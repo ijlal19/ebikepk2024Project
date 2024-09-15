@@ -1,8 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// * {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
 .box {
     width: 100%;
     height: auto;
@@ -60,3 +60,28 @@
         }
     }
 }
+
+.footer_ul {
+        text-align: left;
+        line-height: 30px;
+        list-style-type: none;
+        li:nth-child(1){
+            color: rgb(255, 255, 255);
+            font-size: 18px;
+            cursor: default;
+            padding-top: 20px;
+            padding-bottom: 5px;
+            transition: none;
+            text-decoration: none !important;
+        }
+        li{
+            color: grey;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 1s ease;
+        }
+        li:hover{
+            text-decoration: underline;
+            color: rgb(255, 255, 255);
+        }
+    }

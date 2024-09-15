@@ -1,8 +1,8 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// *{
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
 .main{
         max-width: 98%;
         height: auto;
@@ -14,7 +14,7 @@
         font-weight: bolder;
         color: yellowgreen;
 }
-@media screen and(max-width:1100){
+@media (max-width:1100){
         .main{
                 max-width: 30;
                 height: auto;

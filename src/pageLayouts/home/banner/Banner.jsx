@@ -1,13 +1,16 @@
 import { Box } from '@mui/material'
-import css from './Banner.module.css'
+import styles from './Banner.module.scss'
 import SearchBox from './SearchBox/SearchBox'
-const Banner=()=>{
+
+const Banner = () => {
     return(
-        <Box class={css.main}>
-            <Box class={css.search}>
-                <SearchBox/>
+        <div>
+            <Box class={styles.main}>
+                <Box class={styles.search}>
+                    <SearchBox/>
+                </Box>
             </Box>
-        </Box>
+        </div>
     )
 }
 export default Banner

@@ -1,6 +1,6 @@
+"use client";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import FooterLinks from "../FooterLink/FooterLink";
-import './footer-index.module.scss'
+import styles from './footer-index.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { useState } from "react";
@@ -12,22 +12,45 @@ export default function Footer() {
         alert(Mail)
         setMail('')
     }
+
+
+// Footer Links 
+function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
+    return(
+        <>
+        <ul className={styles.footer_ul}>
+            <li>{heading}</li>
+            <li>{link1}</li>
+            <li>{link2}</li>
+            <li>{link3}</li>
+            <li>{link4}</li>
+            <li>{link5}</li>
+            <li>{link6}</li>
+            <li>{link7}</li>
+            <li>{link8}</li>
+        </ul>
+        </>
+    )
+}
+
     return (
-        <Box className='box'>
+        <Box className={styles.box}>
             <Container>
-                <Grid container className="main">
-                    <Grid item xs={12} sm={8} md={8} lg={8} xl={8} className="links">
+                <Grid container className={styles.main}>
+                    <Grid item xs={12} sm={8} md={8} lg={8} xl={8} className={styles.links}>
                         <Grid container>
-                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}><FooterLinks heading='Used Bike by City'
-                                link1='City Karachi'
-                                link2='City Lahore'
-                                link3='City Quetta'
-                                link4='City Multan'
-                                link5='City Faisalabad'
-                                link6='City Peshawar'
-                                link7='City Islamabad'
-                                link8='City Rawalpindi'
-                            /></Grid>
+                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                <FooterLinks heading='Used Bike by City'
+                                    link1='City Karachi'
+                                    link2='City Lahore'
+                                    link3='City Quetta'
+                                    link4='City Multan'
+                                    link5='City Faisalabad'
+                                    link6='City Peshawar'
+                                    link7='City Islamabad'
+                                    link8='City Rawalpindi'
+                                    />
+                            </Grid>
                             <Grid item xs={12} sm={4} md={4} lg={4} xl={4}><FooterLinks heading='Used Bike by Year'
                                 link1='Years 2020'
                                 link2='Years 2019'
@@ -71,19 +94,19 @@ export default function Footer() {
                         </Grid>
                     </Grid>
 
-                    <Grid item xs={12} sm={12} md={4} lg={4} xl={4} className="mail">
+                    <Grid item xs={12} sm={12} md={4} lg={4} xl={4} className={styles.mail}>
                         <Typography sx={{ fontSize: '18px' }}>
                             Subscribe to our Newsletter
                         </Typography>
-                        <Typography className="getUser_mail">
-                            <form action="" className="getUser_mail" onSubmit={SendMail}>
-                            <input type="email" value={Mail} onChange={(e)=>setMail(e.target.value)} className="TextField" placeholder="User@gmail.com" required/>
+                        <Typography className={styles.getUser_mail}>
+                            <form action="" className={styles.getUser_mail} onSubmit={SendMail}>
+                            <input type="email" value={Mail} onChange={(e)=>setMail(e.target.value)} className={styles.TextField} placeholder="User@gmail.com" required/>
                             <Button variant="contained" type="submit">Send</Button>
                             </form>
                         </Typography>
                         <Typography sx={{ fontSize: '18px', marginTop: '20px' }}>
                             Follow Us
-                            <Typography className="Social_Links">
+                            <Typography className={styles.Social_Links}>
                                 <FacebookIcon sx={{ margin: '0px 10px',cursor:'pointer' }} />
                                 <Instagram sx={{ margin: '0px 10px',cursor:'pointer' }} />
                                 <LinkedIn sx={{ margin: '0px 10px',cursor:'pointer' }} />
@@ -103,48 +126,3 @@ export default function Footer() {
     )
 }
 
-// Footer Links 
-import './Footerlink.scss'
-export default function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
-    return(
-        <>
-        <ul className='ul'>
-            <li>{heading}</li>
-            <li>{link1}</li>
-            <li>{link2}</li>
-            <li>{link3}</li>
-            <li>{link4}</li>
-            <li>{link5}</li>
-            <li>{link6}</li>
-            <li>{link7}</li>
-            <li>{link8}</li>
-        </ul>
-        </>
-    )
-}
-
-// Footer Link SCSS
-.ul{
-    text-align: left;
-    line-height: 30px;
-    list-style-type: none;
-    li:nth-child(1){
-        color: rgb(255, 255, 255);
-        font-size: 18px;
-        cursor: default;
-        padding-top: 20px;
-        padding-bottom: 5px;
-        transition: none;
-        text-decoration: none !important;
-    }
-    li{
-        color: grey;
-        font-size: 15px;
-        cursor: pointer;
-        transition: 1s ease;
-    }
-    li:hover{
-        text-decoration: underline;
-        color: rgb(255, 255, 255);
-    }
-}
