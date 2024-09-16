@@ -1,18 +1,15 @@
+'use client'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import './Section4.scss'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import unique from './slide1Image/unique.png'
-import Benelli from './slide1Image/Benelli.png'
-import crown from './slide1Image/crown.png'
-import HiSpeed from './slide1Image/hi-Speed.png'
-import Honda from './slide1Image/Honda.png'
-import Kawasaki from './slide1Image/Kawasaki.png'
-import BMW from './slide2Image/BMW.png'
-import hero from './slide2Image/hero.png'
-import Yamaha from './slide2Image/Yamaha.png'
-import ZXMCO from './slide2Image/ZXMCO.png'
-import Roadprince from './slide2Image/Road-prince.png'
+// import Carousel from "react-multi-carousel";
+// import "react-multi-carousel/lib/styles.css";
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, FreeMode } from 'swiper/modules';
+// import 'swiper/css/navigation';
+// import 'swiper/css/pagination';
+import { Data } from "./Data"
+
 const Section4 = () => {
   const responsive = {
     superLargeDesktop: {
@@ -32,14 +29,55 @@ const Section4 = () => {
       items: 1
     }
   };
+
   return (
     <Box className='section4_main'>
       <Container className='container'>
         <Box className='Section4-heading'>
           <Typography className='heading'>New Bike Brands</Typography>
           <Button variant='contained' className='btn'>View Brands</Button>
-        </Box><br />
-        <Carousel responsive={responsive} className='carousel-item'>
+        </Box>
+        <br />
+
+        <Swiper 
+          // spaceBetween={50} 
+          // slidesPerView={5} 
+          onSlideChange={() => console.log('slide change')} 
+          onSwiper={(swiper) => console.log(swiper)} 
+          // modules={[Navigation, Pagination]}
+          loop={false}
+          simulateTouch={true}
+          breakpoints={{
+            1: {
+                slidesPerView: 2.5,
+                spaceBetween: 10,
+                initialSlide: 0,
+                // freeMode: {
+                //   enabled: true,
+                //   sticky: false
+                // }
+            },
+            768: {
+              slidesPerView: 5,
+              spaceBetween: 25,
+              slidesPerGroup:5
+            },
+            }}
+        >
+        {
+          Data.map((brand, ind) => {
+            return(
+              <SwiperSlide key >
+                  <div>
+                    <img src={brand.img_url} />
+                  </div>
+              </SwiperSlide>
+            )
+          })
+        }
+        </Swiper>
+
+        {/* <Carousel responsive={responsive} className='carousel-item'>
           <Grid container className='Grid'>
             <Grid item xs={4} sm={4} md={2} lg={2} className='Grid-boxes'><abbr title="Hi-Speed"><img src={HiSpeed} alt="Hi-Speed"  className='images'/></abbr></Grid>
             <Grid item xs={4} sm={4} md={2} lg={2} className='Grid-boxes'><abbr title="Kawasaki"><img src={Kawasaki} alt="Kawasaki"  className='images'/></abbr></Grid>
@@ -56,7 +94,7 @@ const Section4 = () => {
             <Grid item xs={4} sm={4} md={2} lg={2} className='Grid-boxes'><abbr title="Unique"><img src={unique} alt="Unique"  className='images'/></abbr></Grid>
             <Grid item xs={4} sm={4} md={2} lg={2} className='Grid-boxes'><abbr title="Hero"><img src={hero} alt="Hero"  className='images'/></abbr></Grid>
           </Grid>
-        </Carousel>
+        </Carousel> */}
         
       </Container>
     </Box>

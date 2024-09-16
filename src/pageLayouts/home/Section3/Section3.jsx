@@ -1,3 +1,4 @@
+'use client'
 import './Section3.css'
 // import { FaCircleChevronRight } from "react-icons/fa6";
 import ImgCard from './Card/Card';
