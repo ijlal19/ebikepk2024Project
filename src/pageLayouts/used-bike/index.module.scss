@@ -1,0 +1,231 @@
+$green: yellowgreen; 
+$gray: #f2f3f3;
+$blue: #1976d2;
+
+.main_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: $gray;
+    @media (max-width: 767px) {
+        display: block;
+    }
+}
+
+.container_one {
+    width: 40%;
+    height: 100%;
+    margin: 30px;
+    @media (max-width: 767px) {
+        width: auto;
+        margin-top: 0;
+        padding-top: 20px;
+        margin-inline: 10px;
+    }
+}
+
+.info_content { 
+    text-align: center;
+    border: solid 1px black;
+}
+
+.container_one h1 {
+    font-size: 24px;
+    color: $blue ;
+    font-weight: 600;
+    @media (max-width: 767px) {
+        font-size: 20px;
+    }
+}
+.container_one table {
+    border: 1px solid #979b9d;
+    margin-top: 20px;
+}
+.container_one table tbody {
+    height: 110px;
+    background-color: #fff;
+}
+.container_one table td {
+    border: 1px solid #e6e6e6;
+    height: 30%;
+}
+.container_one h2 {
+    margin-top: 40px;
+    font-size: 30px;
+    font-weight: 600;
+}
+.container_one .feature_class {
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    align-items: center;
+    @media (max-width: 767px) {
+        font-size: 13px;
+    }
+}
+
+.seller_comments {
+    background-color: #fff;
+    padding-left: 42px;
+    padding-bottom: 40px;
+    @media (max-width: 767px) {
+        padding-left: 20px;
+    }
+}
+.seller_comments h3 {
+    font-size: 25px;
+    padding-bottom: 10px;
+    font-weight: 500;
+    @media (max-width: 767px) {
+        font-size: 20px;
+    }
+}
+.seller_comments p {
+    @media (max-width: 767px) {
+        font-size: 13px;
+    }
+}
+.container_two {
+    width: 290px;
+    height: 240px;
+    margin: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    @media (max-width: 767px) {
+        width: 370px;
+        margin: 10px;
+    }
+}
+.container_two h2 {
+    font-size: 20px;
+    font-weight: 400;
+    color: $green;
+    // margin-bottom: 30px;
+    margin-top: 20px;
+}
+.container_two .button {
+    margin-top: 2rem;
+    width: 220px;
+    height: 60px;
+    background-color: $green;
+    color: #fff;
+    @media (max-width: 767px) {
+        margin: 1rem;
+    }
+}
+.button span {
+    font-size: 24px;
+    font-weight: 600;
+}
+.container_two .send_message {
+    border: 1px solid $blue;
+    margin-top: 15px;
+    border-radius: 10px;
+    color: $blue;
+    padding-inline: 58px;
+    padding-block: 10px;
+
+
+}
+ .container_three {
+    width: 290px;
+    height: 240px;
+    margin: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    @media (max-width: 767px) {
+        width: 370px;
+        margin: 10px;
+    }
+}
+
+.owner_detail_head h1 {
+    font-size: 20px;
+    border-bottom: 1px solid #EAEDEF;
+    padding: 15px 90px;
+}
+.container_three .owner_name small {
+    color: $blue;
+    display: block;
+}
+.container_three .owner_name {
+    padding: 20px;
+}
+.owner_name p {
+    font-size: 13px;
+}
+.owner_name span {
+    font-size: 13px;
+    color: $blue;
+}
+.container_four {
+    width: 290px;
+    height: 240px;
+    margin: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    position: relative;
+    @media (max-width: 767px) {
+        width: 370px;
+        margin: 10px;
+    }
+}
+.container_four .transaction h1  {
+    font-size: 20px;
+    border-bottom: 1px solid #EAEDEF;
+    padding: 17px 32px;
+}
+.container_four ol li {
+    font-size: 13px;
+    padding: 5px;
+}
+.container_four ol {
+    text-align: justify;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+.container_four p {
+    color: $blue;
+    position: absolute;
+    right: 30px;
+}
+.container_five .notify {
+    border: 1px solid $blue;
+    border-radius: 5px;
+    text-align: center;
+    padding-block: 10px;
+    color: $blue;
+    margin-bottom: 5px;
+    width: 290px;
+    margin-left: 30px;
+    @media (max-width: 767px) {
+        width: 370px;
+        margin-left: 10px ;
+    }
+}
+.container_five .report {
+    border: 1px solid $blue;
+    border-radius: 5px;
+    text-align: center;
+    padding-block: 10px;
+    color: $blue;
+    width: 290px;
+    margin-left: 30px;
+    @media (max-width: 767px) {
+        width: 370px;
+        margin-left: 10px;
+    }
+}
+

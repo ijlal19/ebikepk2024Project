@@ -1,5 +1,25 @@
-
 body {
     margin: 0;
     padding: 0;
+}
+
+
+.used_bike_detail_pg {
+    .swiper {
+        .swiper-button-prev {
+            color: black !important;
+            &::after {
+                font-size: 20px !important;
+                font-weight: 500;
+            }
+        }
+
+        .swiper-button-next {
+            color: black !important;
+            &::after {
+                font-size: 20px !important;
+                font-weight: 500;
+            }
+        }
+    }
 }
