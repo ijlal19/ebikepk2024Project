@@ -13,7 +13,6 @@ const inter = Inter({ subsets: ["latin"] });
 export default function UsedBike() {
   return (
     <main className={`${styles.main_container} used_bike_detail_pg`}>
-      
       <div className={styles.container_one}>
         
         <h1>Honda cb 125F 2023</h1>
@@ -81,7 +80,7 @@ export default function UsedBike() {
      
     <div>
     <div className={styles.container_two}>
-      <h2 className={price_tect} >PKR 3.35 lacs</h2>
+      <h2 className={styles.price_tect} >PKR 3.35 lacs</h2>
       <hr/>
       <div className={styles.button}>
         <span>1234564</span>
@@ -95,6 +94,11 @@ export default function UsedBike() {
           <div className={styles.owner_name}>
           <small>Ahmed</small>
           <small>Member Since Mar 05, 2020</small>
+          <div className={styles.icons}>
+            <span className={styles.contact} ></span>
+            <span className={styles.message}></span>
+            <span className={styles.facebook}></span>
+          </div>
           <p>See if your friends know this seller</p>
           <span>Connect with facebook</span>
           </div>

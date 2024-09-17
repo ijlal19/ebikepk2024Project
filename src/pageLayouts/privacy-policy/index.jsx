@@ -3,7 +3,7 @@ import './index.module.scss'
 const PrivacyPolicy = () => {
     return (
         <>
-            <Box className='privacy_main'>
+            {/* <Box className='privacy_main'>
                 <Container className='privacy_container'>
                     <Box className='privacy'>
                         <h1>Privacy Policy</h1>
@@ -117,7 +117,7 @@ if you have enquiry or concern related to this privacy policy or collection, sto
                         </Box>
                     </Box>
                 </Container>
-            </Box>
+            </Box> */}
         </>
     )
 }

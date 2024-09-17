@@ -6,16 +6,17 @@ import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-mat
 import { useState } from "react";
 
 export default function Footer() {
-    const [Mail,setMail]=useState()
-    function SendMail(e){
+    const [Mail,setMail]=useState('')
+    
+    function SendMail(e:any){
         e.preventDefault()
         alert(Mail)
-        setMail('')
+        // setMail('')
     }
 
 
 // Footer Links 
-function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
+function FooterLinks(heading:any, link1:any, link2:any, link3:any, link4:any, link5:any, link6:any, link7:any, link8:any){
     return(
         <>
         <ul className={styles.footer_ul}>
@@ -40,18 +41,20 @@ function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
                     <Grid item xs={12} sm={8} md={8} lg={8} xl={8} className={styles.links}>
                         <Grid container>
                             <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
-                                <FooterLinks heading='Used Bike by City'
-                                    link1='City Karachi'
-                                    link2='City Lahore'
-                                    link3='City Quetta'
-                                    link4='City Multan'
-                                    link5='City Faisalabad'
-                                    link6='City Peshawar'
-                                    link7='City Islamabad'
-                                    link8='City Rawalpindi'
-                                    />
+                                { FooterLinks( 
+                                    'Used Bike by City',
+                                    'City Karachi',
+                                    'City Lahore',
+                                    'City Quetta',
+                                    'City Multan',
+                                    'City Faisalabad',
+                                    'City Peshawar',
+                                    'City Islamabad',
+                                    'City Rawalpindi'
+                                )}
                             </Grid>
-                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}><FooterLinks heading='Used Bike by Year'
+                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                {/* <FooterLinks heading='Used Bike by Year'
                                 link1='Years 2020'
                                 link2='Years 2019'
                                 link3='Years 2018'
@@ -60,8 +63,10 @@ function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
                                 link6='Years 2015'
                                 link7='Years 2014'
                                 link8='Years 2013'
-                            /></Grid>
-                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}><FooterLinks heading='Used Bike by CC'
+                            /> */}
+                            </Grid>
+                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                {/* <FooterLinks heading='Used Bike by CC'
                                 link1='50CC '
                                 link2='70CC '
                                 link3='100CC'
@@ -70,8 +75,10 @@ function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
                                 link6='150CC'
                                 link7='200CC'
                                 link8='250CC'
-                            /></Grid>
-                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}><FooterLinks heading='Explore Ebike'
+                            /> */}
+                            </Grid>
+                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                {/* <FooterLinks heading='Explore Ebike'
                                 link1='Used Bikes'
                                 link2='New Bikes'
                                 link3='Showroom'
@@ -80,8 +87,11 @@ function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
                                 link6='Shop'
                                 link7='Blog'
                                 link8='Bikes Price List'
-                            /></Grid>
-                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}><FooterLinks heading='Used Bike by Brand'
+                            /> */}
+                            </Grid>
+                            <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                {/* <FooterLinks 
+                                heading='Used Bike by Brand'
                                 link1='Honda Bikes'
                                 link2='United Bikes'
                                 link3='Zxmco Bikes'
@@ -90,7 +100,8 @@ function FooterLinks({heading,link1,link2,link3,link4,link5,link6,link7,link8}){
                                 link6='Road Prince'
                                 link7='Super Power'
                                 link8='Super Star'
-                            /></Grid>
+                            /> */}
+                            </Grid>
                         </Grid>
                     </Grid>
 

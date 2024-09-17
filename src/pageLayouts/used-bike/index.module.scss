@@ -13,7 +13,6 @@ $blue: #1976d2;
         display: block;
     }
 }
-
 .container_one {
     width: 40%;
     height: 100%;
@@ -40,21 +39,21 @@ $blue: #1976d2;
     }
 }
 .container_one table {
-    border: 1px solid #979b9d;
+    border: none;
     margin-top: 20px;
 }
 .container_one table tbody {
-    height: 110px;
+    height: 80px;
     background-color: #fff;
 }
 .container_one table td {
-    border: 1px solid #e6e6e6;
+    // border: 1px solid #e6e6e6;
     height: 30%;
 }
 .container_one h2 {
     margin-top: 40px;
     font-size: 30px;
-    font-weight: 600;
+    font-weight: 400;
 }
 .container_one .feature_class {
     height: 100px;
@@ -69,34 +68,39 @@ $blue: #1976d2;
 
 .seller_comments {
     background-color: #fff;
-    padding-left: 42px;
-    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    line-height: 30px;
+    padding-left: 20px;
     @media (max-width: 767px) {
         padding-left: 20px;
     }
 }
 .seller_comments h3 {
-    font-size: 25px;
-    padding-bottom: 10px;
+    font-size: 20px;
+    margin: 0;
     font-weight: 500;
     @media (max-width: 767px) {
-        font-size: 20px;
+        font-size: 15px;
     }
 }
 .seller_comments p {
+    font-size: 10px;
+    margin: 0;
     @media (max-width: 767px) {
         font-size: 13px;
     }
 }
 .container_two {
-    width: 290px;
-    height: 240px;
+    width: 250px;
+    height: 200px;
     margin: 30px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #fff;
+    justify-content: center ;
     @media (max-width: 767px) {
         width: 370px;
         margin: 10px;
@@ -106,22 +110,34 @@ $blue: #1976d2;
     font-size: 20px;
     font-weight: 400;
     color: $green;
-    // margin-bottom: 30px;
-    margin-top: 20px;
+    margin: 0;
+    border-bottom: 1px solid #EAEDEF;
+    padding-inline: 67px;
+    padding-bottom: 10px;
 }
 .container_two .button {
-    margin-top: 2rem;
     width: 220px;
-    height: 60px;
+    height: 50px;
     background-color: $green;
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease;
     @media (max-width: 767px) {
         margin: 1rem;
     }
+
+    &:hover {
+        background-color: darken($green, 10%); 
+    }
 }
+
+
 .button span {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 400;
+    display: block;
+    padding-top: 3px;
 }
 .container_two .send_message {
     border: 1px solid $blue;
@@ -134,8 +150,8 @@ $blue: #1976d2;
 
 }
  .container_three {
-    width: 290px;
-    height: 240px;
+    width: 250px;
+    height: 200px;
     margin: 30px;
     text-align: center;
     display: flex;
@@ -147,11 +163,40 @@ $blue: #1976d2;
         margin: 10px;
     }
 }
+.icons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding-top: 5px;
+.contact {
+    border: 1px solid #000;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.message {
+    border: 1px solid #000;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+    .facebook {
+        border: 1px solid #000;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+}
 
 .owner_detail_head h1 {
     font-size: 20px;
     border-bottom: 1px solid #EAEDEF;
-    padding: 15px 90px;
+    padding: 5px ;
+    padding-inline: 67px;
 }
 .container_three .owner_name small {
     color: $blue;
@@ -162,14 +207,16 @@ $blue: #1976d2;
 }
 .owner_name p {
     font-size: 13px;
+    margin: 0;
+    margin-top: 5px;
 }
 .owner_name span {
     font-size: 13px;
     color: $blue;
 }
 .container_four {
-    width: 290px;
-    height: 240px;
+    width: 250px;
+    height: 175px;
     margin: 30px;
     text-align: center;
     display: flex;
@@ -185,7 +232,7 @@ $blue: #1976d2;
 .container_four .transaction h1  {
     font-size: 20px;
     border-bottom: 1px solid #EAEDEF;
-    padding: 17px 32px;
+    padding-bottom: 5px;
 }
 .container_four ol li {
     font-size: 13px;
@@ -193,23 +240,24 @@ $blue: #1976d2;
 }
 .container_four ol {
     text-align: justify;
-    padding-left: 40px;
-    padding-top: 20px;
+    padding-left: 20px;
+   
 }
 .container_four p {
     color: $blue;
     position: absolute;
     right: 30px;
+    font-size: 13px;
 }
 .container_five .notify {
     border: 1px solid $blue;
-    border-radius: 5px;
     text-align: center;
-    padding-block: 10px;
+    padding-block: 5px;
     color: $blue;
     margin-bottom: 5px;
-    width: 290px;
+    width: 250px;
     margin-left: 30px;
+    font-size: 13px;
     @media (max-width: 767px) {
         width: 370px;
         margin-left: 10px ;
@@ -217,15 +265,14 @@ $blue: #1976d2;
 }
 .container_five .report {
     border: 1px solid $blue;
-    border-radius: 5px;
     text-align: center;
-    padding-block: 10px;
+    padding-block: 5px;
     color: $blue;
-    width: 290px;
+    width: 250px;
     margin-left: 30px;
+    font-size: 13px;
     @media (max-width: 767px) {
         width: 370px;
         margin-left: 10px;
     }
 }
-

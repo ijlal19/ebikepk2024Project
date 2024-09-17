@@ -19,7 +19,7 @@ const headerStyle={margin:0}
                 <TextField fullWidth label='Phone Number'/>
                 <TextField fullWidth label='Password'/>
                 <TextField fullWidth label='Confirm Password'/>
-                <Button type='Submit' color='primary' fullWidth required variant="contained"> Sign In</Button>           
+                <Button> Sign In </Button>           
             </Paper>
           </Grid>
     )

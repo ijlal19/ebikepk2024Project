@@ -67,7 +67,7 @@ const Section4 = () => {
         {
           Data.map((brand, ind) => {
             return(
-              <SwiperSlide key >
+              <SwiperSlide key={ind}>
                   <div>
                     <img src={brand.img_url} />
                   </div>
