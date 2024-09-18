@@ -8,12 +8,15 @@ import css from './Radio.module.css'
 import { useState } from 'react';
 import SelectTextFields from './DropDown/DropDown';
 export default function RowRadioButtonsGroup({label1,label2}) {
+  
   let [defaultval,setDefaultval]=useState("Select Brand")
   let [defaul2tval,setDefault2val]=useState("Select Model")
+  
   function defult(){
     setDefaultval('Select Brand')
     setDefault2val('Select Model')
   }
+  
   function defultChange(){
     setDefaultval('Select Budget')
     setDefault2val('All Vehicle Types')
@@ -24,15 +27,15 @@ export default function RowRadioButtonsGroup({label1,label2}) {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
-        style={{display:'flex',justifyContent:'space-between'}}
+        style={{display:'flex', justifyContent:'space-between'}}
       >
-        <FormControlLabel value={label1}  onClick={defult}  control={<Radio />} label={label1} />
-        <FormControlLabel value={label2} onClick={defultChange} control={<Radio />} label={label2} />
+        <FormControlLabel value={label1}  onClick={defult}  control={<Radio />} label={label1} style={{ fontSize:"12px" }} />
+        <FormControlLabel value={label2} onClick={defultChange} control={<Radio />} label={label2} style={{ fontSize:"12px" }} />
       </RadioGroup>
       <Box class={css.dropdown}>
-                <SelectTextFields label={defaultval} />
-                <SelectTextFields label={defaul2tval}/>
-            </Box>
+          {/* <SelectTextFields label={defaultval} /> */}
+          <SelectTextFields label={defaul2tval} />
+      </Box>
     </FormControl>
   );
 }

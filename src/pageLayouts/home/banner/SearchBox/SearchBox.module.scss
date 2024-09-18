@@ -1,19 +1,21 @@
-.main{
+.main {
     width: 360px;
     height: auto;
     padding: 20px 10px;
-    /* border: 1px solid #000; */
     border-radius: 15px;
     text-align: center;
     backdrop-filter: blur(20px);
     background-color: rgba(255, 255, 255, 0.227);
 }
-.heading{
+
+.heading {
     color:black;
     font-family: sans-serif;
+    font-size: 16px;
 }
-.Usedbikes,.Newbikes{
-    font-size: 20px;
+
+.usedbikes_btn,.newbikes_btn {
+    font-size: 13px;
     font-weight: bolder;
     color: black;
     background-color: white;
@@ -23,27 +25,27 @@
     cursor: pointer;
     transition: 1s ease;
 }
-.Newbikes:hover,.Usedbikes:hover,.btn:hover{
+
+.usedbikes_btn:hover,.newbikes_btn:hover {
     box-shadow: 0px 0px 9px grey;
     cursor: pointer;
 }
-.Usedbikes:focus,.Newbikes:focus{
+
+.usedbikes_btn:focus,.newbikes_btn:focus {
     color: white;
     background-color: black;
 }
-.radio{
+
+.radio {
     width: 350px;
     margin: auto;
     display: flex;
     padding-left: 20px;
     margin-bottom: 10px;
+    font-size: 11px;
 }
-/* .dropdown{
-    width: 340px;
-    margin: auto;
-    padding: 10px;
-} */
-.model{
+
+.model {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     
@@ -57,7 +59,7 @@
     margin: auto;
     padding: 10px 20px;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 13px;
     margin-top: 5px;
     background-color: #d02f2f;
     border: 1px solid #d02f2f;
