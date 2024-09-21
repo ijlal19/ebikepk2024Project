@@ -17,26 +17,35 @@ $blue: #1976d2;
     width: 40%;
     height: 100%;
     margin: 30px;
+    background-color: #fff;
+    padding: 20px;
     @media (max-width: 767px) {
-        width: auto;
+        width: 100%;
         margin-top: 0;
-        padding-top: 20px;
-        margin-inline: 10px;
+        margin-inline: 0px;
+        padding: 20px 10px 20px 20px;
     }
 }
 
 .info_content { 
     text-align: center;
     border: solid 1px black;
+    .info_field {
+        font-size: 13px;
+    }
+    .info_field_two {
+        font-size: 13px;
+    }
 }
 
-.container_one h1 {
-    font-size: 24px;
+.container_one .title {
+    font-size: 22px;
     color: $blue ;
     font-weight: 600;
     @media (max-width: 767px) {
         font-size: 20px;
     }
+    margin-top: 0px;
 }
 .container_one table {
     border: none;
@@ -46,23 +55,35 @@ $blue: #1976d2;
     height: 80px;
     background-color: #fff;
 }
-.container_one table td {
-    // border: 1px solid #e6e6e6;
-    height: 30%;
+.container_one table tr {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
 }
-.container_one h2 {
+
+.container_one table td {
+    flex: 1;
+    border: 1px solid #e6e6e6;
+    padding: 10px 0px;
+    text-wrap: nowrap;
+}
+.container_one .feature_heading {
     margin-top: 40px;
     font-size: 30px;
     font-weight: 400;
+    font-size: 20px;
 }
 .container_one .feature_class {
-    height: 100px;
+    height: 50px;
     display: flex;
     justify-content: space-around;
     background-color: #fff;
     align-items: center;
+    font-size: 13px;
+    margin-bottom: 30px;
     @media (max-width: 767px) {
-        font-size: 13px;
+        font-size: 12px;
     }
 }
 
@@ -71,10 +92,10 @@ $blue: #1976d2;
     display: flex;
     flex-direction: column;
     line-height: 30px;
-    padding-left: 20px;
-    @media (max-width: 767px) {
-        padding-left: 20px;
-    }
+    // padding-left: 20px;
+    // @media (max-width: 767px) {
+    //     // padding-left: 20px;
+    // }
 }
 .seller_comments h3 {
     font-size: 20px;
@@ -87,10 +108,12 @@ $blue: #1976d2;
 .seller_comments p {
     font-size: 10px;
     margin: 0;
+    line-height: 15px;
     @media (max-width: 767px) {
         font-size: 13px;
     }
 }
+
 .container_two {
     width: 250px;
     height: 200px;
@@ -104,24 +127,29 @@ $blue: #1976d2;
     @media (max-width: 767px) {
         width: 370px;
         margin: 10px;
+        margin: 2px 2px 2px 22px;
+        
     }
 }
 .container_two h2 {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 400;
     color: $green;
     margin: 0;
     border-bottom: 1px solid #EAEDEF;
     padding-inline: 67px;
     padding-bottom: 10px;
+    text-wrap: nowrap;
+
 }
-.container_two .button {
+.container_two .num_button {
     width: 220px;
     height: 50px;
     background-color: $green;
     color: #fff;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     transition: background-color 0.3s ease;
     @media (max-width: 767px) {
         margin: 1rem;
@@ -133,12 +161,16 @@ $blue: #1976d2;
 }
 
 
-.button span {
-    font-size: 24px;
-    font-weight: 400;
-    display: block;
-    padding-top: 3px;
+.num_button { 
+    .num_text {
+        font-size: 17px;
+        font-weight: 400;
+        display: block;
+        padding-top: 3px; 
+        text-wrap: nowrap;
+    }
 }
+
 .container_two .send_message {
     border: 1px solid $blue;
     margin-top: 15px;
@@ -146,8 +178,8 @@ $blue: #1976d2;
     color: $blue;
     padding-inline: 58px;
     padding-block: 10px;
-
-
+    cursor: pointer;
+    font-size: 13px;
 }
  .container_three {
     width: 250px;
@@ -161,6 +193,7 @@ $blue: #1976d2;
     @media (max-width: 767px) {
         width: 370px;
         margin: 10px;
+        margin: 13px 2px 2px 22px;
     }
 }
 .icons {
@@ -192,8 +225,9 @@ $blue: #1976d2;
     }
 }
 
-.owner_detail_head h1 {
-    font-size: 20px;
+.owner_detail_head .details_heading {
+    font-size: 17px;
+    text-wrap: nowrap;
     border-bottom: 1px solid #EAEDEF;
     padding: 5px ;
     padding-inline: 67px;
@@ -203,7 +237,7 @@ $blue: #1976d2;
     display: block;
 }
 .container_three .owner_name {
-    padding: 20px;
+    padding: 5px 10px 5px 10px;
 }
 .owner_name p {
     font-size: 13px;
@@ -227,12 +261,14 @@ $blue: #1976d2;
     @media (max-width: 767px) {
         width: 370px;
         margin: 10px;
+        margin: 13px 2px 2px 22px;
     }
 }
-.container_four .transaction h1  {
-    font-size: 20px;
+.container_four .transaction .tranc_text  {
+    font-size: 17px;
     border-bottom: 1px solid #EAEDEF;
     padding-bottom: 5px;
+    text-wrap: nowrap;
 }
 .container_four ol li {
     font-size: 13px;
@@ -248,6 +284,8 @@ $blue: #1976d2;
     position: absolute;
     right: 30px;
     font-size: 13px;
+    cursor: pointer;
+
 }
 .container_five .notify {
     border: 1px solid $blue;
@@ -258,6 +296,7 @@ $blue: #1976d2;
     width: 250px;
     margin-left: 30px;
     font-size: 13px;
+    cursor: pointer;
     @media (max-width: 767px) {
         width: 370px;
         margin-left: 10px ;
@@ -271,13 +310,10 @@ $blue: #1976d2;
     width: 250px;
     margin-left: 30px;
     font-size: 13px;
+    cursor: pointer;
+
     @media (max-width: 767px) {
         width: 370px;
         margin-left: 10px;
     }
 }
-
-
-
-
-

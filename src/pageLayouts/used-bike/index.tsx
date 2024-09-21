@@ -15,7 +15,7 @@ export default function UsedBike() {
     <main className={`${styles.main_container} used_bike_detail_pg`}>
       <div className={styles.container_one}>
         
-        <h1>Honda cb 125F 2023</h1>
+        <h1 className={styles.title}>Honda cb 125F 2023</h1>
        
         <Swiper spaceBetween={50} slidesPerView={1} onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => console.log(swiper)} modules={[Navigation, Pagination]}>
           <SwiperSlide>
@@ -38,9 +38,9 @@ export default function UsedBike() {
         <table width="100%" className={styles.info_content}>
             <tbody>
               <tr>
-                <td><p>2023</p></td>
-                <td><p>4,900 km</p></td>
-                <td><p>4 Stroke</p></td>
+                <td><p className={styles.info_field}>2023</p></td>
+                <td><p className={styles.info_field}>4,900 km</p></td>
+                <td><p className={styles.info_field}>4 Stroke</p></td>
               </tr>
             </tbody>
         </table> 
@@ -48,49 +48,48 @@ export default function UsedBike() {
         <table width="100%" className={styles.info_content}>
             <tbody>
               <tr>
-                <td>Register in</td>
-                <td>Punjab</td>
-                <td>Last update:</td>
-                <td>Aug 28, 2024</td>
+                <td className={styles.info_field_two}>Register in</td>
+                <td className={styles.info_field_two}>Punjab</td>
+                <td className={styles.info_field_two}>Last update:</td>
+                <td className={styles.info_field_two}>Aug 28, 2024</td>
               </tr>
               <tr>
-                <td>Body Type</td>
-                <td>Standard</td>
-                <td>Ad ref #</td>
-                <td>585746</td>
+                <td className={styles.info_field_two}>Body Type</td>
+                <td className={styles.info_field_two}>Standard</td>
+                <td className={styles.info_field_two}>Ad ref #</td>
+                <td className={styles.info_field_two}>585746</td>
               </tr>
             </tbody>
           </table>
 
-              <h2>Bike Features</h2>
-                <div className={styles.feature_class}>
-                {/* <h2>Bike Features</h2> */}
-                  <span>Anti theft lock</span>
-                  <span>Disc brake</span>
-                  <span>led light</span>
-                  <p>Wind sheild</p>
-                  </div>
-                  <div className={styles.seller_comments}>
-                  <h3>Sellers Comments</h3>
-                  <p>Honda CB 125F 2023 model Total genion.</p>
-                  <p>Mention PakWheels.com when calling Seller to get a good deal</p>
-                  </div>
-                {/* </div> */}
+          <h2 className={styles.feature_heading} >Bike Features</h2>
+          <div className={styles.feature_class}>
+            {/* <h2>Bike Features</h2> */}
+            <span>Anti theft lock</span>
+            <span>Disc brake</span>
+            <span>led light</span>
+            <p>Wind sheild</p>
+            </div>
+            <div className={styles.seller_comments}>
+            <h3>Sellers Comments</h3>
+            <p>Honda CB 125F 2023 model Total genion.</p>
+            <p>Mention PakWheels.com when calling Seller to get a good deal</p>
+          </div>
       </div>
      
     <div>
     <div className={styles.container_two}>
-      <h2 className={styles.price_tect} >PKR 3.35 lacs</h2>
+      <h2 className={styles.price_text} >PKR 3.35 lacs</h2>
       <hr/>
-      <div className={styles.button}>
-        <span>1234564</span>
+      <div className={styles.num_button}>
+        <span className={styles.num_text} >1234564</span>
         <small className="block">show phone number</small>
       </div>
       <div className={styles.send_message}>Send message</div>
     </div>
     <div className={styles.container_three}>
         <div className={styles.owner_detail_head}>
-          <h1>Seller Detals</h1>
+          <h1 className={styles.details_heading} >Seller Details</h1>
           <div className={styles.owner_name}>
           <small>Ahmed</small>
           <small>Member Since Mar 05, 2020</small>
@@ -106,7 +105,7 @@ export default function UsedBike() {
       </div>
       <div className={styles.container_four}>
         <div className={styles.transaction}>
-          <h1>Safety tips for transaction</h1>
+          <h1 className={styles.tranc_text}>Safety tips for transaction</h1>
           <ol>
             <li>Use a safe location to meet seller</li>
             <li>Avoid cash transactions</li>
