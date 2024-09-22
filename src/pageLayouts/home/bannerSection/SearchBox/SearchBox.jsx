@@ -1,7 +1,7 @@
 "use client";
 import { Box, Button, Typography } from "@mui/material"
 import styles from './SearchBox.module.scss'
-import RowRadioButtonsGroup from "@/pageLayouts/home/banner/SearchBox/Radio/Radio"
+import RowRadioButtonsGroup from "@/pageLayouts/home/bannerSection/SearchBox/Radio/Radio"
 import { useState } from "react"
 function  SearchBox(){
     let [defaultval,setDefaultval]=useState("By Brand")

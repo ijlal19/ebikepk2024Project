@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import styles from './Banner.module.scss'
+import styles from './index.module.scss'
 import SearchBox from './SearchBox/SearchBox'
 
 const Banner = () => {

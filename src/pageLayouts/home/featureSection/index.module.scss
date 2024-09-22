@@ -1,0 +1,41 @@
+.featuer_main{
+   
+    width: 100%;
+    text-align: left;
+    margin-bottom: 40px;
+    margin-top: 20px;
+   
+    .featuer_title {
+        font-size: 18px;
+        font-weight: bolder;
+        color: black;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .featuer_container {
+        
+        width: 100%;
+        height: auto;
+        flex-wrap: nowrap;
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        flex-direction: row;
+        margin: auto;
+        @media (max-width:767px) {
+            flex-direction: column;
+        }
+
+        .Grid_boxes {
+           display: inline-block;
+           justify-content: center;
+           align-items: center;
+        }
+    }
+    @media screen and (max-width:600px){
+        .sec2_heading{
+            font-size: 18px;
+        }
+    }
+}
