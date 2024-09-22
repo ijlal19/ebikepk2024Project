@@ -1,7 +1,7 @@
 import BannerSection from './bannerSection/index'
 import FeatureSection from './featureSection/index'
 import BikesSection from './bikesSection/index'
-import Section4 from './Section4/Section4'
+import BrandSection from './brandSection/index'
 
 const Index = () => {
   return (
@@ -9,7 +9,7 @@ const Index = () => {
      <BannerSection />
      <FeatureSection />
      <BikesSection/>
-    <Section4/> 
+     <BrandSection/> 
     </>
   )
 }

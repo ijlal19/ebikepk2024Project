@@ -2,20 +2,19 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation , FreeMode} from 'swiper/modules';
 import styles from './index.module.scss';
-import ItemCard from '@/sharedComponents/itemCard/index'
 import { Box, Container } from '@mui/material'
 import 'swiper/swiper-bundle.css';
 interface IProps {
-    sliderName?: any;
+    from?: any;
     sliderData?: any;
 }
 
-const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
+const SwiperCarousels: React.FC<IProps> = ({from, sliderData}) => {
 
   return (
-    <Container className={`${styles.swiper_card_conatainer} swiper_card_con`}>
+    <Container className={`${styles.swiper_brand_card_conatainer} swiper_card_brand`}>
         <Swiper
-            modules={[Navigation,FreeMode]}
+            modules={[Navigation, FreeMode]}
             navigation={true}
             className={`${styles.swiper}`}
             initialSlide={0}
@@ -24,7 +23,7 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
             slidesPerView={1}
             breakpoints={{
                 1: {
-                    slidesPerView:  2,
+                    slidesPerView:  3,
                     spaceBetween: 10,
                     initialSlide: 0,
                         freeMode: {
@@ -33,19 +32,18 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
                         }
                 },
                 768: {
-                    slidesPerView: 4,
+                    slidesPerView: 6,
                     spaceBetween: 25,
-                    slidesPerGroup: 1
+                    slidesPerGroup: 6
                 },
             }}
             simulateTouch={true}
-
         >
             {sliderData?.length > 0 &&
                 sliderData?.map((item: any, index: any) => {
                 return (
                     <SwiperSlide key={index}>
-                        <ItemCard data={item} />
+                        <img className={styles.brand_img} src={item.img_url} />
                     </SwiperSlide>
                 );
             })}
