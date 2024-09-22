@@ -20,7 +20,7 @@ let cities_arr = [
 ]
 let year_arr = [
     {title: "Used Bike by Year", url: ""},
-    {title: "Years 2020", url: ""},
+    {title: "Years 20220", url: ""},
     {title: "Years 2019", url: ""},
     {title: "Years 2018", url: ""},
     {title: "Years 2017", url: ""},
@@ -66,7 +66,7 @@ let brand_arr = [
 export default function Footer() {
     const [Mail,setMail]=useState('')
     
-    function SendMail(e){
+    function SendMail(e:any){
         e.preventDefault()
         alert(Mail)
         // setMail('')
@@ -74,19 +74,15 @@ export default function Footer() {
 
 
 
-    function FooterLinks(heading, link1, link2, link3, link4, link5, link6, link7, link8){
+    function FooterLinks(arr:any){
         return(
             <>
             <ul className={styles.footer_ul}>
-                <li>{heading}</li>
-                <li>{link1}</li>
-                <li>{link2}</li>
-                <li>{link3}</li>
-                <li>{link4}</li>
-                <li>{link5}</li>
-                <li>{link6}</li>
-                <li>{link7}</li>
-                <li>{link8}</li>
+                {arr.map((item:any, ind:any) => {
+                    return(
+                        <li key={item.title + ind}>{item.title}</li>
+                    )
+                })}
             </ul>
             </>
         )
@@ -100,75 +96,23 @@ export default function Footer() {
                         <Grid container spacing={0}>
                             
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                                { FooterLinks( 
-                                    'Used Bike by City',
-                                    'City Karachi',
-                                    'City Lahore',
-                                    'City Quetta',
-                                    'City Multan',
-                                    'City Faisalabad',
-                                    'City Peshawar',
-                                    'City Islamabad',
-                                    'City Rawalpindi')
-                                }
+                                { FooterLinks(cities_arr)}
                             </Grid>
                             
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-                                { FooterLinks ( 
-                                    'Used Bike by Year',
-                                    'Years 2020',
-                                    'Years 2019',
-                                    'Years 2018',
-                                    'Years 2017',
-                                    'Years 2016',
-                                    'Years 2015',
-                                    'Years 2014',
-                                    'Years 2013')
-                                }
+                                { FooterLinks (year_arr) }
                             </Grid>
                             
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                                { 
-                                    FooterLinks( 
-                                        'Used Bike by CC',
-                                        '50CC',
-                                        '70CC',
-                                        '100CC',
-                                        '110CC',
-                                        '125CC',
-                                        '150CC',
-                                        '200CC',
-                                        '250CC')
-                                }
+                                { FooterLinks(cc_arr) }
                             </Grid>
 
                             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                                { 
-                                    FooterLinks ( 
-                                        'Explore Ebike',
-                                        'Used Bikes',
-                                        'New Bikes',
-                                        'Showroom',
-                                        'Videos',
-                                        'Bikers Forum',
-                                        'Shop',
-                                        'Blog',
-                                        'Bikes Price List')
-                                }
+                                { FooterLinks (catagory_arr) }
                             </Grid>
 
                             <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
-                                { FooterLinks ( 
-                                    'Used Bike by Brand',
-                                    'Honda Bikes',
-                                    'United Bikes',
-                                    'Zxmco Bikes',
-                                    'Unique Bikes',
-                                    'Yamaha Bikes',
-                                    'Road Prince',
-                                    'Super Power',
-                                    'Super Star')
-                                }
+                                { FooterLinks (brand_arr) }
                             </Grid>
                         </Grid>
                     </Grid>
