@@ -5,7 +5,7 @@
 //     font-family: sans-serif;
 // }
 
-.punjab_main{
+.about_main{
     width: 100%;
     height: auto;
     background: white;
@@ -13,24 +13,24 @@
     justify-content: center;
     align-items: center;
     padding: 120px 0px;
-    .punjab_container{
+    .about_container{
         display: flex;
         justify-content: center;
         align-items: center;
         padding-bottom: 10px;
-        .punjab{
+        .aboutus{
             text-align: center;
             box-shadow: 0px 0px 10px rgb(132, 130, 130);
             padding: 10px 15px;
             h1{
-                color:navy;
+                color: rgb(31, 30, 30);
                 padding: 20px 0px;
             }
-            .punjab_text{
+            .about_text{
                 text-align: left;
                 p{
                     margin: 20px 0px;
-                    color: rgb(60, 57, 57);
+                    color: rgb(38, 37, 37);
                 }
             }
         }

@@ -1,0 +1,21 @@
+.itemCard {
+        max-width: 350px;
+        border: solid 1px rgb(194, 194, 194) ;
+        border-radius: 5px;
+
+        .card_img{
+                height: 120px;
+        }
+        
+        .card_title{
+             text-wrap: nowrap;   
+        }
+
+        .card_price {
+                text-wrap: nowrap;   
+        }
+
+        .card_location {
+                text-wrap: nowrap;   
+        }
+}

@@ -9,13 +9,13 @@ const Login = () => {
      return(
        <Grid>
             <Paper elevation={(10)} style={paperstyle}>
-                <Grid align= 'center'>
+                <Grid>
                 <Avatar></Avatar>
                     <h2>Sign in</h2>
                 </Grid>
                 <TextField label='User Name' placeholder='Enter User Name' fullWidth required></TextField>
                 <TextField label='Password' placeholder='Enter Password' type='Password' fullWidth required></TextField>
-                <Button type='Submit' color='primary' fullWidth required variant="contained"> Sign In</Button>
+                <Button> Sign In</Button>
          </Paper>
        </Grid>
           
