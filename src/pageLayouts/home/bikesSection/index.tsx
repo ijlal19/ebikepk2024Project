@@ -7,7 +7,7 @@ import SwiperCarousels from '@/sharedComponents/swiperSlider/index';
 function BikesSection() {
     return (
         <Box className={styles.bike_sec_main}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data}/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from="u"/>
         </Box>
     )
 }

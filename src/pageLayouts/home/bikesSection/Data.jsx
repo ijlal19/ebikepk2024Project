@@ -11,7 +11,7 @@ const Data = [
       img_url: "https://res.cloudinary.com/dulfy2uxn/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto,h_200,w_300/v1606998611/ufpxcjyhp1ffjsyhh1ox.jpg",
       title: "Honda CG 125cc Special",
       price:"PKR 145,000/=",
-      location: "Kushab"
+      location: "Kushab",
     },
     {
       url: "https://www.ebike.pk/used-bikes/super-power-sp-200cc--in-karachi/3517",
