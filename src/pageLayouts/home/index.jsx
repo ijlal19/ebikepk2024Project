@@ -3,6 +3,7 @@ import FeatureSection from './featureSection/index'
 import BikesSection from './bikesSection/index'
 import BrandSection from './brandSection/index'
 import Explore from './exploresection/index'
+import BlogSection from './blogSection/index'
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
      <BikesSection/>
      <BrandSection/>
      <Explore/>
+     <BlogSection/>
     </>
   )
 }
