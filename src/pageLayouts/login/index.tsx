@@ -1,12 +1,15 @@
+"use client"
 import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, OutlinedInput, TextField } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 const Login = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleSubmit = (e:any) => {

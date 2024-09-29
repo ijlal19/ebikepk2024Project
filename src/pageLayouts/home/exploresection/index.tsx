@@ -11,14 +11,14 @@ const Explore = () => {
         <Typography className={styles.explore_heading}>
           Explore ebike.pk Products
         </Typography>
-                <Box className={styles.explore_grid}>
-                <Card data={Data[0]}/>
-                <Card data={Data[1]}/>
-                </Box>
-                <Box className={styles.explore_grid}>
-                <Card data={Data[2]}/>
-                <Card data={Data[3]}/>
-                </Box>
+        <Box className={styles.explore_grid}>
+          <Card data={Data[0]}/>
+          <Card data={Data[1]}/>
+        </Box>
+        <Box className={styles.explore_grid}>
+          <Card data={Data[2]}/>
+          <Card data={Data[3]}/>
+        </Box>
       </Container>
     </Box>
   )
