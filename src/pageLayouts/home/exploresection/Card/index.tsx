@@ -10,10 +10,10 @@ const Card = (props:any) => {
         </Grid>
         <Grid item xs={8} className={styles.explore_card_grid2}>
           <Typography className={styles.explore_card_title}>
-          {props.data.title}
+            {props.data.title}
           </Typography>
           <Typography className={styles.explore_card_description}>
-          {props.data.description}
+            {props.data.description}
           </Typography>
         </Grid>
       </Grid>
