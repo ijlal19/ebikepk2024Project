@@ -5,9 +5,9 @@ const Blog = () => {
     return (
         <Box className={styles.blog_main}>
             {
-                Data.map((e) => {
+                Data.map((e,i) => {
                     return (
-                        <Container className={styles.blog_container}>
+                        <Container className={styles.blog_container} key={i}>
                             <Grid className={styles.grid_box}>
                                 <Grid className={styles.grid_item}>
                                     <img src={e.img_url} alt="blg image" className={styles.blog_image} />
