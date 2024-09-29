@@ -1,19 +1,21 @@
+"use client"
 import { Avatar, Box, Button, Container, Grid, TextField} from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState } from 'react'
 
 const Profile = () => {
-    const [name, setName] = React.useState('')
-    const [email, setEmail] = React.useState('')
-    const [phone, setPhone] = React.useState('')
-    const [about, setAbout] = React.useState('')
-    const [facebookUrl, setFacebookUrl] = React.useState('')
-    const [ridingSince, setRidingsince] = React.useState('')
-    const [vehiclebrands, setVehiclebrands] = React.useState('')
-    const [vehicledetails, setVehicleDetails] = React.useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [about, setAbout] = useState('')
+    const [facebookUrl, setFacebookUrl] = useState('')
+    const [ridingSince, setRidingsince] = useState('')
+    const [vehiclebrands, setVehiclebrands] = useState('')
+    const [vehicledetails, setVehicleDetails] = useState('')
 
     const handlesubmit = (e:any) => {
         e.preventDefault()
+        
         const obj = {
             name: name,
             email: email,
@@ -24,6 +26,7 @@ const Profile = () => {
             vehiclebrands: vehiclebrands,
             vehicledetails: vehicledetails
         }
+
         console.log(obj)
         alert('success')
         setName('')

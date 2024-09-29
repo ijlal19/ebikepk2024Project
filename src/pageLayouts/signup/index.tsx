@@ -1,4 +1,5 @@
-import React from "react"
+"use client"
+import React, {useState} from "react"
 import { Avatar, Grid, Button, TextField, Typography, Box, Container, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
 import styles from './index.module.scss'
 import { Visibility, VisibilityOff } from "@mui/icons-material"
@@ -6,11 +7,11 @@ import { Visibility, VisibilityOff } from "@mui/icons-material"
 const Signup = () => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-    const [name, setName] = React.useState('')
-    const [email, setEmail] = React.useState('')
-    const [phone, setPhone] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const [confirmpassword, setConfirmPassword] = React.useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmpassword, setConfirmPassword] = useState('')
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
