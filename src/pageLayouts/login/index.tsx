@@ -1,26 +1,75 @@
-import React from "react"
-import {Button, TextField, Checkbox, FormControlLabel, Autocomplete} from '@mui/material';
-import {Grid,Paper,Avatar} from "@mui/material"
+import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, OutlinedInput, TextField } from '@mui/material'
+import styles from './index.module.scss'
+import React, { useState } from 'react'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 const Login = () => {
-     
-     const paperstyle={padding: 20, height: '70vh', width: 280, margin: "20px auto"}
-     const avtarStyle={backgroundcolor: 'green'}
-     return(
-       <Grid>
-            <Paper elevation={(10)} style={paperstyle}>
-                <Grid>
-                <Avatar></Avatar>
-                    <h2>Sign in</h2>
-                </Grid>
-                <TextField label='User Name' placeholder='Enter User Name' fullWidth required></TextField>
-                <TextField label='Password' placeholder='Enter Password' type='Password' fullWidth required></TextField>
-                <Button> Sign In</Button>
-         </Paper>
-       </Grid>
-          
-     )
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault()
+    const obj = {
+      email: email,
+      password: password
+    }
+    console.log(obj)
+    alert("success")
+    setEmail('')
+    setPassword('')
+  }
+
+  return (
+    <Box className={styles.login_main}>
+      <Container className={styles.login_container}>
+        <form className={styles.login_form} onSubmit={handleSubmit}>
+          <Grid>
+            <Avatar className={styles.heading_box}>
+            </Avatar>
+            <h2 className={styles.login_heading}>Sign in</h2>
+          </Grid>
+
+          <TextField
+            placeholder='Email*'
+            size="small"
+            fullWidth
+            type='email'
+            required
+            className={styles.login_field}
+            onChange={(e) => { setEmail(e.target.value) }}
+            value={email} />
+
+          <OutlinedInput
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            size='small'
+            value={password}
+            fullWidth
+            className={styles.login_field}
+            placeholder='Password*'
+            onChange={(e) => { setPassword(e.target.value) }}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+
+          <Button className={styles.button} type='submit' fullWidth>Sign in</Button>
+          <Button className={styles.reset_password} >Reset Password</Button>
+
+        </form>
+      </Container>
+    </Box>
+  )
 }
 
-
-export default Login;
+export default Login

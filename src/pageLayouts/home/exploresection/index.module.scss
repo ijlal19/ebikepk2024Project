@@ -1,0 +1,25 @@
+.explore_main {
+    width: 100%;
+    padding: 50px 0px;
+    .explore_container {
+        width: 100%;
+        .explore_heading{
+            font-size: 16px;
+            font-weight: bolder;
+            color: black;
+            padding: 5px 0px;
+        }
+        .explore_grid {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            column-gap: 30px;
+            row-gap: 5px;
+            margin: 5px 0px;
+            width: 100%;
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+        }
+    }
+}
