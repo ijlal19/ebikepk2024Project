@@ -3,6 +3,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import styles from './index.module.scss'
+import { Button } from '@mui/material';
 
 export default function ImgCard(props:any) {
     return (<>
@@ -24,9 +25,19 @@ export default function ImgCard(props:any) {
                     {props.data.price}
                 </Typography>
 
-                <Typography className={styles.card_location}>
-                    {props.data.location}
-                </Typography>
+                { props.from == "u" ? 
+                    <Typography className={styles.card_location}>
+                        {props.data.location}
+                    </Typography> 
+                    :
+                    <>
+                     <Typography className={styles.avg_price_text}>
+                        Avg. Ex-Showroom price
+                     </Typography>
+                     
+                     <Button className={styles.view_detail_btn} > View Detail </Button>
+                    </>
+                }
             </CardContent>
         </Card>
 

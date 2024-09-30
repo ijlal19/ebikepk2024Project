@@ -8,9 +8,10 @@ import 'swiper/swiper-bundle.css';
 interface IProps {
     sliderName?: any;
     sliderData?: any;
+    from: any;
 }
 
-const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
+const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData, from}) => {
 
   return (
     <Container className={`${styles.swiper_card_conatainer} swiper_card_con`}>
@@ -34,7 +35,11 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
                 },
                 768: {
                     slidesPerView: 3,
+<<<<<<< HEAD
                     // spaceBetween: 25,
+=======
+                    spaceBetween: 25,
+>>>>>>> 73066885f3ce8e8c07648d0a835cd411684d2af1
                     slidesPerGroup: 1
                 },
             }}
@@ -44,8 +49,13 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
             {sliderData?.length > 0 &&
                 sliderData?.map((item: any, index: any) => {
                 return (
+<<<<<<< HEAD
                     <SwiperSlide key={index} className={styles.slider_card}>
                         <ItemCard data={item} />
+=======
+                    <SwiperSlide key={index}>
+                        <ItemCard data={item} from={from} />
+>>>>>>> 73066885f3ce8e8c07648d0a835cd411684d2af1
                     </SwiperSlide>
                 );
             })}
