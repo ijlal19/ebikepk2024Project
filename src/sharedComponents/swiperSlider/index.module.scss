@@ -1,11 +1,16 @@
-.swiper_card_conatainer {
+.swiper_card_container {
+    padding: 10px 0px;
     width: 100%;
+    padding: 20px 0px;
     .swiper {
         display: flex;
-        width: 100%;
-        flex-direction: row;
-        gap: 30px;
         justify-content: center;
+        flex-direction: row;
+        gap: 10px;
+        .slider_card{
+            display: flex;
+            justify-content: center;
+        }
     }
 }
 

@@ -8,7 +8,6 @@ import { Button } from '@mui/material';
 export default function ImgCard(props:any) {
     return (<>
         <Card className={styles.itemCard} >
-            
             <CardMedia
                 component="img"
                 alt="green iguana"
@@ -23,7 +22,7 @@ export default function ImgCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {props.data.price}
+                    {props.data.price} Onwards
                 </Typography>
 
                 { props.from == "u" ? 
