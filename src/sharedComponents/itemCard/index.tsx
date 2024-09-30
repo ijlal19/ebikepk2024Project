@@ -22,7 +22,7 @@ export default function ImgCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {props.data.price}
+                    {props.data.price} Onwards
                 </Typography>
 
                 { props.from == "u" ? 
