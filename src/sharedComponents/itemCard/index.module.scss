@@ -1,21 +1,11 @@
-.itemCard {
-        max-width: 350px;
-        border: solid 1px rgb(194, 194, 194) ;
-        border-radius: 5px;
-
+.itemCard{
+        background: rgb(223, 221, 221);
+        width: 230px;
+        border: 1px solid whitesmoke;
+        border-radius: 0px;
         .card_img{
-                height: 120px;
-        }
-        
-        .card_title{
-             text-wrap: nowrap;   
-        }
-
-        .card_price {
-                text-wrap: nowrap;   
-        }
-
-        .card_location {
-                text-wrap: nowrap;   
+                width: 100%;
+                height: auto;
+                border-radius: 0px;
         }
 }

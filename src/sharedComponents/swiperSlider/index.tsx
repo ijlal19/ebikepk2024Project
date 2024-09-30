@@ -25,7 +25,7 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
             breakpoints={{
                 1: {
                     slidesPerView:  2,
-                    spaceBetween: 10,
+                    spaceBetween: 5,
                     initialSlide: 0,
                         freeMode: {
                             enabled: true,
@@ -33,8 +33,8 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
                         }
                 },
                 768: {
-                    slidesPerView: 4,
-                    spaceBetween: 25,
+                    slidesPerView: 3,
+                    // spaceBetween: 25,
                     slidesPerGroup: 1
                 },
             }}
@@ -44,7 +44,7 @@ const SwiperCarousels: React.FC<IProps> = ({sliderName, sliderData}) => {
             {sliderData?.length > 0 &&
                 sliderData?.map((item: any, index: any) => {
                 return (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide key={index} className={styles.slider_card}>
                         <ItemCard data={item} />
                     </SwiperSlide>
                 );

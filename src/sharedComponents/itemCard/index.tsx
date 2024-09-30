@@ -7,7 +7,6 @@ import styles from './index.module.scss'
 export default function ImgCard(props:any) {
     return (<>
         <Card className={styles.itemCard} >
-            
             <CardMedia
                 component="img"
                 alt="green iguana"
