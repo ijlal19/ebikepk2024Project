@@ -1,0 +1,132 @@
+.main_box {
+    width: 100%;
+    height: 100%;
+
+    .navigation {
+        width: 800px;
+        height: 30px;
+        border: 1px solid grey;
+        padding: 10px;
+        margin: auto;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #e6e6e6;
+        margin-bottom: 20px;
+        select {
+          height: 28px;
+          padding: 5px;
+          font-size: 12px !important;
+          width: 200px;
+          margin: 0;
+          margin-left: 10px;
+          border: 1px solid #e6e6e6;
+          border-radius: 5px;
+        }
+        .sort_text {
+          font-size: 13px;
+          color: #9f9797;
+          float: left;
+        }
+        .button_container {
+          padding-top: 5px;
+          button {
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+          }
+        }
+      }
+    
+    .card {
+      background-color: #fff;
+      box-shadow: 0 13px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 800px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 25px;
+      height: 150px;
+      padding-left: 10px;
+      margin: auto;
+      @media (max-width: 767px) {
+        width: 100%;
+        height: auto;
+        display: block;
+      
+       }
+      .bike_image img {
+        width: 170px;
+        padding-top: 24px;
+        @media (max-width: 767px) {
+            width: 400px;
+            padding-top: 10px;
+        }
+      }
+
+      .card_info {
+        width: 100%;
+        position: relative;
+
+        .card_title {
+          color: #233d7b;
+          margin-bottom: 0;
+          font-size: 16px;
+          margin-top: 21px;
+        }
+
+        .card_details {
+          font-size: 13px;
+        }
+
+        .product_price {
+          position: absolute;
+          top: 20px;
+          right: 21px;
+          margin-block: 0px;
+          font-size: 16px;
+          @media (max-width: 767px) {
+            top: 0;
+          }
+        }
+
+        .bike_details { 
+          padding: 0;
+          margin-bottom: 0;
+          margin-top: 0;
+          font-size: 13px;
+        }
+
+        .bike_details li {
+          display: inline-block;
+          padding-right: 10px;
+        }
+
+        .show_phone_button {
+          background-color: #14820e;
+          color: white;
+          border: none;
+          padding: 7px;
+          border-radius: 4px;
+          cursor: pointer;
+          width: 150px;
+          height: 30px;
+          position: absolute;
+          bottom: 20px;
+          right: 15px;
+          @media (max-width: 767px) {
+            bottom: 0;
+          }
+        }
+
+        .show_phone_button:hover {
+          background-color: #53de12;
+        }
+
+        .card_price {
+          font-size: 13px;
+        }
+        
+      }
+
+    }
+  }

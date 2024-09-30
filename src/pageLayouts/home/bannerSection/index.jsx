@@ -7,7 +7,7 @@ const Banner = () => {
         <div>
             <Box class={styles.main}>
                 <Box class={styles.search}>
-                    <SearchBox/>
+                    {/* <SearchBox/> */}
                 </Box>
             </Box>
         </div>
