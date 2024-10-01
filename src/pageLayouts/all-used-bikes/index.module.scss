@@ -17,7 +17,7 @@
         align-items: center;
 
         @media (max-width:900px) {
-          width: 100%;
+          width: 95%;
         }
         
         .bike_text {
@@ -142,6 +142,27 @@
         }
         
       }
-
     }
+
+  .viewMoreBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+
+    .viewMoreBtn {
+      padding: 10px 30px;
+      background-color: #1976d2;
+      color: #fff;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .viewMoreBtnDisabled {
+      pointer-events: none;
+    }
+
+  }
+
   }

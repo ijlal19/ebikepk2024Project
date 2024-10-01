@@ -8,14 +8,20 @@ import {Apps, FormatListBulleted } from '@mui/icons-material';
 const AllUsedBike = () => {
    
     const [allBikesArr, setAllBikesArr] = useState([])
-
+    const [pageNo, setPageNo] = useState(0)
+    const [isLoading, setIsLoading]  = useState(false)
     useEffect(() => {
-        fetchBikeInfo()
+        fetchBikeInfo(pageNo)
     }, [])
 
-    async function fetchBikeInfo() {
-        let res = await getAllbikesDetail()
+    async function fetchBikeInfo(_pageNo) {
+        let curentFetchPage = _pageNo + 10
+        setPageNo(curentFetchPage)
+        setIsLoading(true)
+        let res = await getAllbikesDetail(curentFetchPage)
+        setIsLoading(false)
         setAllBikesArr(res)
+        window.scrollTo(0,0)
         console.log('res', res)
     }
    
@@ -70,6 +76,12 @@ const AllUsedBike = () => {
                                 )
                             })
                         }
+
+
+
+                        <div className={styles.viewMoreBtnContainer} > 
+                            <button onClick={()=>{ fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}` } > View More </button> 
+                        </div>
                     </div>
                 </Container>
             </Box>
