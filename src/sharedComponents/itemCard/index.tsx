@@ -16,7 +16,7 @@ export default function ImgCard(props:any) {
                 className={styles.card_img}
             />
 
-            <CardContent>
+            <CardContent className={styles.card_info}>
                 <Typography className={styles.card_title} >
                     {props.data.title}
                 </Typography>
