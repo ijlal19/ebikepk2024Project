@@ -2,42 +2,42 @@ const Data =[
     {
       url: "new-bikes/honda",
       img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/honda20200511152343.jpg?q=80",
-      title: ""
+      title: "Honda"
     },
     {
         url: "new-bikes/tvs",
         img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/tvs20200508193203.jpg?q=80",
-        title: ""
+        title: "TVS"
     },
     {
-        url: "new-bikes/royal-enfield",
-        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/royal-enfield20200508193112.jpg?q=80",
-        title: ""
+        url: "new-bikes/Ather",
+        img_url: "https://imgd.aeplcdn.com/0X0/n/cw/ec/79/brands/logos/ather1704450986845.jpg?v=1704450986888&q=80",
+        title: "Ather"
       },
       {
         url: "new-bikes/yamaha",
         img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/yamaha20200508193220.jpg?q=80",
-        title: ""
+        title: "Yamaha"
       },
       {
         url: "new-bikes/hero",
         img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/hero20200508192826.jpg?q=80",
-        title: ""
+        title: "Hero"
       },
       {
         url: "new-bikes/bmw",
         img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/bmw20200508192553.jpg?q=80",
-        title: ""
+        title: "BMW"
       },
       {
         url: "new-bikes/ktm",
         img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/ktm20200518163508.jpg?q=80",
-        title: ""
+        title: "KTM"
       },
       {
         url: "new-bikes/kawasaki",
         img_url: "https://imgd.aeplcdn.com/0X0/n/cw/ec/17/brands/logos/kawasaki1656405887432.jpg?v=1656405887528&q=80",
-        title: ""
+        title: "Kawasaki"
       },
       // {
       //   url: "new-bikes/bmw",

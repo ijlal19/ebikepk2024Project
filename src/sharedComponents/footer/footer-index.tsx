@@ -118,13 +118,13 @@ export default function Footer() {
                     </Grid>
 
                     <Grid item xs={12} sm={12} md={4} lg={4} xl={4} className={styles.mail}>
-                        <Typography sx={{ fontSize: '15px' }}>
+                        <Typography sx={{ fontSize: '16px' }}>
                             Subscribe to our Newsletter
                         </Typography>
                         <Typography className={styles.getUser_mail}>
                             <form action="" className={styles.getUser_mail} onSubmit={SendMail}>
                                 <input type="email" value={Mail} onChange={(e)=>setMail(e.target.value)} className={styles.TextField} placeholder="User@gmail.com" required/>
-                                <Button variant="contained" type="submit">Send</Button>
+                                <Button variant="contained" type="submit" sx={{borderRadius:0}}>Send</Button>
                             </form>
                         </Typography>
                         <Typography sx={{ fontSize: '15px', marginTop: '10px'}}>
