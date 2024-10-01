@@ -1,0 +1,59 @@
+.header_main {
+    width: 100%;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo_side {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .menu_button {
+            color: grey;
+        }
+
+        .logo {
+            width: 100px;
+            .logo_image {
+                width: 100%;
+            }
+        }
+    }
+
+    .header_buttons_group {
+        padding-right: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        .header_input {
+            display: flex;
+            font-size: 14px;
+            color: black;
+            font-weight: 500;
+            padding: 0px 20px;
+            width: 350px;
+            ::placeholder{
+                color: rgb(19, 19, 19);
+                font-weight: 500;
+            }
+        }
+
+        .icons {
+            font-size: 25px;
+            margin: 0px 5px;
+            color: rgb(71, 70, 70);
+            cursor: pointer;
+        }
+
+        @media (max-width:768px) {
+            .header_input {
+                display: none;
+            }
+        }
+    }
+
+}
