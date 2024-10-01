@@ -1,3 +1,4 @@
+
 const numericOnly = (value: string) => {
     if (value == 'e') return false;
     return /^[0-9]*$/gm.test(value);
@@ -60,4 +61,17 @@ const noSpecialCharactersButSpace = (value: string) => {
 
 const noSpecialCharactersExceptDotUderscore = (str: string) => {
     return str.replace(/[^a-zA-Z0-9._]/g, "")
+}
+
+function getAllbikesDetail(page:any) {
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/classified/get-adds-with-offset/20/10`, {
+        method: 'GET',
+        // headers: { 'Authorization': 'Bearer eyJBdXRob3IiOiJGYXNoaW9uUGFzcyIsImFsZyI6IkhTMjU2In0.e30.oUQGjCS2S_jycg4PZnFK4uQ81DsNFX-N1m81Dfahi6o','X-Request-For':customer_ip, 'guid': request_guid }
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
+export { 
+    getAllbikesDetail 
 }

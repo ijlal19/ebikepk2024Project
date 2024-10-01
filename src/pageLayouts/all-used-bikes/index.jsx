@@ -2,14 +2,21 @@
 import { Box, Container } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
+import { getAllbikesDetail } from "@/functions/globalFuntions"
 
 const AllUsedBike = () => {
    
     const [allBikesArr, setAllBikesArr] = useState([])
 
     useEffect(() => {
-
+        fetchBikeInfo()
     }, [])
+
+    async function fetchBikeInfo() {
+        let res = await getAllbikesDetail()
+        setAllBikesArr(res)
+        console.log('res', res)
+    }
    
     return (
         <>
@@ -40,29 +47,34 @@ const AllUsedBike = () => {
                         }
                     
                         {/* ads data */} 
-                        <div className={styles.card}>
-                            <div className={styles.bike_image}>
-                                <img src={'https://picsum.photos/300/200?random=3'} alt={'a'} className={styles.card_image} />
-                            </div>
-                        
-                            <div className={styles.card_info}>
-                            <h2 className={styles.card_title}>Honda CG 125 2024 for Sale</h2>
-                            <h3 className={styles.product_price}>PKR 2.55lacs</h3>
-                            <p className={styles.card_details}>Lahore</p>
-                            <ul className={styles.bike_details}>
-                                <li>2024</li>
-                                <li>|</li>
-                                <li>3122km</li>
-                                <li>|</li>
-                                <li>4 Stroke</li>
-                            </ul>
-                            
-                            <p className={styles.card_price}>Price: {'aa'}</p>
-                                <button className={styles.show_phone_button}> Show Phone Number </button>
-                                <p className={styles.phone_number}>{'aa'}</p>
-                            </div>
-                        </div>
-                        
+                        {
+                            allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
+                                return(
+                                    <div className={styles.card}>
+                                        <div className={styles.bike_image}>
+                                            {val.images && val.images.length > 0 ? <img src={val.images[0]} alt={'a'} className={styles.card_image} /> : "" }
+                                        </div>
+                                    
+                                        <div className={styles.card_info}>
+                                        <h2 className={styles.card_title}> {val.title} </h2>
+                                        <h3 className={styles.product_price}>PKR {val.price}</h3>
+                                        <p className={styles.card_details}> {val?.city?.city_name} </p>
+                                        <ul className={styles.bike_details}>
+                                            <li>{val?.year?.year}</li>
+                                            <li>|</li>
+                                            <li>3122km</li>
+                                            <li>|</li>
+                                            <li>4 Stroke</li>
+                                        </ul>
+                                        
+                                        <p className={styles.card_price}>Price:  {val.price}</p>
+                                            <button className={styles.show_phone_button}> Show Phone Number </button>
+                                            <p className={styles.phone_number}>{'aa'}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </Container>
             </Box>
