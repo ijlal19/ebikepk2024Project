@@ -1,28 +1,61 @@
-.brand_main{
+.brand_main {
     width: 100%;
     height: auto;
     padding: 20px 0px;
-    .heading{
+
+    .heading {
         font-size: 20px;
         font-weight: 700;
         color: black;
         padding: 10px 0px;
     }
 
-    .brand_container{
-        border: 1px solid #000;
+    .brand_container {
         padding: 10px 0px;
-        margin:  0px;
+        margin: 0px;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
+        // justify-content: space-evenly;
         align-items: center;
         // flex-direction: column;
         flex-wrap: wrap;
+        gap: 0px;
 
-        .brand_image_box{
-            width: 200px;
-            border: 1px solid #000;
+        .brand_image_box {
+            width: 20%;
+            padding: 20px 0px;
+            display: flex;
+            justify-content: center;
+
+            .brand_image_box:nth-child(7),.brand_image_box:nth-child(8){
+            background: red;
+        }
+        .brand_image{
+            width: 80px;
+            height: 50px;
+            border-radius: 0px;
+        }
+    }
+    
+    @media (max-width:768px) {
+        .brand_image_box {
+            width: 25%;
+            border: 1px solid #e5e1e1;
             padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .brand_image_box:nth-child(7),
+        .brand_image_box:nth-child(8) {
+            display: none;
+        }
+        .brand_image{
+            width: 50px ;
+            margin: auto;
+            border-radius: 0px;
+            height: 39px;
+        }
         }
     }
 }

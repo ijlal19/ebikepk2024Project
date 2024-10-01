@@ -1,61 +1,62 @@
-export const Data =[
+const Data =[
     {
       url: "new-bikes/honda",
-      img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_40,w_50/v1540624358/bike_brands/Honda.png",
+      img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/honda20200511152343.jpg?q=80",
       title: ""
     },
     {
-        url: "new-bikes/harley_davidson",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_40,w_50/v1540624358/bike_brands/Harley_Davidson.png",
+        url: "new-bikes/tvs",
+        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/tvs20200508193203.jpg?q=80",
         title: ""
     },
     {
-        url: "new-bikes/suzuki",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_40,w_50/v1540624359/bike_brands/Suzuki.png",
+        url: "new-bikes/royal-enfield",
+        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/royal-enfield20200508193112.jpg?q=80",
         title: ""
       },
       {
         url: "new-bikes/yamaha",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_40,w_50/v1540624361/bike_brands/Yamaha.png",
+        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/yamaha20200508193220.jpg?q=80",
         title: ""
       },
       {
-        url: "new-bikes/zxmco",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_40,w_40/v1540624361/bike_brands/Zxmco.png",
+        url: "new-bikes/hero",
+        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/hero20200508192826.jpg?q=80",
         title: ""
       },
       {
         url: "new-bikes/bmw",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_40,w_50/v1540624358/bike_brands/BMW.png",
+        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/bmw20200508192553.jpg?q=80",
         title: ""
       },
       {
-        url: "new-bikes/hi_speed",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624358/bike_brands/High_speed.jpg",
+        url: "new-bikes/ktm",
+        img_url: "https://imgd.aeplcdn.com/0X0/bw/makes/ktm20200518163508.jpg?q=80",
         title: ""
       },
       {
         url: "new-bikes/kawasaki",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624358/bike_brands/kawasaki.png",
+        img_url: "https://imgd.aeplcdn.com/0X0/n/cw/ec/17/brands/logos/kawasaki1656405887432.jpg?v=1656405887528&q=80",
         title: ""
       },
-      {
-        url: "new-bikes/bmw",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624357/bike_brands/Crown.jpg",
-        title: ""
-      },
-      {
-        url: "new-bikes/united",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624361/bike_brands/united.jpg",
-        title: ""
-      },
-      {
-        url: "new-bikes/unique",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624360/bike_brands/unique.jpg"
-      },
-      {
-        url: "new-bikes/benelli",
-        img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1582175161/bike_brands/Logo-Benelli-Motorcycles.jpg",
-        title: ""
-      }
+      // {
+      //   url: "new-bikes/bmw",
+      //   img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624357/bike_brands/Crown.jpg",
+      //   title: ""
+      // },
+      // {
+      //   url: "new-bikes/united",
+      //   img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624361/bike_brands/united.jpg",
+      //   title: ""
+      // },
+      // {
+      //   url: "new-bikes/unique",
+      //   img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1540624360/bike_brands/unique.jpg"
+      // },
+      // {
+      //   url: "new-bikes/benelli",
+      //   img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1582175161/bike_brands/Logo-Benelli-Motorcycles.jpg",
+      //   title: ""
+      // }
    ]
+export default Data

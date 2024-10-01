@@ -1,7 +1,7 @@
 'use client'
 import styles from './index.module.scss'
 import { Box, Container, Typography } from '@mui/material';
-// import Data from './Data';
+import Data from './Data';
 import SwiperCarousels from '@/sharedComponents/swiperSlider/index';
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
@@ -41,7 +41,7 @@ function BrandSection() {
 
   return (
     <Box className={styles.brand_main}>
-      <Container>
+      <Container className={styles.brand_container}>
         <Typography className={styles.heading}>
           Brand
         </Typography>
@@ -50,26 +50,34 @@ function BrandSection() {
             <Tabs value={value} onChange={handleChange} textColor="primary"
   indicatorColor="primary" aria-label="basic tabs example">
               <Tab label="Brands" {...a11yProps(0)} />
-              {/* <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} /> */}
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
             <Box className={styles.brand_container}>
-              <Box className={styles.brand_image_box}></Box>
-              {/* <img src="" alt="" /> */}
+              {
+                Data.map((e:any,i:any)=>{
+                  return(
+                    <Box className={styles.brand_image_box} key={i}>
+                      <img src={e.img_url} alt="" className={styles.brand_image}/>
+                    </Box>
+                  )
+                })
+              }
             </Box>
-            {/* <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='n'/> */}
           </CustomTabPanel>
-          {/* <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel> */}
-        </Box>
-      </Container>
-    </Box>
+          </Box>
+        </Container>
+      </Box>
+
+
+
+
+      //     {/* <CustomTabPanel value={value} index={1}>
+      //   Item Two
+      // </CustomTabPanel>
+      // <CustomTabPanel value={value} index={2}>
+      //   Item Three
+      // </CustomTabPanel> */}
   )
 }
 export default BrandSection;
