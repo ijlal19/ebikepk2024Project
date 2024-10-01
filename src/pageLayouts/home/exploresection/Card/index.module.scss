@@ -12,9 +12,11 @@
             padding: 10px 0px;
             display: flex;
             align-items: center;
+            justify-content: center;
 
             .explore_card_image {
                 width: 100%;
+                max-width: 90px;
             }
         }
 
@@ -26,7 +28,7 @@
                 font-size: 13px;
                 font-weight: bolder;
                 margin-top: 10px;
-                color: rgb(13, 13, 205);
+                color: #1976d2;
             }
 
             .explore_card_description {
