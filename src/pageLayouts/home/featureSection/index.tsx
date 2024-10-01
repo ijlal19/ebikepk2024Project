@@ -5,6 +5,7 @@ import Card from './Card/index';
 const Section2 = () => {
   return (
     <Box className={styles.featuer_main}>
+      
       <Container>
         
         <Typography className={styles.featuer_title}>

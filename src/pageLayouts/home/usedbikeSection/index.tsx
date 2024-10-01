@@ -49,7 +49,7 @@ function UsedBikesSection() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
   indicatorColor="primary" aria-label="basic tabs example">
-              <Tab label="Item One" {...a11yProps(0)} />
+              <Tab label="Bikes" {...a11yProps(0)} />
               {/* <Tab label="Item Two" {...a11yProps(1)} />
           <Tab label="Item Three" {...a11yProps(2)} /> */}
             </Tabs>

@@ -36,6 +36,7 @@ function NewBikesSection() {
   const [value, setValue] =React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(newValue)
     setValue(newValue);
   };
 
@@ -45,25 +46,19 @@ function NewBikesSection() {
         <Typography className={styles.heading}>
           New Bikes
         </Typography>
+        
         <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} textColor="primary"
-  indicatorColor="primary" aria-label="basic tabs example">
-              <Tab label="Item One" {...a11yProps(0)} />
-              {/* <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} /> */}
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+            <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
+              <Tab label="Bikes" className={styles.tab} />
             </Tabs>
           </Box>
+
           <CustomTabPanel value={value} index={0}>
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='n'/>
           </CustomTabPanel>
-          {/* <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel> */}
         </Box>
+
       </Container>
     </Box>
   )

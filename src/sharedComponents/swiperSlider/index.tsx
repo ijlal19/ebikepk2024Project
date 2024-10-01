@@ -14,7 +14,7 @@ interface IProps {
 
 const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => {
     return (
-        <Container className={styles.swiper_card_container}>
+        <Container className={`${styles.swiper_card_container} slider_swiper `}>
             <Swiper
                 modules={[Navigation, FreeMode]}
                 navigation={true}
@@ -33,7 +33,6 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => 
                     },
                     768: {
                         slidesPerView: 3,
-                        // spaceBetween: 25,
                         slidesPerGroup: 1,
                     },
                 }}
