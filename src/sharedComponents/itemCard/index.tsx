@@ -34,10 +34,9 @@ export default function ImgCard(props:any) {
                      <Typography className={styles.avg_price_text}>
                         Avg. Ex-Showroom price
                      </Typography>
-                     
-                     <Button className={styles.view_detail_btn} > View Detail </Button>
                     </>
                 }
+                 <Button className={styles.view_detail_btn} > View Detail </Button>
             </CardContent>
         </Card>
 

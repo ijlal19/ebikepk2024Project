@@ -50,7 +50,7 @@ const AllUsedBike = () => {
                         {
                             allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
                                 return(
-                                    <div className={styles.card}>
+                                    <div className={styles.card} key={ind}>
                                         <div className={styles.bike_image}>
                                             {val.images && val.images.length > 0 ? <img src={val.images[0]} alt={'a'} className={styles.card_image} /> : "" }
                                         </div>
@@ -69,7 +69,7 @@ const AllUsedBike = () => {
                                         
                                         <p className={styles.card_price}>Price:  {val.price}</p>
                                             <button className={styles.show_phone_button}> Show Phone Number </button>
-                                            <p className={styles.phone_number}>{'aa'}</p>
+                                            {/* <p className={styles.phone_number}>{'aa'}</p> */}
                                         </div>
                                     </div>
                                 )

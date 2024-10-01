@@ -1,8 +1,6 @@
 "use client"
 import { Box, Button, Icon, InputAdornment, List, TextField } from '@mui/material'
 import styles from './index.module.scss'
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import * as React from 'react';
@@ -14,7 +12,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import logo from './images.png'
 import SearchIcon from '@mui/icons-material/Search';
 
 const Header = () => {
@@ -57,29 +54,18 @@ const Header = () => {
         <Box className={styles.header_main}>
             <Box className={styles.logo_side}>
                 <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}><MenuIcon /></Button>
+               
                 <Drawer open={open} onClose={toggleDrawer(false)}>
                     {DrawerList}
                 </Drawer>
+
                 <Box className={styles.logo}>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmRyK0VOYPEFJqNIKrG99anlIXq54TIWLJOg&s" alt="ebike.pk" className={styles.logo_image} />
+                    <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} />
                 </Box>
             </Box>
+            
             <Box className={styles.header_buttons_group}>
-                <TextField
-                    className={styles.header_input}
-                    size="small"
-                    placeholder="Search"
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <SearchIcon className={styles.icons} />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                <LocationOnIcon className={styles.icons} />
-                <GTranslateIcon className={styles.icons} />
-                <LoginIcon className={styles.icons} />
+                <span className={styles.login_btn} > <LoginIcon className={styles.icons} /> Login </span>
             </Box>
         </Box>
     )
