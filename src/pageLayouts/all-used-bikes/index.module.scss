@@ -10,65 +10,73 @@
         padding: 10px;
         margin: auto;
         position: relative;
-        display: flex;
         justify-content: space-between;
         border: 1px solid #e6e6e6;
         margin-bottom: 20px;
-        select {
-          height: 28px;
-          padding: 5px;
-          font-size: 12px !important;
-          width: 200px;
-          margin: 0;
-          margin-left: 10px;
-          border: 1px solid #e6e6e6;
-          border-radius: 5px;
+        display: flex;
+        align-items: center;
+
+        @media (max-width:900px) {
+          width: 100%;
         }
-        .sort_text {
-          font-size: 13px;
-          color: #9f9797;
+        
+        .bike_text {
+          font-size: 16px;
           float: left;
         }
-        .button_container {
-          padding-top: 5px;
-          button {
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        .swap_button_container {
+          .swap_icon {
+            font-size: 20px;
+            cursor: pointer;
           }
         }
       }
     
-    .card {
-      border: solid 1px rgb(223, 219, 219);
-      background-color: #fff;
-      box-shadow: 0 13px 8px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      width: 800px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 25px;
-      height: 150px;
-      padding-left: 10px;
-      margin: auto;
-      margin-bottom: 10px;
-      @media (max-width: 767px) {
-        width: 100%;
-        height: auto;
-        display: block;
-      
-       }
-      .bike_image img {
-        width: 170px;
-        padding-top: 24px;
-        @media (max-width: 767px) {
-            width: 400px;
-            padding-top: 10px;
+    .long_card {
+       
+       border: solid 1px rgb(223, 219, 219);
+        background-color: #fff;
+        box-shadow: 0 13px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 800px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 25px;
+        height: 150px;
+        padding-left: 10px;
+        margin: auto;
+        margin-bottom: 10px;
+       
+        @media (max-width: 500px) {
+          width: 100%;
+          height: auto;
+          display: block; 
+          padding-left: 0px;
         }
-      }
 
+      .bike_image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 170px;
+          height: 130px;
+          @media (max-width: 500px) {
+              width: 100%;
+          }
+        } 
+    }
+      
       .card_info {
         width: 100%;
         position: relative;
+
+        @media (max-width:500px) {
+          padding-left: 10px;
+          width: 95%;
+          margin-bottom: 20px;
+        }
 
         .card_title {
           color: #233d7b;
@@ -81,14 +89,14 @@
           font-size: 13px;
         }
 
-        .product_price {
+        .card_price_desktop {
           position: absolute;
           top: 20px;
           right: 21px;
           margin-block: 0px;
           font-size: 16px;
-          @media (max-width: 767px) {
-            top: 0;
+          @media (max-width: 500px) {
+            display: none;
           }
         }
 
@@ -105,28 +113,32 @@
         }
 
         .show_phone_button {
-          background-color: #14820e;
+          background-color: #1976d2;
           color: white;
           border: none;
           padding: 7px;
-          border-radius: 4px;
+          border-radius: 0px;
           cursor: pointer;
           width: 150px;
           height: 30px;
           position: absolute;
           bottom: 20px;
           right: 15px;
-          @media (max-width: 767px) {
-            bottom: 0;
+          @media (max-width: 500px) { 
+            display: none;
           }
         }
 
-        .show_phone_button:hover {
-          background-color: #53de12;
-        }
+        // .show_phone_button:hover {
+        //   background-color: #53de12;
+        // }
 
-        .card_price {
+        .card_price_mobile {
           font-size: 13px;
+          // display: block;
+          @media (min-width:500px) {
+            display: none;
+          }
         }
         
       }
