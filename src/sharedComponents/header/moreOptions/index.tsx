@@ -28,7 +28,7 @@ export default function MoreList({props}:any) {
           {
             morear.map((e:any,i:any)=>{
               return(
-                <ListItemButton sx={{ pl: 4 ,background:'#efe9e9'}} onClick={props.toggleDrawers(false)}  key={i}>
+                <ListItemButton sx={{ pl: 4 }} onClick={props.toggleDrawers(false)}  key={i}>
             <ListItemText primary={e.label} />
           </ListItemButton>
               )
