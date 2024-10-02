@@ -8,63 +8,103 @@ import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import TwoWheelerIcon from '@mui/icons-material/TwoWheeler';
-import NestedList from './moreOptions/more';
-import ElectricBikeIcon from '@mui/icons-material/ElectricBike';
-import ForumIcon from '@mui/icons-material/Forum';
-import ArticleIcon from '@mui/icons-material/Article';
+import MoreList from './moreOptions/index';
+import BuyandSell from './buyandsell/index';
+import DealerList from './findDealers';
+import MechanicsList from './findDealers';
 
 const Header = () => {
     const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState(true);
+    const [options, setOptions] = React.useState(false);
+    const [buysellmenu, setBuySellmenu] = React.useState(false);
+    const [findDealer, setFindDealer] = React.useState(false);
+    const [findMechanics, setFindMechanics] = React.useState(false);
 
-    const handleClick = () => {
+    const handlemorelist = () => {
         setOptions(!options);
+    };
+    const handlebuyandsell = () => {
+        setBuySellmenu(!buysellmenu);
+        // alert('kese ho janab')
+    };
+    const handlefinddealer = () => {
+        setFindDealer(!findDealer);
+        // alert('kese ho janab')
+    };
+    const handlefindmechanics = () => {
+        setFindMechanics(!findMechanics);
+        // alert('kese ho janab')
     };
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
 
-    const obj = {
-        togglers: handleClick,
+  
+    const Optionmore = {
+        togglers: handlemorelist,
+        // open: open,
+        toggleDrawers: toggleDrawer,
+        options: options,
+    }
+    const OptionBuySell = {
+        togglers: handlebuyandsell,
         open: open,
         toggleDrawers: toggleDrawer,
-        options: options
+        options: buysellmenu,
+        title:'Buy & Sell Bikes'
     }
-
+    const OptionFindDealer = {
+        togglers: handlefinddealer,
+        open: open,
+        toggleDrawers: toggleDrawer,
+        options: findDealer,
+        title:'Find Dealers'
+    }
+    const OptionFindMechanics = {
+        togglers: handlefindmechanics,
+        open: open,
+        toggleDrawers: toggleDrawer,
+        options: findMechanics,
+        title:'Find Mechanics'
+    }
+    
+    const navlink =[
+        {label: 'New Bikes',url:''},
+        {label: 'My Adds',url:''},
+        {label: 'Bikers Forum',url:''},
+        // {label: 'Blogs',url:''}
+      ]
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation">
             <List>
-                {['Used Bikes', 'New Bike', 'Forums', 'Blog'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+            <BuyandSell props={OptionBuySell  }/>
+            <Divider />
+                {navlink.map((text:any, index:any) => (
+                    <>
+                    <ListItem key={index} disablePadding>
                         <ListItemButton onClick={toggleDrawer(false)}>
-                            <ListItemIcon>
-                                {index === 0 && <TwoWheelerIcon />}      {/* Used Bikes */}
-                                {index === 1 && <ElectricBikeIcon />}    {/* New Bike */}
-                                {index === 2 && <ForumIcon />}           {/* Forums */}
-                                {index === 3 && <ArticleIcon />}         {/* Blog */}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={text.label} />
                         </ListItemButton>
                     </ListItem>
+            <Divider />
+                    </>
+                    
                 ))}
-            </List>
-            <Divider />
-            <NestedList props={obj} />
-            <Divider />
-            <List>
-                    <ListItem key={'Login'} disablePadding>
+            <DealerList props={OptionFindDealer}/>
+            <Divider/>
+            <MechanicsList props={OptionFindMechanics}/>
+            <Divider/>
+            <ListItem  sx={{padding:0}} disablePadding>
                         <ListItemButton onClick={toggleDrawer(false)}>
-                            <ListItemIcon>
-                                <LoginIcon/>    
-                            </ListItemIcon>
-                            <ListItemText primary={'Login'} />
+                            <ListItemText primary='Blog' />
                         </ListItemButton>
                     </ListItem>
+            <Divider/>
+            <MoreList props={Optionmore} />
             </List>
+            
         </Box>
     );
 
