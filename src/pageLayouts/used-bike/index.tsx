@@ -1,35 +1,72 @@
 "use client"
-import { Inter } from "next/font/google";
+import React, { useState, useEffect } from 'react'
 import styles from "./index.module.scss";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-// import 'swiper/css/scrollbar';
 import 'swiper/css';
+import { getSinglebikesDetail, numericOnly } from "@/functions/globalFuntions"
+import Router from 'next/router'
+import Data from './data'
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function UsedBike() {
+
+  const [bikeDetail, setBikeDetail] : any = useState({})
+  const [similarBikeArr, setSimilarBikeArr] : any = useState([])
+  const [isLoading, setIsLoading]  = useState(false)
+ 
+  useEffect(() => {
+      fetchBikeInfo()
+  }, [])
+
+  async function fetchBikeInfo() {
+    let path = location.pathname
+    if(path.indexOf('/') > -1) {
+      let pathArr = path.split('/')
+      let adsId = pathArr[pathArr.length - 1]
+      
+      if(numericOnly(adsId)) {
+        let res = await getSinglebikesDetail(adsId);
+        if(res) {
+          setBikeDetail(res.add)
+          setSimilarBikeArr(res.bikes)
+          console.log('res', res)
+        }
+      }
+      else {
+        // Router.push('/')
+        setBikeDetail(Data.add)
+        setSimilarBikeArr(Data.bikes)
+      }
+    }
+  }
+
   return (
     <main className={`${styles.main_container} used_bike_detail_pg`}>
       <div className={styles.container_one}>
         
-        <h1 className={styles.title}>Honda cb 125F 2023</h1>
+        <h1 className={styles.title}> {bikeDetail.title}  </h1>
        
-        <Swiper spaceBetween={50} slidesPerView={1} onSlideChange={() => console.log('slide change')} onSwiper={(swiper) => console.log(swiper)} modules={[Navigation, Pagination]}>
-          <SwiperSlide>
-            <img src="https://picsum.photos/300/200?random=1" alt="Random Image 1" style={{ width: "100%" }}/>
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://picsum.photos/300/200?random=2" alt="Random Image 2" style={{ width: "100%" }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://picsum.photos/300/200?random=3" alt="Random Image 3" style={{ width: "100%" }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="https://picsum.photos/300/200?random=4" alt="Random Image 4" style={{ width: "100%" }} />
-          </SwiperSlide>
+        <Swiper 
+          spaceBetween={50} 
+          slidesPerView={1} 
+          onSlideChange={() => console.log('slide change')} 
+          onSwiper={(swiper) => console.log(swiper)} 
+          modules={[Navigation, Pagination]}
+        >
+          {
+            bikeDetail.images && bikeDetail.images.length > 0 && 
+            bikeDetail.images.map((imgUrl:any, ind:any) => {
+              return(
+                <SwiperSlide key={imgUrl}>
+                  <img src={imgUrl} alt="Random Image 1" style={{ width: "100%" }}/>
+                </SwiperSlide>
+              )
+            })
+          }
+         
           <div className="swiper-button-prev"></div>
           <div className="swiper-button-next"></div>
         </Swiper>
@@ -38,7 +75,7 @@ export default function UsedBike() {
         <table width="100%" className={styles.info_content}>
             <tbody>
               <tr>
-                <td><p className={styles.info_field}>2023</p></td>
+                <td><p className={styles.info_field}> {bikeDetail.} </p></td>
                 <td><p className={styles.info_field}>4,900 km</p></td>
                 <td><p className={styles.info_field}>4 Stroke</p></td>
               </tr>
