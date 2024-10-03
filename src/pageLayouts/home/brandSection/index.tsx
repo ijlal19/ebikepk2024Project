@@ -57,7 +57,7 @@ function BrandSection() {
           <CustomTabPanel value={value} index={0}>
             <Box className={styles.brand_container}>
               {
-                Data.map((e:any,i:any)=>{
+                Data.slice(0, 8).map((e:any,i:any)=>{
                   return(
                     <Box className={styles.brand_image_box} key={i}>
                       <BrandCard key={i} data={e}/>
