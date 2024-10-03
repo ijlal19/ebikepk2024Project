@@ -66,7 +66,7 @@ function BrandSection() {
                 })
               }
 
-              <Button className={styles.viewallbikes_button} disableRipple>View More Buttons</Button>
+              <Button className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
             </Box>
           </CustomTabPanel>
           </Box>
