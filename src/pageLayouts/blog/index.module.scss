@@ -1,35 +1,85 @@
 .blog_main {
+   padding: 10px 0px;
    width: 100%;
-   padding: 50px 0px;
+   height: auto;
+   max-width: 1000px;
+   margin: auto;
+}
 
-   .blog_container {
+.blog_container {
+   display: flex;
+   justify-content: space-between;
+   padding: 10px 0px;
+}
+
+.blog_heading {
+   font-size: 20px;
+   font-weight: 700;
+   color: #1976d2;
+   padding: 0px;
+}
+
+.blog_grid {
+   display: flex;
+   justify-content: space-between;
+   padding: 15px 0px;
+   border-bottom: 1px solid rgb(216, 210, 210);
+
+}
+
+.blog_grid1 {
+   // border: 1px solid #000;
+   padding: 10px 0px;
+   border-bottom: 1px solid grey;
+}
+
+
+.grid1_child1 {
+   height: auto;
+   .blog_images {
       width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 10px;
-      border: 1px solid #ec3030;
+      height: 100%;
+   }
+}
+.grid1_child2{
+   display: flex;
+   align-items: center;
+   padding: 10px 10px;
+   .blog_card_title{
+      font-size: 14px;
+      font-weight: 700;
+      color: black;
+      cursor: pointer;
+      transition:  0.7s ease;
+   } 
+   .blog_card_title:hover{
+      color: #1976d2;
+   }
+   .blog_card_date{
+      font-size: 12px;
+      color: rgb(165, 156, 156);
+      padding: 4px 0px;
+   }
+   .blog_card_description{
+      padding: 4px 0px;
+      font-size: 12px;
+   }
+}
 
-      .blog_grid {
-         width: 100%;
-         display: flex;
-         justify-content: space-between;
-         border: 1px solid #000;
-         flex-direction: row;
-         align-items: center;
+.blog_grid2 {
+   background: #f5f2f2;
+}
+@media (max-width: 768px) {
+   .blog_grid1 {
+      width: 100%;
+   }
 
-         @media (max-width:768px) {
-            display: flex;
-            flex-direction: column; // This keeps it in row for two columns
-            flex-wrap: wrap; // Enables wrapping of items to the next line
-            background: red;
-         }
+   .grid1_child1,
+   .grid1_child2 {
+      width: 100%;
+   }
 
-         .blog_grid1{
-            border: 1px solid #000;
-         }
-         .blog_grid2{
-            border: 1px solid #000;
-         }
-      }
+   .blog_grid2 {
+      width: 100%;
    }
 }
