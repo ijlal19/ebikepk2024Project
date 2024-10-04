@@ -75,7 +75,7 @@ export default function UsedBike() {
         <table width="100%" className={styles.info_content}>
             <tbody>
               <tr>
-                <td><p className={styles.info_field}> {bikeDetail.} </p></td>
+                <td><p className={styles.info_field}>  </p></td>
                 <td><p className={styles.info_field}>4,900 km</p></td>
                 <td><p className={styles.info_field}>4 Stroke</p></td>
               </tr>
