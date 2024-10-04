@@ -7,6 +7,7 @@ import Explore from './exploresection/index'
 import UsedBikesSection from './usedbikeSection/index'
 import TrendingBikesSection from './treandingSection/index'
 import Loader from '@/sharedComponents/loader/loader'
+import Login from '../login'
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
      <Explore/>
      {/* <BlogSection/> */}
      {/* <Loader/> */}
+     {/* <Login/> */}
     </>
   )
 }
