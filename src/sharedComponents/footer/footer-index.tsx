@@ -158,7 +158,7 @@ export default function Footer() {
                     </Grid>
                     <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
                         <Typography className={styles.copyright}>
-                            Copyright © 2004 - 2025 Ebike.pk (Pvt) Ltd. - All Rights Reserved.
+                            Copyright © 2004 - 2025 ebike.pk - All Rights Reserved.
                         </Typography>
                         <Typography className={styles.term_policy}>
                             Terms of Service |  Privacy Policy
