@@ -1,7 +1,7 @@
 import * as React from 'react';
-// import ProfileComp from "@/pageLayouts/profile/index"
+import TermsCondition from "@/pageLayouts/terms-and-conditions/index"
 export default function Profile() {
     return (
-        <></>
+        <TermsCondition/>
     )
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
-// import ProfileComp from "@/pageLayouts/profile/index"
+import MtmisPunjab from "@/pageLayouts/mtmis-punjab/index"
 export default function Profile() {
     return (
-        <></>
+        <MtmisPunjab />
     )
 }

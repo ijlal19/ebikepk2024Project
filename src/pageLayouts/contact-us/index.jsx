@@ -1,6 +1,6 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material"
 import  styles from  './index.module.scss'
-import logo from './Logo.png'
+
 const ContactUS = () => {
   return (
     <>
@@ -10,11 +10,11 @@ const ContactUS = () => {
             <Grid item xs={12} sm={8} md={6} lg={6} className={styles.Grid_item1}>
               <Box className={styles.description}>
               <Box className={styles.Logo}>
-                <img src={logo} alt="Logo" />
+                <img src="" alt="Logo" />
               </Box>
               <Box className={styles.span}>
-                {/* <Typography>
-                  Don't Hesitate toCall Our ebike.pk Expert for Motorcycle, Parts & Accessories related Queries & get an expert advice.
+                <Typography>
+                  Don&apos;t Hesitate toCall Our ebike.pk Expert for Motorcycle, Parts & Accessories related Queries & get an expert advice.
                   <br/>
                   <br/>
                   <b>021-35396999</b>
@@ -24,7 +24,7 @@ const ContactUS = () => {
                   <br /><br />
                   <p>Monday to Friday</p>
                   <p>10:00 AM to 05:00 PM</p>
-                </Typography> */}
+                </Typography>
               </Box>
               </Box>
             </Grid>
