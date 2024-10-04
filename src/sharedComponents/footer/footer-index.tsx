@@ -63,7 +63,7 @@ let brand_arr = [
 ]
 let headerlink_arr = [
     { title: "Ebike.pk", url: "" },
-    { title: "Contacr us", url: "/contact-us" },
+    { title: "Contacr us", url: "/contact-us" }, 
     { title: "About us", url: "/about-us" },
     { title: "MTMIS Pakistan", url: "/mtmis-pakistan" },
     { title: "Bike Verification Sindh", url: "/bike-verification-sindh" },
