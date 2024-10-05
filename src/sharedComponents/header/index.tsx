@@ -16,26 +16,37 @@ import DealerList from './findDealers';
 import MechanicsList from './findDealers';
 import BasicModal from './login';
 
+const navlink = [
+    { label: 'New Bikes', url: '' },
+    { label: 'My Adds', url: '' },
+    { label: 'Bikers Forum', url: '' },
+    { label: 'Blog', url: '' }
+]
+
 const Header = () => {
+    
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState(false);
     const [buysellmenu, setBuySellmenu] = React.useState(false);
     const [findDealer, setFindDealer] = React.useState(false);
     const [findMechanics, setFindMechanics] = React.useState(false);
-    const [openmodal, setOpenmodal] = React.useState(false);
+    const [openLoginModal, setopenLoginModal] = React.useState(false);
 
-    const handleOpen = () => setOpenmodal(true);
-    const handleClose = () => setOpenmodal(false);
+    const handleOpen = () => setopenLoginModal(true);
+    const handleClose = () => setopenLoginModal(false);
 
     const handlemorelist = () => {
         setOptions(!options);
     };
+
     const handlebuyandsell = () => {
         setBuySellmenu(!buysellmenu);
     };
+
     const handlefinddealer = () => {
         setFindDealer(!findDealer);
     };
+
     const handlefindmechanics = () => {
         setFindMechanics(!findMechanics);
     };
@@ -45,7 +56,7 @@ const Header = () => {
     };
 
     const modalobj = {
-        openmodal: openmodal,
+        openLoginModal: openLoginModal,
         handleClose: handleClose
     }
 
@@ -79,39 +90,35 @@ const Header = () => {
         title: 'Find Mechanics'
     }
 
-    const navlink = [
-        { label: 'New Bikes', url: '' },
-        { label: 'My Adds', url: '' },
-        { label: 'Bikers Forum', url: '' },
-    ]
+
 
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation">
             <List>
+
                 <BuyandSell props={OptionBuySell} />
                 <Divider />
-                {navlink.map((text: any, index: any) => (
+                
+                {navlink.map((data: any, index: any) => (
                     <>
                         <ListItem key={index} disablePadding>
                             <ListItemButton onClick={toggleDrawer(false)}>
-                                <ListItemText primary={text.label} />
+                                <ListItemText primary={data.label} />
                             </ListItemButton>
                         </ListItem>
                         <Divider />
                     </>
                 ))}
+                
                 <DealerList props={OptionFindDealer} />
                 <Divider />
+                
                 <MechanicsList props={OptionFindMechanics} />
                 <Divider />
-                <ListItem sx={{ padding: 0 }} disablePadding>
-                    <ListItemButton onClick={toggleDrawer(false)}>
-                        <ListItemText primary='Blog' />
-                    </ListItemButton>
-                </ListItem>
-                <Divider />
+                
                 <MoreList props={Optionmore} />
                 <Divider />
+                
                 {/* Login Button in Drawer */}
                 <ListItem sx={{ padding: 0 }} disablePadding>
                     <ListItemButton
@@ -123,6 +130,7 @@ const Header = () => {
                         <ListItemText primary='Login' />
                     </ListItemButton>
                 </ListItem>
+
             </List>
         </Box>
     );
@@ -149,9 +157,8 @@ const Header = () => {
                 </Box>
             </Box>
             
-            {/* Only render the modal when openmodal is true */}
-            {/* {openmodal ? <BasicModal data={modalobj}/>:<></> } */}
-             <BasicModal data={modalobj} />
+            {/*  render the modal of Login when open modal is true */}
+            <BasicModal data={modalobj} />
         </>
     );
 };

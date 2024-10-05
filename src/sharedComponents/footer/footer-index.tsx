@@ -4,7 +4,8 @@ import styles from './footer-index.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
+
 // import { useRouter } from 'next/router'
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
