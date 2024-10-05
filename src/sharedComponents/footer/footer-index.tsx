@@ -4,6 +4,8 @@ import styles from './footer-index.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { useState } from "react";
+import { useRouter } from "next/router";
+// import { useRouter } from 'next/router'
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
     { title: "City Karachi", url: "" },
@@ -45,7 +47,7 @@ let catagory_arr = [
     { title: "Videos", url: "" },
     { title: "Bikers Forum", url: "" },
     { title: "Shop", url: "" },
-    { title: "Blog", url: "" },
+    { title: "Blog", url: "/blog" },
     { title: "Bikes Price List", url: "" }
 ]
 let brand_arr = [
@@ -61,14 +63,15 @@ let brand_arr = [
 ]
 let headerlink_arr = [
     { title: "Ebike.pk", url: "" },
-    { title: "Contacr us", url: "" },
-    { title: "About us", url: "" },
-    { title: "MTMIS Pakistan", url: "" },
-    { title: "Bike Verification Sindh", url: "" },
-    { title: "Bike Verification Punjab", url: "" }
+    { title: "Contacr us", url: "/contact-us" }, 
+    { title: "About us", url: "/about-us" },
+    { title: "MTMIS Pakistan", url: "/mtmis-pakistan" },
+    { title: "Bike Verification Sindh", url: "/bike-verification-sindh" },
+    { title: "Bike Verification Punjab", url: "/bike-verification-sindh" }
 ]
-
 export default function Footer() {
+    const router = useRouter()
+
     const [Mail, setMail] = useState('')
     const isMobile = useMediaQuery('(max-width: 768px)');
     const isMobileUl = useMediaQuery('(max-width: 580px)');
@@ -87,7 +90,7 @@ export default function Footer() {
                 <ul className={styles.footer_ul}>
                     {arr.map((item: any, ind: any) => {
                         return (
-                            <li key={item.title + ind}>{item.title}</li>
+                            <li key={item.title + ind} onClick={() =>{ router.push(`${item.url}`)}}>{item.title}</li>
                         )
                     })}
                 </ul>
