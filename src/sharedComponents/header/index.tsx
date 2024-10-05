@@ -1,9 +1,9 @@
 "use client"
+import React, { useState, useEffect } from 'react'
 import { Box, Button, List } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
-import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -13,38 +13,51 @@ import MoreList from './moreOptions/index';
 import BuyandSell from './buyandsell/index';
 import DealerList from './findDealers';
 import MechanicsList from './findDealers';
+import Router from "next/router"
+// import { useRouter } from 'next/router';
+
 
 const Header = () => {
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState(false);
-    const [buysellmenu, setBuySellmenu] = React.useState(false);
-    const [findDealer, setFindDealer] = React.useState(false);
-    const [findMechanics, setFindMechanics] = React.useState(false);
+
+    // const router = useRouter();
+
+    const [open, setOpen] = useState(false);
+    const [options, setOptions] = useState(false);
+    const [buysellmenu, setBuySellmenu] = useState(false);
+    const [findDealer, setFindDealer] = useState(false);
+    const [findMechanics, setFindMechanics] = useState(false);
+    // const [isServerSide, setIsServerSide] = useState(true)
+
+    // useEffect(() => {
+    //     setIsServerSide(false)
+    // }, [])
 
     const handlemorelist = () => {
         setOptions(!options);
     };
     const handlebuyandsell = () => {
         setBuySellmenu(!buysellmenu);
-        // alert('kese ho janab')
     };
     const handlefinddealer = () => {
         setFindDealer(!findDealer);
-        // alert('kese ho janab')
     };
     const handlefindmechanics = () => {
         setFindMechanics(!findMechanics);
-        // alert('kese ho janab')
     };
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
 
+    // const handleRedirection = (path: any)=> () => {
+    //     // if(isServerSide) return;
+    //     // else Router.push(path)
+    //     router.push(path);
+    // };
+
   
     const Optionmore = {
         togglers: handlemorelist,
-        // open: open,
         toggleDrawers: toggleDrawer,
         options: options,
     }
@@ -73,8 +86,7 @@ const Header = () => {
     const navlink =[
         {label: 'New Bikes',url:''},
         {label: 'My Adds',url:''},
-        {label: 'Bikers Forum',url:''},
-        // {label: 'Blogs',url:''}
+        {label: 'Bikers Forum',url:'/blog'},
       ]
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation">
@@ -84,7 +96,7 @@ const Header = () => {
                 {navlink.map((text:any, index:any) => (
                     <>
                     <ListItem key={index} disablePadding>
-                        <ListItemButton onClick={toggleDrawer(false)}>
+                        <ListItemButton >
                             <ListItemText primary={text.label} />
                         </ListItemButton>
                     </ListItem>

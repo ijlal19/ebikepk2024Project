@@ -1,36 +1,35 @@
-// *{
-//     margin: 0;
-//     padding: 0;
-//     box-sizing: border-box;
-//     font-family: sans-serif;
-// }
-
 .punjab_main{
     width: 100%;
     height: auto;
+    max-width: 1000px;
+    margin: 40px auto;
     background: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 120px 0px;
     .punjab_container{
         display: flex;
         justify-content: center;
         align-items: center;
-        padding-bottom: 10px;
+        padding: 10px !important;
         .punjab{
-            text-align: center;
-            box-shadow: 0px 0px 10px rgb(132, 130, 130);
-            padding: 10px 15px;
-            h1{
-                color:navy;
-                padding: 20px 0px;
+            .mtmis_punjab_heading{
+                font-size: 14px;
+                text-align: center;
+                color: #1976d2;
+                cursor: default;
+                @media (max-width:768px) {
+                    font-size: 13px;
+                }
             }
             .punjab_text{
                 text-align: left;
-                p{
-                    margin: 20px 0px;
-                    color: rgb(60, 57, 57);
+                .mtmis_punjab_paragraph{
+                    font-size: 12px;
+                    color: black;
+                    @media (max-width:768px) {
+                        font-size: 11px;
+                    }
                 }
             }
         }

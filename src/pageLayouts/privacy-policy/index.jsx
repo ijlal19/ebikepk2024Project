@@ -1,31 +1,31 @@
-import { Box, Container } from '@mui/material'
-import './index.module.scss'
+import { Box, Container,Typography } from '@mui/material'
+import styles from  './index.module.scss'
 const PrivacyPolicy = () => {
     return (
         <>
-            <Box className='privacy_main'>
-                <Container className='privacy_container'>
-                    <Box className='privacy'>
-                        <h1>Privacy Policy</h1>
-                        <Box className='privacy_text'>
-                            <p>
-                                <span style={{ color: 'black', cursor: 'pointer' }}>Ebike.pk</span> is committed to protecting the privacy of our users. This statement applies with respect to the information that we collect from our website as well as our Mobile Application. Any Change /Amendments to this statement will be posted at this URL and will be effective when posted.
-                            </p>
-                            <p>
+            <Box className={styles.privacy_main}>
+                <Container className={styles.privacy_container}>
+                    <Box className={styles.privacy}>
+                        <h1 className={styles.privacy_policy_heading}>Privacy Policy</h1>
+                        <Box className={styles.privacy_text}>
+                            <Typography className={styles.privacy_policy_paragraph}>
+                                <span style={{ color: '#1976d2', cursor: 'pointer' }}>Ebike.pk</span> is committed to protecting the privacy of our users. This statement applies with respect to the information that we collect from our website as well as our Mobile Application. Any Change /Amendments to this statement will be posted at this URL and will be effective when posted.
+                            </Typography>
+                            <Typography className={styles.privacy_policy_paragraph}>
                                 We care about your privacy and are committed to protecting your personal data. This privacy statement will inform you how we handle your personal data, your privacy rights and how the law protects you.
-                            </p>
-                            <p>Your continued use of this site and mobile application following the posting of any amendment, modification or change shall constitute your acceptance thereof. Please read this privacy statement carefully before using our Services.
-                            </p>
-                            <p>This User Privacy Policy is effective from May 24, 2022</p>
-                            <p>This user privacy statement applies to your use of this website and all ebike.pk applications, services, products and tools collectively the &apos;Services&apos;, regardless of how you access or use these services, including access via mobile devices and apps.</p>
-                            <p>
-                            Ebike.pk is responsible for the collection and processing of your personal data in connection with the provision of the Services depending on how you use our Services. </p>
-                            <p>Information posted on ebike.pk is publicly available. In order to provide you the services, we may collect, store and process your personal information including but not limited to your account ID, name, gender, age, email address, phone number, postal address or any other required details. Further, we collect, non-personally identifiable information about you in a number of ways, including tracking your activities through your IP address and your mobile device ID. We do not collect any personally identifiable information about you unless you voluntarily submit such information to us, by, for example, filling out a survey or registration form. The types of information that may be requested include your name, and your email address.
+                            </Typography>
+                            <Typography className={styles.privacy_policy_paragraph}>Your continued use of this site and mobile application following the posting of any amendment, modification or change shall constitute your acceptance thereof. Please read this privacy statement carefully before using our Services.
+                            </Typography>
+                            <Typography className={styles.privacy_policy_paragraph}>This User Privacy Policy is effective from May 24, 2022</Typography>
+                            <Typography className={styles.privacy_policy_paragraph}>This user privacy statement applies to your use of this website and all ebike.pk applications, services, products and tools collectively the &apos;Services&apos;, regardless of how you access or use these services, including access via mobile devices and apps.</Typography>
+                            <Typography className={styles.privacy_policy_paragraph}>
+                            Ebike.pk is responsible for the collection and processing of your personal data in connection with the provision of the Services depending on how you use our Services. </Typography>
+                            <Typography className={styles.privacy_policy_paragraph}>Information posted on ebike.pk is publicly available. In order to provide you the services, we may collect, store and process your personal information including but not limited to your account ID, name, gender, age, email address, phone number, postal address or any other required details. Further, we collect, non-personally identifiable information about you in a number of ways, including tracking your activities through your IP address and your mobile device ID. We do not collect any personally identifiable information about you unless you voluntarily submit such information to us, by, for example, filling out a survey or registration form. The types of information that may be requested include your name, and your email address.
 
-If you choose to provide us with personal information, you are consenting to the transfer and storage of that information.</p>
+If you choose to provide us with personal information, you are consenting to the transfer and storage of that information.</Typography>
 
 
-<p>
+<Typography className={styles.privacy_policy_paragraph}>
     
 <b>Usage:</b> How you use our Platform, such as the types of content that you view or engage with, the features you use, your searches & results, your browsing information, the actions you take and the time, frequency and duration of your activities.
 <br /><br />
@@ -113,7 +113,7 @@ Ebike.pk reserves the right to amend or modify this privacy policy at any time, 
 <br /><br />
 
 if you have enquiry or concern related to this privacy policy or collection, storage, retention or disclosure of your Information under the terms of this privacy policy or terms of use or any other terms and conditions of or its other business entities including any queries or grievances, or the way in which we are handling personal data please contact our admin department via the contact page. You can also send your  data deletion request through our contact page
-</p>
+</Typography>
                         </Box>
                     </Box>
                 </Container>
