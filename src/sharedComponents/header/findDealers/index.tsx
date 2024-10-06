@@ -6,7 +6,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-export default function MechanicsList({props}:any) {
+export default function DealerList({props}:any) {
   const findmechanics =[
     {label: 'Showrooms',url:''},
     {label: 'Registration',url:''}
@@ -17,7 +17,7 @@ export default function MechanicsList({props}:any) {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={props.togglers} disableRipple>
+      <ListItemButton onClick={()=>props.togglers('finddealer')} disableRipple>
         <ListItemText primary={props.title} />
         {props.options ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>

@@ -19,7 +19,7 @@ export default function MoreList({props}:any) {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={props.togglers} disableRipple>
+      <ListItemButton onClick={()=>props.togglers('moreoption')} disableRipple>
         <ListItemText primary="More" />
         {props.options ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>

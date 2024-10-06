@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Box, Button, List } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
@@ -11,46 +11,52 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MoreList from './moreOptions/index';
 import BuyandSell from './buyandsell/index';
-import DealerList from './findDealers';
-import MechanicsList from './findDealers';
+import DealerList from './findDealers/index';
+import MechanicsList from './findMechanic/index';
+import LoginPopup from '../Loginpopup/login';
 
 
 const Header = () => {
     
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState(false);
-    const [buysellmenu, setBuySellmenu] = React.useState(false);
-    const [findDealer, setFindDealer] = React.useState(false);
-    const [findMechanics, setFindMechanics] = React.useState(false);
-    const [openLoginModal, setopenLoginModal] = React.useState(false);
-
-    const handlemorelist = () => {
-        setOptions(!options);
+    const [open, setOpen] = useState(false);
+    const [options, setOptions] = useState(false);
+    const [buysellmenu, setBuySellmenu] = useState(false);
+    const [findDealer, setFindDealer] = useState(false);
+    const [findMechanics, setFindMechanics] = useState(false);
+    const [openmodal, setOpenmodal] = useState(false);
+//   const handleOpen = () => setOpenmodal(!openmodal);
+    const toggle = (e:any) => {
+        if(e == 'buy&sell'){
+            setBuySellmenu(!buysellmenu);
+        }
+        else if(e == 'finddealer'){
+            setFindDealer(!findDealer);
+        }
+        else if (e == 'findmachenics'){
+            setFindMechanics(!findMechanics);
+        }
+        else if(e == 'moreoption'){
+            setOptions(!options);
+        }
+        else if(e == 'showloginpopup'){
+            // handleOpen()
+            setOpenmodal(!openmodal)
+        }
+        else{
+            setOpen(!open);
+        }
     };
-
-    const handlebuyandsell = () => {
-        setBuySellmenu(!buysellmenu);
-    };
-
-    const handlefinddealer = () => {
-        setFindDealer(!findDealer);
-    };
-
-    const handlefindmechanics = () => {
-        setFindMechanics(!findMechanics);
-    };
-
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
     const Optionmore = {
-        togglers: handlemorelist,
+        togglers: toggle,
         toggleDrawers: toggleDrawer,
         options: options,
     }
 
     const OptionBuySell = {
-        togglers: handlebuyandsell,
+        togglers: toggle,
         open: open,
         toggleDrawers: toggleDrawer,
         options: buysellmenu,
@@ -58,7 +64,7 @@ const Header = () => {
     }
 
     const OptionFindDealer = {
-        togglers: handlefinddealer,
+        togglers: toggle,
         open: open,
         toggleDrawers: toggleDrawer,
         options: findDealer,
@@ -66,18 +72,22 @@ const Header = () => {
     }
 
     const OptionFindMechanics = {
-        togglers: handlefindmechanics,
+        togglers: toggle,
         open: open,
         toggleDrawers: toggleDrawer,
         options: findMechanics,
         title: 'Find Mechanics'
     }
+    const ModalData = {
+        showmodal: toggle,
+        
+        openmodal:openmodal
+    }
 
     const navlink = [
         { label: 'New Bikes', url: '' },
         { label: 'My Adds', url: '' },
-        { label: 'Bikers Forum', url: '' },
-        { label: 'Blog', url: '' },
+        { label: 'Bikers Forum', url: '' }
     ]
 
     const DrawerList = (
@@ -103,19 +113,15 @@ const Header = () => {
                 
                 <MechanicsList props={OptionFindMechanics} />
                 <Divider />
-                
-                <MoreList props={Optionmore} />
-                <Divider />
-                
-                {/* Login Button in Drawer */}
                 <ListItem sx={{ padding: 0 }} disablePadding>
-                    <ListItemButton
-                        onClick={() => { }}
-                    >
-                        <ListItemText primary='Login' />
+                    <ListItemButton>
+                        <ListItemText primary='Blog' />
                     </ListItemButton>
                 </ListItem>
-
+                <Divider/>
+                <MoreList props={Optionmore} />
+                <Divider />
+                <LoginPopup props={ModalData}/>
             </List>
         </Box>
     );
@@ -136,9 +142,10 @@ const Header = () => {
                 </Box>
                 <Box className={styles.header_buttons_group}>
                     {/* Login Button in Header */}
-                    <span className={styles.login_btn} onClick={()=>{}}>
+                    {/* <span className={styles.login_btn} onClick={()=>{}}>
                         <LoginIcon className={styles.icons} /> Login
-                    </span>
+                    </span> */}
+                    <LoginPopup props={ModalData}/>
                 </Box>
             </Box>
             

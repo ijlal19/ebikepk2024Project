@@ -1,9 +1,3 @@
-.icons {
-    font-size: 25px;
-    margin: 0px 5px;
-    color: rgb(71, 70, 70);
-    cursor: pointer;
-}
 
 .login_btn {
     display: flex;
@@ -11,14 +5,20 @@
     font-size: 10px;
     margin-right: 15px;
     cursor: pointer;
+    .icons {
+        font-size: 25px;
+        margin: 0px 5px;
+        color: rgb(71, 70, 70);
+        cursor: pointer;
+    }
 }
 
-.bnt_login{
-    color: black;
-    font-size: 16px;
-    padding: 0px !important;
-    margin: 0px !important;
-}
+// .bnt_login{
+//     color: black;
+//     font-size: 16px;
+//     padding: 0px !important;
+//     margin: 0px !important;
+// }
 .login_main {
     width: 100%;
     display: flex;

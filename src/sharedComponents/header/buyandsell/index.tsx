@@ -18,7 +18,7 @@ export default function BuyandSell({props}:any) {
       
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={props.togglers} disableRipple>
+      <ListItemButton onClick={()=>props.togglers('buy&sell')} disableRipple>
         <ListItemText primary={props.title} />
         {props.options ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
