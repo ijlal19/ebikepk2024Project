@@ -6,7 +6,7 @@ export default function BasicModal(props:any) {
 
   return (
       <Modal
-        open={props.data.openmodal}
+        open={props?.data?.openLoginModal}
         onClose={props.data.handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description" 

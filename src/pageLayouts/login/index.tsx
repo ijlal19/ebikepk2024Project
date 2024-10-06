@@ -3,6 +3,7 @@ import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, Outli
 import styles from './index.module.scss'
 import React, { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import Modal from '@mui/material/Modal';
 
 const Login = () => {
   

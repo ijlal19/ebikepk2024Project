@@ -5,6 +5,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { useState } from "react";
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 let cities_arr = [
     { title: "Used Bike by City", url: "" },

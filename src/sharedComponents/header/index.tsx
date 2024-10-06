@@ -16,26 +16,26 @@ import MechanicsList from './findDealers';
 
 
 const Header = () => {
-
-    const [open, setOpen] = useState(false);
-    const [options, setOptions] = useState(false);
-    const [buysellmenu, setBuySellmenu] = useState(false);
-    const [findDealer, setFindDealer] = useState(false);
-    const [findMechanics, setFindMechanics] = useState(false);
-
-    const toogleLoginPopup = () => {
-        toggleDrawer(false);
-    }
+    
+    const [open, setOpen] = React.useState(false);
+    const [options, setOptions] = React.useState(false);
+    const [buysellmenu, setBuySellmenu] = React.useState(false);
+    const [findDealer, setFindDealer] = React.useState(false);
+    const [findMechanics, setFindMechanics] = React.useState(false);
+    const [openLoginModal, setopenLoginModal] = React.useState(false);
 
     const handlemorelist = () => {
         setOptions(!options);
     };
+
     const handlebuyandsell = () => {
         setBuySellmenu(!buysellmenu);
     };
+
     const handlefinddealer = () => {
         setFindDealer(!findDealer);
     };
+
     const handlefindmechanics = () => {
         setFindMechanics(!findMechanics);
     };
@@ -84,20 +84,21 @@ const Header = () => {
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation">
             <List>
+
                 <BuyandSell props={OptionBuySell} />
                 <Divider />
-
-                {navlink.map((text: any, index: any) => (
+                
+                {navlink.map((data: any, index: any) => (
                     <>
-                    <ListItem key={index} disablePadding>
-                        <ListItemButton >
-                            <ListItemText primary={text.label} />
-                        </ListItemButton>
-                    </ListItem>
-                    <Divider />
+                        <ListItem key={index} disablePadding>
+                            <ListItemButton onClick={toggleDrawer(false)}>
+                                <ListItemText primary={data.label} />
+                            </ListItemButton>
+                        </ListItem>
+                        <Divider />
                     </>
                 ))}
-
+                
                 <DealerList props={OptionFindDealer} />
                 <Divider />
                 
@@ -106,7 +107,7 @@ const Header = () => {
                 
                 <MoreList props={Optionmore} />
                 <Divider />
-
+                
                 {/* Login Button in Drawer */}
                 <ListItem sx={{ padding: 0 }} disablePadding>
                     <ListItemButton
@@ -115,6 +116,7 @@ const Header = () => {
                         <ListItemText primary='Login' />
                     </ListItemButton>
                 </ListItem>
+
             </List>
         </Box>
     );
@@ -140,6 +142,7 @@ const Header = () => {
                     </span>
                 </Box>
             </Box>
+            
         </>
     );
 };
