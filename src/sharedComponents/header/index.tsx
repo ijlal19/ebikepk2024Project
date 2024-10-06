@@ -4,7 +4,7 @@ import { Box, Button, List } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
-import * as React from 'react';
+import {useState}  from 'react';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -14,19 +14,15 @@ import MoreList from './moreOptions/index';
 import BuyandSell from './buyandsell/index';
 import DealerList from './findDealers';
 import MechanicsList from './findDealers';
-import BasicModal from './login';
+import BasicModal from './login/login';
 
 const Header = () => {
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState(false);
-    const [buysellmenu, setBuySellmenu] = React.useState(false);
-    const [findDealer, setFindDealer] = React.useState(false);
-    const [findMechanics, setFindMechanics] = React.useState(false);
-    const [openmodal, setOpenmodal] = React.useState(false);
-
-    const handleOpen = () => setOpenmodal(true);
-    const handleClose = () => setOpenmodal(false);
-
+    const [open, setOpen] =useState(false);
+    const [options, setOptions] =useState(false);
+    const [buysellmenu, setBuySellmenu] =useState(false);
+    const [findDealer, setFindDealer] = useState(false);
+    const [findMechanics, setFindMechanics] =useState(false);
+    
     const handlemorelist = () => {
         setOptions(!options);
     };
@@ -43,12 +39,6 @@ const Header = () => {
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
-
-    const modalobj = {
-        openmodal: openmodal,
-        handleClose: handleClose
-    }
-
     const Optionmore = {
         togglers: handlemorelist,
         toggleDrawers: toggleDrawer,
@@ -112,17 +102,7 @@ const Header = () => {
                 <Divider />
                 <MoreList props={Optionmore} />
                 <Divider />
-                {/* Login Button in Drawer */}
-                <ListItem sx={{ padding: 0 }} disablePadding>
-                    <ListItemButton
-                        onClick={() => {
-                            handleOpen();
-                            toggleDrawer(false)();
-                        }}
-                    >
-                        <ListItemText primary='Login' />
-                    </ListItemButton>
-                </ListItem>
+                        <BasicModal values={true}/>
             </List>
         </Box>
     );
@@ -142,16 +122,11 @@ const Header = () => {
                     </Box>
                 </Box>
                 <Box className={styles.header_buttons_group}>
-                    {/* Login Button in Header */}
-                    <span className={styles.login_btn} onClick={()=>{handleOpen()}}>
-                        <LoginIcon className={styles.icons} /> Login
+                    <span className={styles.login_btn} >
+                        <BasicModal values={false}/>
                     </span>
                 </Box>
             </Box>
-            
-            {/* Only render the modal when openmodal is true */}
-            {/* {openmodal ? <BasicModal data={modalobj}/>:<></> } */}
-             <BasicModal data={modalobj} />
         </>
     );
 };

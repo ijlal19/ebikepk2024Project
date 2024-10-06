@@ -1,7 +1,9 @@
 import * as React from 'react';
-// import ProfileComp from "@/pageLayouts/profile/index"
+import PrivacyComp from "@/pageLayouts/privacy-policy/index"
 export default function Profile() {
     return (
-        <></>
+        <>
+        <PrivacyComp />
+        </>
     )
 }

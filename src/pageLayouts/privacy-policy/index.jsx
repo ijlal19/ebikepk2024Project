@@ -3,7 +3,7 @@ import './index.module.scss'
 const PrivacyPolicy = () => {
     return (
         <>
-            {/* <Box className='privacy_main'>
+            <Box className='privacy_main'>
                 <Container className='privacy_container'>
                     <Box className='privacy'>
                         <h1>Privacy Policy</h1>
@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
                             <p>Your continued use of this site and mobile application following the posting of any amendment, modification or change shall constitute your acceptance thereof. Please read this privacy statement carefully before using our Services.
                             </p>
                             <p>This User Privacy Policy is effective from May 24, 2022</p>
-                            <p>This user privacy statement applies to your use of this website and all ebike.pk applications, services, products and tools collectively the 'Services', regardless of how you access or use these services, including access via mobile devices and apps.</p>
+                            {/* <p>This user privacy statement applies to your use of this website and all ebike.pk applications, services, products and tools collectively the 'Services', regardless of how you access or use these services, including access via mobile devices and apps.</p> */}
                             <p>
                             Ebike.pk is responsible for the collection and processing of your personal data in connection with the provision of the Services depending on how you use our Services. </p>
                             <p>Information posted on ebike.pk is publicly available. In order to provide you the services, we may collect, store and process your personal information including but not limited to your account ID, name, gender, age, email address, phone number, postal address or any other required details. Further, we collect, non-personally identifiable information about you in a number of ways, including tracking your activities through your IP address and your mobile device ID. We do not collect any personally identifiable information about you unless you voluntarily submit such information to us, by, for example, filling out a survey or registration form. The types of information that may be requested include your name, and your email address.
@@ -49,7 +49,7 @@ To allow you to participate in interactive features offered through our Platform
 To contact you about our own and third-party products and services that may be of interest to you. <br />
 To produce and share aggregate insights and statistics that do not identify you.<br />
 To enable us independently or in association with third parties to show you tailored ads that are relevant to you.<br />
-To enable us to display advertisements to our advertisers'/service providers' target audiences. Even though we do not disclose your personal information for these purposes without your consent, if you click on or otherwise interact with an advertisement, the advertiser may assume that you meet its target criteria.<br />
+{/* To enable us to display advertisements to our advertisers'/service providers' target audiences. Even though we do not disclose your personal information for these purposes without your consent, if you click on or otherwise interact with an advertisement, the advertiser may assume that you meet its target criteria.<br /> */}
 To help advertisers and other partners measure the effectiveness and distribution of their ads and services, and understand the types of people who use their services and how people interact with their websites, apps and services.<br />
 To help diagnose problems with our server, and to administer our web site and mobile application.<br />
 In any other way we may describe when you provide the information.<br />
@@ -69,7 +69,7 @@ We may process your Information outside Pakistan on legally provided mechanisms 
 We may share your information in any other circumstances where we have your consent.
 <br /><br />
 
-When you view our website, we might store some information on your computer. This information will be in the form of a 'cookies' or similar file. Cookies are small pieces of information stored on your hard drive, not on our site. Cookies do not spy on you or otherwise invade your privacy, and they cannot invade your hard drive and steal information. Rather, they help you navigate a web site as easily as possible. We use cookies to deliver content specific to your interests and to prevent you from reentering all your registration data at each connection. 
+{/* When you view our website, we might store some information on your computer. This information will be in the form of a 'cookies' or similar file. Cookies are small pieces of information stored on your hard drive, not on our site. Cookies do not spy on you or otherwise invade your privacy, and they cannot invade your hard drive and steal information. Rather, they help you navigate a web site as easily as possible. We use cookies to deliver content specific to your interests and to prevent you from reentering all your registration data at each connection.  */}
 <br /><br />
 
 We may use an outside advertisement server company to display ads on our site and/or mobile application. These ads may contain cookies. The advertisement server company may collect cookies received with outside banner ads. We do not have access to information that would confirm the use of cookies by the advertisement server company.
@@ -92,9 +92,9 @@ Once we receive and confirm your verifiable consumer request, we will (and will 
 You may opt-out of receiving communications from our partners, and from us, by the following means:
 <br /><br />
 
-Click the 'unsubscribe' link in the communication emails you have received from us.
+{/* Click the 'unsubscribe' link in the communication emails you have received from us. */}
  We will only collect and process personal information about you where we have lawful bases. Lawful bases include consent (where you have given consent), contract (where processing is necessary for the performance of a contract with you (e.g. to deliver products or services you have requested)) and “legitimate interests”. Where we rely on your consent to process personal information, you have the right to withdraw or decline your consent at any time and where we rely on legitimate interests, you have the right to object.
-Our site has industry standard security measures in place to protect the loss, misuse and alteration of the information under our control. While there is no such thing as 'perfect security' on the internet, we will take all reasonable steps to ensure the safety of your personal information from unauthorized access, usage or disclosure or alteration.
+{/* Our site has industry standard security measures in place to protect the loss, misuse and alteration of the information under our control. While there is no such thing as 'perfect security' on the internet, we will take all reasonable steps to ensure the safety of your personal information from unauthorized access, usage or disclosure or alteration. */}
 <br /><br />
 
 While we protect your personal information as per industry standards, you acknowledge that the internet or computer networks are not fully secure and that we cannot provide any absolute assurance regarding the security of your personal information. Therefore, you acknowledge that you shall not hold responsible ebike.pk in any manner whatsoever for loss of your information, or any other data, which you share with us or which we have with us if such loss or any damage caused to you because of force majeure events. You further acknowledge that any information (including your personal information) transmitted to us or from your use of the platform will therefore be at your own risk.
@@ -117,7 +117,7 @@ if you have enquiry or concern related to this privacy policy or collection, sto
                         </Box>
                     </Box>
                 </Container>
-            </Box> */}
+            </Box>
         </>
     )
 }

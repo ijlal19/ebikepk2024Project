@@ -4,7 +4,7 @@ import styles from './footer-index.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
 // import { useRouter } from 'next/router'
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
@@ -63,14 +63,13 @@ let brand_arr = [
 ]
 let headerlink_arr = [
     { title: "Ebike.pk", url: "" },
-    { title: "Contacr us", url: "/contact-us" }, 
+    { title: "Contacr us", url: "/contact-us" },
     { title: "About us", url: "/about-us" },
     { title: "MTMIS Pakistan", url: "/mtmis-pakistan" },
     { title: "Bike Verification Sindh", url: "/bike-verification-sindh" },
     { title: "Bike Verification Punjab", url: "/bike-verification-sindh" }
 ]
 export default function Footer() {
-    const router = useRouter()
 
     const [Mail, setMail] = useState('')
     const isMobile = useMediaQuery('(max-width: 768px)');
@@ -90,7 +89,7 @@ export default function Footer() {
                 <ul className={styles.footer_ul}>
                     {arr.map((item: any, ind: any) => {
                         return (
-                            <li key={item.title + ind} onClick={() =>{ router.push(`${item.url}`)}}>{item.title}</li>
+                            <li key={item.title + ind} className={styles.footer_li}>{item.title}</li>
                         )
                     })}
                 </ul>
@@ -164,7 +163,7 @@ export default function Footer() {
                             Copyright © 2004 - 2025 Ebike.pk (Pvt) Ltd. - All Rights Reserved.
                         </Typography>
                         <Typography className={styles.term_policy}>
-                            Terms of Service |  Privacy Policy
+                        <Link href={'/privacy-policy'}>Terms of Service</Link> | <Link href={'/privacy-policy'}>Privacy Policy</Link>
                         </Typography>
                         <Typography className={styles.permission}>
                             Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.
