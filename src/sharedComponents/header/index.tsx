@@ -24,7 +24,6 @@ const Header = () => {
     const [findDealer, setFindDealer] = useState(false);
     const [findMechanics, setFindMechanics] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
-//   const handleOpen = () => setOpenmodal(!openmodal);
     const toggle = (e:any) => {
         if(e == 'buy&sell'){
             setBuySellmenu(!buysellmenu);
@@ -39,7 +38,6 @@ const Header = () => {
             setOptions(!options);
         }
         else if(e == 'showloginpopup'){
-            // handleOpen()
             setOpenmodal(!openmodal)
         }
         else{
@@ -80,7 +78,6 @@ const Header = () => {
     }
     const ModalData = {
         showmodal: toggle,
-        
         openmodal:openmodal
     }
 
@@ -121,7 +118,7 @@ const Header = () => {
                 <Divider/>
                 <MoreList props={Optionmore} />
                 <Divider />
-                <LoginPopup props={ModalData}/>
+                <LoginPopup props={ModalData} values={true}/>
             </List>
         </Box>
     );

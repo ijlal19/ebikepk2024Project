@@ -24,7 +24,7 @@ const style = {
   //   p: 4,
 };
 
-export default function LoginPopup({props}: any) {
+export default function LoginPopup({props,values}: any) {
   // const [openmodal, setOpenmodal] = useState(false);
   // const handleOpen = () => setOpenmodal(!openmodal);
   const [showPassword, setShowPassword] = useState(false);
@@ -47,7 +47,7 @@ export default function LoginPopup({props}: any) {
   return (
     <div>
       {
-        props.values ?
+        values ?
           <ListItem sx={{ padding: 0 }} disablePadding> <ListItemButton onClick={()=>props.showmodal('showloginpopup')}> <ListItemText primary='Login' onClick={()=>props.showmodal('showloginpopup')} /></ListItemButton></ListItem> : <span className={styles.login_btn} onClick={()=>props.showmodal('showloginpopup')}>
             <LoginIcon className={styles.icons} /> Login
           </span>
