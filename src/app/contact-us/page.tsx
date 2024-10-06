@@ -1,7 +1,7 @@
 import * as React from 'react';
-// import ProfileComp from "@/pageLayouts/profile/index"
+import ContactUsComp from "@/pageLayouts/contact-us/index"
 export default function Profile() {
     return (
-        <></>
+        <ContactUsComp />
     )
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
-// import ProfileComp from "@/pageLayouts/profile/index"
+import MtmisSindh from "@/pageLayouts/mtmis-sindh/index"
 export default function Profile() {
     return (
-        <></>
+        <MtmisSindh />
     )
 }

@@ -4,8 +4,8 @@ import styles from './footer-index.module.scss'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { useState } from "react";
-import { useRouter } from "next/router";
-// import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
     { title: "City Karachi", url: "" },
@@ -41,7 +41,7 @@ let cc_arr = [
 ]
 let catagory_arr = [
     { title: "Explore Ebike", url: "" },
-    { title: "Used Bikes", url: "" },
+    { title: "Used Bikes", url: "/used-bikes" },
     { title: "New Bikes", url: "" },
     { title: "Showroom", url: "" },
     { title: "Videos", url: "" },
@@ -62,12 +62,12 @@ let brand_arr = [
     { title: "Super Star", url: "" }
 ]
 let headerlink_arr = [
-    { title: "Ebike.pk", url: "" },
-    { title: "Contacr us", url: "/contact-us" }, 
+    { title: "Ebike.pk", url: "/" },
+    { title: "Contact us", url: "/contact-us" },
     { title: "About us", url: "/about-us" },
-    { title: "MTMIS Pakistan", url: "/mtmis-pakistan" },
-    { title: "Bike Verification Sindh", url: "/bike-verification-sindh" },
-    { title: "Bike Verification Punjab", url: "/bike-verification-sindh" }
+    { title: "MTMIS Pakistan", url: "" },
+    { title: "Bike Verification Sindh", url: "/mtmis-sindh" },
+    { title: "Bike Verification Punjab", url: "/mtmis-punjab" }
 ]
 export default function Footer() {
     const router = useRouter()
@@ -90,7 +90,12 @@ export default function Footer() {
                 <ul className={styles.footer_ul}>
                     {arr.map((item: any, ind: any) => {
                         return (
-                            <li key={item.title + ind} onClick={() =>{ router.push(`${item.url}`)}}>{item.title}</li>
+                            ind == 0 ? 
+                            <li className={styles.link_heading} key={item.title + ind}>{item.title}</li> 
+                            :
+                            <Link className={styles.link} href={item.url}>
+                                <li className={styles.link_text} key={item.title + ind}>{item.title}</li>
+                            </Link>
                         )
                     })}
                 </ul>
@@ -161,10 +166,10 @@ export default function Footer() {
                     </Grid>
                     <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
                         <Typography className={styles.copyright}>
-                            Copyright © 2004 - 2025 Ebike.pk (Pvt) Ltd. - All Rights Reserved.
+                            Copyright © 2004 - 2025 ebike.pk - All Rights Reserved.
                         </Typography>
                         <Typography className={styles.term_policy}>
-                            Terms of Service |  Privacy Policy
+                            <Link href="/terms-and-conditions" className={styles.link}> Terms of Service </Link>  | <Link href="/privacy-policy" className={styles.link}> Privacy Policy </Link> 
                         </Typography>
                         <Typography className={styles.permission}>
                             Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.

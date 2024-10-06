@@ -20,8 +20,6 @@ const Index = () => {
      <BrandSection/>
      <Explore/>
      {/* <BlogSection/> */}
-     {/* <Loader/> */}
-     {/* <Login/> */}
     </>
   )
 }
