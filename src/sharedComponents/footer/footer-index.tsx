@@ -71,7 +71,6 @@ let headerlink_arr = [
     { title: "Bike Verification Punjab", url: "/mtmis-punjab" }
 ]
 export default function Footer() {
-    const router = useRouter()
 
     const [Mail, setMail] = useState('')
     const isMobile = useMediaQuery('(max-width: 768px)');

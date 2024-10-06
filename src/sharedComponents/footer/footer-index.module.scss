@@ -166,7 +166,11 @@
 
     .link_heading {
         color: rgb(255, 255, 255);
-        font-size: 16px;
+    }
+    
+    .footer_li:nth-child(1) {
+        color: rgb(255, 255, 255);
+        font-size: 16px !important;
         cursor: default;
         transition: none;
         margin: 0px 0px 4px;

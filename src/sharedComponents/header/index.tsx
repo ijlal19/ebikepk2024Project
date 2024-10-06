@@ -43,7 +43,6 @@ const Header = () => {
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
-
     const Optionmore = {
         togglers: handlemorelist,
         toggleDrawers: toggleDrawer,

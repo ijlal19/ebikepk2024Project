@@ -1,7 +1,7 @@
 import * as React from 'react';
-import PrivacyPolicy from "@/pageLayouts/privacy-policy/index"
-export default function Profile() {
+import PrivacyPolicyComp from "@/pageLayouts/privacy-policy/index"
+export default function PrivacyPolicy() {
     return (
-        <PrivacyPolicy />
+        <PrivacyPolicyComp />
     )
 }
