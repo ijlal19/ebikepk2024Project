@@ -10,7 +10,7 @@ export default function ImgCard(props:any) {
         <Card className={styles.itemCard} >
             <CardMedia
                 component="img"
-                alt="green iguana"
+                alt={props.data.title}
                 height="230"
                 image={props.data.img_url}
                 className={styles.card_img}

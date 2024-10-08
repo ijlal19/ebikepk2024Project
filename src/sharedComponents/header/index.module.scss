@@ -11,6 +11,22 @@
         cursor: pointer;
     }
 }
+.signup_buttons_group{
+    color: white ;
+    background: #1976d2;
+    font-size: 13px;
+    margin:15px auto 0px auto;
+    text-align: center;
+    width: 150px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 45px;
+    .signup_button{
+        text-align: center;
+    }
+}
 .header_main {
     width: 100%;
     padding: 5px 10px;

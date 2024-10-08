@@ -119,6 +119,11 @@ const Header = () => {
                 <MoreList props={Optionmore} />
                 <Divider />
                 <LoginPopup props={ModalData} values={true}/>
+                <ListItem sx={{ padding: 0 }} disablePadding className={styles.signup_buttons_group} >
+                    <ListItemButton disableRipple className={styles.signup_button}>
+                        <ListItemText primary='Signup' />
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Box>
     );

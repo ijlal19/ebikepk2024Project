@@ -1,5 +1,5 @@
 
-.login_btn {
+.login_icon {
     display: flex;
     align-items: center;
     font-size: 10px;
@@ -12,13 +12,22 @@
         cursor: pointer;
     }
 }
-
-// .bnt_login{
-//     color: black;
-//     font-size: 16px;
-//     padding: 0px !important;
-//     margin: 0px !important;
-// }
+.login_buttons_group{
+    color: white ;
+    background: #1976d2;
+    font-size: 13px;
+    margin:30px auto 0px auto;
+    text-align: center;
+    width: 150px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 45px;
+    .login_button{
+        text-align: center;
+    }
+}
 .login_main {
     width: 100%;
     display: flex;

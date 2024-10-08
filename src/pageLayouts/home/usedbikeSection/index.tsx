@@ -50,19 +50,11 @@ function UsedBikesSection() {
             <Tabs value={value} onChange={handleChange} textColor="primary"
   indicatorColor="primary" aria-label="basic tabs example">
               <Tab label="Bikes" {...a11yProps(0)} />
-              {/* <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} /> */}
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data.slice(5)} from='u'/>
           </CustomTabPanel>
-          {/* <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel> */}
         </Box>
       </Container>
     </Box>
