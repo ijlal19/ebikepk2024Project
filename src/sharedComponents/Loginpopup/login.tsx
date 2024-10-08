@@ -25,8 +25,6 @@ const style = {
 };
 
 export default function LoginPopup({props,values}: any) {
-  // const [openmodal, setOpenmodal] = useState(false);
-  // const handleOpen = () => setOpenmodal(!openmodal);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -48,7 +46,11 @@ export default function LoginPopup({props,values}: any) {
     <div>
       {
         values ?
-          <ListItem sx={{ padding: 0 }} disablePadding> <ListItemButton onClick={()=>props.showmodal('showloginpopup')}> <ListItemText primary='Login' onClick={()=>props.showmodal('showloginpopup')} /></ListItemButton></ListItem> : <span className={styles.login_btn} onClick={()=>props.showmodal('showloginpopup')}>
+          <ListItem sx={{ padding: 0 }} disablePadding className={styles.login_buttons_group}>
+            <ListItemButton onClick={()=>props.showmodal('showloginpopup')} disableRipple  className={styles.login_button}>
+              <ListItemText primary='Login' onClick={()=>props.showmodal('showloginpopup')} />
+            </ListItemButton>
+          </ListItem> : <span className={styles.login_icon} onClick={()=>props.showmodal('showloginpopup')}>
             <LoginIcon className={styles.icons} /> Login
           </span>
       }
