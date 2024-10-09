@@ -11,21 +11,8 @@
         cursor: pointer;
     }
 }
-.signup_buttons_group{
-    color: white ;
-    background: #1976d2;
-    font-size: 13px;
-    margin:15px auto 0px auto;
-    text-align: center;
-    width: 150px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 45px;
-    .signup_button{
-        text-align: center;
-    }
+.drawerfont{
+    font-size: 10x;
 }
 .header_main {
     width: 100%;
@@ -52,33 +39,17 @@
             }
         }
     }
-
-    .header_buttons_group {
-        padding-right: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-
-        .header_input {
-            display: flex;
-            font-size: 14px;
-            color: black;
-            font-weight: 500;
-            padding: 0px 20px;
-            width: 350px;
-            ::placeholder{
-                color: rgb(19, 19, 19);
-                font-weight: 500;
-            }
-        }
-
-
-        @media (max-width:768px) {
-            .header_input {
-                display: none;
-            }
+}
+.listText{
+    font-size: 13px;
+}
+.downloadapp{
+    font-size: 12px !important;
+    font-weight: lighter !important;
+    padding: 20px 10px;
+    background: whitesmoke;
+        .download_image {
+            margin: 20px 0px 10px 0px;
         }
     }
-
-}
+// }

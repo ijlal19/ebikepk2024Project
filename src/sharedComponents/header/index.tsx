@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import { Box, Button, List } from '@mui/material'
+import { Box, Button, List, Typography } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -14,6 +14,7 @@ import BuyandSell from './buyandsell/index';
 import DealerList from './findDealers/index';
 import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
+import Link from 'next/link';
 
 
 const Header = () => {
@@ -87,7 +88,7 @@ const Header = () => {
         { label: 'Bikers Forum', url: '' }
     ]
 
-    const DrawerList = (
+    const DrawerList = (<>
         <Box sx={{ width: 250 }} role="presentation">
             <List>
 
@@ -98,7 +99,7 @@ const Header = () => {
                     <>
                         <ListItem key={index} disablePadding>
                             <ListItemButton onClick={toggleDrawer(false)}>
-                                <ListItemText primary={data.label} />
+                                <ListItemText primary={data.label} className={styles.listText}/>
                             </ListItemButton>
                         </ListItem>
                         <Divider />
@@ -119,13 +120,14 @@ const Header = () => {
                 <MoreList props={Optionmore} />
                 <Divider />
                 <LoginPopup props={ModalData} values={true}/>
-                <ListItem sx={{ padding: 0 }} disablePadding className={styles.signup_buttons_group} >
-                    <ListItemButton disableRipple className={styles.signup_button}>
-                        <ListItemText primary='Signup' />
-                    </ListItemButton>
-                </ListItem>
             </List>
         </Box>
+            <Typography className={styles.downloadapp}>
+                DOWNLOAD MOBILE APP
+                <Box className={styles.download_image}>
+                                <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
+                            </Box>
+            </Typography></>
     );
 
     return (
@@ -135,7 +137,7 @@ const Header = () => {
                     <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
                         <MenuIcon />
                     </Button>
-                    <Drawer open={open} onClose={toggleDrawer(false)}>
+                    <Drawer className='header_drawer' open={open} onClose={toggleDrawer(false)} >
                         {DrawerList}
                     </Drawer>
                     <Box className={styles.logo}>
@@ -143,10 +145,6 @@ const Header = () => {
                     </Box>
                 </Box>
                 <Box className={styles.header_buttons_group}>
-                    {/* Login Button in Header */}
-                    {/* <span className={styles.login_btn} onClick={()=>{}}>
-                        <LoginIcon className={styles.icons} /> Login
-                    </span> */}
                     <LoginPopup props={ModalData}/>
                 </Box>
             </Box>

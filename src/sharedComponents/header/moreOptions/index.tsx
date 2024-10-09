@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-
+import styles from '../index.module.scss'
 export default function MoreList({props}:any) {
   const morear =[
     {label: 'Bike Video',url:''},
@@ -28,7 +28,7 @@ export default function MoreList({props}:any) {
           {
             morear.map((e:any,i:any)=>{
               return(
-                <ListItemButton sx={{ pl: 4 }} onClick={props.toggleDrawers(false)}  key={i}>
+                <ListItemButton sx={{ pl: 4 }} onClick={props.toggleDrawers(false)}  key={i} className={styles.greys}>
             <ListItemText primary={e.label} />
           </ListItemButton>
               )

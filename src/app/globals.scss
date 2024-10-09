@@ -97,3 +97,36 @@ body {
     padding-right: 0px !important;
     padding-left: 0px !important;
 }
+
+.header_drawer {
+    .MuiTypography-root{
+        font-size: 15px !important;
+        font-weight: 600;
+    }
+    .MuiCollapse-root{
+        padding-left: 20px;
+        font-weight: normal !important;
+    }
+    .MuiListItemText-root,.MuiButtonBase-root{
+        font-size: 13px !important;
+
+    }
+    
+    .MuiButtonBase-root{
+        padding: 12px !important;
+    }
+    .MuiBox-root{
+        padding: 0px !important;
+    }
+    .MuiList-padding{
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+
+    }
+    .MuiSvgIcon-root{
+        font-size: 20px !important;
+    }
+    // .MuiListItemText-primary{
+    //     font-size: 13px !important;
+    // }
+}

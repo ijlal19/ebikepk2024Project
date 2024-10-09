@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 // import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 // import Login from '@/pageLayouts/login';
-import { Avatar, Container, Grid, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, OutlinedInput, TextField } from '@mui/material'
+import { Avatar, Container, Divider, Grid, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, OutlinedInput, TextField } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import { useState } from 'react'
@@ -106,6 +106,8 @@ export default function LoginPopup({props,values}: any) {
               <Button className={styles.button} type='submit' fullWidth>Sign in</Button>
               <Button className={styles.reset_password} >Reset Password</Button>
 
+              <Divider/>
+              <Button className={styles.reset_password} >Reset Password</Button>
             </form>
           </Container>
         </Box>

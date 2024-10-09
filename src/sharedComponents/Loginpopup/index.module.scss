@@ -16,16 +16,17 @@
     color: white ;
     background: #1976d2;
     font-size: 13px;
-    margin:30px auto 0px auto;
+    margin:10px auto 10px auto;
     text-align: center;
     width: 150px !important;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 45px;
+    height: 35px;
     .login_button{
         text-align: center;
+        font-size: 11px !important;
     }
 }
 .login_main {
