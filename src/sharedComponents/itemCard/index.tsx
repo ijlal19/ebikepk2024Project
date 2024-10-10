@@ -22,7 +22,7 @@ export default function ImgCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {props.data.price} Onwards
+                    {props.data.price} {props.from == 'n' ? 'Onwards' : '' }
                 </Typography>
 
                 { props.from == "u" ? 
@@ -36,7 +36,7 @@ export default function ImgCard(props:any) {
                      </Typography>
                     </>
                 }
-                 <Button className={styles.view_detail_btn} > View Detail </Button>
+                 <Button className={styles.view_detail_btn} > View Bike Detail </Button>
             </CardContent>
         </Card>
 

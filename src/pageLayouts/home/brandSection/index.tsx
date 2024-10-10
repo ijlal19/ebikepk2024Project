@@ -43,13 +43,13 @@ function BrandSection() {
     <Box className={styles.brand_main}>
       <Container >
         <Typography className={styles.heading}>
-          Brands
+          Bike Brands
         </Typography>
 
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
-  indicatorColor="primary" aria-label="basic tabs example">
+                indicatorColor="primary" aria-label="basic tabs example">
               <Tab label="Brands" {...a11yProps(0)} />
             </Tabs>
           </Box>

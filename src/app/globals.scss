@@ -100,8 +100,10 @@ body {
 
 .header_drawer {
     .MuiTypography-root{
-        font-size: 15px !important;
-        font-weight: 600;
+        font-size: 13px !important;
+        &:hover {
+            font-weight: bold;
+        }
     }
     .MuiCollapse-root{
         padding-left: 20px;
