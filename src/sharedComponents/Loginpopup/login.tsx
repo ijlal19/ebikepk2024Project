@@ -10,6 +10,7 @@ import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import Link from 'next/link';
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -28,7 +29,6 @@ export default function LoginPopup({props,values}: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleSubmit = (e: any) => {
@@ -41,6 +41,10 @@ export default function LoginPopup({props,values}: any) {
     alert("success")
     setEmail('')
     setPassword('')
+  }
+  const handlesignup =()=>{
+    // props.toggleDrawers(false);
+    props.showmodal('showloginpopup')
   }
   return (
     <div>
@@ -103,11 +107,14 @@ export default function LoginPopup({props,values}: any) {
                 }
               />
 
-              <Button className={styles.button} type='submit' fullWidth>Sign in</Button>
               <Button className={styles.reset_password} >Reset Password</Button>
+              <Button className={styles.button} type='submit' fullWidth>Sign in</Button>
 
               <Divider/>
-              <Button className={styles.reset_password} >Reset Password</Button>
+              {/* <Link href='/signup'  onClick={()=>props.showmodal('showloginpopup')}> */}
+              <Link href='/signup'  onClick={handlesignup}>
+              <Button className={styles.signup_button} fullWidth>Signup for Ebike</Button>
+              </Link>
             </form>
           </Container>
         </Box>

@@ -101,6 +101,18 @@ position: relative;
                     text-decoration: underline;
                 }
             }
+            .signup_button {
+                font-size: 12px;
+                margin-top: 10px;
+                font-weight: bolder;
+                text-align: center;
+                text-decoration: none !important;
+                padding: 10px 0px 0px 0px;
+                border-radius: 0px;
+                border-top: 1px solid rgb(211, 204, 204);
+                color: Black;
+                cursor: pointer;
+            }
 
         }
     }

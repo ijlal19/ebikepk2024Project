@@ -100,8 +100,10 @@ body {
 
 .header_drawer {
     .MuiTypography-root{
-        font-size: 15px !important;
-        font-weight: 600;
+        font-size: 13px !important;
+        @media (max-width:768px) {
+            font-size: 12px;
+        }
     }
     .MuiCollapse-root{
         padding-left: 20px;
@@ -109,11 +111,16 @@ body {
     }
     .MuiListItemText-root,.MuiButtonBase-root{
         font-size: 13px !important;
-
+        @media (max-width:768px) {
+            font-size: 12px;
+        }
     }
     
     .MuiButtonBase-root{
-        padding: 12px !important;
+        padding: 13px !important;
+        @media (max-width:768px) {
+            font-size: 12px;
+        }
     }
     .MuiBox-root{
         padding: 0px !important;
