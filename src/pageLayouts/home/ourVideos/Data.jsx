@@ -1,6 +1,6 @@
 const Data =[
     {
-        title:'Zongshen 250cc Bike Price in Pakistan',
+        title:'Zongshen 250cc Bike User Review',
         thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646645/zongshen2_ryuefe.jpg',
         video_url:'https://www.youtube.com/watch?v=A2c6v-1q8CE&t=3s',
     },
@@ -10,19 +10,19 @@ const Data =[
         video_url:'https://www.youtube.com/watch?v=IKo6aiM9jcA',
     },
     {
-        title:'Yamaha Motorcycles in Pakistan',
+        title:'Metro E8S Pro Review',
+        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646763/e8spro_eonu7v.jpg',
+        video_url:'https://www.youtube.com/watch?v=yW5oKvl-UAs',
+    },
+    {
+        title:'Yamaha Bike in Pakistan',
         thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646697/yamaha_od8sy3.jpg',
         video_url:'https://www.youtube.com/watch?v=V35Mn1QnBmU&t=12s',
     },
     {
-        title:'Metro T9 Electric Bike in Pakistan',
+        title:'Metro T9 Bike Review',
         thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646735/metrot9_qtbjje.jpg',
         video_url:'https://www.youtube.com/watch?v=PzRLlaKO_yo',
-    },
-    {
-        title:'Metro E8S Pro Electric Bike',
-        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646763/e8spro_eonu7v.jpg',
-        video_url:'https://www.youtube.com/watch?v=yW5oKvl-UAs',
     },
 ]
 export default Data
