@@ -50,7 +50,7 @@ function BlogSection() {
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
-              <Tab label="Bikes" className={styles.tab} />
+              <Tab label="Blogs" className={styles.tab} />
             </Tabs>
           </Box>
 
@@ -73,8 +73,9 @@ function BlogSection() {
                         className={styles.grid1_child2}
                       >
                         <Box>
-                        <Typography className={styles.blog_card_title}>{e.blogTitle}</Typography>
-                        <Typography className={styles.blog_card_description}>{e.meta_description}</Typography>
+                          <Typography className={styles.blog_card_title}>{e.blogTitle}</Typography>
+                          <Typography className={styles.blog_card_date}>oct 10, 2024</Typography>
+                          <Typography className={styles.blog_card_description}>{e.meta_description}</Typography>
                         </Box>
                       </Grid>
                     </Grid>

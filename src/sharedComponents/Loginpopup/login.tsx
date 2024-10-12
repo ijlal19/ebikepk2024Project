@@ -54,7 +54,8 @@ export default function LoginPopup({props,values}: any) {
             <ListItemButton onClick={()=>props.showmodal('showloginpopup')} disableRipple  className={styles.login_button}>
               <ListItemText primary='Login' onClick={()=>props.showmodal('showloginpopup')} />
             </ListItemButton>
-          </ListItem> : <span className={styles.login_icon} onClick={()=>props.showmodal('showloginpopup')}>
+          </ListItem> :
+          <span className={styles.login_icon} onClick={()=>props.showmodal('showloginpopup')}>
             <LoginIcon className={styles.icons} /> Login
           </span>
       }

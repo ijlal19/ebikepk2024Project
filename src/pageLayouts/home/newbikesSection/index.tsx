@@ -44,7 +44,7 @@ function NewBikesSection() {
     <Box className={styles.bike_sec_main}>
       <Container>
         <Typography className={styles.heading}>
-          New Bikes
+          New Featured Bikes
         </Typography>
         
         <Box sx={{ width: '100%' }}>

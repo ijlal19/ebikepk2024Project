@@ -119,11 +119,13 @@ const Header = () => {
                 <Divider/>
                 <MoreList props={Optionmore} />
                 <Divider />
+                
                 <LoginPopup props={ModalData} values={true}/>
+
             </List>
         </Box>
             <Typography className={styles.downloadapp}>
-                DOWNLOAD MOBILE APP
+                Download Mobile App
                 <Box className={styles.download_image}>
                                 <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
                             </Box>
