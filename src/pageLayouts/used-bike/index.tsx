@@ -48,7 +48,7 @@ export default function UsedBike() {
       <div className={styles.container_one}>
         
         <h1 className={styles.title}> {bikeDetail.title}  </h1>
-       
+        <p className={styles.location} > Karachi </p>
         <Swiper 
           spaceBetween={50} 
           slidesPerView={1} 
