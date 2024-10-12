@@ -101,6 +101,9 @@ body {
 .header_drawer {
     .MuiTypography-root{
         font-size: 13px !important;
+        @media (max-width:768px) {
+            font-size: 12px;
+        }
         &:hover {
             font-weight: bold;
         }
@@ -111,11 +114,16 @@ body {
     }
     .MuiListItemText-root,.MuiButtonBase-root{
         font-size: 13px !important;
-
+        @media (max-width:768px) {
+            font-size: 12px;
+        }
     }
     
     .MuiButtonBase-root{
-        padding: 12px !important;
+        padding: 13px !important;
+        @media (max-width:768px) {
+            font-size: 12px;
+        }
     }
     .MuiBox-root{
         padding: 0px !important;
