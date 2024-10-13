@@ -13,6 +13,7 @@ $blue: #1976d2;
         display: block;
     }
 }
+
 .container_one {
     width: 40%;
     height: 100%;
@@ -30,11 +31,19 @@ $blue: #1976d2;
 .info_content { 
     text-align: center;
     border: solid 1px black;
+    
     .info_field {
         font-size: 13px;
+        margin-bottom: 2px;
+        margin-top: 2px;
+        text-wrap: nowrap;
     }
+
     .info_field_two {
-        font-size: 13px;
+        font-size: 12px;
+        @media (max-width:767px) {
+            font-size: 11px;
+        }
     }
 }
 
@@ -109,16 +118,17 @@ $blue: #1976d2;
     //     // padding-left: 20px;
     // }
 }
-.seller_comments h3 {
-    font-size: 20px;
-    margin: 0;
+.seller_comments .bike_dec_title {
+    font-size: 17px;
+    margin: 10px 0px 5px 0px;
     font-weight: 500;
     @media (max-width: 767px) {
         font-size: 15px;
     }
 }
-.seller_comments p {
-    font-size: 10px;
+.seller_comments .seller_comments_desc {
+    font-size: 11px;
+    letter-spacing: 0.5px;
     margin: 0;
     line-height: 15px;
     @media (max-width: 767px) {
@@ -126,9 +136,10 @@ $blue: #1976d2;
     }
 }
 
-.container_two {
+.container_two { 
+
     width: 250px;
-    height: 200px;
+    // height: 170px;
     margin: 30px;
     text-align: center;
     display: flex;
@@ -136,63 +147,56 @@ $blue: #1976d2;
     align-items: center;
     background-color: #fff;
     justify-content: center ;
+
     @media (max-width: 767px) {
         width: 370px;
         margin: 10px;
-        margin: 2px 2px 2px 22px;
+        margin: 2px 2px 2px 22px;   
+    }
+
+    .price_text {
         
-    }
-}
-.container_two h2 {
-    font-size: 17px;
-    font-weight: 400;
-    color: $green;
-    margin: 0;
-    border-bottom: 1px solid #EAEDEF;
-    padding-inline: 67px;
-    padding-bottom: 10px;
-    text-wrap: nowrap;
-
-}
-.container_two .num_button {
-    width: 220px;
-    height: 50px;
-    background-color: $green;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    @media (max-width: 767px) {
-        margin: 1rem;
-    }
-
-    &:hover {
-        background-color: darken($green, 10%); 
-    }
-}
-
-
-.num_button { 
-    .num_text {
         font-size: 17px;
         font-weight: 400;
-        display: block;
-        padding-top: 3px; 
+        color: $green;
+        margin: 0;
+        border-bottom: 1px solid #EAEDEF;
+        padding-inline: 67px;
+        padding-bottom: 10px;
         text-wrap: nowrap;
+        margin-top: 10px;
     }
+
+    .sellerName {
+        font-size: 13px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    .seller_ph_text {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-style: italic;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        background-color: $green;
+        color: white;
+        width: 180px;
+        margin: auto;
+        height: 30px;
+    }
+
+    .seller_ph_no {
+        font-size: 13px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
 }
 
-.container_two .send_message {
-    border: 1px solid $blue;
-    margin-top: 15px;
-    border-radius: 10px;
-    color: $blue;
-    padding-inline: 58px;
-    padding-block: 10px;
-    cursor: pointer;
-    font-size: 13px;
-}
  .container_three {
     width: 250px;
     height: 200px;
@@ -262,7 +266,8 @@ $blue: #1976d2;
 }
 .container_four {
     width: 250px;
-    height: 175px;
+    height: auto;
+    padding-right: 5px;
     margin: 30px;
     text-align: center;
     display: flex;
@@ -277,13 +282,14 @@ $blue: #1976d2;
     }
 }
 .container_four .transaction .tranc_text  {
-    font-size: 17px;
+    font-size: 15px;
     border-bottom: 1px solid #EAEDEF;
     padding-bottom: 5px;
     text-wrap: nowrap;
+    font-weight: normal;
 }
 .container_four ol li {
-    font-size: 13px;
+    font-size: 11px;
     padding: 5px;
 }
 .container_four ol {
