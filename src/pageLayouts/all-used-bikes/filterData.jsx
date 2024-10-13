@@ -1,4 +1,4 @@
-let brand = [
+export let Brand = [
     {
         "id": 12,
         "brandName": "bmw",
@@ -337,7 +337,7 @@ let brand = [
     }
 ]
 
-let city = [
+ const CityArr = [
     {
         "id": 1,
         "city_name": "Karachi",
@@ -3970,7 +3970,7 @@ let city = [
     }
 ]
 
-let year = [
+export let Year = [
     {
         "id": 2,
         "year": "1970",
@@ -4297,4 +4297,8 @@ let year = [
     }
 ]
 
-let cc = [ 50, 70  ]
+export let CC = [ 50, 70 ,100,110,125,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,
+    1050,1100,1150,1200,1250,1300,1350,1400,1450,1500,1550,1600,1650,1700]
+
+
+    export default CityArr

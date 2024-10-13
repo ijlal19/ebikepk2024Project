@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/pageLayouts/home/Header/Page.jsx", "src/sharedComponents/header/header-index.jsx", "src/pageLayouts/home/index.jsx", "src/pageLayouts/privacy-policy/index.jsx", "src/pageLayouts/mtmis-sindh/index.jsx", "src/pageLayouts/mtmis-punjab/index.jsx", "src/pageLayouts/home/brandSection/index.jsx", "src/pageLayouts/home/exploresection/Data.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/pageLayouts/home/Header/Page.jsx", "src/sharedComponents/header/header-index.jsx", "src/pageLayouts/home/index.jsx", "src/pageLayouts/privacy-policy/index.jsx", "src/pageLayouts/mtmis-sindh/index.jsx", "src/pageLayouts/mtmis-punjab/index.jsx", "src/pageLayouts/home/brandSection/index.jsx", "src/pageLayouts/home/exploresection/Data.jsx", "src/pageLayouts/all-used-bikes/index.jsx"],
   "exclude": ["node_modules"]
 }
