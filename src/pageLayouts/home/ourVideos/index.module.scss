@@ -1,18 +1,45 @@
+.main{
+    max-width: 1000px;
+    width: 100%;
+    margin: 0px auto;
+    padding: 0px !important;
+}
+.heading_box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:5px 20px !important;
+    font-size: 20px;
+    font-weight: bolder;
+    .all_videos{
+        font-size: 13px;
+        color: #1976d2;
+        cursor: pointer;
+    }
+    @media (max-width:768px) {
+        padding: 5px 5px !important;
+        .all_videos{
+            font-size: 12px;
+            cursor: pointer;
+        }
+    }
+}
 .container {
     width: 100%;
     max-width: 1000px;
     height: auto;
-    margin: auto !important;
+    margin:0px auto !important;
     display: flex;
     padding: 20px 5px 20px 5px !important;
     justify-content: center;
 }
 
+
 .background_box {
     width: 100%;
-    height: 100%;
+    height: 57vh;
     padding: 0px;
-    background-size: cover;
+    background-size: 100% auto;
     background-position: center;
     cursor: pointer;
     color: black;
@@ -20,36 +47,55 @@
     .icons{
         font-size: 50px;
     }
+    @media (max-width:768px) {
+        height: 45vh;
+        background-size: 100% 100%;
+    }
+    @media (max-width:550PX) {
+        height: 35vh;
+        background-size: 100% 100%;
+    }
 }
 .background_box:hover{
     color: red;
 }
 .video_title{
-    color: blue;
-    text-decoration: none !important;
-    font-size: 13px;
+    color: #1976d2;
+    text-decoration-line: none !important;
+    font-size: 12px;
+    flex-wrap: nowrap;
+    display: flex;
+    justify-content: left;
+    border: 1px solid #dad4d4;
     font-weight: bolder;
-    padding: 4px 4px 4px 4px !important;
+    padding: 5px 0px 5px 5px !important;
 }
 .cards_grid{
     .card {
-        background-size: cover;
+        background-size: 100% auto;
         background-position: center;
         background-repeat: no-repeat;
         color: black;
         cursor: pointer;
+        height: 25vh;
         transition: color 0.5s ease;
         .icons{
             font-size: 30px;
         }
+        @media (max-width:768px) {
+        height: 45vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        }
+        @media (max-width:550px) {
+        height: 35vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        }
     }
     .card:hover{
         color: red;
-    }
-}
-@media (max-width: 768px) {
-    .card {
-        width: 100%;
-        height: 50vh;
     }
 }
