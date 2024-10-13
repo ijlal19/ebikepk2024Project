@@ -7,9 +7,9 @@ import Data from './Data';
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [currentPage, setCurrentPage] = useState(1);
+
   const blogsPerPage = 10;
   const totalPages = Math.ceil(Data.length / blogsPerPage);
-
   const currentBlogs = Data.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
@@ -25,7 +25,7 @@ const Blog = () => {
         <Grid container className={styles.blog_grid}>
           <Grid item xs={isMobile ? 12 : 7}>
             <Grid container>
-              {currentBlogs.map((e: any, i: any) => (
+              {Data.map((e: any, i: any) => (
                 <Grid className={styles.blog_grid1} item xs={12} key={i}>
                   <Grid container>
                     <Grid item xs={isMobile ? 12 : 4} className={styles.grid1_child1}>
@@ -44,17 +44,17 @@ const Blog = () => {
                 </Grid>
               ))}
             </Grid>
-
+{/* 
             <Box className={styles.pagination}>
               <Pagination
                 count={totalPages}
                 page={currentPage}
                 onChange={handlePageChange}
-                 variant="outlined"
-                  shape="rounded"
-                  color='primary'
+                variant="outlined"
+                shape="rounded"
+                color='primary'
               />
-            </Box>
+            </Box> */}
           </Grid>
           <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 4}>
             <Box className={styles.add_area_content}>

@@ -29,6 +29,7 @@ const AllUsedBike = () => {
         <>
             <Box className={styles.all_bike_main}>
                 <Container className={styles.all_bike_main_container}>
+                   
                     <div className={styles.main_box}> 
                       
                         {/* sort Bar */}
@@ -79,6 +80,7 @@ const AllUsedBike = () => {
                             <button onClick={()=>{ fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}` } > View More </button> 
                         </div>
                     </div>
+                    
                 </Container>
             </Box>
         </>

@@ -19,7 +19,7 @@ const Index = () => {
      <BrandSection/>
      <Explore/>
      <BlogSection/>
-     {/* <Ourvideos/> */}
+     <Ourvideos/>
     </>
   )
 }
