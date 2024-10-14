@@ -25,7 +25,7 @@ const Blog = () => {
         <Grid container className={styles.blog_grid}>
           <Grid item xs={isMobile ? 12 : 7}>
             <Grid container>
-              {Data.map((e: any, i: any) => (
+              {currentBlogs.map((e: any, i: any) => (
                 <Grid className={styles.blog_grid1} item xs={12} key={i}>
                   <Grid container>
                     <Grid item xs={isMobile ? 12 : 4} className={styles.grid1_child1}>
@@ -44,7 +44,7 @@ const Blog = () => {
                 </Grid>
               ))}
             </Grid>
-{/* 
+
             <Box className={styles.pagination}>
               <Pagination
                 count={totalPages}
@@ -54,7 +54,7 @@ const Blog = () => {
                 shape="rounded"
                 color='primary'
               />
-            </Box> */}
+            </Box>
           </Grid>
           <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 4}>
             <Box className={styles.add_area_content}>

@@ -4298,3 +4298,23 @@ let year = [
 ]
 
 let cc = [ 50, 70  ]
+
+export { brand, city, year, cc }
+
+// http://localhost:4000/api/brand/get-brand
+// http://localhost:4000/api/city/get-city
+// http://localhost:4000/api/years/get-years
+
+
+// http://localhost:4000/api/classified/get-adds-by-filter
+
+// {
+//     "city_filter": [],
+//     "brand_filter": [
+//         12
+//     ],
+//     "years_filter": [],
+//     "cc": []
+// }
+
+
