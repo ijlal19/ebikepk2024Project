@@ -1,10 +1,10 @@
 'use client'
-import { Box, Container, Grid } from '@mui/material'
+import { Box, Container, Grid, Typography } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
 import { getAllbikesDetail } from "@/functions/globalFuntions"
 import {Apps, FormatListBulleted } from '@mui/icons-material';
-
+import CityArr from './filterData'
 const AllUsedBike = () => {
    
     const [allBikesArr, setAllBikesArr] = useState([])
@@ -28,11 +28,28 @@ const AllUsedBike = () => {
     return (
         <>
             <Box className={styles.all_bike_main}>
-                <Container className={styles.all_bike_main_container}>
-                   
+
+                <Box className={styles.filter_box}>
+                    <Box className={styles.heading_resultby}>
+                        <Typography>Show Result By:</Typography>
+                    </Box>
+                    <Box className={styles.heading_city}>
+                        <Typography className={styles.city_text}>CITY</Typography>
+                    </Box>
+                        <Box className={styles.city_options}>
+                            {
+                            CityArr.slice(0,5).map((e,i)=>{
+                                return(
+                           <Typography className={styles.option_values} key={i}>
+                            <input type="checkbox" /> {e.city_name}
+                           </Typography>)
+                            })
+                            }
+                            <Typography className={styles.seeMore}>More Choices...</Typography>
+                        </Box>
+                </Box>
+
                     <div className={styles.main_box}> 
-                      
-                        {/* sort Bar */}
                         <div className={styles.navigation}>
                             <div className={styles.text_container}>
                                 <span className={styles.bike_text}> Used Bikes </span>
@@ -80,8 +97,8 @@ const AllUsedBike = () => {
                             <button onClick={()=>{ fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}` } > View More </button> 
                         </div>
                     </div>
-                    
-                </Container>
+
+                <Box className={styles.add_area}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi distinctio id minima consectetur iste, rem accusantium neque autem aut porro.</Box>
             </Box>
         </>
     )
