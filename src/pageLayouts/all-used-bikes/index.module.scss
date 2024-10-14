@@ -1,16 +1,15 @@
 .all_bike_main {
   display: flex;
   width: 100% !important;
-  // justify-content: space-between;
-  border: 1px solid #000;
   max-width: 1200px;
   margin: auto;
   gap: 15px;
 
   .filter_box {
+    height: auto;
+    box-shadow: 0px 0px 5px rgb(183, 181, 181);
     max-width: 200px;
     padding: 0px !important;
-    border: 1px solid #000;
     margin-top: 20px;
 
     .heading_resultby {
@@ -20,33 +19,44 @@
       color: rgb(255, 255, 255);
       text-align: center;
     }
-
-    .heading_city {
+    .heading_brand ,.heading_years{
+      border-top: 1px solid rgb(235, 231, 231);
+    }
+    .heading_city ,.heading_brand,.heading_years{
       width: 200px;
-      border-bottom: 1px solid rgb(164, 160, 160);
+      border-bottom: 1px solid rgb(235, 231, 231);
       padding: 9px 0px !important;
       color: black;
       margin-top: 5px;
 
-      .city_text {
+      .city_text,.brand_text,.years_text {
         padding-left: 10px;
         font-size: 12px;
       }
 
     }
-    .city_options {
+    .city_options ,.brand_options,.years_options{
       width: 200px;
       padding: 15px 0px !important;
       color: black;
       margin-top: 5px;
       font-size: 12px;
-
-      .option_values {
+      
+      .option_values{
+        gap: 5px;
+        width: 100%;
         display: flex;
         align-items: center;
         padding: 2px 0px 2px 10px !important;
         font-size: 12px;
       }
+      .option_values .MuiMenuItem-root {
+        font-size: 12px;
+        padding: 4px 10px;
+      }
+      .option_values .MuiMenuItem-root:hover {
+        background-color: #f0f0f0;
+    }
       .seeMore{
         color: #1976d2;
         padding: 5px 0px 5px 13px !important;
@@ -57,7 +67,6 @@
   }
 
   .main_box {
-    border: 1px solid #000000;
     margin-top: 20px;
     width: 100% !important;
     height: 100%;
@@ -232,7 +241,6 @@
 
   .add_area {
     max-width: 150px;
-    border: 1px solid #000;
     margin-top: 20px;
   }
 }

@@ -1,4 +1,4 @@
-export let Brand = [
+export const Brand = [
     {
         "id": 12,
         "brandName": "bmw",
@@ -337,7 +337,7 @@ export let Brand = [
     }
 ]
 
- const CityArr = [
+ export const CityArr = [
     {
         "id": 1,
         "city_name": "Karachi",
@@ -3962,15 +3962,15 @@ export let Brand = [
         "createdAt": "2019-01-24T07:26:01.278Z",
         "updatedAt": "2019-01-24T07:26:01.278Z"
     },
-    {
-        "id": 668,
-        "city_name": "Adda Jahan Khan",
-        "createdAt": "2019-02-01T12:32:24.794Z",
-        "updatedAt": "2019-02-01T12:32:24.794Z"
-    }
+    // {
+    //     "id": 668,
+    //     "city_name": "Adda Jahan Khan",
+    //     "createdAt": "2019-02-01T12:32:24.794Z",
+    //     "updatedAt": "2019-02-01T12:32:24.794Z"
+    // }
 ]
 
-export let Year = [
+export const YearArray = [
     {
         "id": 2,
         "year": "1970",
@@ -4279,26 +4279,26 @@ export let Year = [
     },
     {
         "id": 53,
-        "year": "non register",
+        "year": "2021",
         "createdAt": "2020-06-18T03:54:05.563Z",
         "updatedAt": "2020-06-18T04:17:03.933Z"
     },
     {
         "id": 54,
-        "year": "2021",
+        "year": "2022",
         "createdAt": "2020-06-18T03:52:52.624Z",
         "updatedAt": "2020-06-18T04:14:50.816Z"
     },
     {
         "id": 55,
-        "year": "2022",
+        "year": "2023",
         "createdAt": "2020-06-18T04:14:50.816Z",
         "updatedAt": "2020-06-18T04:14:50.816Z"
     }
 ]
 
-export let CC = [ 50, 70 ,100,110,125,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,
+export const CCArray = [ 50, 70 ,100,110,125,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,
     1050,1100,1150,1200,1250,1300,1350,1400,1450,1500,1550,1600,1650,1700]
 
 
-    export default CityArr
+    // export default CityArr
