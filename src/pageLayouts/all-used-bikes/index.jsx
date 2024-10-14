@@ -29,7 +29,7 @@ const AllUsedBike = () => {
         <>
             <Box className={styles.all_bike_main}>
 
-                <Box className={styles.filter_box}>
+                {/* <Box className={styles.filter_box}>
                     <Box className={styles.heading_resultby}>
                         <Typography>Show Result By:</Typography>
                     </Box>
@@ -47,7 +47,7 @@ const AllUsedBike = () => {
                             }
                             <Typography className={styles.seeMore}>More Choices...</Typography>
                         </Box>
-                </Box>
+                </Box> */}
 
                     <div className={styles.main_box}> 
                         <div className={styles.navigation}>
@@ -98,7 +98,7 @@ const AllUsedBike = () => {
                         </div>
                     </div>
 
-                <Box className={styles.add_area}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi distinctio id minima consectetur iste, rem accusantium neque autem aut porro.</Box>
+                {/* <Box className={styles.add_area}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi distinctio id minima consectetur iste, rem accusantium neque autem aut porro.</Box> */}
             </Box>
         </>
     )
