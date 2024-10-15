@@ -3972,6 +3972,12 @@ export const Brand = [
 
 export const YearArray = [
     {
+        "id": 1,
+        "year": "1969",
+        "createdAt": "2018-12-14T13:03:03.107Z",
+        "updatedAt": "2018-12-14T13:03:03.107Z"
+    },
+    {
         "id": 2,
         "year": "1970",
         "createdAt": "2018-12-14T13:03:03.107Z",

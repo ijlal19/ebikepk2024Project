@@ -1,19 +1,20 @@
-import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { CCArray, YearArray } from '../filterData';
+import { useState } from 'react';
 
 export default function FilterDropdown({ values, dropvalues }: any) {
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value);
-    };
-
+    const [YearFrom, setYearFrom] = useState('');
+    const [YearTo, setYearTo] = useState('');
+    const [CCFrom, setCCFrom] = useState('');
+    const [CCTo, setCCTo] = useState('');
+    // console.log(YearFrom)
+    // console.log(YearTo)
+    // console.log(CCFrom)
+    // console.log(CCTo)
     return (
-
         <>{
             dropvalues == 'years' ?
                 <> {
@@ -25,8 +26,8 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                     labelId="demo-select-small-label"
                                     id="demo-select-small"
                                     label='from'
-                                    value={age}
-                                    onChange={handleChange}
+                                    value={YearFrom}
+                                    onChange={(e)=>setYearFrom(e.target.value)}
                                 >
                                     {YearArray.map((e: any, i: any) => {
                                         return <MenuItem key={i} value={e.id}>{e.year}</MenuItem>
@@ -42,8 +43,8 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                     labelId="demo-select-small-label"
                                     id="demo-select-small"
                                     label='from'
-                                    value={age}
-                                    onChange={handleChange}
+                                    value={YearTo}
+                                    onChange={(e)=>setYearTo(e.target.value)}
                                 >
                                     {YearArray.map((e: any, i: any) => {
                                         return <MenuItem key={i} value={e.id}>{e.year}</MenuItem>
@@ -62,8 +63,8 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                         labelId="demo-select-small-label"
                                         id="demo-select-small"
                                         label='from'
-                                        value={age}
-                                        onChange={handleChange}
+                                        value={CCFrom}
+                                        onChange={(e)=>setCCFrom(e.target.value)}
                                     >
                                         {CCArray.map((e: any, i: any) => {
                                             return <MenuItem key={i} value={e}>{e} CC</MenuItem>
@@ -79,9 +80,8 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                         labelId="demo-select-small-label"
                                         id="demo-select-small"
                                         label='from'
-                                        value={age}
-                                        onChange={handleChange}
-                                    >
+                                        value={CCTo}
+                                        onChange={(e)=>setCCTo(e.target.value)}>
                                         {[...CCArray].reverse().map((e: any, i: any) => {
                                             return <MenuItem key={i} value={e}>{e} CC</MenuItem>;
                                         })}

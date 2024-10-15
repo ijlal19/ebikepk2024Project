@@ -1,5 +1,5 @@
 'use client'
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box,  Typography } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
 import { getAllbikesDetail } from "@/functions/globalFuntions"
@@ -8,15 +8,22 @@ import { CityArr, Brand } from './filterData'
 import MoreOptionPopup from './Popup'
 import FilterDropdown from './DropDown'
 const AllUsedBike = () => {
+
     const [popupArray, setPopupArray] = useState([CityArr])
     const [allBikesArr, setAllBikesArr] = useState([])
     const [pageNo, setPageNo] = useState(0)
-    const [isLoading, setIsLoading] = useState(false)
     const [openmodal, setOpenModal] = useState(false)
     const [functionval, setFunctionVal] = useState()
+    const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedBrand, setSelectedBrand] = useState(null);
+
+    // Console For Value
     useEffect(() => {
-        fetchBikeInfo(pageNo)
-    }, [])
+        console.log(selectedCity)
+    }, [selectedCity])
+    useEffect(() => {
+        console.log(selectedBrand)
+    }, [selectedBrand])
 
     function toggle(e) {
         if (e == 'city') {
@@ -36,7 +43,9 @@ const AllUsedBike = () => {
             '*'
         }
     }
-
+    useEffect(() => {
+        fetchBikeInfo(pageNo)
+    }, [])
     async function fetchBikeInfo(_pageNo) {
         let curentFetchPage = _pageNo + 10
         setPageNo(curentFetchPage)
@@ -56,7 +65,6 @@ const AllUsedBike = () => {
     return (
         <>
             <Box className={styles.all_bike_main}>
-
                 <Box className={styles.filter_box}>
                     <Box className={styles.heading_resultby}>
                         <Typography>Show Result By:</Typography>
@@ -69,13 +77,24 @@ const AllUsedBike = () => {
                             CityArr.slice(0, 5).map((e, i) => {
                                 return (
                                     <Typography className={styles.option_values} key={i}>
-                                        <input type="checkbox" /> {e.city_name}
-                                    </Typography>)
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedCity === e.id}
+                                            onChange={(event) => {
+                                                if (event.target.checked) {
+                                                    setSelectedCity(e.id); 
+                                                } else {
+                                                    setSelectedCity(null); 
+                                                }
+                                            }}
+                                        />
+                                        {e.city_name}
+                                    </Typography>
+                                );
                             })
                         }
-                        <MoreOptionPopup props={ModalData} values='city' />
+                        <MoreOptionPopup props={ModalData} values="city" selectPropsCity={setSelectedCity} PropsCity={selectedCity}/>
                     </Box>
-
                     <Box className={styles.heading_brand}>
                         <Typography className={styles.brand_text}>MAKE</Typography>
                     </Box>
@@ -84,35 +103,46 @@ const AllUsedBike = () => {
                             Brand.slice(0, 5).map((e, i) => {
                                 return (
                                     <Typography className={styles.option_values} key={i}>
-                                        <input type="checkbox" /> {e.brandName}
+                                       <input
+                                            type="checkbox"
+                                            checked={selectedBrand === e.id}
+                                            onChange={(event) => {
+                                                if (event.target.checked) {
+                                                    setSelectedBrand(e.id); 
+                                                } else {
+                                                    setSelectedBrand(null); 
+                                                }
+                                            }}
+                                        />
+                                        {e.brandName}
                                     </Typography>)
                             })
                         }
-                        <MoreOptionPopup props={ModalData} values='brand' />
+                        <MoreOptionPopup props={ModalData} values='brand'  selectPropsBrand={setSelectedBrand}PropsBrand={selectedBrand}/>
                     </Box>
                     <Box className={styles.heading_years}>
                         <Typography className={styles.years_text}>YEARS</Typography>
                     </Box>
                     <Box className={styles.years_options}>
                         <FilterDropdown
-                        dropvalues='years'
+                            dropvalues='years'
                             values='from'
                             className={styles.option_values}
                             sx={{
-                                Width: '90%',  
-                                padding: '8px', 
+                                Width: '90%',
+                                padding: '8px',
                                 fontSize: '12px'
                             }}
                         /><FilterDropdown
-                        dropvalues='years'
-                        values='To'
-                        className={styles.option_values}
-                        sx={{
-                            minWidth: 120,  
-                            padding: '8px', 
-                            fontSize: '12px'
-                        }}
-                    />
+                            dropvalues='years'
+                            values='To'
+                            className={styles.option_values}
+                            sx={{
+                                minWidth: 120,
+                                padding: '8px',
+                                fontSize: '12px'
+                            }}
+                        />
                     </Box>
                     <Box className={styles.heading_years}>
                         <Typography className={styles.years_text}>ENGINE CC</Typography>
@@ -122,19 +152,19 @@ const AllUsedBike = () => {
                             values='from'
                             className={styles.option_values}
                             sx={{
-                                Width: '90%',  
-                                padding: '8px', 
+                                Width: '90%',
+                                padding: '8px',
                                 fontSize: '12px'
                             }}
                         /><FilterDropdown
-                        values='To'
-                        className={styles.option_values}
-                        sx={{
-                            minWidth: 120,  
-                            padding: '8px', 
-                            fontSize: '12px'
-                        }}
-                    />
+                            values='To'
+                            className={styles.option_values}
+                            sx={{
+                                minWidth: 120,
+                                padding: '8px',
+                                fontSize: '12px'
+                            }}
+                        />
                     </Box>
                 </Box>
 
@@ -150,33 +180,33 @@ const AllUsedBike = () => {
                     </div>
 
                     <div>
-                              {  allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
-                                    return (
-                                        <div className={styles.long_card} key={ind}>
-                                            <div className={styles.bike_image}>
-                                                {val.images && val.images.length > 0 ? <img src={val.images[0]} alt={'a'} className={styles.card_image} /> : ""}
-                                            </div>
+                        {allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
+                            return (
+                                <div className={styles.long_card} key={ind}>
+                                    <div className={styles.bike_image}>
+                                        {val.images && val.images.length > 0 ? <img src={val.images[0]} alt={'a'} className={styles.card_image} /> : ""}
+                                    </div>
 
-                                            <div className={styles.card_info}>
-                                                <h2 className={styles.card_title}> {val.title} </h2>
-                                                <h3 className={styles.card_price_desktop}>PKR {val.price}</h3>
-                                                <p className={styles.card_details}> {val?.city?.city_name} </p>
-                                                <ul className={styles.bike_details}>
-                                                    <li>{val?.year?.year}</li>
-                                                    <li>|</li>
-                                                    <li>3122km</li>
-                                                    <li>|</li>
-                                                    <li>4 Stroke</li>
-                                                </ul>
+                                    <div className={styles.card_info}>
+                                        <h2 className={styles.card_title}> {val.title} </h2>
+                                        <h3 className={styles.card_price_desktop}>PKR {val.price}</h3>
+                                        <p className={styles.card_details}> {val?.city?.city_name} </p>
+                                        <ul className={styles.bike_details}>
+                                            <li>{val?.year?.year}</li>
+                                            <li>|</li>
+                                            <li>3122km</li>
+                                            <li>|</li>
+                                            <li>4 Stroke</li>
+                                        </ul>
 
-                                                <p className={styles.card_price_mobile}>Price:  {val.price}</p>
+                                        <p className={styles.card_price_mobile}>Price:  {val.price}</p>
 
-                                                <button className={styles.show_phone_button}> Show Phone Number </button>
-                                                {/* <p className={styles.phone_number}>{'aa'}</p> */}
-                                            </div>
-                                        </div>
-                                    )
-                                })}
+                                        <button className={styles.show_phone_button}> Show Phone Number </button>
+                                        {/* <p className={styles.phone_number}>{'aa'}</p> */}
+                                    </div>
+                                </div>
+                            )
+                        })}
 
                     </div>
 
@@ -186,7 +216,9 @@ const AllUsedBike = () => {
                     </div>
                 </div>
 
-                <Box className={styles.add_area}>Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.</Box>
+                <Box className={styles.add_area}>
+                    Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.
+                </Box>
             </Box>
         </>
     )
