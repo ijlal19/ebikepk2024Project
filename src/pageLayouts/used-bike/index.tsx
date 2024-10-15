@@ -6,9 +6,10 @@ import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css';
-import { getSinglebikesDetail, numericOnly } from "@/functions/globalFuntions"
+import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId} from "@/functions/globalFuntions"
 import Router from 'next/router'
 import Data from './data'
+import { CityArr, BrandArr, YearArr } from "@/constants/globalData"
 
 
 export default function UsedBike() {
@@ -16,13 +17,15 @@ export default function UsedBike() {
   const [bikeDetail, setBikeDetail] : any = useState({})
   const [similarBikeArr, setSimilarBikeArr] : any = useState([])
   const [isLoading, setIsLoading]  = useState(false)
- 
+  const [showPhoneNo, setShowPhoneNo] = useState(false)
+
   useEffect(() => {
       fetchBikeInfo()
   }, [])
 
   async function fetchBikeInfo() {
     let path = location.pathname
+    
     if(path.indexOf('/') > -1) {
       let pathArr = path.split('/')
       let adsId = pathArr[pathArr.length - 1]
@@ -32,7 +35,7 @@ export default function UsedBike() {
         if(res) {
           setBikeDetail(res.add)
           setSimilarBikeArr(res.bikes)
-          console.log('res', res)
+          setShowPhoneNo(false)
         }
       }
       else {
@@ -42,6 +45,14 @@ export default function UsedBike() {
       }
     }
   }
+
+  let bikeBrand = getBrandFromId(bikeDetail.brandId, BrandArr)
+  let bikeCity = getCityFromId(bikeDetail.cityId, CityArr)
+  let bikeYear = getYearFromId(bikeDetail.yearId, YearArr)
+
+  console.log('bikeYear', bikeYear, bikeDetail.yearId, YearArr)
+  console.log('bikeCity', bikeCity, bikeDetail.cityId, CityArr)
+  console.log('bikeBrand', bikeBrand, bikeDetail.brandId, BrandArr)
 
   return (
     <main className={`${styles.main_container} used_bike_detail_pg`}>
@@ -77,15 +88,15 @@ export default function UsedBike() {
               <tr>
                 <td>
                   <p className={styles.info_field}> Model </p>
-                  <p className={styles.info_field}> 2013 </p>
+                  <p className={styles.info_field}> { bikeYear && bikeYear?.length > 0 && bikeYear[0].year } </p>
                 </td>
                 <td>
-                  <p className={styles.info_field}> Km Driven </p>
-                  <p className={styles.info_field}> 4,900 </p>
+                  <p className={styles.info_field}> Brand </p>
+                  <p className={styles.info_field}> { bikeBrand && bikeBrand.length > 0 && bikeBrand[0].brandName } </p>
                 </td>
                 <td>
                   <p className={styles.info_field}> CC </p>
-                  <p className={styles.info_field}> 100 CC</p>
+                  <p className={styles.info_field}> { bikeDetail.cc } </p>
                 </td>
               </tr>
             </tbody>
@@ -94,10 +105,11 @@ export default function UsedBike() {
         <table width="100%" className={styles.info_content}>
             <tbody>
               <tr>
-                <td className={styles.info_field_two}>Register in</td>
-                <td className={styles.info_field_two}>Punjab</td>
+                <td className={styles.info_field_two}> Location </td>
+                <td className={styles.info_field_two}> { bikeCity && bikeCity.length > 0 && bikeCity[0].city_name } </td>
+                
                 <td className={styles.info_field_two}>Posted On</td>
-                <td className={styles.info_field_two}>Aug 28, 2024</td>
+                <td className={styles.info_field_two}> { '' + bikeDetail?.createdAt?.slice(0, 10) } </td>
               </tr>
               <tr>
                 <td className={styles.info_field_two}>Body Type</td>
@@ -116,14 +128,14 @@ export default function UsedBike() {
      
     <div>
     <div className={styles.container_two}>
-      <h2 className={styles.price_text} >PKR 3.35 lacs</h2>
+      <h2 className={styles.price_text} > PKR { bikeDetail.price } </h2>
       <hr/>
-      <p className={styles.sellerName}> Seller Name: Asaddddd </p>
+      <p className={styles.sellerName}> Seller Name: { bikeDetail.sellerName } </p>
       <hr/>
-      <p className={styles.seller_ph_text}> Show Phone No </p>
-      <span className={styles.seller_ph_no} >1234564</span>
-      
-    
+      {!showPhoneNo ? 
+      <p className={styles.seller_ph_text} onClick={() => setShowPhoneNo(true) }> Show Phone No </p> :
+      <span className={styles.seller_ph_no} > { bikeDetail.mobileNumber } </span>
+      }
     </div>
     {/* <div className={styles.container_three}>
         <div className={styles.owner_detail_head}>

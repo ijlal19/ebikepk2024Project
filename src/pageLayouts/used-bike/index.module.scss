@@ -40,6 +40,8 @@ $blue: #1976d2;
     }
 
     .info_field_two {
+        max-width: 150px;
+        overflow: hidden;
         font-size: 12px;
         @media (max-width:767px) {
             font-size: 11px;
@@ -48,10 +50,10 @@ $blue: #1976d2;
 }
 
 .container_one .title {
-    font-size: 18px;
+    font-size: 17px;
     color: $blue ;
-    font-weight: 600;
-    margin-bottom: 5px;
+    font-weight: 500;
+    margin-bottom: 10px;
     @media (max-width: 767px) {
         font-size: 16px;
     }
@@ -147,6 +149,7 @@ $blue: #1976d2;
     align-items: center;
     background-color: #fff;
     justify-content: center ;
+    padding-bottom: 10px;
 
     @media (max-width: 767px) {
         width: 370px;

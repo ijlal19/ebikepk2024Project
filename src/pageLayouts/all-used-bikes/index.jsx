@@ -5,11 +5,16 @@ import React, { useState, useEffect } from 'react'
 import { getAllbikesDetail } from "@/functions/globalFuntions"
 import {Apps, FormatListBulleted } from '@mui/icons-material';
 import CityArr from './filterData'
+import { useRouter } from 'next/navigation'
+
 const AllUsedBike = () => {
    
     const [allBikesArr, setAllBikesArr] = useState([])
     const [pageNo, setPageNo] = useState(0)
     const [isLoading, setIsLoading]  = useState(false)
+
+    const router = useRouter()
+
     useEffect(() => {
         fetchBikeInfo(pageNo)
     }, [])
@@ -23,6 +28,14 @@ const AllUsedBike = () => {
         setAllBikesArr(res)
         window.scrollTo(0,0)
         console.log('res', res)
+    }
+
+    function goToDetailPage(val) {
+        console.log('val', val)
+        let title = val.title
+        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+        console.log('url title', urlTitle)
+        router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
    
     return (
@@ -64,7 +77,8 @@ const AllUsedBike = () => {
                                 {
                                     allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
                                         return(
-                                            <div className={styles.long_card} key={ind}>
+
+                                            <div className={styles.long_card} key={ind} onClick={()=>{ goToDetailPage(val) }}>
                                                 <div className={styles.bike_image}>
                                                     {val.images && val.images.length > 0 ? <img src={val.images[0]} alt={'a'} className={styles.card_image} /> : "" }
                                                 </div>
@@ -83,7 +97,7 @@ const AllUsedBike = () => {
                                                 
                                                 <p className={styles.card_price_mobile}>Price:  {val.price}</p>
                                                 
-                                                <button className={styles.show_phone_button}> Show Phone Number </button>
+                                                {/* <button className={styles.show_phone_button}> Show Phone Number </button> */}
                                                 {/* <p className={styles.phone_number}>{'aa'}</p> */}
                                                 </div>
                                             </div>

@@ -1,3 +1,4 @@
+import data from '@/pageLayouts/bike-brands/data';
 import Gconfig from 'globalconfig'
 
 const numericOnly = (value: string) => {
@@ -58,6 +59,32 @@ function getSinglebikesDetail(id:any) {
     })
 }
 
+function getBrandFromId(id:any, dataArr:any) {
+    if(dataArr && dataArr.length > 0 && id) {
+        let brand = dataArr.filter(val => { return (val.id == id) })
+        return brand;
+    }
+    else return []
+}
+
+function getCityFromId(id:any, dataArr:any) {
+    if(dataArr && dataArr.length > 0 && id) {
+        let city = dataArr.filter(val => { return (val.id == id) })
+        return city;
+    }
+    else return []
+}
+
+function getYearFromId(id:any, dataArr:any) {
+    if(dataArr && dataArr.length > 0 && id) {
+        let year = dataArr.filter(val => { return (val.id == id) })
+        return year;
+    }
+    else return []
+}
+
 export { 
-    numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, getAllbikesDetail, getSinglebikesDetail
+    numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
+    noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
+    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId
 }
