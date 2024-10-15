@@ -140,3 +140,39 @@ body {
     //     font-size: 13px !important;
     // }
 }
+
+.usedbikeDetailSwiper {
+    .swiper-wrapper {
+        align-items: center;
+    }
+
+    .swiper-button-prev {
+        color: black !important;
+        background-color: rgba(243, 243, 243, 0.322);
+        // border-radius: 50px;
+        box-shadow: 2px 0 4px 0 rgba(0, 0, 0, .15);
+        height: 35px;
+        width: 35px;
+        margin-left: -10px;
+        border: solid 1px rgb(231, 229, 229);
+        &::after {
+            font-size: 15px !important;
+            font-weight: 500;
+        }
+    }
+
+    .swiper-button-next {
+        color: black !important;
+        background-color: rgba(243, 243, 243, 0.322);
+        // border-radius: 50px;
+        box-shadow: -1px 0 4px 0 rgba(0, 0, 0, .15);
+        height: 35px;
+        width: 35px;
+        margin-right: -10px;
+        border: solid 1px rgb(231, 229, 229);
+        &::after {
+            font-size: 15px !important;
+            font-weight: 500;
+        }
+    }
+}

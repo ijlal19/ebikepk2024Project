@@ -32,7 +32,7 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => 
                         },
                     },
                     768: {
-                        slidesPerView: 3,
+                        slidesPerView:  3,
                         slidesPerGroup: 1,
                     },
                 }}

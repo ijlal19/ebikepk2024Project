@@ -2,15 +2,14 @@
 import React, { useState, useEffect } from 'react'
 import styles from "./index.module.scss";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css';
+import { Navigation, FreeMode, Pagination } from 'swiper/modules';
+import 'swiper/swiper-bundle.css';
 import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId} from "@/functions/globalFuntions"
 import Router from 'next/router'
 import Data from './data'
 import { CityArr, BrandArr, YearArr } from "@/constants/globalData"
-
+import { useRouter } from 'next/navigation'
+import SwiperCarousels from '@/sharedComponents/swiperSlider/index';
 
 export default function UsedBike() {
 
@@ -18,6 +17,8 @@ export default function UsedBike() {
   const [similarBikeArr, setSimilarBikeArr] : any = useState([])
   const [isLoading, setIsLoading]  = useState(false)
   const [showPhoneNo, setShowPhoneNo] = useState(false)
+
+  const router = useRouter()
 
   useEffect(() => {
       fetchBikeInfo()
@@ -36,6 +37,7 @@ export default function UsedBike() {
           setBikeDetail(res.add)
           setSimilarBikeArr(res.bikes)
           setShowPhoneNo(false)
+          console.log('res', res)
         }
       }
       else {
@@ -50,12 +52,14 @@ export default function UsedBike() {
   let bikeCity = getCityFromId(bikeDetail.cityId, CityArr)
   let bikeYear = getYearFromId(bikeDetail.yearId, YearArr)
 
-  console.log('bikeYear', bikeYear, bikeDetail.yearId, YearArr)
-  console.log('bikeCity', bikeCity, bikeDetail.cityId, CityArr)
-  console.log('bikeBrand', bikeBrand, bikeDetail.brandId, BrandArr)
+  // console.log('bikeYear', bikeYear, bikeDetail.yearId, YearArr)
+  // console.log('bikeCity', bikeCity, bikeDetail.cityId, CityArr)
+  // console.log('bikeBrand', bikeBrand, bikeDetail.brandId, BrandArr)
 
   return (
+    <div className={styles.main_body}>
     <main className={`${styles.main_container} used_bike_detail_pg`}>
+      
       <div className={styles.container_one}>
         
         <h1 className={styles.title}> {bikeDetail.title}  </h1>
@@ -65,21 +69,23 @@ export default function UsedBike() {
           slidesPerView={1} 
           onSlideChange={() => console.log('slide change')} 
           onSwiper={(swiper) => console.log(swiper)} 
-          modules={[Navigation, Pagination]}
+          modules={[Navigation, FreeMode]}
+          navigation={true}
+          initialSlide={0}
+          loop={true}
+          className='usedbikeDetailSwiper'
         >
           {
             bikeDetail.images && bikeDetail.images.length > 0 && 
             bikeDetail.images.map((imgUrl:any, ind:any) => {
               return(
                 <SwiperSlide key={imgUrl}>
-                  <img src={imgUrl} alt="Random Image 1" style={{ width: "100%" }}/>
+                  <img src={imgUrl} alt="Random Image 1"  className={styles.slider_img}/>
                 </SwiperSlide>
               )
             })
           }
          
-          <div className="swiper-button-prev"></div>
-          <div className="swiper-button-next"></div>
         </Swiper>
   
 
@@ -95,8 +101,8 @@ export default function UsedBike() {
                   <p className={styles.info_field}> { bikeBrand && bikeBrand.length > 0 && bikeBrand[0].brandName } </p>
                 </td>
                 <td>
-                  <p className={styles.info_field}> CC </p>
-                  <p className={styles.info_field}> { bikeDetail.cc } </p>
+                  <p className={styles.info_field}> Bike CC </p>
+                  <p className={styles.info_field}> { bikeDetail.cc } CC </p>
                 </td>
               </tr>
             </tbody>
@@ -127,43 +133,36 @@ export default function UsedBike() {
       </div>
      
     <div>
-    <div className={styles.container_two}>
-      <h2 className={styles.price_text} > PKR { bikeDetail.price } </h2>
-      <hr/>
-      <p className={styles.sellerName}> Seller Name: { bikeDetail.sellerName } </p>
-      <hr/>
-      {!showPhoneNo ? 
-      <p className={styles.seller_ph_text} onClick={() => setShowPhoneNo(true) }> Show Phone No </p> :
-      <span className={styles.seller_ph_no} > { bikeDetail.mobileNumber } </span>
-      }
-    </div>
-    {/* <div className={styles.container_three}>
-        <div className={styles.owner_detail_head}>
-          <h1 className={styles.details_heading} >Seller Details</h1>
-          <div className={styles.owner_name}>
-          <small>Ahmed</small>
-          <small>Member Since Mar 05, 2020</small>
-          <div className={styles.icons}>
-            <span className={styles.contact} ></span>
-            <span className={styles.message}></span>
-            <span className={styles.facebook}></span>
-          </div>
-          <p>See if your friends know this seller</p>
-          <span>Connect with facebook</span>
+        <div className={styles.container_two}>
+          <h2 className={styles.price_text} > PKR { bikeDetail.price } </h2>
+          <hr/>
+          <p className={styles.sellerName}> Seller Name: { bikeDetail.sellerName } </p>
+          <hr/>
+          {!showPhoneNo ? 
+          <p className={styles.seller_ph_text} onClick={() => setShowPhoneNo(true) }> Show Phone No </p> :
+          <span className={styles.seller_ph_no} > { bikeDetail.mobileNumber } </span>
+          }
+        </div>
+    
+        <div className={styles.container_four}>
+          <div className={styles.transaction}>
+            <h1 className={styles.tranc_text}>Instructions for Seller & Buyer</h1>
+            <ol>
+              <li> ebike.pk is not responsible for the authenticity/clearance of any motorcycle or its documents.</li>
+              <li> Kindly Verify Motorcycle Papers and get the Clearance from RELEVANT AUTHORITY OF YOUR PROVINCE before finalizing the deal. </li>
+              <li> Meet Safe Place for Finalizing your deal. </li>
+            </ol>
           </div>
         </div>
-      </div> */}
-      <div className={styles.container_four}>
-        <div className={styles.transaction}>
-          <h1 className={styles.tranc_text}>Instructions for Seller & Buyer</h1>
-          <ol>
-            <li> ebike.pk is not responsible for the authenticity/clearance of any motorcycle or its documents.</li>
-            <li> Kindly Verify Motorcycle Papers and get the Clearance from RELEVANT AUTHORITY OF YOUR PROVINCE before finalizing the deal. </li>
-            <li> Meet Safe Place for Finalizing your deal. </li>
-          </ol>
-        </div>
       </div>
-      </div>
+
     </main>
+    
+    <div className={styles.similarBikeDiv}>
+      <h6 className={styles.similar_heading}> Similar Bikes </h6>
+      <SwiperCarousels  sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='u'/>
+    </div>
+    
+    </div>
   );
 }

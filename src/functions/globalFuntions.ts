@@ -61,7 +61,7 @@ function getSinglebikesDetail(id:any) {
 
 function getBrandFromId(id:any, dataArr:any) {
     if(dataArr && dataArr.length > 0 && id) {
-        let brand = dataArr.filter(val => { return (val.id == id) })
+        let brand = dataArr.filter((val:any) => { return (val.id == id) })
         return brand;
     }
     else return []
@@ -69,7 +69,7 @@ function getBrandFromId(id:any, dataArr:any) {
 
 function getCityFromId(id:any, dataArr:any) {
     if(dataArr && dataArr.length > 0 && id) {
-        let city = dataArr.filter(val => { return (val.id == id) })
+        let city = dataArr.filter((val:any) => { return (val.id == id) })
         return city;
     }
     else return []
@@ -77,7 +77,7 @@ function getCityFromId(id:any, dataArr:any) {
 
 function getYearFromId(id:any, dataArr:any) {
     if(dataArr && dataArr.length > 0 && id) {
-        let year = dataArr.filter(val => { return (val.id == id) })
+        let year = dataArr.filter((val:any) => { return (val.id == id) })
         return year;
     }
     else return []
