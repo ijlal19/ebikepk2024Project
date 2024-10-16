@@ -1,8 +1,8 @@
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { CCArray, YearArray } from '../filterData';
+import Select  from '@mui/material/Select';
+import { CCArray, YearArray } from '../data';
 import { useState } from 'react';
 
 export default function FilterDropdown({ values, dropvalues }: any) {
