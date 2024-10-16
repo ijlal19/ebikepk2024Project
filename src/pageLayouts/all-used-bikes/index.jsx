@@ -1,5 +1,5 @@
 'use client'
-import { Box,  Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
 import { getAllbikesDetail } from "@/functions/globalFuntions"
@@ -7,6 +7,7 @@ import { Apps, FormatListBulleted } from '@mui/icons-material';
 import { CityArr, Brand } from './filterData'
 import MoreOptionPopup from './Popup'
 import FilterDropdown from './DropDown'
+import { useRouter } from 'next/navigation'
 const AllUsedBike = () => {
 
     const [popupArray, setPopupArray] = useState([CityArr])
@@ -16,11 +17,26 @@ const AllUsedBike = () => {
     const [functionval, setFunctionVal] = useState()
     const [selectedCity, setSelectedCity] = useState(null);
     const [selectedBrand, setSelectedBrand] = useState(null);
+    const [isLoading, setIsLoading] = useState(false)
+
+    const router = useRouter()
+
+    const ModalData = {
+        showmodal: toggle,
+        openmodal: openmodal,
+        popupdata: popupArray,
+        arrname: functionval
+    }
+
+    useEffect(() => {
+        fetchBikeInfo(pageNo)
+    }, [])
 
     // Console For Value
     useEffect(() => {
         console.log(selectedCity)
     }, [selectedCity])
+
     useEffect(() => {
         console.log(selectedBrand)
     }, [selectedBrand])
@@ -43,9 +59,8 @@ const AllUsedBike = () => {
             '*'
         }
     }
-    useEffect(() => {
-        fetchBikeInfo(pageNo)
-    }, [])
+
+
     async function fetchBikeInfo(_pageNo) {
         let curentFetchPage = _pageNo + 10
         setPageNo(curentFetchPage)
@@ -56,11 +71,13 @@ const AllUsedBike = () => {
         window.scrollTo(0, 0)
         console.log('res', res)
     }
-    const ModalData = {
-        showmodal: toggle,
-        openmodal: openmodal,
-        popupdata: popupArray,
-        arrname: functionval
+
+    function goToDetailPage(val) {
+        console.log('val', val)
+        let title = val.title
+        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+        console.log('url title', urlTitle)
+        router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
     return (
         <>
@@ -82,9 +99,9 @@ const AllUsedBike = () => {
                                             checked={selectedCity === e.id}
                                             onChange={(event) => {
                                                 if (event.target.checked) {
-                                                    setSelectedCity(e.id); 
+                                                    setSelectedCity(e.id);
                                                 } else {
-                                                    setSelectedCity(null); 
+                                                    setSelectedCity(null);
                                                 }
                                             }}
                                         />
@@ -93,7 +110,7 @@ const AllUsedBike = () => {
                                 );
                             })
                         }
-                        <MoreOptionPopup props={ModalData} values="city" selectPropsCity={setSelectedCity} PropsCity={selectedCity}/>
+                        <MoreOptionPopup props={ModalData} values="city" selectPropsCity={setSelectedCity} PropsCity={selectedCity} />
                     </Box>
                     <Box className={styles.heading_brand}>
                         <Typography className={styles.brand_text}>MAKE</Typography>
@@ -103,14 +120,14 @@ const AllUsedBike = () => {
                             Brand.slice(0, 5).map((e, i) => {
                                 return (
                                     <Typography className={styles.option_values} key={i}>
-                                       <input
+                                        <input
                                             type="checkbox"
                                             checked={selectedBrand === e.id}
                                             onChange={(event) => {
                                                 if (event.target.checked) {
-                                                    setSelectedBrand(e.id); 
+                                                    setSelectedBrand(e.id);
                                                 } else {
-                                                    setSelectedBrand(null); 
+                                                    setSelectedBrand(null);
                                                 }
                                             }}
                                         />
@@ -118,7 +135,7 @@ const AllUsedBike = () => {
                                     </Typography>)
                             })
                         }
-                        <MoreOptionPopup props={ModalData} values='brand'  selectPropsBrand={setSelectedBrand}PropsBrand={selectedBrand}/>
+                        <MoreOptionPopup props={ModalData} values='brand' selectPropsBrand={setSelectedBrand} PropsBrand={selectedBrand} />
                     </Box>
                     <Box className={styles.heading_years}>
                         <Typography className={styles.years_text}>YEARS</Typography>
@@ -182,7 +199,7 @@ const AllUsedBike = () => {
                     <div>
                         {allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
                             return (
-                                <div className={styles.long_card} key={ind}>
+                                <div className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>
                                     <div className={styles.bike_image}>
                                         {val.images && val.images.length > 0 ? <img src={val.images[0]} alt={'a'} className={styles.card_image} /> : ""}
                                     </div>
@@ -201,7 +218,7 @@ const AllUsedBike = () => {
 
                                         <p className={styles.card_price_mobile}>Price:  {val.price}</p>
 
-                                        <button className={styles.show_phone_button}> Show Phone Number </button>
+                                        {/* <button className={styles.show_phone_button}> Show Phone Number </button> */}
                                         {/* <p className={styles.phone_number}>{'aa'}</p> */}
                                     </div>
                                 </div>
@@ -217,7 +234,7 @@ const AllUsedBike = () => {
                 </div>
 
                 <Box className={styles.add_area}>
-                    Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.Add area.
+
                 </Box>
             </Box>
         </>

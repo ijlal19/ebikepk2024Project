@@ -2,6 +2,10 @@ $green: yellowgreen;
 $gray: #f2f3f3;
 $blue: #1976d2;
 
+.main_body {
+    background-color: $gray ;
+}
+
 .main_container {
     width: 100%;
     height: 100%;
@@ -26,6 +30,11 @@ $blue: #1976d2;
         margin-inline: 0px;
         padding: 20px 10px 20px 20px;
     }
+
+    .slider_img {
+        max-height: 300px;
+        width: 100%;
+    }
 }
 
 .info_content { 
@@ -40,6 +49,8 @@ $blue: #1976d2;
     }
 
     .info_field_two {
+        max-width: 150px;
+        overflow: hidden;
         font-size: 12px;
         @media (max-width:767px) {
             font-size: 11px;
@@ -48,10 +59,10 @@ $blue: #1976d2;
 }
 
 .container_one .title {
-    font-size: 18px;
+    font-size: 17px;
     color: $blue ;
-    font-weight: 600;
-    margin-bottom: 5px;
+    font-weight: 500;
+    margin-bottom: 10px;
     @media (max-width: 767px) {
         font-size: 16px;
     }
@@ -147,6 +158,7 @@ $blue: #1976d2;
     align-items: center;
     background-color: #fff;
     justify-content: center ;
+    padding-bottom: 10px;
 
     @media (max-width: 767px) {
         width: 370px;
@@ -334,4 +346,17 @@ $blue: #1976d2;
         width: 370px;
         margin-left: 10px;
     }
+}
+
+.similarBikeDiv {
+    .similar_heading {
+      font-size: 18px;
+      margin-bottom: 0px;
+      font-weight: normal;  
+    }
+    background-color: $gray;
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px 0px;
+
 }

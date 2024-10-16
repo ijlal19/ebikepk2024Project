@@ -16,12 +16,15 @@
                 margin: auto;
                 height: auto;
                 border-radius: 0px;
-                max-height: 180px;
+                height: 180px;
+                min-width: 280px;
+                font-size: 11px;
         }
 
         .card_title {
                 color: black;
                 font-size: 16px;
+                text-wrap: nowrap;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
                         font-size: 14px;
@@ -31,6 +34,7 @@
         .card_price {
                 font-size: 15px;
                 color: #333;
+                text-wrap: nowrap;
                 text-transform: capitalize !important;
                 padding: 0px;
                 margin-bottom: 0px;
@@ -44,6 +48,7 @@
         .card_location {
                 color: black;
                 font-size: 12px;
+                text-wrap: nowrap;
                 padding: 0px;
                 margin-bottom: 0px;
                 @media (max-width:768px) {

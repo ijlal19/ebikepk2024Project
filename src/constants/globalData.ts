@@ -1,4 +1,4 @@
-export const Brand = [
+let BrandArr = [
     {
         "id": 12,
         "brandName": "bmw",
@@ -337,7 +337,7 @@ export const Brand = [
     }
 ]
 
- export const CityArr = [
+ const CityArr = [
     {
         "id": 1,
         "city_name": "Karachi",
@@ -3962,21 +3962,15 @@ export const Brand = [
         "createdAt": "2019-01-24T07:26:01.278Z",
         "updatedAt": "2019-01-24T07:26:01.278Z"
     },
-    // {
-    //     "id": 668,
-    //     "city_name": "Adda Jahan Khan",
-    //     "createdAt": "2019-02-01T12:32:24.794Z",
-    //     "updatedAt": "2019-02-01T12:32:24.794Z"
-    // }
+    {
+        "id": 668,
+        "city_name": "Adda Jahan Khan",
+        "createdAt": "2019-02-01T12:32:24.794Z",
+        "updatedAt": "2019-02-01T12:32:24.794Z"
+    }
 ]
 
-export const YearArray = [
-    {
-        "id": 1,
-        "year": "1969",
-        "createdAt": "2018-12-14T13:03:03.107Z",
-        "updatedAt": "2018-12-14T13:03:03.107Z"
-    },
+let YearArr = [
     {
         "id": 2,
         "year": "1970",
@@ -4285,19 +4279,19 @@ export const YearArray = [
     },
     {
         "id": 53,
-        "year": "2021",
+        "year": "non register",
         "createdAt": "2020-06-18T03:54:05.563Z",
         "updatedAt": "2020-06-18T04:17:03.933Z"
     },
     {
         "id": 54,
-        "year": "2022",
+        "year": "2021",
         "createdAt": "2020-06-18T03:52:52.624Z",
         "updatedAt": "2020-06-18T04:14:50.816Z"
     },
     {
         "id": 55,
-        "year": "2023",
+        "year": "2022",
         "createdAt": "2020-06-18T04:14:50.816Z",
         "updatedAt": "2020-06-18T04:14:50.816Z"
     }
@@ -4307,21 +4301,5 @@ export let CC = [ 50, 70 ,100,110,125,150,200,250,300,350,400,450,500,550,600,65
     1050,1100,1150,1200,1250,1300,1350,1400,1450,1500,1550,1600,1650,1700]
 
 
-export default CityArr
+export {BrandArr, CityArr, YearArr}
 
-
-// http://localhost:4000/api/brand/get-brand
-// http://localhost:4000/api/city/get-city
-// http://localhost:4000/api/years/get-years
-
-
-// http://localhost:4000/api/classified/get-adds-by-filter
-
-// {
-//     "city_filter": [],
-//     "brand_filter": [
-//         12
-//     ],
-//     "years_filter": [],
-//     "cc": []
-// }
