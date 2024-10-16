@@ -224,4 +224,4 @@ const AllUsedBike = () => {
     )
 }
 
-export default AllUsedBike;
+export default AllUsedBike; 
