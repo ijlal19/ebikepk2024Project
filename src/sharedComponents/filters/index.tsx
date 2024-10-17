@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import styles from './index.module.scss'
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Brand, CityArr } from './data'
+import { BrandArr, CityArr } from '@/constants/globalData'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 function Filters() {
@@ -82,7 +82,7 @@ function Filters() {
       </Box>
       <Box className={styles.brand_options}>
         {
-          Brand.slice(0, 5).map((e: any, i: any) => {
+          BrandArr.slice(0, 5).map((e: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input

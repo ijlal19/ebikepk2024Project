@@ -2,7 +2,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select  from '@mui/material/Select';
-import { CCArray, YearArray } from '../data';
+import { CcArr, YearArr } from '@/constants/globalData';
 import { useState } from 'react';
 
 export default function FilterDropdown({ values, dropvalues }: any) {
@@ -10,10 +10,7 @@ export default function FilterDropdown({ values, dropvalues }: any) {
     const [YearTo, setYearTo] = useState('');
     const [CCFrom, setCCFrom] = useState('');
     const [CCTo, setCCTo] = useState('');
-    // console.log(YearFrom)
-    // console.log(YearTo)
-    // console.log(CCFrom)
-    // console.log(CCTo)
+
     return (
         <>{
             dropvalues == 'years' ?
@@ -29,7 +26,7 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                     value={YearFrom}
                                     onChange={(e)=>setYearFrom(e.target.value)}
                                 >
-                                    {YearArray.map((e: any, i: any) => {
+                                    {YearArr.map((e: any, i: any) => {
                                         return <MenuItem key={i} value={e.id}>{e.year}</MenuItem>
                                     })}
                                 </Select>
@@ -46,7 +43,7 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                     value={YearTo}
                                     onChange={(e)=>setYearTo(e.target.value)}
                                 >
-                                    {YearArray.map((e: any, i: any) => {
+                                    {YearArr.map((e: any, i: any) => {
                                         return <MenuItem key={i} value={e.id}>{e.year}</MenuItem>
                                     })}
                                 </Select>
@@ -66,7 +63,7 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                         value={CCFrom}
                                         onChange={(e)=>setCCFrom(e.target.value)}
                                     >
-                                        {CCArray.map((e: any, i: any) => {
+                                        {CcArr.map((e: any, i: any) => {
                                             return <MenuItem key={i} value={e}>{e} CC</MenuItem>
                                         })}
                                     </Select>
@@ -82,7 +79,7 @@ export default function FilterDropdown({ values, dropvalues }: any) {
                                         label='from'
                                         value={CCTo}
                                         onChange={(e)=>setCCTo(e.target.value)}>
-                                        {[...CCArray].reverse().map((e: any, i: any) => {
+                                        {[...CcArr].reverse().map((e: any, i: any) => {
                                             return <MenuItem key={i} value={e}>{e} CC</MenuItem>;
                                         })}
                                     </Select>

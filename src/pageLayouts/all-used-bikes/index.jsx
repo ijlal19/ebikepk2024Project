@@ -6,6 +6,7 @@ import { getAllbikesDetail } from "@/functions/globalFuntions"
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import { useRouter } from 'next/navigation'
 import Filters from '@/sharedComponents/filters'
+
 const AllUsedBike = () => {
 
     const [allBikesArr, setAllBikesArr] = useState([])
