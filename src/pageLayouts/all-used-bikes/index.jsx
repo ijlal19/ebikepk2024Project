@@ -18,6 +18,7 @@ const AllUsedBike = () => {
     useEffect(() => {
         fetchBikeInfo(pageNo)
     }, [])
+
     async function fetchBikeInfo(_pageNo) {
         let curentFetchPage = _pageNo + 10
         setPageNo(curentFetchPage)
@@ -30,16 +31,20 @@ const AllUsedBike = () => {
     }
 
     function goToDetailPage(val) {
-        console.log('val', val)
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         console.log('url title', urlTitle)
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
+
     return (
         <>
             <Box className={styles.all_bike_main}>
-                <Filters/>
+                
+                <Filters 
+                    setLoader={setIsLoading} 
+                    updateData={setAllBikesArr}
+                />
 
                 <div className={styles.main_box}>
                     <div className={styles.navigation}>
@@ -73,16 +78,11 @@ const AllUsedBike = () => {
                                         </ul>
 
                                         <p className={styles.card_price_mobile}>Price:  {val.price}</p>
-
-                                        {/* <button className={styles.show_phone_button}> Show Phone Number </button> */}
-                                        {/* <p className={styles.phone_number}>{'aa'}</p> */}
                                     </div>
                                 </div>
                             )
                         })}
-
                     </div>
-
 
                     <div className={styles.viewMoreBtnContainer} >
                         <button onClick={() => { fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
