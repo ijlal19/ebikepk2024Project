@@ -1,3 +1,123 @@
 $green: yellowgreen; 
 $gray: #f2f3f3;
 $blue: #1976d2;
+
+
+.dealers_main{
+    width: 100%;
+    max-width: 1000px;
+    margin:10px auto;
+    padding: 5px !important;
+    height: auto;
+    .bikre_review_grid{
+        display: flex;
+        justify-content: center;
+        .bike_image_box{
+            width: 100%;
+            height: auto;
+            padding: 10px;
+            display: inline-block;
+            justify-content: center;
+            .title{
+                width: 100%;
+                text-align: left;
+                color: #1976d2;
+                font-size: 20px;
+                @media (max-width:768px) {
+                    font-size: 13px;
+                }
+            }
+
+            .bike_image{
+                width: 100%;
+                height: auto;
+                .image{
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        }
+
+        .bike_review_box{
+            padding: 10px !important;
+            box-shadow: 0px 0px 5px grey;
+            height: fit-content;
+
+            .price_box{
+                width: 100%;
+                border-bottom: 1px solid rgb(203, 199, 199);
+                text-align: center;
+                font-size: 20px;
+                padding: 10px 0px !important;
+                font-weight: bolder;
+                color: yellowgreen;
+                @media (max-width:768px) {
+                    font-size: 13px;
+                }
+            }
+            .rating_box{
+                width: 100%;
+                border-bottom: 1px solid rgb(203, 199, 199);
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                padding: 15px 0px !important;
+                color: rgb(203, 199, 199);
+                @media (max-width:768px) {
+                    font-size: 13px;
+                }
+            }
+            .comment_box{
+                margin: 5px 0px;
+                width: 100%;
+                border-bottom: 1px solid rgb(213, 206, 206);
+                text-align: left;
+                font-size: 18px;
+                font-weight: bold;
+                padding: 15px 0px 15px 0px!important;
+                color: rgb(14, 13, 13);
+                @media (max-width:768px) {
+                    font-size: 13px;
+                }
+
+                .comment_box_data{
+                    display: flex;
+                    // align-items: center;
+                    .data_heading{
+                        font-size: 14px;
+                        font-weight: bolder;
+                        color: grey;
+                        padding: 10px 0px;
+                    }
+                    .data_comment{
+                        font-size: 14px;
+                        color: grey;
+                        padding: 10px 0px;
+                    }
+                    .data_text{
+                        padding: 10px 0px 10px 5px;
+                        font-size: 13px;
+                    }
+                    .data_date{
+                        font-size: 10px;
+                        width: 100%;
+                        text-align: right;
+                    }
+                }
+            }
+
+            .view_detail_btn {
+                color: #1976d2;
+                margin-top: 10px;
+                padding: 3px 8px;
+                border-radius: 0px;
+                width: 100%;
+                font-size: 13px;
+                border: 1px solid #1976d2;
+        }
+        }
+
+    }
+}
