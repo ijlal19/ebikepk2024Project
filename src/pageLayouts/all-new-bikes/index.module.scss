@@ -1,3 +1,167 @@
 $green: yellowgreen; 
 $gray: #f2f3f3;
 $blue: #1976d2;
+
+
+.all_new_bike_main{
+    width: 100%;
+    max-width: 1000px;
+    margin: 0px auto !important;
+    padding: 10px 5px 10px 5px !important;
+
+    .description_box{
+        width: 100%;
+        padding: 10px 0px;
+        font-size: 13px;
+
+        .card_main{
+            width: 50px;
+            height: 50px;
+            margin: auto;
+            padding: 0px !important;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            .card_image{
+                width: 50px !important;
+                // @media (max-width:768px) {
+                //     width:40px !important;
+                //     height: 40px !important;
+                //     border: 1px solid #000;
+                // }
+            }
+        }
+        .descriptionPara{
+            font-size: 12px;
+            width: 100%;
+            text-align: center;
+            margin: auto;
+            padding: 10px 10px !important;
+        }
+        .buttons_box{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .show_more_button{
+                font-size: 10px;
+                border-radius: 0px;
+            background: white;
+            margin: auto !important;
+            padding: 0px !important;
+        }
+    }
+    }
+
+    .grid_sectiion_box{
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+
+        .card_grid{
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0px !important;
+            gap: 10px 10px;
+            justify-content: center;
+            .heading{
+                width: 100%;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bolder;
+            }
+        }
+    }
+
+    .Dealers_grid_box{
+        display: inline-block;
+        justify-content: center;
+        .heading{
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bolder;
+            padding: 5px 0px 10px 0px!important;
+            border-bottom: 1px solid #d7d2d2;
+        }
+        .Dealers_card{
+            margin-top: 10px;
+            display: flex;
+            padding: 10px 10px 10px 10px !important;
+            flex-wrap: wrap;
+            box-shadow: 0px 0px 5px rgb(228, 225, 225);
+        .card_main{
+            width: 95%;
+            border: 1px solid #dfdada;
+            margin: 5px auto 5px auto;
+            height: 60px;
+            display: flex;
+            justify-content: left;
+            flex-direction: row;
+            text-align: left;
+            padding: 0px 10px 0px 10px !important;
+            align-items: center;
+
+            .card_image{
+                width: 60px;
+                height: auto;
+            }
+            .card_text{
+                display: inline-block;
+                justify-content: center;
+                align-items: center;
+                padding: 0px !important;
+                margin: 0px !important;
+                width: 100%;
+                .card_title{
+                    font-size: 12px;
+                font-weight: bold;
+                color: grey;
+                padding: 0px 0px 0px 10px;
+                @media (max-width:768px) {
+                    font-size: 11px;
+                }
+            }
+            .card_location{
+                font-size: 12px;
+                font-weight: bolder;
+                color: black;
+                padding: 0px 0px 0px 10px;
+                @media (max-width:768px) {
+                    font-size: 11px;
+                }
+            }
+        }
+            @media (max-width:768px) {
+                width: 40%;
+                height: 80px;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    }
+    .view_detail_btn {
+        color: #1976d2;
+        margin-top: 10px;
+        padding: 3px 8px;
+        border-radius: 0px;
+        width: 100%;
+        font-size: 13px;
+        border: 1px solid #1976d2;
+}
+        @media (max-width:768px) {
+            // display: flex;
+            margin-top: 40px;
+            border: 1px solid #000;
+            justify-content: center;
+            // flex-wrap: wrap;
+
+            .view_detail_btn{
+                margin: 0px 0px 0px 20px !important;
+                width:80%;
+            }
+        }
+    }
+
+}
