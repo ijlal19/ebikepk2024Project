@@ -5,29 +5,9 @@ import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss'
 import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ImgCard from '@/sharedComponents/itemCard';
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px')
-
-  const Columns = ["Frame", "Displacement", "Dimention", "Tyre Front", "Clutch", "Dry Weight", "Starting"
-    ,'Starting', 'Engine','Petrol Capacity','Tyre Back','Compression Ratio','Ground Clearnce','Transmission']
-
-  const Valuer = [
-    newBikeData.bike.frame,
-    newBikeData.bike.displacement,
-    // newBikeData.bike.dimention,
-    // newBikeData.bike.tyreFront,
-    // newBikeData.bike.clutch,
-    // newBikeData.bike.dryWeight, 
-    // newBikeData.bike.starting,
-    // newBikeData.bike.starting,
-    // newBikeData.bike.engine,
-    // newBikeData.bike.petrolCapacity,
-    // newBikeData.bike.tyreBack,
-    // newBikeData.bike.compressionRatio,
-    // newBikeData.bike.groundClearance,
-    // newBikeData.bike.transmission
-  ];
-  console.log(Valuer)
 
   return (
     <Box className={styles.dealers_main}>
@@ -85,24 +65,68 @@ export default function NewBikeBrand() {
             <Grid container>
             <Grid item xs={isMobile ? 12 : 6}>
   <table className={styles.table}>
-    {Columns.slice(0, 7).map((column: any, index: any) => (
-      <tr className={styles.tr} key={index}>
-        <td className={styles.column}>{column}</td> 
-        <td className={styles.column}>{column}</td> 
+      <tr className={styles.tr} >
+        <td className={styles.column}>Frame</td> 
+        <td className={styles.column}>{newBikeData.bike.frame}</td> 
       </tr>
-    ))}
+      <tr className={styles.tr} >
+        <td className={styles.column}>Displacement</td> 
+        <td className={styles.column}>{newBikeData.bike.displacement}</td> 
+      </tr>
+      <tr className={styles.tr} >
+        <td className={styles.column}>Dimention</td> 
+        <td className={styles.column}>{newBikeData.bike.dimention}</td> 
+      </tr>
+      <tr className={styles.tr} >
+        <td className={styles.column}>Tyre Front</td> 
+        <td className={styles.column}>{newBikeData.bike.tyreFront}</td> 
+      </tr>
+      <tr className={styles.tr} >
+        <td className={styles.column}>Clutch</td> 
+        <td className={styles.column}>{newBikeData.bike.clutch}</td> 
+      </tr>
+      <tr className={styles.tr} >
+        <td className={styles.column}>Dry Weight</td> 
+        <td className={styles.column}>{newBikeData.bike.dryWeight}</td> 
+      </tr>
+      <tr className={styles.tr} >
+        <td className={styles.column}>Starting</td> 
+        <td className={styles.column}>{newBikeData.bike.starting}</td> 
+      </tr>
   </table>
 </Grid>
 
               <Grid item xs={isMobile ? 12 : 6}>
 
                 <table className={styles.table}>
-                  {Columns.slice(7).map((column: any, index: any) => (
                     <tr className={styles.tr}>
-                        <td key={index} className={styles.column}>{column}</td>
-                        <td key={index} className={styles.column}>{column}</td>
+                        <td className={styles.column}>Starting</td>
+                        <td className={styles.column}>{newBikeData.bike.starting}</td>
                     </tr>
-                  ))}
+                    <tr className={styles.tr}>
+                        <td className={styles.column}>Engine</td>
+                        <td className={styles.column}>{newBikeData.bike.engine.slice(0,24)}</td>
+                    </tr>
+                    <tr className={styles.tr}>
+                        <td className={styles.column}>Petrol Capacity</td>
+                        <td className={styles.column}>{newBikeData.bike.petrolCapacity}</td>
+                    </tr>
+                    <tr className={styles.tr}>
+                        <td className={styles.column}>Tyre Back</td>
+                        <td className={styles.column}>{newBikeData.bike.tyreBack}</td>
+                    </tr>
+                    <tr className={styles.tr}>
+                        <td className={styles.column}>Comp-Ration</td>
+                        <td className={styles.column}>{newBikeData.bike.compressionRatio}</td>
+                    </tr>
+                    <tr className={styles.tr}>
+                        <td className={styles.column}>Ground Clearence</td>
+                        <td className={styles.column}>{newBikeData.bike.groundClearance}</td>
+                    </tr>
+                    <tr className={styles.tr}>
+                        <td className={styles.column}>Transmittion</td>
+                        <td className={styles.column}>{newBikeData.bike.transmission}</td>
+                    </tr>
                 </table>
               </Grid>
             </Grid>
@@ -112,6 +136,27 @@ export default function NewBikeBrand() {
         <Grid item xs={isMobile ? 12 : 3} className={styles.bike_information_grid2}></Grid>
       </Grid>
 
+      <Grid container className={styles.bike_video_grid}>
+      <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
+          <Box className={styles.bike_video}>
+          <iframe  src="https://www.youtube.com/embed/GqVt-mtq-dE?si=MhC5-eRs0XHEEzGr" title="YouTube video player"      className={styles.bike_video}></iframe>
+          </Box>
+        </Grid>
+        <Grid item xs={isMobile ? 12 :3}></Grid>
+      </Grid>
+
+      <Grid container className={styles.other_bike_card}>
+      <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
+          {
+            [newBikeData.bike].map(( e:any , i:any ) => {
+              return(
+                <ImgCard data={e} from='u' key={i} />
+              )
+})
+          }
+        </Grid>
+        <Grid item xs={isMobile ?12 :3}></Grid>
+      </Grid>
 
     </Box>
   );

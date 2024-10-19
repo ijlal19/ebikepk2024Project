@@ -6,43 +6,52 @@
         margin: auto 10px;
         border: 1px solid #e4e4e4;
         @media (max-width:767px) {
-                
+                max-width: 180px;
+                margin: auto 0px !important;
         }
 
         .card_info {
                 padding-bottom: 10px !important;
+                @media (max-width:767px) {
+                        margin-bottom: 0px !important;
+                }
         }
 
         .card_img {
                 width: 100%;
                 margin: auto;
-                height: auto;
                 border-radius: 0px;
-                height: 180px;
-                min-width: 280px;
+                height: auto;
                 font-size: 11px;
+                @media (max-width:767px) {
+                        min-width: 100px;
+                        height: auto;
+                        width: 100%;
+                }
         }
 
-        .card_title {
+        .card_title{
                 color: black;
-                font-size: 16px;
+                font-size: 15px;
                 text-wrap: nowrap;
-                margin-bottom: 0px;
-                @media (max-width:768px) {
-                        font-size: 14px;
+                padding: 0px !important;
+                font-weight: bolder;
+
+                @media (max-width:767px) {
+                        font-size: 12px;
                 }
         }
 
         .card_price {
-                font-size: 15px;
+                font-size: 12px;
                 color: #333;
                 text-wrap: nowrap;
                 text-transform: capitalize !important;
-                padding: 0px;
+                padding:  0px;
+                font-weight: bolder;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
-                        font-size: 11px;
-                        font-weight: 500;
+                        font-size: 10px;
                 }
 
         }
@@ -54,14 +63,14 @@
                 padding: 0px;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
-                        font-size: 11px;
+                        font-size: 10px;
                 }
         }
 
         .avg_price_text {
                 color: black;
                 font-size: 12px;
-                padding: 0px;
+                padding:  0px;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
                         font-size: 11px;
@@ -78,7 +87,8 @@
                 text-wrap: wrap;
                 text-transform: capitalize;
                 @media (max-width:768px) {
-                        font-size: 12px;
+                        font-size: 11px;
+                        display: none;
                 }
         }
 }

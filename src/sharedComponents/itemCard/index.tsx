@@ -56,7 +56,7 @@ export default function ImgCard(props:any) {
                      </Typography>
                     </>
                 }
-                 <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props.data) }} > View Bike Detail </Button>
+                 <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props.data) }} > View Detail </Button>
             </CardContent>
         </Card>
 

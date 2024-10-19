@@ -122,19 +122,21 @@ $blue: #1976d2;
     }
 
     .bike_information_grid{
-        border: 1px solid #000;
         padding: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
 
         .bike_information_grid1{
+        box-shadow: 0px 0px 10px rgb(210, 207, 207);
             .title{
                 width: 100%;
                 text-align: left;
+                padding: 10px 0px 0px 10px;
                 color: #1976d2;
                 font-size: 16px;
                 @media (max-width:768px) {
+                    padding: 10px 0px 0px 5px;
                     font-size: 13px;
                 }
             }
@@ -155,12 +157,13 @@ $blue: #1976d2;
                         border: 1px solid #000;
 
                         .column {
+                            text-wrap: wrap;
                             padding: 10px 12px;
                             text-align: center;
-                            font-size: 13px;
+                            font-size: 12px;
                             border: 1px solid #ddd;
                             @media (max-width:768px) {
-                                font-size: 12px;
+                                font-size: 11px;
                             }
                           }
                       }
@@ -169,44 +172,40 @@ $blue: #1976d2;
 
         }
     }
-}
 
-// .table {
-//     width: 100%;
-//     border-collapse: collapse; /* Removes gap between table cells */
-//     margin: 10px 5px 10px 5px !important; /* Adds some space between the two tables */
-//   }
-  
-//   .tr {
-//     border-bottom: 1px solid #e0e0e0; /* Adds a light border between rows */
-//     border: 1px solid #000;
-//     margin: 0px 10px;
-//   }
-  
-//   .column {
-//     padding: 8px 12px; /* Adjusts padding inside the cells */
-//     text-align: center;
-//     border: 1px solid #000;
-//     background-color: #f9f9f9; /* Light background color for cells */
-//     border: 1px solid #ddd; /* Light border around each cell */
-//     font-weight: 500; /* Adds weight to the text */
-//   }
-  
-//   .column:nth-child(even) {
-//     background-color: #f1f1f1; /* Alternate row coloring for better visibility */
-//   }
-  
-//   /* Additional styling for the table to look cleaner */
-//   .table th, .table td {
-//     padding: 8px;
-//     border: none;
-//   }
-  
-//   .table td {
-//     padding: 0; /* Removes the padding between the columns */
-//   }
-  
-//   .table tr {
-//     margin: 0;
-//   }
-  
+    .bike_video_grid{
+        padding: 20px 0px;
+        .bike_video_box{
+            width: 100%;
+            padding: 10px 10px 10px 10px;
+
+            .bike_video{
+                width: 100%;
+                margin: auto;
+                height: 315px;
+                border: none;
+                padding: 0px;
+                margin: 0px;
+                box-sizing: border-box;
+                box-shadow: 0px 0px 10px rgb(210, 207, 207);
+            }
+        }
+    }
+
+    .other_bike_card{
+        .card_grid{
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0px !important;
+            gap: 10px;
+            justify-content: center;
+            .heading{
+                width: 100%;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bolder;
+            }
+        }
+    }
+
+}
