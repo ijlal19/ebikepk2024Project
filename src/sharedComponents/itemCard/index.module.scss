@@ -1,5 +1,4 @@
 .itemCard{
-        // background: rgb(248, 244, 244);
         background: rgb(249, 249, 249);
         width: 100%;
         max-width: 320px;
@@ -16,12 +15,15 @@
                 margin: auto;
                 height: auto;
                 border-radius: 0px;
-                max-height: 180px;
+                height: 180px;
+                min-width: 280px;
+                font-size: 11px;
         }
 
         .card_title {
                 color: black;
                 font-size: 16px;
+                text-wrap: nowrap;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
                         font-size: 14px;
@@ -29,9 +31,10 @@
         }
 
         .card_price {
-                font-size: 12px;
-                color: black;
-                font-weight: 700;
+                font-size: 15px;
+                color: #333;
+                text-wrap: nowrap;
+                text-transform: capitalize !important;
                 padding: 0px;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
@@ -44,6 +47,7 @@
         .card_location {
                 color: black;
                 font-size: 12px;
+                text-wrap: nowrap;
                 padding: 0px;
                 margin-bottom: 0px;
                 @media (max-width:768px) {
@@ -66,10 +70,11 @@
                 margin-top: 10px;
                 padding: 3px 8px;
                 border-radius: 0px;
-                font-size: 11px;
+                font-size: 13px;
                 border: 1px solid #1976d2;
+                text-transform: capitalize;
                 @media (max-width:768px) {
-                        font-size: 11px;
+                        font-size: 12px;
                 }
         }
 }

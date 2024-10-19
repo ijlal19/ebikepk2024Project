@@ -43,13 +43,13 @@ function BrandSection() {
     <Box className={styles.brand_main}>
       <Container >
         <Typography className={styles.heading}>
-          Brands
+          Bike Brands
         </Typography>
 
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
-  indicatorColor="primary" aria-label="basic tabs example">
+                indicatorColor="primary" aria-label="basic tabs example">
               <Tab label="Brands" {...a11yProps(0)} />
             </Tabs>
           </Box>
@@ -57,7 +57,7 @@ function BrandSection() {
           <CustomTabPanel value={value} index={0}>
             <Box className={styles.brand_container}>
               {
-                Data.map((e:any,i:any)=>{
+                Data.slice(0, 8).map((e:any,i:any)=>{
                   return(
                     <Box className={styles.brand_image_box} key={i}>
                       <BrandCard key={i} data={e}/>
@@ -66,7 +66,7 @@ function BrandSection() {
                 })
               }
 
-              <Button className={styles.viewallbikes_button} disableRipple>View More Buttons</Button>
+              <Button className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
             </Box>
           </CustomTabPanel>
           </Box>

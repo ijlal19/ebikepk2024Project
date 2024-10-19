@@ -32,18 +32,20 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => 
                         },
                     },
                     768: {
-                        slidesPerView: 3,
+                        slidesPerView:  3,
                         slidesPerGroup: 1,
                     },
                 }}
                 simulateTouch={true}
             >
                 {sliderData?.length > 0 &&
-                    sliderData.map((e:any, i:any) => (
-                        <SwiperSlide key={i} className={styles.slider_card}>
+                    sliderData.map((e:any, i:any) => {
+                        return(
+                            <SwiperSlide key={i} className={styles.slider_card}>
                             <ItemCard data={e} from={from} />
                         </SwiperSlide>
-                    ))}
+                        )
+})}
             </Swiper>
          </Container>
     );

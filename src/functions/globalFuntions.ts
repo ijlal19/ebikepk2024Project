@@ -1,3 +1,4 @@
+import data from '@/pageLayouts/bike-brands/data';
 import Gconfig from 'globalconfig'
 
 const numericOnly = (value: string) => {
@@ -49,6 +50,16 @@ function getAllbikesDetail(page:any) {
     })
 }
 
+function getFilteredAllbikesDetail(data:any) {
+    return fetch( Gconfig.ebikeApi + `classified/get-adds-by-filter`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
 function getSinglebikesDetail(id:any) {
     return fetch( Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-adds/${id}`, {
         method: 'GET',
@@ -58,6 +69,32 @@ function getSinglebikesDetail(id:any) {
     })
 }
 
+function getBrandFromId(id:any, dataArr:any) {
+    if(dataArr && dataArr.length > 0 && id) {
+        let brand = dataArr.filter((val:any) => { return (val.id == id) })
+        return brand;
+    }
+    else return []
+}
+
+function getCityFromId(id:any, dataArr:any) {
+    if(dataArr && dataArr.length > 0 && id) {
+        let city = dataArr.filter((val:any) => { return (val.id == id) })
+        return city;
+    }
+    else return []
+}
+
+function getYearFromId(id:any, dataArr:any) {
+    if(dataArr && dataArr.length > 0 && id) {
+        let year = dataArr.filter((val:any) => { return (val.id == id) })
+        return year;
+    }
+    else return []
+}
+
 export { 
-    numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, getAllbikesDetail, getSinglebikesDetail
+    numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
+    noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
+    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail
 }

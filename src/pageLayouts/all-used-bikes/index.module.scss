@@ -1,148 +1,161 @@
-.main_box {
+.all_bike_main {
+  display: flex;
+  width: 100% !important;
+  max-width: 1200px;
+  margin: auto;
+  gap: 15px;
+
+  .main_box {
     margin-top: 20px;
-    width: 100%;
+    width: 100% !important;
     height: 100%;
 
     .navigation {
-        width: 800px;
-        height: 30px;
-        border: 1px solid grey;
-        padding: 10px;
-        margin: auto;
-        position: relative;
-        justify-content: space-between;
-        border: 1px solid #e6e6e6;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
+      max-width: 800px;
+      height: 30px;
+      border: 1px solid grey;
+      padding: 10px;
+      margin: auto;
+      position: relative;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
 
-        @media (max-width:900px) {
-          width: 95%;
-        }
-        
-        .bike_text {
-          font-size: 16px;
-          float: left;
-        }
-        .swap_button_container {
-          .swap_icon {
-            font-size: 20px;
-            cursor: pointer;
-          }
+      @media (max-width:900px) {
+        width: 95%;
+      }
+
+      .bike_text {
+        font-size: 16px;
+        float: left;
+      }
+
+      .swap_button_container {
+        .swap_icon {
+          font-size: 20px;
+          cursor: pointer;
         }
       }
-    
-    .long_card {
-       
-       border: solid 1px rgb(223, 219, 219);
-        background-color: #fff;
-        box-shadow: 0 13px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        width: 800px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        gap: 25px;
-        height: 150px;
-        padding-left: 10px;
-        margin: auto;
-        margin-bottom: 10px;
-       
+    }
+  }
+
+  .long_card {
+    cursor: pointer;
+    border: solid 1px rgb(223, 219, 219);
+    background-color: #fff;
+    box-shadow: 0 13px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 25px;
+    height: 150px;
+    padding-left: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+
+    @media (max-width: 500px) {
+      width: 100%;
+      height: auto;
+      display: block;
+      padding-left: 0px;
+    }
+
+    .bike_image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 170px;
+        height: 130px;
+
         @media (max-width: 500px) {
           width: 100%;
-          height: auto;
-          display: block; 
-          padding-left: 0px;
         }
-
-      .bike_image {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 170px;
-          height: 130px;
-          @media (max-width: 500px) {
-              width: 100%;
-          }
-        } 
-    }
-      
-      .card_info {
-        width: 100%;
-        position: relative;
-
-        @media (max-width:500px) {
-          padding-left: 10px;
-          width: 95%;
-          margin-bottom: 20px;
-        }
-
-        .card_title {
-          color: #233d7b;
-          margin-bottom: 0;
-          font-size: 16px;
-          margin-top: 21px;
-        }
-
-        .card_details {
-          font-size: 13px;
-        }
-
-        .card_price_desktop {
-          position: absolute;
-          top: 20px;
-          right: 21px;
-          margin-block: 0px;
-          font-size: 16px;
-          @media (max-width: 500px) {
-            display: none;
-          }
-        }
-
-        .bike_details { 
-          padding: 0;
-          margin-bottom: 0;
-          margin-top: 0;
-          font-size: 13px;
-        }
-
-        .bike_details li {
-          display: inline-block;
-          padding-right: 10px;
-        }
-
-        .show_phone_button {
-          background-color: #1976d2;
-          color: white;
-          border: none;
-          padding: 7px;
-          border-radius: 0px;
-          cursor: pointer;
-          width: 150px;
-          height: 30px;
-          position: absolute;
-          bottom: 20px;
-          right: 15px;
-          @media (max-width: 500px) { 
-            display: none;
-          }
-        }
-
-        // .show_phone_button:hover {
-        //   background-color: #53de12;
-        // }
-
-        .card_price_mobile {
-          font-size: 13px;
-          // display: block;
-          @media (min-width:500px) {
-            display: none;
-          }
-        }
-        
       }
     }
+
+    .card_info {
+      width: 100%;
+      position: relative;
+
+      @media (max-width:500px) {
+        padding-left: 10px;
+        width: 95%;
+        margin-bottom: 20px;
+      }
+
+      .card_title {
+        color: #233d7b;
+        margin-bottom: 0;
+        font-size: 16px;
+        margin-top: 21px;
+      }
+
+      .card_details {
+        font-size: 13px;
+      }
+
+      .card_price_desktop {
+        position: absolute;
+        top: 20px;
+        right: 21px;
+        margin-block: 0px;
+        font-size: 16px;
+
+        @media (max-width: 500px) {
+          display: none;
+        }
+      }
+
+      .bike_details {
+        padding: 0;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-size: 13px;
+      }
+
+      .bike_details li {
+        display: inline-block;
+        padding-right: 10px;
+      }
+
+      .show_phone_button {
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        padding: 7px;
+        border-radius: 0px;
+        cursor: pointer;
+        width: 150px;
+        height: 30px;
+        position: absolute;
+        bottom: 20px;
+        right: 15px;
+
+        @media (max-width: 500px) {
+          display: none;
+        }
+      }
+
+      // .show_phone_button:hover {
+      //   background-color: #53de12;
+      // }
+
+      .card_price_mobile {
+        font-size: 13px;
+
+        // display: block;
+        @media (min-width:500px) {
+          display: none;
+        }
+      }
+
+    }
+  }
 
   .viewMoreBtnContainer {
     display: flex;
@@ -165,4 +178,8 @@
 
   }
 
+  .add_area {
+    max-width: 150px;
+    margin-top: 20px;
   }
+}
