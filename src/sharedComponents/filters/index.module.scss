@@ -4,6 +4,9 @@
     max-width: 200px;
     padding: 0px !important;
     margin-top: 20px;
+    @media (max-width:768px) {
+      display: none;
+    }
 
     .heading_resultby {
       width: 200px;
