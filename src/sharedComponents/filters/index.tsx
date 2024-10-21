@@ -7,11 +7,13 @@ import { BrandArr, CityArr } from '@/constants/globalData'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import { getFilteredAllbikesDetail } from "@/functions/globalFuntions"
+import Loader from '@/sharedComponents/loader/loader'
 
 function Filters(props:any) {
   const [popupData, setpopupData]:any = useState([])
   const [openmodal, setOpenModal] = useState(false)
   const [modalOpenFor, setModalOpenFor ] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const [selectedCity, setSelectedCity]:any = useState([]);
   const [selectedBrand, setSelectedBrand]:any = useState([]);
@@ -102,7 +104,11 @@ async function fetchedFilterData() {
     "cc": []
   }
 
+  setIsLoading(true)
+  
   let res = await getFilteredAllbikesDetail(obj)
+  
+  setIsLoading(false)
 
   if(res && res.length > 0) {
     props.updateData(res)
@@ -234,6 +240,8 @@ console.log('selele', selectedCity)
           filterdData= { modalOpenFor == 'city' ? selectedCity : selectedBrand } 
           fetchFilters= { () => fetchedFilterData() }
         /> : "" }
+
+        <Loader isLoading={isLoading} />
 
     </Box>
   )
