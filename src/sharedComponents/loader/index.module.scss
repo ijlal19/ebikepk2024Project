@@ -1,7 +1,36 @@
-.loader_main{
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    // justify-content: center;
-    // align-items: center;
+
+.loader_main {
+
+    .loader_inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 140px;
+        background-color: rgba(255, 255, 255, 0.947);
+        border: '2px solid #000';
+        text-align: center;
+        padding-top: 0px;
+    }
+
+    .logo_image {
+        width: 100px;
+        height: auto;
+    }
+
+    .progress {
+        width: 40px;
+        display: block;
+        text-align: center;
+        margin: 0px auto;
+    }
+
+    .text {
+        font-size: 16px;
+        text-align: center;
+        font-weight: 400;
+        color: black;
+        margin: 5px auto;
+    }
 }

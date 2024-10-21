@@ -6,67 +6,63 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useState, useEffect } from 'react';
 
-export default function MoreOptionPopup({ props, values, selectPropsCity, selectPropsBrand, PropsBrand, PropsCity }: any) {
+export default function MoreOptionPopup(props:any) {
+
+
+    const [newApplyFilter, setNewApplyFilters]:any = useState(props.filterdData)
+
+    function updateFilterValue(event:any) {
+        let filterData = [...newApplyFilter]
+        if(event.target.checked) {
+            if(filterData.indexOf(event.target.id.toString()) == -1) {
+                filterData.push(event.target.id.toString())
+            }
+        }
+        else {
+            if(filterData.indexOf(event.target.id.toString()) > -1) {
+                filterData = filterData.filter((val:any) => event.target.id != val)
+            }
+        }
+
+        setNewApplyFilters(filterData)
+        console.log('appliedFilters', filterData)
+    }
+
+    function submitUpdatedFilter(from:any) {
+        props.updateFilteredData(from == 1 ? [] : newApplyFilter)
+        props.fetchFilters()
+        props.modalData.showmodal('close')
+    }
+    
+
     return (
         <div>
-            {
-                values == 'city' ?
-                    <Typography className={styles.seeMore} onClick={() => props.showmodal('city')}>
-                        more choices...
-                    </Typography> :
-                    <Typography className={styles.seeMore} onClick={() => props.showmodal('brand')}>
-                        more choices...
-                    </Typography>
-            }
-
-            <Modal open={props.openmodal}>
+            <Modal open={props.modalData.openmodal} onClose={() => props.modalData.showmodal('close')} >
                 <Box className={styles.Modal_box}>
 
                     <Box className={styles.modal_header}>
                         <Typography className={styles.slesctMake_heading}>
-                            {props.arrname === 'city' ? 'Select City' : 'Select Make'}
+                            {props.from === 'city' ? 'Select City' : 'Select Brand'}
                         </Typography>
                         <Typography className={styles.close_ICon}>
-                            <CloseIcon onClick={() => props.showmodal('close')} />
+                            <CloseIcon onClick={() => props.modalData.showmodal('close')} />
                         </Typography>
                     </Box>
 
                     <Box className={styles.modal_content}>
                         {
-                            props.popupdata.map((e: any, i: any) => {
+                            props.modalData.popupdata.map((data: any, i: any) => {
                                 return (
                                     <Typography className={styles.option_values} key={i}>
-                                        <input type="checkbox"
-                                            checked=
-                                            {values === 'city' ? 
-                                                PropsCity === e.id:
-                                                PropsBrand === e.id
-                                            }
-                                            onChange={(event) => {
-                                                if (values === 'city') {
-
-                                                    if (event.target.checked && selectPropsCity !== e.id) {
-                                                        selectPropsCity(e.id);
-                                                    }
-                                                     else if (!event.target.checked) {
-                                                        selectPropsCity(null);
-                                                    }
-                                                }
-                                                else {
-                                                    if (event.target.checked && selectPropsBrand !== e.id) {
-                                                        selectPropsBrand(e.id);
-                                                    }
-                                                     else if (!event.target.checked) {
-                                                        selectPropsBrand(null);
-                                                    }
-                                                }
-                                            }}
+                                        <input 
+                                            type="checkbox"
+                                            checked = { newApplyFilter.indexOf(data.id.toString()) > -1 }
+                                            onChange={(event) => { updateFilterValue(event) }}
+                                            id={data.id}
                                         />
-                                        {props.arrname === 'city' ?
-                                        e.city_name:
-                                        e.brandName
-                                        }
+                                        { props.from == 'city' ? data.city_name: data.brandName }
                                     </Typography>
                                 )
                             })
@@ -74,8 +70,8 @@ export default function MoreOptionPopup({ props, values, selectPropsCity, select
                     </Box>
 
                     <Box className={styles.modal_footer}>
-                        <Typography className={styles.footer_clear}>Clear</Typography>
-                        <Button className={styles.btn_submit}>Submit</Button>
+                        <Typography className={styles.footer_clear} onClick={ () => submitUpdatedFilter(1) } > Clear </Typography>
+                        <Button className={styles.btn_submit}  onClick={ () => submitUpdatedFilter(2) } > Submit </Button>
                     </Box>
 
                 </Box>

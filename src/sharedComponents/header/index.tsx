@@ -127,8 +127,8 @@ const Header = () => {
             <Typography className={styles.downloadapp}>
                 Download Mobile App
                 <Box className={styles.download_image}>
-                                <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
-                            </Box>
+                    <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
+                </Box>
             </Typography></>
     );
 
