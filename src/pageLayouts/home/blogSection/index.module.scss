@@ -22,11 +22,18 @@
 
     .blog_grid1 {
         padding: 10px 0px;
-      //   border-bottom: 1px solid grey;
+        display: flex;
+        flex-direction: row;
+        justify-content: left;
+        
+        @media (max-width:500px) {
+         flex-direction: column;
+         justify-content: center;
+        }
      }
      
      
-     .grid1_child1 {
+     .grid1_child1{
         flex: 0;
         height: auto;
         width: 100%;
@@ -34,8 +41,12 @@
          margin: auto;
         }
         .blog_images {
-           width: 155px;
+           width: 160px;
            height: 116px;
+           @media (max-width:500px) {
+            width: 100%;
+            height: auto;
+           }
         }
      }
      .grid1_child2{

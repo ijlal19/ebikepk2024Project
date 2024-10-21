@@ -120,4 +120,92 @@ $blue: #1976d2;
         }
 
     }
+
+    .bike_information_grid{
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bike_information_grid1{
+        box-shadow: 0px 0px 10px rgb(210, 207, 207);
+            .title{
+                width: 100%;
+                text-align: left;
+                padding: 10px 0px 0px 10px;
+                color: #1976d2;
+                font-size: 16px;
+                @media (max-width:768px) {
+                    padding: 10px 0px 0px 5px;
+                    font-size: 13px;
+                }
+            }
+
+            .information_table{
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+
+                .table {
+                    width: 95%;
+                    border-collapse: collapse;
+                    margin: 10px 5px 10px 5px !important;
+                    text-align: center;
+
+                    .tr {
+                        border-bottom: 1px solid #e0e0e0;
+                        border: 1px solid #000;
+
+                        .column {
+                            text-wrap: wrap;
+                            padding: 10px 12px;
+                            text-align: center;
+                            font-size: 12px;
+                            border: 1px solid #ddd;
+                            @media (max-width:768px) {
+                                font-size: 11px;
+                            }
+                          }
+                      }
+                  }
+            }
+
+        }
+    }
+
+    .bike_video_grid{
+        padding: 20px 0px;
+        .bike_video_box{
+            width: 100%;
+            padding: 10px 10px 10px 10px;
+
+            .bike_video{
+                width: 100%;
+                margin: auto;
+                height: 315px;
+                border: none;
+                padding: 0px;
+                margin: 0px;
+                box-sizing: border-box;
+                box-shadow: 0px 0px 10px rgb(210, 207, 207);
+            }
+        }
+    }
+
+    .other_bike_card{
+        .card_grid{
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0px !important;
+            gap: 10px;
+            justify-content: center;
+            .heading{
+                width: 100%;
+                text-align: center;
+                font-size: 16px;
+                font-weight: bolder;
+            }
+        }
+    }
+
 }

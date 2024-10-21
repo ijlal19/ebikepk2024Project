@@ -61,7 +61,7 @@ function BlogSection() {
                     <Grid container key={i}className={styles.blog_grid1}>
                       <Grid
                         item
-                        xs={isMobile ? 10 : 4}
+                        xs={isMobile ? 12 : 4}
                         className={styles.grid1_child1}
                       >
                         <img src={e.featuredImage} alt={e.blogTitle.slice(0,15)} className={styles.blog_images} />
@@ -69,7 +69,7 @@ function BlogSection() {
 
                       <Grid
                         item
-                        xs={isMobile ? 10 : 8}
+                        xs={isMobile ? 12 : 8}
                         className={styles.grid1_child2}
                       >
                         <Box>

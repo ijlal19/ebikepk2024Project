@@ -68,16 +68,10 @@ const AllUsedBike = () => {
                                     <div className={styles.card_info}>
                                         <h2 className={styles.card_title}> {val.title} </h2>
                                         <h3 className={styles.card_price_desktop}>PKR {val.price}</h3>
-                                        <p className={styles.card_details}> {val?.city?.city_name} </p>
-                                        <ul className={styles.bike_details}>
-                                            <li>{val?.year?.year}</li>
-                                            <li>|</li>
-                                            <li>3122km</li>
-                                            <li>|</li>
-                                            <li>4 Stroke</li>
-                                        </ul>
-
-                                        <p className={styles.card_price_mobile}>Price:  {val.price}</p>
+                                        <p className={styles.card_location}> {val?.city?.city_name} </p>
+                                        <p className={styles.bike_details}>
+                                        {val?.year?.year} | 3122km | 4 Stroke
+                                        </p>
                                     </div>
                                 </div>
                             )

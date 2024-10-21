@@ -58,12 +58,15 @@ $blue: #1976d2;
         display: flex;
         justify-content: space-between;
         padding: 5px;
+        @media (max-width:768px) {
+            padding: 0px !important;
+        }
 
         .card_grid{
             display: flex;
             flex-wrap: wrap;
             padding: 0px !important;
-            gap: 10px 10px;
+            gap: 10px;
             justify-content: center;
             .heading{
                 width: 100%;
@@ -145,7 +148,7 @@ $blue: #1976d2;
         color: #1976d2;
         margin-top: 10px;
         padding: 3px 8px;
-        border-radius: 0px;
+        border-radius: 1px;
         width: 100%;
         font-size: 13px;
         border: 1px solid #1976d2;
@@ -153,7 +156,6 @@ $blue: #1976d2;
         @media (max-width:768px) {
             // display: flex;
             margin-top: 40px;
-            border: 1px solid #000;
             justify-content: center;
             // flex-wrap: wrap;
 
