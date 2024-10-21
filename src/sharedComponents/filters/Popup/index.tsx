@@ -31,8 +31,7 @@ export default function MoreOptionPopup(props:any) {
     }
 
     function submitUpdatedFilter(from:any) {
-        props.updateFilteredData(from == 1 ? [] : newApplyFilter)
-        props.fetchFilters()
+        props.updateFilteredData(from == 'clear' ? [] : newApplyFilter, props.from)
         props.modalData.showmodal('close')
     }
     
@@ -70,8 +69,8 @@ export default function MoreOptionPopup(props:any) {
                     </Box>
 
                     <Box className={styles.modal_footer}>
-                        <Typography className={styles.footer_clear} onClick={ () => submitUpdatedFilter(1) } > Clear </Typography>
-                        <Button className={styles.btn_submit}  onClick={ () => submitUpdatedFilter(2) } > Submit </Button>
+                        <Typography className={styles.footer_clear} onClick={ () => submitUpdatedFilter('clear') } > Clear </Typography>
+                        <Button className={styles.btn_submit}  onClick={ () => submitUpdatedFilter('update') } > Submit </Button>
                     </Box>
 
                 </Box>

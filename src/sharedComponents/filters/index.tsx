@@ -8,15 +8,22 @@ import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import { getFilteredAllbikesDetail } from "@/functions/globalFuntions"
 
+
+let selectedCity: any = []
+let selectedBrand:any = []
+let selectedCC:any = {start:'', end:''}
+let selectedYear:any = {start:'', end:''}
+
 function Filters(props:any) {
   const [popupData, setpopupData]:any = useState([])
   const [openmodal, setOpenModal] = useState(false)
   const [modalOpenFor, setModalOpenFor ] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
-  const [selectedCity, setSelectedCity]:any = useState([]);
-  const [selectedBrand, setSelectedBrand]:any = useState([]);
-  const [selectedCC, setSelectedCC]:any = useState({start:'', end:''})
-  const [selectedYear, setSelectedYear]:any = useState({start:'', end:''})
+  // const [selectedCity, setSelectedCity]:any = useState([]);
+  // const [selectedBrand, setSelectedBrand]:any = useState([]);
+  // const [selectedCC, setSelectedCC]:any = useState({start:'', end:''})
+  // const [selectedYear, setSelectedYear]:any = useState({start:'', end:''})
 
   const ModalData = {
     showmodal: toggle,
@@ -45,45 +52,38 @@ function Filters(props:any) {
 
 
   function updateFilterValue(event:any, from:any) {
-    console.log('event', event)
-  
     if(from == 'city') {
       let filterData = [...selectedCity]
       if(event.target.checked) {
         if(filterData.indexOf(event.target.id.toString()) == -1) {
           filterData.push(event.target.id.toString())
-          setSelectedCity(filterData)
+          selectedCity = filterData
         }
       }
       else {
         if(filterData.indexOf(event.target.id.toString()) > -1) {
           filterData = filterData.filter((val:any) => event.target.id != val)
-          setSelectedCity(filterData)
+          selectedCity = filterData
         }
       }
-      console.log('updateFilterData', filterData )
-      setTimeout(()=> { 
         fetchedFilterData()
-      },500) 
     }
     else if(from == 'brand') {
       let filterData = [...selectedBrand]
       if(event.target.checked) {
         if(filterData.indexOf(event.target.id) == -1) {
           filterData.push(event.target.id)
-          setSelectedBrand(filterData)
+          selectedBrand = filterData 
         }
       }
       else {
         if(filterData.indexOf(event.target.id) > -1) {
           filterData = filterData.filter((val:any) => event.target.id != val)
-          setSelectedBrand(filterData)
+          selectedBrand = filterData
         }
       }
-      console.log('updateFilterData', filterData )
-      setTimeout(()=> { 
-        fetchedFilterData()
-      },500) 
+    
+      fetchedFilterData()
     }
     else if(from == 'cc') {
 
@@ -91,6 +91,17 @@ function Filters(props:any) {
     else if(from == "year") {
 
     }
+}
+
+function updateFilterDataFromModel(updatedValue:any, from:any) {
+  if(from == "city") {
+    selectedCity = updatedValue
+    fetchedFilterData()
+  }
+  else if(from == "brand"){
+    selectedBrand = updatedValue
+    fetchedFilterData()
+  } 
 }
 
 async function fetchedFilterData() {
@@ -228,11 +239,11 @@ console.log('selele', selectedCity)
 
        {openmodal ?  
         <MoreOptionPopup 
-          modalData={ModalData} 
+          modalData={ ModalData } 
           from = { modalOpenFor == 'city' ? 'city' : 'brand' } 
-          updateFilteredData={ modalOpenFor == 'city' ? setSelectedCity : setSelectedBrand} 
+          updateFilteredData = { updateFilterDataFromModel } 
           filterdData= { modalOpenFor == 'city' ? selectedCity : selectedBrand } 
-          fetchFilters= { () => fetchedFilterData() }
+          // fetchFilters= { () => fetchedFilterData() }
         /> : "" }
 
     </Box>
