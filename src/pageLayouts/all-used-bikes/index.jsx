@@ -57,7 +57,7 @@ const AllUsedBike = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className={styles.card_box}>
                         {allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
                             return (
                                 <div className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>

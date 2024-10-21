@@ -65,6 +65,7 @@ $blue: #1976d2;
         .card_grid{
             display: flex;
             flex-wrap: wrap;
+            flex-direction: row;
             padding: 0px !important;
             gap: 10px;
             justify-content: center;

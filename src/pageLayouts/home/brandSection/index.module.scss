@@ -34,10 +34,10 @@
             align-items: center;
             justify-content: center;
             border: 1px solid #dad4d4;
-            width: 24.5% !important;
+            width: 18% !important;
         }
         .viewallbikes_button{
-            width: 100%;
+            width: 91%;
             border: 1px solid #dad4d4;
             border-top: none;
             padding: 10px 0px;
@@ -55,24 +55,28 @@
                 padding-top: 20px !important;
                 height: auto;
                 padding-bottom: 20px;
-                display: flex;
+                // display: flex;
+                margin: 5px 5px;
                 align-items: center;
                 justify-content: center;
-                width: 25% !important;
-                border: 1px solid #dad4d4;
+                width: 28% !important;
+                border: none;
             }
-            .brand_image_box:nth-child(7),.brand_image_box:nth-child(8){
+            .brand_image_box:nth-child(7),
+            .brand_image_box:nth-child(8),
+            .brand_image_box:nth-child(9),
+            .brand_image_box:nth-child(10){
                 display: none;
             }
             .viewallbikes_button{
-                width: 80%;
-                font-size: 12px;
+                width: 100%;
+                font-size: 11px;
                 margin: auto;
                 border: 1px solid #dad4d4;
                 padding: 10px 0px;
                 font-weight: 500;
                 margin: 0px 5px;
-                border-radius: 5px;
+                border-radius: 0px;
             }
         }
         
