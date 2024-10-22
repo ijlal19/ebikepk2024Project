@@ -367,14 +367,15 @@ $blue: #1976d2;
 }
 
 .similarBikeDiv {
-    .similar_heading {
-      font-size: 18px;
-      margin-bottom: 0px;
-      font-weight: normal;
-    }
     background-color: $gray;
     max-width: 1000px;
     margin: auto;
     padding: 20px 0px;
+    .similar_heading {
+      font-size: 18px;
+     padding: 2px 2px 2px 5px;
+      margin-bottom: 0px;
+      font-weight: normal;
+    }
 
 }

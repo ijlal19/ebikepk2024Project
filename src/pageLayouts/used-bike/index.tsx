@@ -160,7 +160,7 @@ export default function UsedBike() {
     
     <div className={styles.similarBikeDiv}>
       <h6 className={styles.similar_heading}> Similar Bikes </h6>
-      <SwiperCarousels  sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='u'/>
+      <SwiperCarousels  sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='n'/>
     </div>
     
     </div>
