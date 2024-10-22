@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import styles from './index.module.scss'
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { BrandArr, CityArr } from '@/constants/globalData'
+import { BrandArr, CityArr, YearArr } from '@/constants/globalData'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import { getFilteredAllbikesDetail } from "@/functions/globalFuntions"
@@ -12,19 +12,17 @@ import Loader from '@/sharedComponents/loader/loader'
 
 let selectedCity: any = []
 let selectedBrand:any = []
-let selectedCC:any = {start:'', end:''}
-let selectedYear:any = {start:'', end:''}
+let CCvalues:any =  {start:'', end:''}
+let yearValues:any =  {start:'', end:''}
+let selectedCC:any = []
+let selectedYear:any = []
 
 function Filters(props:any) {
   const [popupData, setpopupData]:any = useState([])
   const [openmodal, setOpenModal] = useState(false)
   const [modalOpenFor, setModalOpenFor ] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-
-  // const [selectedCity, setSelectedCity]:any = useState([]);
-  // const [selectedBrand, setSelectedBrand]:any = useState([]);
-  // const [selectedCC, setSelectedCC]:any = useState({start:'', end:''})
-  // const [selectedYear, setSelectedYear]:any = useState({start:'', end:''})
+  const [isFilterChange, setIsFilterChange] = useState(false)
 
   const ModalData = {
     showmodal: toggle,
@@ -86,12 +84,6 @@ function Filters(props:any) {
     
       fetchedFilterData()
     }
-    else if(from == 'cc') {
-
-    }
-    else if(from == "year") {
-
-    }
 }
 
 function updateFilterDataFromModel(updatedValue:any, from:any) {
@@ -105,32 +97,70 @@ function updateFilterDataFromModel(updatedValue:any, from:any) {
   } 
 }
 
-async function fetchedFilterData() {
+function updateFilterDataFromDropdown(value:any, isStarValue:any, from:any) {
+  // console.log('selectedYear', value)
+  if(from == "cc") {
+    if(isStarValue) {
+      CCvalues.start = value
+    }
+    else {
+      CCvalues.end = value
+    }
+
+    if(CCvalues.start != "" && CCvalues.end != "") {
+      console.log('selectedYear', CCvalues)
+      selectedCC[0] = CCvalues.start
+      selectedCC[1] = CCvalues.end
+      fetchedFilterData()
+    }
+    else {
+      selectedCC = []
+    }
+
+  }
+  else if(from == "year") {
+    if(isStarValue) {
+      yearValues.start = value
+    }
+    else {
+      yearValues.end = value
+    }
+
+    if(yearValues.start != "" && yearValues.end != "") {
+      console.log('selectedYear', CCvalues)
+      selectedYear[0] = yearValues.start
+      selectedYear[1] = yearValues.end
+      fetchedFilterData()
+    }
+    else {
+      selectedYear = []
+    }
+  }
   
+  setIsFilterChange(prev => !prev)
+  
+}
+
+async function fetchedFilterData() {
   let obj = {
     "city_filter": selectedCity,
     "brand_filter": selectedBrand,
-    "years_filter": [],
-    "cc": []
+    "years_filter": selectedYear,
+    "cc": selectedCC
   }
 
+  console.log('obj', obj)
+
   setIsLoading(true)
-  
   let res = await getFilteredAllbikesDetail(obj)
-  
   setIsLoading(false)
 
   if(res && res.length > 0) {
     props.updateData(res)
     window.scrollTo(0, 0)
-    console.log('filter data res', res)
+    // console.log('filter data res', res)
   }
-
-  console.log('res', res)
-
 }
-
-console.log('selele', selectedCity)
 
   return (
     <Box className={styles.filter_box}>
@@ -196,22 +226,28 @@ console.log('selele', selectedCity)
           dropvalues='years'
           values='from'
           className={styles.option_values}
+          from="year"
+          updateFilterValue={updateFilterDataFromDropdown}
           sx={{
             Width: '90%',
             padding: '8px',
             fontSize: '12px'
           }}
+          data={yearValues}
         />
         
         <FilterDropdown
           dropvalues='years'
           values='To'
           className={styles.option_values}
+          updateFilterValue={updateFilterDataFromDropdown}
+          from="year"
           sx={{
             minWidth: 120,
             padding: '8px',
             fontSize: '12px'
           }}
+          data={yearValues}
         />
       </Box>
 
@@ -224,21 +260,27 @@ console.log('selele', selectedCity)
         <FilterDropdown
           values='from'
           className={styles.option_values}
+          from="cc"
+          updateFilterValue={updateFilterDataFromDropdown}
           sx={{
             Width: '90%',
             padding: '8px',
             fontSize: '12px'
           }}
+          data={CCvalues}
         />
         
         <FilterDropdown
           values='To'
           className={styles.option_values}
+          from="cc"
+          updateFilterValue={updateFilterDataFromDropdown}
           sx={{
             minWidth: 120,
             padding: '8px',
             fontSize: '12px'
           }}
+          data={CCvalues}
         />
       </Box>
 
@@ -248,7 +290,6 @@ console.log('selele', selectedCity)
           from = { modalOpenFor == 'city' ? 'city' : 'brand' } 
           updateFilteredData = { updateFilterDataFromModel } 
           filterdData= { modalOpenFor == 'city' ? selectedCity : selectedBrand } 
-          // fetchFilters= { () => fetchedFilterData() }
         /> : "" }
 
         <Loader isLoading={isLoading} />
