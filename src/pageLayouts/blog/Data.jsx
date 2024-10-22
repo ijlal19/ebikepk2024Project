@@ -39,5 +39,7 @@ let data = {
     "blog_comments": []
 }
 
+export default data
+
 
 // http://localhost:4000/api/blog/get-blog-by-id/647
