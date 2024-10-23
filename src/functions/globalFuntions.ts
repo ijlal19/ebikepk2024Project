@@ -50,6 +50,28 @@ function getAllbikesDetail(page:any) {
     })
 }
 
+
+
+
+
+function getbrandData(){
+    return fetch( Gconfig.ebikeApi + 'brand/get-brand')
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
+
+
+
+
+
+
+
+
+
 function getFilteredAllbikesDetail(data:any) {
     return fetch( Gconfig.ebikeApi + `classified/get-adds-by-filter`, {
         method: 'POST',
@@ -96,5 +118,6 @@ function getYearFromId(id:any, dataArr:any) {
 export { 
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
-    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail
+    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
+    getbrandData
 }
