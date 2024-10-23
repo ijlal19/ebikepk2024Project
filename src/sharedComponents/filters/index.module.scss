@@ -61,3 +61,17 @@
       }
     }
   }
+
+  .clear_btn {
+    border-radius: 0px;
+    height: 25px;
+    background-color: #1976d2;
+    display: block;
+    width: 120px;
+    font-size: 12px;
+    margin: 20px auto;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-wrap: nowrap;
+  }

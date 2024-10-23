@@ -44,6 +44,7 @@ const AllUsedBike = () => {
                 <Filters 
                     setLoader={setIsLoading} 
                     updateData={setAllBikesArr}
+                    fetchBikeInfo={fetchBikeInfo}
                 />
 
                 <div className={styles.main_box}>

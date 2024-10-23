@@ -142,31 +142,74 @@ function updateFilterDataFromDropdown(value:any, isStarValue:any, from:any) {
 }
 
 async function fetchedFilterData() {
-  let obj = {
-    "city_filter": selectedCity,
-    "brand_filter": selectedBrand,
-    "years_filter": selectedYear,
-    "cc": selectedCC
+  if(selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) {
+    let obj = {
+      "city_filter": selectedCity,
+      "brand_filter": selectedBrand,
+      "years_filter": selectedYear,
+      "cc": selectedCC
+    }
+  
+    setIsLoading(true)
+    let res = await getFilteredAllbikesDetail(obj)
+    setIsLoading(false)
+  
+    if(res && res.length > 0) {
+      props.updateData(res)
+      window.scrollTo(0, 0)
+    }
   }
-
-  console.log('obj', obj)
-
-  setIsLoading(true)
-  let res = await getFilteredAllbikesDetail(obj)
-  setIsLoading(false)
-
-  if(res && res.length > 0) {
-    props.updateData(res)
-    window.scrollTo(0, 0)
-    // console.log('filter data res', res)
+  else {
+    props.fetchBikeInfo(1)
   }
+ 
 }
+
+function clearFilters(from:any) {
+  if(from == 'city') {
+    selectedCity = []
+  }
+  else if(from == "brand") {
+    selectedBrand = []
+  }
+  else if(from == "year") {
+    yearValues.start = ""
+    yearValues.end = ""
+    selectedYear = []
+  }
+  else if(from == "cc") {
+    CCvalues.start = ""
+    CCvalues.end = ""
+    selectedCC = []
+  }
+  else if(from == "all") {
+    selectedCity = []
+    selectedBrand = []
+    
+    yearValues.start = ""
+    yearValues.end = ""
+    selectedYear = []
+    
+    CCvalues.start = ""
+    CCvalues.end = ""
+    selectedCC = []
+  } 
+
+  fetchedFilterData()
+
+}
+
 
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
         <Typography> Show Result By: </Typography>
       </Box>
+
+      { (selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) ?
+            <button onClick={()=>{ clearFilters('all') }} className={styles.clear_btn} > Clear All Filter </button> :
+            ""     
+      }
       
       {/* city filter */}
       <Box className={styles.heading_city}>
@@ -190,6 +233,12 @@ async function fetchedFilterData() {
         }
 
         <p onClick={()=> toggle('city')} className={styles.seeMore} > More Cities </p>
+        
+        {
+          selectedCity.length > 0 ?
+          <button onClick={()=>{ clearFilters('city') }} className={styles.clear_btn} > Clear City Filter </button> : 
+          ""
+        }
 
       </Box>
 
@@ -214,6 +263,13 @@ async function fetchedFilterData() {
         }
 
         <p onClick={()=> toggle('brand')} className={styles.seeMore} > More Brands </p>
+
+        {
+          selectedBrand.length > 0 ?
+          <button onClick={()=>{ clearFilters('brand') }} className={styles.clear_btn} > Clear Brand Filter </button> : 
+          ""
+        }
+
       </Box>
 
       {/* years filter */}
@@ -249,6 +305,13 @@ async function fetchedFilterData() {
           }}
           data={yearValues}
         />
+
+        {
+          selectedYear.length > 0 ?
+          <button onClick={()=>{ clearFilters('year') }} className={styles.clear_btn} > Clear Years Filter </button> : 
+          ""
+        }
+
       </Box>
 
        {/* CC filter */}
@@ -282,6 +345,13 @@ async function fetchedFilterData() {
           }}
           data={CCvalues}
         />
+
+        {
+          selectedCC.length > 0 ?
+          <button onClick={()=>{ clearFilters('cc') }} className={styles.clear_btn} > Clear CC Filter </button> : 
+          ""
+        }
+
       </Box>
 
        {openmodal ?  
