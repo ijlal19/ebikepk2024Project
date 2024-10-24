@@ -35,7 +35,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px 10px;
-position: relative;
+    position: relative;
 
     .login_container {
         padding: 0px;
@@ -43,6 +43,13 @@ position: relative;
         justify-content: center;
         align-items: center;
         position: relative;
+
+        .ebike_logo {
+            width: 120px;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
 
         .login_form {
             position: absolute;
@@ -65,7 +72,9 @@ position: relative;
                 font-weight: bolder;
                 text-align: center;
                 margin-bottom: 15px;
-                padding: 10px 0px;
+                margin-top: 0px;
+                padding: 0px;
+                padding-bottom: 10px;
                 color: navy;
                 border-bottom: 2px solid navy;
             }
@@ -74,6 +83,13 @@ position: relative;
                 margin: 5px 0px;
                 outline: none;
                 border: none;
+            }
+
+            .error {
+                color: rgb(157, 20, 20);
+                font-size: 13px;
+                text-align: center;
+                
             }
 
             .button {
@@ -101,6 +117,7 @@ position: relative;
                     text-decoration: underline;
                 }
             }
+
             .signup_button {
                 font-size: 12px;
                 margin-top: 10px;
