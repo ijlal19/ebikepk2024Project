@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { bikesDataArr, dealerDataArr } from './data';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss';
@@ -7,15 +7,30 @@ import ImgCard from '@/sharedComponents/itemCard';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { getdealerData, getnewBikeData } from '@/functions/globalFuntions';
 
 export default function AllNewBikes() {
   const [Showmore, setShowmore] = useState(true);
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const isMobile2 = useMediaQuery('(max-width: 550px)');
+  const [allnewBikeArr, setAllnewBikeArr] = useState([])
+  const [allDealerArr, setAllDelaerArr] = useState([])
 
   const showmore = () => {
     setShowmore(!Showmore);
   };
+
+  useEffect(() => {
+    fetchBrandInfo()
+  }, [])
+
+  async function fetchBrandInfo() {
+
+    let res = await getnewBikeData()
+    setAllnewBikeArr(res)
+
+    let DealerDataRes = await getdealerData()
+    setAllDelaerArr(DealerDataRes.dealers)
+  }
 
   return (
     <Box className={styles.all_new_bike_main}>
@@ -51,7 +66,7 @@ export default function AllNewBikes() {
           <Typography className={styles.heading}>Related Dealers</Typography>
           <Box className={styles.Dealers_card}>
             {
-              dealerDataArr.map((e: any, i: any) => {
+              allDealerArr.map((e: any, i: any) => {
                 return (
                   <Box className={styles.card_main} key={i}>
                     <img src={e.bike_brand.logoUrl} alt='' className={styles.card_image} />
@@ -64,7 +79,7 @@ export default function AllNewBikes() {
               })
             }
           </Box>
-          <Button className={styles.view_detail_btn} > View Bike Detail <KeyboardArrowRightIcon/></Button>
+          <Button className={styles.view_detail_btn} > View Bike Detail <KeyboardArrowRightIcon /></Button>
         </Grid>
       </Grid>
     </Box>

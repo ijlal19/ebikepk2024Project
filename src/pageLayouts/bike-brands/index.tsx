@@ -14,7 +14,7 @@ export default function NewBikeBrand() {
     async function  fetchBrandInfo() {
         let res = await getbrandData()
         setAllBrandArr(res)
-    }
+      }
 
   return (
     <Box className={styles.bikes_brand_main}>
