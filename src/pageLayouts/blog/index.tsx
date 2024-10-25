@@ -2,20 +2,24 @@
 import { Box, Container, Grid, useMediaQuery, Typography, Pagination } from '@mui/material';
 import { useState } from 'react';
 import styles from './index.module.scss';
-import Data from './Data';
+import BlogData from './Data';
+import { useRouter } from 'next/navigation'
 
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [currentPage, setCurrentPage] = useState(1);
-
+  const router = useRouter()
   const blogsPerPage = 10;
-  const totalPages = Math.ceil(Data.length / blogsPerPage);
-  const currentBlogs = Data.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
+  const totalPages = Math.ceil(BlogData.length / blogsPerPage);
+  const currentBlogs = BlogData.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
   };
-
+  const handleRoute = ({title,id}: any) => {
+    const formattedTitle = title.replace(/\s+/g, '-');
+  router.push(`/blog/${id}${formattedTitle}/`);
+  };
   return (
     <Box className={styles.blog_main}>
       <Typography className={styles.blog_heading}>
@@ -28,12 +32,12 @@ const Blog = () => {
               {currentBlogs.map((e: any, i: any) => (
                 <Grid className={styles.blog_grid1} item xs={12} key={i}>
                   <Grid container>
-                    <Grid item xs={isMobile ? 12 : 4} className={styles.grid1_child1}>
+                    <Grid item xs={isMobile ? 12 : 4} className={styles.grid1_child1} onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>
                       <img src={e.featuredImage} alt="" className={styles.blog_images} />
                     </Grid>
                     <Grid item xs={isMobile ? 12 : 8} className={styles.grid1_child2}>
                       <Box>
-                        <Typography className={styles.blog_card_title}>{e.blogTitle}</Typography>
+                        <Typography className={styles.blog_card_title}  onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>{e.blogTitle}</Typography>
                         <Typography className={styles.blog_card_date}>
                           {e.authorname} | {e.createdAt.slice(0, 10)} | {e.id}
                         </Typography>
