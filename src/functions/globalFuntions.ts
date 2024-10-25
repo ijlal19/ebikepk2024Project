@@ -49,8 +49,9 @@ function getbrandData(){
         console.log(err)
     })
 }
+
 function getnewBikeData(){
-    return fetch( Gconfig.ebikeApi + 'new-bikes/get-new-bikes-by-brand')
+    return fetch( Gconfig.ebikeApi + 'new-bikes/get-new-bikes-by-brand/')
     .then(response => response.json())
     .then(data => {
         return data })
@@ -58,6 +59,7 @@ function getnewBikeData(){
         console.log(err)
     })
 }
+
 function getdealerData(){
     return fetch( Gconfig.ebikeApi + 'dealer/dealer-by-brand/25')
     .then(response => response.json()).then(data => {
