@@ -120,56 +120,6 @@ const BlogData = [
         "blog_comments": []
     },
     {
-        "id": 646,
-        "blogTitle": "Pakistani Startup Introduces Electric Vehicle Scooter",
-        "bloghtml": "<p>Pakistani Startup evee introduces C1 Scooter, Scooter is featured with short wheelbase and a flatboard with stylish design. It can cover upto 60km with a single charge.</p><p>The C1 Scooter has following features and it is equipped with 60V 20Ah Lead Dry Acid battery</p><ul><li>Range: 50-60 km</li><li>Anti Theft Alarm</li><li>Reverse Gear</li><li>Hub Magnetic Coil</li><li>Up to 550 Charging Cycles</li><li>Max Speed: 55 km/hr</li><li>1200W Motor</li><li>Load Capacity 150KG</li><li>Charging time: 6 to 7 Hours</li><li>12 Tube vector controller</li><li>Disk brake</li><li>Color Display Meter</li></ul><p>The Company has not yet announce the price of C1 scooter.</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>",
-        "authorname": "Akhtar Kalim        ",
-        "blogCategoryId": 1,
-        "uid": "f6882342-689b-41a7-b142-446512ff158f",
-        "featuredImage": "http://res.cloudinary.com/dtroqldun/image/upload/v1675767378/blogs/emzcnyjtjjfwitrxhqt7.jpg",
-        "isPosted": false,
-        "blogUrl": "",
-        "blogtext": "",
-        "meta_title": "Pakistani Startup Introduces Electric Vehicle Scooter | ebike.pk",
-        "meta_description": "Pakistani Startup evee introduces C1 Scooter, Scooter is featured with short wheelbase and a flatboard with stylish design. It can cover upto 60km with a single charge.",
-        "focus_keyword": "evee scooter",
-        "createdAt": "2023-02-07T11:15:15.349Z",
-        "updatedAt": "2023-02-07T11:15:15.349Z",
-        "blog_category": {
-            "id": 1,
-            "name": "News",
-            "parentCategoryId": 0,
-            "createdAt": "2019-01-10T14:41:45.859Z",
-            "updatedAt": "2019-01-10T14:41:45.859Z"
-        },
-        "user": {
-            "id": "f6882342-689b-41a7-b142-446512ff158f",
-            "userFullName": "Maqbool",
-            "userType": "user",
-            "signupType": "email",
-            "email": "maqboolbhai396@gmail.com",
-            "password": "ccdbfbd934a2b10d38bcfc80c37be3b04ff7a3733aecd8e90ad59f50e0fde6ef",
-            "isVerified": true,
-            "status": "inactive",
-            "last_login": "2019-02-01T04:57:27.254Z",
-            "social_uid": null,
-            "createdAt": "2019-02-01T12:36:43.182Z",
-            "updatedAt": "2020-06-06T07:02:19.889Z"
-        },
-        "comments": [],
-        "blog_comments": [
-            {
-                "id": 57,
-                "blog_id": 646,
-                "comment": "gjklorom9jmw",
-                "user_name": "ebiker",
-                "uid": null,
-                "createdAt": "2023-06-21T07:08:42.261Z",
-                "updatedAt": "2023-06-21T07:08:42.261Z"
-            }
-        ]
-    },
-    {
         "id": 645,
         "blogTitle": "Suzuki Introduces V-Strom 250 In Philippines",
         "bloghtml": "<p>Suzuki introduced small size adventure touring bike V-Strom 250 in Philippines, the bike is an inspiration from V-Strom 650 XT &amp; V Strom 1,000. Unlike V-Strom what has become customary for the &lsquo;Strom, the 250 doesn&rsquo;t get a V-twin engine but it has an oil cooled 249cc single cylinder engine that&nbsp;churns out 26.1bhp and 22.2Nm of peak torque.</p><p>Suzuki V-Strom 250 featured with standard telescopic forks with 120 millimetres of travel. It also has a preload-adjustable rear monoshock, and rolls on a 19-inch front and 17-inch rear wheel. The introductory price of Suzuki V-Strom 250 is P229,000, which is equivalent to $3,880 USD. However, the bike delivery is expected from Ist quarter of 2023.</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>",
@@ -10095,6 +10045,55 @@ const BlogData = [
                 "uid": "b47a4c6f-0150-46c3-8265-42286db52290",
                 "createdAt": "2020-11-17T10:53:37.528Z",
                 "updatedAt": "2020-11-17T10:53:37.528Z"
+            }
+        ]
+    },{
+        "id": 646,
+        "blogTitle": "Pakistani Startup Introduces Electric Vehicle Scooter",
+        "bloghtml": "<p>Pakistani Startup evee introduces C1 Scooter, Scooter is featured with short wheelbase and a flatboard with stylish design. It can cover upto 60km with a single charge.</p><p>The C1 Scooter has following features and it is equipped with 60V 20Ah Lead Dry Acid battery</p><ul><li>Range: 50-60 km</li><li>Anti Theft Alarm</li><li>Reverse Gear</li><li>Hub Magnetic Coil</li><li>Up to 550 Charging Cycles</li><li>Max Speed: 55 km/hr</li><li>1200W Motor</li><li>Load Capacity 150KG</li><li>Charging time: 6 to 7 Hours</li><li>12 Tube vector controller</li><li>Disk brake</li><li>Color Display Meter</li></ul><p>The Company has not yet announce the price of C1 scooter.</p><p data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\">Powered by <a href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\">Froala Editor</a></p>",
+        "authorname": "Akhtar Kalim        ",
+        "blogCategoryId": 1,
+        "uid": "f6882342-689b-41a7-b142-446512ff158f",
+        "featuredImage": "http://res.cloudinary.com/dtroqldun/image/upload/v1675767378/blogs/emzcnyjtjjfwitrxhqt7.jpg",
+        "isPosted": false,
+        "blogUrl": "",
+        "blogtext": "",
+        "meta_title": "Pakistani Startup Introduces Electric Vehicle Scooter | ebike.pk",
+        "meta_description": "Pakistani Startup evee introduces C1 Scooter, Scooter is featured with short wheelbase and a flatboard with stylish design. It can cover upto 60km with a single charge.",
+        "focus_keyword": "evee scooter",
+        "createdAt": "2023-02-07T11:15:15.349Z",
+        "updatedAt": "2023-02-07T11:15:15.349Z",
+        "blog_category": {
+            "id": 1,
+            "name": "News",
+            "parentCategoryId": 0,
+            "createdAt": "2019-01-10T14:41:45.859Z",
+            "updatedAt": "2019-01-10T14:41:45.859Z"
+        },
+        "user": {
+            "id": "f6882342-689b-41a7-b142-446512ff158f",
+            "userFullName": "Maqbool",
+            "userType": "user",
+            "signupType": "email",
+            "email": "maqboolbhai396@gmail.com",
+            "password": "ccdbfbd934a2b10d38bcfc80c37be3b04ff7a3733aecd8e90ad59f50e0fde6ef",
+            "isVerified": true,
+            "status": "inactive",
+            "last_login": "2019-02-01T04:57:27.254Z",
+            "social_uid": null,
+            "createdAt": "2019-02-01T12:36:43.182Z",
+            "updatedAt": "2020-06-06T07:02:19.889Z"
+        },
+        "comments": [],
+        "blog_comments": [
+            {
+                "id": 57,
+                "blog_id": 646,
+                "comment": "gjklorom9jmw",
+                "user_name": "ebiker",
+                "uid": null,
+                "createdAt": "2023-06-21T07:08:42.261Z",
+                "updatedAt": "2023-06-21T07:08:42.261Z"
             }
         ]
     }
