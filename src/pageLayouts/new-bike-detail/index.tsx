@@ -10,7 +10,7 @@ import { getnewBikedetailsData } from '@/functions/globalFuntions';
 
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px')
-  const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr] = useState([])
+  const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr]:any = useState([])
 
   useEffect(() => {
     fetchBrandInfo()
