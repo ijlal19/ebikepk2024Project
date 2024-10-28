@@ -2,7 +2,7 @@ import { Box, Button, Paper, Typography } from '@mui/material'
 import { TiTick } from "react-icons/ti";
 import styles from './index.module.scss'
 
-const Card = (props:any) => {
+const Card = ({props}:any) => {
   return (
     <Paper className={styles.card_main} >
         <Typography className={styles.heading}>

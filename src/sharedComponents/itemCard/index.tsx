@@ -48,12 +48,12 @@ export default function ImgCard(props:any) {
                 { props.from == "u" ? 
                     <Typography className={styles.card_location}>
                         {props.data.location}
-                    </Typography> 
+                    </Typography>
                     :
                     <>
-                     <Typography className={styles.avg_price_text}>
+                    <Typography className={styles.avg_price_text}>
                         Avg. Ex-Showroom price
-                     </Typography>
+                    </Typography>
                     </>
                 }
                  <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props.data) }} > View Detail </Button>

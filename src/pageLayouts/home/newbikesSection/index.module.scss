@@ -1,19 +1,22 @@
 .bike_sec_main{
     width: 100%;
     height: auto;
-    padding: 20px 0px;
+    padding: 5px 0px 5px 0px;
     max-width: 1060px;
     margin: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     
     .heading {
         padding: 0px !important;
-        font-size: 20px;
         font-weight: 700;
         color: black;
         padding: 10px 0px;
         margin-bottom: -18px;
+        font-size: 25px;
+        @media (max-width:768px) {
+            font-size: 20px;
+        }
     }
 
     .tab {

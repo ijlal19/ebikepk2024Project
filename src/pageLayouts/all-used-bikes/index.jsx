@@ -26,6 +26,7 @@ const AllUsedBike = () => {
         let res = await getAllbikesDetail(curentFetchPage)
         setIsLoading(false)
         setAllBikesArr(res)
+        // console.log(res)
         window.scrollTo(0, 0)
         console.log('res', res)
     }
@@ -67,12 +68,17 @@ const AllUsedBike = () => {
                                     </div>
 
                                     <div className={styles.card_info}>
-                                        <h2 className={styles.card_title}> {val.title} </h2>
-                                        <h3 className={styles.card_price_desktop}>PKR {val.price}</h3>
-                                        <p className={styles.card_location}> {val?.city?.city_name} </p>
-                                        <p className={styles.bike_details}>
+                                        <Typography className={styles.titleandPrice}>
+                                        <Typography className={styles.card_title}> {val.title} </Typography>
+                                        <Typography className={styles.card_price_desktop}>PKR {val.price}</Typography>
+                                        </Typography>
+                                        <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
+                                        <Typography className={styles.bike_details}>
                                         {val?.year?.year} | 3122km | 4 Stroke
-                                        </p>
+                                        </Typography>
+                                        <Typography className={styles.phone_number}>
+                                           Cell: 0{val.mobileNumber}
+                                        </Typography>
                                     </div>
                                 </div>
                             )
@@ -85,7 +91,7 @@ const AllUsedBike = () => {
                 </div>
 
                 <Box className={styles.add_area}>
-
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis fuga cumque quasi aspernatur voluptate magnam! Alias magnam culpa obcaecati facere? Officiis doloremque eveniet non nostrum maxime est ut, recusandae expedita.
                 </Box>
             </Box>
         </>

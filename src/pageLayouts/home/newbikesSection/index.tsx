@@ -2,6 +2,7 @@
 import styles from './index.module.scss'
 import { Box, Container, Typography } from '@mui/material';
 import Data from './Data';
+import TrendingData from './TrendingData'
 import SwiperCarousels from '@/sharedComponents/swiperSlider/index';
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
@@ -44,18 +45,22 @@ function NewBikesSection() {
     <Box className={styles.bike_sec_main}>
       <Container>
         <Typography className={styles.heading}>
-          New Featured Bikes
+          Our Bike Collection
         </Typography>
         
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
-              <Tab label="Bikes" className={styles.tab} />
+              <Tab label="Feartuer" className={styles.tab} />
+              <Tab label="Trending" className={styles.tab} />
             </Tabs>
           </Box>
 
           <CustomTabPanel value={value} index={0}>
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='n'/>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={TrendingData} from='n'/>
           </CustomTabPanel>
         </Box>
 
