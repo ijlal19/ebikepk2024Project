@@ -3,6 +3,9 @@ body {
     padding: 0;
 }
 
+.noPointerEvent {
+    pointer-events: none;
+}
 
 .used_bike_detail_pg {
     .swiper {

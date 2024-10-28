@@ -9,7 +9,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Link from 'next/link';
-import { validateEmail } from "@/functions/globalFuntions"
+import { validateEmail, userLogin } from "@/functions/globalFuntions"
 
 
 
@@ -18,11 +18,12 @@ export default function LoginPopup({props,values}: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
- const  [error, setError] = useState('')
+  const  [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     setError('')
 
@@ -39,11 +40,18 @@ export default function LoginPopup({props,values}: any) {
       password: password
     }
 
-    console.log(obj)
-  
+    setIsLoading(true)
+    let res = await userLogin(obj)
+    setIsLoading(false)
+
+    if(res.success) {
+
+    }
+    else {
+      setError(res.info)
+    }
   }
-  const handlesignup =()=>{
-    // props.toggleDrawers(false);
+  const handlesignup =()=> {
     props.showmodal('showloginpopup')
   }
   return (
@@ -110,13 +118,13 @@ export default function LoginPopup({props,values}: any) {
 
               <Typography className={ styles.error } >  { error } </Typography>
 
-              <Button className={styles.reset_password} >Reset Password</Button>
-              <Button className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
+              <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button>
+              <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
 
               <Divider/>
 
               <Link href='/signup'  onClick={handlesignup}>
-                <Button className={styles.signup_button} fullWidth>Signup for Ebike</Button>
+                <Button disabled={isLoading}  className={styles.signup_button} fullWidth>Signup for Ebike</Button>
               </Link>
             </div>
           </Container>

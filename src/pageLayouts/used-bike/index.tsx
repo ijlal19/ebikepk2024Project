@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId} from "@/functions/globalFuntions"
-import Router from 'next/router'
 import Data from './data'
 import { CityArr, BrandArr, YearArr } from "@/constants/globalData"
 import { useRouter } from 'next/navigation'
@@ -17,8 +16,6 @@ export default function UsedBike() {
   const [similarBikeArr, setSimilarBikeArr] : any = useState([])
   const [isLoading, setIsLoading]  = useState(false)
   const [showPhoneNo, setShowPhoneNo] = useState(false)
-
-  const router = useRouter()
 
   useEffect(() => {
       fetchBikeInfo()

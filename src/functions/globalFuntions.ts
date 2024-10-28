@@ -93,8 +93,40 @@ function getYearFromId(id:any, dataArr:any) {
     else return []
 }
 
+
+function userLogin(data:any) {
+    return fetch( Gconfig.ebikeApi + `user/login`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
+function userSignup(data:any) {
+    return fetch( Gconfig.ebikeApi + `user/createUser`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
+
+function verifyUserFromAuthenticationEmail(email:any, token:any) {
+    return fetch( Gconfig.ebikeApi + `user/verification/${email}/${token}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" }
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
 export { 
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
-    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail
+    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
+    userLogin, userSignup, verifyUserFromAuthenticationEmail
 }
