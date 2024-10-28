@@ -108,8 +108,12 @@ $blue: #1976d2;
             align-items: center;
 
             .card_image{
-                width: 60px;
+                width: 40px;
                 height: auto;
+                @media (max-width:768px) {
+                    padding: 10px 0px 10px 0px;
+                    width: 30px;
+                }
             }
             .card_text{
                 display: inline-block;
@@ -138,8 +142,9 @@ $blue: #1976d2;
             }
         }
             @media (max-width:768px) {
-                width: 40%;
+                width: 45%;
                 height: 80px;
+                padding: 10px 0px 10px 0px !important;
                 flex-direction: column;
                 text-align: center;
             }

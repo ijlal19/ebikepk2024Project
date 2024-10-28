@@ -1,6 +1,4 @@
-// import image from './rollcool.jpg'
-// import image1 from './download.jpg'
- const BlogData = [
+ const BlogDetailsData = [
     {
         "id": 648,
         "blogTitle": "Motorcycle Oil Standards : Understanding the Importance",
@@ -10062,4 +10060,4 @@
     }
 ]
 
-export default BlogData
+export default BlogDetailsData
