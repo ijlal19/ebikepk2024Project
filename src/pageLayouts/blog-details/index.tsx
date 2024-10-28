@@ -11,7 +11,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 const BlogDetails = () => {
   const [displayicon,setDisplayIcon]=useState(true)
   const isMobile = useMediaQuery('(max-width:768px)')
-  const [DataBlog, setDataBlog]:any = useState({})
+  const [DataBlog, setDataBlog]:any = useState(null)
   const params = useParams()
   const id = params.slug.slice(0, 3)
 
@@ -32,7 +32,7 @@ const handleicons=()=>{
 
   return (
     <Box className={styles.blog_details_main}>
-      <Grid container>
+      {DataBlog ? <Grid container>
         <Grid item xs={isMobile ? 12 : 8} className={styles.blog_details_card}>
           <Box className={styles.image_box}>
             <img src={DataBlog.featuredImage} alt="" className={styles.image} />
@@ -66,7 +66,7 @@ const handleicons=()=>{
           </Box>
         </Grid>
         {/* <Grid item xs={isMobile ? 12 : 3}></Grid> */}
-      </Grid>
+      </Grid> : <></> }
     </Box>
   );
 };
