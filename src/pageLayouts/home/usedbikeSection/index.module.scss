@@ -1,19 +1,22 @@
 .usedbike_main {
     width: 100%;
     height: auto;
-    padding: 20px 0px;
+    padding: 10px 0px;
     max-width: 1060px;
     margin: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     
     .heading {
         padding: 0px !important;
-        font-size: 20px;
+        font-size: 25px;
         font-weight: 700;
         color: black;
         padding: 10px 0px;
         margin-bottom: -18px;
+        @media (max-width:768px) {
+            font-size: 20px;
+        }
     }
 
     .tab {

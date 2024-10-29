@@ -4,10 +4,10 @@
     text-align: left;
     max-width: 1060px;
     margin: auto;
-    padding: 5px 0px 5px 0px !important;
+    padding: 10px 0px 10px 0px !important;
     margin-bottom: 10px;
     margin-top: 10px;
-   
+
     .featuer_title {
         font-weight: bolder;
         color: black;
@@ -16,16 +16,22 @@
         font-size: 25px;
         @media (max-width:768px) {
             font-size: 20px;
+            padding-bottom: 10px;
+            text-align: left;
+        }
+        .titleShow{
+            @media (max-width:768px) {
+                display: none;
+            }
         }
     }
 
     .featuer_container {
-        
         width: 100%;
         height: auto;
         flex-wrap: nowrap;
         display: flex;
-        gap: 30px;
+        gap: 20px;
         justify-content: center;
         flex-direction: row;
         margin: auto;

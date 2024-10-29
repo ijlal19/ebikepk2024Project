@@ -1,19 +1,22 @@
 .brand_main {
     width: 100%;
     height: auto;
-    padding: 20px 0px;
+    padding: 10px 0px;
     max-width: 1060px;
     margin: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     
     .heading {
         padding: 0px !important;
-        font-size: 20px;
+        font-size: 25px;
         font-weight: 700;
         color: black;
         padding: 10px 0px;
         margin-bottom: -18px;
+        @media (max-width:768px) {
+            font-size: 20px;
+        }
     }
 
     .tab {
@@ -50,17 +53,18 @@
         }
         @media (max-width:768px) {
             padding: 0px;
+            justify-content: space-between;
             
             .brand_image_box{
                 padding-top: 20px !important;
                 height: auto;
                 padding-bottom: 20px;
-                // display: flex;
+                display: flex;
                 margin: 5px 5px;
                 align-items: center;
+                border: 1px solid rgb(230, 228, 228);
                 justify-content: center;
                 width: 28% !important;
-                border: none;
             }
             .brand_image_box:nth-child(7),
             .brand_image_box:nth-child(8),

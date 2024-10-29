@@ -5,6 +5,7 @@ import ItemCard from '@/sharedComponents/itemCard/index';
 import { Container } from '@mui/material';
 import 'swiper/swiper-bundle.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import FeatureCard from '../FeatureCard';
 
 interface IProps {
     sliderName?: string;
@@ -42,7 +43,10 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => 
                     sliderData.map((e:any, i:any) => {
                         return(
                             <SwiperSlide key={i} className={styles.slider_card}>
-                            <ItemCard data={e} from={from} />
+                                {sliderName == 'featurSection' ?
+                                <FeatureCard props={e}/>
+                                :<ItemCard data={e} from={from} />
+                            }
                         </SwiperSlide>
                         )
 })}
