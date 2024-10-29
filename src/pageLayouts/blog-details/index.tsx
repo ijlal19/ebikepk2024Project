@@ -32,19 +32,25 @@ const handleicons=()=>{
 
   return (
     <Box className={styles.blog_details_main}>
-      {DataBlog ? <Grid container className={styles.gird_box_main}>
+      {DataBlog ? 
+      <Grid container className={styles.gird_box_main}>
         <Grid item xs={isMobile ? 12 : 8} className={styles.blog_details_card}>
+          
           <Box className={styles.image_box}>
             <img src={DataBlog.featuredImage} alt="" className={styles.image} />
           </Box>
+          
           <Box className={styles.blog_details_content}>
+            
             <Typography className={styles.blogTitle}>
               {DataBlog.blogTitle}
             </Typography>
 
             <Typography className={styles.profile_box}>
               <Avatar alt="Remy Sharp" sx={{ width: 26, height: 26, marginRight: 1 }} src={DataBlog.featuredImage} />
-              <span><span style={{ color: 'grey' }}>By</span> {DataBlog.authorname} <span style={{ color: 'grey' }}>- On</span> {DataBlog.createdAt.slice(0,10)}</span>
+              <span>
+                <span style={{ color: 'grey' }}>By</span> {DataBlog.authorname} <span style={{ color: 'grey' }}>- On</span> {DataBlog.createdAt.slice(0,10)}
+              </span>
             </Typography>
 
             <Typography className={styles.socialicons_box}>
@@ -64,10 +70,15 @@ const handleicons=()=>{
               <AddCircleRoundedIcon sx={{ fontSize: '30px',height:30 ,display: isMobile ? 'flex' : 'none',color:'black'}} onClick={handleicons}/>
             </Typography>
           </Box>
+
+          <div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }}></div>
+
         </Grid>
+       
         <Grid item xs={isMobile ? 12 : 4} className={styles.moreBlog}>
           <Box>More Blogs</Box>
         </Grid>
+
       </Grid> : <></> }
     </Box>
   );
