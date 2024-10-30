@@ -1,6 +1,6 @@
 'use client';
 import { Box, Container, Grid, useMediaQuery, Typography, Pagination } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import BlogData from './Data';
 import { useRouter } from 'next/navigation'
@@ -21,29 +21,50 @@ const Blog = () => {
     const formattedTitle = title.replace(/\s+/g, '-');
   router.push(`/blog/${id}${formattedTitle}/`);
   };
+
+  const App = () => {
+    const texts = [BlogData[0].blogTitle, BlogData[1].blogTitle, BlogData[2].blogTitle,BlogData[3].blogTitle];
+    const [currentText, setCurrentText] = useState(texts[0]);
+    let currentIndex = 0;
+  
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        currentIndex = (currentIndex + 1) % texts.length;
+        setCurrentText(texts[currentIndex]);
+      }, 3000);
+  
+      return () => clearInterval(intervalId); // Clean up interval on component unmount
+    }, []);
+  
+    return `${currentText}`;
+  };
+
   return (<>
-      <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs'/>
     <Box className={styles.blog_main}>
+      <Box className={styles.FrontAdd_box}>
+        <Box className={styles.trending}><b style={{color:'black'}}>Trending</b>{App()}</Box>
+        <Box></Box>
+      </Box>
+      <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs'/>
       <Typography className={styles.blog_heading}>
         Blogs & Articles
       </Typography>
-      <Container className={styles.blog_container}>
         <Grid container className={styles.blog_grid}>
-          <Grid item xs={isMobile ? 12 : 8}>
+          <Grid item xs={isMobile ? 12 : 9} sx={{paddingRight:'15px'}}>
             <Grid container>
               {currentBlogs.map((e: any, i: any) => (
                 <Grid className={styles.blog_grid1} item xs={12} key={i}>
                   <Grid container>
-                    <Grid item xs={isMobile ? 12 : 4} className={styles.grid1_child1} onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>
+                    <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>
                       <img src={e.featuredImage} alt="" className={styles.blog_images} />
                     </Grid>
-                    <Grid item xs={isMobile ? 12 : 8} className={styles.grid1_child2}>
+                    <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2}>
                       <Box>
                         <Typography className={styles.blog_card_title}  onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>{e.blogTitle}</Typography>
                         <Typography className={styles.blog_card_date}>
-                          {e.authorname} | {e.createdAt.slice(0, 10)} | <span style={{color:'#1976d2'}}>{e.id}</span>
+                         <span style={{marginRight:8}}>{e.authorname}</span> | <span style={{marginRight:8,marginLeft:8}}>{e.createdAt.slice(0, 10)}</span> | <span style={{color:'#1976d2',marginLeft:8}}>{e.id}</span>
                         </Typography>
-                        <Typography className={styles.blog_card_description}>{e.meta_description}</Typography>
+                        <Typography className={styles.blog_card_description}>{e.meta_description.slice(0,119)}...</Typography>
                       </Box>
                     </Grid>
                   </Grid>
@@ -68,7 +89,6 @@ const Blog = () => {
              </Box>
            </Grid>
          </Grid>
-       </Container>
      </Box>
   </>
    );

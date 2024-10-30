@@ -4,6 +4,7 @@
     height: auto;
     max-width: 1150px;
     margin: auto;
+    // color: #b5b2b2;
     .gird_box_main{
         display: flex;
         justify-content: space-between;
@@ -28,6 +29,7 @@
             .blogTitle{
                 font-size: 24px;
                 padding: 15px 0px 5px 0px !important;
+                margin: 0px 0px 13px;
             }
 
             .profile_box{
@@ -39,14 +41,117 @@
 
             .socialicons_box{
                 display: flex;
-                align-items: center;
-                gap: 3px;
-                padding: 10px 0px 10px 0px;
+                align-items: center !important;
+                gap: 5px;
+                padding: 20px 0px 5px 0px;
+                margin: 0px 0px 7px;
             }
         }
-
         .blog_content {
             font-size: 13px;
+            margin: 0px 0px 17px;
+        }
+
+        .comment_box{
+            margin: 0px 0px 10px;
+            .comment_box_Title{
+                font-size: 24px;
+                font-weight: bolder;
+                color: #1976d2;
+                padding: 0px 0px 0px 10px;
+                margin: 0px 0px 15px;
+            }
+            .email_publish{
+                font-size: 13px;
+                text-align: center;
+            }
+            // .input_container {
+            //     position: relative;
+            //     width: 95%;
+            //     max-width: 100%;
+            //     margin: 10px 0px 10px 0px;
+            // // .your_comment_input {
+            // //     width: 100%;
+            // //     display: flex;
+            // //     outline: none;
+            // //     border: 1px solid #e2e2e2;
+            // //     align-items: flex-start;
+            // //     padding: 18px 15px 5px;
+            // //     height: 160px;
+            // //     overflow-y: auto;
+            // //     font-size: 16px;
+            // //     resize: none;
+            // // }
+            // @media (max-width:768px) {
+            //     width: 97% !important;
+            // }
+            // }
+            .details_input{
+                margin: 0px 0px 15px;
+                display: flex;
+                padding: 0px 0px 0px 0px !important;
+                flex-wrap: wrap;
+                row-gap: 10px !important;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 99%;
+                box-sizing: border-box;
+                .your_comment_input {
+                    width: 100%;
+                    display: flex;
+                    outline: none;
+                    border: 1px solid #e2e2e2;
+                    align-items: flex-start;
+                    padding: 18px 15px 5px;
+                    height: 160px;
+                    overflow-y: auto;
+                    font-size: 16px;
+                    resize: none;
+                }
+                .name_input{
+                    width: 45%;
+                    padding: 8px 12px;
+                    border-radius: 0px;
+                    border: 1px solid #e2e2e2;
+                    outline: none;
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+                .email_input{
+                    padding: 8px 12px;
+                    width: 45%;
+                    border-radius: 0px;
+                    border: 1px solid #e2e2e2;
+                    outline: none;
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+                .website_input{
+                    width: 100%;
+                    padding: 8px 12px;
+                    border-radius: 0px;
+                    border: 1px solid #e2e2e2;
+                    outline: none;
+                }
+            }
+            .permission{
+                font-size: 12px;
+                margin: 0px 0px 10px;
+                @media (max-width:768px) {
+                    margin: 0px 0px 15px;
+                }
+            }
+            .post_comment{
+                padding: 8px 12px;
+                font-size: 12px;
+                border-radius: 0px;
+                background: #1976d2;
+                color: white;
+                font-weight: bold;
+
+            }
         }
     }
 
@@ -55,3 +160,5 @@
     }
 }
 }
+
+
