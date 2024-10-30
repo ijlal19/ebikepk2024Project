@@ -5,8 +5,7 @@ import styles from './index.module.scss'
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { validateEmail, userSignup } from "@/functions/globalFuntions"
 import { useRouter } from 'next/navigation'
-// import jsCookie from 'js-cookie'
-// jsCookie.set('a','a')
+
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -14,10 +13,10 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
-    const  [error, setError] = useState('')
+    const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
-    const router = useRouter()
+    const Router = useRouter()
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
@@ -62,7 +61,7 @@ const Signup = () => {
             email: email,
             password: password,
             confirmpassword: password,
-            isVerified: true
+            isVerified: false
         }
 
         setIsLoading(true)
@@ -70,9 +69,9 @@ const Signup = () => {
         setIsLoading(false)
 
         if(res.success) {
-            setError('Signup Successfully')
+            setError('Verification Link has been sent to your Email. Please Verify your Email address for login.')
             setTimeout(()=> {
-                router.push('/')
+                Router.push('/')
             }, 3000)
         }
         else {
