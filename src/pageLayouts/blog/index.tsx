@@ -6,6 +6,12 @@ import BlogData from './Data';
 import { useRouter } from 'next/navigation'
 import OurVideos from '../home/ourVideos';
 
+
+// var title = post.blogTitle;
+//     title = title.replace(/\s+/g, '-');
+//     var lowerTitle = title.toLowerCase();
+//     this.router.navigate(['/blog', post.blog_category.name.toLowerCase(), lowerTitle, post.id]);
+
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,9 +23,11 @@ const Blog = () => {
   const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
   };
-  const handleRoute = ({title,id}: any) => {
-    const formattedTitle = title.replace(/\s+/g, '-');
-  router.push(`/blog/news/${formattedTitle}/${id}`);
+  const handleRoute = (blogInfo: any) => {
+    var title = blogInfo.blogTitle;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+  router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
   };
 
   const App = () => {
@@ -55,16 +63,16 @@ const Blog = () => {
               {currentBlogs.map((e: any, i: any) => (
                 <Grid className={styles.blog_grid1} item xs={12} key={i}>
                   <Grid container>
-                    <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>
+                    <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} onClick={()=>handleRoute(e)}>
                       <img src={e.featuredImage} alt="" className={styles.blog_images} />
                     </Grid>
                     <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2}>
                       <Box>
-                        <Typography className={styles.blog_card_title}  onClick={()=>handleRoute({title:e.blogTitle,id:e.id})}>{e.blogTitle}</Typography>
+                        <Typography className={styles.blog_card_title}  onClick={()=>handleRoute(e)}>{e.blogTitle}</Typography>
                         <Typography className={styles.blog_card_date}>
                          <span style={{marginRight:8}}>{e.authorname}</span> | <span style={{marginRight:8,marginLeft:8}}>{e.createdAt.slice(0, 10)}</span> | <span style={{color:'#1976d2',marginLeft:8}}>{e.id}</span>
                         </Typography>
-                        <Typography className={styles.blog_card_description}>{e.meta_description.slice(0,119)}...</Typography>
+                        <Typography className={styles.blog_card_description}>{e?.meta_description?.slice(0,119)}...</Typography>
                       </Box>
                     </Grid>
                   </Grid>
