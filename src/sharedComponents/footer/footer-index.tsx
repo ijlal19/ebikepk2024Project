@@ -20,7 +20,7 @@ let cities_arr = [
 ]
 let year_arr = [
     { title: "Used Bike by Year", url: "" },
-    { title: "Years 20220", url: "" },
+    { title: "Years 2020", url: "" },
     { title: "Years 2019", url: "" },
     { title: "Years 2018", url: "" },
     { title: "Years 2017", url: "" },
@@ -149,12 +149,31 @@ export default function Footer() {
                         <Typography className={styles.follow_heading}>
                             Follow Us
                             <Typography className={styles.Social_Links}>
-                                <FacebookIcon sx={{ margin: '0px', cursor: 'pointer' }} />
-                                <Instagram sx={{ margin: '0px', cursor: 'pointer' }} />
-                                <LinkedIn sx={{ margin: '0px', cursor: 'pointer' }} />
-                                <Pinterest sx={{ margin: '0px', cursor: 'pointer' }} />
-                                <Twitter sx={{ margin: '0px', cursor: 'pointer' }} />
-                                <YouTube sx={{ margin: '0px', cursor: 'pointer' }} />
+
+                                <Link href='https://web.facebook.com/ebike.pk' target="blank" className={styles.Link}>
+                                <FacebookIcon sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px'}} />
+                                </Link>
+
+                                <Link href='https://www.instagram.com/ebikepak/' target="blank" className={styles.Link}>
+                                <Instagram sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
+                                </Link>
+
+                                <Link href='https://www.linkedin.com/in/ebikepk/' target="blank" className={styles.Link}>
+                                <LinkedIn sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
+                                </Link>
+
+                                <Link href='#' target="blank"  className={styles.Link}>
+                                <Pinterest sx={{ margin: '0px', cursor: 'pointer' ,fontSize:'25px'}} />
+                                </Link>
+
+                                <Link href='https://twitter.com/ebikepk' target="blank" className={styles.Link}>
+                                <Twitter sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
+                                </Link>
+
+                                <Link href='https://www.youtube.com/@ebikepk' target="blank" className={styles.Link}>
+                                <YouTube sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
+                                </Link>
+
                             </Typography>
                         </Typography>
                         <Typography className={styles.download_app}>
