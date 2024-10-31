@@ -51,7 +51,7 @@ function NewBikesSection() {
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
-              <Tab label="Feartuer" className={styles.tab} />
+              <Tab label="Feature" className={styles.tab} sx={{marginRight:2}}/>
               <Tab label="Trending" className={styles.tab} />
             </Tabs>
           </Box>

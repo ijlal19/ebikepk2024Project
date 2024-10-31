@@ -15,10 +15,11 @@ import DealerList from './findDealers/index';
 import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 
 const Header = () => {
-    
+    const router = useRouter()
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState(false);
     const [buysellmenu, setBuySellmenu] = useState(false);
@@ -143,7 +144,7 @@ const Header = () => {
                         {DrawerList}
                     </Drawer>
                     <Box className={styles.logo}>
-                        <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} />
+                        <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} onClick={()=>{router.push('/')}}/>
                     </Box>
                 </Box>
                 <Box className={styles.header_buttons_group}>

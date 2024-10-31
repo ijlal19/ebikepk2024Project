@@ -2,17 +2,21 @@
     width: 100%;
     padding: 50px 0px;
     max-width: 1060px;
-    margin:auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
     
     .explore_container {
         width: 100%;
         .explore_heading{
-            font-size: 16px;
+            font-size: 24px;
             font-weight: bolder;
             color: black;
             padding: 5px 0px;
+            @media (max-width:768px) {
+                font-size: 20px;
+            }
         }
         .explore_grid {
             display: flex;
@@ -20,10 +24,11 @@
             flex-direction: row;
             column-gap: 30px;
             row-gap: 5px;
-            margin: 5px 0px;
-            width: 100%;
+            margin: 5px auto;
+            width: 90%;
             @media (max-width: 768px) {
                 flex-direction: column;
+                width: 100%;
             }
         }
     }

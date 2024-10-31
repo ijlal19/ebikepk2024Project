@@ -39,8 +39,9 @@ function BlogSection() {
     setValue(newValue);
   };
 
-  const isMobile = useMediaQuery('(max-width: 500px)');
+  const isMobile = useMediaQuery('(max-width: 768px)');
   return (
+    <Box className={styles.main_blog}>
     <Box className={styles.blog_section_main}>
       <Container>
         <Typography className={styles.heading}>
@@ -61,20 +62,18 @@ function BlogSection() {
                     <Grid container key={i}className={styles.blog_grid1}>
                       <Grid
                         item
-                        xs={isMobile ? 12 : 4}
+                        xs={isMobile ? 12 : 3}
                         className={styles.grid1_child1}
                       >
                         <img src={e.featuredImage} alt={e.blogTitle.slice(0,15)} className={styles.blog_images} />
                       </Grid>
 
-                      <Grid
-                        item
-                        xs={isMobile ? 12 : 8}
-                        className={styles.grid1_child2}
-                      >
+                      <Grid item xs={isMobile ? 12 : 8} className={styles.grid1_child2}>
                         <Box>
                           <Typography className={styles.blog_card_title}>{e.blogTitle}</Typography>
-                          <Typography className={styles.blog_card_date}>oct 10, 2024</Typography>
+                          <Typography className={styles.blog_card_date}>
+                            <span style={{marginRight:8}}>{e.authorname}</span> | <span style={{marginRight:8,marginLeft:8}}>{e.createdAt.slice(0, 10)}</span> | <span style={{color:'#1976d2',marginLeft:8}}>{e.id}</span>
+                            </Typography>
                           <Typography className={styles.blog_card_description}>{e.meta_description}</Typography>
                         </Box>
                       </Grid>
@@ -84,6 +83,7 @@ function BlogSection() {
           </CustomTabPanel>
         </Box>
       </Container>
+    </Box>
     </Box>
   )
 }
