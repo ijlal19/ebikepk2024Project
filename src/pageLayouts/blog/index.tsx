@@ -19,7 +19,7 @@ const Blog = () => {
   };
   const handleRoute = ({title,id}: any) => {
     const formattedTitle = title.replace(/\s+/g, '-');
-  router.push(`/blog/${id}${formattedTitle}/`);
+  router.push(`/blog/news/${formattedTitle}/${id}`);
   };
 
   const App = () => {

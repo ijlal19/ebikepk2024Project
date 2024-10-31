@@ -45,13 +45,13 @@ function NewBikesSection() {
     <Box className={styles.bike_sec_main}>
       <Container>
         <Typography className={styles.heading}>
-          Our Bike Collection
+          Bike Collection
         </Typography>
         
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
-              <Tab label="Feature" className={styles.tab} sx={{marginRight:2}}/>
+              <Tab label="Featured" className={styles.tab} sx={{marginRight:2}}/>
               <Tab label="Trending" className={styles.tab} />
             </Tabs>
           </Box>

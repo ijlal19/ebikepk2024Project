@@ -10,8 +10,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 5px 20px !important;
-    font-size: 24px;
+    font-size: 21px;
     font-weight: bolder;
+
+    @media (max-width:767px) {
+        font-size: 19px;
+    }
 
     .all_videos {
         font-size: 13px;
