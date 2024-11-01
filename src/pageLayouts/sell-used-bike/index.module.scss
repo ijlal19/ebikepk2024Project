@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
     padding: 20px 10px 20px 10px !important;
 
     .form_container {
@@ -88,24 +89,49 @@
                 gap: 10px;
                 margin-bottom: 5px;
 
+                @media (max-width:768px) {
+                    flex-direction: column;
+                    gap: 0px !important;
+                }
+
                 .dropdown_main:nth-child(1) {
                     width: 40%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
                 }
 
                 .dropdown_main:nth-child(2) {
                     width: 40%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
                 }
 
                 .dropdown_main:nth-child(3) {
                     width: 20%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
                 }
 
                 .dropdown_main2:nth-child(1) {
                     width: 50%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
                 }
 
                 .dropdown_main2:nth-child(2) {
                     width: 50%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
                 }
 
                 .section_main {
@@ -162,37 +188,13 @@
                 width: 100%;
                 padding: 8px 0px;
                 border: none;
-                background: #1976d2;
-                font-size: 14px;
+                background: #3393f4;
+                font-size: 18px;
                 font-weight: bold;
                 color: white;
+                border-radius: 5px;
+                cursor: pointer;
             }
-
-            // .dropdown_div2{
-            //     display: flex;
-            //     gap: 10px;
-            //     .dropdown_main2:nth-child(1){
-            //         width: 50%;
-            //     }
-            //     .dropdown_main2:nth-child(2){
-            //         width: 50%;
-            //     }
-
-            //     .section_main{
-            //         border: 1px solid #d2d2d2;
-            //         outline: none;
-            //         width: 100%;
-            //         padding: 5px 10px 5px 0px!important;
-
-            //         .drop_option{
-            //             background: #f2f2f2 !important;
-            //             color: black;
-            //             font-size: 12px;
-            //             border: 1px solid #d2d2d2;
-
-            //         }
-            //     }
-            // }
         }
     }
 }
