@@ -1,19 +1,51 @@
+.main{
+  width: 100%;
+  padding: 0px;
+  background: #f2f3f3;
+  @media (max-width:991px) {
+    padding: 0px 10px !important;
+  }
+  .usedBike_headingBpx{
+    width: 100%;
+    max-width: 1200px;
+    padding: 0px 0px 0px 10px;
+    margin: auto;
+    @media (max-width:768px) {
+      padding:10px 0px 0px 20px !important;
+    }
+    .headinh_sale{
+      font-size: 24px;
+      color: yellowgreen;
+      margin: 0px 0px 5px;
+      font-weight: bold;
+    }
+    .path_text{
+      font-size: 12px;
+      color: #7b8397;
+      margin: 15px 0px 10px;
+    }
+  }
 .all_bike_main {
   display: flex;
+  padding: 0px 10px;
   width: 100% !important;
   max-width: 1200px;
   margin: auto;
+  align-items: start;
   gap: 15px;
 
   .main_box {
-    margin-top: 20px;
+    padding: 0px 10px !important;
     width: 100% !important;
     height: 100%;
+    max-width: 800px;
+    margin: 20px auto 0px auto;
 
     .navigation {
       max-width: 800px;
       height: 30px;
-      border: 1px solid grey;
+      background: white;
+      border: 1px solid #e6e6e6;
       padding: 10px;
       margin: auto;
       position: relative;
@@ -39,91 +71,121 @@
       }
     }
   }
-  .card_box{
-  .long_card {
-    cursor: pointer;
-    border: solid 1px rgb(223, 219, 219);
-    background-color: #fff;
-    overflow: hidden;
-    max-width: 800px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 120px;
-    padding: 10px 0px;
-    margin: auto auto 20px auto ;
 
-    
-
-    .bike_image {
-      width: 100%;
-      max-width: 185px;
-      margin: 0px !important;
-      height: 123px;
-      padding: 0px 10px;
-      img {
-        width: 100%;
-        height: 100%;
+  .card_box {
+    .long_card {
+      display: flex;
+      padding: 10px 0px !important;
+      margin: 0px 0px 20px;
+      background: white;
+      border: 1px solid #e6e6e6;
+      height: 147px;
+      align-items: center;
+      @media (max-width:768px) {
+        height: auto;
       }
-    }
-
-    .card_info {
-      padding: 0px 10px;
-      max-width: 700px;
-      width: 100%;
-      align-items: center !important;
-      margin: 0px !important;
-      display: inline-block;
-      height: 114px;
-
-      .titleandPrice{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      .card_title {
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        font-weight: 700;
-        width: auto;
-        padding: 0px;
-        margin: 0px;
-      }
-      .card_price_desktop {
-        padding: 0px 10px 0px 0px ;
-        font-size: 18px;
-        font-weight: bolder;
-        color: #1976d2;
-        text-align: right;
-        width: 30%;
-
-      }
-    }
-
-      .card_location {
-        margin: 0px;
-        font-size: 13px;
-        padding: 7px 0px 0px 0px ;
-        color: #434343;
+      @media (max-width:991px) {
+        height: auto !important;
+        padding: 5px 0px !important;
       }
 
-      .bike_details {
-        margin: 0px;
-        color: #434343;
-        font-size: 13px;
-        padding: 5px 0px 0px 0px;
+      .bike_image {
+        height: 123px;
+        width: 185px;
+        padding: 0px 10px;
+        @media (max-width:991px) {
+          height: auto !important;
+        }
+        img {
+          height: 100%;
+          width: 100%;
+        }
       }
 
-      .phone_number {
-        margin: 0px;
-        font-size: 13px;
-        margin: 8px 0px 0px;
-        color: #434343;
+      .card_info {
+        padding: 0px 10px;
+
+        .titleandPrice {
+          display: flex;
+          flex-direction: row;
+          padding: 0px;
+          box-sizing: border-box;
+          width: 100%;
+          max-width: 450px;
+          justify-content: space-between;
+          flex-direction: row;
+          .card_title {
+            max-width: 250px;
+            font-size: 14px;
+            padding: 0px;
+            display: flex;
+            align-items: center;
+            color: #1976d2;
+            width: 70%;
+            @media (max-width:768px) {
+              font-size: 16px;
+              width: 100%;
+              max-width: 100%;
+              padding: 5px 0px 4px 0px;
+            }
+            @media (max-width:991px) {
+              font-size: 18px;
+              width: 100%;
+              max-width: 400px !important;
+              padding: 5px 0px 3px 0px;
+            }
+          }
+          
+          .card_price_desktop {
+            max-width: 150px;
+            padding: 0px;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bolder;
+            color: yellowgreen;
+            @media (max-width:768px) {
+              font-size: 16px;
+              width: 100%;
+              max-width: 100%;
+            }
+            @media (max-width:991px) {
+              font-size: 16px;
+              width: 100%;
+              max-width: 150px !important;
+            }
+          }
+          @media (max-width:768px) {
+            flex-direction: column;
+            max-width: 100%;
+          }
+          @media (max-width:991px) {
+            max-width: 100%;
+          }
+        }
+
+        .card_location {
+          padding: 7px 0px 0px;
+          font-size: 13px;
+          color: #434343;
+        }
+
+        .bike_details {
+          font-size: 13px;
+          color: #434343;
+          padding: 5px 0px 0px;
+        }
+
+        .phone_number {
+          font-size: 11px;
+          color: #434343;
+          margin: 8px 0px 0px;
+        }
       }
     }
   }
-  }
+
   .viewMoreBtnContainer {
     display: flex;
     align-items: center;
@@ -148,9 +210,12 @@
   .add_area {
     max-width: 150px;
     margin-top: 20px;
+    background: white;
+    color: rgb(0, 0, 0);
 
     @media (max-width:768px) {
       display: none;
     }
   }
+}
 }
