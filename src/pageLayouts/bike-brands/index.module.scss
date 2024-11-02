@@ -4,12 +4,24 @@ $blue: #1976d2;
 
 .bikes_brand_main{
     width: 100%;
-    max-width: 1000px;
-    margin: auto;
-    padding: 20px 0px 20px 0px !important;
+    padding: 40px 0px 40px 0px !important;
     color: black !important;
-    text-align: center;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+
+    .bikes_brand_container{
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0px 10px 0px 10px !important;
+        justify-content: center;
+
+        .heading{
+            width: 100%;
+            font-size: 22px;
+            color: #434343;
+            margin: 0px 0px 20px;
+            font-weight: bolder;
+        }
+    }
 }

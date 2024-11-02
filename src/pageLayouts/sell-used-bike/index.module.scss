@@ -1,0 +1,200 @@
+.usedbike_form_main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px 10px 20px 10px !important;
+
+    .form_container {
+        width: 100%;
+        box-shadow: 0px 0px 10px #cbcdcd;
+        max-width: 600px;
+        margin: 5px auto 5px auto;
+        height: auto;
+        padding: 0px !important;
+
+        .form_heading {
+            text-align: center;
+            padding: 10px 0px;
+            background: yellowgreen;
+            color: white;
+            font-size: 20px;
+            margin: 0px !important;
+            font-weight: bolder;
+        }
+
+        .form_input_div {
+            box-sizing: border-box;
+            line-height: 20px !important;
+            width: 100%;
+            padding: 15px 10px 15px 10px !important;
+
+            .title_label,
+            .description_label {
+                color: #434343;
+                font-size: 12px;
+                padding: 5px 0px 0px 0px !important;
+                cursor: pointer;
+                width: 100%;
+                margin: 10px 0px 0px 0px !important;
+                box-sizing: border-box;
+                letter-spacing: 1px;
+            }
+
+            .input_parent {
+                width: 100%;
+                margin: 3px 0px 10px 0px !important;
+                box-sizing: border-box;
+
+                .title_input {
+                    width: 100%;
+                    outline: none;
+                    box-sizing: border-box;
+                    border: 1px solid #d2d2d2;
+                    padding: 10px 0px 8px 7px;
+                }
+
+                .title_input::placeholder {
+                    letter-spacing: 1px;
+                    font-size: 12px;
+                }
+            }
+
+            .desc_parent {
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 5px;
+                padding: 0px 0px 0px 0px !important;
+
+                .description_area {
+                    width: 100%;
+                    max-width: 575px;
+                    min-width: 100px;
+                    box-sizing: border-box;
+                    height: 80px !important;
+                    max-height: 80px !important;
+                    border: 1px solid #d2d2d2;
+                    outline: none;
+                    padding: 5px 3px 5px 10px !important;
+                }
+
+                .description_input::placeholder {
+                    letter-spacing: 1px;
+                }
+            }
+
+            .dropdown_div,
+            .dropdown_div2 {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 5px;
+
+                @media (max-width:768px) {
+                    flex-direction: column;
+                    gap: 0px !important;
+                }
+
+                .dropdown_main:nth-child(1) {
+                    width: 40%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+
+                .dropdown_main:nth-child(2) {
+                    width: 40%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+
+                .dropdown_main:nth-child(3) {
+                    width: 20%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+
+                .dropdown_main2:nth-child(1) {
+                    width: 50%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+
+                .dropdown_main2:nth-child(2) {
+                    width: 50%;
+
+                    @media (max-width:768px) {
+                        width: 100%;
+                    }
+                }
+
+                .section_main {
+                    border: 1px solid #d2d2d2;
+                    outline: none;
+                    width: 100%;
+                    // margin-top: 5px;
+                    margin: 3px 0px 10px 0px !important;
+                    // padding: 5px 10px 5px 0px!important;
+                    padding: 10px 0px 8px 7px;
+
+
+                    .drop_option {
+                        background: #f2f2f2 !important;
+                        color: black;
+                        font-size: 12px;
+                        border: 1px solid #d2d2d2;
+
+                    }
+                }
+
+                .section_input {
+                    width: 100%;
+                    margin-top: 5px;
+                    box-sizing: border-box;
+                    border: 1px solid #d2d2d2;
+                    padding: 10px 0px 8px 7px;
+                    outline: none;
+                }
+
+                .section_input::placeholder {
+                    font-size: 12px;
+                    letter-spacing: 1px;
+                }
+            }
+
+            .permission {
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+                margin: 15px 0px 10px;
+                color: #434343;
+
+                .permission_text {
+                    margin: 0px 0px 0px 5px !important;
+                }
+
+                @media (max-width:768px) {
+                    margin: 0px 0px 15px;
+                }
+            }
+
+            .post_button {
+                width: 100%;
+                padding: 8px 0px;
+                border: none;
+                background: #3393f4;
+                font-size: 18px;
+                font-weight: bold;
+                color: white;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+}
