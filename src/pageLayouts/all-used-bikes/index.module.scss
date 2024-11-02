@@ -105,6 +105,11 @@
       .card_info {
         padding: 0px 10px;
 
+        @media (min-width:768px) {
+            height: 130px;
+            flex: auto;
+        }
+
         .titleandPrice {
           display: flex;
           flex-direction: row;
@@ -114,6 +119,7 @@
           max-width: 450px;
           justify-content: space-between;
           flex-direction: row;
+          
           .card_title {
             max-width: 250px;
             font-size: 14px;
@@ -136,7 +142,7 @@
             }
           }
           
-          .card_price_desktop {
+          .card_price_mobile {
             max-width: 150px;
             padding: 0px;
             width: 30%;
@@ -145,25 +151,19 @@
             font-size: 18px;
             font-weight: bolder;
             color: yellowgreen;
+
             @media (max-width:768px) {
               font-size: 16px;
               width: 100%;
               max-width: 100%;
             }
-            @media (max-width:991px) {
-              font-size: 16px;
-              width: 100%;
-              max-width: 150px !important;
-            }
+          
+          @media (min-width:768px) {
+            display: none;
           }
-          @media (max-width:768px) {
-            flex-direction: column;
-            max-width: 100%;
-          }
-          @media (max-width:991px) {
-            max-width: 100%;
-          }
+         
         }
+      }
 
         .card_location {
           padding: 7px 0px 0px;
@@ -183,6 +183,11 @@
           margin: 8px 0px 0px;
         }
       }
+
+      .price_section {
+        border:solid 1px black;
+      }
+
     }
   }
 
@@ -208,7 +213,8 @@
   }
 
   .add_area {
-    max-width: 150px;
+    width: 150px;
+    // min-width: 100px;
     margin-top: 20px;
     background: white;
     color: rgb(0, 0, 0);
