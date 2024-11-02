@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Button, List, Typography } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
@@ -17,6 +17,8 @@ import LoginPopup from '../Loginpopup/login';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import {isLoginUser} from '@/functions/globalFuntions'
+
 
 const Header = () => {
     const router = useRouter()
@@ -26,6 +28,22 @@ const Header = () => {
     const [findDealer, setFindDealer] = useState(false);
     const [findMechanics, setFindMechanics] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
+    // const [changeState, setChangeState]  = useState(false)
+    const [customer, setCustomer]  = useState('not_login')
+    // let customer = 'not_login'
+    
+    useEffect(() => {
+        let _isLoginUser = isLoginUser()
+        debugger
+        if(_isLoginUser?.login) {
+            setCustomer(_isLoginUser.info)
+            // setChangeState(prev => !prev)
+        }else {
+            setCustomer("not_login")
+            // setChangeState(prev => !prev)
+        }
+    },[])
+   
     const toggle = (e:any) => {
         if(e == 'buy&sell'){
             setBuySellmenu(!buysellmenu);
@@ -46,9 +64,11 @@ const Header = () => {
             setOpen(!open);
         }
     };
+    
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
+    
     const Optionmore = {
         togglers: toggle,
         toggleDrawers: toggleDrawer,
@@ -147,9 +167,12 @@ const Header = () => {
                         <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} onClick={()=>{router.push('/')}}/>
                     </Box>
                 </Box>
-                <Box className={styles.header_buttons_group}>
-                    <LoginPopup props={ModalData}/>
-                </Box>
+                {customer == 'not_login' ?
+                    <Box className={styles.header_buttons_group}>
+                        <LoginPopup props={ModalData}/>
+                    </Box> :
+                    <p> Logout </p> } 
+
             </Box>
             
         </>

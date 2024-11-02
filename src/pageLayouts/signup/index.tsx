@@ -21,21 +21,6 @@ const Signup = () => {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
-    // {
-    //     "id": "f77f054c-4813-48ff-a30a-d4df0d005b58",
-    //     "userType": "user",
-    //     "signupType": "email",
-    //     "status": "inactive",
-    //     "last_login": "2024-10-23T16:12:22.742Z",
-    //     "userFullName": "asad",
-    //     "email": "asad10@gmail.com",
-    //     "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-    //     "isVerified": true,
-    //     "updatedAt": "2024-10-24T05:13:00.649Z",
-    //     "createdAt": "2024-10-24T05:13:00.649Z",
-    //     "social_uid": null
-    // }
-
     const handlesubmit = async (e:any) => {
         e.preventDefault()
         setError('')
@@ -69,10 +54,10 @@ const Signup = () => {
         setIsLoading(false)
 
         if(res.success) {
-            setError('Verification Link has been sent to your Email. Please Verify your Email address for login.')
-            setTimeout(()=> {
-                Router.push('/')
-            }, 3000)
+            setError('Account Created Successfully!. Verification Link has been sent to your Email. Please Verify your Email address for login.')
+            // setTimeout(()=> {
+            //     Router.push('/')
+            // }, 10000)
         }
         else {
           setError(res.info)
@@ -155,7 +140,7 @@ const Signup = () => {
                         }
                     />
 
-                    <Typography className={ styles.error } >  { error } </Typography>
+                    <Typography className={ styles.error} style={error?.indexOf('Account Created Successfully') > -1 ?  { color:"green"} : {}} >  { error } </Typography>
 
                     <Button fullWidth type="submit" className={`${styles.button} ${isLoading ? 'noPointerEvent':''} `} onClick={(e) => handlesubmit(e)} > Sign Up</Button>
 

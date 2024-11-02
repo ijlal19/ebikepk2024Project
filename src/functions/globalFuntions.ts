@@ -1,5 +1,6 @@
 import data from '@/pageLayouts/bike-brands/data';
 import Gconfig from 'globalconfig'
+import jsCookie from 'js-cookie'
 
 const numericOnly = (value: string) => {
     if (value == 'e') return false;
@@ -148,9 +149,20 @@ function verifyUserFromAuthenticationEmail(email:any, token:any) {
     })
 }
 
+function isLoginUser() {
+    let obj = jsCookie.get('userInfo_e')
+    if(obj) {
+        return { login: true, info: JSON.parse(obj) }
+    }
+    else {
+        return { login: false, info: null }
+    }
+}
+
 export { 
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
-    getbrandData,getnewBikeData,getdealerData,getnewBikedetailsData,  userLogin, userSignup, verifyUserFromAuthenticationEmail
+    getbrandData,getnewBikeData,getdealerData,getnewBikedetailsData,  userLogin, userSignup, verifyUserFromAuthenticationEmail,
+    isLoginUser
 }
