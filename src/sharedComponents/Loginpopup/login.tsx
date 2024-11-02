@@ -10,7 +10,7 @@ import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Link from 'next/link';
 import { validateEmail, userLogin } from "@/functions/globalFuntions"
-
+import jsCookie from 'js-cookie'
 
 
 export default function LoginPopup({props,values}: any) {
@@ -18,7 +18,7 @@ export default function LoginPopup({props,values}: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const  [error, setError] = useState('')
+  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -29,6 +29,7 @@ export default function LoginPopup({props,values}: any) {
 
     if(!email || !validateEmail(email)) {
       setError('Please Enter Valid Email')
+      return
     }
     else if(!password || password?.length < 6) {
       setError('Password length must be greather or equal to 6')
@@ -44,8 +45,11 @@ export default function LoginPopup({props,values}: any) {
     let res = await userLogin(obj)
     setIsLoading(false)
 
-    if(res.success) {
-
+    if(res.success && res.login) {
+      let userObj = JSON.stringify(res.user)
+      jsCookie.set('userInfo_e', userObj, {expires: 1})
+      jsCookie.set('accessToken_e', res.accessToken, {expires: 1})
+      props.showmodal('showloginpopup')
     }
     else {
       setError(res.info)
@@ -118,7 +122,7 @@ export default function LoginPopup({props,values}: any) {
 
               <Typography className={ styles.error } >  { error } </Typography>
 
-              <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button>
+              {/* <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button> */}
               <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
 
               <Divider/>
