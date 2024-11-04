@@ -22,7 +22,7 @@ const SellUsedBike = () => {
     const [mobile, setMobile] = useState('');
     const [isAggreed, setIsAggreed] = useState(false)
     const [msg, setMsg] = useState('')
-    const [customer, setCustomer]  = useState('not_login')
+    const [customer, setCustomer]  = useState<any>('not_login')
     const [imageArr, setImageArr] = useState([])
 
     useEffect(() => {
