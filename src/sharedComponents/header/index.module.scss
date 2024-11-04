@@ -56,4 +56,27 @@
             cursor: pointer;
         }
     }
-// }
+.header_btn_sec {
+    display: flex;
+    align-items: center;
+    align-items: center;
+}    
+
+.sell_bike_btn {
+    background-color: #1976d2;
+    font-size: 11px;
+    padding: 5px 7px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    display: block;
+    height: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.logout_btn {
+    font-size: 12px;
+    cursor: pointer;
+    margin-right: 20px;
+}

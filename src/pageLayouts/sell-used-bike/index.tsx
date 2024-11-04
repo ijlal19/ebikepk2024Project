@@ -68,18 +68,22 @@ const SellUsedBike = () => {
                     <Typography>
                         <label htmlFor="title" className={styles.title_label}>Title*</label>
                     </Typography>
+                    
                     <Typography className={styles.input_parent}>
                         <input required  type="text" id="title" className={styles.title_input} placeholder="Title"
                         onChange={(e) => handleChange('title', e.target.value)}/>
                     </Typography>
+                    
                     <Typography>
                         <label htmlFor="desc" className={styles.description_label}>Description*</label>
                     </Typography>
+                   
                     <Typography className={styles.desc_parent}>
                         <TextareaAutosize id="desc" className={styles.description_area} placeholder="Add a Description"  required  onChange={(e) => handleChange('description', e.target.value)}/>
                     </Typography>
 
                     <div className={styles.dropdown_div}>
+                        
                         <div className={styles.dropdown_main}>
                             <Typography>
                                 <label htmlFor="city" className={styles.description_label}>City*</label>
@@ -97,6 +101,7 @@ const SellUsedBike = () => {
                                 </select>
                             </Typography>
                         </div>
+                       
                         <div className={styles.dropdown_main}>
                             <Typography>
                                 <label htmlFor="model" className={styles.description_label}>Model Year*</label>
@@ -115,6 +120,7 @@ const SellUsedBike = () => {
                                 </select>
                             </Typography>
                         </div>
+                     
                         <div className={styles.dropdown_main}>
                             <Typography>
                                 <label htmlFor="cc" className={styles.description_label}>CC*</label>
@@ -155,6 +161,7 @@ const SellUsedBike = () => {
                                 </select>
                             </Typography>
                         </div>
+
                         <div className={styles.dropdown_main2}>
                             <Typography>
                                 <label htmlFor="pkr" className={styles.description_label}>Price in PKR</label>
@@ -165,26 +172,33 @@ const SellUsedBike = () => {
                         </div>
 
                     </div>
+
                     <Typography>
                         <label htmlFor="urlvideo" className={styles.title_label}>Video URL (Only Youtube) Optional</label>
                     </Typography>
+
                     <Typography className={styles.input_parent}>
                         <input required  type="text" id="urlvideo" className={styles.title_input} placeholder="Paste your bike youtube video URL" onChange={(e) => handleChange('videoUrl', e.target.value)}/>
                     </Typography>
+
                     <Typography>
                         <label htmlFor="sellername" className={styles.title_label}>Seller Name</label>
                     </Typography>
+
                     <Typography className={styles.input_parent}>
                         <input required  type="text" id="sellername" className={styles.title_input} placeholder="Name" 
                         onChange={(e) => handleChange('sellerName', e.target.value)}/>
                     </Typography>
+
                     <Typography>
                         <label htmlFor="mobile" className={styles.title_label}>Seller Mobile</label>
                     </Typography>
+
                     <Typography className={styles.input_parent}>
                         <input required  type="text" id="mobile" className={styles.title_input} placeholder="Mobile Number" 
                         onChange={(e) => handleChange('mobile', e.target.value)}/>
                     </Typography>
+                    
                     <Typography className={styles.permission}><input type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
                     <button className={styles.post_button} onClick={handelsubmit} >Post Now</button>
                 </div>

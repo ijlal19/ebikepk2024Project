@@ -50,6 +50,7 @@ export default function LoginPopup({props,values}: any) {
       jsCookie.set('userInfo_e', userObj, {expires: 1})
       jsCookie.set('accessToken_e', res.accessToken, {expires: 1})
       props.showmodal('showloginpopup')
+      props.updateAfterLogin()
     }
     else {
       setError(res.info)
@@ -128,7 +129,7 @@ export default function LoginPopup({props,values}: any) {
               <Divider/>
 
               <Link href='/signup'  onClick={handlesignup}>
-                <Button disabled={isLoading}  className={styles.signup_button} fullWidth>Signup for Ebike</Button>
+                <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
               </Link>
             </div>
           </Container>

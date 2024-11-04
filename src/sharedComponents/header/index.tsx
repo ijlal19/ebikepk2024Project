@@ -14,10 +14,9 @@ import BuyandSell from './buyandsell/index';
 import DealerList from './findDealers/index';
 import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
 import {isLoginUser} from '@/functions/globalFuntions'
+import jsCookie from 'js-cookie'
 
 
 const Header = () => {
@@ -28,21 +27,28 @@ const Header = () => {
     const [findDealer, setFindDealer] = useState(false);
     const [findMechanics, setFindMechanics] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
-    // const [changeState, setChangeState]  = useState(false)
     const [customer, setCustomer]  = useState('not_login')
-    // let customer = 'not_login'
     
     useEffect(() => {
+        authenticateUser()
+    },[])
+
+    function authenticateUser() {
+        console.log('aaaaaa')
         let _isLoginUser = isLoginUser()
-        debugger
         if(_isLoginUser?.login) {
             setCustomer(_isLoginUser.info)
-            // setChangeState(prev => !prev)
-        }else {
-            setCustomer("not_login")
-            // setChangeState(prev => !prev)
         }
-    },[])
+        else {
+            setCustomer("not_login")
+        }
+    }
+
+    function LogoutUser() {
+        jsCookie.remove('userInfo_e')
+        jsCookie.remove('accessToken_e')
+        window.location.reload()
+    }
    
     const toggle = (e:any) => {
         if(e == 'buy&sell'){
@@ -100,7 +106,8 @@ const Header = () => {
     }
     const ModalData = {
         showmodal: toggle,
-        openmodal:openmodal
+        openmodal:openmodal,
+        updateAfterLogin: authenticateUser
     }
 
     const navlink = [
@@ -140,8 +147,13 @@ const Header = () => {
                 <Divider/>
                 <MoreList props={Optionmore} />
                 <Divider />
-                
-                <LoginPopup props={ModalData} values={true}/>
+
+                {customer == 'not_login' ?
+                    <LoginPopup 
+                        props={ModalData} 
+                        values={true} 
+                    /> 
+                : <></> }
 
             </List>
         </Box>
@@ -167,11 +179,18 @@ const Header = () => {
                         <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} onClick={()=>{router.push('/')}}/>
                     </Box>
                 </Box>
-                {customer == 'not_login' ?
-                    <Box className={styles.header_buttons_group}>
-                        <LoginPopup props={ModalData}/>
-                    </Box> :
-                    <p> Logout </p> } 
+
+                <div className={styles.header_btn_sec}>
+                    <button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button>
+                    {customer == 'not_login' ?
+                        <Box className={styles.header_buttons_group}>
+                            <LoginPopup 
+                               props={ModalData} 
+                            />
+                        </Box> :
+                    <p className={styles.logout_btn} onClick={() => LogoutUser()}> Logout </p> } 
+                </div>
+               
 
             </Box>
             
