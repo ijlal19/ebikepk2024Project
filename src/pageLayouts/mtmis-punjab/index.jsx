@@ -5,7 +5,6 @@ const MtmisPunjab = () => {
     return (
         <>
     <Box className={styles.punjab_main}>
-        <Container className={styles.punjab_container}>
             <Box className={styles.punjab}>
                 <h1 className={styles.mtmis_punjab_heading}>MTMIS Punjab Online Vehicle Verification Punjab</h1>
                 <Box className={styles.punjab_text}>
@@ -14,7 +13,6 @@ const MtmisPunjab = () => {
                     
                 </Box>
             </Box>
-        </Container>
     </Box>
 </>
     )

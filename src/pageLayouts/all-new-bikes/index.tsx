@@ -34,6 +34,19 @@ export default function AllNewBikes() {
   console.log(allnewBikeArr)
 
   return (
+    <>
+    {/* {Add Area} */}
+      <div className={styles.top_add_area}>
+        <div className={styles.add_image}>
+          <div className={styles.image}>Add Image</div>
+        </div>
+      </div>
+      {/* {Path Area} */}
+      <div className={styles.path_box}>
+        <div className={styles.path_text_box}>
+          <p className={styles.path_text}>Home<span style={{marginLeft:5,marginRight:5}}>/</span>New Bikes<span style={{marginLeft:5,marginRight:5}}>/</span>Honda</p>
+        </div>
+      </div>
     <Box className={styles.all_new_bike_main}>
       <Box className={styles.description_box}>
         <Box className={styles.card_main}>
@@ -84,5 +97,7 @@ export default function AllNewBikes() {
         </Grid>
       </Grid>
     </Box>
+    </>
+
   );
 }
