@@ -1,6 +1,7 @@
 import data from '@/pageLayouts/bike-brands/data';
 import Gconfig from 'globalconfig'
-import jsCookie from 'js-cookie'
+// import jsCookie from 'js-cookie'
+const jsCookie = require('js-cookie');
 
 const numericOnly = (value: string) => {
     if (value == 'e') return false;
@@ -159,10 +160,31 @@ function isLoginUser() {
     }
 }
 
+function publishAd(data:any) {
+    let token = jsCookie.get('accessToken_e')
+    return fetch( Gconfig.ebikeApi + `classified/crete-add`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json", "x-access-token": token},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
+function uplaodImageFunc(data:any) {
+    return fetch( `https://api.cloudinary.com/v1_1/dulfy2uxn/image/upload`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
 export { 
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData,getnewBikeData,getdealerData,getnewBikedetailsData,  userLogin, userSignup, verifyUserFromAuthenticationEmail,
-    isLoginUser
+    isLoginUser, publishAd, uplaodImageFunc
 }

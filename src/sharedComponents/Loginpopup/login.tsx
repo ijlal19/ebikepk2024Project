@@ -10,7 +10,8 @@ import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Link from 'next/link';
 import { validateEmail, userLogin } from "@/functions/globalFuntions"
-import jsCookie from 'js-cookie'
+// import jsCookie from 'js-cookie'
+const jsCookie = require('js-cookie');
 
 
 export default function LoginPopup({props,values}: any) {

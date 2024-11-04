@@ -16,7 +16,8 @@ import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
 import { useRouter } from 'next/navigation';
 import {isLoginUser} from '@/functions/globalFuntions'
-import jsCookie from 'js-cookie'
+// import jsCookie from 'js-cookie'
+const jsCookie = require('js-cookie');
 
 
 const Header = () => {
@@ -34,7 +35,6 @@ const Header = () => {
     },[])
 
     function authenticateUser() {
-        console.log('aaaaaa')
         let _isLoginUser = isLoginUser()
         if(_isLoginUser?.login) {
             setCustomer(_isLoginUser.info)

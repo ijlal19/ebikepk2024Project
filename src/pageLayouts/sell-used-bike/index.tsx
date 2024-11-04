@@ -1,9 +1,10 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/constants/globalData'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
+import { numericOnly, isLoginUser, publishAd, uplaodImageFunc } from "@/functions/globalFuntions"
 
 const SellUsedBike = () => {
 
@@ -19,6 +20,21 @@ const SellUsedBike = () => {
     const [videoUrl, setVideoUrl] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [mobile, setMobile] = useState('');
+    const [isAggreed, setIsAggreed] = useState(false)
+    const [msg, setMsg] = useState('')
+    const [customer, setCustomer]  = useState('not_login')
+    const [imageArr, setImageArr] = useState([])
+
+    useEffect(() => {
+        let _isLoginUser = isLoginUser()
+        if(_isLoginUser?.login) {
+            setCustomer(_isLoginUser.info)
+        }
+        else {
+            setCustomer("not_login")
+            Router.push('/')
+        }
+    },[])
 
     const handleChange = (field:any, value:any) => {
         if (field === 'city') {
@@ -44,21 +60,130 @@ const SellUsedBike = () => {
         }
     };
 
-    const handelsubmit=()=>{
-        const formData =[ {
-            title,
-            description,
-            city,
-            modelYear,
-            cc,
-            brand,
-            price,
-            videoUrl,
-            sellerName,
-            mobile,
-        }];
-        console.log("Form Data:", formData);
+    const handelsubmit = async () => {
+
+        if(!customer || customer == "not_login" || customer?.id == undefined) {
+            Router.push('/')
+        }
+
+        if(!title || title.length < 2) {
+            alert("Please add title")
+            return
+        }
+        else if(!description || description.length < 4) {
+            alert("Description should contain 4 or more characters")
+            return
+        }
+        else if(!city) {
+            alert("Please select city")
+            return
+        }
+        else if(!modelYear) {
+            alert("Please select model Year")
+            return
+        }
+        else if(!city) {
+            alert("Please select city")
+            return
+        }
+        else if(!cc) {
+            alert("Please select CC")
+            return
+        }
+        else if(!brand) {
+            alert("Please select brand")
+            return
+        }
+        else if(!price || parseInt(price) < 1000) {
+            alert("Please add correct price")
+            return
+        }
+        else if(!sellerName || sellerName.length < 2) {
+            alert("Please write correct seller Name")
+            return
+        }
+        else if(!mobile || mobile.length != 11 || !numericOnly(mobile)) {
+            alert("Please write correct mobile number")
+            return
+        }
+        else if(!isAggreed) {
+            alert("Please checked terms and conditions")
+            return
+        }  
+        
+        let _phone = mobile
+        while(_phone.charAt(0) === '0')
+        {
+            _phone = _phone.substring(1);
+        }
+
+        let obj = {
+            "brandId": brand,
+            "cityId": city,
+            "description": description,
+            "mobileNumber": parseInt(_phone),
+            "price": parseInt(price),
+            "sellerName": sellerName,
+            "title": title,
+            "uid": customer?.id,
+            "yearId": modelYear,
+            "images": imageArr,
+            "videoUrl": videoUrl,
+            "cc": cc,
+            "requestedForFeatured": false
+        }
+
+        let res = await publishAd(obj)
+        if(res.success) {
+            alert('Ad submitted Successfully! Please wait for approval')
+            Router.push('/used-bikes')
+        }
+        else {
+            alert('Some thing went wrong')
+        }
+        console.log('obj', obj, res)
     }
+
+    function uploadImage(event:any) {
+
+     console.log('event', event)
+     
+     // new method to send image in cloudinary with size reducing
+     const reader = new FileReader()
+     reader.readAsDataURL(event.target.files[0])
+     
+     reader.onload = (event:any) => {
+       
+       const imgElement : any  = document.createElement("img");
+       imgElement.src = reader.result;
+ 
+       imgElement.onload = async(e:any) => {
+       
+         const canvas = document.createElement("canvas");
+         const max_width = 600;
+ 
+         const scaleSize = max_width / e.target.width;
+         canvas.width = max_width;
+         canvas.height = e.target.height * scaleSize;
+ 
+         const ctx:any = canvas.getContext("2d")
+         ctx.drawImage(e.target , 0 , 0  , canvas.width , canvas.height)
+ 
+        const srcEncoded  = ctx.canvas.toDataURL(e.target , "image/jpeg")
+        let obj = { file: srcEncoded , upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+        
+        let imgRes:any = await uplaodImageFunc(obj)
+        
+        let _imageArr:any = [...imageArr]
+        _imageArr.push(imgRes.secure_url)
+        setImageArr(_imageArr)
+
+        console.log('imgRes', imgRes)
+        }
+ 
+      }
+    }
+
     return (
         <div className={styles.usedbike_form_main}>
             <div className={styles.form_container}>
@@ -82,6 +207,21 @@ const SellUsedBike = () => {
                         <TextareaAutosize id="desc" className={styles.description_area} placeholder="Add a Description"  required  onChange={(e) => handleChange('description', e.target.value)}/>
                     </Typography>
 
+                    <Typography>
+                        <label htmlFor="desc" className={styles.description_label}>Description*</label>
+                    </Typography>
+                    <Typography>
+                        <input type="file" accept="image/*" id="imageInput" name="image" onChange={(e)=>uploadImage(e)} />
+                    </Typography>
+
+                    <div style={{ display:"flex", margin:"20px auto"}} >
+                        {
+                            imageArr.length > 0 && imageArr.map((val, ind) => {
+                                return <img src={val} key={ind} style={{ border:"solid 1px grey", display:"inline-block", margin:"10px", width:"100px", height:"70px" }} />
+                            })
+                        }
+                    </div>
+
                     <div className={styles.dropdown_div}>
                         
                         <div className={styles.dropdown_main}>
@@ -94,7 +234,7 @@ const SellUsedBike = () => {
                                     {
                                         CityArr.map((e: any) => {
                                             return (
-                                                <option key={e.city_name} value={e.city_name}className={styles.drop_option}>{e.city_name}</option>
+                                                <option key={e.city_name} value={e.id}className={styles.drop_option}>{e.city_name}</option>
                                             )
                                         })
                                     }
@@ -108,12 +248,12 @@ const SellUsedBike = () => {
                             </Typography>
                             <Typography>
                                 <select name="" id="model" className={styles.section_main}
-                                onChange={(e) => handleChange('modelYear', e.target.value)}>
+                                    onChange={(e) => handleChange('modelYear', e.target.value)}>
                                     <option value="" disabled selected hidden></option>
                                     {
                                         YearArr.map((e: any) => {
                                             return (
-                                                <option key={e.year} value={e.year} className={styles.drop_option}>{e.year}</option>
+                                                <option key={e.year} value={e.id} className={styles.drop_option}>{e.year}</option>
                                             )
                                         })
                                     }
@@ -154,7 +294,7 @@ const SellUsedBike = () => {
                                     {
                                         BrandArr.map((e: any) => {
                                             return (
-                                                <option key={e.brandName} value={e.brandName} className={styles.drop_option}>{e.brandName}</option>
+                                                <option key={e.id} value={e.id} className={styles.drop_option}>{e.brandName}</option>
                                             )
                                         })
                                     }
@@ -195,11 +335,11 @@ const SellUsedBike = () => {
                     </Typography>
 
                     <Typography className={styles.input_parent}>
-                        <input required  type="text" id="mobile" className={styles.title_input} placeholder="Mobile Number" 
+                        <input required  type="number" id="mobile" className={styles.title_input} placeholder="Mobile Number" 
                         onChange={(e) => handleChange('mobile', e.target.value)}/>
                     </Typography>
                     
-                    <Typography className={styles.permission}><input type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
+                    <Typography className={styles.permission}><input checked={isAggreed} onChange={(e) => { setIsAggreed(e.target.checked)}} type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
                     <button className={styles.post_button} onClick={handelsubmit} >Post Now</button>
                 </div>
             </div>
