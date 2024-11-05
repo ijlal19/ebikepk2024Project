@@ -93,7 +93,7 @@ const AllUsedBike = () => {
                                     </Grid>
                                     
                                     <Grid item className={styles.price_section_desktop}>
-                                        10000
+                            
                                     </Grid>
 
                                 </Grid>
