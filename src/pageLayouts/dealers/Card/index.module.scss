@@ -1,0 +1,63 @@
+// Feature Car Styling
+.feature_card_main{
+    width: 100%;
+    max-width: 210px;
+    height: auto;
+    padding: 15px 0px;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    @media (max-width:768px) {
+        max-width: 175px;
+    }
+    .shop_name{
+        font-size: 14px;
+        text-align: center;
+        color: #1976d2;
+        margin: 0px 0px !important;
+        padding: 10px 0px 10px 0px;
+    }
+    .logo{
+        margin: auto;
+        display: flex;
+    }
+    .city{
+        font-size: 14px;
+        text-align: center;
+        color: #1976d2;
+        margin: 0px 0px !important;
+        padding: 15px 0px 5px 0px;
+    }
+    .address{
+        font-size: 12px;
+        text-align: center;
+        color: grey;
+        margin: 0px 0px !important;
+        padding: 8px 0px;
+    }
+    .date{
+        font-size: 12px;
+        text-align: center;
+        color: grey;
+        margin: 0px 0px !important;
+        padding: 4px 0px;
+        @media (max-width:768px) {
+            margin-bottom: 10px !important;
+        }
+    }
+    .more_details_button{
+        font-size: 14px;
+        display: flex;
+        margin: 13px auto 8px auto;
+        padding: 6px 15px;
+        border-radius: 0px;
+        border: none;
+        background: #1976d2;
+        color: white ;
+        cursor: pointer;
+        @media (max-width:768px) {
+            display: none;
+        }
+    }
+}
+
+// 

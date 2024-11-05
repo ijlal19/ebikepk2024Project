@@ -1,0 +1,28 @@
+.featuremain{
+    width: 100%;
+    max-width: 950px;
+    margin: auto;
+    padding:0px 5px 5px 5px;
+    box-sizing: border-box;
+    @media (max-width:768px) {
+       padding: 0px 0px !important;
+       border: none;
+    }
+    .heading{
+        font-size: 25px;
+        text-align: center;
+        color: #1976d2;
+        @media (max-width:768px) {
+            font-size: 20px;
+        }
+    }
+    .card_box{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        @media (max-width:768px) {
+            gap: 10px;
+        }
+    }
+}

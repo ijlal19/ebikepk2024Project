@@ -1,0 +1,20 @@
+.filter_drawer_main{
+    // border: 1px solid #000;
+    width: 250px;
+    padding: 0px !important;
+    overflow-y: auto;
+    
+    scroll-behavior: smooth;
+
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: #d2d2d2;
+                border-radius: 10px;
+            }
+            &::-webkit-scrollbar-track {
+                background-color: #f0f0f0;
+            }
+    
+}
