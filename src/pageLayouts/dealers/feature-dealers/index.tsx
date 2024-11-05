@@ -6,9 +6,9 @@ return(
         <p className={styles.heading}>Featured Dealers</p>
         <div className={styles.card_box}>
         {
-            props.slice(0,12).map((e:any)=>{
+            props.slice(0,12).map((e:any,i:any)=>{
                 return(
-                    <FeatureDealerCard props={e}/>
+                    <FeatureDealerCard props={e} key={i}/>
                 )
             })
         }
