@@ -32,10 +32,8 @@ const AllUsedBike = () => {
     }
 
     function goToDetailPage(val) {
-        return
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        console.log('url title', urlTitle)
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
 
@@ -93,7 +91,7 @@ const AllUsedBike = () => {
                                     </Grid>
                                     
                                     <Grid item className={styles.price_section_desktop}>
-                            
+                                        <span> PKR {val.price}  </span>
                                     </Grid>
 
                                 </Grid>
