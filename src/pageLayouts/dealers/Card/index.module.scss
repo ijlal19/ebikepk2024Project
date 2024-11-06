@@ -61,3 +61,59 @@
 }
 
 // 
+
+.dealer_card_main{
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    border: 1px solid #d2d2d2;
+    margin: 20px 0px 20px 0px;
+    display: flex;
+
+    .image_box{
+        width: 100%;
+        max-width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+
+        .image{
+        }
+    }
+
+    .detail_box{
+        width: 100%;
+        padding: 0px 0px 0px 10px;
+    }
+    .shop_name{
+        font-size: 14px;
+        color: #1976d2;
+        font-weight: bolder;
+        margin: 0px;
+        padding: 0px 0px 5px 0px;
+    }
+    .city{
+        font-size: 14px;
+        color: #1976d2;
+        padding: 5px 0px 5px 0px;
+        margin: 0px;
+    }
+    .address{
+        font-size: 12px;
+        margin: 0px;
+        display: flex;
+        padding: 5px 0px 0px 0px;
+        color: grey;
+    }
+    .more_button{
+        font-size: 14px;
+        display: flex;
+        margin:15px 15px 5px auto;
+        padding: 6px 15px;
+        border-radius: 0px;
+        border: none;
+        background: #1976d2;
+        color: white ;
+        cursor: pointer;
+    }
+}

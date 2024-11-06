@@ -1,5 +1,4 @@
 .filter_drawer_main{
-    // border: 1px solid #000;
     width: 250px;
     padding: 0px !important;
     overflow-y: auto;
@@ -16,5 +15,56 @@
             &::-webkit-scrollbar-track {
                 background-color: #f0f0f0;
             }
-    
+}
+
+.Dealer_pakistan_main{
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+    margin: 20px auto 10px auto !important;
+    border: 1px solid #d2d2d2;
+    padding: 20px 10px 0px 10px;
+    height: auto;
+
+    .heading_box{
+        width: 100%;
+        height: auto;
+        border: 1px solid #d2d2d2;
+
+        .showrooms_heading{
+            font-size:16px;
+            margin: 0px;
+            padding: 5px 0px 15px 0px;
+            text-align: center;
+            color: #1976d2;
+        }
+
+        .search_box{
+            width: 100%;
+            padding: 5px 0px 20px 0px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .drawer_button{
+                background: #1976d2;
+                color: white;
+                font-size: 12px;
+                padding: 2px 10px;
+                border-radius: 0px;
+                font-weight: bolder;
+            }
+            .search_input{
+                padding: 9px 0px 9px 5px;
+                width: 80%;
+                border: 1px solid #d2d2d2;
+                outline: none;
+            }
+        }
+    }
+
+    .dealer_card_section{
+        margin: 20px 0px 10px 0px;
+        padding: 10px 0px;
+    }
 }
