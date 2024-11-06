@@ -10,7 +10,7 @@ import Filters from '@/sharedComponents/filters'
 const AllUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:991px)')
     const [allBikesArr, setAllBikesArr] = useState([])
-    const [pageNo, setPageNo] = useState(0)
+    const [pageNo, setPageNo] = useState(-1)
     const [isLoading, setIsLoading] = useState(false)
 
     const router = useRouter()
@@ -20,7 +20,7 @@ const AllUsedBike = () => {
     }, [])
 
     async function fetchBikeInfo(_pageNo) {
-        let curentFetchPage = _pageNo + 10
+        let curentFetchPage = _pageNo + 1
         setPageNo(curentFetchPage)
         setIsLoading(true)
         let res = await getAllbikesDetail(curentFetchPage)
