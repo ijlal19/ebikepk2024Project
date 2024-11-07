@@ -1,50 +1,58 @@
 // Feature Car Styling
-.feature_card_main{
+.feature_card_main {
     width: 100%;
     max-width: 210px;
     height: auto;
     padding: 15px 0px;
     border: 1px solid #d2d2d2;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+
     @media (max-width:768px) {
         max-width: 175px;
     }
-    .shop_name{
+
+    .shop_name {
         font-size: 14px;
         text-align: center;
         color: #1976d2;
         margin: 0px 0px !important;
         padding: 10px 0px 10px 0px;
     }
-    .logo{
+
+    .logo {
         margin: auto;
         display: flex;
     }
-    .city{
+
+    .city {
         font-size: 14px;
         text-align: center;
         color: #1976d2;
         margin: 0px 0px !important;
         padding: 15px 0px 5px 0px;
     }
-    .address{
+
+    .address {
         font-size: 12px;
         text-align: center;
         color: grey;
         margin: 0px 0px !important;
         padding: 8px 0px;
     }
-    .date{
+
+    .date {
         font-size: 12px;
         text-align: center;
         color: grey;
         margin: 0px 0px !important;
         padding: 4px 0px;
+
         @media (max-width:768px) {
             margin-bottom: 10px !important;
         }
     }
-    .more_details_button{
+
+    .more_details_button {
         font-size: 14px;
         display: flex;
         margin: 13px auto 8px auto;
@@ -52,8 +60,9 @@
         border-radius: 0px;
         border: none;
         background: #1976d2;
-        color: white ;
+        color: white;
         cursor: pointer;
+
         @media (max-width:768px) {
             display: none;
         }
@@ -62,7 +71,7 @@
 
 // 
 
-.dealer_card_main{
+.dealer_card_main {
     width: 100%;
     height: auto;
     padding: 10px 0px;
@@ -70,50 +79,105 @@
     margin: 20px 0px 20px 0px;
     display: flex;
 
-    .image_box{
+    @media (max-width:768px) {
+        border: 1px solid #d2d2d2;
+        width: 100%;
+        margin: 3px 0px 0px 0px;
+        max-width: 175px;
+        flex-direction: column;
+    }
+
+    .image_box {
         width: 100%;
         max-width: 200px;
         display: flex;
         justify-content: center;
-        align-items: center; 
+        align-items: center;
 
-        .image{
+        @media (max-width:768px) {
+            margin: 5px 0px;
         }
+        .image {}
     }
 
-    .detail_box{
+    .detail_box {
         width: 100%;
-        padding: 0px 0px 0px 10px;
+        padding: 0px 0px 0px 0px;
+        box-sizing: border-box;
     }
-    .shop_name{
+
+    .shop_name {
         font-size: 14px;
         color: #1976d2;
         font-weight: bolder;
         margin: 0px;
         padding: 0px 0px 5px 0px;
+
+        @media (max-width:768px) {
+            text-align: center !important;
+            display: flex;
+            margin: 5px 0px;
+            justify-content: center;
+        }
     }
-    .city{
+
+    .city {
         font-size: 14px;
         color: #1976d2;
         padding: 5px 0px 5px 0px;
         margin: 0px;
+
+        @media (max-width:768px) {
+            text-align: center !important;
+            display: flex;
+            padding: 10px 0px 5px 0px;
+            justify-content: center;
+        }
     }
-    .address{
+
+    .address {
         font-size: 12px;
         margin: 0px;
         display: flex;
         padding: 5px 0px 0px 0px;
         color: grey;
+
+        .dealer_address {
+            @media (max-width:768px) {
+                padding: 8px 0px;
+                margin: 0px;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        .dealer_createAt {
+            @media (max-width:768px) {
+                display: flex;
+                justify-content: center;
+                margin: 0px 0px 10px;
+                padding: 4px 0px;
+            }
+        }
+
+        @media (max-width:768px) {
+            flex-direction: column;
+        }
     }
-    .more_button{
+
+    .more_button {
         font-size: 14px;
         display: flex;
-        margin:15px 15px 5px auto;
+        margin: 15px 15px 5px auto;
         padding: 6px 15px;
         border-radius: 0px;
         border: none;
         background: #1976d2;
-        color: white ;
+        color: white;
         cursor: pointer;
+
+        @media (max-width:768px) {
+            display: none;
+        }
     }
 }

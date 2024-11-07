@@ -7,7 +7,7 @@ import { DealerInPakistan } from './dealer-in-pakistan';
 const Dealer = () => {
   return (
     <div className={styles.main_dealer}>
-      {/* <FeatureDelers props={FeaturedDealerData}/> */}
+      <FeatureDelers props={FeaturedDealerData}/>
 
       <DealerInPakistan/>
     </div>

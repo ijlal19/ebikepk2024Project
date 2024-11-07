@@ -7,10 +7,11 @@ import { DealerinPakFilter } from './filter';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AllDealerData } from '../Data';
 import { DealerinPakCard } from '../Card';
-import { Pagination } from '@mui/material';
+import { Pagination, useMediaQuery } from '@mui/material';
 
 export const DealerInPakistan = () => {
     const [open, setOpen] = React.useState(false);
+    const isMobile = useMediaQuery(`(max-width:768px)`)
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     }

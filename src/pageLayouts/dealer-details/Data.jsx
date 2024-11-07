@@ -107,7 +107,7 @@ export const moreDealers = {
         },
         {
             "id": 151,
-            "shop_name": "Good luck Autos Corporation Honda 5S",
+            "shop_name": "Good luck Autos Honda",
             "brand_id": 1,
             "phone": "03006202066",
             "phone2": "",
@@ -202,7 +202,7 @@ export const moreDealers = {
     ]
 }
 
-export const dealerDetail = {
+export const DealerDetailData = {
     "id": 1302,
     "shop_name": "shahzain_honda_centre ",
     "brand_id": 1,

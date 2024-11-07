@@ -22,14 +22,22 @@
     max-width: 900px;
     box-sizing: border-box;
     margin: 20px auto 10px auto !important;
-    border: 1px solid #d2d2d2;
     padding: 20px 10px 0px 10px;
     height: auto;
 
+    @media (max-width:768px) {
+        padding: 0px !important;
+    }
+
     .heading_box{
         width: 100%;
+        padding: 0px 10px 0px 10px;
+        box-sizing: border-box;
         height: auto;
         border: 1px solid #d2d2d2;
+        @media (max-width:768px) {
+            // max-width: ;
+        }
 
         .showrooms_heading{
             font-size:16px;
@@ -66,5 +74,17 @@
     .dealer_card_section{
         margin: 20px 0px 10px 0px;
         padding: 10px 0px;
+
+        @media (max-width:768px) {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
     }
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+ }
