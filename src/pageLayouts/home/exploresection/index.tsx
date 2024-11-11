@@ -9,7 +9,7 @@ const Explore = () => {
     <Box className={styles.explore_main}>
       <Container className={styles.explore_container}>
         <Typography className={styles.explore_heading}>
-          Explore ebike.pk Products
+          Explore ebike.pk
         </Typography>
         <Box className={styles.explore_grid}>
           <Card data={Data[0]}/>

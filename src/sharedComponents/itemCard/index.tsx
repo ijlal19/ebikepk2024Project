@@ -42,7 +42,7 @@ export default function ImgCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {props.data.price} {props.from == 'n' ? 'Onwards' : '' }
+                    {props.data.price} {props.from == 'n' ? '' : '' }
                 </Typography>
 
                 { props.from == "u" ? 
@@ -51,9 +51,9 @@ export default function ImgCard(props:any) {
                     </Typography>
                     :
                     <>
-                    <Typography className={styles.avg_price_text}>
+                    {/* <Typography className={styles.avg_price_text}>
                         Avg. Ex-Showroom price
-                    </Typography>
+                    </Typography> */}
                     </>
                 }
                  <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props.data) }} > View Detail </Button>

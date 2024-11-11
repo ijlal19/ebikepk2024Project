@@ -8,7 +8,7 @@ const Data = [
 {
     url: "",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1728046737/Yamaha_YB125G-20_q5hk2x.jpg",
-    title: "YB125Z",
+    title: "Yamaha YB125Z",
     price:"PKR 485,000",
    },
    {
@@ -20,14 +20,14 @@ const Data = [
 {
     url: "",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1728047731/Suzuki_GSX_125-20_uhnujy.jpg",
-    title: "YBR125G",
+    title: "Suzuki GSX125",
     price:"PKR 499,000",
    },
 
    {
     url: "",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1728047566/Yamaha_YB_125_Z-20_u0ek4l.jpg",
-    title: "Suzuki GSX125",
+    title: "Yamaha YBR125G",
     price:"PKR 424,000",
    },
   {
