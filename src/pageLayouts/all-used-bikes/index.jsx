@@ -41,8 +41,8 @@ const AllUsedBike = () => {
         <Box className={styles.main}>
             <Box className={styles.usedBike_headingBpx}>
             <Typography className=
-            {styles.headinh_sale}>Bike For Slae In Pakistan</Typography>
-            <Typography className={styles.path_text}>Home<span style={{paddingLeft:5,paddingRight:5}}>/</span>Used<span style={{paddingLeft:5,paddingRight:5}}>/</span>Bike For Slae In Pakistan</Typography>
+            {styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
+            <Typography className={styles.path_text}>Home<span style={{paddingLeft:5,paddingRight:5}}>/</span>Used<span style={{paddingLeft:5,paddingRight:5}}>/</span>Bike For Sale In Pakistan</Typography>
             </Box>
             <Box className={styles.all_bike_main}>
                 

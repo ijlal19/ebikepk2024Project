@@ -11,16 +11,14 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = params
-    
-    console.log('usedId', id)
     const product = await getSinglebikesDetail(id)
-    console.log('usedId', product)
 
     return {
       title: product?.add?.title + ' for sale in '+ getCityFromId(product?.add?.cityId, CityArr)  + ' | ebike.pk',
       description: product?.add?.description,
       openGraph: {
         title:  product?.add?.title,
+        description: product?.add?.description,
         images: [product?.add?.images[0]],
       },
     }
@@ -28,17 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
 
 export default function UsedBike() {
-    
-    return (
-        <>
-        <Head>
-            <></>
-            {/* <meta property="og:image" content={Gconfig.productImageUrl + productInfo?.images[0]?.product_image_url + "?profile=b"} />
-            <title>{page_title}</title>
-            <meta name="description" content={"Shop the " + (productInfo.vendor.toLowerCase() != "fashionpass" ? productInfo.vendor : '') + " " + titleCaptilize + (productInfo.external_color != null ? ' in ' + colorCaptilize : '')}></meta>
-            <script type="application/ld+json">{JSON.stringify(productScript)}</script> */}
-        </Head>
-        <UsedBikeCompDetail />
-        </>
+    return (  
+      <UsedBikeCompDetail />
     )
 }
