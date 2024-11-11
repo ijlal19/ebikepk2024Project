@@ -1,14 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss'
-import { DealerDetailData ,moreDealers} from './Data'
+// import { DealerDetailData ,moreDealers} from './Data'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import BadgeIcon from '@mui/icons-material/Badge';
 import { useMediaQuery } from '@mui/material';
+import { DealerDetailData, moreDealers } from '../dealer-details/Data';
 
-const DealerDetails = () => {
-  console.log(moreDealers.dealers[1])
+const MechanicsDetails = () => {
   const isMobile = useMediaQuery('(max-width:562px)')
   return (
 
@@ -22,7 +22,7 @@ const DealerDetails = () => {
             <div className={styles.main_card_details}>
               <p className={styles.shop_name}>{DealerDetailData.shop_name}</p>
               <p className={styles.address}><BadgeIcon
-              className={styles.icon}/>Dealer in - {DealerDetailData.address.slice(36)}</p>
+              className={styles.icon}/>Mechanic in - {DealerDetailData.address.slice(36)}</p>
               <p className={styles.full_address}><LocationOnIcon
               className={styles.icon}/>{DealerDetailData.address}</p>
               <p className={styles.phone}><PhoneIcon
@@ -32,7 +32,7 @@ const DealerDetails = () => {
         </div>
         <div className={styles.more_dealers}>
           <div className={styles.similar_dealer_heading_box}>
-            <p className={styles.heading}>Similar Dealers</p>
+            <p className={styles.heading}>Similar Mechanics</p>
             <p className={styles.view_all_dealers}>View All Dealers</p>
           </div>
           <div className={styles.more_dealers_card}>
@@ -73,5 +73,4 @@ const DealerDetails = () => {
   );
 };
 
-export default DealerDetails;
-
+export default MechanicsDetails;

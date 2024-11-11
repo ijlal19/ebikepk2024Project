@@ -1,4 +1,4 @@
-'use client';
+   'use client';
 import { TextareaAutosize, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss'
@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { numericOnly, isLoginUser, publishAd, uplaodImageFunc } from "@/functions/globalFuntions"
 import { BrandArr, CcArr, CityArr, YearArr } from '@/constants/globalData';
 
-const DealerRegistration = () => {
+const MechanicRegistration = () => {
 
 
   // const [isLoading, setIsLoading] = useState(false)
@@ -111,7 +111,7 @@ const DealerRegistration = () => {
   return (
     <div className={styles.usedbike_form_main}>
         <div className={styles.form_container}>
-            <Typography className={styles.form_heading}>Dealer Registration</Typography>
+            <Typography className={styles.form_heading}>Mechanic Registration</Typography>
 
             <div className={styles.form_input_div} >
                 <Typography>
@@ -198,5 +198,5 @@ const DealerRegistration = () => {
 );
  };
 
-export default DealerRegistration;
+export default MechanicRegistration;
 

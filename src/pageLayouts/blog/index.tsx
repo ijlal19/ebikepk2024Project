@@ -14,8 +14,8 @@ import OurVideos from '../home/ourVideos';
 
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter()
+  const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 10;
   const totalPages = Math.ceil(BlogData.length / blogsPerPage);
   const currentBlogs = BlogData.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
