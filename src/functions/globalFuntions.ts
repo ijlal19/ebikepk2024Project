@@ -119,6 +119,16 @@ function getYearFromId(id:any, dataArr:any) {
     else return []
 }
 
+function getSingleBlogData(id:any){
+    return fetch( Gconfig.ebikeApi + `blog/get-blog-by-id/${id}`)
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
+
 
 function userLogin(data:any) {
     return fetch( Gconfig.ebikeApi + `user/login`, {
@@ -139,7 +149,6 @@ function userSignup(data:any) {
         return data
     })
 }
-
 
 function verifyUserFromAuthenticationEmail(email:any, token:any) {
     return fetch( Gconfig.ebikeApi + `user/verification/${email}/${token}`, {
@@ -181,7 +190,7 @@ function uplaodImageFunc(data:any) {
     })
 }
 
-export { 
+export { getSingleBlogData,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,

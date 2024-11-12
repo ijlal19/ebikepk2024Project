@@ -8,6 +8,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, MailruShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
+import {getSingleBlogData } from '@/functions/globalFuntions';
 
 const BlogDetails = () => {
   const [displayicon, setDisplayIcon] = useState(true)
@@ -15,18 +16,16 @@ const BlogDetails = () => {
   const [DataBlog, setDataBlog]: any = useState(null)
   const params = useParams()
   const id = params.slug.slice(0, 3)
-
+console.log(id)
   useEffect(() => {
-    const blogs: any = BlogDetailsData.find((e: any) => {
-      if (e.id == id) {
-        return e
-      }
-    }
-    );
-    setDataBlog(blogs);
-  }, [id])
+    fetchBrandInfo()
+  }, [])
 
-
+  async function fetchBrandInfo() {
+    let res = await getSingleBlogData(id)
+    setDataBlog(res)
+  }
+  console.log(DataBlog)
   const handleicons = () => {
     setDisplayIcon(!displayicon)
   }
