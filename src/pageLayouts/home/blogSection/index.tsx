@@ -5,14 +5,19 @@ import Data from './Data'
 import styles from './index.module.scss'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { useRouter } from 'next/navigation'
+
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
+
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-  
+  const router = useRouter()
+
   return (
     <div
       role="tabpanel"
@@ -25,19 +30,25 @@ function CustomTabPanel(props: TabPanelProps) {
     </div>
   );
 }
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+
+
+
 function BlogSection() {
   const [value, setValue] =React.useState(0);
-  
+  const router = useRouter()
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log(newValue)
     setValue(newValue);
   };
+
+  const handleRoute = (blogInfo: any) => {
+    var title = blogInfo.blogTitle;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+    router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+  };
+
 
   const isMobile = useMediaQuery('(max-width: 768px)');
   return (
@@ -59,7 +70,7 @@ function BlogSection() {
               {
                 Data.slice(0,2).map((e: any, i: any) => (
                 
-                    <Grid container key={i}className={styles.blog_grid1}>
+                    <Grid onClick={() => { handleRoute(e) }} container key={i}className={styles.blog_grid1}>
                       <Grid
                         item
                         xs={isMobile ? 12 : 3}

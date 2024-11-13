@@ -23,11 +23,12 @@ const Blog = () => {
   const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
   };
+  
   const handleRoute = (blogInfo: any) => {
     var title = blogInfo.blogTitle;
     title = title.replace(/\s+/g, '-');
     var lowerTitle = title.toLowerCase();
-  router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+    router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
   };
 
   const App = () => {

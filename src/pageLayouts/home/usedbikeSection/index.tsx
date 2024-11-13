@@ -48,12 +48,12 @@ function UsedBikesSection() {
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
-  indicatorColor="primary" aria-label="basic tabs example">
+                  indicatorColor="primary" aria-label="basic tabs example">
               <Tab label="Bikes" {...a11yProps(0)} />
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data.slice(5)} from='u'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u'/>
           </CustomTabPanel>
         </Box>
       </Container>

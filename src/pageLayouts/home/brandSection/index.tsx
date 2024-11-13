@@ -6,14 +6,16 @@ import * as React from 'react';
 import BrandCard from './Card/index'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { useRouter } from 'next/navigation'
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
+
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -26,18 +28,27 @@ function CustomTabPanel(props: TabPanelProps) {
     </div>
   );
 }
+
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+
+
 function BrandSection() {
   const [value, setValue] =React.useState(0);
+  const Router = useRouter()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  function goToBrands() {
+    Router.push('/new-bikes')
+  }
 
   return (
     <Box className={styles.brand_main}>
@@ -66,7 +77,7 @@ function BrandSection() {
                 })
               }
 
-              <Button className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
+              <Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
             </Box>
           </CustomTabPanel>
           </Box>
