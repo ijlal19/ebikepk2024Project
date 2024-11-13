@@ -31,7 +31,6 @@ export default function AllNewBikes() {
     let DealerDataRes = await getdealerData()
     setAllDelaerArr(DealerDataRes.dealers)
   }
-  console.log(allnewBikeArr)
 
   return (
     <>

@@ -181,13 +181,13 @@ const Header = () => {
                 </Box>
 
                 <div className={styles.header_btn_sec}>
-                    <button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button>
+                    {customer == 'not_login' ? "" : <button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button> }
                     {customer == 'not_login' ?
                         <Box className={styles.header_buttons_group}>
                             <LoginPopup 
                                props={ModalData} 
                             />
-                        </Box> :
+                        </Box  > :
                     <p className={styles.logout_btn} onClick={() => LogoutUser()}> Logout </p> } 
                 </div>
                

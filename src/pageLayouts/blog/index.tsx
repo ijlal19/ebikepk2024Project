@@ -16,6 +16,7 @@ const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const router = useRouter()
   const [currentPage, setCurrentPage] = useState(1);
+
   const blogsPerPage = 10;
   const totalPages = Math.ceil(BlogData.length / blogsPerPage);
   const currentBlogs = BlogData.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
@@ -42,7 +43,7 @@ const Blog = () => {
         setCurrentText(texts[currentIndex]);
       }, 3000);
   
-      return () => clearInterval(intervalId); // Clean up interval on component unmount
+      return () => clearInterval(intervalId);
     }, []);
   
     return `${currentText}`;
