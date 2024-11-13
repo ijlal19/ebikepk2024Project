@@ -190,10 +190,38 @@ function uplaodImageFunc(data:any) {
     })
 }
 
+function getBikesBySpecificFilter(from:any, id:any) {
+    
+    if(from == 'city') {
+        return fetch( Gconfig.ebikeApi + `classified/get-adds-by-city-offset/${id}/0/8`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }).then(response => response.json()).then(data => {
+            return data
+        })
+    }
+    else if(from == "cc"){
+        return fetch( Gconfig.ebikeApi + `classified/get-adds-by-cc-offset/${id}/0/10`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }).then(response => response.json()).then(data => {
+            return data
+        })
+    }
+    else if(from == "year") {
+        return fetch( Gconfig.ebikeApi + `classified/get-adds-by-year-offset/${id}/0/10`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }).then(response => response.json()).then(data => {
+            return data
+        })
+    }
+}
+
 export { getSingleBlogData,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData,getnewBikeData,getdealerData,getnewBikedetailsData,  userLogin, userSignup, verifyUserFromAuthenticationEmail,
-    isLoginUser, publishAd, uplaodImageFunc
+    isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter
 }

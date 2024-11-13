@@ -9,41 +9,42 @@ import { useRouter } from 'next/navigation'
 
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
-    { title: "City Karachi", url: "" },
-    { title: "City Lahore", url: "" },
-    { title: "City Quetta", url: "" },
-    { title: "City Multan", url: "" },
-    { title: "City Faisalabad", url: "" },
-    { title: "City Peshawar", url: "" },
-    { title: "City Islamabad", url: "" },
-    { title: "City Rawalpindi", url: "" }
+    { title: "City Karachi", url: "/used-bikes/bike-by-city/karachi/1" },
+    { title: "City Lahore", url: "/used-bikes/bike-by-city/lahore/2" },
+    { title: "City Quetta", url: "/used-bikes/bike-by-city/quetta/5" },
+    { title: "City Multan", url: "/used-bikes/bike-by-city/multan/10" },
+    { title: "City Faisalabad", url: "/used-bikes/bike-by-city/faisalabad/6" },
+    { title: "City Peshawar", url: "/used-bikes/bike-by-city/peshawar/4" },
+    { title: "City Islamabad", url: "/used-bikes/bike-by-city/islamabad/3" },
+    { title: "City Rawalpindi", url: "/used-bikes/bike-by-city/rawalpindi/8" }
 ]
 let year_arr = [
     { title: "Used Bike by Year", url: "" },
-    { title: "Years 2020", url: "" },
-    { title: "Years 2019", url: "" },
-    { title: "Years 2018", url: "" },
-    { title: "Years 2017", url: "" },
-    { title: "Years 2016", url: "" },
-    { title: "Years 2015", url: "" },
-    { title: "Years 2014", url: "" },
-    { title: "Years 2013", url: "" }
+    { title: "Years 2022", url: "used-bikes/bike-by-year/2022/55" },
+    { title: "Years 2021", url: "used-bikes/bike-by-year/2021/54" },
+    { title: "Years 2020", url: "used-bikes/bike-by-year/2020/53" },
+    { title: "Years 2019", url: "used-bikes/bike-by-year/2019/52" },
+    { title: "Years 2018", url: "used-bikes/bike-by-year/2018/51" },
+    { title: "Years 2017", url: "used-bikes/bike-by-year/2017/50" },
+    { title: "Years 2016", url: "used-bikes/bike-by-year/2016/49" },
+    { title: "Years 2015", url: "used-bikes/bike-by-year/2015/48" },
+    
 ]
 let cc_arr = [
     { title: "Used Bike by CC", url: "" },
-    { title: "50cc", url: "" },
-    { title: "70cc", url: "" },
-    { title: "100cc", url: "" },
-    { title: "110cc", url: "" },
-    { title: "125cc", url: "" },
-    { title: "150cc", url: "" },
-    { title: "200cc", url: "" },
-    { title: "250cc", url: "" }
+    { title: "50cc", url: "used-bikes/bike-by-cc/50/1" },
+    { title: "70cc", url: "used-bikes/bike-by-cc/70/1" },
+    { title: "100cc", url: "used-bikes/bike-by-cc/100/1" },
+    { title: "110cc", url: "used-bikes/bike-by-cc/110/1" },
+    { title: "125cc", url: "used-bikes/bike-by-cc/125/1" },
+    { title: "150cc", url: "used-bikes/bike-by-cc/150/1" },
+    { title: "200cc", url: "used-bikes/bike-by-cc/200/1" },
+    { title: "250cc", url: "used-bikes/bike-by-cc/250/1" }
 ]
 let catagory_arr = [
     { title: "Explore Ebike", url: "" },
     { title: "Used Bikes", url: "/used-bikes" },
-    { title: "New Bikes", url: "" },
+    { title: "New Bikes", url: "/new-bikes" },
     { title: "Showroom", url: "" },
     { title: "Videos", url: "" },
     { title: "Bikers Forum", url: "" },

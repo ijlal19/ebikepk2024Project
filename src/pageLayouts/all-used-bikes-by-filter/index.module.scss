@@ -1,0 +1,248 @@
+.main{
+  width: 100%;
+  padding: 0px;
+  background: #f2f3f3;
+  @media (max-width:991px) {
+    padding: 0px 10px !important;
+  }
+  .usedBike_headingBpx{
+    width: 100%;
+    max-width: 1200px;
+    padding: 0px 0px 0px 10px;
+    margin: auto;
+    @media (max-width:768px) {
+      padding:10px 0px 0px 20px !important;
+    }
+    .headinh_sale{
+      font-size: 24px;
+      color: yellowgreen;
+      margin: 0px 0px 5px;
+      font-weight: bold;
+    }
+    .path_text{
+      font-size: 12px;
+      color: #7b8397;
+      margin: 15px 0px 10px;
+    }
+  }
+.all_bike_main {
+  display: flex;
+  padding: 0px 10px;
+  width: 100% !important;
+  max-width: 1200px;
+  margin: auto;
+  align-items: start;
+  gap: 15px;
+
+  .main_box {
+    padding: 0px 10px !important;
+    width: 100% !important;
+    height: 100%;
+    max-width: 800px;
+    margin: 20px auto 0px auto;
+
+    .navigation {
+      max-width: 800px;
+      height: 30px;
+      background: white;
+      border: 1px solid #e6e6e6;
+      padding: 10px;
+      margin: auto;
+      position: relative;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+
+      @media (max-width:900px) {
+        width: 95%;
+      }
+
+      .bike_text {
+        font-size: 16px;
+        float: left;
+      }
+
+      .swap_button_container {
+        .swap_icon {
+          font-size: 20px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .card_box {
+    .long_card {
+      display: flex;
+      padding: 10px 0px !important;
+      margin: 0px 0px 20px;
+      background: white;
+      border: 1px solid #e6e6e6;
+      height: 147px;
+      align-items: center;
+      cursor: pointer;
+      @media (max-width:768px) {
+        height: auto;
+      }
+      @media (max-width:991px) {
+        height: auto !important;
+        padding: 5px 0px !important;
+      }
+
+      .bike_image {
+        height: 123px;
+        width: 185px;
+        padding: 0px 10px;
+        @media (max-width:991px) {
+          height: auto !important;
+        }
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .card_info {
+        padding: 0px 10px;
+
+        @media (min-width:768px) {
+            height: 130px;
+            flex: auto;
+        }
+
+        .titleandPrice {
+          display: flex;
+          flex-direction: row;
+          padding: 0px;
+          box-sizing: border-box;
+          width: 100%;
+          max-width: 450px;
+          justify-content: space-between;
+          flex-direction: row;
+
+          @media (max-width:767px) {
+            flex-direction: column;
+          }
+          
+          .card_title {
+            max-width: 250px;
+            font-size: 14px;
+            padding: 0px;
+            display: flex;
+            align-items: center;
+            color: #1976d2;
+            width: 70%;
+            @media (max-width:768px) {
+              font-size: 16px;
+              width: 100%;
+              max-width: 100%;
+              padding: 5px 0px 4px 0px;
+            }
+            @media (max-width:991px) {
+              font-size: 18px;
+              width: 100%;
+              max-width: 400px !important;
+              padding: 5px 0px 3px 0px;
+            }
+          }
+          
+          .card_price_mobile {
+            max-width: 150px;
+            padding: 0px;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bolder;
+            color: yellowgreen;
+
+            @media (max-width:768px) {
+              font-size: 16px;
+              width: 100%;
+              max-width: 100%;
+            }
+          
+          @media (min-width:768px) {
+            display: none;
+          }
+         
+        }
+      }
+
+        .card_location {
+          padding: 7px 0px 0px;
+          font-size: 13px;
+          color: #434343;
+        }
+
+        .bike_details {
+          font-size: 13px;
+          color: #434343;
+          padding: 5px 0px 0px;
+        }
+
+        .phone_number {
+          font-size: 11px;
+          color: #434343;
+          margin: 8px 0px 0px;
+        }
+      }
+
+      .price_section {
+        border:solid 1px black;
+      }
+
+    }
+  }
+
+  .viewMoreBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+
+    .viewMoreBtn {
+      padding: 10px 30px;
+      background-color: #1976d2;
+      color: #fff;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .viewMoreBtnDisabled {
+      pointer-events: none;
+    }
+
+  }
+
+
+
+  .add_area {
+    width: 150px;
+    // min-width: 100px;
+    margin-top: 20px;
+    background: white;
+    color: rgb(0, 0, 0);
+
+    @media (max-width:768px) {
+      display: none;
+    }
+  }
+}
+}
+
+.price_section_desktop {
+  display: flex;
+  height: 147px;
+  align-items: flex-start;
+  margin-right: 10px;
+  @media (max-width:1000px) {
+    display: none;
+  }
+  span {
+    color: #1976d2;
+    font-size: 16px;
+  }
+}
