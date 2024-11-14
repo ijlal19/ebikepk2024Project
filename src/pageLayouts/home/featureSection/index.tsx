@@ -12,25 +12,28 @@ const Section2 = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const feautureArray=[
     {
-      Heading:'Post Free Add',
+              Heading:'Post Free Add',
               txt1:'Post your Bike Add Free in Easy Steps',
               txt2:'Post your Bike Video Picture and ADD For Free',
               txt3:'Sell Your Bike at the Best Price',
               button:'Post Bike Add',
+              url:"/used-bikes/sell-used-bike/"
     },
     {
-      Heading:'Register Dealer',
+              Heading:'Register Dealer',
               txt1:'Register your Motorcycle showroom',
               txt2:'Get more business Leads from ebike.pk users',
               txt3:'Enhance your business revenue',
-              button:'Register Dealer'
+              button:'Register Dealer',
+              url:"/dealers/register"
     },
     {
-      Heading:'Register Mechanic',
+              Heading:'Register Mechanic',
               txt1:'Register your Motorcycle in workshop',
               txt2:'Get more business Leads from ebike.pk users',
               txt3:'Enhance your business revenue',
-              button:'Register Mechanic'
+              button:'Register Mechanic',
+              url:"/mechanics/register"
     }
   ]
 

@@ -5,12 +5,39 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { useRouter } from 'next/navigation';
+
 
 export default function DealerList({props}:any) {
-  const findmechanics =[
-    {label: 'Showrooms',url:''},
-    {label: 'Registration',url:''}
+  
+  const Router = useRouter()
+
+  const findmechanics = [
+    {label: 'Showrooms', url:'/dealers'},
+    {label: 'Registration', url:'/dealers/register'}
   ]
+
+  function goToRoute(data:any) {
+    console.log('data',data)
+    if(data?.url?.indexOf('register') > -1) {
+      if(props.customer == "not_login") {
+        alert('Please Login to continue')
+      }
+      else {
+        props.toggleDrawers(false)
+        setTimeout(()=>{
+          Router.push(data.url)
+        }, 100)
+      }
+    }
+    else {
+      props.toggleDrawers(false)
+      setTimeout(()=>{
+        Router.push(data.url)
+      }, 100)
+    }
+  }
+
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, padding:0}}
@@ -26,13 +53,13 @@ export default function DealerList({props}:any) {
           {
             findmechanics.map((e:any,i:any)=>{
               return(
-                <ListItemButton sx={{ pl: 4 }} onClick={props.toggleDrawers(false)}  key={i}>
-            <ListItemText primary={e.label} />
-          </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} onClick={()=>goToRoute(e)}  key={i}>
+                  <ListItemText primary={e.label} />
+                </ListItemButton>
               )
             })
           }
-          </List>
+        </List>
       </Collapse>
     </List>
   );

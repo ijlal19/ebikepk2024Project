@@ -49,6 +49,11 @@ const Header = () => {
         jsCookie.remove('accessToken_e')
         window.location.reload()
     }
+
+    function goToRoute(data:any) {
+        // console.log('data',data)
+        router.push(data.url)
+      }
    
     const toggle = (e:any) => {
         if(e == 'buy&sell'){
@@ -94,7 +99,8 @@ const Header = () => {
         open: open,
         toggleDrawers: toggleDrawer,
         options: findDealer,
-        title: 'Find Dealers'
+        title: 'Find Dealers',
+        customer: customer
     }
 
     const OptionFindMechanics = {
@@ -102,7 +108,8 @@ const Header = () => {
         open: open,
         toggleDrawers: toggleDrawer,
         options: findMechanics,
-        title: 'Find Mechanics'
+        title: 'Find Mechanics',
+        customer: customer
     }
     const ModalData = {
         showmodal: toggle,
@@ -111,7 +118,7 @@ const Header = () => {
     }
 
     const navlink = [
-        { label: 'New Bikes', url: '' },
+        { label: 'New Bikes', url: 'new-bikes' },
         { label: 'My Adds', url: '' },
         { label: 'Bikers Forum', url: '' }
     ]
@@ -126,7 +133,7 @@ const Header = () => {
                 {navlink.map((data: any, index: any) => (
                     <>
                         <ListItem key={index} disablePadding>
-                            <ListItemButton onClick={toggleDrawer(false)}>
+                            <ListItemButton onClick={()=>goToRoute(data)}>
                                 <ListItemText primary={data.label} className={styles.listText}/>
                             </ListItemButton>
                         </ListItem>
@@ -139,12 +146,14 @@ const Header = () => {
                 
                 <MechanicsList props={OptionFindMechanics} />
                 <Divider />
+
                 <ListItem sx={{ padding: 0 }} disablePadding>
                     <ListItemButton>
                         <ListItemText primary='Blog' />
                     </ListItemButton>
                 </ListItem>
                 <Divider/>
+
                 <MoreList props={Optionmore} />
                 <Divider />
 
