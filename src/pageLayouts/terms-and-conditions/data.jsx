@@ -1,4 +1,4 @@
-let termdata = {
+const TermData = {
     "id": 25,
     "title": "Terms and Conditions",
     "name": "Terms and Conditions",
@@ -29,3 +29,4 @@ let termdata = {
         "updatedAt": "2020-06-06T07:02:19.889Z"
     }
 }
+export default TermData

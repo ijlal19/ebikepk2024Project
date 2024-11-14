@@ -71,7 +71,7 @@ const BlogDetails = () => {
                 </Fab>
 
                 <FacebookShareButton
-                  url={'https://github.com/Abdullah30Nov'}
+                  url={'https://github.com/next-share'}
                   quote={'next-share is a social share buttons for your next React apps.'}
                   hashtag={'#nextshare'} style={{ display: 'flex', alignItems: 'center' }}>
                   <FacebookIcon size={32} round />

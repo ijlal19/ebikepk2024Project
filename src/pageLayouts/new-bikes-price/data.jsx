@@ -1,4 +1,4 @@
-let bikePriceData = [
+const  BikePriceData = [
     {
         "id": 8,
         "brandId": 1,
@@ -417,3 +417,4 @@ let bikePriceData = [
         }
     }
 ]
+export default BikePriceData
