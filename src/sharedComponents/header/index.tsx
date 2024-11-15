@@ -16,6 +16,7 @@ import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
 import { useRouter } from 'next/navigation';
 import {isLoginUser} from '@/functions/globalFuntions'
+import { Label } from '@mui/icons-material';
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
 
@@ -84,6 +85,7 @@ const Header = () => {
         togglers: toggle,
         toggleDrawers: toggleDrawer,
         options: options,
+        customer: customer
     }
 
     const OptionBuySell = {
@@ -91,7 +93,8 @@ const Header = () => {
         open: open,
         toggleDrawers: toggleDrawer,
         options: buysellmenu,
-        title: 'Buy & Sell Bikes'
+        title: 'Buy & Sell Bikes',
+        customer: customer
     }
 
     const OptionFindDealer = {
@@ -127,19 +130,22 @@ const Header = () => {
         <Box sx={{ width: 250 }} role="presentation">
             <List>
 
-                <BuyandSell props={OptionBuySell} />
+                <BuyandSell props={OptionBuySell}   />
                 <Divider />
                 
-                {navlink.map((data: any, index: any) => (
-                    <>
-                        <ListItem key={index} disablePadding>
-                            <ListItemButton onClick={()=>goToRoute(data)}>
-                                <ListItemText primary={data.label} className={styles.listText}/>
-                            </ListItemButton>
-                        </ListItem>
-                        <Divider />
-                    </>
-                ))}
+                {navlink.map((data: any, index: any) => {
+                    if(data.label == "My Adds" && customer == "not_login") return;
+                    return(
+                        <>
+                            <ListItem key={index} disablePadding>
+                                <ListItemButton onClick={()=>goToRoute(data)}>
+                                    <ListItemText primary={data.label} className={styles.listText}/>
+                                </ListItemButton>
+                            </ListItem>
+                            <Divider />
+                        </>
+                    )
+                })}
                 
                 <DealerList props={OptionFindDealer} />
                 <Divider />
@@ -148,7 +154,7 @@ const Header = () => {
                 <Divider />
 
                 <ListItem sx={{ padding: 0 }} disablePadding>
-                    <ListItemButton>
+                    <ListItemButton onClick={()=> goToRoute({url:"/blog"}) }>
                         <ListItemText primary='Blog' />
                     </ListItemButton>
                 </ListItem>

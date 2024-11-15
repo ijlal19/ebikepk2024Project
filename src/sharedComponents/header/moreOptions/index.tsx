@@ -6,13 +6,28 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import styles from '../index.module.scss'
+import { useRouter } from 'next/navigation';
+
+
 export default function MoreList({props}:any) {
+
+  const Router = useRouter()
+
   const morear =[
-    {label: 'Bike Video',url:''},
-    {label: 'MTMIS Pakistan',url:''},
-    {label: 'Bike Verification Sindh',url:''},
-    {label: 'Bike Verification Punjab',url:''}
+    {label: 'Bike Video',url:'https://www.youtube.com/@ebikepk'},
+    // {label: 'MTMIS Pakistan',url:''},
+    {label: 'Bike Verification Sindh',url:'/mtmis-sindh'},
+    {label: 'Bike Verification Punjab',url:'/mtmis-punjab'}
   ]
+
+  function goToRoute(data:any) {
+    console.log('data',data)
+      props.toggleDrawers(false)
+      setTimeout(()=>{
+        Router.push(data.url)
+      }, 100)
+  }
+
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, padding:0 }}
@@ -28,9 +43,9 @@ export default function MoreList({props}:any) {
           {
             morear.map((e:any,i:any)=>{
               return(
-                <ListItemButton sx={{ pl: 4 }} onClick={props.toggleDrawers(false)}  key={i} className={styles.greys}>
-            <ListItemText primary={e.label} />
-          </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} onClick={()=>goToRoute(e)}  key={i} className={styles.greys}>
+                  <ListItemText primary={e.label} />
+                </ListItemButton>
               )
             })
           }

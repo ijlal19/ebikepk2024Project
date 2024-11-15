@@ -67,7 +67,7 @@ let headerlink_arr = [
     { title: "Ebike.pk", url: "/" },
     { title: "Contact us", url: "/contact-us" },
     { title: "About us", url: "/about-us" },
-    { title: "MTMIS Pakistan", url: "" },
+    // { title: "MTMIS Pakistan", url: "" },
     { title: "Bike Verification Sindh", url: "/mtmis-sindh" },
     { title: "Bike Verification Punjab", url: "/mtmis-punjab" }
 ]

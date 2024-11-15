@@ -5,12 +5,39 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { useRouter } from 'next/navigation';
 
 export default function BuyandSell({props}:any) {
+
+  const Router = useRouter()
+
   const buysellarr =[
-    {label: 'Find Used Bikes',url:''},
-    {label: 'Sell Your Bike',url:''}
+    {label: 'Find Used Bikes',url:'/used-bikes'},
+    {label: 'Sell Your Bike',url:'/used-bikes/sell-used-bike'}
   ]
+
+
+  function goToRoute(data:any) {
+    console.log('data',data)
+    if(data?.url?.indexOf('sell-used-bike') > -1) {
+      if(props.customer == "not_login") {
+        alert('Please Login to continue')
+      }
+      else {
+        props.toggleDrawers(false)
+        setTimeout(()=>{
+          Router.push(data.url)
+        }, 100)
+      }
+    }
+    else {
+      props.toggleDrawers(false)
+      setTimeout(()=>{
+        Router.push(data.url)
+      }, 100)
+    }
+  }
+
   return (
     <List
       sx={{ width: '100%', maxWidth: 360,padding:0 }}
@@ -27,9 +54,9 @@ export default function BuyandSell({props}:any) {
           {
             buysellarr.map((e:any,i:any)=>{
               return(
-                <ListItemButton sx={{ pl: 4 }} onClick={props.toggleDrawers(false)}  key={i}>
-            <ListItemText primary={e.label} />
-          </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} onClick={()=>goToRoute(e)}  key={i}>
+                  <ListItemText primary={e.label} />
+                </ListItemButton>
               )
             })
           }
