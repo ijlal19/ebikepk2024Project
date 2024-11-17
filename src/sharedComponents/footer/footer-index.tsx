@@ -50,7 +50,7 @@ let catagory_arr = [
     { title: "Bikers Forum", url: "" },
     { title: "Shop", url: "" },
     { title: "Blog", url: "/blog" },
-    { title: "Bikes Price List", url: "" }
+    { title: "Bikes Price List", url: "/new-bike-price/a/b" }
 ]
 let brand_arr = [
     { title: "Used Bike by Brand", url: "" },
