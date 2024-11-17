@@ -2,7 +2,7 @@
 import { Box, Grid, Typography, useMediaQuery } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
-import { getAllbikesDetail } from "@/functions/globalFuntions"
+import { getAllbikesDetail, priceWithCommas } from "@/functions/globalFuntions"
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import { useRouter } from 'next/navigation'
 import Filters from '@/sharedComponents/filters'
@@ -76,7 +76,7 @@ const AllUsedBike = () => {
                                         
                                         <Typography className={styles.titleandPrice}>
                                             <Typography className={styles.card_title}> {val.title} </Typography>
-                                            <Typography className={styles.card_price_mobile}>PKR {val.price}</Typography>
+                                            <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val.price)}</Typography>
                                         </Typography>
                                         
                                         <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
@@ -91,7 +91,7 @@ const AllUsedBike = () => {
                                     </Grid>
                                     
                                     <Grid item className={styles.price_section_desktop}>
-                                        <span> PKR {val.price}  </span>
+                                        <span> PKR {priceWithCommas(val.price)}  </span>
                                     </Grid>
 
                                 </Grid>

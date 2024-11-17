@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import styles from './index.module.scss'
 import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation'
+import { priceWithCommas } from '@/functions/globalFuntions'
 
 export default function ImgCard(props:any) {
 
@@ -42,7 +43,7 @@ export default function ImgCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {props.data.price} {props.from == 'n' ? '' : '' }
+                    {priceWithCommas(props.data.price)} {props.from == 'n' ? '' : '' }
                 </Typography>
 
                 { props.from == "u" ? 

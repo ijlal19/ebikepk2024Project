@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import BikePriceData from './data'
 import styles from './index.module.scss'
+import { priceWithCommas } from '@/functions/globalFuntions'
+
 export default function NewBikePrice() {
 
   // const [AllnewBikePriceDetailsArr, setAllnewBikePriceDetailsArr]:any = useState([])
@@ -37,7 +39,7 @@ export default function NewBikePrice() {
         <tr key={i}>
           <td className={styles.td} style={{fontWeight:'bolder',color:'black'}}>{i}</td>
           <td className={styles.td}>{e.title}</td>
-          <td className={styles.td} style={{fontWeight:'bolder',color:'black'}}>{e.price}</td>
+          <td className={styles.td} style={{fontWeight:'bolder',color:'black'}}>{priceWithCommas(e.price)}</td>
           <td className={styles.td}>{e.updatedAt.slice(0, 10)}</td>
         </tr>
       ))

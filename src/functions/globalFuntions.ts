@@ -129,6 +129,17 @@ function getSingleBlogData(id:any){
     })
 }
 
+function getAllBlog(){
+    return fetch( Gconfig.ebikeApi + `blog/get-all-blog`)
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
+
+
 
 function userLogin(data:any) {
     return fetch( Gconfig.ebikeApi + `user/login`, {
@@ -218,10 +229,16 @@ function getBikesBySpecificFilter(from:any, id:any) {
     }
 }
 
+function priceWithCommas(x:any) {
+    if (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }
+
 export { getSingleBlogData,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData,getnewBikeData,getdealerData,getnewBikedetailsData,  userLogin, userSignup, verifyUserFromAuthenticationEmail,
-    isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter
+    isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas
 }

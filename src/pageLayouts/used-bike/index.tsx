@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
-import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId} from "@/functions/globalFuntions"
+import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId, priceWithCommas} from "@/functions/globalFuntions"
 import Data from './data'
 import { CityArr, BrandArr, YearArr } from "@/constants/globalData"
 import { useRouter } from 'next/navigation'
@@ -25,27 +25,29 @@ export default function UsedBike() {
   async function fetchBikeInfo() {
     let path = location.pathname
     
-    if(path.indexOf('/') > -1) {
-      let pathArr = path.split('/')
-      let adsId = pathArr[pathArr.length - 1]
+    // if(path.indexOf('/') > -1) {
+    //   let pathArr = path.split('/')
+    //   let adsId = pathArr[pathArr.length - 1]
       
-      if(numericOnly(adsId)) {
-        setIsLoading(true)
-        let res = await getSinglebikesDetail(adsId);
-        setIsLoading(false)
-        if(res) {
-          setBikeDetail(res.add)
-          setSimilarBikeArr(res.bikes)
-          setShowPhoneNo(false)
-          console.log('res', res)
-        }
-      }
-      else {
-        // Router.push('/')
-        setBikeDetail(Data.add)
-        setSimilarBikeArr(Data.bikes)
-      }
-    }
+    //   if(numericOnly(adsId)) {
+    //     setIsLoading(true)
+    //     let res = await getSinglebikesDetail(adsId);
+    //     setIsLoading(false)
+    //     if(res) {
+    //       setBikeDetail(res.add)
+    //       setSimilarBikeArr(res.bikes)
+    //       setShowPhoneNo(false)
+    //       console.log('res', res)
+    //     }
+    //   }
+    //   else {
+    //     setBikeDetail(Data.add)
+    //     setSimilarBikeArr(Data.bikes)
+    //   }
+    // }
+
+     setBikeDetail(Data.add)
+    //     setSimilarBikeArr(Data.bikes)
   }
 
   let bikeBrand = getBrandFromId(bikeDetail.brandId, BrandArr)
@@ -82,7 +84,6 @@ export default function UsedBike() {
                 )
               })
             }
-          
           </Swiper>
     
 
@@ -131,7 +132,7 @@ export default function UsedBike() {
       
       <div>
           <div className={styles.container_two}>
-            <h2 className={styles.price_text} > PKR { bikeDetail.price } </h2>
+            <h2 className={styles.price_text} > PKR { priceWithCommas(bikeDetail.price) } </h2>
             <hr/>
             <p className={styles.sellerName}> Seller Name: { bikeDetail.sellerName } </p>
             <hr/>

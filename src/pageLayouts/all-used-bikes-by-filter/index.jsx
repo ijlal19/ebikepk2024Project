@@ -2,7 +2,7 @@
 import { Box, Grid, Typography, useMediaQuery } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
-import { getBikesBySpecificFilter } from "@/functions/globalFuntions"
+import { getBikesBySpecificFilter, priceWithCommas } from "@/functions/globalFuntions"
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import { useRouter, useParams } from 'next/navigation'
 import Filters from '@/sharedComponents/filters'
@@ -53,19 +53,7 @@ const AllUsedBikeByFilter = () => {
 
     return (
         <Box className={styles.main}>
-            {/* <Box className={styles.usedBike_headingBpx}>
-            <Typography className=
-            {styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
-            <Typography className={styles.path_text}>Home<span style={{paddingLeft:5,paddingRight:5}}>/</span>Used<span style={{paddingLeft:5,paddingRight:5}}>/</span>Bike For Sale In Pakistan</Typography>
-            </Box> */}
             <Box className={styles.all_bike_main}>
-                
-                {/* <Filters 
-                    setLoader={setIsLoading} 
-                    updateData={setAllBikesArr}
-                    fetchBikeInfo={fetchBikeInfo}
-                /> */}
-
                 <div className={styles.main_box}>
                     <div className={styles.navigation}>
                         <div className={styles.text_container}>
@@ -90,7 +78,7 @@ const AllUsedBikeByFilter = () => {
                                         
                                         <Typography className={styles.titleandPrice}>
                                             <Typography className={styles.card_title}> {val.title} </Typography>
-                                            <Typography className={styles.card_price_mobile}>PKR {val.price}</Typography>
+                                            <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val.price)}</Typography>
                                         </Typography>
                                         
                                         <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
@@ -101,7 +89,7 @@ const AllUsedBikeByFilter = () => {
                                     </Grid>
                                     
                                     <Grid item className={styles.price_section_desktop}>
-                                        <span> PKR {val.price}  </span>
+                                        <span> PKR {priceWithCommas(val.price)}  </span>
                                     </Grid>
 
                                 </Grid>

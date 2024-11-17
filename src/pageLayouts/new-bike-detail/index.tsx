@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ImgCard from '@/sharedComponents/itemCard';
-import { getnewBikedetailsData } from '@/functions/globalFuntions';
+import { getnewBikedetailsData, priceWithCommas } from '@/functions/globalFuntions';
 
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px')
@@ -37,7 +37,7 @@ export default function NewBikeBrand() {
             <Grid item xs={isMobile ? 12 : 3} className={styles.bike_review_box}>
 
               <Box className={styles.price_box}>
-                Rs: {e.bike.price}
+                Rs: {priceWithCommas(e.bike.price)}
               </Box>
 
               <Box className={styles.rating_box}>

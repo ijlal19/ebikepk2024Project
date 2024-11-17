@@ -9,11 +9,14 @@ import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, MailruShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
 import {getSingleBlogData } from '@/functions/globalFuntions';
+import Loader from '@/sharedComponents/loader/loader'
 
 const BlogDetails = () => {
   const [displayicon, setDisplayIcon] = useState(true)
   const isMobile = useMediaQuery('(max-width:768px)')
   const [DataBlog, setDataBlog]: any = useState(null)
+  const [isLoading, setIsLoading]  = useState(false)
+
   const params = useParams()
   const id = params?.id
   console.log('params?.slug?', params?.id)
@@ -23,8 +26,14 @@ const BlogDetails = () => {
   }, [])
 
   async function fetchBrandInfo() {
+    setIsLoading(true)
     let res = await getSingleBlogData(id)
+    if(res.bloghtml){
+      res.bloghtml = res.bloghtml.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
+    }
     setDataBlog(res)
+    setIsLoading(false)
+    window.scrollTo(0, 0)
   }
   console.log(DataBlog)
   const handleicons = () => {
@@ -33,7 +42,8 @@ const BlogDetails = () => {
 
   return (
     <Box className={styles.blog_details_main}>
-      {DataBlog ?
+      {!isLoading ?
+       <> { DataBlog ?
         <Grid container className={styles.gird_box_main}>
           <Grid item xs={isMobile ? 12 : 8} className={styles.blog_details_card}>
 
@@ -108,7 +118,7 @@ const BlogDetails = () => {
             <div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }}></div>
 
             <Box className={styles.comment_box}>
-              <Typography className={styles.comment_box_Title}>Leave A Reply</Typography>
+              <Typography className={styles.comment_box_Title}>Leave a Reply</Typography>
               <Typography className={styles.email_publish}>Your email address will not be published.</Typography>
               <Box className={styles.input_container}>
               </Box>
@@ -127,7 +137,13 @@ const BlogDetails = () => {
             <Box>More Blogs</Box>
           </Grid>
 
-        </Grid> : <></>}
+        </Grid> 
+        : <></> } </> 
+        : 
+        <div className={styles.load_div}>
+          <Loader isLoading={isLoading} />
+        </div>
+        }
     </Box>
   );
 };
