@@ -19,9 +19,7 @@ const Blog = () => {
 
   async function getAllBlogList() {
     let res = await getAllBlog()
-    console.log('res', res)
     setBlogData(res)
-
   }
 
   const blogsPerPage = 10;
@@ -38,29 +36,6 @@ const Blog = () => {
     var lowerTitle = title.toLowerCase();
     router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
   };
-
-  // const App = () => {
-  //   if(BlogData.length == 0) return
-
-  //   const texts = [BlogData[0].blogTitle, BlogData[1].blogTitle, BlogData[2].blogTitle,BlogData[3].blogTitle];
-    
-  //   if(texts && texts.length > 0) {
-  //     const [currentText, setCurrentText] = useState(texts ? texts[0] : '');
-  //     let currentIndex = 0;
-    
-  //     useEffect(() => {
-  //       const intervalId = setInterval(() => {
-  //         currentIndex = (currentIndex + 1) % texts.length;
-  //         setCurrentText(texts[currentIndex]);
-  //       }, 3000);
-    
-  //       return () => clearInterval(intervalId);
-  //     }, []);
-    
-  //     return `${currentText}`;
-  //   }
-    
-  // };
 
   return (
   <>
