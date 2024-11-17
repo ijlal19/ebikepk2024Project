@@ -82,10 +82,6 @@ const SellUsedBike = () => {
             alert("Please select model Year")
             return
         }
-        else if(!city) {
-            alert("Please select city")
-            return
-        }
         else if(!cc) {
             alert("Please select CC")
             return

@@ -8,13 +8,18 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { getdealerData, getnewBikeData } from '@/functions/globalFuntions';
+import { useParams } from 'next/navigation';
 
 export default function AllNewBikes() {
+  const params=useParams()
+  const brandId =params.slug
   const [Showmore, setShowmore] = useState(true);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
   const [allDealerArr, setAllDelaerArr] = useState([])
-
+  const [desc,setDesc]=useState('')
+  const [logo,setLogo]=useState('')
+  const [brandname,setbrandName]=useState('')
   const showmore = () => {
     setShowmore(!Showmore);
   };
@@ -25,13 +30,15 @@ export default function AllNewBikes() {
 
   async function fetchBrandInfo() {
 
-    let res = await getnewBikeData()
-    setAllnewBikeArr(res)
-
-    let DealerDataRes = await getdealerData()
+    let DealerDataRes = await getdealerData(brandId)
     setAllDelaerArr(DealerDataRes.dealers)
+    const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
+    setDesc(DealerDataRes.dealers[0].bike_brand.description)
+    setLogo(DealerDataRes.dealers[0].bike_brand.logoUrl)
+    setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
+    let res = await getnewBikeData({brand:brandName})
+    setAllnewBikeArr(res)
   }
-
   return (
     <>
     {/* {Add Area} */}
@@ -50,13 +57,13 @@ export default function AllNewBikes() {
       <Box className={styles.description_box}>
         <Box className={styles.card_main}>
           <img
-            src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624359/bike_brands/Suzuki.png'
-            alt='./'
+            src={logo}
+            alt={brandname}
             className={styles.card_image}
           />
         </Box>
         <Typography className={styles.descriptionPara}>
-          {Showmore ? bikesDataArr[0].bike_brand.description.slice(0, 100) : bikesDataArr[0].bike_brand.description}
+          {Showmore ? desc.slice(0, 100) : desc}
         </Typography>
         <Box>
           <Box className={styles.buttons_box}>
@@ -70,9 +77,11 @@ export default function AllNewBikes() {
         <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
           <Typography className={styles.heading}>New Bikes</Typography>
           {
-            bikesDataArr.map((e, i) => (
-              <ImgCard data={e} from='u' key={i} />
-            ))
+            allnewBikeArr.map((e, i) => {
+              return(
+                <ImgCard data={e} from='n' key={i} />
+              )
+})
           }
         </Grid>
         <Grid item xs={isMobile ? 12 : 3} className={styles.Dealers_grid_box}>

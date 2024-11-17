@@ -3,12 +3,10 @@ import { TextareaAutosize, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation';
-import { numericOnly, isLoginUser, publishAd, uplaodImageFunc } from "@/functions/globalFuntions"
+import { numericOnly, isLoginUser, publishAd, uplaodImageFunc, createmechanic } from "@/functions/globalFuntions"
 import { BrandArr, CcArr, CityArr, YearArr } from '@/constants/globalData';
 
 const MechanicRegistration = () => {
-
-
   // const [isLoading, setIsLoading] = useState(false)
   const Router = useRouter()
   const [ShopName, setShopName] = useState('');
@@ -17,20 +15,19 @@ const MechanicRegistration = () => {
   const [Phone, setPhone] = useState('');
   const [Phone2, setPhone2] = useState('');
   const [Address, setAddress] = useState('');
-  // const [isAggreed, setIsAggreed] = useState(false)
+  const [isAggreed, setIsAggreed] = useState(false)
   const [customer, setCustomer]  = useState<any>('not_login')
-  // const [imageArr, setImageArr] = useState([])
 
-  // useEffect(() => {
-  //     let _isLoginUser = isLoginUser()
-  //     if(_isLoginUser?.login) {
-  //         setCustomer(_isLoginUser.info)
-  //     }
-  //     else {
-  //         setCustomer("not_login")
-  //         Router.push('/')
-  //     }
-  // },[])
+  useEffect(() => {
+      let _isLoginUser = isLoginUser()
+      if(_isLoginUser?.login) {
+          setCustomer(_isLoginUser.info)
+      }
+      else {
+          setCustomer("not_login")
+          Router.push('/')
+      }
+  },[])
 
   const handleChange = (field:any, value:any) => {
       if (field === 'city') {
@@ -51,7 +48,8 @@ const MechanicRegistration = () => {
   const handelsubmit = async () => {
 
       if(!customer || customer == "not_login" || customer?.id == undefined) {
-          // Router.push('/')
+          Router.push('/')
+        console.log('not Login')
       }
 
       if(!ShopName || ShopName.length < 2) {
@@ -96,15 +94,14 @@ const MechanicRegistration = () => {
           "requestedForFeatured": false
       }
 
-      // let res = await publishAd(obj)
-      // if(res.success) {
-      //     alert('Ad submitted Successfully! Please wait for approval')
-      // }
-      // else {
-      //     alert('Some thing went wrong')
-      // }
-      // console.log('obj', obj, res)
-      console.log(obj)
+      let res = await createmechanic(obj)
+      if(res.success) {
+          console.log('Mechanic submitted Successfully! Please wait for approval')
+      }
+      else {
+          console.log('Some thing went wrong')
+      }
+      console.log('object is here ', obj, res)
   }
 
 
