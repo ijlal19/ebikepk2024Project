@@ -52,18 +52,22 @@ function getbrandData(){
     })
 }
 
-function getnewBikeData(){
-    return fetch( Gconfig.ebikeApi + 'new-bikes/get-new-bikes-by-brand/')
+function getnewBikeData(data:any){
+    return fetch( Gconfig.ebikeApi + `new-bikes/get-new-bikes-by-brand/`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
     .then(response => response.json())
     .then(data => {
         return data })
     .catch((err)=>{
-        console.log(err)
+        console.log('err',err)
     })
 }
 
-function getdealerData(){
-    return fetch( Gconfig.ebikeApi + 'dealer/dealer-by-brand/25')
+function getdealerData(id:any){
+    return fetch( Gconfig.ebikeApi + `dealer/dealer-by-brand/${id}`)
     .then(response => response.json()).then(data => {
         return data
     })
@@ -179,6 +183,26 @@ function publishAd(data:any) {
         return data
     })
 }
+function createmechanic(data:any) {
+    let token = jsCookie.get('accessToken_e')
+    return fetch( Gconfig.ebikeApi + `dealers/crete-dealer`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json", "x-access-token": token},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+function createdealer(data:any) {
+    let token = jsCookie.get('accessToken_e')
+    return fetch( Gconfig.ebikeApi + `dealers/crete-dealer`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json", "x-access-token": token},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
 
 function uplaodImageFunc(data:any) {
     return fetch( `https://api.cloudinary.com/v1_1/dulfy2uxn/image/upload`, {
@@ -218,7 +242,7 @@ function getBikesBySpecificFilter(from:any, id:any) {
     }
 }
 
-export { getSingleBlogData,
+export { getSingleBlogData,createmechanic,createdealer,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode, 
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore, 
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,

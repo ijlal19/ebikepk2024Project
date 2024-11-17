@@ -32,7 +32,7 @@ function a11yProps(index: number) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-function UsedBikesSection() {
+function UsedBikesSection({from}:any) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -43,7 +43,7 @@ function UsedBikesSection() {
     <Box className={styles.usedbike_main}>
       <Container>
         <Typography className={styles.heading}>
-          Used Bikes
+         {from == 'used-bike' ? 'Featured Bike': 'Used Bikes'} 
         </Typography>
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

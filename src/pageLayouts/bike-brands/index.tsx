@@ -23,7 +23,7 @@ export default function NewBikeBrand() {
         {
           allBrandArr.map((e: any, i: any) => {
             return (
-              <Box className={styles.brand_image_box} key={i}>
+              <Box className={styles.brand_image_box} key={i} >
                 <BikesBrandCard key={i} data={e} />
               </Box>
             )
