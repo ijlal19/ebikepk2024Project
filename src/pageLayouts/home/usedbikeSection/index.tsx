@@ -42,9 +42,14 @@ function UsedBikesSection({from}:any) {
   return (
     <Box className={styles.usedbike_main}>
       <Container>
-        <Typography className={styles.heading}>
-         {from == 'used-bike' ? 'Featured Bike': 'Used Bikes'} 
+        <Typography className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `  } >
+         {from == 'featuredBike' ? 'Featured Bike': 'Used Bikes'} 
         </Typography>
+        
+        { from == 'featuredBike' ?
+        <Box sx={{ width: '100%' }}>
+          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u'/>
+        </Box> :
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
@@ -55,7 +60,8 @@ function UsedBikesSection({from}:any) {
           <CustomTabPanel value={value} index={0}>
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u'/>
           </CustomTabPanel>
-        </Box>
+        </Box> }
+        
       </Container>
     </Box>
   )

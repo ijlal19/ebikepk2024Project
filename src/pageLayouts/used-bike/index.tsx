@@ -25,29 +25,29 @@ export default function UsedBike() {
   async function fetchBikeInfo() {
     let path = location.pathname
     
-    // if(path.indexOf('/') > -1) {
-    //   let pathArr = path.split('/')
-    //   let adsId = pathArr[pathArr.length - 1]
+    if(path.indexOf('/') > -1) {
+      let pathArr = path.split('/')
+      let adsId = pathArr[pathArr.length - 1]
       
-    //   if(numericOnly(adsId)) {
-    //     setIsLoading(true)
-    //     let res = await getSinglebikesDetail(adsId);
-    //     setIsLoading(false)
-    //     if(res) {
-    //       setBikeDetail(res.add)
-    //       setSimilarBikeArr(res.bikes)
-    //       setShowPhoneNo(false)
-    //       console.log('res', res)
-    //     }
-    //   }
-    //   else {
-    //     setBikeDetail(Data.add)
-    //     setSimilarBikeArr(Data.bikes)
-    //   }
-    // }
+      if(numericOnly(adsId)) {
+        setIsLoading(true)
+        let res = await getSinglebikesDetail(adsId);
+        setIsLoading(false)
+        if(res) {
+          setBikeDetail(res.add)
+          setSimilarBikeArr(res.bikes)
+          setShowPhoneNo(false)
+          console.log('res', res)
+        }
+      }
+      else {
+        setBikeDetail(Data.add)
+        setSimilarBikeArr(Data.bikes)
+      }
+    }
 
-     setBikeDetail(Data.add)
-    //     setSimilarBikeArr(Data.bikes)
+     //setBikeDetail(Data.add)
+    // setSimilarBikeArr(Data.bikes)
   }
 
   let bikeBrand = getBrandFromId(bikeDetail.brandId, BrandArr)

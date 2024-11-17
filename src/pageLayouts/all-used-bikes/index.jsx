@@ -6,8 +6,8 @@ import { getAllbikesDetail, priceWithCommas } from "@/functions/globalFuntions"
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import { useRouter } from 'next/navigation'
 import Filters from '@/sharedComponents/filters'
-import UsedBikesSection from '../home/usedbikeSection'
-                            //cxecfvvvvvvvvvvvvvvvvvvvvvvvvvvvvf
+import UsedBikesSection from '@/pageLayouts/home/usedbikeSection/index'
+                            
 const AllUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:991px)')
     const [allBikesArr, setAllBikesArr] = useState([])
@@ -40,14 +40,15 @@ const AllUsedBike = () => {
 
     return (
         <Box className={styles.main}>
-                <UsedBikesSection from='used-bike'/>
+            
             <Box className={styles.usedBike_headingBpx}>
-            <Typography className=
-            {styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
-            <Typography className={styles.path_text}>Home<span style={{paddingLeft:5,paddingRight:5}}>/</span>Used<span style={{paddingLeft:5,paddingRight:5}}>/</span>Bike For Sale In Pakistan</Typography>
+                <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
+                <Typography className={styles.path_text}> Home <span style={{paddingLeft:5,paddingRight:5}}>/</span>Used<span style={{paddingLeft:5,paddingRight:5}}>/</span>Bike For Sale In Pakistan</Typography>
             </Box>
-            <Box className={styles.all_bike_main}>
-                
+
+            <UsedBikesSection from='featuredBike'/>
+
+            <Box className={styles.all_bike_main}>    
                 <Filters 
                     setLoader={setIsLoading} 
                     updateData={setAllBikesArr}
