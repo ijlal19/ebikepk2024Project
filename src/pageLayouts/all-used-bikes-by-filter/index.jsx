@@ -11,7 +11,9 @@ const AllUsedBikeByFilter = () => {
     const isMobile = useMediaQuery('(max-width:991px)')
     const [allBikesArr, setAllBikesArr] = useState([])
     const [isLoading, setIsLoading] = useState(false)
-    
+    const [heading, setHeading] = useState('')
+    const [getAdFrom, setGetAdFrom] = useState(-10)
+
     const params = useParams()
     const router = useRouter()
 
@@ -20,24 +22,31 @@ const AllUsedBikeByFilter = () => {
     }, [])
 
     async function fetchBikeInfo() {
+        setGetAdFrom(getAdFrom + 10)
         let from = params.slug
-
         setIsLoading(true)
-        
-        if(from?.indexOf('year') > -1) {
+        console.log('params', params)
+
+        if(from?.indexOf('year') > -1) {  
           let id = params.id1  
-          let res = await getBikesBySpecificFilter('year', id)
+          let res = await getBikesBySpecificFilter('year', id, getAdFrom+10)
+          setHeading('Used Bike For Year ' + params.id)
           setAllBikesArr(res)
+          window.scrollTo(0,0)
         }
         else if(from?.indexOf('cc') > -1) {
             let id = params.id
-            let res = await getBikesBySpecificFilter('cc', id)
+            let res = await getBikesBySpecificFilter('cc', id, getAdFrom+10)
+            setHeading('Used Bike By ' + params.id + ' CC')
             setAllBikesArr(res)
+            window.scrollTo(0,0)
         }
         else if(from?.indexOf('city') > -1) {
             let id = params.id1
-            let res = await getBikesBySpecificFilter('city', id)
+            let res = await getBikesBySpecificFilter('city', id, getAdFrom+10)
+            setHeading('Used Bike For Sale in ' + params.id?.toUpperCase())
             setAllBikesArr(res)
+            window.scrollTo(0,0)
         }
 
         setIsLoading(false)
@@ -53,8 +62,13 @@ const AllUsedBikeByFilter = () => {
 
     return (
         <Box className={styles.main}>
+            
             <Box className={styles.all_bike_main}>
+
                 <div className={styles.main_box}>
+
+                    <h5 className={styles.heading}> { heading } </h5>
+
                     <div className={styles.navigation}>
                         <div className={styles.text_container}>
                             <span className={styles.bike_text}> Used Bikes </span>
@@ -95,6 +109,10 @@ const AllUsedBikeByFilter = () => {
                                 </Grid>
                             )
                         })}
+                    </div>
+
+                    <div className={styles.viewMoreBtnContainer} >
+                        <button onClick={() => { fetchBikeInfo() }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
                     </div>
 
                 </div>
