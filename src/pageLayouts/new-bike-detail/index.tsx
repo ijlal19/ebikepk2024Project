@@ -7,17 +7,19 @@ import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ImgCard from '@/sharedComponents/itemCard';
 import { getnewBikedetailsData } from '@/functions/globalFuntions';
+import { useParams } from 'next/navigation';
 
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px')
   const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr]:any = useState([])
-
+const params = useParams()
+const detailsId=params.slug3
   useEffect(() => {
     fetchBrandInfo()
   }, [])
 
   async function fetchBrandInfo() {
-    const responsedetails = await getnewBikedetailsData()
+    const responsedetails = await getnewBikedetailsData(detailsId)
     setAllnewBikeDetailsArr(responsedetails)
   }
 
@@ -154,7 +156,7 @@ export default function NewBikeBrand() {
           <Grid container className={styles.bike_video_grid}>
             <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
               <Box className={styles.bike_video}>
-                <iframe src="https://www.youtube.com/embed/GqVt-mtq-dE?si=MhC5-eRs0XHEEzGr" title="YouTube video player" className={styles.bike_video}></iframe>
+                <iframe src={e.bike.videoUrl} title="YouTube video player" className={styles.bike_video}></iframe>
               </Box>
             </Grid>
             <Grid item xs={isMobile ? 12 : 3}></Grid>

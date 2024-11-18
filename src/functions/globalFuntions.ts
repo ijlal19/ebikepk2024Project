@@ -75,8 +75,8 @@ function getdealerData(id:any){
         console.log(err)
     })
 }
-function getnewBikedetailsData(){
-    return fetch( Gconfig.ebikeApi + 'new-bikes/get-new-bikes-by-id-with-random-bikes/73')
+function getnewBikedetailsData(id:any){
+    return fetch( Gconfig.ebikeApi + `new-bikes/get-new-bikes-by-id-with-random-bikes/${id}`)
     .then(response => response.json())
     .then(data => {
         return [data] })

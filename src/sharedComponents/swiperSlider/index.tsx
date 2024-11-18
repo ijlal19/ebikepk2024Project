@@ -13,7 +13,7 @@ interface IProps {
     from: string;
 }
 
-const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => {
+const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from ,currentpage}:any) => {
     return (
         <Container className={`${styles.swiper_card_container} slider_swiper `}>
             <Swiper
@@ -45,7 +45,7 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from }) => 
                             <SwiperSlide key={i} className={styles.slider_card}>
                                 {sliderName == 'featurSection' ?
                                 <FeatureCard props={e}/>
-                                :<ItemCard data={e} from={from} />
+                                :<ItemCard data={e} from={from} currentpage={currentpage} />
                             }
                         </SwiperSlide>
                         )

@@ -53,7 +53,7 @@ function UsedBikesSection({from}:any) {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage='used_bike'/>
           </CustomTabPanel>
         </Box>
       </Container>
