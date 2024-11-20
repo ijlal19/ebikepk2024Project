@@ -27,7 +27,6 @@ const AllUsedBike = () => {
         let res = await getAllbikesDetail(curentFetchPage)
         setIsLoading(false)
         setAllBikesArr(res)
-        // console.log(res)
         window.scrollTo(0, 0)
         console.log('res', res)
     }

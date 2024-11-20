@@ -34,7 +34,12 @@ export default function UsedBike() {
         let res = await getSinglebikesDetail(adsId);
         setIsLoading(false)
         if(res) {
-          setBikeDetail(res.add)
+          if(res.add) { 
+            setBikeDetail(res.add)
+          }
+          else {
+            
+          }
           setSimilarBikeArr(res.bikes)
           setShowPhoneNo(false)
           console.log('res', res)
@@ -50,12 +55,12 @@ export default function UsedBike() {
     // setSimilarBikeArr(Data.bikes)
   }
 
-  let bikeBrand = getBrandFromId(bikeDetail.brandId, BrandArr)
-  let bikeCity = getCityFromId(bikeDetail.cityId, CityArr)
-  let bikeYear = getYearFromId(bikeDetail.yearId, YearArr)
+  let bikeBrand = getBrandFromId(bikeDetail?.brandId, BrandArr)
+  let bikeCity = getCityFromId(bikeDetail?.cityId, CityArr)
+  let bikeYear = getYearFromId(bikeDetail?.yearId, YearArr)
 
   return (
-    !isLoading  ? 
+    !isLoading && bikeDetail  ? 
     <div className={styles.main_body}>
       <main className={`${styles.main_container} used_bike_detail_pg`}>
         

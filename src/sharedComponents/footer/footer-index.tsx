@@ -20,26 +20,26 @@ let cities_arr = [
 ]
 let year_arr = [
     { title: "Used Bike by Year", url: "" },
-    { title: "Years 2022", url: "used-bikes/bike-by-year/2022/55" },
-    { title: "Years 2021", url: "used-bikes/bike-by-year/2021/54" },
-    { title: "Years 2020", url: "used-bikes/bike-by-year/2020/53" },
-    { title: "Years 2019", url: "used-bikes/bike-by-year/2019/52" },
-    { title: "Years 2018", url: "used-bikes/bike-by-year/2018/51" },
-    { title: "Years 2017", url: "used-bikes/bike-by-year/2017/50" },
-    { title: "Years 2016", url: "used-bikes/bike-by-year/2016/49" },
-    { title: "Years 2015", url: "used-bikes/bike-by-year/2015/48" },
+    { title: "Years 2022", url: "/used-bikes/bike-by-year/2022/55" },
+    { title: "Years 2021", url: "/used-bikes/bike-by-year/2021/54" },
+    { title: "Years 2020", url: "/used-bikes/bike-by-year/2020/53" },
+    { title: "Years 2019", url: "/used-bikes/bike-by-year/2019/52" },
+    { title: "Years 2018", url: "/used-bikes/bike-by-year/2018/51" },
+    { title: "Years 2017", url: "/used-bikes/bike-by-year/2017/50" },
+    { title: "Years 2016", url: "/used-bikes/bike-by-year/2016/49" },
+    { title: "Years 2015", url: "/used-bikes/bike-by-year/2015/48" },
     
 ]
 let cc_arr = [
     { title: "Used Bike by CC", url: "" },
-    { title: "50cc", url: "used-bikes/bike-by-cc/50/1" },
-    { title: "70cc", url: "used-bikes/bike-by-cc/70/1" },
-    { title: "100cc", url: "used-bikes/bike-by-cc/100/1" },
-    { title: "110cc", url: "used-bikes/bike-by-cc/110/1" },
-    { title: "125cc", url: "used-bikes/bike-by-cc/125/1" },
-    { title: "150cc", url: "used-bikes/bike-by-cc/150/1" },
-    { title: "200cc", url: "used-bikes/bike-by-cc/200/1" },
-    { title: "250cc", url: "used-bikes/bike-by-cc/250/1" }
+    { title: "50cc", url: "/used-bikes/bike-by-cc/50/1" },
+    { title: "70cc", url: "/used-bikes/bike-by-cc/70/1" },
+    { title: "100cc", url: "/used-bikes/bike-by-cc/100/1" },
+    { title: "110cc", url: "/used-bikes/bike-by-cc/110/1" },
+    { title: "125cc", url: "/used-bikes/bike-by-cc/125/1" },
+    { title: "150cc", url: "/used-bikes/bike-by-cc/150/1" },
+    { title: "200cc", url: "/used-bikes/bike-by-cc/200/1" },
+    { title: "250cc", url: "/used-bikes/bike-by-cc/250/1" }
 ]
 let catagory_arr = [
     { title: "Explore Ebike", url: "" },
@@ -50,7 +50,9 @@ let catagory_arr = [
     { title: "Bikers Forum", url: "" },
     { title: "Shop", url: "" },
     { title: "Blog", url: "/blog" },
-    { title: "Bikes Price List", url: "/new-bike-price" }
+    { title: "Bikes Price List", url: "/new-bike-price" },
+    { title: "Dealers", url: "/dealers" },
+    { title: "Mechanics", url: "/mechanics" }
 ]
 let brand_arr = [
     { title: "Used Bike by Brand", url: "" },
@@ -127,9 +129,9 @@ export default function Footer() {
                                 {FooterLinks(catagory_arr)}
                             </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
+                            {/* <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(brand_arr)}
-                            </Grid>
+                            </Grid> */}
 
                             <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(headerlink_arr)}
@@ -186,7 +188,7 @@ export default function Footer() {
                     </Grid>
                     <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
                         <Typography className={styles.copyright}>
-                            Copyright © 2004 - 2025 ebike.pk - All Rights Reserved.
+                            Copyright © 2017 - 2024 ebike.pk - All Rights Reserved.
                         </Typography>
                         <Typography className={styles.term_policy}>
                             <Link href="/terms-and-conditions" className={styles.link}> Terms of Service </Link>  | <Link href="/privacy-policy" className={styles.link}> Privacy Policy </Link> 
