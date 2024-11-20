@@ -121,7 +121,7 @@ const Header = () => {
     }
 
     const navlink = [
-        { label: 'New Bikes', url: 'new-bikes' },
+        { label: 'New Bikes', url: '/new-bikes' },
         { label: 'My Adds', url: '' },
         { label: 'Bikers Forum', url: '' }
     ]

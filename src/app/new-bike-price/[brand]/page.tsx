@@ -1,7 +1,7 @@
 import * as React from 'react';
-import AllNewBikeComp from "@/pageLayouts/all-new-bikes/index"
+import BikePriceComp from '@/pageLayouts/new-bikes-price/index'
 export default function AboutUs() {
     return (
-        <AllNewBikeComp /> 
+        <BikePriceComp /> 
     )
 }

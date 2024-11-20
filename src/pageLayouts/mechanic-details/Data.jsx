@@ -1,10 +1,9 @@
 
-// http://localhost:4000/api/dealer/dealer-by-brand
-// http://localhost:4000/api/dealer/get-dealer-by-id/1302
+//http://localhost:4000/api/mechanic/get-mechanic-by-id/348
 
 
 
-
+http://localhost:4000/api/used-bikes/used-bikes-by-brand/1
 
 
 

@@ -55,16 +55,21 @@ export default function NewBikeBrand() {
                   <Box className={styles.price_box}>
                     Rs: {e.bike.price}
                   </Box>
-
-                  <Box className={styles.rating_box}>
-                    <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e.bike.newbike_ratings[0].rating} | 4 Reviews
-                  </Box>
+                  {
+                    e?.bike?.newbike_ratings?.length > 0 ?
+                    <Box className={styles.rating_box}>
+                      <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e.bike.newbike_ratings[0].rating} | 4 Reviews
+                    </Box> : ""
+                  }
+                  
 
                   <Box className={styles.comment_box}>
                     Reviews
                     <Typography className={styles.comment_box_data}>
                       <Typography className={styles.data_heading}>Name :</Typography>
-                      <Typography className={styles.data_text}>{e.bike.newbike_comments[0].user.userFullName}</Typography>
+                      { e?.bike?.newbike_comments?.length > 0 ?
+                        <Typography className={styles.data_text}>{e.bike.newbike_comments[0].user.userFullName}</Typography> : "" 
+                      }
                     </Typography>
                     <Typography className={styles.comment_box_data}>
                       <Typography className={styles.data_heading}>Review :</Typography>

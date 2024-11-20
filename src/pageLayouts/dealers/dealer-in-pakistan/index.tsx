@@ -18,7 +18,7 @@ export const DealerInPakistan = () => {
     const [currentPage, setCurrentPage] = React.useState(1);
     const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
         setCurrentPage(page);
-      };
+    };
     const DealerPerPage = 10;
     const totalPages = Math.ceil(AllDealerData.length / DealerPerPage);
     const currentData = AllDealerData.slice((currentPage - 1) * DealerPerPage, currentPage * DealerPerPage);

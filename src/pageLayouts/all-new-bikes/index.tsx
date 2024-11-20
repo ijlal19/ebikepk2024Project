@@ -11,8 +11,7 @@ import { getdealerData, getnewBikeData } from '@/functions/globalFuntions';
 import { useParams } from 'next/navigation';
 
 export default function AllNewBikes() {
-  const params=useParams()
-  const brandId =params.slug
+
   const [Showmore, setShowmore] = useState(true);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
@@ -20,9 +19,9 @@ export default function AllNewBikes() {
   const [desc,setDesc]=useState('')
   const [logo,setLogo]=useState('')
   const [brandname,setbrandName]=useState('')
-  const showmore = () => {
-    setShowmore(!Showmore);
-  };
+
+  const params = useParams()
+  const brandId = params.slug
 
   useEffect(() => {
     fetchBrandInfo()
@@ -39,6 +38,12 @@ export default function AllNewBikes() {
     let res = await getnewBikeData({brand:brandName})
     setAllnewBikeArr(res)
   }
+
+
+  const showmore = () => {
+    setShowmore(!Showmore);
+  };
+
   return (
     <>
     {/* {Add Area} */}
@@ -53,6 +58,7 @@ export default function AllNewBikes() {
           <p className={styles.path_text}>Home<span style={{marginLeft:5,marginRight:5}}>/</span>New Bikes<span style={{marginLeft:5,marginRight:5}}>/</span>Honda</p>
         </div>
       </div>
+      
     <Box className={styles.all_new_bike_main}>
       <Box className={styles.description_box}>
         <Box className={styles.card_main}>
