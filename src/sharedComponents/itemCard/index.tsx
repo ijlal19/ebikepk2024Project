@@ -82,7 +82,6 @@ export default function ImgCard(props:any) {
                  <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props) }} > View Detail </Button>
             </CardContent>
         </Card>
-
     </>
     );
 }
