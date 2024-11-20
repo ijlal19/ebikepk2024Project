@@ -11,6 +11,7 @@ export default function NewBikeBrand() {
   useEffect(() => {
     fetchBrandInfo()
   }, [])
+  
   async function fetchBrandInfo() {
     let res = await getbrandData()
     setAllBrandArr(res)
