@@ -847,3 +847,12 @@ export { newBikeData, dealerData }
 
 // http://localhost:4000/api/new-bikes/get-new-bikes-by-id-with-random-bikes/73
 // http://localhost:4000/api/dealer/dealer-by-brand/25
+
+
+// http://localhost:4000/api/new-bike-comment/add-new-bike-user-comment
+// {
+//     "comment": "ASAD",
+//     "bikeId": 8,
+//     "uid": "12e5ec6a-d2fc-4f11-a4e9-c9d8c6e12215",
+//     "rating": "3"
+// }

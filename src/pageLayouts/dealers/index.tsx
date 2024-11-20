@@ -8,7 +8,6 @@ const Dealer = () => {
   return (
     <div className={styles.main_dealer}>
       <FeatureDelers props={FeaturedDealerData}/>
-
       <DealerInPakistan/>
     </div>
    );

@@ -1,5 +1,9 @@
-// http://localhost:4000/api/dealers/get-dealer
-// http://localhost:4000/api/dealers/get-featured-dealer
+// http://localhost:4000/api/mechanic/get-mechanic
+
+// http://localhost:4000/api/mechanic/get-featured-mechanic
+// {
+//     "payload": 8  // hard code
+// }
 
 
 export const AllDealerData = [
