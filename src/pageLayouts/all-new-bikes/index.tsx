@@ -85,7 +85,7 @@ export default function AllNewBikes() {
           {
             allnewBikeArr.map((e, i) => {
               return(
-                <ImgCard data={e} from='n' key={i} />
+                <ImgCard data={e} currentpage='new_bike' from='n' key={i} />
               )
 })
           }

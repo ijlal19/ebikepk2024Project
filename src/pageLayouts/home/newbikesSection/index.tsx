@@ -57,10 +57,10 @@ function NewBikesSection() {
           </Box>
 
           <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='n'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='n' currentpage="featured_bike" />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={TrendingData} from='n'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={TrendingData} from='n' currentpage='trending_bike'/>
           </CustomTabPanel>
         </Box>
 
