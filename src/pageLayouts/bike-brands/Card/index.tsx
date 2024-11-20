@@ -9,8 +9,6 @@ const BikesBrandCard = ({ data }: any) => {
   const router = useRouter()
   const params = useParams()
 
-  console.log('params', params)
-
   const handleNavigate =(id:any)=>{
     if(window?.location?.pathname.indexOf('new-bike-price') > -1) {
       router.push(`new-bike-price/${id}`)

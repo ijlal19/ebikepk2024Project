@@ -34,6 +34,7 @@ export default function AllNewBikes() {
     const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
     setDesc(DealerDataRes.dealers[0].bike_brand.description)
     setLogo(DealerDataRes.dealers[0].bike_brand.logoUrl)
+    
     setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
     let res = await getnewBikeData({brand:brandName})
     setAllnewBikeArr(res)

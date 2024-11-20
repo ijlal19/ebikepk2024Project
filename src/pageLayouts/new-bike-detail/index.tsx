@@ -1,42 +1,74 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { newBikeData, dealerData } from './data'
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss'
 import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ImgCard from '@/sharedComponents/itemCard';
-import { getnewBikedetailsData, priceWithCommas } from '@/functions/globalFuntions';
-import { useParams } from 'next/navigation';
-import ReviewModal from '@/sharedComponents/Review-popup';
+import { getnewBikedetailsData, isLoginUser } from '@/functions/globalFuntions';
+import { useParams, useRouter } from 'next/navigation';
+import { WriteModal, MoreReviewModal } from '@/sharedComponents/Review-popup';
 
 export default function NewBikeBrand() {
-  const isMobile = useMediaQuery('(max-width:768px')
+  const isMobile = useMediaQuery('(max-width:768px)')
+  const [writePopup, setWritePopup] = useState(false)
+  const [morePopup, setMorePopup] = useState(false)
+  const [moreReviewArray, setmoreReviewArray] = useState()
+  const [customer, setCustomer] = useState<any>('not_login')
   const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr]: any = useState([])
-  const [openPopup, setOpenpopup] = useState(false)
 
+  const Router = useRouter()
   const params = useParams()
   const detailsId = params.slug3
+
   useEffect(() => {
     fetchBrandInfo()
+    let _isLoginUser = isLoginUser()
+    if (_isLoginUser?.login) {
+      setCustomer(_isLoginUser.info)
+      console.log(_isLoginUser.info.id)
+    }
+    else {
+      setCustomer("not_login")
+    }
   }, [])
 
   async function fetchBrandInfo() {
     const responsedetails = await getnewBikedetailsData(detailsId)
     setAllnewBikeDetailsArr(responsedetails)
+    setmoreReviewArray(responsedetails[0].bike.newbike_comments)
   }
-  const toggle = (e: any) => {
-    if (e == "showReviewpopup") {
-      setOpenpopup(!openPopup)
+
+  const writeopen = () => {
+    if (!customer || customer == "not_login" || customer?.id == undefined) {
+      alert('You must be logged in to submit a review.')
     }
+    setWritePopup(true)
   }
-  const handleOpen = () => {
-    setOpenpopup(!openPopup)
+
+  const writeclose = () => {
+    setWritePopup(false)
   }
-  const popupData = {
-    close: toggle,
-    open: openPopup
+  const moreOpen = () => {
+    if (!customer || customer == "not_login" || customer?.id == undefined) {
+      alert('You must be logged in to see a review.')
+    }
+    setMorePopup(true)
   }
+  const moreClose = () => {
+    setMorePopup(false)
+  }
+
+  const writepopupData = {
+    Open: writePopup,
+    uid: customer?.id,
+    bikeId: detailsId
+  }
+  const morepopupData = {
+    OpenMore: morePopup,
+    data:moreReviewArray? moreReviewArray:'nhi' 
+  }
+
   return (
     <Box className={styles.dealers_main}>
       {
@@ -57,18 +89,17 @@ export default function NewBikeBrand() {
                   </Box>
                   {
                     e?.bike?.newbike_ratings?.length > 0 ?
-                    <Box className={styles.rating_box}>
-                      <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e.bike.newbike_ratings[0].rating} | 4 Reviews
-                    </Box> : ""
+                      <Box className={styles.rating_box}>
+                        <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e.bike.newbike_ratings[0].rating} | 4 Reviews
+                      </Box> : ""
                   }
-                  
 
                   <Box className={styles.comment_box}>
                     Reviews
                     <Typography className={styles.comment_box_data}>
                       <Typography className={styles.data_heading}>Name :</Typography>
-                      { e?.bike?.newbike_comments?.length > 0 ?
-                        <Typography className={styles.data_text}>{e.bike.newbike_comments[0].user.userFullName}</Typography> : "" 
+                      {e?.bike?.newbike_comments?.length > 0 ?
+                        <Typography className={styles.data_text}>{e.bike.newbike_comments[0].user.userFullName}</Typography> : ""
                       }
                     </Typography>
                     <Typography className={styles.comment_box_data}>
@@ -89,8 +120,10 @@ export default function NewBikeBrand() {
                     </Typography>
                   </Box>
 
-                  <Button className={styles.view_detail_btn} disableRipple> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button>
-                  <Button className={styles.view_detail_btn} disableRipple onClick={handleOpen}><ReviewModal props={popupData} /> Write Your Review</Button>
+                  <Button className={styles.view_detail_btn} disableRipple onClick={()=>{moreOpen()}}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button>
+                  <MoreReviewModal props={morepopupData} closeFunctionmore={moreClose} />
+                  <Button className={styles.view_detail_btn} disableRipple onClick={() => {writeopen()}}> Write Your Review</Button>
+                  <WriteModal props={writepopupData} closeFunction={writeclose} />
                 </Grid>
               </Grid>
               <Grid container className={styles.bike_information_grid}>
@@ -170,14 +203,14 @@ export default function NewBikeBrand() {
 
                 <Grid item xs={isMobile ? 12 : 3} className={styles.bike_information_grid2}></Grid>
               </Grid>
-              <Grid container className={styles.bike_video_grid}>
+              {/* <Grid container className={styles.bike_video_grid}>
                 <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
                   <Box className={styles.bike_video}>
                     <iframe src={e.bike.videoUrl} title="YouTube video player" className={styles.bike_video}></iframe>
                   </Box>
                 </Grid>
                 <Grid item xs={isMobile ? 12 : 3}></Grid>
-              </Grid>
+              </Grid> */}
               <Grid container className={styles.other_bike_card}>
                 <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
                   {
@@ -192,6 +225,6 @@ export default function NewBikeBrand() {
               </Grid>
             </>)
         })}
-        </Box>
+    </Box>
   );
 }
