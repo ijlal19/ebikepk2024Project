@@ -6,17 +6,17 @@ import { useRouter } from 'next/navigation';
 
 const FeatureCard = ({props}:any) => {
 
-  const Router = useRouter()
+  // const Router = useRouter()
 
-  function goToRoute(url:any) {
-    let _isLoginUser = isLoginUser()
-    if(_isLoginUser?.login) {
-      Router.push(url)
-    }
-    else {
-      alert("Please Login to Continue")
-    }
-  }
+  // function goToRoute(url:any) {
+  //   let _isLoginUser = isLoginUser()
+  //   if(_isLoginUser?.login) {
+  //     Router.push(url)
+  //   }
+  //   else {
+  //     alert("Please Login to Continue")
+  //   }
+  // }
 
   return (
     <Paper className={styles.card_main} >
@@ -36,7 +36,7 @@ const FeatureCard = ({props}:any) => {
               <TiTick style={{color:'yellowgreen'}}/>
                {props.txt3}
             </Typography>
-            <Button className={styles._btn} onClick={()=>goToRoute(props.url)}  >{props.button}</Button>
+            <Button className={styles._btn}  >{props.button}</Button>
         </Box>
     </Paper>
   )

@@ -20,11 +20,33 @@ export default function ImgCard(props:any) {
     }
 
     function goToDetailPage(val:any) {
-        console.log('val', val)
-        let title = val.title
-        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        console.log('url title', urlTitle)
-        router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        if(val.currentpage == 'new_bike'){
+            let title = val.data.title
+            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            // console.log('url title', urlTitle,title)
+            router.push(`/new-bikes/a/${urlTitle}/${val.data.id}`)
+        }
+        else if(val.currentpage == 'featured_bike'){
+            let title = val.data.title
+            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            console.log('url title', urlTitle,title)
+            // router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        }
+        else if(val.currentpage == 'trending_bike'){
+            let title = val.data.title
+            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            console.log('url title', urlTitle,title)
+            // router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        }
+        else if(val.currentpage == 'used_bike'){
+            let title = val.data.title
+            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            console.log('url title', urlTitle,title)
+            router.push(`/used-bikes/${urlTitle}/${val.data.id}`)
+        }
+        else{
+            console.log('not found')
+        }
     }
 
     return (<>
@@ -57,7 +79,7 @@ export default function ImgCard(props:any) {
                     </Typography> */}
                     </>
                 }
-                 <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props.data) }} > View Detail </Button>
+                 <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props) }} > View Detail </Button>
             </CardContent>
         </Card>
 
