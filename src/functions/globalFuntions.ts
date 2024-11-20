@@ -236,7 +236,6 @@ function getBikesBySpecificFilter(from:any, id:any, getAdFrom:any) {
         })
     }
     else if(from == "cc"){
-        return fetch( Gconfig.ebikeApi + `classified/get-adds-by-cc-offset/${id}/0/10`, {
         return fetch( Gconfig.ebikeApi + `classified/get-adds-by-cc-offset/${id}/${getAdFrom}/10`, {
             method: 'GET',
             headers: { "Content-Type": "application/json" },
