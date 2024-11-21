@@ -25,12 +25,13 @@ const DealerDetails = () => {
     if(params.dealerid) {
       let res = await getSingleDealerDetails(params.dealerid)
       setDealerDetails(res)
+      console.log(res)
       if(res.brand_id) {
         let res1 = await getSimilarDealers(res.brand_id)
         setSimilarDealers(res1.dealers)
         console.log(res1)
       }
-      console.log(res)
+      // console.log(res)
     }
   }
 
@@ -82,7 +83,7 @@ const DealerDetails = () => {
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>
                       <p className={styles.phone}>{e.phone}</p>
-                      <button className={styles.btn}>View Details</button>
+                      <button onClick={()=> goToDetailPage(e)} className={styles.btn}>View Details</button>
                     </div>
                   </div>
                 )
