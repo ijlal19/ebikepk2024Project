@@ -273,6 +273,61 @@ function priceWithCommas(x: any) {
     }
 }
 
+
+
+function getFeaturedDealer() {
+    return fetch(Gconfig.ebikeApi + `dealers/get-featured-dealer`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+    })
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+
+
+function getAllDealer() {
+    return fetch(Gconfig.ebikeApi + `dealers/get-dealer`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+
+function getSingleDealerDetails(id:any) {
+    return fetch(Gconfig.ebikeApi + `dealer/get-dealer-by-id/${id}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+function getSimilarDealers(id:any) {
+    return fetch(Gconfig.ebikeApi + `dealer/dealer-by-brand/${id}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+
 export {
     getPostcomment,
      getSingleBlogData, createmechanic, createdealer,
@@ -280,5 +335,6 @@ export {
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore,
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
-    isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas
+    isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
+    getSingleDealerDetails, getSimilarDealers
 }
