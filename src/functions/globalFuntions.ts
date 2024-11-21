@@ -327,6 +327,61 @@ function getSimilarDealers(id:any) {
     })
 }
 
+// -----------------
+
+function getFeaturedMechanics() {
+    return fetch(Gconfig.ebikeApi + `mechanic/get-featured-mechanic`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify({ payload: 8 })
+    })
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+
+
+function getAllMechanics() {
+    return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+
+function getSingleMechanicsDetails(id:any) {
+    return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic-by-id/${id}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
+function getSimilarMechanics(id:any) {
+    return fetch(Gconfig.ebikeApi + `dealer/dealer-by-brand/${id}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+    .then(response => response.json()).then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
 
 export {
     getPostcomment,
@@ -336,5 +391,5 @@ export {
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
     isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
-    getSingleDealerDetails, getSimilarDealers
+    getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics
 }
