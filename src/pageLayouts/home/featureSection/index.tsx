@@ -47,7 +47,7 @@ const Section2 = () => {
         
         <Grid container spacing={2} className={styles.featuer_container}>
           {
-            isMobile ? <SwiperCarousels from='' sliderName='featurSection' sliderData={feautureArray}/>:
+            isMobile ? <SwiperCarousels from='' sliderName='featurSection' sliderData={feautureArray} currentpage="" />:
             (feautureArray.map((e:any,i:any)=>{
               console.log(e)
               return(
