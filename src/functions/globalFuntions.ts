@@ -157,8 +157,6 @@ function getAllBlog() {
         })
 }
 
-
-
 function userLogin(data: any) {
     return fetch(Gconfig.ebikeApi + `user/login`, {
         method: 'POST',
@@ -228,7 +226,6 @@ function createdealer(data: any) {
         return data
     })
 }
-
 function uplaodImageFunc(data: any) {
     return fetch(`https://api.cloudinary.com/v1_1/dulfy2uxn/image/upload`, {
         method: 'POST',
@@ -238,7 +235,6 @@ function uplaodImageFunc(data: any) {
         return data
     })
 }
-
 function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
 
     if (from == 'city') {
@@ -266,16 +262,13 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
         })
     }
 }
-
 function priceWithCommas(x: any) {
     if (x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 }
 
-export {
-    getPostcomment,
-     getSingleBlogData, createmechanic, createdealer,
+export {getPostcomment,getSingleBlogData, createmechanic, createdealer,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode,
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore,
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,

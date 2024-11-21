@@ -26,7 +26,6 @@ export default function NewBikeBrand() {
     let _isLoginUser = isLoginUser()
     if (_isLoginUser?.login) {
       setCustomer(_isLoginUser.info)
-      console.log(_isLoginUser.info.id)
     }
     else {
       setCustomer("not_login")
@@ -66,7 +65,7 @@ export default function NewBikeBrand() {
   }
   const morepopupData = {
     OpenMore: morePopup,
-    data:moreReviewArray? moreReviewArray:'nhi' 
+    data: moreReviewArray ? moreReviewArray : 'nhi'
   }
 
   return (
@@ -91,7 +90,7 @@ export default function NewBikeBrand() {
                     e?.bike?.newbike_ratings?.length > 0 ?
                       <Box className={styles.rating_box}>
                         <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e.bike.newbike_ratings[0].rating} | 4 Reviews
-                      </Box> : ""
+                      </Box> : "-"
                   }
 
                   <Box className={styles.comment_box}>
@@ -99,30 +98,35 @@ export default function NewBikeBrand() {
                     <Typography className={styles.comment_box_data}>
                       <Typography className={styles.data_heading}>Name :</Typography>
                       {e?.bike?.newbike_comments?.length > 0 ?
-                        <Typography className={styles.data_text}>{e.bike.newbike_comments[0].user.userFullName}</Typography> : ""
+                        <Typography className={styles.data_text}>{e.bike.newbike_comments[0].user.userFullName}</Typography> : "-"
                       }
                     </Typography>
                     <Typography className={styles.comment_box_data}>
                       <Typography className={styles.data_heading}>Review :</Typography>
-                      <Typography className={styles.data_text} sx={{ display: 'flex', justifyContent: 'center', color: 'yellowgreen' }}><StarIcon sx={{ color: 'yellowgreen', fontSize: '15px' }} />
-                        {e.bike.newbike_comments[0].rating}
-                      </Typography>
+                      {
+                        e?.bike?.newbike_comments[0]?.rating ?
+                          <Typography className={styles.data_text} sx={{ display: 'flex', justifyContent: 'center', color: 'yellowgreen' }}><StarIcon sx={{ color: 'yellowgreen', fontSize: '15px' }} />
+                            {e.bike.newbike_comments[0].rating}</Typography> : '-'}
                     </Typography>
                     <Typography className={styles.comment_box_data}>
+                      {e?.bike?.newbike_comments[0]?.comment?
                       <Typography className={styles.data_comment}><span style={{ color: 'grey', fontWeight: 'bolder' }}>Comment : </span>
                         {isMobile ? e.bike.newbike_comments[0].comment : e.bike.newbike_comments[0].comment.slice(0, 100)}
-                      </Typography>
+                      </Typography>:'-'
+                    }
                     </Typography>
                     <Typography className={styles.comment_box_data}>
+                      {e?.bike?.newbike_comments[0]?.createdAt?
                       <Typography className={styles.data_date}>
                         {e.bike.newbike_comments[0].createdAt.slice(0, 10)}
-                      </Typography>
+                      </Typography>:'-'
+                      }
                     </Typography>
                   </Box>
 
-                  <Button className={styles.view_detail_btn} disableRipple onClick={()=>{moreOpen()}}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button>
+                  <Button className={styles.view_detail_btn} disableRipple onClick={() => { moreOpen() }}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button>
                   <MoreReviewModal props={morepopupData} closeFunctionmore={moreClose} />
-                  <Button className={styles.view_detail_btn} disableRipple onClick={() => {writeopen()}}> Write Your Review</Button>
+                  <Button className={styles.view_detail_btn} disableRipple onClick={() => { writeopen() }}> Write Your Review</Button>
                   <WriteModal props={writepopupData} closeFunction={writeclose} />
                 </Grid>
               </Grid>
@@ -135,31 +139,31 @@ export default function NewBikeBrand() {
                         <table className={styles.table}>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Frame</td>
-                            <td className={styles.column}>{e.bike.frame}</td>
+                            <td className={styles.column}>{e?.bike?.frame? e.bike.frame:'-'}</td>
                           </tr>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Displacement</td>
-                            <td className={styles.column}>{e.bike.displacement}</td>
+                            <td className={styles.column}>{e?.bike?.displacement? e.bike.displacement:'-'}</td>
                           </tr>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Dimention</td>
-                            <td className={styles.column}>{e.bike.dimention}</td>
+                            <td className={styles.column}>{e?.bike?.dimention ?  e.bike.dimention : "-"}</td>
                           </tr>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Tyre Front</td>
-                            <td className={styles.column}>{e.bike.tyreFront}</td>
+                            <td className={styles.column}>{e?.bike?.tyreFront? e.bike.tyreFront :'-'}</td>
                           </tr>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Clutch</td>
-                            <td className={styles.column}>{e.bike.clutch}</td>
+                            <td className={styles.column}>{e?.bike?.clutch? e.bike.clutch:'-'}</td>
                           </tr>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Dry Weight</td>
-                            <td className={styles.column}>{e.bike.dryWeight}</td>
+                            <td className={styles.column}>{e?.bike?.dryWeight? e.bike.dryWeight:'-'}</td>
                           </tr>
                           <tr className={styles.tr} >
                             <td className={styles.column}>Starting</td>
-                            <td className={styles.column}>{e.bike.starting}</td>
+                            <td className={styles.column}>{e?.bike?.starting? e.bike.starting:'-'}</td>
                           </tr>
                         </table>
                       </Grid>
@@ -169,31 +173,31 @@ export default function NewBikeBrand() {
                         <table className={styles.table}>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Starting</td>
-                            <td className={styles.column}>{e.bike.starting}</td>
+                            <td className={styles.column}>{e?.bike?.starting? e.bike.starting:'-'}</td>
                           </tr>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Engine</td>
-                            <td className={styles.column}>{e.bike.engine.slice(0, 15)}</td>
+                            <td className={styles.column}>{e?.bike?.engine? e.bike.engine.slice(0, 15):'-'}</td>
                           </tr>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Petrol Capacity</td>
-                            <td className={styles.column}>{e.bike.petrolCapacity}</td>
+                            <td className={styles.column}>{e?.bike?.petrolCapacity? e.bike.petrolCapacity:'-'}</td>
                           </tr>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Tyre Back</td>
-                            <td className={styles.column}>{e.bike.tyreBack}</td>
+                            <td className={styles.column}>{e?.bike?.tyreBack? e.bike.tyreBack:'-'}</td>
                           </tr>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Comp-Ration</td>
-                            <td className={styles.column}>{e.bike.compressionRatio}</td>
+                            <td className={styles.column}>{e?.bike?.compressionRatio? e.bike.compressionRatio:'-'}</td>
                           </tr>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Ground Clearence</td>
-                            <td className={styles.column}>{e.bike.groundClearance}</td>
+                            <td className={styles.column}>{e?.bike?.groundClearance? e.bike.groundClearance:'-'}</td>
                           </tr>
                           <tr className={styles.tr}>
                             <td className={styles.column}>Transmittion</td>
-                            <td className={styles.column}>{e.bike.transmission}</td>
+                            <td className={styles.column}>{e?.bike?.transmission? e.bike.transmission:'-'}</td>
                           </tr>
                         </table>
                       </Grid>

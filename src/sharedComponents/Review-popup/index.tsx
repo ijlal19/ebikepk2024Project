@@ -54,7 +54,7 @@ function WriteModal({ props, closeFunction }: any) {
 
   async function fetchuserComment() {
     let res = await getPostcomment(data)
-    console.log(res)
+    console.log('Response' , res)
   }
   const handleClose = () => {
     closeFunction()
@@ -67,6 +67,7 @@ function WriteModal({ props, closeFunction }: any) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className={styles.popup_main}>
+          <Typography onClick={handleClose}>Close</Typography>
           <Box className={styles.heading_box}>
             <Typography className={styles.heading} id="modal-modal-title" variant="h6" component="h2">
               Write Your Review
@@ -92,7 +93,7 @@ function MoreReviewModal({ props, closeFunctionmore }: any) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 370,
     boxShadow: 24,
     border: 'none',
   };
@@ -121,7 +122,6 @@ function MoreReviewModal({ props, closeFunctionmore }: any) {
           <Box className={styles.comment_box_main}>
           {
             props.data.map((e: any, i: any) => {
-              console.log(e)
               return (
                 <Typography key={i} className={styles.content_box}>
                   <Box className={styles.comment_box}>
