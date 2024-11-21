@@ -11,9 +11,10 @@ interface IProps {
     sliderName?: string;
     sliderData?: any; 
     from: string;
+    currentpage:any
 }
 
-const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from ,currentpage}:any) => {
+const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, currentpage}:any) => {
     return (
         <Container className={`${styles.swiper_card_container} slider_swiper `}>
             <Swiper

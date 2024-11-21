@@ -48,7 +48,7 @@ function UsedBikesSection({from}:any) {
         
         { from == 'featuredBike' ?
         <Box sx={{ width: '100%' }}>
-          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u'/>
+          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage="" />
         </Box> :
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -58,7 +58,7 @@ function UsedBikesSection({from}:any) {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage='used_bike'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage='used_bike' />
           </CustomTabPanel>
         </Box> }
         

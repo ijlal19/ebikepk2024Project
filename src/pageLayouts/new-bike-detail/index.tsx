@@ -33,9 +33,11 @@ export default function NewBikeBrand() {
   }, [])
 
   async function fetchBrandInfo() {
-    const responsedetails = await getnewBikedetailsData(detailsId)
+    const responsedetails:any = await getnewBikedetailsData(detailsId)
     setAllnewBikeDetailsArr(responsedetails)
-    setmoreReviewArray(responsedetails[0].bike.newbike_comments)
+    if(responsedetails?.length > 0) {
+      setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
+    }
   }
 
   const writeopen = () => {
@@ -61,7 +63,8 @@ export default function NewBikeBrand() {
   const writepopupData = {
     Open: writePopup,
     uid: customer?.id,
-    bikeId: detailsId
+    bikeId: detailsId,
+    close: ()=> setWritePopup(false)
   }
   const morepopupData = {
     OpenMore: morePopup,
@@ -93,7 +96,7 @@ export default function NewBikeBrand() {
                       </Box> : "-"
                   }
 
-                  <Box className={styles.comment_box}>
+                  {e?.bike?.newbike_comments?.length > 0 ? <Box className={styles.comment_box}>
                     Reviews
                     <Typography className={styles.comment_box_data}>
                       <Typography className={styles.data_heading}>Name :</Typography>
@@ -122,9 +125,9 @@ export default function NewBikeBrand() {
                       </Typography>:'-'
                       }
                     </Typography>
-                  </Box>
+                  </Box> : "" }
 
-                  <Button className={styles.view_detail_btn} disableRipple onClick={() => { moreOpen() }}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button>
+                  {e?.bike?.newbike_comments?.length > 0 ? <Button className={styles.view_detail_btn} disableRipple onClick={()=>{moreOpen()}}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button> : "" }
                   <MoreReviewModal props={morepopupData} closeFunctionmore={moreClose} />
                   <Button className={styles.view_detail_btn} disableRipple onClick={() => { writeopen() }}> Write Your Review</Button>
                   <WriteModal props={writepopupData} closeFunction={writeclose} />

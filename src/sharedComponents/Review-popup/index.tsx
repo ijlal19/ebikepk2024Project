@@ -25,7 +25,7 @@ const style = {
 function WriteModal({ props, closeFunction }: any) {
   const [rating, setRating] = React.useState('')
   const [comment, setComment] = React.useState('')
-  const [data, setData]: any = React.useState()
+  // const [data, setData]: any = React.useState()
 
 
 
@@ -45,20 +45,23 @@ function WriteModal({ props, closeFunction }: any) {
     }
     else {
       console.log('Submitted Data:', obj);
-      setData(obj)
-      fetchuserComment()
+      // setData(obj)
+      fetchuserComment(obj)
     }
     closeFunction()
   };
 
 
-  async function fetchuserComment() {
-    let res = await getPostcomment(data)
-    console.log('Response' , res)
+  async function fetchuserComment(dataObj:any) {
+    let res = await getPostcomment(dataObj)
+    if(res.success){
+      setComment('')
+      setRating('')
+      window.location.reload()
+    }
+    console.log(res)
   }
-  const handleClose = () => {
-    closeFunction()
-  }
+
   return (
     <div>
       <Modal
@@ -67,12 +70,14 @@ function WriteModal({ props, closeFunction }: any) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className={styles.popup_main}>
-          <Typography onClick={handleClose}>Close</Typography>
+            <Typography style={{ textAlign:"right" }} className={styles.closebtn} >
+              <CloseIcon onClick={() => { props.close() }} className={styles.closebtn} />
+            </Typography>
           <Box className={styles.heading_box}>
             <Typography className={styles.heading} id="modal-modal-title" variant="h6" component="h2">
               Write Your Review
               <Rating name="size-medium"
-                value={rating}
+                value={parseInt(rating)}
                 onChange={(event, newValue: any) => setRating(newValue)} />
             </Typography>
           </Box>
