@@ -21,10 +21,13 @@ export default function ImgCard(props:any) {
 
     function goToDetailPage(val:any) {
         if(val.currentpage == 'new_bike'){
+
+            // bike.bike_brand.brandName, bike.bikeUrl, bike.id
+
             let title = val.data.title
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
             // console.log('url title', urlTitle,title)
-            router.push(`/new-bikes/a/${urlTitle}/${val.data.id}`)
+            router.push(`/new-bikes/${val?.data?.bike_brand?.brandName}/${val?.data?.bikeUrl}/${val.data.id}`)
         }
         else if(val.currentpage == 'featured_bike'){
             let title = val.data.title
