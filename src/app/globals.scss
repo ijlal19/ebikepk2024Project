@@ -7,7 +7,9 @@ body {
     pointer-events: none;
 }
 
-.cursorpointer{}
+.cursorpointer{
+    cursor: pointer;
+}
 
 .used_bike_detail_pg {
     .swiper {

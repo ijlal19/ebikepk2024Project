@@ -37,7 +37,7 @@ const MechanicsDetails = () => {
     var shop_name = bike.shop_name;
     shop_name = shop_name.replace(/\s+/g, '-');
     var lowerTitle = shop_name.toLowerCase();
-    router.push(`/mechanics/${lowerTitle}/${bike.id}`)
+    router.push(`/dealers/${lowerTitle}/${bike.id}`)
     // window.location.reload()/.
 }
 
@@ -67,7 +67,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
         <div className={styles.more_dealers}>
           <div className={styles.similar_dealer_heading_box}>
             <p className={styles.heading}>Similar Mechanics</p>
-            <p onClick={()=> router.push('/mechanics') } className={styles.view_all_dealers}>View All Mechanics</p>
+            <p onClick={()=> router.push('/dealers') } className={styles.view_all_dealers}>View All Dealers</p>
           </div>
           <div className={styles.more_dealers_card}>
             {
