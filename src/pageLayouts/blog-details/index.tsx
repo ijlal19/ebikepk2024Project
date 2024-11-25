@@ -15,14 +15,16 @@ const BlogDetails = () => {
   const [displayicon, setDisplayIcon] = useState(true)
   const isMobile = useMediaQuery('(max-width:768px)')
   const [DataBlog, setDataBlog]: any = useState(null)
+  const [Href, setHref] = useState('')
   const [isLoading, setIsLoading]  = useState(false)
 
   const params = useParams()
   const id = params?.id
-  console.log('params?.slug?', params?.id)
 
   useEffect(() => {
     fetchBrandInfo()
+ setHref(window.location.href)
+
   }, [])
 
   async function fetchBrandInfo() {
@@ -35,7 +37,6 @@ const BlogDetails = () => {
     setIsLoading(false)
     window.scrollTo(0, 0)
   }
-  console.log(DataBlog)
   const handleicons = () => {
     setDisplayIcon(!displayicon)
   }
@@ -81,31 +82,32 @@ const BlogDetails = () => {
                 </Fab>
 
                 <FacebookShareButton
-                  url={'https://github.com/next-share'}
+                  url={Href}
                   quote={'next-share is a social share buttons for your next React apps.'}
                   hashtag={'#nextshare'} style={{ display: 'flex', alignItems: 'center' }}>
                   <FacebookIcon size={32} round />
                 </FacebookShareButton>
 
                 <PinterestShareButton
-                  url={'https://github.com/next-share'}
+                  url={Href}
                   media={'next-share is a social share buttons for your next React apps.'}
                   style={{ display: isMobile ? displayicon ? 'none' : 'flex' : 'flex', alignItems: 'center' }}
                 >
                   <PinterestIcon size={32} round />
                 </PinterestShareButton>
                 <TwitterShareButton
-                  url={'https://github.com/next-share'}
+                  url={Href}
                   title={'next-share is a social share buttons for your next React apps.'} style={{ display: 'flex', alignItems: 'center' }}>
                   <TwitterIcon size={32} round />
                 </TwitterShareButton>
 
-                <LinkedinShareButton url={'https://github.com/next-share'} style={{ display: 'flex', alignItems: 'center' }}>
+                <LinkedinShareButton url={Href}
+                style={{ display: 'flex', alignItems: 'center' }}>
                   <LinkedinIcon size={32} round />
                 </LinkedinShareButton>
 
                 <EmailShareButton
-                  url={'https://github.com/next-share'}
+                  url={Href}
                   subject={'Next Share'}
                   body="body" style={{ display: isMobile ? displayicon ? 'none' : 'flex' : 'flex', alignItems: 'center' }}
                 >

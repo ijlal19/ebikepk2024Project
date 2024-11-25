@@ -2,49 +2,59 @@
 import React, { useState, useEffect } from 'react'
 import BikePriceData from './data'
 import styles from './index.module.scss'
+import { useParams } from 'next/navigation'
+import { getdealerData, getnewBikeData, getnewBikedetailsData } from '@/functions/globalFuntions'
 export default function NewBikePrice() {
+  const [allnewBikeArr, setAllnewBikeArr] = useState([])
+  const [brandname, setbrandName] = useState('')
 
-  // const [AllnewBikePriceDetailsArr, setAllnewBikePriceDetailsArr]:any = useState([])
+  const params = useParams()
+  const bikeId = params.brand
 
-  // useEffect(() => {
-  //   fetchBrandInfo()
-  // }, [])
+  useEffect(() => {
+    fetchBrandInfo()
+  }, [])
 
-  // async function fetchBrandInfo() {
-  //   // const responsedetails = await getnewBikedetailsData()
-  // }
+  async function fetchBrandInfo() {
+
+    let DealerDataRes = await getdealerData(bikeId)
+    const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
+    setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
+    let res = await getnewBikeData({ brand: brandName })
+    setAllnewBikeArr(res)
+  }
   return (
     <div className={styles.bike_price_main}>
-     <div className={styles.heading_box}>
-      <p className={styles.heading}>Honda Bike Price in Pakistan 2024</p></div> 
-     
-      <table 
-  border={1} 
-  style={{ borderCollapse: 'collapse', width: '100%' }} 
-  className={styles.bike_price_table}
->
-  <thead>
-    <tr>
-      <th className={styles.th}>#</th>
-      <th className={styles.th}>Bike Name</th>
-      <th className={styles.th}>Price</th>
-      <th className={styles.th}>Last Update</th>
-    </tr>
-  </thead>
-  <tbody>
-    {
-      BikePriceData.map((e, i) => (
-        <tr key={i}>
-          <td className={styles.td} style={{fontWeight:'bolder',color:'black'}}>{i}</td>
-          <td className={styles.td}>{e.title}</td>
-          <td className={styles.td} style={{fontWeight:'bolder',color:'black'}}>{e.price}</td>
-          <td className={styles.td}>{e.updatedAt.slice(0, 10)}</td>
-        </tr>
-      ))
-    }
-  </tbody>
-</table>
+      <div className={styles.heading_box}>
+        <p className={styles.heading}>{brandname} Bike Price in Pakistan 2024</p></div>
+
+      <table
+        border={1}
+        style={{ borderCollapse: 'collapse', width: '100%' }}
+        className={styles.bike_price_table}
+      >
+        <thead>
+          <tr>
+            <th className={styles.th}>#</th>
+            <th className={styles.th}>Bike Name</th>
+            <th className={styles.th}>Price</th>
+            <th className={styles.th}>Last Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            allnewBikeArr.map((e:any, i:any) => (
+              <tr key={i}>
+                <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{i+1}</td>
+                <td className={styles.td}>{e?.title? e.title :'-'}</td>
+                <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{e?.price? e.price:'-'}</td>
+                <td className={styles.td}>{e?.updatedAt? e.updatedAt.slice(0, 10):'-'}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
 
     </div>
-)
+  )
 }

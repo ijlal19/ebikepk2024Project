@@ -136,7 +136,7 @@
 
                 .view_all_dealers {
                     padding-right: 30px;
-
+                    cursor: pointer;
                     @media (max-width:768px) {
                         display: none;
                     }

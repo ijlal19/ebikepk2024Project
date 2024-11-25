@@ -3,8 +3,18 @@ import { useMediaQuery } from '@mui/material';
 import styles from './index.module.scss'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 
 export const FeatureMechanicCard = ({ props }: any) => {
+    const params = useParams()
+    const router = useRouter()
+
+    function goToDetailPage(bike:any) {
+        var shop_name = bike.shop_name;
+        shop_name = shop_name.replace(/\s+/g, '-');
+        var lowerTitle = shop_name.toLowerCase();
+        router.push(`/mechanics/${lowerTitle}/${bike.id}`)
+    }
     return (
         <div className={styles.feature_card_main}>
             <p className={styles.shop_name}>{props.shop_name}</p>
@@ -12,7 +22,7 @@ export const FeatureMechanicCard = ({ props }: any) => {
             <p className={styles.city}>Mechanic in {props.city.city_name}</p>
             <p className={styles.address}>{props.address.slice(0, 12)} ...</p>
             <p className={styles.date}>Listen on {props.updatedAt.slice(0, 10)}</p>
-            <button className={styles.more_details_button}>More Details</button>
+            <button onClick={()=>goToDetailPage(props)} className={styles.more_details_button}>More Details</button>
         </div>
     )
 }
@@ -21,6 +31,17 @@ export const FeatureMechanicCard = ({ props }: any) => {
 
 export const MechanicinPakCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width: 768px)');
+
+    const params = useParams()
+    const router = useRouter()
+
+    function goToDetailPage(bike:any) {
+        var shop_name = bike.shop_name;
+        shop_name = shop_name.replace(/\s+/g, '-');
+        var lowerTitle = shop_name.toLowerCase();
+        router.push(`/mechanics/${lowerTitle}/${bike.id}`)
+    }
+
     return (<>
         {isMobile ?            
             <div className={styles.mechanic_card_main}>
@@ -48,7 +69,7 @@ export const MechanicinPakCard = ({ props }: any) => {
                     <p className={styles.city}>Mechanic in {props.city.city_name}</p>
                     <p className={styles.address}>{props.address.slice(0, 25)} ... <span style={{ marginRight: 7, marginLeft: 7 }}>|</span> Listed in
                         <span style={{ marginRight: 7, marginLeft: 7 }}><ArrowForwardIcon sx={{ fontSize: 15, margin: 0, color: "green" }} /></span> {props.createdAt.slice(0, 10)}</p>
-                    <button className={styles.more_button}>View More Details</button>
+                    <button onClick={()=>goToDetailPage(props)} className={styles.more_button}>View More Details</button>
                 </div>
             </div> 
         }

@@ -16,13 +16,12 @@ export default function AllNewBikes() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
   const [allDealerArr, setAllDelaerArr] = useState([])
+  const [brandname,setbrandName]=useState('')
   const [desc,setDesc]=useState('')
   const [logo,setLogo]=useState('')
-  const [brandname,setbrandName]=useState('')
 
   const params = useParams()
   const brandId = params.slug
-
   useEffect(() => {
     fetchBrandInfo()
   }, [])

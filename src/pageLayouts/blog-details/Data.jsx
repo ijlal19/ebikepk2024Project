@@ -1,3 +1,16 @@
+// http://localhost:4000/api/blog-comments/add-blog-comments
+// {
+//     "uid": null,
+//     "blog_id": 646,
+//     "user_name": "ebiker",
+//     "comment": "aaa"
+// }
+
+
+// isme comment a rahy hen
+//   /blog/news/pakistani-startup-introduces-electric-vehicle-scooter/646
+
+ 
  const BlogDetailsData = [
     {
         "id": 648,

@@ -9,7 +9,7 @@ import { Pagination, useMediaQuery } from '@mui/material';
 import { MechanicinPakFilter } from './filter';
 import { MechanicinPakCard } from '../Card';
 
-export const MechanicsInPakistan = () => {
+export const MechanicsInPakistan = ({mechanics}:any) => {
     const [open, setOpen] = React.useState(false);
     const isMobile = useMediaQuery(`(max-width:768px)`)
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -20,8 +20,8 @@ export const MechanicsInPakistan = () => {
         setCurrentPage(page);
       };
     const DealerPerPage = 10;
-    const totalPages = Math.ceil(AllDealerData.length / DealerPerPage);
-    const currentData = AllDealerData.slice((currentPage - 1) * DealerPerPage, currentPage * DealerPerPage);
+    const totalPages = Math.ceil(mechanics.length / DealerPerPage);
+    const currentData = mechanics.slice((currentPage - 1) * DealerPerPage, currentPage * DealerPerPage);
     const DrawerList = (
         <Box className={styles.filter_drawer_main} role="presentation" >
             <MechanicinPakFilter />
@@ -33,7 +33,7 @@ export const MechanicsInPakistan = () => {
                 <div className={styles.heading_box}>
                     <p className={styles.showrooms_heading}>Bike Showrooms / Mechanics in Pkaistan</p>
                     <div className={styles.search_box}>
-                        <Button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon/></Button>
+                        <Button onClick={()=>{}} className={styles.drawer_button}><MenuIcon/></Button>
                         <Drawer open={open} onClose={toggleDrawer(false)}>
                             {DrawerList}
                         </Drawer>

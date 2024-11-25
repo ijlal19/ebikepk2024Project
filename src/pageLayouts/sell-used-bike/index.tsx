@@ -129,7 +129,9 @@ const SellUsedBike = () => {
             "requestedForFeatured": false
         }
 
+        setIsLoading(true)
         let res = await publishAd(obj)
+        setIsLoading(false)
         if(res.success) {
             alert('Ad submitted Successfully! Please wait for approval')
             Router.push('/used-bikes')
@@ -336,7 +338,7 @@ const SellUsedBike = () => {
                     </Typography>
                     
                     <Typography className={styles.permission}><input checked={isAggreed} onChange={(e) => { setIsAggreed(e.target.checked)}} type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
-                    <button className={styles.post_button} onClick={handelsubmit} >Post Now</button>
+                    <button disabled={isLoading} className={styles.post_button} onClick={handelsubmit} >Post Now</button>
                 </div>
             </div>
         </div>
