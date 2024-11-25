@@ -68,13 +68,14 @@ export default function NewBikeBrand() {
   }
   const morepopupData = {
     OpenMore: morePopup,
-    data: moreReviewArray ? moreReviewArray : 'nhi'
+    data: moreReviewArray ? moreReviewArray : ''
   }
 
   return (
     <Box className={styles.dealers_main}>
       {
         AllnewBikeDetailsArr.map((e: any, i: any) => {
+          console.log(e)
           return (
             <>
               <Grid key={i} container className={styles.bikre_review_grid}>
@@ -210,14 +211,14 @@ export default function NewBikeBrand() {
 
                 <Grid item xs={isMobile ? 12 : 3} className={styles.bike_information_grid2}></Grid>
               </Grid>
-              {/* <Grid container className={styles.bike_video_grid}>
+              <Grid container className={styles.bike_video_grid}>
                 <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
                   <Box className={styles.bike_video}>
-                    <iframe src={e.bike.videoUrl} title="YouTube video player" className={styles.bike_video}></iframe>
+                    <iframe src={e?.bike?.videoUrl} title="YouTube video player" className={styles.bike_video}></iframe>
                   </Box>
                 </Grid>
                 <Grid item xs={isMobile ? 12 : 3}></Grid>
-              </Grid> */}
+              </Grid>
               <Grid container className={styles.other_bike_card}>
                 <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
                   {
