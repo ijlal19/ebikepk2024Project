@@ -62,31 +62,7 @@
                 padding: 0px 0px 0px 10px;
                 margin: 0px 0px 15px;
             }
-            .email_publish{
-                font-size: 13px;
-                text-align: center;
-            }
-            // .input_container {
-            //     position: relative;
-            //     width: 95%;
-            //     max-width: 100%;
-            //     margin: 10px 0px 10px 0px;
-            // // .your_comment_input {
-            // //     width: 100%;
-            // //     display: flex;
-            // //     outline: none;
-            // //     border: 1px solid #e2e2e2;
-            // //     align-items: flex-start;
-            // //     padding: 18px 15px 5px;
-            // //     height: 160px;
-            // //     overflow-y: auto;
-            // //     font-size: 16px;
-            // //     resize: none;
-            // // }
-            // @media (max-width:768px) {
-            //     width: 97% !important;
-            // }
-            // }
+
             .details_input{
                 margin: 0px 0px 15px;
                 display: flex;
@@ -104,44 +80,10 @@
                     border: 1px solid #e2e2e2;
                     align-items: flex-start;
                     padding: 18px 15px 5px;
-                    height: 160px;
+                    min-height: 30px;
                     overflow-y: auto;
+                    height: auto;
                     font-size: 16px;
-                    resize: none;
-                }
-                .name_input{
-                    width: 45%;
-                    padding: 8px 12px;
-                    border-radius: 0px;
-                    border: 1px solid #e2e2e2;
-                    outline: none;
-                    @media (max-width:768px) {
-                        width: 100%;
-                    }
-                }
-                .email_input{
-                    padding: 8px 12px;
-                    width: 45%;
-                    border-radius: 0px;
-                    border: 1px solid #e2e2e2;
-                    outline: none;
-                    @media (max-width:768px) {
-                        width: 100%;
-                    }
-                }
-                .website_input{
-                    width: 100%;
-                    padding: 8px 12px;
-                    border-radius: 0px;
-                    border: 1px solid #e2e2e2;
-                    outline: none;
-                }
-            }
-            .permission{
-                font-size: 12px;
-                margin: 0px 0px 10px;
-                @media (max-width:768px) {
-                    margin: 0px 0px 15px;
                 }
             }
             .post_comment{
