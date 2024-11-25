@@ -8,6 +8,7 @@ import ImgCard from '@/sharedComponents/itemCard';
 import { getnewBikedetailsData, isLoginUser } from '@/functions/globalFuntions';
 import { useParams, useRouter } from 'next/navigation';
 import { WriteModal, MoreReviewModal } from '@/sharedComponents/Review-popup';
+import SwiperCarousels from '@/sharedComponents/swiperSlider';
 
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px)')
@@ -16,6 +17,7 @@ export default function NewBikeBrand() {
   const [moreReviewArray, setmoreReviewArray] = useState()
   const [customer, setCustomer] = useState<any>('not_login')
   const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr]: any = useState([])
+  const [AllnewBikeCardArr, setAllnewBikeCardArr]: any = useState()
 
   const Router = useRouter()
   const params = useParams()
@@ -34,19 +36,25 @@ export default function NewBikeBrand() {
 
   async function fetchBrandInfo() {
     const responsedetails:any = await getnewBikedetailsData(detailsId)
+    if(responsedetails.length > 0) {
+      if(responsedetails[0]?.bike?.description) {
+        responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
+      }
+    }
     setAllnewBikeDetailsArr(responsedetails)
+    setAllnewBikeCardArr(responsedetails[0].bikes)
     if(responsedetails?.length > 0) {
       setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
     }
   }
-
+  
   const writeopen = () => {
     if (!customer || customer == "not_login" || customer?.id == undefined) {
       alert('You must be logged in to submit a review.')
     }
     setWritePopup(true)
   }
-
+  
   const writeclose = () => {
     setWritePopup(false)
   }
@@ -59,7 +67,7 @@ export default function NewBikeBrand() {
   const moreClose = () => {
     setMorePopup(false)
   }
-
+  
   const writepopupData = {
     Open: writePopup,
     uid: customer?.id,
@@ -71,11 +79,33 @@ export default function NewBikeBrand() {
     data: moreReviewArray ? moreReviewArray : ''
   }
 
+  function  embebedYoutubeVideoId(videoURL: string) {
+    if (videoURL) {
+      var url = videoURL;
+      if (url.split('https://youtu.be/')[1]) {
+        let  videoID = url.split('https://youtu.be/')[1]
+        let  videoUrl = 'https://www.youtube.com/embed/' + videoID
+        return videoUrl;
+      } 
+      else if (url.split('https://www.youtube.com/watch?v=')[1]) {
+        let  videoID = url.split('https://www.youtube.com/watch?v=')[1]
+        let  videoUrl = 'https://www.youtube.com/embed/' + videoID;
+        return videoUrl;
+      }
+      else {
+        return ""
+      }
+    }
+    else {
+      return ""
+    }
+  }
+
   return (
+  <>
     <Box className={styles.dealers_main}>
       {
         AllnewBikeDetailsArr.map((e: any, i: any) => {
-          console.log(e)
           return (
             <>
               <Grid key={i} container className={styles.bikre_review_grid}>
@@ -137,6 +167,9 @@ export default function NewBikeBrand() {
               <Grid container className={styles.bike_information_grid}>
                 <Grid item xs={isMobile ? 12 : 9} className={styles.bike_information_grid1}>
                   <Typography className={styles.title}>{e.bike.title}</Typography>
+                  
+                  <Typography style={{ margin:"10px" }} className={styles.desc} dangerouslySetInnerHTML={{ __html: e.bike.description }}></Typography>
+
                   <Box className={styles.information_table}>
                     <Grid container>
                       <Grid item xs={isMobile ? 12 : 6}>
@@ -214,25 +247,25 @@ export default function NewBikeBrand() {
               <Grid container className={styles.bike_video_grid}>
                 <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
                   <Box className={styles.bike_video}>
-                    <iframe src={e?.bike?.videoUrl} title="YouTube video player" className={styles.bike_video}></iframe>
+                    <iframe 
+                      src={embebedYoutubeVideoId(e.bike.videoUrl)} 
+                      title="YouTube video player" 
+                      className={styles.bike_video}
+                      // frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      // allowfullscreen  
+                    ></iframe>
                   </Box>
                 </Grid>
                 <Grid item xs={isMobile ? 12 : 3}></Grid>
-              </Grid>
-              <Grid container className={styles.other_bike_card}>
-                <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
-                  {
-                    [e.bike].map((e: any, i: any) => {
-                      return (
-                        <ImgCard data={e} from='u' key={i} />
-                      )
-                    })
-                  }
-                </Grid>
-                <Grid item xs={isMobile ? 12 : 3}></Grid>
-              </Grid>
+              </Grid> 
             </>)
         })}
     </Box>
+              <Box className={styles.other_card}>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='n' currentpage='new_bike'/>
+              </Box>
+
+    </>
   );
 }
