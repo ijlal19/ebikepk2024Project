@@ -51,28 +51,27 @@ const Header = () => {
         window.location.reload()
     }
 
-    function goToRoute(data:any) {
-        // console.log('data',data)
+    function goToRoute(data:any) {   
         router.push(data.url)
-      }
+    }
    
     const toggle = (e:any) => {
-        if(e == 'buy&sell'){
+        if(e == 'buy&sell') {
             setBuySellmenu(!buysellmenu);
         }
-        else if(e == 'finddealer'){
+        else if(e == 'finddealer') {
             setFindDealer(!findDealer);
         }
-        else if (e == 'findmachenics'){
+        else if (e == 'findmachenics') {
             setFindMechanics(!findMechanics);
         }
-        else if(e == 'moreoption'){
+        else if(e == 'moreoption') {
             setOptions(!options);
         }
-        else if(e == 'showloginpopup'){
+        else if(e == 'showloginpopup') { 
             setOpenmodal(!openmodal)
         }
-        else{
+        else {
             setOpen(!open);
         }
     };

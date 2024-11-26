@@ -20,6 +20,8 @@ let cities_arr = [
 ]
 let year_arr = [
     { title: "Used Bike by Year", url: "" },
+    { title: "Years 2022", url: "/used-bikes/bike-by-year/2024/55" },
+    { title: "Years 2022", url: "/used-bikes/bike-by-year/2023/55" },
     { title: "Years 2022", url: "/used-bikes/bike-by-year/2022/55" },
     { title: "Years 2021", url: "/used-bikes/bike-by-year/2021/54" },
     { title: "Years 2020", url: "/used-bikes/bike-by-year/2020/53" },
@@ -27,8 +29,6 @@ let year_arr = [
     { title: "Years 2018", url: "/used-bikes/bike-by-year/2018/51" },
     { title: "Years 2017", url: "/used-bikes/bike-by-year/2017/50" },
     { title: "Years 2016", url: "/used-bikes/bike-by-year/2016/49" },
-    { title: "Years 2015", url: "/used-bikes/bike-by-year/2015/48" },
-    
 ]
 let cc_arr = [
     { title: "Used Bike by CC", url: "" },
@@ -39,14 +39,18 @@ let cc_arr = [
     { title: "125cc", url: "/used-bikes/bike-by-cc/125/1" },
     { title: "150cc", url: "/used-bikes/bike-by-cc/150/1" },
     { title: "200cc", url: "/used-bikes/bike-by-cc/200/1" },
-    { title: "250cc", url: "/used-bikes/bike-by-cc/250/1" }
+    { title: "250cc", url: "/used-bikes/bike-by-cc/250/1" },
+    { title: "300cc", url: "/used-bikes/bike-by-cc/300/1" },
+    { title: "350cc", url: "/used-bikes/bike-by-cc/350/1" },
+    { title: "400cc", url: "/used-bikes/bike-by-cc/400/1" },
+    { title: "450cc", url: "/used-bikes/bike-by-cc/450/1" }
 ]
 let catagory_arr = [
     { title: "Explore Ebike", url: "" },
     { title: "Used Bikes", url: "/used-bikes" },
     { title: "New Bikes", url: "/new-bikes" },
-    { title: "Showroom", url: "" },
-    { title: "Videos", url: "" },
+    { title: "Showroom", url: "/dealers" },
+    { title: "Videos", url: "https://www.youtube.com/@ebikepk" },
     { title: "Bikers Forum", url: "" },
     { title: "Shop", url: "" },
     { title: "Blog", url: "/blog" },

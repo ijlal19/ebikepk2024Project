@@ -44,7 +44,7 @@ export default function MoreList({props}:any) {
             morear.map((e:any,i:any)=>{
               return(
                 <ListItemButton sx={{ pl: 4 }} onClick={()=>goToRoute(e)}  key={i} className={styles.greys}>
-                  <ListItemText primary={e.label} />
+                  <ListItemText style={{ marginLeft:"10px" }} primary={e.label} />
                 </ListItemButton>
               )
             })
