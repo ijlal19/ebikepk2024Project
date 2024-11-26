@@ -8,10 +8,12 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import { useMediaQuery } from '@mui/material';
 import { getSimilarDealers, getSingleDealerDetails } from "@/functions/globalFuntions"
 import { useRouter, useParams } from 'next/navigation'
+import Loader from '@/sharedComponents/loader/loader';
 
 const DealerDetails = () => {
   const [dealersDetails, setDealerDetails]:any = useState([])
   const [similarDealers, setSimilarDealers]:any = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const params = useParams()
   const router = useRouter()
@@ -21,17 +23,16 @@ const DealerDetails = () => {
   },[])
 
   async function fetchInfo() {
-
     if(params.dealerid) {
+      setIsLoading(true)
       let res = await getSingleDealerDetails(params.dealerid)
       setDealerDetails(res)
-      console.log(res)
       if(res.brand_id) {
         let res1 = await getSimilarDealers(res.brand_id)
         setSimilarDealers(res1.dealers)
-        console.log(res1)
+        setIsLoading(false)
+        window.scrollTo(0, 0)
       }
-      // console.log(res)
     }
   }
 
@@ -45,8 +46,12 @@ const DealerDetails = () => {
 
   const isMobile = useMediaQuery('(max-width:562px)')
   return (
-    dealersDetails ?  
-    <div className={styles.dealer_detail_main}>
+    <>
+    {
+      !isLoading ?
+       <>
+        {dealersDetails ?
+     <div className={styles.dealer_detail_main}>
       <div className={styles.container}>
         <div className={styles.first_detail_card_box}>
           <div className={styles.main_crad}>
@@ -108,7 +113,15 @@ const DealerDetails = () => {
           </div>
         </div>
       </div>
-    </div> : <></>
+    </div>:
+     <></>
+     }</>
+    :
+    <div className={styles.load_div}>
+          <Loader isLoading={isLoading} />
+        </div>
+  }
+  </>
   );
 };
 

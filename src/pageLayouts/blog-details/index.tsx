@@ -2,13 +2,11 @@
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import BlogDetailsData from './Data';
 import { useParams } from 'next/navigation';
 import ShareIcon from '@mui/icons-material/Share';
-import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { EmailIcon, EmailShareButton, FacebookIcon, FacebookMessengerIcon, FacebookMessengerShareButton, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, MailruShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
-import { getAllBlogComment, getPostBlogcomment, getSingleBlogData } from '@/functions/globalFuntions';
+import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, MailruShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
+import {  getPostBlogcomment, getSingleBlogData } from '@/functions/globalFuntions';
 import Loader from '@/sharedComponents/loader/loader'
 
 const BlogDetails = () => {
@@ -154,7 +152,7 @@ const BlogDetails = () => {
                 <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button><hr />
                 <div className={styles.user_comment_box}>
                   {CommentArr && CommentArr.length > 0 ? (
-                    [...CommentArr].reverse().map((data: any, i: number) => (
+                    [...CommentArr].reverse().map((data: any, i: any) => (
                       <div key={i} className={styles.user_comment}>
                         <div className={styles.user_comment_data}>
                           <div style={{ display: 'flex', alignItems: 'center' }}>

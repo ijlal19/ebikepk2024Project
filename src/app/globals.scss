@@ -15,17 +15,25 @@ body {
     .swiper {
         .swiper-button-prev {
             color: black !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
             &::after {
-                font-size: 20px !important;
-                font-weight: 500;
+                font-size: 16px !important;
+                font-weight: bolder;
             }
         }
 
         .swiper-button-next {
             color: black !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
             &::after {
-                font-size: 20px !important;
-                font-weight: 500;
+                font-size: 16px !important;
+                font-weight: bolder;
             }
         }
     }

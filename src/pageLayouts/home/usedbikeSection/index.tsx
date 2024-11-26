@@ -48,7 +48,7 @@ function UsedBikesSection({from}:any) {
         
         { from == 'featuredBike' ?
         <Box sx={{ width: '100%' }}>
-          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage="" />
+          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage="used_bike" />
         </Box> :
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

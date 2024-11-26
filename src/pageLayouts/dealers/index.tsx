@@ -5,33 +5,51 @@ import { FeatureDelers } from './feature-dealers';
 import { FeaturedDealerData } from './Data';
 import { DealerInPakistan } from './dealer-in-pakistan';
 import { getFeaturedDealer, getAllDealer } from "@/functions/globalFuntions"
+import Loader from '@/sharedComponents/loader/loader';
 
 const Dealer = () => {
 
-  const [allDealers, setAllDealers]:any = useState([])
-  const [featuredDealers, setFeaturedDealers]:any = useState([])
+  const [allDealers, setAllDealers] = useState([])
+  const [featuredDealers, setFeaturedDealers] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    fetchInfo() 
-  },[])
+    fetchInfo()
+  }, [])
 
   async function fetchInfo() {
+    setIsLoading(true)
     let res = await getAllDealer()
     setAllDealers(res)
-    console.log(res)
-
-    let res1 = await getFeaturedDealer()
-    setFeaturedDealers(res1)
-    console.log(res1)
+    if(!res){
+      setIsLoading(true)
+    }
+    else{
+      let res1 = await getFeaturedDealer()
+      setFeaturedDealers(res1)
+      setIsLoading(false)
+      window.scrollTo(0, 0)
+    }
   }
 
   return (
     <div className={styles.main_dealer}>
-      <FeatureDelers featuredDealers={featuredDealers}/>
-      <DealerInPakistan dealers={allDealers}  />
+      {
+        isLoading ?
+         <>
+          {<div>
+          <Loader isLoading={isLoading} />
+        </div>}
+         </>
+          : 
+          <>
+            <FeatureDelers featuredDealers={featuredDealers}/>
+            <DealerInPakistan dealers={allDealers}  />
+          </>
+      }
     </div>
-   );
- };
+  );
+};
 
 export default Dealer;
 
