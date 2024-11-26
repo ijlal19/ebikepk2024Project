@@ -18,6 +18,7 @@ const BlogDetails = () => {
   const [Href, setHref] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [Comment, setComment] = useState('')
+  const [CommentArr, setCommentArr]: any = useState()
 
   const params = useParams()
   const id = params?.id
@@ -32,24 +33,13 @@ const BlogDetails = () => {
     setIsLoading(true)
     let res = await getSingleBlogData(id)
 
-
-    let response = await getAllBlogComment()
-    console.log('res',response)
-
-
     if (res.bloghtml) {
       res.bloghtml = res.bloghtml.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
     }
     setDataBlog(res)
-    console.log(res)
+    setCommentArr(res.blog_comments)
     setIsLoading(false)
     window.scrollTo(0, 0)
-    // const category = res?.blog_category?.name
-    // console.log(category)
-    // const Maintitle = res?.blogTitle
-    // const titleReplace = Maintitle.replace(/\s+/g, '-');
-    // var completetitle = titleReplace.toLowerCase();
-    // console.log(completetitle)
   }
 
   const handleicons = () => {
@@ -67,18 +57,15 @@ const BlogDetails = () => {
       "user_name": "ebiker",
       "comment": Comment
     }
-    console.log('eded', CommentObj)
-    // getPostBlogcomment
     fetchuserComment(CommentObj)
   }
   async function fetchuserComment(dataObj: any) {
     let res = await getPostBlogcomment(dataObj)
     if (res.success) {
+      window.location.reload()
       setComment('')
-      console.log('Success', res)
       return
     }
-    console.log('erro', res)
   }
   return (
     <Box className={styles.blog_details_main}>
@@ -164,7 +151,37 @@ const BlogDetails = () => {
                   <textarea name="" id="" className={styles.your_comment_input} placeholder="Enter your comment"
                     onChange={(e) => setComment(e.target.value)}></textarea>
                 </Box>
-                <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button>
+                <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button><hr />
+                <div className={styles.user_comment_box}>
+                  {CommentArr && CommentArr.length > 0 ? (
+                    [...CommentArr].reverse().map((data: any, i: number) => (
+                      <div key={i} className={styles.user_comment}>
+                        <div className={styles.user_comment_data}>
+                          <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Avatar
+                              alt="Profile"
+                              sx={{ width: 28, height: 28, marginRight: 1, marginLeft: 1 }}
+                            />
+                          </div>
+                          <span className={styles.user_comment_details}>
+                            <p style={{ margin: 0, fontSize: '14px', paddingBottom: 3 }}>
+                              {data?.user_name}
+                            </p>
+                            <p style={{ margin: 0, fontSize: '10px', color: 'grey' }}>
+                              {data?.createdAt?.slice(0, 10)}
+                            </p>
+                          </span>
+                        </div>
+                        <p className={styles.user_main_comment}>{data?.comment}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p style={{ textAlign: 'center', color: 'grey', fontSize: '14px' }}>
+                      No comments yet
+                    </p>
+                  )}
+
+                </div>
               </Box>
             </Grid>
 

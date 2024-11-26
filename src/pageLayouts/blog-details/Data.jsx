@@ -10,7 +10,7 @@
 // isme comment a rahy hen
 //   /blog/news/pakistani-startup-introduces-electric-vehicle-scooter/646
 
- 
+
  const BlogDetailsData = [
     {
         "id": 648,
