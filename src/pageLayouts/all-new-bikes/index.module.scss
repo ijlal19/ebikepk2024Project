@@ -48,6 +48,7 @@ $blue: #1976d2;
 .all_new_bike_main {
     width: 100%;
     max-width: 1000px;
+    box-sizing: border-box;
     margin: 0px auto !important;
     padding: 10px 5px 10px 5px !important;
 
@@ -114,7 +115,7 @@ $blue: #1976d2;
             flex-wrap: wrap;
             flex-direction: row;
             padding: 0px !important;
-            gap: 10px;
+            gap:10px;
             // border: 1px solid #000;
             justify-content: center;
 
@@ -213,21 +214,24 @@ $blue: #1976d2;
         .view_detail_btn {
             color: #1976d2;
             margin-top: 10px;
-            padding: 3px 8px;
             border-radius: 1px;
+            padding: 3px 8px;
             width: 100%;
             font-size: 13px;
             border: 1px solid #1976d2;
         }
-
+        
         @media (max-width:768px) {
             // display: flex;
             margin-top: 40px;
-            justify-content: center;
+            justify-content: center !important; 
             // flex-wrap: wrap;
 
             .view_detail_btn {
-                margin: 0px 0px 0px 20px !important;
+                padding: 2px 6px;
+                margin:5px auto 0px auto !important;
+                display: flex;
+                justify-content: center;
                 width: 80%;
             }
         }

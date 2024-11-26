@@ -377,9 +377,30 @@ function getSimilarMechanics(id:any) {
     })
 }
 
+function getPostBlogcomment(data: any) {
+    return fetch(Gconfig.ebikeApi + `blog-comments/add-blog-comments/`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function getAllBlogComment() {
+    return fetch(Gconfig.ebikeApi + `news/pakistani-startup-introduces-electric-vehicle-scooter/646`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
 
 export {
-    getPostcomment,
+    getPostcomment,getPostBlogcomment,getAllBlogComment,
      getSingleBlogData, createmechanic, createdealer,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode,
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore,

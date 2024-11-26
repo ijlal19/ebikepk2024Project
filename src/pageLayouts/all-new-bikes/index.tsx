@@ -46,19 +46,6 @@ export default function AllNewBikes() {
 
   return (
     <>
-    
-      {/* <div className={styles.top_add_area}>
-        <div className={styles.add_image}>
-          <div className={styles.image}>Add Image</div>
-        </div>
-      </div>
-
-      <div className={styles.path_box}>
-        <div className={styles.path_text_box}>
-          <p className={styles.path_text}>Home<span style={{marginLeft:5,marginRight:5}}>/</span>New Bikes<span style={{marginLeft:5,marginRight:5}}>/</span>Honda</p>
-        </div>
-      </div> */}
-      
     <Box className={styles.all_new_bike_main}>
       <Box className={styles.description_box}>
         <Box className={styles.card_main}>
@@ -106,8 +93,8 @@ export default function AllNewBikes() {
                 )
               })
             }
-          </Box>
           <Button className={styles.view_detail_btn} > View Bike Detail <KeyboardArrowRightIcon /></Button>
+          </Box>
         </Grid>
       </Grid>
     </Box>

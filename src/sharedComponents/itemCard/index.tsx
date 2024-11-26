@@ -21,7 +21,6 @@ export default function ImgCard(props:any) {
 
     function goToDetailPage(val:any) {
         if(val.currentpage == 'new_bike'){
-
             // bike.bike_brand.brandName, bike.bikeUrl, bike.id
 
             let title = val.data.title

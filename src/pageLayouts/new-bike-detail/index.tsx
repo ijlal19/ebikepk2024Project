@@ -8,6 +8,7 @@ import ImgCard from '@/sharedComponents/itemCard';
 import { getnewBikedetailsData, isLoginUser } from '@/functions/globalFuntions';
 import { useParams, useRouter } from 'next/navigation';
 import { WriteModal, MoreReviewModal } from '@/sharedComponents/Review-popup';
+import SwiperCarousels from '@/sharedComponents/swiperSlider';
 
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px)')
@@ -16,6 +17,7 @@ export default function NewBikeBrand() {
   const [moreReviewArray, setmoreReviewArray] = useState()
   const [customer, setCustomer] = useState<any>('not_login')
   const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr]: any = useState([])
+  const [AllnewBikeCardArr, setAllnewBikeCardArr]: any = useState()
 
   const Router = useRouter()
   const params = useParams()
@@ -34,25 +36,25 @@ export default function NewBikeBrand() {
 
   async function fetchBrandInfo() {
     const responsedetails:any = await getnewBikedetailsData(detailsId)
-    console.log('responsedetails', responsedetails)
     if(responsedetails.length > 0) {
       if(responsedetails[0]?.bike?.description) {
         responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
       }
     }
     setAllnewBikeDetailsArr(responsedetails)
+    setAllnewBikeCardArr(responsedetails[0].bikes)
     if(responsedetails?.length > 0) {
       setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
     }
   }
-
+  
   const writeopen = () => {
     if (!customer || customer == "not_login" || customer?.id == undefined) {
       alert('You must be logged in to submit a review.')
     }
     setWritePopup(true)
   }
-
+  
   const writeclose = () => {
     setWritePopup(false)
   }
@@ -65,7 +67,7 @@ export default function NewBikeBrand() {
   const moreClose = () => {
     setMorePopup(false)
   }
-
+  
   const writepopupData = {
     Open: writePopup,
     uid: customer?.id,
@@ -74,7 +76,7 @@ export default function NewBikeBrand() {
   }
   const morepopupData = {
     OpenMore: morePopup,
-    data: moreReviewArray ? moreReviewArray : 'nhi'
+    data: moreReviewArray ? moreReviewArray : ''
   }
 
   function  embebedYoutubeVideoId(videoURL: string) {
@@ -100,10 +102,10 @@ export default function NewBikeBrand() {
   }
 
   return (
+  <>
     <Box className={styles.dealers_main}>
       {
         AllnewBikeDetailsArr.map((e: any, i: any) => {
-          console.log('eaaa', e)
           return (
             <>
               <Grid key={i} container className={styles.bikre_review_grid}>
@@ -257,20 +259,13 @@ export default function NewBikeBrand() {
                 </Grid>
                 <Grid item xs={isMobile ? 12 : 3}></Grid>
               </Grid> 
-              <Grid container className={styles.other_bike_card}>
-                <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
-                  {
-                    [e.bike].map((e: any, i: any) => {
-                      return (
-                        <ImgCard data={e} from='u' key={i} />
-                      )
-                    })
-                  }
-                </Grid>
-                <Grid item xs={isMobile ? 12 : 3}></Grid>
-              </Grid>
             </>)
         })}
     </Box>
+              <Box className={styles.other_card}>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='n' currentpage='new_bike'/>
+              </Box>
+
+    </>
   );
 }
