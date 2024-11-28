@@ -43,6 +43,12 @@
     justify-content: center;
 }
 
+.big_video_box {
+    @media (min-width:768px) {
+        padding-bottom: 5px;
+    }
+}
+
 .background_box {
     width: 100%;
     height: 53vh;

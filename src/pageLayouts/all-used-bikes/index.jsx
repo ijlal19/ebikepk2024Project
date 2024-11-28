@@ -2,7 +2,7 @@
 import { Box, Grid, Typography, useMediaQuery } from '@mui/material'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'
-import { getAllbikesDetail, priceWithCommas } from "@/functions/globalFuntions"
+import { getAllbikesDetail, priceWithCommas, getAllFeaturedBike } from "@/functions/globalFuntions"
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import { useRouter } from 'next/navigation'
 import Filters from '@/sharedComponents/filters'
@@ -18,6 +18,7 @@ const AllUsedBike = () => {
     const router = useRouter()
 
     useEffect(() => {
+        fetchFeaturedBike()
         fetchBikeInfo(pageNo)
     }, [])
 
@@ -29,6 +30,10 @@ const AllUsedBike = () => {
         setAllBikesArr(res)
         setIsLoading(false)
         window.scrollTo(0, 0)
+    }
+    async function fetchFeaturedBike() {
+        let res = await  getAllFeaturedBike();
+        console.log('res', res)
     }
 
     function goToDetailPage(val) {

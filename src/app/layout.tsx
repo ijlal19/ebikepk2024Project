@@ -9,11 +9,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "ebike.pk",
   description: "",
+  icons: {
+    icon: "/favicon.png", // Path to the favicon
+  },
 };
 
 export default function RootLayout({  children }: Readonly<{ children: React.ReactNode;}>) {
 
-  // console.log('params', params.param)
+
   return (
     <html lang="en">
       <body className={inter.className}>

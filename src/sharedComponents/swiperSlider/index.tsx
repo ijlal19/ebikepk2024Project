@@ -5,7 +5,7 @@ import ItemCard from '@/sharedComponents/itemCard/index';
 import { Container } from '@mui/material';
 import 'swiper/swiper-bundle.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import FeatureCard from '../FeatureCard';
+import FeatureCard from '@/sharedComponents/FeatureCard';
 
 interface IProps {
     sliderName?: string;
@@ -21,20 +21,21 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                 modules={[Navigation, FreeMode]}
                 navigation={true}
                 className={styles.swiper}
-                initialSlide={0}
-                loop={true}
+                initialSlide={sliderName == 'featurSection' ? 1 : 0}
+                loop={sliderName == 'featurSection' ? false : true}
                 slidesPerView={1}
+                centeredSlides={sliderName == 'featurSection' ? true : false }
                 breakpoints={{
                     1: {
-                        slidesPerView: 2,
-                        spaceBetween: 5,
+                        slidesPerView: sliderName == 'featurSection' ? 1.5 : 2,
+                        spaceBetween: sliderName == 'featurSection' ?  15 : 5,
                         freeMode: {
                             enabled: true,
                             sticky: false,
                         },
                     },
                     768: {
-                        slidesPerView:  3,
+                        slidesPerView: 3,
                         slidesPerGroup: 1,
                     },
                 }}
@@ -46,7 +47,7 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                             <SwiperSlide key={i} className={styles.slider_card}>
                                 {sliderName == 'featurSection' ?
                                     <FeatureCard 
-                                        props={data}
+                                        data={data}
                                     /> 
                                     :
                                     <ItemCard 

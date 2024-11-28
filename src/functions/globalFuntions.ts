@@ -389,14 +389,29 @@ function getPostBlogcomment(data: any) {
         })
 }
 
-function getAllBlogComment() {
-    return fetch(Gconfig.ebikeApi + `news/pakistani-startup-introduces-electric-vehicle-scooter/646`)
-        .then(response => response.json()).then(data => {
-            return data
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    function getAllBlogComment() {
+        return fetch(Gconfig.ebikeApi + `news/pakistani-startup-introduces-electric-vehicle-scooter/646`)
+            .then(response => response.json()).then(data => {
+                return data
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    
+    function getAllFeaturedBike() {
+        return fetch(Gconfig.ebikeApi + `classified/get-featured-ads`, {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
+            })
+            .then(response => response.json()).then(data => {
+                return data
+            })
+            .catch((err) => {
+                console.log(err) 
+            })
     }
 
 export {
@@ -407,5 +422,6 @@ export {
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
     isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
-    getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics
+    getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
+    getAllFeaturedBike
 }

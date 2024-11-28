@@ -18,7 +18,7 @@ const OurVideos = ({SetWidth,SetMaxWidth}:any) => {
             </Box>
 
         <Grid container spacing={1} className={styles.container} style={{maxWidth: SetMaxWidth === 'inblogs'?'1150px':'1000px' }}>
-            <Grid item xs={isMobile ? 8 : 7} >
+            <Grid item xs={isMobile ? 8 : 7} style={isMobile ? {} : { paddingTop:"10px" }}  >
                 <Link href={Data[0].video_url} className={styles.link} target='blank'>
                     <Box
                         className={styles.background_box}
@@ -36,7 +36,7 @@ const OurVideos = ({SetWidth,SetMaxWidth}:any) => {
                 </Link>
             </Grid>
 
-            <Grid item xs={isMobile ? 4 : 5}>
+            <Grid item xs={isMobile ? 4 : 5} style={{ paddingTop:"10px" }}>
                 <Grid container spacing={1}>
                     {
                     isMobile? Data.slice(1, 3).map((e: any, i: any) => (

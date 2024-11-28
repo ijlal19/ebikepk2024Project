@@ -4,41 +4,44 @@ import styles from './index.module.scss'
 import {isLoginUser} from '@/functions/globalFuntions'
 import { useRouter } from 'next/navigation';
 
-const FeatureCard = ({props}:any) => {
+const FeatureCard = (props :any) => {
 
-  // const Router = useRouter()
+  const Router = useRouter()
 
-  // function goToRoute(url:any) {
-  //   let _isLoginUser = isLoginUser()
-  //   if(_isLoginUser?.login) {
-  //     Router.push(url)
-  //   }
-  //   else {
-  //     alert("Please Login to Continue")
-  //   }
-  // }
+  function goToRoute(url:any) {
+    let _isLoginUser = isLoginUser()
+    if(_isLoginUser?.login) {
+      Router.push(url)
+    }
+    else {
+      alert("Please Login to Continue")
+    }
+  }
+
+  let data = props.data
 
   return (
-    <Paper className={styles.card_main} >
+    data ? 
+      <Paper className={styles.card_main} >
         <Typography className={styles.heading}>
-            <h4>{props.Heading}</h4>
+            <h4>{data.heading}</h4>
         </Typography>
         <Box className={styles.card_text}>
             <Typography className={styles.information}>
                 <TiTick style={{color:'yellowgreen'}}/> 
-                {props.txt1}
+                {data.txt1}
               </Typography> 
             <Typography className={styles.information}>
                 <TiTick style={{color:'yellowgreen'}}/> 
-                {props.txt2}
+                {data.txt2}
             </Typography> 
             <Typography className={styles.information}>
               <TiTick style={{color:'yellowgreen'}}/>
-               {props.txt3}
+               {data.txt3}
             </Typography>
-            <Button className={styles._btn}  >{props.button}</Button>
+            <Button className={styles._btn} onClick={()=> goToRoute(data.url)} >{data.button}</Button>
         </Box>
-    </Paper>
+    </Paper> : <></>
   )
 }
 
