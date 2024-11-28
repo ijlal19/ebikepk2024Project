@@ -41,16 +41,24 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                 simulateTouch={true}
             >
                 {sliderData?.length > 0 &&
-                    sliderData.map((e:any, i:any) => {
+                    sliderData.map((data:any, i:any) => {
                         return(
                             <SwiperSlide key={i} className={styles.slider_card}>
                                 {sliderName == 'featurSection' ?
-                                <FeatureCard props={e}/>
-                                :<ItemCard data={e} from={from} currentpage={currentpage} />
-                            }
-                        </SwiperSlide>
+                                    <FeatureCard 
+                                        props={data}
+                                    /> 
+                                    :
+                                    <ItemCard 
+                                        data={data} 
+                                        from={from} 
+                                        currentpage={currentpage} 
+                                    />
+                                }
+                            </SwiperSlide>
                         )
-})}
+                    })
+                }
             </Swiper>
          </Container>
     );

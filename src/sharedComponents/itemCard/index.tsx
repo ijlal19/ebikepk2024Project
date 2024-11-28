@@ -9,7 +9,7 @@ import { priceWithCommas } from '@/functions/globalFuntions'
 
 export default function ImgCard(props:any) {
 
-    const router = useRouter()
+    const Router = useRouter()
     
     let imgUrl = ''
     if(props.data.img_url) {
@@ -19,43 +19,34 @@ export default function ImgCard(props:any) {
         imgUrl = props.data?.images[0]
     }
 
-    function goToDetailPage(val:any) {
-        if(val.currentpage == 'new_bike'){
-            // bike.bike_brand.brandName, bike.bikeUrl, bike.id
-
-            let title = val.data.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            // console.log('url title', urlTitle,title)
-            router.push(`/new-bikes/${val?.data?.bike_brand?.brandName}/${val?.data?.bikeUrl}/${val.data.id}`)
+    function goToDetailPage(bike:any) {
+        
+        if(props.currentpage == 'new_bike') {
+            Router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)
         }
-        else if(val.currentpage == 'featured_bike'){
-            let title = val.data.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            console.log('url title', urlTitle,title)
-            // router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        else if(props.currentpage == 'featured_bike') {
+            Router.push(bike?.url)
         }
-        else if(val.currentpage == 'trending_bike'){
-            let title = val.data.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            console.log('url title', urlTitle,title)
-            // router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        else if(props.currentpage == 'trending_bike') {
+            Router.push(bike?.url)
         }
-        else if(val.currentpage == 'used_bike'){
-            let title = val.data.title
+        else if(props.currentpage == 'used_bike') {
+            let title = bike?.title
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            console.log('url title', urlTitle,title)
-            router.push(`/used-bikes/${urlTitle}/${val.data.id}`)
+            Router.push(`/used-bikes/${urlTitle}/${bike?.id}`)
         }
-        else{
+        else {
             console.log('not found')
         }
     }
+
+    let bike = props.data
 
     return (<>
         <Card className={styles.itemCard} >
             <CardMedia
                 component="img"
-                alt={props.data.title}
+                alt={bike.title}
                 height="230"
                 image={imgUrl}
                 className={styles.card_img}
@@ -63,25 +54,20 @@ export default function ImgCard(props:any) {
 
             <CardContent className={styles.card_info}>
                 <Typography className={styles.card_title} >
-                    {props.data.title}
+                    {bike.title}
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {priceWithCommas(props.data.price)} {props.from == 'n' ? '' : '' }
+                    {priceWithCommas(bike.price)} {props.from == 'n' ? '' : '' }
                 </Typography>
 
                 { props.from == "u" ? 
                     <Typography className={styles.card_location}>
-                        {props.data.location}
+                        {bike.location}
                     </Typography>
-                    :
-                    <>
-                    {/* <Typography className={styles.avg_price_text}>
-                        Avg. Ex-Showroom price
-                    </Typography> */}
-                    </>
+                    : ""
                 }
-                 <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(props) }} > View Detail </Button>
+                 <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(bike) }} > View Detail </Button>
             </CardContent>
         </Card>
     </>

@@ -11,11 +11,9 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({  children }: Readonly<{ children: React.ReactNode;}>) {
+
+  // console.log('params', params.param)
   return (
     <html lang="en">
       <body className={inter.className}>
