@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .contactus_main {
     width: 100%;
     max-width: 1000px;
@@ -122,7 +123,7 @@
             }
             .contact_heading {
                 font-size: 20px;
-                color: #1976d2;
+                color: $primary_two;
                 font-weight: bolder;
                 text-align: center;
                 padding: 15px 0px 0px 0px;
@@ -148,7 +149,7 @@
                     color: white;
                     font-size: 16px;
                     font-weight: bolder;
-                    background: #1976d2;
+                    background: $primary_two;
                     border: none;
                     margin: 5px 0px 5px 0px;
                     padding: 5px 0px 5px 0px;

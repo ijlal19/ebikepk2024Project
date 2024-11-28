@@ -7,7 +7,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useRouter } from 'next/navigation'
 
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;

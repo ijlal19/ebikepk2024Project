@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .usedbike_form_main {
     width: 100%;
     display: flex;
@@ -16,7 +17,7 @@
         .form_heading {
             text-align: center;
             padding: 10px 0px;
-            background: #1976d2;
+            background: $primary_two;
             color: white;
             font-size: 20px;
             margin: 0px !important;
@@ -117,7 +118,7 @@
                 margin:5px auto 7px auto;
                 border: none;
                 display: flex;
-                background: #1976d2;
+                background: $primary_two;
                 font-size: 18px;
                 font-weight: bold;
                 color: white;

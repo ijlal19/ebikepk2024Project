@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .main{
   width: 100%;
   padding: 0px;
@@ -131,7 +132,7 @@
             padding: 0px;
             display: flex;
             align-items: center;
-            color: #1976d2;
+            color: $primary_two;
             width: 70%;
             @media (max-width:768px) {
               font-size: 16px;
@@ -204,7 +205,7 @@
 
     .viewMoreBtn {
       padding: 10px 30px;
-      background-color: #1976d2;
+      background-color: $primary_two;
       color: #fff;
       font-size: 14px;
       border: none;
@@ -242,7 +243,7 @@
     display: none;
   }
   span {
-    color: #1976d2;
+    color: $primary_two;
     font-size: 16px;
   }
 }

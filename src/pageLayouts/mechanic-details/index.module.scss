@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .dealer_detail_main {
     width: 100%;
     display: flex;
@@ -62,7 +63,7 @@
                     .shop_name {
                         font-size: 16px;
                         display: flex;
-                        color: #1976d2;
+                        color: $primary_two;
                         align-items: center;
                         gap: 7px;
                         margin: 3px 0px 5px 0px;
@@ -72,7 +73,7 @@
                     .address {
                         font-size: 16px;
                         margin: 10px 0px 10px 0px;
-                        color: #1976d2;
+                        color: $primary_two;
                         color: yellowgreen;
                         display: flex;
                         align-items: center;
@@ -122,7 +123,7 @@
                 .heading,
                 .view_all_dealers {
                     margin: 0px 0px;
-                    color: #1976d2;
+                    color: $primary_two;
                     font-size: 14px;
                 }
 
@@ -179,7 +180,7 @@
 
                     .shop_name {
                         font-size: 14px;
-                        color: #1976d2;
+                        color: $primary_two;
                         display: flex;
                         justify-content: center;
                         margin: 10px 0px;
@@ -187,7 +188,7 @@
 
                     .phone {
                         font-size: 14px;
-                        color: #1976d2;
+                        color: $primary_two;
                         display: flex;
                         justify-content: center;
                         margin: 10px 0px 20px 0px;
@@ -198,9 +199,9 @@
                         margin: 10px auto 0px auto;
                         border-radius: 0px;
                         justify-content: center;
-                        border: 1px solid #1976d2;
+                        border: 1px solid $primary_two;
                         background: transparent;
-                        color: #1976d2;
+                        color: $primary_two;
                         font-size: 14px;
                         text-align: center;
                         width: 90%;

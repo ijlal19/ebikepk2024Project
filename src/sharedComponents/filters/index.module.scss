@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .filter_box {
     height: fit-content;
     box-shadow: 0px 0px 5px rgb(183, 181, 181);
@@ -11,7 +12,7 @@
 
     .heading_resultby {
       width: 200px;
-      background: #1976d2;
+      background: $primary_two;
       padding: 10px 0px !important;
       color: rgb(255, 255, 255);
       text-align: center;
@@ -55,7 +56,7 @@
         background-color: #f0f0f0;
     }
       .seeMore{
-        color: #1976d2;
+        color: $primary_two;
         padding: 5px 0px 5px 13px !important;
         font-size: 12px;
         cursor: pointer;
@@ -66,7 +67,7 @@
   .clear_btn {
     border-radius: 0px;
     height: 25px;
-    background-color: #1976d2;
+    background-color: $primary_two;
     display: block;
     width: 120px;
     font-size: 12px;

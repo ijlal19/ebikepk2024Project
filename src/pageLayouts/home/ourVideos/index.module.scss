@@ -1,3 +1,4 @@
+@import '../../../styles/variable';
 .main {
     margin: 10px auto 20px auto;
     width: 100%;
@@ -19,7 +20,7 @@
 
     .all_videos {
         font-size: 13px;
-        color: #1976d2;
+        color: $primary_two;
         cursor: pointer;
     }
 

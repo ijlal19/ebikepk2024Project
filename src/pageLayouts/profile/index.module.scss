@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .profile_main {
     width: 100%;
     display: flex;
@@ -41,7 +42,7 @@
                 font-weight: bolder;
                 text-align: center;
                 color: white;
-                background-color: #1976d2;
+                background-color: $primary_two;
                 cursor: pointer;
             }
         }

@@ -1,8 +1,4 @@
-$green: yellowgreen; 
-$gray: #f2f3f3;
-$blue: #1976d2;
-
-
+@import '../../styles/variable';
 .dealers_main{
     width: 100%;
     max-width: 1000px;
@@ -22,7 +18,7 @@ $blue: #1976d2;
             .title{
                 width: 100%;
                 text-align: left;
-                color: #1976d2;
+                color: $primary_two;
                 font-size: 20px;
                 @media (max-width:768px) {
                     font-size: 13px;
@@ -116,13 +112,13 @@ $blue: #1976d2;
             }
 
             .view_detail_btn {
-                color: #1976d2;
+                color: $primary_two;
                 margin-top: 10px;
                 padding: 3px 8px;
                 border-radius: 0px;
                 width: 100%;
                 font-size: 13px;
-                border: 1px solid #1976d2;
+                border: 1px solid $primary_two;
         }
         }
 
@@ -140,7 +136,7 @@ $blue: #1976d2;
                 width: 100%;
                 text-align: left;
                 padding: 10px 0px 0px 10px;
-                color: #1976d2;
+                color: $primary_two;
                 font-size: 16px;
                 @media (max-width:768px) {
                     padding: 10px 0px 0px 5px;

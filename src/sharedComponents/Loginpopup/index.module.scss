@@ -1,4 +1,4 @@
-
+@import '../../styles/variable';
 .login_icon {
     display: flex;
     align-items: center;
@@ -14,7 +14,7 @@
 }
 .login_buttons_group{
     color: white ;
-    background: #1976d2;
+    background: $primary_two;
     font-size: 13px;
     margin:30px auto 30px auto;
     text-align: center;
@@ -99,13 +99,13 @@
                 text-align: center;
                 padding: 5px 0px;
                 color: white;
-                background-color: #1976d2;
+                background-color: $primary_two;
                 cursor: pointer;
             }
 
             .reset_password {
                 float: right;
-                color: #1976d2;
+                color: $primary_two;
                 background: transparent;
                 border: none;
                 font-size: 12px;

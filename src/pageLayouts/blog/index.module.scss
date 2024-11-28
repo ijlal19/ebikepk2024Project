@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .blog_main {
    padding: 10px 20px 10px 20px !important;
    box-sizing: border-box;
@@ -30,7 +31,7 @@
    font-size: 24px;
    font-weight: 700;
    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-   color: #1976d2;
+   color: $primary_two;
    padding-left: 10px;
    @media (max-width:768px) {
       font-size: 20px;
@@ -122,7 +123,7 @@
    .blog_grid1:hover {
       .grid1_child2 {
          .blog_card_title {
-            color: #1976d2;
+            color: $primary_two;
             cursor: pointer;
          }
       }

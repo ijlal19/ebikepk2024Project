@@ -1,3 +1,4 @@
+@import '../../../../styles/variable';
 .filter_main {
     width: 100%;
     box-sizing: border-box;
@@ -15,7 +16,7 @@
             border-bottom: 1px solid #d2d2d2;
             font-weight: bolder;
             text-align: center;
-            color: #1976d2;
+            color: $primary_two;
             margin: 0px 0px 15px 0px!important;
             padding: 20px 0px 20px 0px;
         }
@@ -25,7 +26,7 @@
             overflow-x: hidden;
             width: 80%;
             margin: auto;
-            color: #1976d2;
+            color: $primary_two;
             box-sizing: border-box;
             scroll-behavior: smooth;
 
@@ -33,7 +34,7 @@
                 width: 6px;
             }
             &::-webkit-scrollbar-thumb {
-                background-color: #1976d2;
+                background-color: $primary_two;
                 border-radius: 10px;
             }
             &::-webkit-scrollbar-track {
@@ -57,7 +58,7 @@
             border: none;
             display: flex;
             margin:20px auto 10px auto;
-            background: #1976d2;
+            background: $primary_two;
             border-radius: 0px;
             font-size: 12px;
             padding: 8px 15px;

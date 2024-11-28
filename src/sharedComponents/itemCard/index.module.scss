@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .itemCard{
         background: rgb(249, 249, 249);
         width: 100%;
@@ -79,12 +80,12 @@
         }
 
         .view_detail_btn {
-                color: #1976d2;
+                color: $primary_two;
                 margin-top: 10px;
                 padding: 3px 8px;
                 border-radius: 0px;
                 font-size: 13px;
-                border: 1px solid #1976d2;
+                border: 1px solid $primary_two;
                 text-wrap: wrap;
                 text-transform: capitalize;
                 @media (max-width:768px) {

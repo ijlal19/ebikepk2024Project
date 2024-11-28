@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .privacy_main {
     width: 100%;
     background: white;
@@ -19,7 +20,7 @@
             box-shadow: 0 .5rem 1rem rgb(0, 0, 0 ,.15) !important;
         }
         .privacy_policy_heading {
-            color: #1976d2;
+            color: $primary_two;
             font-size: 18px;
             margin: 10px 0px 30px 0px;
             cursor: default;

@@ -1,3 +1,4 @@
+@import '../../../styles/variable';
 .main_blog{
    background-color: #f2f3f3;
    width: 100%;
@@ -86,7 +87,7 @@
         }
 
         .blog_card_title:hover{
-           color: #1976d2;
+           color: $primary_two;
         }
         .blog_card_description{
            padding: 4px 0px;

@@ -1,6 +1,4 @@
-$green: yellowgreen;
-$gray: #f2f3f3;
-$blue: #1976d2;
+@import '../../styles/variable';
 
 .top_add_area {
     width: 100%;
@@ -212,13 +210,13 @@ $blue: #1976d2;
         }
 
         .view_detail_btn {
-            color: #1976d2;
+            color: $primary_two;
             margin-top: 10px;
             border-radius: 1px;
             padding: 3px 8px;
             width: 100%;
             font-size: 13px;
-            border: 1px solid #1976d2;
+            border: 1px solid $primary_two;
         }
         
         @media (max-width:768px) {

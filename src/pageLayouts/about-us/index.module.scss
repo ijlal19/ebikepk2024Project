@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .about_main {
     width: 100%;
     max-width: 1000px;
@@ -24,7 +25,7 @@
                 font-size: 18px;
                 margin: 10px 0px 30px 0px;
                 text-align: center;
-                color: #1976d2;
+                color: $primary_two;
                 font-weight: bolder;
                 cursor: default;
                 @media (max-width:768px) {

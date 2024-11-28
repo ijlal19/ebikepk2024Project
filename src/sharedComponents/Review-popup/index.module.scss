@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .popup_main{
     color: black;
     text-align: center;
@@ -45,7 +46,7 @@
         margin: 10px 0px;
         padding:2px 5px;
         border-radius: 0px;
-        background-color: #1976d2;
+        background-color: $primary_two;
         color: white;
     }
 }

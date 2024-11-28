@@ -1,3 +1,4 @@
+@import '../../../styles/variable';
 .featuremain{
     width: 100%;
     max-width: 950px;
@@ -11,7 +12,7 @@
     .heading{
         font-size: 25px;
         text-align: center;
-        color: #1976d2;
+        color: $primary_two;
         @media (max-width:768px) {
             font-size: 20px;
         }

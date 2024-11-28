@@ -1,3 +1,4 @@
+@import  '../../styles/variable';
 .blog_details_main{
     width: 100%;
     padding: 20px 5px 20px 5px !important;
@@ -58,7 +59,7 @@
             .comment_box_Title{
                 font-size: 24px;
                 font-weight: bolder;
-                color: #1976d2;
+                color: $primary_two;
                 padding: 0px 0px 0px 10px;
                 margin: 0px 0px 15px;
             }
@@ -90,7 +91,7 @@
                 padding: 8px 12px;
                 font-size: 12px;
                 border-radius: 0px;
-                background: #1976d2;
+                background: $primary_two;
                 color: white;
                 font-weight: bold;
 
