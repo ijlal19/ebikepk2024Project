@@ -7,15 +7,16 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import { useMediaQuery } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import { getSimilarMechanics, getSingleMechanicsDetails } from '@/functions/globalFuntions';
+import Loader from '@/sharedComponents/loader/loader';
 
 const MechanicsDetails = () => {
   
   const [MechanicsDetails, setMechanicsDetails]:any = useState([])
   const [similarMechanics, setSimilarMechanics]:any = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   
   const params = useParams()
   const router = useRouter()
-  console.log(params.mechanicid)
   
   useEffect(() => {
     fetchInfo() 
@@ -23,13 +24,14 @@ const MechanicsDetails = () => {
   
   async function fetchInfo() {
     if(params.mechanicid) {
+      setIsLoading(true)
       let res = await getSingleMechanicsDetails(params.mechanicid)
       setMechanicsDetails(res)
-      console.log(res)
       if(res.brand_id) {
         let res1 = await getSimilarMechanics(res.brand_id)
         setSimilarMechanics(res1.dealers)
-        console.log(res1)
+        setIsLoading(false)
+        window.scrollTo(0, 0)
       }
     }
   }
@@ -38,11 +40,15 @@ const MechanicsDetails = () => {
     shop_name = shop_name.replace(/\s+/g, '-');
     var lowerTitle = shop_name.toLowerCase();
     router.push(`/dealers/${lowerTitle}/${bike.id}`)
-    // window.location.reload()/.
 }
 
 const isMobile = useMediaQuery('(max-width:562px)')
   return (
+    <>
+     {
+      !isLoading ?
+      <>
+        {
     MechanicsDetails ? 
     <div className={styles.dealer_detail_main}>
       <div className={styles.container}>
@@ -107,7 +113,16 @@ const isMobile = useMediaQuery('(max-width:562px)')
           </div>
         </div>
       </div>
-    </div>: <></>
+    </div>:<></>
+    }
+    </>
+    :
+    <div className={styles.load_div}>
+          <Loader isLoading={isLoading} />
+        </div>
+    }
+    </>
+
   );
 };
 

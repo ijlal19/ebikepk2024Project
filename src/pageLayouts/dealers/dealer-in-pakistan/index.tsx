@@ -9,7 +9,7 @@ import { AllDealerData } from '../Data';
 import { DealerinPakCard } from '../Card';
 import { Pagination, useMediaQuery } from '@mui/material';
 
-export const DealerInPakistan = ({dealers}:any) => {
+export const DealerInPakistan = ({ dealers}: any) => {
     const [open, setOpen] = React.useState(false);
     const isMobile = useMediaQuery(`(max-width:768px)`)
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -20,8 +20,8 @@ export const DealerInPakistan = ({dealers}:any) => {
         setCurrentPage(page);
     };
     const DealerPerPage = 10;
-    const totalPages = Math.ceil(dealers.length / DealerPerPage);
-    const currentData = dealers.slice((currentPage - 1) * DealerPerPage, currentPage * DealerPerPage);
+    const totalPages = Math.ceil(dealers?.length / DealerPerPage);
+    const currentData = dealers?.slice((currentPage - 1) * DealerPerPage, currentPage * DealerPerPage);
     const DrawerList = (
         <Box className={styles.filter_drawer_main} role="presentation" >
             <DealerinPakFilter />
@@ -33,33 +33,33 @@ export const DealerInPakistan = ({dealers}:any) => {
                 <div className={styles.heading_box}>
                     <p className={styles.showrooms_heading}>Bike Showrooms / Dealers in Pkaistan</p>
                     <div className={styles.search_box}>
-                        <Button onClick={()=>{}} className={styles.drawer_button}><MenuIcon/></Button> 
+                        <Button onClick={() => { }} className={styles.drawer_button}><MenuIcon /></Button>
                         {/* toggleDrawer(true) */}
                         <Drawer open={open} onClose={toggleDrawer(false)}>
                             {DrawerList}
                         </Drawer>
-                        <input type="text" placeholder='Search' className={styles.search_input}/>
+                        <input type="text" placeholder='Search' className={styles.search_input} />
                     </div>
                 </div>
-                    <div className={styles.dealer_card_section}>
-                        {
-                            currentData.map((e:any,i:any)=>{
-                                return(
-                                    <DealerinPakCard props={e} key={i}/>
-                                )
-                            })
-                        }
-                    </div>
-                    <Box className={styles.pagination}>
-               <Pagination
-                 count={totalPages}
-                 page={currentPage}
-                 onChange={handlePageChange}
-                 variant="outlined"
-                 shape="rounded"
-                 color='primary'
-               />
-             </Box>
+                <div className={styles.dealer_card_section}>
+                    {
+                        currentData?.map((e: any, i: any) => {
+                            return (
+                                <DealerinPakCard props={e} key={i} />
+                            )
+                        })
+                    }
+                </div>
+                <Box className={styles.pagination}>
+                    <Pagination
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        variant="outlined"
+                        shape="rounded"
+                        color='primary'
+                    />
+                </Box>
             </div>
         </div>
     )

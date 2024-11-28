@@ -9,6 +9,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { getdealerData, getnewBikeData } from '@/functions/globalFuntions';
 import { useParams } from 'next/navigation';
+import Loader from '@/sharedComponents/loader/loader';
 
 export default function AllNewBikes() {
 
@@ -16,9 +17,11 @@ export default function AllNewBikes() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
   const [allDealerArr, setAllDelaerArr] = useState([])
-  const [brandname,setbrandName]=useState('')
-  const [desc,setDesc]=useState('')
-  const [logo,setLogo]=useState('')
+  const [brandname, setbrandName] = useState('')
+  const [desc, setDesc] = useState('')
+  const [logo, setLogo] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
 
   const params = useParams()
   const brandId = params.slug
@@ -27,16 +30,22 @@ export default function AllNewBikes() {
   }, [])
 
   async function fetchBrandInfo() {
-
+    setIsLoading(true)
     let DealerDataRes = await getdealerData(brandId)
     setAllDelaerArr(DealerDataRes.dealers)
     const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
     setDesc(DealerDataRes.dealers[0].bike_brand.description)
     setLogo(DealerDataRes.dealers[0].bike_brand.logoUrl)
-    
-    setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
-    let res = await getnewBikeData({brand:brandName})
-    setAllnewBikeArr(res)
+    if (!DealerDataRes) {
+      setIsLoading(true)
+    }
+    else {
+      setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
+      let res = await getnewBikeData({ brand: brandName })
+      setAllnewBikeArr(res)
+      setIsLoading(false)
+      window.scrollTo(0, 0)
+    }
   }
 
 
@@ -46,58 +55,64 @@ export default function AllNewBikes() {
 
   return (
     <>
-    <Box className={styles.all_new_bike_main}>
-      <Box className={styles.description_box}>
-        <Box className={styles.card_main}>
-          <img
-            src={logo}
-            alt={brandname}
-            className={styles.card_image}
-          />
-        </Box>
-        <Typography className={styles.descriptionPara}>
-          {Showmore ? desc.slice(0, 100) : desc}
-        </Typography>
-        <Box>
-          <Box className={styles.buttons_box}>
-            <Button className={styles.show_more_button} onClick={showmore} disableRipple>
-              {Showmore ? <>Show More<KeyboardArrowDownIcon sx={{ fontSize: '15px' }} /></> : <>Show Less<KeyboardArrowUpIcon sx={{ fontSize: '15px' }} /></>}
-            </Button>
+      {
+        !isLoading ?
+          <Box className={styles.all_new_bike_main}>
+            <Box className={styles.description_box}>
+              <Box className={styles.card_main}>
+                <img
+                  src={logo}
+                  alt={brandname}
+                  className={styles.card_image}
+                />
+              </Box>
+              <Typography className={styles.descriptionPara}>
+                {Showmore ? desc.slice(0, 100) : desc}
+              </Typography>
+              <Box>
+                <Box className={styles.buttons_box}>
+                  <Button className={styles.show_more_button} onClick={showmore} disableRipple>
+                    {Showmore ? <>Show More<KeyboardArrowDownIcon sx={{ fontSize: '15px' }} /></> : <>Show Less<KeyboardArrowUpIcon sx={{ fontSize: '15px' }} /></>}
+                  </Button>
+                </Box>
+              </Box>
+            </Box>
+            <Grid container className={styles.grid_sectiion_box}>
+              <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
+                <Typography className={styles.heading}>New Bikes</Typography>
+                {
+                  allnewBikeArr.map((e, i) => {
+                    return (
+                      <ImgCard data={e} currentpage='new_bike' from='n' key={i} />
+                    )
+                  })
+                }
+              </Grid>
+              <Grid item xs={isMobile ? 12 : 3} className={styles.Dealers_grid_box}>
+                <Typography className={styles.heading}>Related Dealers</Typography>
+                <Box className={styles.Dealers_card}>
+                  {
+                    allDealerArr.map((e: any, i: any) => {
+                      return (
+                        <Box className={styles.card_main} key={i}>
+                          <img src={e.bike_brand.logoUrl} alt='' className={styles.card_image} />
+                          <Box className={styles.card_text}>
+                            <Typography className={styles.card_title}>{e.shop_name}</Typography>
+                            <Typography className={styles.card_location}>{e.city.city_name}</Typography>
+                          </Box>
+                        </Box>
+                      )
+                    })
+                  }
+                  <Button className={styles.view_detail_btn} > View Bike Detail <KeyboardArrowRightIcon /></Button>
+                </Box>
+              </Grid>
+            </Grid>
           </Box>
-        </Box>
-      </Box>
-      <Grid container className={styles.grid_sectiion_box}>
-        <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
-          <Typography className={styles.heading}>New Bikes</Typography>
-          {
-            allnewBikeArr.map((e, i) => {
-              return(
-                <ImgCard data={e} currentpage='new_bike' from='n' key={i} />
-              )
-})
-          }
-        </Grid>
-        <Grid item xs={isMobile ? 12 : 3} className={styles.Dealers_grid_box}>
-          <Typography className={styles.heading}>Related Dealers</Typography>
-          <Box className={styles.Dealers_card}>
-            {
-              allDealerArr.map((e: any, i: any) => {
-                return (
-                  <Box className={styles.card_main} key={i}>
-                    <img src={e.bike_brand.logoUrl} alt='' className={styles.card_image} />
-                    <Box className={styles.card_text}>
-                      <Typography className={styles.card_title}>{e.shop_name}</Typography>
-                      <Typography className={styles.card_location}>{e.city.city_name}</Typography>
-                    </Box>
-                  </Box>
-                )
-              })
-            }
-          <Button className={styles.view_detail_btn} > View Bike Detail <KeyboardArrowRightIcon /></Button>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
+          : <div className={styles.load_div}>
+            <Loader isLoading={isLoading} />
+          </div>
+      }
     </>
 
   );

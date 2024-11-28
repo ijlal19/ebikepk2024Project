@@ -39,13 +39,14 @@ function WriteModal({ props, closeFunction }: any) {
     if (obj?.uid == null || obj?.uid == undefined || obj?.bikeId == null || obj?.bikeId == undefined) {
       alert('Please log in to write a review.')
     }
-    else if (obj?.comment === '' || obj?.rating > '5' || obj?.rating == '' || obj?.rating == null) {
+    else if (obj?.comment == '' || obj?.rating > '5' || obj?.rating == '' || obj?.rating == null) {
       alert('Please fill in all required fields');
       return
     }
     else {
       console.log('Submitted Data:', obj);
       // setData(obj)
+      // window.location.reload()
       fetchuserComment(obj)
     }
     closeFunction()
@@ -58,8 +59,11 @@ function WriteModal({ props, closeFunction }: any) {
       setComment('')
       setRating('')
       window.location.reload()
+      setComment('')
+      setRating('')
     }
     console.log(res)
+    window.location.reload()
   }
 
   return (
@@ -103,7 +107,6 @@ function MoreReviewModal({ props, closeFunctionmore }: any) {
     border: 'none',
   };
   const handleClose = () => {
-    console.log(props.data)
     closeFunctionmore()
 
   }
@@ -126,7 +129,7 @@ function MoreReviewModal({ props, closeFunctionmore }: any) {
           </Box>
           <Box className={styles.comment_box_main}>
           {
-            props.data.map((e: any, i: any) => {
+            props.data.reverse().map((e: any, i: any) => {
               return (
                 <Typography key={i} className={styles.content_box}>
                   <Box className={styles.comment_box}>
