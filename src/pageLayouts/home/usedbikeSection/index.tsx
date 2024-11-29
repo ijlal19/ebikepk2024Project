@@ -32,12 +32,15 @@ function a11yProps(index: number) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-function UsedBikesSection({from}:any) {
+function UsedBikesSection({from, featuredData}:any) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+
+  console.log('featuredData', featuredData)
 
   return (
     <Box className={styles.usedbike_main}>
@@ -48,8 +51,9 @@ function UsedBikesSection({from}:any) {
         
         { from == 'featuredBike' ?
         <Box sx={{ width: '100%' }}>
-          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='u' currentpage="used_bike" />
+          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={from == 'featuredBike' ? (featuredData?.length > 0 ?  featuredData : Data) : Data}  from='u' currentpage="used_bike" />
         </Box> :
+        
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"

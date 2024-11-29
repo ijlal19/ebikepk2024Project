@@ -14,12 +14,13 @@ const AllUsedBike = () => {
     const [allBikesArr, setAllBikesArr] = useState([])
     const [pageNo, setPageNo] = useState(-1)
     const [isLoading, setIsLoading] = useState(false)
+    const [featuredData, setFeaturedData] = useState([])
 
     const router = useRouter()
 
     useEffect(() => {
-        fetchFeaturedBike()
         fetchBikeInfo(pageNo)
+        fetchFeaturedBike()
     }, [])
 
     async function fetchBikeInfo(_pageNo) {
@@ -33,6 +34,12 @@ const AllUsedBike = () => {
     }
     async function fetchFeaturedBike() {
         let res = await  getAllFeaturedBike();
+        if(res?.length > 0) {
+            setFeaturedData(res)
+        }
+        else {
+            setFeaturedData([])
+        }
         console.log('res', res)
     }
 
@@ -52,7 +59,7 @@ const AllUsedBike = () => {
                             <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
                         </Box>
 
-                        <UsedBikesSection from='featuredBike' />
+                        <UsedBikesSection from='featuredBike' featuredData={featuredData} />
 
                         <Box className={styles.all_bike_main}>
                             <Filters
