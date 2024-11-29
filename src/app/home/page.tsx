@@ -1,4 +1,4 @@
-import Index from '@/pageLayouts/home'
+import Index from '@/ebikeWeb/pageLayouts/home'
 
 const page = () => {
   return (

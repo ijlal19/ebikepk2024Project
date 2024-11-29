@@ -1,5 +1,5 @@
 import * as React from 'react';
-import BlogComp from "@/pageLayouts/blog/index"
+import BlogComp from "@/ebikeWeb/pageLayouts/blog/index"
 import { Metadata } from 'next'
 
 

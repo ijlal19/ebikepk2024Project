@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AboutUsComp from "@/pageLayouts/about-us/index"
+import AboutUsComp from "@/ebikeWeb/pageLayouts/about-us/index"
 export default function AboutUs() {
     return (
         <AboutUsComp/> 
