@@ -7,6 +7,8 @@ import SwiperCarousels from '@/sharedComponents/swiperSlider/index';
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Link from 'next/link'
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -42,6 +44,9 @@ function NewBikesSection() {
       <Container>
         <Typography className={styles.heading}>
           Bike Collection
+          <Link className={styles.view_new_bik_btn}  href={'/new-bikes'}> 
+            <span> View New Bikes </span>
+          </Link> 
         </Typography>
         
         <Box sx={{ width: '100%' }}>
@@ -61,6 +66,7 @@ function NewBikesSection() {
         </Box>
 
       </Container>
+
     </Box>
   )
 }

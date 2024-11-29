@@ -18,7 +18,8 @@
     }
 
     .all_videos {
-        font-size: 13px;
+        font-size: 11px;
+        text-decoration: none;
         color: #1976d2;
         cursor: pointer;
     }
@@ -28,8 +29,11 @@
         font-size: 20px;
 
         .all_videos {
-            font-size: 12px;
+            font-size: 11px;
+            text-decoration: none;
+            color: #1976d2;
             cursor: pointer;
+            font-weight: normal;
         }
     }
 }

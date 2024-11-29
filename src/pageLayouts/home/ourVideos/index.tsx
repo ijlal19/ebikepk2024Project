@@ -12,12 +12,13 @@ const OurVideos = ({SetWidth,SetMaxWidth}:any) => {
 
             <Box className={styles.heading_box}  style={{display:SetMaxWidth === 'inblogs' ? 'none': 'flex'}}>
                 <Box>Our Browse Videos</Box>
-                 <Link href="https://www.youtube.com/@ebikepk" target='_blank'>
+                 <Link href="https://www.youtube.com/@ebikepk" target='_blank' style={{ textDecoration:"none" }}>
                     <Box className={styles.all_videos}>View all Videos</Box>
                  </Link>
             </Box>
 
         <Grid container spacing={1} className={styles.container} style={{maxWidth: SetMaxWidth === 'inblogs'?'1150px':'1000px' }}>
+            
             <Grid item xs={isMobile ? 8 : 7} style={isMobile ? {} : { paddingTop:"10px" }}  >
                 <Link href={Data[0].video_url} className={styles.link} target='blank'>
                     <Box
@@ -61,7 +62,7 @@ const OurVideos = ({SetWidth,SetMaxWidth}:any) => {
                         </Grid>
                     )):
                     Data.slice(1, 5).map((e: any, i: any) => (
-                        <Grid item xs={isMobile ? 12 :6} style={{marginBottom:SetMaxWidth ==='inblogs'? 0:2}} key={i} className={styles.cards_grid}>
+                        <Grid item xs={isMobile ? 12 :6} style={{marginBottom:SetMaxWidth ==='inblogs'? 0:6}} key={i} className={styles.cards_grid}>
                             <Link href={e.video_url}className={styles.cards_grid}  target='blank'>
                                 <Box
                                     className={styles.card}

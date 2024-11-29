@@ -49,16 +49,16 @@ export default function ImgCard(props:any) {
                 alt={bike.title}
                 height="230"
                 image={imgUrl}
-                className={styles.card_img}
+                className={`${styles.card_img} ${props.from == "n" ? styles.card_img_dynamic_height: ""}`}
             />
 
             <CardContent className={styles.card_info}>
                 <Typography className={styles.card_title} >
-                    {bike.title}
+                    {bike.title }
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {priceWithCommas(bike.price)} {props.from == 'n' ? '' : '' }
+                    {priceWithCommas(bike.price)}
                 </Typography>
 
                 { props.from == "u" ? 

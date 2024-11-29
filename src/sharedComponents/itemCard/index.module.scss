@@ -31,12 +31,28 @@
                 }
         }
 
+        .card_img_dynamic_height {
+                height: 170px;
+                @media (max-width:950px) {
+                        height: 150px;  
+                } 
+                @media (max-width:767px) { 
+                        height: 120px;
+                }
+                @media (max-width:450px) { 
+                        height: 100px;
+                }
+        }
+
         .card_title{
                 color: black;
                 font-size: 15px;
                 text-wrap: nowrap;
                 padding: 0px !important;
                 font-weight: bolder;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
 
                 @media (max-width:767px) {
                         font-size: 12px;

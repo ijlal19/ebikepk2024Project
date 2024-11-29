@@ -16,6 +16,22 @@
         margin-bottom: -18px;
         @media (max-width:768px) {
             font-size: 19px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .view_new_bik_btn {
+            @media (min-width:768px) {
+                display: none;
+            }
+            text-decoration: none;
+            font-size: 11px;
+            margin: auto;
+            padding: 10px 0px;
+            font-weight: 500;
+            margin: 0px 5px;
+            border-radius: 0px;
+            color: rgb(25, 118, 210);
         }
     }
 
@@ -41,7 +57,7 @@
         }
         .viewallbikes_button{
             width: 91%;
-            border: 1px solid #dad4d4;
+            // border: 1px solid #dad4d4;
             border-top: none;
             padding: 10px 0px;
             font-weight: 500;
@@ -72,11 +88,12 @@
             .brand_image_box:nth-child(10){
                 display: none;
             }
+            
             .viewallbikes_button{
                 width: 100%;
                 font-size: 11px;
                 margin: auto;
-                border: 1px solid #dad4d4;
+                // border: 1px solid #dad4d4;
                 padding: 10px 0px;
                 font-weight: 500;
                 margin: 0px 5px;

@@ -7,6 +7,7 @@ import BrandCard from './Card/index'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -55,6 +56,9 @@ function BrandSection() {
       <Container >
         <Typography className={styles.heading}>
           Bike Brands
+          <Link className={styles.view_new_bik_btn}  href={'/new-bikes'}> 
+            <span> View Bike Brands </span>
+          </Link> 
         </Typography>
 
         <Box sx={{ width: '100%' }}>
@@ -77,7 +81,7 @@ function BrandSection() {
                 })
               }
 
-              <Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
+              {/* <Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple>View More Brands</Button> */}
             </Box>
           </CustomTabPanel>
           </Box>

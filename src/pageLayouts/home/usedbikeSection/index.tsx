@@ -6,6 +6,7 @@ import SwiperCarousels from '@/sharedComponents/swiperSlider/index';
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Link from 'next/link'
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -47,6 +48,10 @@ function UsedBikesSection({from, featuredData}:any) {
       <Container>
         <Typography className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `  } >
          {from == 'featuredBike' ? 'Featured Bike': 'Used Bikes'} 
+         {from != 'featuredBike' ?  
+           <Link className={styles.view_new_bik_btn}  href={'/used-bikes'}> 
+              <span> View Used Bikes </span>
+            </Link>  : "" }
         </Typography>
         
         { from == 'featuredBike' ?

@@ -35,6 +35,7 @@
         justify-content: center;
         flex-direction: row;
         margin: auto;
+        overflow: hidden;
         @media (max-width:767px) {
             flex-direction: column;
         }
