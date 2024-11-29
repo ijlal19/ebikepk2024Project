@@ -16,7 +16,7 @@
     }
     .headinh_sale{
       font-size: 24px;
-      color: yellowgreen;
+      color: $primary_one;
       margin: 0px 0px 5px;
       font-weight: bold;
     }
@@ -156,7 +156,7 @@
             align-items: center;
             font-size: 18px;
             font-weight: bolder;
-            color: yellowgreen;
+            color: $primary_one;
 
             @media (max-width:768px) {
               font-size: 16px;
