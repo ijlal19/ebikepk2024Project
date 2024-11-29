@@ -27,7 +27,7 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                 centeredSlides={sliderName == 'featurSection' ? true : false }
                 breakpoints={{
                     1: {
-                        slidesPerView: sliderName == 'featurSection' ? 1.5 : 2,
+                        slidesPerView: sliderName == 'featurSection' ? 1.3 : 2,
                         spaceBetween: sliderName == 'featurSection' ?  15 : 5,
                         freeMode: {
                             enabled: true,
