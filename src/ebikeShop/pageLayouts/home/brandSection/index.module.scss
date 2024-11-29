@@ -1,0 +1,88 @@
+.brand_main {
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    max-width: 1060px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    .heading {
+        padding: 0px !important;
+        font-size: 21px;
+        font-weight: 700;
+        color: black;
+        padding: 10px 0px;
+        margin-bottom: -18px;
+        @media (max-width:768px) {
+            font-size: 19px;
+        }
+    }
+
+    .tab {
+        padding: 0px !important;
+    }
+
+    .brand_container{
+        display: flex;
+        padding: 20px 0px !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        height: auto;
+        .brand_image_box{
+            padding-top: 20px !important;
+            height: auto;
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dad4d4;
+            width: 18% !important;
+        }
+        .viewallbikes_button{
+            width: 91%;
+            border: 1px solid #dad4d4;
+            border-top: none;
+            padding: 10px 0px;
+            font-weight: 500;
+            margin: 0px 5px;
+            font-size: 13px;
+            border-radius: 0px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        @media (max-width:768px) {
+            padding: 0px;
+            justify-content: space-between;
+            
+            .brand_image_box{
+                padding-top: 20px !important;
+                height: auto;
+                padding-bottom: 20px;
+                display: flex;
+                margin: 5px 5px;
+                align-items: center;
+                border: 1px solid rgb(230, 228, 228);
+                justify-content: center;
+                width: 28% !important;
+            }
+            .brand_image_box:nth-child(7),
+            .brand_image_box:nth-child(8),
+            .brand_image_box:nth-child(9),
+            .brand_image_box:nth-child(10){
+                display: none;
+            }
+            .viewallbikes_button{
+                width: 100%;
+                font-size: 11px;
+                margin: auto;
+                border: 1px solid #dad4d4;
+                padding: 10px 0px;
+                font-weight: 500;
+                margin: 0px 5px;
+                border-radius: 0px;
+            }
+        }
+        
+    }
+}

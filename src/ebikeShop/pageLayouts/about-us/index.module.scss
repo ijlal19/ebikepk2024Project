@@ -1,0 +1,50 @@
+.about_main {
+    width: 100%;
+    max-width: 1000px;
+    margin:40px  auto;
+    background: white;
+    height: auto;
+    display: flex;
+    padding: 0px 0px 0px 0px !important;
+    justify-content: center;
+    align-items: start;
+    box-shadow: 0 .5rem 1rem rgba(0 , 0 , 0 , .15) !important;
+    @media (max-width:768px) {
+        height: auto !important;
+        padding: 0px 0px 20px 0px !important;
+        box-shadow: none !important;
+        margin: 10px auto !important;
+    }
+        .aboutus {
+            @media (max-width:768px) {
+                margin: 0px 10px 0px 10px !important;
+                box-shadow: 0 .5rem 1rem rgb(0, 0, 0 ,.15) !important;
+            }
+            .abutus_heading {
+                font-size: 18px;
+                margin: 10px 0px 30px 0px;
+                text-align: center;
+                color: #1976d2;
+                font-weight: bolder;
+                cursor: default;
+                @media (max-width:768px) {
+                    font-size: 16px;
+                }
+            }
+
+            .about_text {
+                text-align: left;
+                .paragraph {
+                    font-size: 12px;
+                    color: rgb(38, 37, 37);
+                    margin: 0px !important;
+                    padding: 10px 50px 10px 50px !important;
+                    @media (max-width:768px) {
+                        padding: 10px 20px 10px 20px !important;
+                        font-size: 11px;
+                    }
+                }
+
+            }
+        }
+    }
