@@ -2,8 +2,12 @@
   width: 100%;
   padding: 0px;
   background: #f2f3f3;
+  min-height: 50vh;
   @media (max-width:991px) {
     padding: 0px 10px !important;
+  }
+  @media (max-width:600px) {
+    padding: 0px !important;
   }
   .usedBike_headingBpx{
     width: 100%;
@@ -13,11 +17,11 @@
     @media (max-width:768px) {
       padding:10px 0px 0px 20px !important;
     }
-    .headinh_sale{
+    .headinh_sale {
       font-size: 24px;
-      color: yellowgreen;
-      margin: 0px 0px 5px;
-      font-weight: bold;
+      color: #1976d2;
+      margin: 0px 0px -2px;
+      font-weight: normal;
     }
     .path_text{
       font-size: 12px;
@@ -72,79 +76,65 @@
     }
   }
 
-  .card_box {
+  .card_box_list {
+
     .long_card {
+
       display: flex;
       padding: 10px 0px !important;
       margin: 0px 0px 20px;
       background: white;
       border: 1px solid #e6e6e6;
-      height: 147px;
+      height: 150px;
       align-items: center;
+      flex-wrap: nowrap;
       cursor: pointer;
-      @media (max-width:768px) {
-        height: auto;
-      }
-      @media (max-width:991px) {
+
+      @media (max-width:600px) {
         height: auto !important;
         padding: 5px 0px !important;
       }
 
-      .bike_image {
-        height: 123px;
-        width: 185px;
-        padding: 0px 10px;
-        @media (max-width:991px) {
-          height: auto !important;
-        }
-        img {
-          height: 100%;
-          width: 100%;
-        }
+      // grid 1
+      .bike_image_box {
+          height: 123px;
+          width: 185px;
+          padding: 0px 10px;
+          
+          img {
+            height: 100%;
+            width: 100%;
+            min-width: 180px;
+            max-width: 200px;
+          }
       }
 
+      // grid 2
       .card_info {
+
+        height: 148px;
         padding: 0px 10px;
-
-        @media (min-width:768px) {
-            height: 130px;
-            flex: auto;
-        }
-
-        .titleandPrice {
-          display: flex;
-          flex-direction: row;
-          padding: 0px;
-          box-sizing: border-box;
-          width: 100%;
-          max-width: 450px;
-          justify-content: space-between;
-          flex-direction: row;
-
-          @media (max-width:767px) {
-            flex-direction: column;
-          }
+        margin-top: 20px;
+        margin-left: 10px;
           
           .card_title {
-            max-width: 250px;
-            font-size: 14px;
-            padding: 0px;
-            display: flex;
-            align-items: center;
-            color: #1976d2;
-            width: 70%;
-            @media (max-width:768px) {
-              font-size: 16px;
+              max-width: 250px;
+              font-size: 14px;
+              padding: 0px;
+              display: flex;
+              align-items: center;
+              color: #1976d2;
               width: 100%;
-              max-width: 100%;
-              padding: 5px 0px 4px 0px;
-            }
-            @media (max-width:991px) {
-              font-size: 18px;
-              width: 100%;
-              max-width: 400px !important;
-              padding: 5px 0px 3px 0px;
-            }
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+             
+              @media (max-width:768px) {
+                font-size: 16px;
+                width: 100%;
+                max-width: 100%;
+                padding: 5px 0px 4px 0px;
+              }
           }
           
           .card_price_mobile {
@@ -156,19 +146,12 @@
             font-size: 18px;
             font-weight: bolder;
             color: yellowgreen;
-
-            @media (max-width:768px) {
-              font-size: 16px;
-              width: 100%;
-              max-width: 100%;
-            }
           
-          @media (min-width:768px) {
-            display: none;
+            @media (min-width:600px) {
+              display: none;
+            }
           }
-         
-        }
-      }
+        
 
         .card_location {
           padding: 7px 0px 0px;
@@ -182,15 +165,23 @@
           padding: 5px 0px 0px;
         }
 
-        .phone_number {
-          font-size: 11px;
-          color: #434343;
-          margin: 8px 0px 0px;
-        }
       }
 
-      .price_section {
-        border:solid 1px black;
+      // grid 3
+      .price_section_desktop {
+        display: flex;
+        height: 148px;
+        align-items: flex-start;
+        margin-right: 10px;
+        margin-top: 20px;
+        white-space: nowrap;
+        @media (max-width:600px) {
+          display: none;
+        }
+        span {
+          color: #1976d2;
+          font-size: 16px;
+        }
       }
 
     }
@@ -233,16 +224,3 @@
 }
 }
 
-.price_section_desktop {
-  display: flex;
-  height: 147px;
-  align-items: flex-start;
-  margin-right: 10px;
-  @media (max-width:1000px) {
-    display: none;
-  }
-  span {
-    color: #1976d2;
-    font-size: 16px;
-  }
-}

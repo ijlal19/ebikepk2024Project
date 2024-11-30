@@ -47,7 +47,7 @@ function UsedBikesSection({from, featuredData}:any) {
     <Box className={styles.usedbike_main}>
       <Container>
         <Typography className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `  } >
-         {from == 'featuredBike' ? 'Featured Bike': 'Used Bikes'} 
+         {from == 'featuredBike' ? 'Featured Bikes': 'Used Bikes'} 
          {from != 'featuredBike' ?  
            <Link className={styles.view_new_bik_btn}  href={'/used-bikes'}> 
               <span> View Used Bikes </span>

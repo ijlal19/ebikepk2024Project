@@ -40,6 +40,13 @@
         text-align: center;
         margin-bottom: 10px;
         color: #1976d2;
+        font-weight: normal !important;
+
+        @media (max-width:767px) {
+            margin-top: 20px;
+            display: block;
+            margin-bottom: 0px;
+        }
     }
 
     .tab {

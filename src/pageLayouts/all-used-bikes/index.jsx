@@ -81,31 +81,27 @@ const AllUsedBike = () => {
 
 
                                 <>
-                                    <div className={styles.card_box}>
+                                    <div className={styles.card_box_list}>
                                         {allBikesArr?.length > 0 && allBikesArr.map((val, ind) => {
                                             return (
                                                 <Grid container className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>
 
-                                                    <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image}>
-                                                        {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} className={styles.card_image} /> : ""}
+                                                    <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
+                                                        {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
                                                     </Grid>
 
                                                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
-
-                                                        <Typography className={styles.titleandPrice}>
-                                                            <Typography className={styles.card_title}> {val?.title} </Typography>
-                                                            <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
-                                                        </Typography>
-
+                                               
+                                                        <Typography className={styles.card_title}> {val?.title} </Typography>
+                                                        
+                                                        <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
+                                             
                                                         <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
 
                                                         <Typography className={styles.bike_details}>
-                                                            {val?.year?.year}<span style={{ paddingLeft: 10, paddingRight: 7 }}>|</span>3122km<span style={{ paddingLeft: 10, paddingRight: 7 }}>|</span>4 Stroke
+                                                            {val?.year?.year} <span style={{ paddingLeft: 10, paddingRight: 7 }}> | </span>3122km<span style={{ paddingLeft: 10, paddingRight: 7 }}> | </span> 4 Stroke
                                                         </Typography>
 
-                                                        {/* <Typography className={styles.price_section}>
-                                           Cell: 0{val.mobileNumber}
-                                        </Typography> */}
                                                     </Grid>
 
                                                     <Grid item className={styles.price_section_desktop}>
