@@ -65,8 +65,11 @@
         }
 
         .viewallbikes_button {
+            @media (max-width:767px) {
+                display: none;
+            }
             width: 91%;
-            // border: 1px solid #dad4d4;
+            border: 1px solid #dad4d4;
             border-top: none;
             padding: 10px 0px;
             font-weight: 500;
@@ -106,10 +109,13 @@
             }
             
             .viewallbikes_button{
+                @media (max-width:767px) {
+                    display: none;
+                }
                 width: 100%;
                 font-size: 11px;
                 margin: auto;
-                // border: 1px solid #dad4d4;
+                border: 1px solid #dad4d4;
                 padding: 10px 0px;
                 font-weight: 500;
                 margin: 0px 5px;

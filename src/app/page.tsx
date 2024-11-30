@@ -1,12 +1,21 @@
 import Index from '@/pageLayouts/home'
+import * as React from 'react';
+import { Metadata } from 'next'
+
+export async function generateMetadata(): Promise<Metadata> {
+
+    return {
+      title: "Pakistan's Ist Exclusive Motorcycle Portal for BUY & SELL Bikes & Parts|ebike.pk",
+      description: "Get Complete Details about Bikes / Motorcycles, New Bikes, Bike Parts, Used Bikes, Forum, & Motorcycle News / Videos in Pakistan. Post Ad for FREE",
+      openGraph: {
+        title: "Pakistan's Ist Exclusive Motorcycle Portal for BUY & SELL Bikes & Parts|ebike.pk",
+        description: "Get Complete Details about Bikes / Motorcycles, New Bikes, Bike Parts, Used Bikes, Forum, & Motorcycle News / Videos in Pakistan. Post Ad for FREE",
+      },
+    }
+  }
+
 export default function Home() {
   return (
-    // <div style={{ textAlign:"center" }} >
-    //   <h1> ebike.pk </h1>
-    //   <h6> We have taken the side down for some brief maintenance. </h6>
-    //   <h6> Stay Connected! </h6>
-    //   <h6> Sorry for inconvenience   </h6>
-    // </div> 
     <Index/>
   );
 }

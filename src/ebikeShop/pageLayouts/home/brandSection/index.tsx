@@ -52,12 +52,15 @@ function BrandSection() {
 
   return (
     <Box className={styles.brand_main}>
-      <Container >
+      
+      <Container>
+        
         <Typography className={styles.heading}>
           Bike Brands
         </Typography>
 
         <Box sx={{ width: '100%' }}>
+          
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
                 indicatorColor="primary" aria-label="basic tabs example">
@@ -77,8 +80,9 @@ function BrandSection() {
                 })
               }
 
-              <Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
+              <Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple> View More Brands </Button>
             </Box>
+            
           </CustomTabPanel>
           </Box>
         </Container>

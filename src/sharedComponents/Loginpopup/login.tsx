@@ -73,7 +73,6 @@ export default function LoginPopup({props,values}: any) {
             <LoginIcon className={styles.icons} /> Login
           </span>
       }
-
       <Modal
         open={props.openmodal}
         onClose={()=>props.showmodal('showloginpopup')}
@@ -136,6 +135,9 @@ export default function LoginPopup({props,values}: any) {
           </Container>
         </Box>
       </Modal>
+
+      <span onClick={()=>props.showmodal('showloginpopup')} id="general_login_btn" style={{ visibility:"hidden" }}> login </span>
+
     </div>
   );
 }

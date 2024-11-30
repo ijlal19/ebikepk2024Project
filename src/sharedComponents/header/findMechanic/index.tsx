@@ -20,7 +20,10 @@ export default function MechanicsList({props}:any) {
     console.log('data',data)
     if(data?.url?.indexOf('register') > -1) {
       if(props.customer == "not_login") {
-        alert('Please Login to continue')
+        // alert('Please Login to continue')
+        if(document.getElementById('general_login_btn')) { 
+          document.getElementById('general_login_btn')?.click()
+        }
       }
       else {
         props.toggleDrawers(false)

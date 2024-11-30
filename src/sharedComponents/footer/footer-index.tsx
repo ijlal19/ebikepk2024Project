@@ -41,10 +41,21 @@ let cc_arr = [
     { title: "200cc", url: "/used-bikes/bike-by-cc/200/1" },
     { title: "250cc", url: "/used-bikes/bike-by-cc/250/1" },
     { title: "300cc", url: "/used-bikes/bike-by-cc/300/1" },
+]
+
+let cc_arr_2 = [
+    { title: "Used Bike by CC", url: "" },
     { title: "350cc", url: "/used-bikes/bike-by-cc/350/1" },
     { title: "400cc", url: "/used-bikes/bike-by-cc/400/1" },
-    { title: "450cc", url: "/used-bikes/bike-by-cc/450/1" }
+    { title: "450cc", url: "/used-bikes/bike-by-cc/450/1" },
+    { title: "500cc", url: "/used-bikes/bike-by-cc/500/1" },
+    { title: "550cc", url: "/used-bikes/bike-by-cc/550/1" },
+    { title: "600cc", url: "/used-bikes/bike-by-cc/600/1" },
+    { title: "650cc", url: "/used-bikes/bike-by-cc/650/1" },
+    { title: "700cc", url: "/used-bikes/bike-by-cc/700/1" },
+    { title: "750cc", url: "/used-bikes/bike-by-cc/750/1" },
 ]
+
 let catagory_arr = [
     { title: "Explore Ebike", url: "" },
     { title: "Used Bikes", url: "/used-bikes" },
@@ -130,6 +141,12 @@ export default function Footer() {
                             </Grid>
 
                             <Grid item xs={isMobileUl ? 6 : 4}>
+                                {FooterLinks(cc_arr_2)}
+                            </Grid>
+
+                            
+
+                            <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(catagory_arr)}
                             </Grid>
 
@@ -169,7 +186,7 @@ export default function Footer() {
                                 <LinkedIn sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
                                 </Link>
 
-                                <Link href='#' target="blank"  className={styles.Link}>
+                                <Link href='https://www.pinterest.com/ebikepk/' target="blank"  className={styles.Link}>
                                 <Pinterest sx={{ margin: '0px', cursor: 'pointer' ,fontSize:'25px'}} />
                                 </Link>
 
