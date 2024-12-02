@@ -2,7 +2,7 @@
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss';
 import Link from 'next/link';
-import {isLoginUser} from '@/functions/globalFuntions'
+import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
 import { useRouter } from 'next/navigation';
 
 const MobileBanner = () => {
@@ -16,7 +16,6 @@ const MobileBanner = () => {
           Router.push(url)
         }
         else {
-          // alert("Please Login to Continue")
           if(document.getElementById('general_login_btn')) { 
             document.getElementById('general_login_btn')?.click()
           }

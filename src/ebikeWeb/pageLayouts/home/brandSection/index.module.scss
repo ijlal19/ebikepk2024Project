@@ -16,6 +16,22 @@
         margin-bottom: -18px;
         @media (max-width:768px) {
             font-size: 19px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .view_new_bik_btn {
+            @media (min-width:768px) {
+                display: none;
+            }
+            text-decoration: none;
+            font-size: 11px;
+            margin: auto;
+            padding: 10px 0px;
+            font-weight: 500;
+            margin: 0px 5px;
+            border-radius: 0px;
+            color: rgb(25, 118, 210);
         }
     }
 
@@ -23,23 +39,35 @@
         padding: 0px !important;
     }
 
-    .brand_container{
+    .brand_container {
         display: flex;
         padding: 20px 0px !important;
         flex-wrap: wrap;
         justify-content: center;
         height: auto;
-        .brand_image_box{
-            padding-top: 20px !important;
+
+        .brand_image_box {
+
+            // border: 1px solid #dad4d4;
             height: auto;
-            padding-bottom: 20px;
+            // border: 1px solid #dad4d4;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #dad4d4;
+            // border: 1px solid #dad4d4;
             width: 18% !important;
+
+            @media (min-width:768px) {
+                border: 1px solid #dad4d4;
+                padding-bottom: 20px;
+                padding-top: 20px;
+            }
         }
-        .viewallbikes_button{
+
+        .viewallbikes_button {
+            @media (max-width:767px) {
+                display: none;
+            }
             width: 91%;
             border: 1px solid #dad4d4;
             border-top: none;
@@ -51,20 +79,27 @@
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
         }
+
         @media (max-width:768px) {
             padding: 0px;
             justify-content: space-between;
             
             .brand_image_box{
-                padding-top: 20px !important;
+                // padding-bottom: 20px;
                 height: auto;
-                padding-bottom: 20px;
+                // padding-bottom: 20px;
                 display: flex;
                 margin: 5px 5px;
                 align-items: center;
-                border: 1px solid rgb(230, 228, 228);
+                // border: 1px solid rgb(230, 228, 228);
                 justify-content: center;
                 width: 28% !important;
+
+                @media (min-width:768px) {
+                    border: 1px solid #dad4d4;
+                    padding-bottom: 20px;
+                    padding-top: 20px;
+                }
             }
             .brand_image_box:nth-child(7),
             .brand_image_box:nth-child(8),
@@ -72,7 +107,11 @@
             .brand_image_box:nth-child(10){
                 display: none;
             }
+            
             .viewallbikes_button{
+                @media (max-width:767px) {
+                    display: none;
+                }
                 width: 100%;
                 font-size: 11px;
                 margin: auto;

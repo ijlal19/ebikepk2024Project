@@ -14,6 +14,7 @@ const FeatureCard = (props :any) => {
       Router.push(url)
     }
     else {
+      // alert("Please Login to Continue")
       if(document.getElementById('general_login_btn')) { 
         document.getElementById('general_login_btn')?.click()
       }
