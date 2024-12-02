@@ -1,7 +1,7 @@
 import * as React from 'react';
-import BlogDetails from '@/pageLayouts/blog-details/index';
+import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index';
 import { Metadata } from 'next'
-import {getSingleBlogData } from '@/functions/globalFuntions';
+import {getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
 
 
 type Props = {

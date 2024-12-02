@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AllUsedBikeComp from "@/pageLayouts/all-used-bikes/index"
+import AllUsedBikeComp from "@/ebikeWeb/pageLayouts/all-used-bikes/index"
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {

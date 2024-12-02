@@ -1,0 +1,25 @@
+
+.bikes_brand_main {
+    width: 100%;
+    padding: 40px 0px 40px 0px !important;
+    color: black !important;
+
+    .bikes_brand_container{
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0px 10px 0px 10px !important;
+        justify-content: center;
+
+        .heading{
+            width: 100%;
+            font-size: 22px;
+            color: #434343;
+            margin: 0px 0px 20px;
+            font-weight: bolder;
+            text-align: center;
+        }
+    }
+}

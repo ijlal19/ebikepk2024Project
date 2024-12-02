@@ -1,0 +1,131 @@
+@import '../../styles/variable';
+.popup_main{
+    color: black;
+    text-align: center;
+    border-radius: 0px;
+    padding: 10px 10px !important;
+    background-color: whitesmoke;
+
+    .heading_box{
+        display: flex;
+        margin-top: 10px;
+        justify-content: center;
+        align-items: center;
+        padding: 0px !important;
+
+        .heading{
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            color: rgb(58, 57, 57);
+            width: 100%;
+            gap: 20px;
+            align-items: center;
+        }
+    }
+    .para{
+        font-size: 14px;
+        color: #424242;
+        display: flex;
+        box-sizing: border-box;
+
+        .text_area{
+            width: 90%;
+            padding: 10px 10px;
+            margin: auto;
+            height: 35px !important;
+            outline: none;
+            font-size: 14px;
+            color: #434343;
+            border: 1px solid #a7a0a0;
+        }
+    }
+    .submit_button{
+        width: 100%;
+        border: 1px solid transparent;
+        margin: 10px 0px;
+        padding:2px 5px;
+        border-radius: 0px;
+        background-color: $primary_two;
+        color: white;
+    }
+}
+
+.more_review_main{
+    color: black;
+    text-align: center;
+    border-radius: 0px;
+    height: auto;
+    padding: 0px 0px !important;
+    background-color: whitesmoke;
+    .more_heading{
+        border-bottom: 2px solid #cdcaca;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        color: #434343;
+        padding:10px 10px !important;
+
+        .heading{
+            font-size: 14px;
+            color: #424343;
+        }
+
+        .closebtn{
+            color: rgb(65, 62, 62);
+            font-size: 16px;
+            font-weight: bolder;
+            align-items: center;
+            display: flex;
+            cursor: pointer;
+        }
+    }
+
+    .comment_box_main{
+        height: 300px;
+        overflow-y: scroll;
+        padding: 0px 20px !important;
+
+        .content_box{
+            border-bottom: 1px solid #cdcaca;
+        padding: 10px 0px !important;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        
+
+        .comment_box{
+            width: 100%;
+            padding: 0px 5px !important;
+            margin: 0px auto;
+
+            .comment_header{
+                padding: 0px !important;
+                display: flex;
+
+                .avatar{
+                    width: 40px;
+                    height: 40px;
+                    margin: 0px 0px;
+                }
+
+                .detail{
+                    color: rgb(58, 57, 57);
+                    display: flex;
+                    align-items: center;
+                    font-size: 12px;
+                    padding-left: 10px ;
+                }
+
+            }
+            .comment_text{
+                margin-top: 8px;
+                font-size: 11px;
+                color: black;
+                text-align: left;
+            }
+        }
+    }
+}
+}

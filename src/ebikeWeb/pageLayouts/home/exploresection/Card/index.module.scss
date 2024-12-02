@@ -1,0 +1,45 @@
+@import '../../../../styles/variable';
+.explore_card_main{
+    width: 95%;
+    min-width: 200px;
+    padding: 0px 0px;
+    border: 1px solid rgba(161, 156, 156, 0.518);
+    @media (max-width:768px) {
+        border-bottom: 1px solid rgba(161, 156, 156, 0.518) !important;
+        border: none;
+    }
+
+    .explore_card_container {
+        cursor: pointer;
+        width: 100%;
+        padding: 0px 5px;
+
+        .explore_card_grid1 {
+            padding: 10px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .explore_card_image {
+                width: 100%;
+                max-width: 90px;
+            }
+        }
+
+        .explore_card_grid2 {
+            width: 100%;
+            padding: 15px 5px ;
+
+            .explore_card_title {
+                font-size: 13px;
+                font-weight: bolder;
+                margin-top: 10px;
+                color: $primary_two;
+            }
+
+            .explore_card_description {
+                font-size: 12px;
+            }
+        }
+    }
+}

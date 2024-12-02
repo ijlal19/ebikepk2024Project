@@ -1,0 +1,183 @@
+@import '../../../styles/variable';
+// Feature Car Styling
+.feature_card_main {
+    width: 100%;
+    max-width: 210px;
+    height: auto;
+    padding: 15px 0px;
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+
+    @media (max-width:768px) {
+        max-width: 175px;
+    }
+
+    .shop_name {
+        font-size: 14px;
+        text-align: center;
+        color: $primary_two;
+        margin: 0px 0px !important;
+        padding: 10px 0px 10px 0px;
+    }
+
+    .logo {
+        margin: auto;
+        display: flex;
+    }
+
+    .city {
+        font-size: 14px;
+        text-align: center;
+        color: $primary_two;
+        margin: 0px 0px !important;
+        padding: 15px 0px 5px 0px;
+    }
+
+    .address {
+        font-size: 12px;
+        text-align: center;
+        color: grey;
+        margin: 0px 0px !important;
+        padding: 8px 0px;
+    }
+
+    .date {
+        font-size: 12px;
+        text-align: center;
+        color: grey;
+        margin: 0px 0px !important;
+        padding: 4px 0px;
+
+        @media (max-width:768px) {
+            margin-bottom: 10px !important;
+        }
+    }
+
+    .more_details_button {
+        font-size: 14px;
+        display: flex;
+        margin: 13px auto 8px auto;
+        padding: 6px 15px;
+        border-radius: 0px;
+        border: none;
+        background: $primary_two;
+        color: white;
+        cursor: pointer;
+
+        @media (max-width:768px) {
+            display: none;
+        }
+    }
+}
+
+// 
+
+.mechanic_card_main {
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    border: 1px solid #d2d2d2;
+    margin: 20px 0px 20px 0px;
+    display: flex;
+
+    @media (max-width:768px) {
+        border: 1px solid #d2d2d2;
+        width: 100%;
+        margin: 3px 0px 0px 0px;
+        max-width: 175px;
+        flex-direction: column;
+    }
+
+    .image_box {
+        width: 100%;
+        max-width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @media (max-width:768px) {
+            margin: 5px 0px;
+        }
+    }
+
+    .detail_box {
+        width: 100%;
+        padding: 0px 0px 0px 0px;
+        box-sizing: border-box;
+    }
+
+    .shop_name {
+        font-size: 14px;
+        color: $primary_two;
+        font-weight: bolder;
+        margin: 0px;
+        padding: 0px 0px 5px 0px;
+
+        @media (max-width:768px) {
+            text-align: center !important;
+            display: flex;
+            margin: 5px 0px;
+            justify-content: center;
+        }
+    }
+
+    .city {
+        font-size: 14px;
+        color: $primary_two;
+        padding: 5px 0px 5px 0px;
+        margin: 0px;
+
+        @media (max-width:768px) {
+            text-align: center !important;
+            display: flex;
+            padding: 10px 0px 5px 0px;
+            justify-content: center;
+        }
+    }
+
+    .address {
+        font-size: 12px;
+        margin: 0px;
+        display: flex;
+        padding: 5px 0px 0px 0px;
+        color: grey;
+
+        .dealer_address {
+            @media (max-width:768px) {
+                padding: 8px 0px;
+                margin: 0px;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        .dealer_createAt {
+            @media (max-width:768px) {
+                display: flex;
+                justify-content: center;
+                margin: 0px 0px 10px;
+                padding: 4px 0px;
+            }
+        }
+
+        @media (max-width:768px) {
+            flex-direction: column;
+        }
+    }
+
+    .more_button {
+        font-size: 14px;
+        display: flex;
+        margin: 15px 15px 5px auto;
+        padding: 6px 15px;
+        border-radius: 0px;
+        border: none;
+        background: $primary_two;
+        color: white;
+        cursor: pointer;
+
+        @media (max-width:768px) {
+            display: none;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AllUsedBikeFilter from "@/pageLayouts/all-used-bikes-by-filter/index"
+import AllUsedBikeFilter from "@/ebikeWeb/pageLayouts/all-used-bikes-by-filter/index"
 import { Metadata } from 'next'
 
 type Props = {
