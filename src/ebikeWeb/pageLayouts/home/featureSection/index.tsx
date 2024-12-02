@@ -55,7 +55,7 @@ const Section2 = () => {
             isMobile ? 
             <SwiperCarousels 
               from='' 
-              sliderName='featurSection' 
+              sliderName='featurSectionHomeSlider' 
               sliderData={feautureArray} 
               currentpage="" 
             /> 

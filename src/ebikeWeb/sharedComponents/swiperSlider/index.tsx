@@ -21,14 +21,14 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                 modules={[Navigation, FreeMode]}
                 navigation={true}
                 className={styles.swiper}
-                initialSlide={sliderName == 'featurSection' ? 1 : 0}
-                loop={sliderName == 'featurSection' ? false : true}
+                initialSlide={sliderName == 'featurSectionHomeSlider' ? 1 : 0}
+                loop={sliderName == 'featurSectionHomeSlider' ? false : true}
                 slidesPerView={1}
-                centeredSlides={sliderName == 'featurSection' ? true : false }
+                centeredSlides={sliderName == 'featurSectionHomeSlider' ? true : false }
                 breakpoints={{
                     1: {
-                        slidesPerView: sliderName == 'featurSection' ? 1.3 : 2,
-                        spaceBetween: sliderName == 'featurSection' ?  15 : 5,
+                        slidesPerView: sliderName == 'featurSectionHomeSlider' ? 1.3 : 2,
+                        spaceBetween: sliderName == 'featurSectionHomeSlider' ?  15 : 5,
                         freeMode: {
                             enabled: true,
                             sticky: false,
@@ -45,7 +45,7 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                     sliderData.map((data:any, i:any) => {
                         return(
                             <SwiperSlide key={i} className={styles.slider_card}>
-                                {sliderName == 'featurSection' ?
+                                {sliderName == 'featurSectionHomeSlider' ?
                                     <FeatureCard 
                                         data={data}
                                     /> 

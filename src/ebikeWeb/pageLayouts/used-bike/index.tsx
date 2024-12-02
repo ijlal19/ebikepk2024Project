@@ -164,7 +164,7 @@ export default function UsedBike() {
       
       <div className={styles.similarBikeDiv}>
         <h6 className={styles.similar_heading}> Similar Bikes </h6>
-        <SwiperCarousels  sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='u' currentpage="used_bike"/>
+        <SwiperCarousels  sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='usedBikeComp' currentpage="used_bike"/>
       </div>
     </div> :
     <div className={styles.load_div}>

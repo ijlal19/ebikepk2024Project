@@ -49,7 +49,7 @@ export default function ImgCard(props:any) {
                 alt={bike.title}
                 height="230"
                 image={imgUrl}
-                className={`${styles.card_img} ${props.from == "n" ? styles.card_img_dynamic_height: ""}`}
+                className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height: ""}`}
             />
 
             <CardContent className={styles.card_info}>
@@ -61,7 +61,7 @@ export default function ImgCard(props:any) {
                     {priceWithCommas(bike.price)}
                 </Typography>
 
-                { props.from == "u" ? 
+                { props.from == "usedBikeComp" ? 
                     <Typography className={styles.card_location}>
                         {bike.location}
                     </Typography>
