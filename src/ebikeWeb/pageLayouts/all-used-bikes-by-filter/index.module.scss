@@ -81,103 +81,234 @@
     }
   }
 
-  .card_box {
+  .grid_bike_list {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  
+    .grid_card {
+  
+      width: 28%;
+      height: auto;
+      padding: 0px !important;
+      background: white;
+      border: 1px solid #e6e6e6;
+      margin: 10px;
+      cursor: pointer;
+
+      @media (max-width:600px) {
+        width: 44%;
+      }
+  
+      .grid_image_box {
+        width: 100%;
+          img {
+            width: 100%;
+            height: 140px;
+          }
+      }
+  
+      .grid_card_info {
+  
+        height: auto;
+        padding: 0px;
+        max-width: 100%;   
+        margin-top: 0px;
+        margin-left: 0px;  
+        width: 100%;
+        padding-left: 10px;
+        padding-bottom: 10px;
+
+        .grid_card_title {
+          color: $black;
+          font-weight: bold;
+          font-size: 14px;
+          width: 100%;
+          max-width: 150px;
+          padding: 5px 0px 4px 0px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          overflow: hidden;
+          display: block;
+          @media (max-width:430px) {
+            width: 140px;
+          }
+        }
+  
+        .grid_card_location {
+          padding: 0px 0px 0px;
+          font-size: 13px;
+          color: #434343;
+        }
+  
+        .grid_card_price {
+          width: 100%;
+          white-space: nowrap;
+          font-size: 13px;
+          font-weight: bolder;
+          color:  $primary_two;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+  
+        .grid_bike_details {
+          font-size: 13px;
+          color: #434343;
+          padding: 0px 0px 0px;
+          width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          overflow: hidden;
+          display: block;
+          @media (max-width:430px) {
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+          }
+            
+            .grid_verticl_line {
+              padding-right: 2px;
+              padding-left: 2px;
+              @media (max-width:440px) {
+                padding-right: 0px;
+                padding-left: 0px;
+              }
+            }
+        }
+  
+      }
+  
+    }
+  
+  }
+
+  .bike_ad_list {
+
+    @media (max-width:600px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     .long_card {
+
       display: flex;
       padding: 10px 0px !important;
       margin: 0px 0px 20px;
       background: white;
       border: 1px solid #e6e6e6;
-      height: 147px;
+      height: 150px;
       align-items: center;
+      flex-wrap: nowrap;
       cursor: pointer;
-      @media (max-width:768px) {
-        height: auto;
-      }
-      @media (max-width:991px) {
+      flex-direction: row;
+
+      @media (max-width:600px) {
         height: auto !important;
-        padding: 5px 0px !important;
+        padding: 0px !important;
+        flex-direction: column;
+        max-width: 250px;
+        margin: 5px 8px !important;
+        border: 1px solid #e4e4e4;
+        background: rgb(249, 249, 249);
+        border-radius: 0;
+        width: 44%;
       }
 
-      .bike_image {
-        height: 123px;
-        width: 185px;
-        padding: 0px 10px;
-        @media (max-width:991px) {
-          height: auto !important;
-        }
-        img {
-          height: 100%;
-          width: 100%;
-        }
-      }
+      // grid 1
+      .bike_image_box {
+          height: 123px;
+          width: 185px;
+          padding: 0px 10px;
 
-      .card_info {
-        padding: 0px 10px;
-
-        @media (min-width:768px) {
-            height: 130px;
-            flex: auto;
-        }
-
-        .titleandPrice {
-          display: flex;
-          flex-direction: row;
-          padding: 0px;
-          box-sizing: border-box;
-          width: 100%;
-          max-width: 450px;
-          justify-content: space-between;
-          flex-direction: row;
-
-          @media (max-width:767px) {
-            flex-direction: column;
+          @media (max-width:600px) {
+            width: 100%; 
+            max-width: 100%;   
+            height: 120px;  
+            padding: 0px;
           }
           
+          img {
+            height: 100%;
+            width: 100%;
+            min-width: 180px;
+            max-width: 200px;
+
+            @media (max-width:600px) {
+              height: 120px;
+              width: 100%;     
+              min-width: unset;
+              max-width: unset;
+            }
+
+          }
+      }
+
+      // grid 2
+      .card_info {
+
+        height: 148px;
+        padding: 0px 10px;
+        margin-top: 20px;
+        margin-left: 10px;
+
+        @media (max-width:600px) {
+          height: auto;
+          padding: 0px;
+          max-width: 100%;   
+          margin-top: 0px;
+          margin-left: 0px;  
+          width: 100%;
+          padding-left: 10px;
+        }
+
+          
           .card_title {
-            max-width: 250px;
-            font-size: 14px;
-            padding: 0px;
-            display: flex;
-            align-items: center;
-            color: $primary_two;
-            width: 70%;
-            @media (max-width:768px) {
-              font-size: 16px;
+              max-width: 250px;
+              font-size: 14px;
+              padding: 0px;
+              display: flex;
+              align-items: center;
+              color: $black;
+              font-weight: bold;
               width: 100%;
-              max-width: 100%;
-              padding: 5px 0px 4px 0px;
-            }
-            @media (max-width:991px) {
-              font-size: 18px;
-              width: 100%;
-              max-width: 400px !important;
-              padding: 5px 0px 3px 0px;
-            }
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+             
+              @media (max-width:600px) {
+                font-size: 13px;
+                width: 100%;
+                max-width: 150px;
+                padding: 5px 0px 4px 0px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                overflow: hidden;
+                display: block;
+                width: 140px;
+              }
           }
           
           .card_price_mobile {
-            max-width: 150px;
-            padding: 0px;
-            width: 30%;
-            display: flex;
-            align-items: center;
-            font-size: 18px;
+            width: 100%;
+            white-space: nowrap;
+            font-size: 13px;
             font-weight: bolder;
-            color: $primary_one;
-
-            @media (max-width:768px) {
-              font-size: 16px;
-              width: 100%;
-              max-width: 100%;
+            color:  $primary_two;
+            margin-top: 10px;
+            margin-bottom: 10px;
+    
+            @media (min-width:600px) {
+              display: none;
             }
-          
-          @media (min-width:768px) {
-            display: none;
           }
-         
-        }
-      }
+        
 
         .card_location {
           padding: 7px 0px 0px;
@@ -189,20 +320,50 @@
           font-size: 13px;
           color: #434343;
           padding: 5px 0px 0px;
+          width: 100%;
+          @media (max-width:500px) {
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+          }
+
+          .verticl_line {
+            padding-right: 7px;
+            padding-left: 7px;
+            @media (max-width:440px) {
+              padding-right: 0px;
+              padding-left: 0px;
+            }
+          }
+
         }
 
-        .phone_number {
-          font-size: 11px;
-          color: #434343;
-          margin: 8px 0px 0px;
-        }
       }
 
-      .price_section {
-        border:solid 1px black;
+      // grid 3
+      .price_section_desktop {
+        display: flex;
+        height: 148px;
+        align-items: flex-start;
+        margin-right: 10px;
+        margin-top: 20px;
+        white-space: nowrap;
+
+        @media (max-width:600px) {
+          display: none;
+        }
+
+        span {
+          color: #1976d2;
+          font-size: 16px;
+        }
+
       }
 
     }
+
   }
 
   .viewMoreBtnContainer {

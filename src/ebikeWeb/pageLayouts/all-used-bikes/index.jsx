@@ -17,7 +17,7 @@ const AllUsedBike = () => {
     const [pageNo, setPageNo] = useState(-1)
     const [isLoading, setIsLoading] = useState(false)
     const [featuredData, setFeaturedData] = useState([])
-    const [isGridSelected, setIsGridSelected] = useState(true)
+    const [isGridSelected, setIsGridSelected] = useState(false)
 
     const router = useRouter()
 

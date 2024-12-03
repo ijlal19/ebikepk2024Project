@@ -238,7 +238,7 @@ function uplaodImageFunc(data: any) {
 function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
 
     if (from == 'city') {
-        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-city-offset/${id}/${getAdFrom}/10`, {
+        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-city-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
@@ -246,7 +246,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
         })
     }
     else if (from == "cc") {
-        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-cc-offset/${id}/${getAdFrom}/10`, {
+        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-cc-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
@@ -254,7 +254,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
         })
     }
     else if (from == "year") {
-        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-year-offset/${id}/${getAdFrom}/10`, {
+        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-year-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
