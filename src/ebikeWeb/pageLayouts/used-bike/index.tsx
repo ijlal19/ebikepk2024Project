@@ -42,6 +42,7 @@ export default function UsedBike() {
           }
           setSimilarBikeArr(res.bikes)
           setShowPhoneNo(false)
+          window.scrollTo(0, 0)
           console.log('res', res)
         }
       }
@@ -50,7 +51,6 @@ export default function UsedBike() {
         setSimilarBikeArr(Data.bikes)
       }
     }
-    window.scrollTo(0, 0)
 
      //setBikeDetail(Data.add)
     // setSimilarBikeArr(Data.bikes)

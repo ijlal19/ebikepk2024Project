@@ -132,6 +132,8 @@ const SellUsedBike = () => {
         setIsLoading(true)
         let res = await publishAd(obj)
         setIsLoading(false)
+        window.scrollTo(0, 0)
+
         if(res.success) {
             alert('Ad submitted Successfully! Please wait for approval')
             Router.push('/used-bikes')
