@@ -36,7 +36,7 @@ export default function NewUsedBikesCard(props:any) {
             Router.push(`/used-bikes/${urlTitle}/${bike?.id}`)
         }
         else {
-            console.log('not found')
+            alert('Route not found')
         }
     }
 

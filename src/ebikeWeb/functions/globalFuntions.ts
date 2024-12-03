@@ -399,7 +399,7 @@ function getPostBlogcomment(data: any) {
             })
     }
 
-    
+
     function getAllFeaturedBike() {
         return fetch(Gconfig.ebikeApi + `classified/get-featured-ads`, {
                 method: 'POST',
