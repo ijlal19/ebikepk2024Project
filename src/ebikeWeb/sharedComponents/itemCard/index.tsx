@@ -7,7 +7,7 @@ import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation'
 import { priceWithCommas } from '@/ebikeWeb/functions/globalFuntions'
 
-export default function ImgCard(props:any) {
+export default function NewUsedBikesCard(props:any) {
 
     const Router = useRouter()
     
@@ -43,7 +43,7 @@ export default function ImgCard(props:any) {
     let bike = props.data
 
     return (<>
-        <Card className={styles.itemCard} >
+        <Card className={styles.itemCard}>
             <CardMedia
                 component="img"
                 alt={bike.title}

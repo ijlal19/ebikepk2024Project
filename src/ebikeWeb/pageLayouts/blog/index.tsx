@@ -31,11 +31,21 @@ const Blog = () => {
   };
   
   const handleRoute = (blogInfo: any) => {
+    // debugger
     var title = blogInfo.blogTitle;
     title = title.replace(/\s+/g, '-');
     var lowerTitle = title.toLowerCase();
+    lowerTitle = '' + lowerTitle.replaceAll("?","")
     router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
   };
+
+  // goToBlogDetails(post) {
+  //   var title = post.blogTitle;
+  //   title = title.replace(/\s+/g, '-');
+  //   var lowerTitle = title.toLowerCase();
+  //   this.router.navigate(['/blog', post.blog_category.name.toLowerCase(), lowerTitle, post.id]);
+  // }
+
 
   return (
   <>

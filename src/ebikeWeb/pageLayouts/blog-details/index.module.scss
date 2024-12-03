@@ -32,6 +32,9 @@
                 font-size: 24px;
                 padding: 15px 0px 5px 0px !important;
                 margin: 0px 0px 13px;
+                @media (max-width:500px) {
+                    font-size: 18px;
+                }
             }
 
             .profile_box{
@@ -52,12 +55,15 @@
         .blog_content {
             font-size: 13px;
             margin: 0px 0px 17px;
+            @media (max-width:767px) {
+                margin:  15px;
+            }
         }
 
         .comment_box{
             margin: 0px 0px 10px;
             .comment_box_Title{
-                font-size: 24px;
+                font-size: 17px;
                 font-weight: bolder;
                 color: $primary_two;
                 padding: 0px 0px 0px 10px;
@@ -85,6 +91,12 @@
                     overflow-y: auto;
                     height: auto;
                     font-size: 16px;
+                    min-height: 140px;
+
+                    @media (max-width:767px) {
+                        min-height: 120px;
+                    }
+
                 }
             }
             .post_comment{

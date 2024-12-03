@@ -90,7 +90,7 @@ const SellUsedBike = () => {
             alert("Please select brand")
             return
         }
-        else if(!price || parseInt(price) < 1000) {
+        else if(!price) {
             alert("Please add correct price")
             return
         }

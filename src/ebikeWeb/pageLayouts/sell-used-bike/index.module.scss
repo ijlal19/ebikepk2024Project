@@ -72,11 +72,13 @@
                     max-width: 575px;
                     min-width: 100px;
                     box-sizing: border-box;
-                    height: 80px !important;
-                    max-height: 80px !important;
+                    height: 150px !important;
+                    // max-height: 80px !important;
                     border: 1px solid #d2d2d2;
                     outline: none;
                     padding: 5px 3px 5px 10px !important;
+                    // height: 200px;
+                    overflow: scroll !important;
                 }
 
                 .description_input::placeholder {
