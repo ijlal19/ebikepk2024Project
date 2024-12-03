@@ -1,0 +1,22 @@
+@import '../../styles/variable';
+
+.add_main{
+    width: 100%;
+    height: auto;
+    padding: 10px 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .slider_main{
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+
+        .heading{
+            font-size: 25px;
+            color: $primary-two;
+            padding-left: 10px;
+        }
+    }
+}
