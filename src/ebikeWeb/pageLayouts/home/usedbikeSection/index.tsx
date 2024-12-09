@@ -12,7 +12,7 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-function CustomTabPanel(props: TabPanelProps) {
+function CustomTabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
   return (
