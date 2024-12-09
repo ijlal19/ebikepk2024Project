@@ -31,7 +31,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function NewBikesSection() {
+function NewBikesSection(props:any) {
   const [value, setValue] =React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -57,12 +57,12 @@ function NewBikesSection() {
             </Tabs>
           </Box>
 
-          <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='newBikeComp' currentpage="featured_bike" />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={TrendingData} from='newBikeComp' currentpage='trending_bike'/>
-          </CustomTabPanel>
+          {props?.featuredData ? <CustomTabPanel value={value} index={0}>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.featuredData} from='newBikeComp' currentpage="featured_bike" />
+          </CustomTabPanel> : "" }
+          {props?.trendingData ? <CustomTabPanel value={value} index={1}>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike'/>
+          </CustomTabPanel> : "" }
         </Box>
 
       </Container>

@@ -8,25 +8,83 @@ import UsedBikesSection from './usedbikeSection/index'
 import BlogSection from './blogSection/index'
 import Ourvideos from './ourVideos/index'
 import MobileBanner from './mobileBanner/index'
-import { useEffect } from 'react'
-import style from './index.module.scss'
+import { useEffect, useState } from 'react'
+import styles from './index.module.scss'
+import {  isLoginUser } from '@/ebikeWeb/functions/globalFuntions'
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
+
+import blogData from './blogSection/Data'
+import youTubeData from './ourVideos/Data'
+import usedBikeData from './usedbikeSection/Data'
+import trendingData from './newbikesSection/TrendingData'
+import featuredData from './newbikesSection/Data'
+
 
 const Index = () => {
+
+  const [homeData, setHomeData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
   
   useEffect(()=>{
-    window.scrollTo(0,0)
+    getHomeData()
   },[])
 
+  async function getHomeData() {
+    const gistUrl = "https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/6c3f058f8f96c7da649a19757996501ba3a35401/gistfile1.json";
+
+    setIsLoading(true)
+    fetch(gistUrl).then((res) => {
+      setIsLoading(false)
+      if (!res.ok) {
+        let obj = {
+          "homeFeaturedBike": featuredData,
+          "homeTrendingBike": trendingData,
+          "homeUsedBike": usedBikeData,
+          "homeYoutubeVideos": youTubeData,
+          "homeBlogs": blogData
+        }
+        setHomeData(obj)
+        return
+      };
+      console.log('res qq 11', res)
+      return res.json();
+    })
+    .then((data) => {
+        window.scrollTo(0, 0)
+        setHomeData(data)
+        console.log('res qq', data)
+    })
+    .catch((err) => {
+      let obj = {
+        "homeFeaturedBike": featuredData,
+        "homeTrendingBike": trendingData,
+        "homeUsedBike": usedBikeData,
+        "homeYoutubeVideos": youTubeData,
+        "homeBlogs": blogData
+      }
+      setHomeData(obj)
+    });
+
+ 
+  
+   
+    
+  }
+
   return (
+    isLoading ?
+    <div className={styles.load_div}>
+      <Loader isLoading={isLoading} />
+    </div> :
     <>
      <BannerSection />
      <MobileBanner />
-     <NewBikesSection/>
+     <NewBikesSection featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />
      <FeatureSection />
-     <UsedBikesSection/>
+     <UsedBikesSection usedBikeData={homeData.homeUsedBike} />
      <BrandSection/>
      <Explore/>
-     <BlogSection/>
+     <BlogSection blogData={homeData.homeBlogs} />
      <Ourvideos/>
     </>
   )

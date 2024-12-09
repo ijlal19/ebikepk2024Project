@@ -331,10 +331,11 @@ function getFeaturedMechanics() {
         body:JSON.stringify({ payload: 8 })
     })
     .then(response => response.json()).then(data => {
+        console.log('data', data)
         return data
     })
     .catch((err) => {
-        console.log(err)
+        return { success: false }
     })
 }
 
@@ -413,6 +414,21 @@ function getPostBlogcomment(data: any) {
                 console.log(err) 
             })
     }
+
+    // function getHomePageData() {
+    //     return fetch(`https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/824c76b9c3f353270706d74596af18a44aeac07f/gistfile1.json`, {
+    //             method: 'GET',
+    //             headers: { "Content-Type": "application/json" },
+    //             // body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
+    //         })
+    //         .then(response => response.json()).then(data => {
+    //             return data
+    //             console.log('home data')
+    //         })
+    //         .catch((err) => {
+    //             return { success: false }
+    //         })
+    // }
 
 export {
     getPostcomment,getPostBlogcomment,getAllBlogComment,
