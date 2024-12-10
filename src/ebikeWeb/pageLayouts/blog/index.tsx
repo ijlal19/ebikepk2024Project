@@ -23,6 +23,7 @@ const Blog = () => {
     let res = await getAllBlog()
     setBlogData(res)
     setIsLoading(false)
+    window.scrollTo(0,0)
   }
 
   const blogsPerPage = 10;
