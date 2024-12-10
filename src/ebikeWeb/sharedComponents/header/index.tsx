@@ -22,7 +22,6 @@ const jsCookie = require('js-cookie');
 
 
 const Header = () => {
-    const router = useRouter()
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState(false);
     const [buysellmenu, setBuySellmenu] = useState(false);
@@ -31,9 +30,17 @@ const Header = () => {
     const [openmodal, setOpenmodal] = useState(false);
     const [customer, setCustomer]  = useState('not_login')
     
+    const router = useRouter()
+   
     useEffect(() => {
         authenticateUser()
-    },[])
+        const handleRouteChange = () => setOpen(false);
+        // Cleanup listener on unmount
+        return () => {
+            handleRouteChange()
+        };
+
+    },[router])
 
     function authenticateUser() {
         let _isLoginUser = isLoginUser()
@@ -52,7 +59,10 @@ const Header = () => {
     }
 
     function goToRoute(data:any) {   
-        router.push(data.url)
+        toggleDrawer(false)
+        setTimeout(()=> {
+            router.push(data.url)
+        }, 500)
     }
    
     const toggle = (e:any) => {
@@ -77,6 +87,7 @@ const Header = () => {
     };
     
     const toggleDrawer = (newOpen: boolean) => () => {
+        console.log('aaa', newOpen)
         setOpen(newOpen);
     };
     
@@ -186,7 +197,12 @@ const Header = () => {
                     <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
                         <MenuIcon />
                     </Button>
-                    <Drawer className='header_drawer' open={open} onClose={toggleDrawer(false)} >
+                    <Drawer 
+                        className='header_drawer' 
+                        open={open} 
+                        onClose={toggleDrawer(false)} 
+                    
+                    >
                         {DrawerList}
                     </Drawer>
                     <Box className={styles.logo}>

@@ -43,19 +43,6 @@ let cc_arr = [
     { title: "300cc", url: "/used-bikes/bike-by-cc/300/1" },
 ]
 
-let cc_arr_2 = [
-    { title: "Used Bike by CC", url: "" },
-    { title: "350cc", url: "/used-bikes/bike-by-cc/350/1" },
-    { title: "400cc", url: "/used-bikes/bike-by-cc/400/1" },
-    { title: "450cc", url: "/used-bikes/bike-by-cc/450/1" },
-    { title: "500cc", url: "/used-bikes/bike-by-cc/500/1" },
-    { title: "550cc", url: "/used-bikes/bike-by-cc/550/1" },
-    { title: "600cc", url: "/used-bikes/bike-by-cc/600/1" },
-    { title: "650cc", url: "/used-bikes/bike-by-cc/650/1" },
-    { title: "700cc", url: "/used-bikes/bike-by-cc/700/1" },
-    { title: "750cc", url: "/used-bikes/bike-by-cc/750/1" },
-]
-
 let catagory_arr = [
     { title: "Explore Ebike", url: "" },
     { title: "Used Bikes", url: "/used-bikes" },
@@ -69,6 +56,7 @@ let catagory_arr = [
     { title: "Dealers", url: "/dealers" },
     { title: "Mechanics", url: "/mechanics" }
 ]
+
 let brand_arr = [
     { title: "Used Bike by Brand", url: "" },
     { title: "Honda Bikes", url: "" },
@@ -80,6 +68,7 @@ let brand_arr = [
     { title: "Super Power", url: "" },
     { title: "Super Star", url: "" }
 ]
+
 let headerlink_arr = [
     { title: "Ebike.pk", url: "/" },
     { title: "Contact us", url: "/contact-us" },
@@ -97,10 +86,7 @@ export default function Footer() {
     function SendMail(e: any) {
         e.preventDefault()
         alert(Mail)
-        // setMail('')
     }
-
-
 
     function FooterLinks(arr: any) {
         return (
@@ -140,9 +126,9 @@ export default function Footer() {
                                 {FooterLinks(cc_arr)}
                             </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
+                            {/* <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(cc_arr_2)}
-                            </Grid>
+                            </Grid> */}
 
                             
 

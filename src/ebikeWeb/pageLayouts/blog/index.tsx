@@ -51,7 +51,7 @@ const Blog = () => {
   <>
     <Box className={styles.blog_main}>
       <Box className={styles.FrontAdd_box}>
-        <Box className={styles.trending}><b style={{color:'black'}}>Trending Blogs</b></Box>
+        <Box className={styles.trending}><b style={{color:'black'}}>Trending Videos</b></Box>
         <Box></Box>
       </Box>
       <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs'/>

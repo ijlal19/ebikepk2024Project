@@ -10,16 +10,17 @@ const Card = (props:any) => {
   const Router = useRouter()
 
   function goToRoute(url:any) {
+    Router.push(url)
     let _isLoginUser = isLoginUser()
-    if(_isLoginUser?.login) {
-      Router.push(url)
-    }
-    else {
-      // alert("Please Login to Continue")
-      if(document.getElementById('general_login_btn')) { 
-        document.getElementById('general_login_btn')?.click()
-      }
-    }
+    // if(_isLoginUser?.login) {
+    //   Router.push(url)
+    // }
+    // else {
+    //   // alert("Please Login to Continue")
+    //   if(document.getElementById('general_login_btn')) { 
+    //     document.getElementById('general_login_btn')?.click()
+    //   }
+    // }
   }
 
   let data = props.data
