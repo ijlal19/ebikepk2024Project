@@ -14,7 +14,7 @@ import BuyandSell from './buyandsell/index';
 import DealerList from './findDealers/index';
 import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
 import { Label } from '@mui/icons-material';
 // import jsCookie from 'js-cookie'
@@ -22,6 +22,9 @@ const jsCookie = require('js-cookie');
 
 
 const Header = () => {
+    const router = useRouter()
+    const pathname = usePathname(); 
+
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState(false);
     const [buysellmenu, setBuySellmenu] = useState(false);
@@ -29,19 +32,15 @@ const Header = () => {
     const [findMechanics, setFindMechanics] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
     const [customer, setCustomer]  = useState('not_login')
-    
-    const router = useRouter()
    
     useEffect(() => {
         authenticateUser()
-        const handleRouteChange = () => setOpen(false);
-        // Cleanup listener on unmount
-        return () => {
-            handleRouteChange()
-        };
+    },[])
 
-    },[router])
-
+    useEffect(() => {
+        setOpen(false);
+    }, [pathname]);
+    
     function authenticateUser() {
         let _isLoginUser = isLoginUser()
         if(_isLoginUser?.login) {
