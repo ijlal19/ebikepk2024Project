@@ -11,7 +11,7 @@ const OurVideos = ({SetWidth,SetMaxWidth}:any) => {
         <Box className={styles.main} style={{maxWidth: SetMaxWidth === 'inblogs'?'1150px':'1000px',display : isMobile? SetMaxWidth === 'inblogs'?'none':'block':'block' }} >
 
             <Box className={styles.heading_box}  style={{display:SetMaxWidth === 'inblogs' ? 'none': 'flex'}}>
-                <Box>Our Browse Videos</Box>
+                <Box>Browse Our Videos</Box>
                  <Link href="https://www.youtube.com/@ebikepk" target='_blank' style={{ textDecoration:"none" }}>
                     <Box className={styles.all_videos}>View all Videos</Box>
                  </Link>

@@ -12,6 +12,7 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
+
 function CustomTabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
@@ -27,13 +28,15 @@ function CustomTabPanel(props: any) {
     </div>
   );
 }
+
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-function UsedBikesSection({from, featuredData}:any) {
+
+function UsedBikesSection({from, featuredData, usedBikeData}:any) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -67,7 +70,7 @@ function UsedBikesSection({from, featuredData}:any) {
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={Data} from='usedBikeComp' currentpage='used_bike' />
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={usedBikeData} from='usedBikeComp' currentpage='used_bike' />
           </CustomTabPanel>
         </Box> }
         

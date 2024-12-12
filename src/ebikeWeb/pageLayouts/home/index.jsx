@@ -23,7 +23,7 @@ import featuredData from './newbikesSection/Data'
 const Index = () => {
 
   const [homeData, setHomeData] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   
   useEffect(()=>{
     getHomeData()
@@ -31,7 +31,6 @@ const Index = () => {
 
   async function getHomeData() {
     const gistUrl = "https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/6c3f058f8f96c7da649a19757996501ba3a35401/gistfile1.json";
-
     setIsLoading(true)
     fetch(gistUrl).then((res) => {
       setIsLoading(false)
@@ -46,7 +45,7 @@ const Index = () => {
         setHomeData(obj)
         return
       };
-      console.log('res qq 11', res)
+    
       return res.json();
     })
     .then((data) => {
@@ -64,11 +63,6 @@ const Index = () => {
       }
       setHomeData(obj)
     });
-
- 
-  
-   
-    
   }
 
   return (

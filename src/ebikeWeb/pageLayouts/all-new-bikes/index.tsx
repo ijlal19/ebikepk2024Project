@@ -17,35 +17,49 @@ export default function AllNewBikes() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
   const [allDealerArr, setAllDelaerArr] = useState([])
-  const [brandname, setbrandName] = useState('')
+  const [brandname, setbrandName]:any = useState('')
   const [desc, setDesc] = useState('')
   const [logo, setLogo] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
 
   const params = useParams()
-  const brandId = params.slug
+  const brandName = params.slug
   useEffect(() => {
     fetchBrandInfo()
   }, [])
 
   async function fetchBrandInfo() {
     setIsLoading(true)
-    let DealerDataRes = await getdealerData(brandId)
-    setAllDelaerArr(DealerDataRes.dealers)
-    const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
-    setDesc(DealerDataRes.dealers[0].bike_brand.description)
-    setLogo(DealerDataRes.dealers[0].bike_brand.logoUrl)
-    if (!DealerDataRes) {
-      setIsLoading(true)
-    }
-    else {
-      setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
+   
+      // const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
+      setbrandName(brandName)
       let res = await getnewBikeData({ brand: brandName })
-      setAllnewBikeArr(res)
-      setIsLoading(false)
-      window.scrollTo(0, 0)
-    }
+     
+
+      if(res?.length > 0) {
+        setAllnewBikeArr(res)
+        setDesc(res[0]?.bike_brand?.description)
+        setLogo(res[0]?.bike_brand?.logoUrl)
+        setIsLoading(false)
+        window.scrollTo(0, 0)
+        let DealerDataRes = await getdealerData(res[0].brandId)
+        setAllDelaerArr(DealerDataRes.dealers)  
+      }
+     
+    
+
+    
+    // if (!DealerDataRes) {
+    //   setIsLoading(true)
+    // }
+    // else {
+    //   setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
+    //   let res = await getnewBikeData({ brand: brandName })
+    //   setAllnewBikeArr(res)
+    //   setIsLoading(false)
+    //   window.scrollTo(0, 0)
+    // }
   }
 
 

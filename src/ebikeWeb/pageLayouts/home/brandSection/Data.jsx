@@ -1,61 +1,61 @@
 const Data = [
   {
     id: 1,
-    url: "new-bikes/1",
+    url: "new-bikes/honda",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727874817/Honda_qfmevz.png",
     title: "Honda"
   },
   {
     id: 15,
-    url: "new-bikes/15",
+    url: "new-bikes/metro",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727874287/Metroo_eeutmi.png",
     title: "Metro"
   },
   {
     id: 25,
-    url: "new-bikes/25",
+    url: "new-bikes/crown",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727877732/Crown_yylmdw.png",
     title: "Crown"
   },
   {
     id: 7,
-    url: "new-bikes/7",
+    url: "new-bikes/yamaha",
     img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624361/bike_brands/Yamaha.png",
     title: "Yamaha"
   },
   {
     id:41,
-    url: "new-bikes/41",
-    img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727857184/Beneling_rk5lhs.png",
-    title: "Beneling"
+    url: "new-bikes/united",
+    img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727873848/United_et6w6r.png",
+    title: "United"
   },
   {
     id: 12,
-    url: "new-bikes/12",
+    url: "new-bikes/bmw",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727877795/BMW_o7clvn.png",
     title: "BMW"
   },
   {
     id: 7,
-    url: "new-bikes/7",
+    url: "new-bikes/unique",
     img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624360/bike_brands/unique.jpg",
     title: "Unique"
   },
   {
     id: 2,
-    url: "new-bikes/2",
+    url: "new-bikes/kawasaki",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727874671/Kawasaki_sasv2f.png",
     title: "Kawasaki"
   },
   {
     id: 24,
-    url: "new-bikes/24",
+    url: "new-bikes/hi_speed",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727874947/Hi_SPeed_g0lzxe.png",
     title: "Hi-Speed"
   },
   {
     id: 19,
-    url: "new-bikes/19",
+    url: "new-bikes/road_prince",
     img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1727874195/Road_Prince_envppt.png",
     title: "Road prince"
   },

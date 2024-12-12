@@ -32,7 +32,7 @@ function CustomTabPanel(props: TabPanelProps) {
 
 
 
-function BlogSection() {
+function BlogSection(props:any) {
   const [value, setValue] =React.useState(0);
   const router = useRouter()
 
@@ -67,9 +67,9 @@ function BlogSection() {
 
           <CustomTabPanel value={value} index={0}>
               {
-                Data.slice(0,2).map((e: any, i: any) => (
+                props?.blogData?.length > 0 && props?.blogData?.map((e: any, i: any) => (
                 
-                    <Grid onClick={() => { handleRoute(e) }} container key={i}className={styles.blog_grid1}>
+                    <Grid onClick={() => { handleRoute(e) }} container key={i} className={styles.blog_grid1}>
                       <Grid
                         item
                         xs={isMobile ? 12 : 3}
