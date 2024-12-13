@@ -223,7 +223,7 @@
 
       // grid 1
       .bike_image_box {
-          height: 123px;
+          height: 135px;
           width: 185px;
           padding: 0px 10px;
 
@@ -237,7 +237,7 @@
           img {
             height: 100%;
             width: 100%;
-            min-width: 180px;
+            min-width: 200px;
             max-width: 200px;
 
             @media (max-width:600px) {
@@ -257,6 +257,14 @@
         padding: 0px 10px;
         margin-top: 20px;
         margin-left: 10px;
+
+        @media (max-width:1050px) {
+          margin-left: 20px;
+        }
+
+        @media (max-width:800px) {
+          margin-left: 10px;
+        }
 
         @media (max-width:600px) {
           height: auto;

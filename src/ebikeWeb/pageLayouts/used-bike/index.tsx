@@ -35,6 +35,11 @@ export default function UsedBike() {
         setIsLoading(false)
         if(res) {
           if(res.add) { 
+            
+            if(res?.add?.mobileNumber && res?.add?.mobileNumber?.charAt(0) != "0"){
+              res.add.mobileNumber = '0' + res.add.mobileNumber
+            }
+
             setBikeDetail(res.add)
           }
           else {
@@ -97,15 +102,15 @@ export default function UsedBike() {
               <tbody>
                 <tr>
                   <td>
-                    <p className={styles.info_field}> Model </p>
+                    <p className={styles.info_field}> <b> Model </b> </p>
                     <p className={styles.info_field}> { bikeYear && bikeYear?.length > 0 && bikeYear[0].year } </p>
                   </td>
                   <td>
-                    <p className={styles.info_field}> Brand </p>
+                    <p className={styles.info_field}> <b> Brand </b> </p>
                     <p className={styles.info_field}> { bikeBrand && bikeBrand.length > 0 && bikeBrand[0].brandName } </p>
                   </td>
                   <td>
-                    <p className={styles.info_field}> Bike CC </p>
+                    <p className={styles.info_field}> <b> Bike CC  </b> </p>
                     <p className={styles.info_field}> { bikeDetail.cc } CC </p>
                   </td>
                 </tr>
@@ -115,17 +120,17 @@ export default function UsedBike() {
           <table width="100%" className={styles.info_content}>
               <tbody>
                 <tr>
-                  <td className={styles.info_field_two}> Location </td>
+                  <td className={styles.info_field_two}> <b> Location </b> </td>
                   <td className={styles.info_field_two}> { bikeCity && bikeCity.length > 0 && bikeCity[0].city_name } </td>
                   
-                  <td className={styles.info_field_two}>Posted On</td>
+                  <td className={styles.info_field_two}> <b> Posted On </b> </td>
                   <td className={styles.info_field_two}> { '' + bikeDetail?.createdAt?.slice(0, 10) } </td>
                 </tr>
                 <tr>
-                  <td className={styles.info_field_two}>Body Type</td>
+                  <td className={styles.info_field_two}> <b> Body Type </b> </td>
                   <td className={styles.info_field_two}>Standard</td>
-                  <td className={styles.info_field_two}>Ad ID </td>
-                  <td className={styles.info_field_two}>585746</td>
+                  <td className={styles.info_field_two}> <b> Ad ID </b>  </td>
+                  <td className={styles.info_field_two}> { bikeDetail?.id } </td>
                 </tr>
               </tbody>
             </table>

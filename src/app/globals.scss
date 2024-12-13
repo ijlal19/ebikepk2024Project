@@ -18,7 +18,8 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 50%;
+            background-color: white;
+            // border-radius: 50%;
             &::after {
                 font-size: 16px !important;
                 font-weight: bolder;
@@ -30,7 +31,8 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 50%;
+            background-color: white;
+            // border-radius: 50%;
             &::after {
                 font-size: 16px !important;
                 font-weight: bolder;

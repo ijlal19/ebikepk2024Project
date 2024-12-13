@@ -1,3 +1,4 @@
+@import '../../styles/variable';
 .main_body {
     background-color: whitesmoke ;
 }
@@ -60,12 +61,13 @@
 
 .container_one .title {
     font-size: 17px;
-    color: whitesmoke ;
+    color: $primary_two ;
     font-weight: 500;
     margin-bottom: 10px;
     @media (max-width: 767px) {
         font-size: 16px;
         padding: 15px 5px 4px 0px;
+        margin-bottom: 0px;
     }
     margin-top: 0px;
 }
@@ -175,7 +177,7 @@
         text-wrap: nowrap;
         margin-top: 10px;
         @media (max-width:767px) {
-            font-size: 14px;
+            font-size: 16px;
             width: -webkit-fill-available;
         }
     }
@@ -184,7 +186,7 @@
         font-size: 13px;
         margin:5px 0px;
         @media (max-width:767px) {
-            font-size: 12px;
+            font-size: 13px;
         }
     }
 
@@ -213,7 +215,7 @@
         margin-bottom: 5px;
         margin-top: 5px;
         @media (max-width:767px) {
-            font-size: 12px;
+            font-size: 13px;
         }
     }
 
@@ -304,6 +306,7 @@
     background-color: #fff;
     position: relative;
     @media (max-width: 767px) {
+        margin-top: 25px !important;
         width:99%;
         margin: 5px auto;
     }
@@ -369,12 +372,26 @@
     max-width: 1000px;
     margin: auto;
     padding: 20px 0px;
+    
+    @media (max-width:767px) {
+        padding: 0px;  
+        
+    }
+    
     .similar_heading {
+      margin-top: 0px;
+      margin-left: 5px;
       font-size: 18px;
-     padding: 2px 2px 2px 5px;
+      padding: 2px 2px 2px 5px;
       margin-bottom: 0px;
       font-weight: normal;
+      @media (max-width:767px) {
+        margin-top: 5px;
+        margin-left: 10px;
+     }
     }
+
+
 
 }
 
