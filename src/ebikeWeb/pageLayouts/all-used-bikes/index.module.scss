@@ -39,6 +39,11 @@
   align-items: start;
   gap: 15px;
 
+  @media (max-width:767px) {
+    flex-direction: column;
+    width: 90% !important;
+  }
+
   .main_box {
     padding: 0px 10px !important;
     width: 100% !important;
@@ -360,10 +365,15 @@
 
     }
 
+    .banner {
+      width: 300px;
+      text-align: center;
+      margin: 10px auto;
+      .baner_image {
+        width: 100%;
+      }
+    }  
   }
-
-
-
 
 
   .viewMoreBtnContainer {

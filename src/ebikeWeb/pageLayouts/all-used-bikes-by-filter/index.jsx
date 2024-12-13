@@ -24,6 +24,10 @@ const AllUsedBikeByFilter = () => {
         fetchBikeInfo()
     }, [])
 
+    const capitalizeFirstWord = (str) => {
+        return str.replace(/^\s*\w/, (match) => match.toUpperCase());
+      };
+
     async function fetchBikeInfo() {
         setGetAdFrom(getAdFrom + 10)
         let from = params.slug
@@ -47,7 +51,7 @@ const AllUsedBikeByFilter = () => {
         else if (from?.indexOf('city') > -1) {
             let id = params.id1
             let res = await getBikesBySpecificFilter('city', id, getAdFrom + 10)
-            setHeading('Used Bike For Sale in ' + params.id?.toUpperCase())
+            setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
             setAllBikesArr(res)
             window.scrollTo(0, 0)
         }
@@ -68,6 +72,12 @@ const AllUsedBikeByFilter = () => {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
         return (
+            <>
+             {ind % 4 == 0 ? 
+             <div className={styles.banner}>
+                <img className={styles.baner_image} src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" />
+             </div> : "" }
+             
             <Grid container className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>
 
                 <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
@@ -97,6 +107,7 @@ const AllUsedBikeByFilter = () => {
                 </Grid>
 
             </Grid>
+            </>
         )
     }
 

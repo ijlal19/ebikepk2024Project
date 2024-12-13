@@ -57,35 +57,43 @@ const AllUsedBike = () => {
         let brand =  getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
         return(
-            <Grid container className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>
+            <>
+             
+             {ind % 4 == 0 ? 
+             <div className={styles.banner}>
+                <img className={styles.baner_image} src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" />
+             </div> : "" }
 
-            <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
-                {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
-            </Grid>
+             <Grid container className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>
+                <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
+                    {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
+                </Grid>
 
-            <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
-        
-                <Typography className={styles.card_title}> {val?.title} </Typography>
-        
-                <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
+                <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
 
-                <Typography className={styles.bike_details}>
-                    {val?.year?.year}
-                    <span className={styles.verticl_line}> | </span> 
-                    <span> {brand && brand?.length > 0 && brand[0].brandName } </span>
-                    <span className={styles.verticl_line}> | </span> 
-                    <span className={styles.verticl_line}> { city && city?.length > 0 && city[0].city_name} </span> 
-                </Typography>
+                    <Typography className={styles.card_title}> {val?.title} </Typography>
 
-                <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
+                    <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
 
-            </Grid>
+                    <Typography className={styles.bike_details}>
+                        {val?.year?.year}
+                        <span className={styles.verticl_line}> | </span> 
+                        <span> {brand && brand?.length > 0 && brand[0].brandName } </span>
+                        <span className={styles.verticl_line}> | </span> 
+                        <span className={styles.verticl_line}> { city && city?.length > 0 && city[0].city_name} </span> 
+                    </Typography>
 
-            <Grid item className={styles.price_section_desktop}>
-                <span> PKR {priceWithCommas(val?.price)}  </span>
-            </Grid>
+                    <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
 
-        </Grid>
+                </Grid>
+
+                <Grid item className={styles.price_section_desktop}>
+                    <span> PKR {priceWithCommas(val?.price)}  </span>
+                </Grid>
+
+                </Grid>
+            </>
+           
         )
     }
 
