@@ -31,7 +31,9 @@ const MechanicsDetails = () => {
         let res1 = await getSimilarMechanics(res.brand_id)
         setSimilarMechanics(res1.dealers)
         setIsLoading(false)
-        window.scrollTo(0, 0)
+       setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
       }
     }
   }

@@ -37,7 +37,9 @@ const BlogDetails = () => {
     setDataBlog(res)
     setCommentArr(res.blog_comments)
     setIsLoading(false)
-    window.scrollTo(0, 0)
+   setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
   }
 
   const handleicons = () => {

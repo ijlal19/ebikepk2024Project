@@ -47,7 +47,9 @@ export default function UsedBike() {
           }
           setSimilarBikeArr(res.bikes)
           setShowPhoneNo(false)
+         setTimeout(() => {
           window.scrollTo(0, 0)
+        }, 1000);
           console.log('res', res)
         }
       }
@@ -111,7 +113,7 @@ export default function UsedBike() {
                   </td>
                   <td>
                     <p className={styles.info_field}> <b> Bike CC  </b> </p>
-                    <p className={styles.info_field}> { bikeDetail.cc } CC </p>
+                    <p className={styles.info_field}> { bikeDetail.cc }</p>
                   </td>
                 </tr>
               </tbody>

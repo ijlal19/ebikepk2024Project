@@ -29,7 +29,9 @@ export default function NewBikePrice() {
       let res = await getnewBikeData({ brand: brandName })
       setAllnewBikeArr(res)
       setIsLoading(false)
-      window.scrollTo(0, 0)
+     setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
     }
   }
   return (

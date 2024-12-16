@@ -33,7 +33,9 @@ const AllUsedBike = () => {
         let res = await getAllbikesDetail(curentFetchPage)
         setAllBikesArr(res)
         setIsLoading(false)
-        window.scrollTo(0, 0)
+       setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
     }
 
     async function fetchFeaturedBike() {

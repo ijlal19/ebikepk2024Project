@@ -39,25 +39,33 @@ const AllUsedBikeByFilter = () => {
             setHeading('Used Bike For Year ' + params.id)
             console.log(res)
             setAllBikesArr(res)
-            window.scrollTo(0, 0)
+           setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
         }
         else if (from?.indexOf('cc') > -1) {
             let id = params.id
             let res = await getBikesBySpecificFilter('cc', id, getAdFrom + 10)
             setHeading('Used Bike By ' + params.id + ' CC')
             setAllBikesArr(res)
-            window.scrollTo(0, 0)
+           setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
         }
         else if (from?.indexOf('city') > -1) {
             let id = params.id1
             let res = await getBikesBySpecificFilter('city', id, getAdFrom + 10)
             setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
             setAllBikesArr(res)
-            window.scrollTo(0, 0)
+           setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
         }
 
         setIsLoading(false)
-        window.scrollTo(0, 0)
+       setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
 
     }
 

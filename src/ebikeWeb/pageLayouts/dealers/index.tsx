@@ -28,7 +28,9 @@ const Dealer = () => {
       let res1 = await getFeaturedDealer()
       setFeaturedDealers(res1)
       setIsLoading(false)
-      window.scrollTo(0, 0)
+     setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
     }
   }
 

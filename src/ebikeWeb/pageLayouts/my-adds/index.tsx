@@ -34,7 +34,9 @@ const MyAddComponent = () => {
         if (res?.length > 0) {
             setFeaturedData(res)
             setIsLoading(false)
-            window.scrollTo(0, 0)
+           setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
             console.log('res', res)
             return
         }

@@ -25,7 +25,9 @@ const Mechanic = () => {
       let res1 = await getFeaturedMechanics()
       setFeaturedMechanics(res1)
       setIsLoading(false)
-      window.scrollTo(0, 0)
+     setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
     }
 
   }

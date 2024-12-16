@@ -132,7 +132,9 @@ const SellUsedBike = () => {
         setIsLoading(true)
         let res = await publishAd(obj)
         setIsLoading(false)
-        window.scrollTo(0, 0)
+       setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
 
         if(res.success) {
             alert('Ad submitted Successfully! Please wait for approval')

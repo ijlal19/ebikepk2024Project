@@ -19,7 +19,9 @@ export default function NewBikeBrand() {
     let res = await getbrandData()
     setAllBrandArr(res)
     setIsLoading(false)
-    window.scrollTo(0, 0)
+   setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
   }
 
   return (

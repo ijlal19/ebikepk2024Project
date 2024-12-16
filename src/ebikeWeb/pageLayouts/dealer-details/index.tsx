@@ -31,7 +31,9 @@ const DealerDetails = () => {
         let res1 = await getSimilarDealers(res.brand_id)
         setSimilarDealers(res1.dealers)
         setIsLoading(false)
-        window.scrollTo(0, 0)
+       setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
       }
     }
   }

@@ -42,7 +42,9 @@ export default function AllNewBikes() {
         setDesc(res[0]?.bike_brand?.description)
         setLogo(res[0]?.bike_brand?.logoUrl)
         setIsLoading(false)
-        window.scrollTo(0, 0)
+         setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
         let DealerDataRes = await getdealerData(res[0].brandId)
         setAllDelaerArr(DealerDataRes.dealers)  
       }
@@ -58,7 +60,9 @@ export default function AllNewBikes() {
     //   let res = await getnewBikeData({ brand: brandName })
     //   setAllnewBikeArr(res)
     //   setIsLoading(false)
-    //   window.scrollTo(0, 0)
+    //  setTimeout(() => {
+        //   window.scrollTo(0, 0)
+        // }, 1000);
     // }
   }
 

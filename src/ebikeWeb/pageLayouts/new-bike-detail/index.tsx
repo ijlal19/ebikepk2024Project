@@ -50,7 +50,9 @@ export default function NewBikeBrand() {
       setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
     }
     setIsLoading(false)
-    window.scrollTo(0, 0)
+   setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
   }
 
   const writeopen = () => {
