@@ -72,7 +72,7 @@ let brand_arr = [
 let headerlink_arr = [
     { title: "Ebike.pk", url: "/" },
     { title: "Contact us", url: "/contact-us" },
-    { title: "About us", url: "/about-us" },
+    { title: "About us", url: "/page/about-us/14" },
     // { title: "MTMIS Pakistan", url: "" },
     { title: "Bike Verification Sindh", url: "/mtmis-sindh" },
     { title: "Bike Verification Punjab", url: "/mtmis-punjab" }
@@ -198,7 +198,7 @@ export default function Footer() {
                             Copyright © 2017 - 2024 ebike.pk - All Rights Reserved.
                         </Typography>
                         <Typography className={styles.term_policy}>
-                            <Link href="/terms-and-conditions" className={styles.link}> Terms of Service </Link>  | <Link href="/privacy-policy" className={styles.link}> Privacy Policy </Link> 
+                            <Link href="/page/terms-and-conditions/25" className={styles.link}> Terms of Service </Link>  | <Link href="/page/privacy-policy/13" className={styles.link}> Privacy Policy </Link> 
                         </Typography>
                         <Typography className={styles.permission}>
                             Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.
