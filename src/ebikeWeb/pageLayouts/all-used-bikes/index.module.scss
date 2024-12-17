@@ -220,6 +220,7 @@
         background: rgb(249, 249, 249);
         border-radius: 0;
         width: 44%;
+        overflow: hidden;
       }
 
       // grid 1
@@ -232,7 +233,6 @@
           // border: solid 1px;
           min-width: 220px;
           max-width: 220px;
-          // background-color: #f2f2f4;
 
           @media (max-width:600px) {
             width: 100%; 
