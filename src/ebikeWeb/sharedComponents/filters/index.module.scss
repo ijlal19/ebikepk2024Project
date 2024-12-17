@@ -35,6 +35,10 @@
       color: black;
       margin-top: 5px;
 
+      @media (max-width:767px) {
+        width: 300px;
+      }
+
       .city_text,.brand_text,.years_text {
         padding-left: 10px;
         font-size: 12px;
@@ -47,6 +51,10 @@
       color: black;
       margin-top: 5px;
       font-size: 12px;
+
+      @media (max-width:767px) {
+        width: 300px;
+      }
       
       .option_values{
         gap: 5px;

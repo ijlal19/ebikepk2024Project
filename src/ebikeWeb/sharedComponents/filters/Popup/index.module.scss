@@ -18,6 +18,12 @@
     padding: 5px;
     box-sizing: 'border-box';
     border-radius:5px ;
+
+    @media (max-width:767px) {
+      top: 35%;
+      width: 90%;
+    }
+
   .modal_header{
     border-bottom: 1px solid black;
     display: flex;

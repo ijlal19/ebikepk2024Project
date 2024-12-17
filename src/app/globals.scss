@@ -190,6 +190,12 @@ body {
         align-items: center;
     }
 
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+    }
+   
+
     .swiper-button-prev {
         color: black !important;
         background-color: rgba(243, 243, 243, 0.322);
