@@ -28,7 +28,6 @@ function WriteModal({ props, closeFunction }: any) {
   // const [data, setData]: any = React.useState()
 
 
-
   const handleSubmit = () => {
     const obj = {
       "comment": String(comment),
@@ -58,11 +57,10 @@ function WriteModal({ props, closeFunction }: any) {
     if(res.success){
       setComment('')
       setRating('')
-      window.location.reload()
       setComment('')
       setRating('')
+      window.location.reload()
     }
-    console.log(res)
     window.location.reload()
   }
 
@@ -129,19 +127,19 @@ function MoreReviewModal({ props, closeFunctionmore }: any) {
           </Box>
           <Box className={styles.comment_box_main}>
           {
-            props.data.reverse().map((e: any, i: any) => {
+            props?.data?.reverse().map((e: any, i: any) => {
               return (
                 <Typography key={i} className={styles.content_box}>
                   <Box className={styles.comment_box}>
                     <Box className={styles.comment_header}>
                       <Avatar alt="Remy Sharp" className={styles.avatar} src="" />
                       <Typography className={styles.detail}>
-                        {e.user.userFullName}<span style={{ marginLeft: 5, marginRight: 5 }}> | </span><StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e.rating}.0<span style={{ marginLeft: 5, marginRight: 5 }}> | </span> {e.createdAt.slice(0, 10)}
+                        {e?.user?.userFullName}<span style={{ marginLeft: 5, marginRight: 5 }}> | </span><StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e?.rating}.0<span style={{ marginLeft: 5, marginRight: 5 }}> | </span> {e?.createdAt.slice(0, 10)}
                       </Typography>
                     </Box>
 
                     <Typography className={styles.comment_text}>
-                      {e.comment}
+                      {e?.comment}
                     </Typography>
                   </Box>
                 </Typography>
