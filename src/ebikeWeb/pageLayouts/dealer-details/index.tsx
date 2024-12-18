@@ -33,7 +33,7 @@ const DealerDetails = () => {
         setIsLoading(false)
        setTimeout(() => {
           window.scrollTo(0, 0)
-        }, 1000);
+        }, 1000); 
       }
     }
   }
