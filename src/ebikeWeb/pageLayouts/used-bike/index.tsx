@@ -151,7 +151,8 @@ export default function UsedBike() {
             <hr/>
             {!showPhoneNo ? 
             <p className={styles.seller_ph_text} onClick={() => setShowPhoneNo(true) }> Show Phone No </p> :
-            <span className={styles.seller_ph_no} > { bikeDetail.mobileNumber } </span>
+            <span className={styles.seller_ph_no} > { bikeDetail.mobileNumber.slice(
+              0,4)}-{bikeDetail.mobileNumber.slice(4)} </span>
             }
           </div>
       

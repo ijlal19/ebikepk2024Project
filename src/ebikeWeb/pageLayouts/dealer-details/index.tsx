@@ -67,7 +67,7 @@ const DealerDetails = () => {
               <p className={styles.full_address}><LocationOnIcon
               className={styles.icon}/>{dealersDetails?.address}</p>
               <p className={styles.phone}><PhoneIcon
-              className={styles.icon}/>{dealersDetails?.phone}</p>
+              className={styles.icon}/>0{dealersDetails?.phone}</p>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ const DealerDetails = () => {
                     </div>
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>
-                      <p className={styles.phone}>{e.phone}</p>
+                      <p className={styles.phone}>0{e.phone}</p>
                       <button onClick={()=> goToDetailPage(e)} className={styles.btn}>View Details</button>
                     </div>
                   </div>
@@ -105,7 +105,7 @@ const DealerDetails = () => {
                     </div>
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>
-                      <p className={styles.phone}>{e.phone}</p>
+                      <p className={styles.phone}>0{e.phone}</p>
                       <button onClick={()=> goToDetailPage(e)} className={styles.btn}>View Details</button>
                     </div>
                   </div>
