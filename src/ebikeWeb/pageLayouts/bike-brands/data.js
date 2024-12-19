@@ -1,4 +1,4 @@
-let data = [
+const data = [
     {
         "id": 12,
         "brandName": "bmw",
