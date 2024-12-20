@@ -63,7 +63,7 @@ const AllUsedBike = () => {
              
              {ind % 4 == 0 ? 
              <div className={styles.banner}>
-                <img className={styles.baner_image} src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" />
+                <img className={styles.baner_image} src={isMobile ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg" } />
              </div> : "" }
 
              <Grid container className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>

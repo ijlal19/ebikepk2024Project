@@ -365,13 +365,16 @@
     }
 
     .banner {
-      width: 300px;
+      width: 500px;
+      @media (max-width:991px) {
+        width: 300px;
+      }
       text-align: center;
       margin: 10px auto;
       .baner_image {
         width: 100%;
       }
-    } 
+    }  
 
   }
 

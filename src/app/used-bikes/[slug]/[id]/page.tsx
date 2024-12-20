@@ -12,9 +12,9 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = params
     const product = await getSinglebikesDetail(id)
-
+    let city = getCityFromId(product?.add?.cityId, CityArr); 
     return {
-      title: product?.add?.title + ' for sale in '+ getCityFromId(product?.add?.cityId, CityArr)  + ' | ebike.pk',
+      title: product?.add?.title + ' for sale in '+ city && city?.length > 0 && city[0].city_name  + ' | ebike.pk',
       description: product?.add?.description,
       openGraph: {
         title:  product?.add?.title,
