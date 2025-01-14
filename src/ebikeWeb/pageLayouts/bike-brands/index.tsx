@@ -31,7 +31,7 @@ export default function NewBikeBrand() {
       <Box className={styles.bikes_brand_container}>
         <Typography className={styles.heading}>New Bikes By Make</Typography>
         {
-          allBrandArr.map((e: any, i: any) => {
+          allBrandArr?.map((e: any, i: any) => {
             return (
               <Box className={styles.brand_image_box} key={i} >
                 <BikesBrandCard key={i} data={e} />

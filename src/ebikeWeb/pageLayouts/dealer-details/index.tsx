@@ -26,10 +26,23 @@ const DealerDetails = () => {
     if(params.dealerid) {
       setIsLoading(true)
       let res = await getSingleDealerDetails(params.dealerid)
-      setDealerDetails(res)
+      if(res){
+        if(res?.phone && res?.phone?.charAt(0) != '0'){
+          res.phone = '0'+res.phone
+        }
+        setDealerDetails(res)
+      }
+
       if(res.brand_id) {
         let res1 = await getSimilarDealers(res.brand_id)
-        setSimilarDealers(res1.dealers)
+        if(res1){
+          res1?.dealers?.map((e:any, i:any)=>{
+            if(e?.phone?.charAt(0) != '0'){
+              e.phone = '0'+e.phone
+            }
+            setSimilarDealers(res1.dealers)
+          })
+        }
         setIsLoading(false)
        setTimeout(() => {
           window.scrollTo(0, 0)
@@ -67,7 +80,7 @@ const DealerDetails = () => {
               <p className={styles.full_address}><LocationOnIcon
               className={styles.icon}/>{dealersDetails?.address}</p>
               <p className={styles.phone}><PhoneIcon
-              className={styles.icon}/>0{dealersDetails?.phone}</p>
+              className={styles.icon}/>{dealersDetails?.phone?.slice(0,4)}-{dealersDetails?.phone?.slice(4)}</p>
             </div>
           </div>
         </div>
@@ -89,7 +102,7 @@ const DealerDetails = () => {
                     </div>
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>
-                      <p className={styles.phone}>0{e.phone}</p>
+                      <p className={styles.phone}>{e?.phone?.slice(0,4)}-{e?.phone?.slice(4)}</p>
                       <button onClick={()=> goToDetailPage(e)} className={styles.btn}>View Details</button>
                     </div>
                   </div>
@@ -105,7 +118,7 @@ const DealerDetails = () => {
                     </div>
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>
-                      <p className={styles.phone}>0{e.phone}</p>
+                      <p className={styles.phone}>{e?.phone?.slice(0,4)}-{e?.phone?.slice(4)}</p>
                       <button onClick={()=> goToDetailPage(e)} className={styles.btn}>View Details</button>
                     </div>
                   </div>

@@ -35,11 +35,9 @@ export default function UsedBike() {
         setIsLoading(false)
         if(res) {
           if(res.add) { 
-            
             if(res?.add?.mobileNumber && res?.add?.mobileNumber?.charAt(0) != "0"){
               res.add.mobileNumber = '0' + res.add.mobileNumber
             }
-
             setBikeDetail(res.add)
           }
           else {
@@ -50,7 +48,6 @@ export default function UsedBike() {
          setTimeout(() => {
           window.scrollTo(0, 0)
         }, 1000);
-          console.log('res', res)
         }
       }
       else {

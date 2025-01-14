@@ -10,8 +10,6 @@ import Modal from '@mui/material/Modal';
     <Modal open={props.isLoading}  className={styles.loader_main} >
       <Box className={styles.loader_inner}>
         <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png " alt="ebike.pk" className={styles.logo_image} />
-        <CircularProgress className={styles.progress} />
-        <p className={styles.text} > Loading ... </p>
       </Box>
     </Modal>
   )
