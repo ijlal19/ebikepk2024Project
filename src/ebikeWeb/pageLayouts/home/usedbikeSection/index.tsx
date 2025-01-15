@@ -44,8 +44,6 @@ function UsedBikesSection({from, featuredData, usedBikeData}:any) {
   };
 
 
-  console.log('featuredData', featuredData)
-
   return (
     <Box className={styles.usedbike_main}>
       <Container>

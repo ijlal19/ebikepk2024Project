@@ -132,7 +132,7 @@ export default function NewBikeBrand() {
                           e?.bike?.newbike_ratings?.length > 0 ?
                             <Box className={styles.rating_box}>
                               <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e?.bike?.newbike_ratings[0]?.rating} | 4 Reviews
-                            </Box> : "-"
+                            </Box> : ""
                         }
 
                         {e?.bike?.newbike_comments?.length > 0 ? <Box className={styles.comment_box}>
@@ -174,7 +174,7 @@ export default function NewBikeBrand() {
                     </Grid>
                     <Grid container className={styles.bike_information_grid}>
                       <Grid item xs={isMobile ? 12 : 9} className={styles.bike_information_grid1}>
-                        <Typography className={styles.title}>{e?.bike?.title}</Typography>
+                        {/* <Typography className={styles.title}>{e?.bike?.title}</Typography> */}
 
                         <Typography style={{ margin: "10px" }} className={styles.desc} dangerouslySetInnerHTML={{ __html: e?.bike?.description }}></Typography>
 
@@ -252,6 +252,8 @@ export default function NewBikeBrand() {
 
                       <Grid item xs={isMobile ? 12 : 3} className={styles.bike_information_grid2}></Grid>
                     </Grid>
+                    {
+                      e?.bike?.videoUrl ?
                     <Grid container className={styles.bike_video_grid}>
                       <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
                         <Box className={styles.bike_video}>
@@ -266,7 +268,7 @@ export default function NewBikeBrand() {
                         </Box>
                       </Grid>
                       <Grid item xs={isMobile ? 12 : 3}></Grid>
-                    </Grid>
+                    </Grid>:''}
                   </>)
               })}
           </Box>
@@ -274,9 +276,11 @@ export default function NewBikeBrand() {
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' />
           </Box>
         </> :
+         <div className={styles.load_main}>
          <div className={styles.load_div}>
-          <Loader isLoading={isLoading} />
-        </div>
+           <Loader isLoading={isLoading} />
+         </div>
+         </div>
       }
     </>
   );

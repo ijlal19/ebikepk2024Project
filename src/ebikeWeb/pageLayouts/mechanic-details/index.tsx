@@ -132,9 +132,11 @@ const isMobile = useMediaQuery('(max-width:562px)')
     }
     </>
     :
-    <div className={styles.load_div}>
-          <Loader isLoading={isLoading} />
-        </div>
+    <div className={styles.load_main}>
+          <div className={styles.load_div}>
+            <Loader isLoading={isLoading} />
+          </div>
+          </div>
     }
     </>
 

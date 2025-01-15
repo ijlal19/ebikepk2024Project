@@ -7,11 +7,12 @@
         transform: translate(-50%, -50%);
         width: 180px;
         height: auto;
-        background-color: transparent;
-        opacity: 0.8;
+        background-color: rgba(218, 203, 203, 0.509);
+        opacity: 0.9;
         border: '2px solid #000';
         text-align: center;
         padding-top: 0px;
+        border-radius: 10px;
         border: none;
         outline: none;
 
@@ -21,7 +22,7 @@
     }
 
     .logo_image {
-        width: 100px;
+        width: 130px;
         height: auto;
         border: none;
         transition: all 1s ease;

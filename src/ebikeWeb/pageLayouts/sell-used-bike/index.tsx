@@ -22,21 +22,21 @@ const SellUsedBike = () => {
     const [mobile, setMobile] = useState('');
     const [isAggreed, setIsAggreed] = useState(false)
     const [msg, setMsg] = useState('')
-    const [customer, setCustomer]  = useState<any>('not_login')
+    const [customer, setCustomer] = useState<any>('not_login')
     const [imageArr, setImageArr] = useState([])
 
     useEffect(() => {
         let _isLoginUser = isLoginUser()
-        if(_isLoginUser?.login) {
+        if (_isLoginUser?.login) {
             setCustomer(_isLoginUser.info)
         }
         else {
             setCustomer("not_login")
             Router.push('/')
         }
-    },[])
+    }, [])
 
-    const handleChange = (field:any, value:any) => {
+    const handleChange = (field: any, value: any) => {
         if (field === 'city') {
             setCity(value);
         } else if (field === 'modelYear') {
@@ -62,54 +62,58 @@ const SellUsedBike = () => {
 
     const handelsubmit = async () => {
 
-        if(!customer || customer == "not_login" || customer?.id == undefined) {
+        if (!customer || customer == "not_login" || customer?.id == undefined) {
             Router.push('/')
         }
 
-        if(!title || title.length < 2) {
+        if (!title || title.length < 2) {
             alert("Please add title")
             return
         }
-        else if(!description || description.length < 4) {
+        const invalidChars = /[\/,?#$!+]/;
+        if (invalidChars.test(title)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        else if (!description || description.length < 4) {
             alert("Description should contain 4 or more characters")
             return
         }
-        else if(!city) {
+        else if (!city) {
             alert("Please select city")
             return
         }
-        else if(!modelYear) {
+        else if (!modelYear) {
             alert("Please select model Year")
             return
         }
-        else if(!cc) {
+        else if (!cc) {
             alert("Please select CC")
             return
         }
-        else if(!brand) {
+        else if (!brand) {
             alert("Please select brand")
             return
         }
-        else if(!price) {
+        else if (!price) {
             alert("Please add correct price")
             return
         }
-        else if(!sellerName || sellerName.length < 2) {
+        else if (!sellerName || sellerName.length < 2) {
             alert("Please write correct seller Name")
             return
         }
-        else if(!mobile || mobile.length != 11 || !numericOnly(mobile)) {
+        else if (!mobile || mobile.length != 11 || !numericOnly(mobile)) {
             alert("Please write correct mobile number")
             return
         }
-        else if(!isAggreed) {
+        else if (!isAggreed) {
             alert("Please checked terms and conditions")
             return
-        }  
-        
+        }
+
         let _phone = mobile
-        while(_phone.charAt(0) === '0')
-        {
+        while (_phone.charAt(0) === '0') {
             _phone = _phone.substring(1);
         }
 
@@ -132,58 +136,54 @@ const SellUsedBike = () => {
         setIsLoading(true)
         let res = await publishAd(obj)
         setIsLoading(false)
-       setTimeout(() => {
-          window.scrollTo(0, 0)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
         }, 1000);
 
-        if(res.success) {
+        if (res.success) {
             alert('Ad submitted Successfully! Please wait for approval')
             Router.push('/used-bikes')
         }
         else {
             alert('Some thing went wrong')
         }
-        console.log('obj', obj, res)
     }
 
-    function uploadImage(event:any) {
+    function uploadImage(event: any) {
 
-     console.log('event', event)
-     
-     // new method to send image in cloudinary with size reducing
-     const reader = new FileReader()
-     reader.readAsDataURL(event.target.files[0])
-     
-     reader.onload = (event:any) => {
-       
-       const imgElement : any  = document.createElement("img");
-       imgElement.src = reader.result;
- 
-       imgElement.onload = async(e:any) => {
-       
-         const canvas = document.createElement("canvas");
-         const max_width = 600;
- 
-         const scaleSize = max_width / e.target.width;
-         canvas.width = max_width;
-         canvas.height = e.target.height * scaleSize;
- 
-         const ctx:any = canvas.getContext("2d")
-         ctx.drawImage(e.target , 0 , 0  , canvas.width , canvas.height)
- 
-        const srcEncoded  = ctx.canvas.toDataURL(e.target , "image/jpeg")
-        let obj = { file: srcEncoded , upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
-        
-        let imgRes:any = await uplaodImageFunc(obj)
-        
-        let _imageArr:any = [...imageArr]
-        _imageArr.push(imgRes.secure_url)
-        setImageArr(_imageArr)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
 
-        console.log('imgRes', imgRes)
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
+
+                console.log('imgRes', imgRes)
+            }
+
         }
- 
-      }
     }
 
     return (
@@ -195,55 +195,55 @@ const SellUsedBike = () => {
                     <Typography>
                         <label htmlFor="title" className={styles.title_label}>Title*</label>
                     </Typography>
-                    
+
                     <Typography className={styles.input_parent}>
-                        <input required  type="text" id="title" className={styles.title_input} placeholder="Title"
-                        onChange={(e) => handleChange('title', e.target.value)}/>
+                        <input required type="text" id="title" className={styles.title_input} placeholder="Title"
+                            onChange={(e) => handleChange('title', e.target.value)} />
                     </Typography>
-                    
+
                     <Typography>
                         <label htmlFor="desc" className={styles.description_label}>Description*</label>
                     </Typography>
-                   
+
                     <Typography className={styles.desc_parent}>
-                        <TextareaAutosize id="desc" className={styles.description_area} placeholder="Add a Description"  required  onChange={(e) => handleChange('description', e.target.value)}/>
+                        <TextareaAutosize id="desc" className={styles.description_area} placeholder="Add a Description" required onChange={(e) => handleChange('description', e.target.value)} />
                     </Typography>
 
                     <Typography>
                         <label htmlFor="desc" className={styles.description_label}>Description*</label>
                     </Typography>
                     <Typography>
-                        <input type="file" accept="image/*" id="imageInput" name="image" onChange={(e)=>uploadImage(e)} />
+                        <input type="file" accept="image/*" id="imageInput" name="image" onChange={(e) => uploadImage(e)} />
                     </Typography>
 
-                    <div style={{ display:"flex", margin:"20px auto"}} >
+                    <div style={{ display: "flex", margin: "20px auto" }} >
                         {
                             imageArr.length > 0 && imageArr.map((val, ind) => {
-                                return <img src={val} key={ind} style={{ border:"solid 1px grey", display:"inline-block", margin:"10px", width:"100px", height:"70px" }} />
+                                return <img src={val} key={ind} style={{ border: "solid 1px grey", display: "inline-block", margin: "10px", width: "100px", height: "70px" }} />
                             })
                         }
                     </div>
 
                     <div className={styles.dropdown_div}>
-                        
+
                         <div className={styles.dropdown_main}>
                             <Typography>
                                 <label htmlFor="city" className={styles.description_label}>City*</label>
                             </Typography>
                             <Typography>
-                                <select name="" id="city" className={styles.section_main}onChange={(e) => handleChange('city', e.target.value)}>
+                                <select name="" id="city" className={styles.section_main} onChange={(e) => handleChange('city', e.target.value)}>
                                     <option value="" disabled selected hidden></option>
                                     {
                                         CityArr.map((e: any) => {
                                             return (
-                                                <option key={e.city_name} value={e.id}className={styles.drop_option}>{e.city_name}</option>
+                                                <option key={e.city_name} value={e.id} className={styles.drop_option}>{e.city_name}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </Typography>
                         </div>
-                       
+
                         <div className={styles.dropdown_main}>
                             <Typography>
                                 <label htmlFor="model" className={styles.description_label}>Model Year*</label>
@@ -262,14 +262,14 @@ const SellUsedBike = () => {
                                 </select>
                             </Typography>
                         </div>
-                     
+
                         <div className={styles.dropdown_main}>
                             <Typography>
                                 <label htmlFor="cc" className={styles.description_label}>CC*</label>
                             </Typography>
                             <Typography>
                                 <select name="" id="cc" className={styles.section_main}
-                                onChange={(e) => handleChange('cc', e.target.value)}>
+                                    onChange={(e) => handleChange('cc', e.target.value)}>
                                     <option value="" disabled selected hidden></option>
                                     {
                                         CcArr.map((e: any) => {
@@ -291,7 +291,7 @@ const SellUsedBike = () => {
                             </Typography>
                             <Typography>
                                 <select name="" id="brand" className={styles.section_main}
-                                onChange={(e) => handleChange('brand', e.target.value)}>
+                                    onChange={(e) => handleChange('brand', e.target.value)}>
                                     <option value="" disabled selected hidden></option>
                                     {
                                         BrandArr.map((e: any) => {
@@ -309,7 +309,7 @@ const SellUsedBike = () => {
                                 <label htmlFor="pkr" className={styles.description_label}>Price in PKR</label>
                             </Typography>
                             <Typography>
-                                <input required  name="" id="pkr" type="text" className={styles.section_input} placeholder="Price" onChange={(e) => handleChange('price', e.target.value)}/>
+                                <input required name="" id="pkr" type="text" className={styles.section_input} placeholder="Price" onChange={(e) => handleChange('price', e.target.value)} />
                             </Typography>
                         </div>
 
@@ -320,7 +320,7 @@ const SellUsedBike = () => {
                     </Typography>
 
                     <Typography className={styles.input_parent}>
-                        <input required  type="text" id="urlvideo" className={styles.title_input} placeholder="Paste your bike youtube video URL" onChange={(e) => handleChange('videoUrl', e.target.value)}/>
+                        <input required type="text" id="urlvideo" className={styles.title_input} placeholder="Paste your bike youtube video URL" onChange={(e) => handleChange('videoUrl', e.target.value)} />
                     </Typography>
 
                     <Typography>
@@ -328,8 +328,8 @@ const SellUsedBike = () => {
                     </Typography>
 
                     <Typography className={styles.input_parent}>
-                        <input required  type="text" id="sellername" className={styles.title_input} placeholder="Name" 
-                        onChange={(e) => handleChange('sellerName', e.target.value)}/>
+                        <input required type="text" id="sellername" className={styles.title_input} placeholder="Name"
+                            onChange={(e) => handleChange('sellerName', e.target.value)} />
                     </Typography>
 
                     <Typography>
@@ -337,11 +337,11 @@ const SellUsedBike = () => {
                     </Typography>
 
                     <Typography className={styles.input_parent}>
-                        <input required  type="number" id="mobile" className={styles.title_input} placeholder="Mobile Number" 
-                        onChange={(e) => handleChange('mobile', e.target.value)}/>
+                        <input required type="number" id="mobile" className={styles.title_input} placeholder="Mobile Number"
+                            onChange={(e) => handleChange('mobile', e.target.value)} />
                     </Typography>
-                    
-                    <Typography className={styles.permission}><input checked={isAggreed} onChange={(e) => { setIsAggreed(e.target.checked)}} type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
+
+                    <Typography className={styles.permission}><input checked={isAggreed} onChange={(e) => { setIsAggreed(e.target.checked) }} type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
                     <button disabled={isLoading} className={styles.post_button} onClick={handelsubmit} >Post Now</button>
                 </div>
             </div>

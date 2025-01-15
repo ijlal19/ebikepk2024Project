@@ -12,7 +12,6 @@ export default function FilterDropdown({ values, dropvalues, updateFilterValue, 
     // const [CCTo, setCCTo] = useState('');
 
     let dataArr = dropvalues == 'years' ? YearArr : CcArr
-    console.log('data', data)
 
     return (
         <>{

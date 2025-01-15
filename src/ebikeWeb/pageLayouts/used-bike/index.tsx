@@ -172,8 +172,10 @@ export default function UsedBike() {
         <SwiperCarousels  sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='usedBikeComp' currentpage="used_bike"/>
       </div>
     </div> :
-    <div className={styles.load_div}>
-      <Loader isLoading={isLoading} />
-    </div>
+   <div className={styles.load_main}>
+   <div className={styles.load_div}>
+     <Loader isLoading={isLoading} />
+   </div>
+   </div>
   );
 }

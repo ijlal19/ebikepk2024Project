@@ -72,9 +72,11 @@ export default function NewBikePrice() {
           </div>
         </>
         :
-        <div className={styles.load_div}>
-          <Loader isLoading={isLoading} />
-        </div>
+        <div className={styles.load_main}>
+          <div className={styles.load_div}>
+            <Loader isLoading={isLoading} />
+          </div>
+          </div>
       }
     </>
   )
