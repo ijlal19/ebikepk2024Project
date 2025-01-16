@@ -19,6 +19,7 @@ body {
             justify-content: center;
             align-items: center;
             background-color: white;
+            opacity: 0.6;
             // border-radius: 50%;
             &::after {
                 font-size: 16px !important;
@@ -33,6 +34,7 @@ body {
             align-items: center;
             background-color: white;
             // border-radius: 50%;
+            opacity: 0.6;
             &::after {
                 font-size: 16px !important;
                 font-weight: bolder;

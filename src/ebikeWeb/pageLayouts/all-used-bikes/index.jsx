@@ -141,7 +141,7 @@ const AllUsedBike = () => {
                 !isLoading ?
                     <>
                         {
-                            isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filter</Button> : ''
+                            isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
                         }
 
                         <Box className={styles.usedBike_headingBpx}>
