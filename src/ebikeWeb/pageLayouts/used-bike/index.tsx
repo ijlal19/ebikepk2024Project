@@ -17,7 +17,6 @@ export default function UsedBike() {
   const [similarBikeArr, setSimilarBikeArr] : any = useState([])
   const [isLoading, setIsLoading]  = useState(false)
   const [showPhoneNo, setShowPhoneNo] = useState(false)
-
   useEffect(() => {
       fetchBikeInfo()
   }, [])
@@ -55,9 +54,6 @@ export default function UsedBike() {
         setSimilarBikeArr(Data.bikes)
       }
     }
-
-     //setBikeDetail(Data.add)
-    // setSimilarBikeArr(Data.bikes)
   }
 
   let bikeBrand = getBrandFromId(bikeDetail?.brandId, BrandArr)
@@ -85,14 +81,17 @@ export default function UsedBike() {
             className='usedbikeDetailSwiper'
           >
             {
-              bikeDetail.images && bikeDetail.images.length > 0 && 
+              bikeDetail.images && bikeDetail.images.length > 0 ? 
               bikeDetail.images.map((imgUrl:any, ind:any) => {
                 return(
                   <SwiperSlide key={imgUrl}>
-                    <img src={imgUrl} alt="Random Image 1"  className={styles.slider_img}/>
+                    <img src={imgUrl} alt={bikeDetail?.title}  className={styles.slider_img}/>
                   </SwiperSlide>
                 )
-              })
+              }):
+              <SwiperSlide key=''>
+              <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'  alt={bikeDetail?.title}  className={styles.slider_img}/>
+            </SwiperSlide>
             }
           </Swiper>
     
