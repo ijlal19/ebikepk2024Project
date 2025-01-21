@@ -8,6 +8,7 @@ import { useParams, useRouter } from 'next/navigation';
 export const FeatureMechanicCard = ({ props }: any) => {
     const params = useParams()
     const router = useRouter()
+    const isMobile = useMediaQuery('(max-width:768px)')
 
     function goToDetailPage(bike:any) {
         var shop_name = bike.shop_name;
@@ -16,7 +17,7 @@ export const FeatureMechanicCard = ({ props }: any) => {
         router.push(`/mechanics/${lowerTitle}/${bike.id}`)
     }
     return (
-        <div className={styles.feature_card_main}>
+        <div className={styles.feature_card_main}  onClick={isMobile ? ()=>goToDetailPage(props):undefined}>
             <p className={styles.shop_name}>{props.shop_name}</p>
             <img className={styles.logo} src={props.bike_brand.logoUrl} alt="" />
             <p className={styles.city}>Mechanic in {props.city.city_name}</p>
@@ -44,7 +45,7 @@ export const MechanicinPakCard = ({ props }: any) => {
 
     return (<>
         {isMobile ?            
-            <div className={styles.mechanic_card_main}>
+            <div className={styles.mechanic_card_main}  onClick={isMobile ? ()=>goToDetailPage(props):undefined}>
                 <p className={styles.shop_name} style={{display:isMobile ? 'flex': 'none'}}>{props.shop_name}</p>
             <div className={styles.image_box}>
                 <img src={props.bike_brand.logoUrl} alt="" className={styles.image} />
