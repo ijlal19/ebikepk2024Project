@@ -12,6 +12,8 @@ import Link from 'next/link';
 import { validateEmail, userLogin } from "@/ebikeWeb/functions/globalFuntions"
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
+// import FacebookLogin from 'react-facebook-login';
+
 
 
 export default function LoginPopup({props,values}: any) {
@@ -60,6 +62,11 @@ export default function LoginPopup({props,values}: any) {
   const handlesignup =()=> {
     props.showmodal('showloginpopup')
   }
+
+  const responseFacebook = (response:any) => {
+    console.log(response);
+  }
+
   return (
     <div>
       {
@@ -126,6 +133,16 @@ export default function LoginPopup({props,values}: any) {
               {/* <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button> */}
               <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
 
+              {/* <div style={{ margin:"10px auto", textAlign:"center" }}>
+                  <FacebookLogin
+                    appId="217553265854765"
+                    autoLoad={false}
+                    fields="name,email"
+                    scope="public_profile,user_friends,user_actions.books"
+                    callback={responseFacebook}
+                  />
+              </div> */}
+              
               <Divider/>
 
               <Link href='/signup'  onClick={handlesignup}>
