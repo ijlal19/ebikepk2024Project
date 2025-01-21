@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "ebike.pk",
   description: "",
   icons: {
-    icon: "/favicon.png", // Path to the favicon
+    icon: "/favicon.png",
   },
 };
 

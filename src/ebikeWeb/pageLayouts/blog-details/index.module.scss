@@ -81,20 +81,23 @@
                 width: 99%;
                 box-sizing: border-box;
                 .your_comment_input {
-                    width: 100%;
+                    width: 50%;
+                    max-width: 50%;
+                    min-width: 200px;
                     display: flex;
                     outline: none;
                     border: 1px solid #e2e2e2;
                     align-items: flex-start;
                     padding: 18px 15px 5px;
-                    min-height: 30px;
+                    min-height: 70px;
                     overflow-y: auto;
                     height: auto;
                     font-size: 16px;
-                    min-height: 140px;
 
                     @media (max-width:767px) {
-                        min-height: 120px;
+                        width: 100%;
+                        max-width: 100%;
+                        min-height: 80px;
                     }
 
                 }
