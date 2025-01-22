@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import OurVideos from '../home/ourVideos';
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import Adsense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -93,7 +94,7 @@ const Blog = () => {
               </Grid>
               <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3}>
                 <Box className={styles.add_area_content}>
-                  <Typography>Add Area</Typography>
+                  <Adsense style={{ display:"block" }} client="ca-pub-5167970563180610" slot="4524790990" />
                 </Box>
               </Grid>
             </Grid>
