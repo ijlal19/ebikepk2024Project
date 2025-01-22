@@ -12,7 +12,6 @@ import Link from 'next/link';
 import { validateEmail, userLogin } from "@/ebikeWeb/functions/globalFuntions"
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
-// import FacebookLogin from 'react-facebook-login';
 
 
 

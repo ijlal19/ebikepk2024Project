@@ -15,7 +15,7 @@ const AllUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:991px)');
     const isMobile2 = useMediaQuery('(max-width:766px)');
     const [allBikesArr, setAllBikesArr] = useState([]);
-    const [pageNo, setPageNo] = useState(-1);
+    const [pageNo, setPageNo] = useState(-10);
     const [isLoading, setIsLoading] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
@@ -29,7 +29,7 @@ const AllUsedBike = () => {
     }, [])
 
     async function fetchBikeInfo(_pageNo) {
-        let curentFetchPage = _pageNo + 1
+        let curentFetchPage = _pageNo + 10
         setPageNo(curentFetchPage)
         setIsLoading(true)
         let res = await getAllbikesDetail(curentFetchPage)
