@@ -9,6 +9,7 @@ export const FeatureDealerCard = ({ props }: any) => {
 
     const params = useParams()
     const router = useRouter()
+    const isMobile = useMediaQuery('(max-width:768px)');
 
     function goToDetailPage(bike:any) {
         var shop_name = bike.shop_name;
@@ -18,7 +19,7 @@ export const FeatureDealerCard = ({ props }: any) => {
     }
 
     return (
-        <div className={styles.feature_card_main}>
+        <div className={styles.feature_card_main} onClick={isMobile ? ()=>goToDetailPage(props):undefined}>
             <p className={styles.shop_name}>{props.shop_name}</p>
             <img className={styles.logo} src={props.bike_brand.logoUrl} alt="" />
             <p className={styles.city}>Dealer in {props.city.city_name}</p>

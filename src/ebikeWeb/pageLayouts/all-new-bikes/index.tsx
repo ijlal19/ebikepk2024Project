@@ -31,8 +31,6 @@ export default function AllNewBikes() {
 
   async function fetchBrandInfo() {
     setIsLoading(true)
-
-    // const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
     setbrandName(brandName)
     let res = await getnewBikeData({ brand: brandName })
 
