@@ -8,11 +8,12 @@ import CommentIcon from '@mui/icons-material/Comment';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useRouter } from 'next/navigation';
 
 function Home() {
     const [isLoading, setIsLoading] = useState(false);
     const isMobile = useMediaQuery('(max-width:768px)');
-
+    const router = useRouter()
     const randomColors = [
         "hotpink",
         "lightblue",
@@ -30,6 +31,13 @@ function Home() {
         return randomColors[Math.floor(Math.random() * randomColors.length)];
     };
 
+    const handleRoute = (forumsinfo: any) => {
+        var title = forumsinfo.title;
+        title = title.replace(/\s+/g, '-');
+        var lowerTitle = title.toLowerCase();
+        lowerTitle = '' + lowerTitle.replaceAll("?", "")
+        router.push(`/forums/${lowerTitle}/${forumsinfo.id}`);
+      };
     return (
         <Box sx={{ backgroundColor: '#f2f2f4' }}>
             {!isLoading ? (
@@ -40,17 +48,18 @@ function Home() {
                                 const randomColor = getRandomColor();
                                 return (
                                     <Grid container className={styles.forum_card_main} key={i}>
-                                        <Grid item xs={isMobile ? 2 : 1} className={styles.logo_grid}>
+                                        <Grid item xs={isMobile ? 1 : 1} className={styles.logo_grid}>
                                             <Box
                                                 className={styles.logo}
                                                 sx={{ backgroundColor: randomColor }}
+                                                onClick={() => handleRoute(e)}
                                             >
                                                 {e?.title?.slice(0, 1)}
                                             </Box>
                                         </Grid>
-                                        <Grid item xs={isMobile ? 10 : 11} className={styles.data_grid}>
+                                        <Grid item xs={isMobile ? 12 : 11} className={styles.data_grid}>
                                             <Typography className={styles.notice}>{e?.notic}</Typography>
-                                            <Typography className={styles.title}>{e?.title}</Typography>
+                                            <Typography className={styles.title} onClick={() => handleRoute(e)}>{e?.title}</Typography>
                                             <Typography className={styles.forum_detail}>
                                                 {e?.uname} <span style={{ marginLeft: 4, marginRight: 4 }}>·</span>
                                                 {e?.postdayago}d ago <span style={{ marginLeft: 4, marginRight: 4 }}>·</span>

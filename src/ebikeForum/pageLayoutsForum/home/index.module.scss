@@ -16,6 +16,9 @@
 
         .card_grid_main{
             padding: 5px 10px;
+            @media (max-width:768px) {
+                padding: 5px 0px !important;
+            }
 
             .forum_card_main{
                 width: 100%;
@@ -24,6 +27,9 @@
                 margin: 0px 0px 9px 0px;
                 padding: 9px 12px;
                 border-radius: .5rem;
+                @media (max-width:768px) {
+                    border-radius: 0px;
+                }
 
                 .logo_grid {
                     display: flex;
@@ -32,6 +38,9 @@
                     flex-wrap: wrap;
                     gap: 10px;
                     padding: 6px 0px 0px !important;
+                    @media (max-width:768px) {
+                        display: none;
+                    }
                   }
                   
                   .logo {
@@ -40,6 +49,7 @@
                     border-radius: 0.5rem;
                     display: flex;
                     justify-content: center;
+                    cursor: pointer;
                     align-items: center;
                     color: white;
                     font-family: sans-serif;
@@ -51,6 +61,10 @@
 
                 .data_grid{
                     padding: 0px 0px 0px 12px;
+                    @media (max-width:768px) {
+                        padding: 0px 0px 0px 0px !important;
+                        
+                    }
 
                     .notice{
                         font-size: 12px;
@@ -60,6 +74,7 @@
                         font-size: 18px;
                         font-weight: 600;
                         color: #06477A;
+                        cursor:pointer;
                         padding: 0px !important;
                     }
                     .forum_detail{
@@ -67,6 +82,8 @@
                         color: #3c3c3c;
                         box-sizing: border-box;
                         padding: 0px;
+                        width: 100%;
+                        display: inline-block;
                     }
                     .cmnt_btn{
                         padding: 2px 8px 0px !important;
@@ -85,6 +102,9 @@
             display: flex;
             flex-direction: column;
             padding: 5px 0px !important;
+            @media (max-width:768px) {
+                padding: 5px 10px !important;
+            }
 
             .motorcycle_forum{
                 border-radius: 10px;
