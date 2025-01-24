@@ -54,7 +54,7 @@ function Home() {
                                                 sx={{ backgroundColor: randomColor }}
                                                 onClick={() => handleRoute(e)}
                                             >
-                                                {e?.title?.slice(0, 1)}
+                                                {e?.uname?.slice(0, 1)}
                                             </Box>
                                         </Grid>
                                         <Grid item xs={isMobile ? 12 : 11} className={styles.data_grid}>
