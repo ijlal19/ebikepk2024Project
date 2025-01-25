@@ -12,9 +12,20 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 const Forum_details = () => {
     const isMobile = useMediaQuery('(max-width:768px)');
     const [isLoading, setIsLoading] = useState(false);
+    const [reply,setReply]=useState('')
     const params = useParams();
     const { slug2 } = params;
     const singledata = data.find(item => item.id === Number(slug2));
+
+    const PostReply =()=>{
+        if(reply){
+            alert(reply)
+            setReply('')
+        }
+        else{
+            alert('please write your reply')
+        }
+    }
     return (
         <Box className={styles.main}>
             {
@@ -78,6 +89,10 @@ const Forum_details = () => {
                                     )
                                 })
                             }
+                            <Box className={styles.comment_box}>
+                                <textarea name="" id="" className={styles.textarea} onChange={(e)=>setReply(e.target.value)} placeholder="Write your reply..."></textarea>
+                            </Box>
+                                <Button className={styles.postcmnt_btn} onClick={PostReply}>Post Reply</Button>
                         </Grid>
                         {/* ADD Grid */}
                         <Grid item xs={isMobile ? 12 : 3.5} className={styles.side_grid}>
