@@ -59,9 +59,6 @@ const Forum_details = () => {
                                     <Typography className={styles.shortdesc}>{userdata?.shortDescription}</Typography>
                                 </Box>
                             </Box>
-                            {/* <Box className={styles.image_box}>
-                                <img src={userdata?.userimage} alt={singledata?.title} className={styles.bike_image} />
-                            </Box> */}
                             <Box className={styles.sort_by}>
                                 Sort By <span>Oldest first</span>
                             </Box>
