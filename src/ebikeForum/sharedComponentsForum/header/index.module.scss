@@ -1,0 +1,139 @@
+.banner_box {
+    width: 100%;
+    height: auto;
+    position: relative;
+    object-fit: cover;
+    padding: 0px !important;
+    margin: 0px !important;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    .image {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        padding: 0px !important;
+        margin: 0px !important;
+
+        @media (max-width:450px) {
+            height: 100px;
+            padding: 10px 0px 0px 0px !important;
+        }
+    }
+
+    .header_main {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: black;
+        box-sizing: border-box;
+        padding: 0px !important;
+        margin: 0px !important;
+        display: flex;
+        justify-content: center !important;
+        align-items: center !important;
+
+        .header_container {
+            width: 100%;
+            height: 'auto';
+            margin: 0px 15px;
+            display: flex;
+            flex-direction: column;
+
+            @media (max-width:768px) {
+                margin: 0px 5px;
+                padding: 10px 20px 10px 20px !important;
+            }
+
+            .content_box {
+                box-sizing: border-box;
+                font-size: 14px;
+                height: auto;
+                padding: 20px 0px 20px 0px !important;
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center !important;
+
+                @media (max-width:768px) {
+                    padding: 10px 0px 10px 0px !important;
+                    justify-content: space-between;
+                }
+
+                .logo_box {
+                    width: 225px;
+                    height: 44px;
+                    display: flex;
+                    align-items: center !important;
+                    padding: 0px 0px 0px 0px !important;
+
+                    .logo_image {
+                        padding: 0px 0px 0px 0px !important;
+                        width: 100%
+                    }
+
+                    @media (max-width:768px) {
+                        width: 150px;
+                        height: 40px;
+                    }
+                }
+
+                .input_box {
+                    padding: 0px 0px 0px 0px !important;
+                    display: flex;
+                    width: 40%;
+                    height: 40px;
+                    align-items: center;
+                    margin: 0px 0px 0px 20px !important;
+                    justify-content: center;
+                    background-color: #3c3c3c;
+                    color: white !important;
+
+                    .input {
+                        padding: 0px 0px 0px 0px !important;
+                        color: white;
+                    }
+
+                    input::placeholder {
+                        color: white;
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            .mobile_input {
+                width: 100%;
+                padding: 10px 0px 0px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+                background-color: transparent;
+
+                .input_box {
+                    padding: 0px 0px 0px 0px !important;
+                    display: flex;
+                    width: 100%;
+                    height: 40px;
+                    align-items: center;
+                    margin: 0px 0px 0px 20px !important;
+                    justify-content: center;
+                    background-color: #3c3c3c;
+                    color: white !important;
+
+                    .input {
+                        padding: 0px 0px 0px 0px !important;
+                        color: white;
+                    }
+
+                    input::placeholder {
+                        color: white;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+
+    }
+}
