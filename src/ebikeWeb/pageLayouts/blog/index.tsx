@@ -93,8 +93,8 @@ const Blog = () => {
                 </Box>
               </Grid>
               <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3}>
+                <Adsense style={{ display:"block" }} client="ca-pub-5167970563180610" slot="4524790990" />
                 <Box className={styles.add_area_content}>
-                  <Adsense style={{ display:"block" }} client="ca-pub-5167970563180610" slot="4524790990" />
                 </Box>
               </Grid>
             </Grid>
