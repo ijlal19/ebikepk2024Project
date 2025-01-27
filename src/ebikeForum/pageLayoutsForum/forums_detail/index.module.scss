@@ -81,8 +81,8 @@
                     // }
 
                     .logo {
-                        width: 45px;
-                        height: 45px;
+                        width: 40px;
+                        height: 40px;
                         border-radius: 0.5rem;
                         display: flex;
                         justify-content: center;
@@ -92,7 +92,7 @@
                         background-color: grey;
                         font-family: sans-serif;
                         text-transform: capitalize;
-                        font-size: 26px;
+                        font-size: 24px;
                         padding: 0px !important;
                     }
 
@@ -181,8 +181,8 @@
                     // }
 
                     .logo {
-                        width: 45px;
-                        height: 45px;
+                        width: 40px;
+                        height: 40px;
                         border-radius: 0.5rem;
                         display: flex;
                         justify-content: center;
@@ -192,7 +192,7 @@
                         background-color: grey;
                         font-family: sans-serif;
                         text-transform: capitalize;
-                        font-size: 26px;
+                        font-size: 24px;
                         padding: 0px !important;
                     }
 
@@ -256,6 +256,9 @@
                 font-weight: bold;
                 margin: 9px 0px 0px;
                 float: right;
+                @media (max-width:768px) {
+                    margin-right: 10px;
+                }
             }
         }
 
@@ -269,102 +272,102 @@
                 display: none;
             }
 
-            .motorcycle_forum {
-                border-radius: 10px;
-                background-color: white;
-                padding: 18px !important;
-                margin-bottom: 9px;
+            // .motorcycle_forum {
+            //     border-radius: 10px;
+            //     background-color: white;
+            //     padding: 18px !important;
+            //     margin-bottom: 9px;
 
-                .heading {
-                    font-size: 1.125rem;
-                    font-weight: bold;
-                    margin: 0px 0px 4px;
-                    color: #191500;
-                }
+            //     .heading {
+            //         font-size: 1.125rem;
+            //         font-weight: bold;
+            //         margin: 0px 0px 4px;
+            //         color: #191500;
+            //     }
 
-                .forum_analys {
-                    font-size: 14px;
-                    color: #3c3c3c;
-                    padding-right: 19px !important;
-                }
+            //     .forum_analys {
+            //         font-size: 14px;
+            //         color: #3c3c3c;
+            //         padding-right: 19px !important;
+            //     }
 
-                .instruction {
-                    font-size: 14px;
-                    padding-top: 10px;
-                    text-align: left;
-                    color: #191500;
-                }
-                .explore_forums{
-                    font-size: 14px;
-                    font-weight: bold;
-                    color: #191500;
-                    margin: 0px 0px 8px;
-                }
-                .our_forums{
-                    font-size: 14px;
-                    margin:0px 0px 5px;
-                    text-decoration: none;
-                    color: #05355b;
-                }
+            //     .instruction {
+            //         font-size: 14px;
+            //         padding-top: 10px;
+            //         text-align: left;
+            //         color: #191500;
+            //     }
+            //     .explore_forums{
+            //         font-size: 14px;
+            //         font-weight: bold;
+            //         color: #191500;
+            //         margin: 0px 0px 8px;
+            //     }
+            //     .our_forums{
+            //         font-size: 14px;
+            //         margin:0px 0px 5px;
+            //         text-decoration: none;
+            //         color: #05355b;
+            //     }
 
-            }
-            .topcontributer{
-                border-radius: 10px;
-                background-color: white;
-                padding: 18px !important;
-                margin-bottom: 9px;
+            // }
+            // .topcontributer{
+            //     border-radius: 10px;
+            //     background-color: white;
+            //     padding: 18px !important;
+            //     margin-bottom: 9px;
 
-                .headeing_tismont{
-                    font-size: 18px;
-                    color: #191500;
-                    font-weight: bold;
-                    margin: 0px 0px 9px;
-                }
-                .logo_grid {
-                    display: flex;
-                    justify-content: left;
-                    align-items: center;
-                    column-gap: 10px;
-                    flex-wrap: wrap;
-                    padding: 6px 0px 0px !important;
+            //     .headeing_tismont{
+            //         font-size: 18px;
+            //         color: #191500;
+            //         font-weight: bold;
+            //         margin: 0px 0px 9px;
+            //     }
+            //     .logo_grid {
+            //         display: flex;
+            //         justify-content: left;
+            //         align-items: center;
+            //         column-gap: 10px;
+            //         flex-wrap: wrap;
+            //         padding: 6px 0px 0px !important;
 
-                    .logo {
-                        width: 35px;
-                        height: 35px;
-                        border-radius: 0.5rem;
-                        display: flex;
-                        justify-content: center;
-                        cursor: pointer;
-                        align-items: center;
-                        color: white;
-                        background-color: grey;
-                        font-family: sans-serif;
-                        text-transform: capitalize;
-                        font-size: 23px;
-                        padding: 0px !important;
-                    }
+            //         .logo {
+            //             width: 35px;
+            //             height: 35px;
+            //             border-radius: 0.5rem;
+            //             display: flex;
+            //             justify-content: center;
+            //             cursor: pointer;
+            //             align-items: center;
+            //             color: white;
+            //             background-color: grey;
+            //             font-family: sans-serif;
+            //             text-transform: capitalize;
+            //             font-size: 23px;
+            //             padding: 0px !important;
+            //         }
 
-                    .user_details_box {
-                        padding: 0px 0px 0px 0px !important;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
+            //         .user_details_box {
+            //             padding: 0px 0px 0px 0px !important;
+            //             display: flex;
+            //             flex-direction: column;
+            //             align-items: center;
 
-                        .username {
-                            color: #191500;
-                            font-weight: bold;
-                            font-size: 14px;
-                            padding: 0px 0px 0px 0px !important;
-                        }
+            //             .username {
+            //                 color: #191500;
+            //                 font-weight: bold;
+            //                 font-size: 14px;
+            //                 padding: 0px 0px 0px 0px !important;
+            //             }
 
-                        .post_join {
-                            font-size: 12px;
-                            padding: 0px 0px 0px 0px !important;
-                            color: #3c3c3c;
-                        }
-                    }
-                }
-            }
+            //             .post_join {
+            //                 font-size: 12px;
+            //                 padding: 0px 0px 0px 0px !important;
+            //                 color: #3c3c3c;
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
 }
