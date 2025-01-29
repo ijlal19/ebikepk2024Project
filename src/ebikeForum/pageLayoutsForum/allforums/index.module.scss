@@ -1,0 +1,345 @@
+@import '../../stylesForum/variable';
+
+.heading_box {
+    padding: 10px 20px !important;
+
+    .heading_inner_box {
+        padding: 0px 0px 0px 0px !important;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+
+        @media (max-width:768px) {
+            gap: 0.5rem;
+            flex-direction: column;
+        }
+
+        .banner_heading {
+            font-size: 32px;
+            color: #191500;
+            font-weight: normal;
+
+            @media (max-width:768px) {
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
+
+        .pencil_btn {
+            padding: 8px 16px !important;
+            width: 200px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: #085998;
+            color: white;
+            text-transform: none;
+            border-radius: .5rem;
+
+            @media (max-width:768px) {
+                width: 150px;
+                padding: 5px 10px !important;
+            }
+
+            .pencil_icon {
+                font-size: 14px;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.home_main {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0px auto;
+    background-color: #f2f2f4;
+    height: auto;
+    padding: 10px 0px;
+    box-sizing: border-box;
+
+    .home_grid_main {
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+
+        .card_grid_main {
+            padding: 5px 10px;
+
+            @media (max-width:768px) {
+                padding: 5px 0px !important;
+            }
+
+            .forums_box {
+                box-sizing: border-box;
+                padding: 6px 12px;
+                margin: 0px 0px 9px;
+                background-color: #ffffff;
+                border-radius: .5rem;
+
+                .logo_grid {
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    .logo {
+                        width: 36px;
+                        cursor: pointer;
+                        height: 36px;
+                        padding: 0px !important;
+                        border-radius: 50%;
+                        background-color: #06477a;
+                        display: flex;
+                        justify-content: center;
+                        font-size: 14px;
+                        margin: 6px 0px 0px;
+                        align-items: center;
+
+                        .comment_icon {
+                            font-size: 14px;
+                            color: white;
+                        }
+                    }
+                }
+
+                .card_main {
+                    display: flex;
+                    padding: 0px 0px 0px 0px;
+
+                    @media (max-width:768px) {
+                        padding: 0px 10px 0px 10px !important;
+                    }
+
+                    .card_details {
+                        padding: 0px 12px 0px 12px !important;
+
+                        @media (max-width:768px) {
+                            padding: 0px 0px 0px 0px !important;
+                        }
+
+                        .card_title {
+                            cursor: pointer;
+                            font-size: 16px;
+                            color: #06477a;
+                            font-weight: bold;
+                        }
+
+                        .card_desc {
+                            font-size: 12px;
+                            color: #3c3c3c;
+                        }
+                    }
+
+                    .card_analys {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .view_box {
+                            display: flex;
+                            align-items: center;
+                            color: #191500;
+                            font-size: 12px;
+                            column-gap: 5px;
+
+                            .view_box_inner {
+                                display: flex;
+                                align-items: center;
+                                color: #191500;
+                                font-size: 12px;
+                            }
+
+                            .analys_icon {
+                                display: inline-block;
+                                font-size: 14px;
+                                align-items: center;
+                                margin-right: 2px;
+                            }
+                        }
+
+                        .timeago {
+                            font-size: 12px;
+                            color: #3c3c3c;
+                        }
+                    }
+                }
+
+                @media (max-width:768px) {}
+            }
+
+        }
+
+        .inform_cards_grid {
+            display: flex;
+            flex-direction: column;
+            padding: 5px 0px !important;
+
+            @media (max-width:768px) {
+                display: none;
+                padding: 5px 10px !important;
+            }
+        }
+    }
+}
+
+
+.load_main {
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .load_div {
+        border: 1px solid #000;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+@media (max-width:768px) {
+    .load_main {
+        width: 100%;
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .load_div {
+            border: 1px solid #000;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    }
+}
+
+.popup_container {
+    width: 100%;
+    border-radius: 5px;
+    max-width: 430px;
+    min-width: 100px;
+    border: none !important;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+    @media (max-width:768px) {
+        max-width:350px;
+    }
+
+    .popup_main {
+        background-color: white;
+        width: 100%;
+        padding: 10px 10px 10px 10px !important;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+        .title_section {
+            width: 100%;
+            margin: 0px auto 5px auto;
+            display: flex;
+            column-gap: 5px;
+            justify-content: left;
+            padding: 0px 0px !important;
+
+            .logo {
+                padding: 0px 0px 0px 0px !important;
+                width: 35px;
+                height: 33px;
+                border-radius: 5px;
+                background-color: grey;
+                font-size: 20px;
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .title_input {
+                width: 95%;
+                border-radius: 5px;
+                padding: 6px;
+                background-color: #f2f2f2;
+                outline: none;
+                border: none;
+                color: #191500;
+
+            }
+
+            .title_input::placeholder {
+                color: grey;
+            }
+        }
+
+        .message_section {
+            width: 100%;
+            margin: 0px auto;
+            box-sizing: border-box;
+            padding: 0px 0px 15px 0px!important;
+            border-bottom: 1px solid #c8c4c4;
+
+            .label {
+                font-size: 18px;
+                font-weight: bold;
+                color: #191500;
+            }
+
+            .message_box {
+                width: 100%;
+                min-width: 100%;
+                box-sizing: border-box;
+                max-width: 100%;
+                background-color: white;
+                outline: none;
+                padding: 10px !important;
+                font-size: 14px;
+                max-height: 80px;
+                min-height: 80px;
+                margin: 5px 0px 0px 0px !important;
+                // border: none;
+            }
+            .tag_input{
+                width: 100%;
+                box-sizing: border-box;
+                margin: 5px 0px 0px 0px;
+                padding: 6px 10px;
+                font-size: 14px;
+                outline: none;
+                background-color: #f2f2f2;
+                border: none;
+                border-radius: 5px;
+            }
+        }
+
+        .btn_box{
+            display: flex;
+            justify-content: right;
+            column-gap: 10px;
+            box-sizing: border-box;
+            margin: 10px 0px 0px 0px !important;
+
+            .post_btn{
+                background-color: #085998;
+                color: white;
+                text-transform: none !important;
+                font-size: 12px;
+                padding: 3px 10px 3px 10px !important;
+            }
+            .cancel_btn{
+                background-color: white;
+                border: 1px solid #3c3c3c;
+                color: #191500;
+                text-transform: none !important;
+                font-size: 12px;
+                padding: 3px 10px 3px 10px!important;
+            }
+        }
+    }
+}

@@ -223,36 +223,4 @@ const data = [
         },
     }
 ]
-const Topforums = [
-    {
-        "id": 1,
-        "title": 'Motorcycle discusion',
-        "comment": '375K',
-        "views": '73M'
-    },
-    {
-        "id": 2,
-        "title": 'Motorcycle Repair',
-        "comment": '245K',
-        "views": '69M'
-    },
-    {
-        "id": 3,
-        "title": 'First Rider',
-        "comment": '223K',
-        "views": '58M'
-    },
-    {
-        "id": 4,
-        "title": 'Amazing Bike',
-        "comment": '180K',
-        "views": '40M'
-    },
-    {
-        "id": 5,
-        "title": 'Last Model',
-        "comment": '156K',
-        "views": '38M'
-    },
-]
-export { data, Topforums }
+export default data
