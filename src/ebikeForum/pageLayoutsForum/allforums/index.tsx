@@ -96,7 +96,7 @@ function Allforums() {
                                 {userdata?.comment?.map((e: any, i: any) => {
                                     const randomColor = getRandomColor();
                                     return (
-                                        <Grid container className={styles.forums_box}>
+                                        <Grid container className={styles.forums_box} key={i}>
                                             <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
                                                 <Box className={styles.logo}
                                                     sx={{ backgroundColor: randomColor }}>

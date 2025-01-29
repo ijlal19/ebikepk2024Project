@@ -34,7 +34,7 @@ const Home = () => {
                             data?.map((e: any, i: any) => {
                                 console.log('kk', e.username)
                                 return (
-                                    <Grid container className={styles.forums_box}>
+                                    <Grid container className={styles.forums_box} key={i}>
                                         <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
                                             <Box className={styles.logo}>
                                                 <CommentIcon className={styles.comment_icon} />
