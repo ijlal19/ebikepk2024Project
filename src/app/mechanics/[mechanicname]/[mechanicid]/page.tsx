@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MechanicsDetails from '@/ebikeWeb/pageLayouts/mechanic-details';
 import { Metadata } from 'next'
-import { getSimilarMechanics, getSingleMechanicsDetails } from '@/ebikeWeb/functions/globalFuntions';
+import { getSimilarMechanics, getSingleMechanicsDetails, capitalizeFirstWord } from '@/ebikeWeb/functions/globalFuntions';
 
 type Props = {
     params: { mechanicid: string }
@@ -11,11 +11,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { mechanicid } = params
     const data = await getSimilarMechanics(mechanicid)
     return {
-      title: data?.shop_name +' | '+ data?.bike_brand?.brandName + " Bike Mechanic in " + data?.city?.city_name + " | ebike.pk",
-      description: data?.bike_brand && data?.bike_brand?.brandName + " Bike Dealer in " + data?.city?.city_name + " | " + data?.address + " | ebike.pk",
+      title: capitalizeFirstWord(data?.shop_name) +' | '+ capitalizeFirstWord(data?.bike_brand?.brandName) + " Bike Mechanic in " + capitalizeFirstWord(data?.city?.city_name) + " | ebike.pk",
+      description: data?.bike_brand && capitalizeFirstWord(data?.bike_brand?.brandName) + " Bike Dealer in " + capitalizeFirstWord(data?.city?.city_name) + " | " + data?.address + " | ebike.pk",
       openGraph: {
-        title: data?.shop_name +' | '+ data?.bike_brand?.brandName + " Bike Mechanic in " + data?.city?.city_name + " | ebike.pk",
-        description: data?.bike_brand && data?.bike_brand?.brandName + " Bike Dealer in " + data?.city?.city_name + " | " + data?.address + " | ebike.pk",
+        title:  capitalizeFirstWord(data?.shop_name) +' | '+ capitalizeFirstWord(data?.bike_brand?.brandName) + " Bike Mechanic in " + capitalizeFirstWord(data?.city?.city_name) + " | ebike.pk",
+        description: data?.bike_brand && capitalizeFirstWord(data?.bike_brand?.brandName) + " Bike Dealer in " + capitalizeFirstWord(data?.city?.city_name) + " | " + data?.address + " | ebike.pk",
       },
     }
   }

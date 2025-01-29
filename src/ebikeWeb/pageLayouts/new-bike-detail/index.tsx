@@ -273,7 +273,7 @@ export default function NewBikeBrand() {
               })}
           </Box>
           <Box className={styles.other_card}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' />
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' onBtnClick={()=>{}}  />
           </Box>
         </> :
          <div className={styles.load_main}>

@@ -58,10 +58,10 @@ function NewBikesSection(props:any) {
           </Box>
 
           {props?.featuredData ? <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.featuredData} from='newBikeComp' currentpage="featured_bike" />
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.featuredData} from='newBikeComp' currentpage="featured_bike" onBtnClick={()=>{}}  />
           </CustomTabPanel> : "" }
           {props?.trendingData ? <CustomTabPanel value={value} index={1}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike'/>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike' onBtnClick={()=>{}} />
           </CustomTabPanel> : "" }
         </Box>
 

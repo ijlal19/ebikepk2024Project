@@ -3,6 +3,10 @@ import Gconfig from 'globalconfig'
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
 
+function capitalizeFirstWord(str:any) {
+    return str.replace(/^\w/, (c:any) => c.toUpperCase());
+}
+
 const numericOnly = (value: string) => {
     if (value == 'e') return false;
     return /^[0-9]*$/gm.test(value);
@@ -415,20 +419,34 @@ function getPostBlogcomment(data: any) {
             })
     }
 
-    // function getHomePageData() {
-    //     return fetch(`https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/824c76b9c3f353270706d74596af18a44aeac07f/gistfile1.json`, {
-    //             method: 'GET',
-    //             headers: { "Content-Type": "application/json" },
-    //             // body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
-    //         })
-    //         .then(response => response.json()).then(data => {
-    //             return data
-    //             console.log('home data')
-    //         })
-    //         .catch((err) => {
-    //             return { success: false }
-    //         })
-    // }
+    function getMyAds(uid:any) {
+        return fetch(Gconfig.ebikeApi + `classified/get-user-adds/${uid}`, {
+                method: 'GET',
+                headers: { "Content-Type": "application/json" },
+                // body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
+            })
+            .then(response => response.json()).then(data => {
+                return data
+            })
+            .catch((err) => {
+                return { success: false }
+            })
+    }
+
+    function MarkBikeAsSold(id:any, data:any) {
+        return fetch(Gconfig.ebikeApi + `classified/sold-used-bike/${id}`, {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json()).then(data => {
+                return data
+            })
+            .catch((err) => {
+                console.log(err) 
+            })
+    }
+    
 
 export {
     getPostcomment,getPostBlogcomment,getAllBlogComment,
@@ -439,5 +457,5 @@ export {
     getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
     isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
     getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
-    getAllFeaturedBike
+    getAllFeaturedBike, capitalizeFirstWord, getMyAds, MarkBikeAsSold
 }

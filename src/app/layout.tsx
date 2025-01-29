@@ -24,6 +24,15 @@ export default function RootLayout({  children }: Readonly<{ children: React.Rea
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           crossOrigin="anonymous"
         ></script>
+      
+      <script
+          async
+          defer
+          crossOrigin="anonymous"
+          src="https://connect.facebook.net/en_US/sdk.js"
+        ></script>
+
+
       </head>
       <body className={inter.className}>
         <Header/>

@@ -12,9 +12,10 @@ interface IProps {
     sliderData?: any; 
     from: string;
     currentpage:any
+    onBtnClick: any
 }
 
-const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, currentpage}:any) => {
+const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, currentpage, onBtnClick}:any) => {
     return (
         <Container className={`${styles.swiper_card_container} slider_swiper `}>
             <Swiper
@@ -54,6 +55,7 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                                         data={data} 
                                         from={from} 
                                         currentpage={currentpage} 
+                                        onBtnClick={onBtnClick}
                                     />
                                 }
                             </SwiperSlide>

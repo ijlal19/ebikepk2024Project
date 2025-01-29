@@ -58,6 +58,7 @@ const Section2 = () => {
               sliderName='featurSectionHomeSlider' 
               sliderData={feautureArray} 
               currentpage="" 
+              onBtnClick={()=>{}} 
             /> 
             :
             (feautureArray.map((data:any ,i:any) => {

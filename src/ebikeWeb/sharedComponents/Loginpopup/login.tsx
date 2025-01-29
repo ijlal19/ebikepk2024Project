@@ -1,12 +1,11 @@
 "use client"
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { Avatar, Container, Divider, Grid, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, OutlinedInput, TextField, Typography } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
-import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Link from 'next/link';
 import { validateEmail, userLogin } from "@/ebikeWeb/functions/globalFuntions"
@@ -22,6 +21,17 @@ export default function LoginPopup({props,values}: any) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    // window.fbAsyncInit = function () {
+    //   FB.init({
+    //     appId: '217553265854765',
+    //     cookie: true,
+    //     xfbml: true,
+    //     version: 'v16.0',
+    //   });
+    // };
+  },[])
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -62,9 +72,17 @@ export default function LoginPopup({props,values}: any) {
     props.showmodal('showloginpopup')
   }
 
-  const responseFacebook = (response:any) => {
-    console.log(response);
-  }
+  // const handleLogin = () => {
+    
+  //   FB.login(function (response) {
+  //     if (response.status === 'connected') {
+  //       console.log('Logged in:', response.authResponse);
+  //       // You can send the accessToken to your server for further processing
+  //     } else {
+  //       console.log('Login failed');
+  //     }
+  //   }, { scope: 'email' });
+  // };
 
   return (
     <div>
@@ -141,6 +159,8 @@ export default function LoginPopup({props,values}: any) {
                     callback={responseFacebook}
                   />
               </div> */}
+
+              {/* <button onClick={handleLogin} > Login with Facebook </button> */}
               
               <Divider/>
 
