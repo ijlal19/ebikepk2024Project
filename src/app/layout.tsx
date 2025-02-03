@@ -19,11 +19,11 @@ export default function RootLayout({  children }: Readonly<{ children: React.Rea
   return (
     <html lang="en">
        <head>
-        <script
+        {/* <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
           crossOrigin="anonymous"
-        ></script>
+        ></script> */}
       
       <script
           async

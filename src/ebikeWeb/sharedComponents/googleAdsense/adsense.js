@@ -18,15 +18,22 @@ const AdSense = ({ client, slot, style, format = "auto" }) => {
   }, []);
 
   return (
-    <div style={{ textAlign: "center", margin: "20px 0" }}>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client={client} // Replace with your AdSense publisher ID
-        data-ad-slot={slot} // Replace with your AdSense ad slot ID
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
+    <div>
+       <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+        crossOrigin="anonymous"
+      ></script>
+        <div style={{ textAlign: "center", margin: "20px 0" }}>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block' }}
+            data-ad-client={client} // Replace with your AdSense publisher ID
+            data-ad-slot={slot} // Replace with your AdSense ad slot ID
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+        </div>
     </div>
   );
 };
