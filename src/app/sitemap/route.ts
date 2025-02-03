@@ -62,7 +62,7 @@ export async function GET() {
         { loc: `${baseUrl}/used-bikes/bike-by-city/jhang/15`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-city/abbottabad/25`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-city/gujrat/17`, lastmod: new Date().toISOString() },
-        { loc: `${baseUrl}used-bikes/bike-by-city/dera-ismail-khan/28`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-city/dera-ismail-khan/28`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-city/bahawalnagar/126`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-year/2000/32`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-year/2001/33`, lastmod: new Date().toISOString() },
@@ -94,7 +94,7 @@ export async function GET() {
         { loc: `${baseUrl}/used-bikes/bike-by-cc/250/8`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-cc/300/9`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-cc/600/15`, lastmod: new Date().toISOString() },
-        { loc: `${baseUrl}/www.ebike.pk/used-bikes`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes`, lastmod: new Date().toISOString() },
     ];
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
