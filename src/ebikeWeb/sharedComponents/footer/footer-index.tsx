@@ -20,15 +20,15 @@ let cities_arr = [
 ]
 let year_arr = [
     { title: "Used Bike by Year", url: "" },
+    { title: "Years 2025", url: "/used-bikes/bike-by-year/2025/58" },
+    { title: "Years 2024", url: "/used-bikes/bike-by-year/2024/57" },
+    { title: "Years 2023", url: "/used-bikes/bike-by-year/2023/56" },
     { title: "Years 2022", url: "/used-bikes/bike-by-year/2022/55" },
     { title: "Years 2021", url: "/used-bikes/bike-by-year/2021/54" },
     { title: "Years 2020", url: "/used-bikes/bike-by-year/2020/53" },
     { title: "Years 2019", url: "/used-bikes/bike-by-year/2019/52" },
     { title: "Years 2018", url: "/used-bikes/bike-by-year/2018/51" },
-    { title: "Years 2017", url: "/used-bikes/bike-by-year/2017/50" },
-    { title: "Years 2016", url: "/used-bikes/bike-by-year/2016/49" },
-    { title: "Years 2015", url: "/used-bikes/bike-by-year/2015/48" },
-    { title: "Years 2014", url: "/used-bikes/bike-by-year/2014/47" },
+    { title: "Years 2017", url: "/used-bikes/bike-by-year/2017/50" }
 ]
 let cc_arr = [
     { title: "Used Bike by CC", url: "" },
