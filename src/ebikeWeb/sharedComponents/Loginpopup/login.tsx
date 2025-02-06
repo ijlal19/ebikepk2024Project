@@ -26,7 +26,7 @@ export default function LoginPopup({props,values}: any) {
     // Load the Facebook SDK script
     (window as any).fbAsyncInit = function () {
       (window as any).FB.init({
-        appId: '2175565', // Replace with your Facebook App ID
+        appId: '217553265854765', // Replace with your Facebook App ID
         cookie: true,
         xfbml: true,
         version: 'v3.2',
