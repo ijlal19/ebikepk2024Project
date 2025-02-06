@@ -21,15 +21,18 @@ export default function LoginPopup({props,values}: any) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  
+ 
 
   useEffect(() => {
+
     // Load the Facebook SDK script
     (window as any).fbAsyncInit = function () {
       (window as any).FB.init({
         appId: '217553265854765', // Replace with your Facebook App ID
         cookie: true,
         xfbml: true,
-        version: 'v3.2',
+        version: 'v19.0'
       });
 
       (window as any).FB.AppEvents.logPageView();
@@ -90,6 +93,7 @@ export default function LoginPopup({props,values}: any) {
   }
 
   const handleFacebookLogin = () => {
+    console.log('aasadad');
     (window as any).FB.login(
       (response:any) => {
         if (response.authResponse) {
