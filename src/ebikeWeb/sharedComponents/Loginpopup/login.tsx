@@ -23,15 +23,31 @@ export default function LoginPopup({props,values}: any) {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    // window.fbAsyncInit = function () {
-    //   FB.init({
-    //     appId: '217553265854765',
-    //     cookie: true,
-    //     xfbml: true,
-    //     version: 'v16.0',
-    //   });
-    // };
-  },[])
+    // Load the Facebook SDK script
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '2175565', // Replace with your Facebook App ID
+        cookie: true,
+        xfbml: true,
+        version: 'v3.2',
+      });
+
+      FB.AppEvents.logPageView();
+
+      // You can add additional FB event handlers or login logic here
+    };
+
+    // Load the Facebook SDK script dynamically
+    (function (d, s, id) {
+      const js = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      const fjs = d.createElement(s);
+      fjs.id = id;
+      fjs.src = 'https://connect.facebook.net/en_US/sdk.js';
+      js.parentNode.insertBefore(fjs, js);
+    })(document, 'script', 'facebook-jssdk');
+  }, []);
+
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -72,17 +88,19 @@ export default function LoginPopup({props,values}: any) {
     props.showmodal('showloginpopup')
   }
 
-  // const handleLogin = () => {
-    
-  //   FB.login(function (response) {
-  //     if (response.status === 'connected') {
-  //       console.log('Logged in:', response.authResponse);
-  //       // You can send the accessToken to your server for further processing
-  //     } else {
-  //       console.log('Login failed');
-  //     }
-  //   }, { scope: 'email' });
-  // };
+  const handleFacebookLogin = () => {
+    FB.login(
+      (response) => {
+        if (response.authResponse) {
+          console.log('User logged in successfully:', response);
+          // Handle successful login (e.g., send authResponse to your backend)
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+        }
+      },
+      { scope: 'public_profile,email' } // Add required permissions
+    );
+  };
 
   return (
     <div>
@@ -164,9 +182,13 @@ export default function LoginPopup({props,values}: any) {
               
               <Divider/>
 
+              <button onClick={handleFacebookLogin}>Login with Facebook</button>
+
               <Link href='/signup'  onClick={handlesignup}>
                 <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
               </Link>
+
+
             </div>
           </Container>
         </Box>
