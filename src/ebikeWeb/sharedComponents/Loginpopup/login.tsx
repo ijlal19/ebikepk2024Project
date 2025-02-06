@@ -24,28 +24,29 @@ export default function LoginPopup({props,values}: any) {
 
   useEffect(() => {
     // Load the Facebook SDK script
-    window.fbAsyncInit = function () {
-      FB.init({
+    (window as any).fbAsyncInit = function () {
+      (window as any).FB.init({
         appId: '2175565', // Replace with your Facebook App ID
         cookie: true,
         xfbml: true,
         version: 'v3.2',
       });
 
-      FB.AppEvents.logPageView();
+      (window as any).FB.AppEvents.logPageView();
 
       // You can add additional FB event handlers or login logic here
     };
 
     // Load the Facebook SDK script dynamically
     (function (d, s, id) {
-      const js = d.getElementsByTagName(s)[0];
+      let js: HTMLScriptElement;
+      const fjs = d.createElement(s) as HTMLScriptElement; // Cast to HTMLScriptElement
       if (d.getElementById(id)) return;
-      const fjs = d.createElement(s);
       fjs.id = id;
-      fjs.src = 'https://connect.facebook.net/en_US/sdk.js';
-      js.parentNode.insertBefore(fjs, js);
-    })(document, 'script', 'facebook-jssdk');
+      fjs.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.async = true; // Recommended for non-blocking load
+      d.getElementsByTagName("head")[0].appendChild(fjs);
+    })(document, "script", "facebook-jssdk");
   }, []);
 
  
@@ -89,8 +90,8 @@ export default function LoginPopup({props,values}: any) {
   }
 
   const handleFacebookLogin = () => {
-    FB.login(
-      (response) => {
+    (window as any).FB.login(
+      (response:any) => {
         if (response.authResponse) {
           console.log('User logged in successfully:', response);
           // Handle successful login (e.g., send authResponse to your backend)
