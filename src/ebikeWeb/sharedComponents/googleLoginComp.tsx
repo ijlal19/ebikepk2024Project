@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { userSignup } from "@/ebikeWeb/functions/globalFuntions"
+const jsCookie = require('js-cookie');
 
 declare global {
   interface Window {
@@ -35,15 +37,47 @@ const GoogleLoginButton = () => {
     };
   }, []);
 
-  const prepareLoginButton = (auth2: any) => {
+  const prepareLoginButton =  (auth2: any) => {
     // Your logic to prepare the login button
     console.log('Auth2 initialized:', auth2);
     // Example: Attach a click handler to a button
     const button = document.getElementById('google-login-button');
     if (button) {
       button.addEventListener('click', () => {
-        auth2.signIn().then((user: any) => {
-          console.log('User signed in:', user);
+        auth2.signIn().then(async(user: any) => {
+        //   console.log('User signed in:', user);
+
+          const profile = user.getBasicProfile();
+          const userId = profile.getId(); // User ID
+          const userName = profile.getName(); // User's full name
+          const userEmail = profile.getEmail(); // User's email address
+  
+          // Log the details
+          console.log('User ID:', userId);
+          console.log('User Name:', userEmail);
+          console.log('User Email:', userEmail);
+
+        //   social_uid:req.body.social_uid,
+        //   //email : req.body.email,
+        //   signupType : req.body.signupType,
+        //   isVerified : req.body.isVerified,
+        //   userFullName: req.body.userFullName
+
+        let obj = {
+            social_uid: userId,
+            signupType: 'social',
+            isVerified : true,
+            userFullName: userName
+        }
+
+        let res = await userSignup(obj)
+        console.log('res', res)
+
+        if(res.success && res.login) {
+            let userObj = JSON.stringify(res.user)
+            jsCookie.set('userInfo_e', userObj, {expires: 1})
+            jsCookie.set('accessToken_e', res.accessToken, {expires: 1})
+        }
         });
       });
     }
