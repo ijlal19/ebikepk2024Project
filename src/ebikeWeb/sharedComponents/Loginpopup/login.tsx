@@ -11,8 +11,7 @@ import Link from 'next/link';
 import { validateEmail, userLogin } from "@/ebikeWeb/functions/globalFuntions"
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
-
-
+import GoogleLoginButton from '../googleLoginComp';
 
 export default function LoginPopup({props,values}: any) {
   
@@ -25,7 +24,7 @@ export default function LoginPopup({props,values}: any) {
  
 
   useEffect(() => {
-
+  
     // Load the Facebook SDK script
     (window as any).fbAsyncInit = function () {
       (window as any).FB.init({
@@ -51,6 +50,7 @@ export default function LoginPopup({props,values}: any) {
       d.getElementsByTagName("head")[0].appendChild(fjs);
     })(document, "script", "facebook-jssdk");
   }, []);
+
 
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -188,6 +188,8 @@ export default function LoginPopup({props,values}: any) {
               <Divider/>
 
               <button onClick={handleFacebookLogin}>Login with Facebook</button>
+
+              <GoogleLoginButton/>
 
               <Link href='/signup'  onClick={handlesignup}>
                 <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>

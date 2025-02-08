@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.4",
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.61",
     "bootstrap": "^5.3.3",
     "express": "^4.21.0",
     "isomorphic-unfetch": "^4.0.2",
