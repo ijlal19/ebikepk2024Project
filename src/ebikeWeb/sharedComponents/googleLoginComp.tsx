@@ -73,10 +73,11 @@ const GoogleLoginButton = () => {
         let res = await userSignup(obj)
         console.log('res', res)
 
-        if(res.success && res.login) {
+        if(res.token && res.user) {
             let userObj = JSON.stringify(res.user)
             jsCookie.set('userInfo_e', userObj, {expires: 1})
-            jsCookie.set('accessToken_e', res.accessToken, {expires: 1})
+            jsCookie.set('accessToken_e', res.token , {expires: 1})
+            window?.location?.reload()
         }
         });
       });
