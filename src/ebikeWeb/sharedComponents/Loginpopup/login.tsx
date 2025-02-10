@@ -187,7 +187,7 @@ export default function LoginPopup({props,values}: any) {
               
               <Divider/>
 
-              <button onClick={handleFacebookLogin}>Login with Facebook</button>
+              {/* <button onClick={handleFacebookLogin}>Login with Facebook</button> */}
 
               <GoogleLoginButton/>
 

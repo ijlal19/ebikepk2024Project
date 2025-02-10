@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { userSignup } from "@/ebikeWeb/functions/globalFuntions"
 const jsCookie = require('js-cookie');
+import { useRouter } from 'next/navigation'
 
 declare global {
   interface Window {
@@ -10,6 +11,9 @@ declare global {
 }
 
 const GoogleLoginButton = () => {
+  
+  const Router = useRouter()
+
   useEffect(() => {
     // Define the global callback function
     window.googleSDKLoaded = () => {
@@ -45,7 +49,6 @@ const GoogleLoginButton = () => {
     if (button) {
       button.addEventListener('click', () => {
         auth2.signIn().then(async(user: any) => {
-        //   console.log('User signed in:', user);
 
           const profile = user.getBasicProfile();
           const userId = profile.getId(); // User ID
@@ -57,28 +60,27 @@ const GoogleLoginButton = () => {
           console.log('User Name:', userEmail);
           console.log('User Email:', userEmail);
 
-        //   social_uid:req.body.social_uid,
-        //   //email : req.body.email,
-        //   signupType : req.body.signupType,
-        //   isVerified : req.body.isVerified,
-        //   userFullName: req.body.userFullName
+          let obj = {
+              social_uid: userId,
+              signupType: 'social',
+              isVerified : true,
+              userFullName: userName
+          }
 
-        let obj = {
-            social_uid: userId,
-            signupType: 'social',
-            isVerified : true,
-            userFullName: userName
-        }
-
-        let res = await userSignup(obj)
-        console.log('res', res)
+          let res = await userSignup(obj)
+          console.log('res', res)
 
         if(res.token && res.user) {
             let userObj = JSON.stringify(res.user)
             jsCookie.set('userInfo_e', userObj, {expires: 1})
             jsCookie.set('accessToken_e', res.token , {expires: 1})
-            window?.location?.reload()
-        }
+            Router.push(`/`);
+            setTimeout(()=>{
+              window?.location?.reload()
+
+            },500)
+          }
+
         });
       });
     }
