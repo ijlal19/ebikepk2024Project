@@ -2,7 +2,7 @@ import * as React from 'react';
 import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index';
 import { Metadata } from 'next'
 import {getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
-
+import Head from 'next/head';
 
 type Props = {
     params: { id: string }
@@ -26,6 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function Blog() {
     return (
+      <>
+      <Head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+          crossOrigin="anonymous"
+        ></script>
+        </Head>
         <BlogDetails /> 
+        </>
     )
 }

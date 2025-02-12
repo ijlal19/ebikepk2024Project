@@ -1,6 +1,8 @@
 import * as React from 'react';
 import BlogComp from "@/ebikeWeb/pageLayouts/blog/index"
 import { Metadata } from 'next'
+import Head from 'next/head';
+
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,6 +18,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Blog() { 
     return (
+      <>
+        <Head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+            crossOrigin="anonymous"
+          ></script>
+        </Head>
         <BlogComp/>
+      </>
     )
 }

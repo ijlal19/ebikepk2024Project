@@ -2,6 +2,7 @@ import * as React from 'react';
 import DealerDetails from '@/ebikeWeb/pageLayouts/dealer-details/index'; 
 import { Metadata } from 'next'
 import { getSingleDealerDetails, capitalizeFirstWord } from "@/ebikeWeb/functions/globalFuntions"
+import Head from 'next/head';
 
 type Props = {
     params: { dealerid: string }
@@ -23,6 +24,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default function DealersDetails() { 
     return (
+      <>
+        <Head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+            crossOrigin="anonymous"
+          ></script>
+        </Head>
         <DealerDetails/>
+      </>  
     )
 }
