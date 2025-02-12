@@ -3,6 +3,7 @@ import MechanicsDetails from '@/ebikeWeb/pageLayouts/mechanic-details';
 import { Metadata } from 'next'
 import { getSimilarMechanics, getSingleMechanicsDetails, capitalizeFirstWord } from '@/ebikeWeb/functions/globalFuntions';
 import Head from 'next/head';
+import Script from 'next/script';
 
 type Props = {
     params: { mechanicid: string }
@@ -24,13 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function MechanicDetails() { 
     return (
       <>
-        <Head>
-          <script
+        
+          <Script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
             crossOrigin="anonymous"
-          ></script>
-        </Head>
+          ></Script>
+        
         <MechanicsDetails/>
         </>
     )
