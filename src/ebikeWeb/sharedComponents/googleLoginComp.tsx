@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = (props:any) => {
   
   const Router = useRouter()
 
@@ -74,11 +74,13 @@ const GoogleLoginButton = () => {
             let userObj = JSON.stringify(res.user)
             jsCookie.set('userInfo_e', userObj, {expires: 1})
             jsCookie.set('accessToken_e', res.token , {expires: 1})
-            Router.push(`/`);
-            setTimeout(()=>{
-              window?.location?.reload()
+            props.showmodal()
+            props.updateAfterLogin()
+            // Router.push(`/`);
+            // setTimeout(()=>{
+            //   window?.location?.reload()
 
-            },500)
+            // },500)
           }
 
         });
