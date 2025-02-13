@@ -24,11 +24,11 @@ export default function Dealers() {
           as="script"
           crossOrigin="anonymous" // Add this
         /> */}
-        <Script
+        {/* <Script
          strategy="beforeInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
           crossOrigin="anonymous"
-        ></Script>
+        ></Script> */}
       
         <Dealer/>
         </>

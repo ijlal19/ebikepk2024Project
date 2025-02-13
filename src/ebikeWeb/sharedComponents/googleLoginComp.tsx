@@ -110,12 +110,12 @@ const GoogleLoginButton = (props: any) => {
 
   useEffect(() => {
     const initializeGoogleOneTap = () => {
-      window?.google?.accounts?.id?.initialize({
+      window.google.accounts.id.initialize({
         client_id: '695671409592-1id3ruo8n70o8ugi5k2vvu0sabifan98.apps.googleusercontent.com',
         callback: handleCredentialResponse,
       });
 
-      window?.google?.accounts?.id?.prompt((notification:any) => {
+      window.google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed() || notification.isSkipped()) {
           console.log('Google One Tap prompt was not displayed or was skipped.');
         }
