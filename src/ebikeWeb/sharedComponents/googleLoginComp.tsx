@@ -133,6 +133,7 @@ const GoogleLoginButton = (props: any) => {
       console.log('User ID:', userId);
       console.log('User Name:', userName);
       console.log('User Email:', userEmail);
+      console.log('User Email: aaa');
 
       let obj = {
         social_uid: userId,
