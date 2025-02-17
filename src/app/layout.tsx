@@ -5,6 +5,7 @@ import Header from '@/ebikeWeb/sharedComponents/header/index'
 import Footer from '@/ebikeWeb/sharedComponents/footer/footer-index'
 import Script from "next/script";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +29,22 @@ export default function RootLayout({  children }: Readonly<{ children: React.Rea
           crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js"
         ></script>
+
+      {/* <Script
+          src="https://connect.facebook.net/en_US/sdk.js"
+          strategy="lazyOnload"
+          onLoad={() => {
+            (window as any).fbAsyncInit = function () {
+              FB.init({
+                appId: 'YOUR_APP_ID',
+                cookie: true,
+                xfbml: true,
+                version: 'v18.0',
+              });
+              FB.AppEvents.logPageView();
+            };
+          }}
+        /> */}
 
 
       </head>

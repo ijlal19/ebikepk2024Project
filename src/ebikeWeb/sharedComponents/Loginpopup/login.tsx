@@ -31,7 +31,8 @@ export default function LoginPopup({props,values}: any) {
         appId: '217553265854765', // Replace with your Facebook App ID
         cookie: true,
         xfbml: true,
-        version: 'v19.0'
+        // version: 'v19.0'
+        version: 'v3.2' 
       });
 
       (window as any).FB.AppEvents.logPageView();
@@ -103,7 +104,7 @@ export default function LoginPopup({props,values}: any) {
           console.log('User cancelled login or did not fully authorize.');
         }
       },
-      { scope: 'public_profile,email' } // Add required permissions
+      { scope: 'public_profile' } // Add required permissions
     );
   };
 
@@ -187,7 +188,7 @@ export default function LoginPopup({props,values}: any) {
               
               <Divider/>
 
-              {/* <button onClick={handleFacebookLogin}>Login with Facebook</button> */}
+              <button id="login_with_FB" onClick={handleFacebookLogin}>Login with Facebook</button>
 
               <GoogleLoginButton  
                 showmodal = {() => props.showmodal('showloginpopup')}
