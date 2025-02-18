@@ -179,7 +179,7 @@ export default function GoogleSignIn(props:any) {
           }
 
           let res = await userSignup(obj)
-          console.log('res', res)
+          console.log('res 111', res)
 
           if(res.token && res.user) {
             let userObj = JSON.stringify(res.user)
