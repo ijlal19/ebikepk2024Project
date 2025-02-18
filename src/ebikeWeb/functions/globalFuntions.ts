@@ -4,7 +4,7 @@ import Gconfig from 'globalconfig'
 const jsCookie = require('js-cookie');
 
 function capitalizeFirstWord(str:any) {
-    return str.replace(/^\w/, (c:any) => c.toUpperCase());
+    return str?.replace(/^\w/, (c:any) => c.toUpperCase());
 }
 
 const numericOnly = (value: string) => {
