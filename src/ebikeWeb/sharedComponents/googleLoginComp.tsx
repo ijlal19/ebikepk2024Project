@@ -159,7 +159,7 @@ export default function GoogleSignIn(props:any) {
     console.log("Decoded token:", decodedToken);
 
     // Extract user info
-    const { name, email, picture, sub } = decodedToken;
+    const { name, email, picture, sub, jti } = decodedToken;
 
           // const profile = user.getBasicProfile();
           // const userId = profile.getId(); // User ID
@@ -172,7 +172,7 @@ export default function GoogleSignIn(props:any) {
           // console.log('User Email:', userEmail);
 
           let obj = {
-              social_uid: response.credential,
+              social_uid: jti,
               signupType: 'social',
               isVerified : true,
               userFullName: name

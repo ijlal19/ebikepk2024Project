@@ -190,10 +190,12 @@ export default function LoginPopup({props,values}: any) {
 
               <button id="login_with_FB" onClick={handleFacebookLogin}>Login with Facebook</button>
 
-              <GoogleLoginButton  
-                showmodal = {() => props.showmodal('showloginpopup')}
-                updateAfterLogin = {() => props.updateAfterLogin()}
-              />
+              <div style={{ marginTop:"10px", textAlign:"center" }}>
+                  <GoogleLoginButton  
+                    showmodal = {() => props.showmodal('showloginpopup')}
+                    updateAfterLogin = {() => props.updateAfterLogin()}
+                  />
+              </div>
 
               <Link href='/signup'  onClick={handlesignup}>
                 <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
