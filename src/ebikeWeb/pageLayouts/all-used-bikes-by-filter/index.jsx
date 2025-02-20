@@ -61,6 +61,15 @@ const AllUsedBikeByFilter = () => {
                 window.scrollTo(0, 0)
             }, 1000);
         }
+        else if (from?.indexOf('brand') > -1) {
+            let id = params.id1
+            let res = await getBikesBySpecificFilter('brand', id, getAdFrom + 10)
+            setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
+            setAllBikesArr(res)
+            setTimeout(() => {
+                window.scrollTo(0, 0)
+            }, 1000);
+        }
 
         setIsLoading(false)
         setTimeout(() => {

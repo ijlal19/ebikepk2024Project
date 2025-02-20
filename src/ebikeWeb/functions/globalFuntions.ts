@@ -240,7 +240,7 @@ function uplaodImageFunc(data: any) {
     })
 }
 function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
-
+    // /get-adds-by-brand-offset
     if (from == 'city') {
         return fetch(Gconfig.ebikeApi + `classified/get-adds-by-city-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
@@ -259,6 +259,14 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
     }
     else if (from == "year") {
         return fetch(Gconfig.ebikeApi + `classified/get-adds-by-year-offset/${id}/${getAdFrom}/12`, {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }).then(response => response.json()).then(data => {
+            return data
+        })
+    }
+    else if (from == "brand") {
+        return fetch(Gconfig.ebikeApi + `classified/get-adds-by-brand-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
@@ -448,6 +456,20 @@ function getPostBlogcomment(data: any) {
     }
     
 
+    function sendEmailLetter(data:any) {
+        return fetch(Gconfig.ebikeApi + `news-letter/create`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err) 
+        })
+    }
+
 export {
     getPostcomment,getPostBlogcomment,getAllBlogComment,
      getSingleBlogData, createmechanic, createdealer,
@@ -457,5 +479,5 @@ export {
     getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
     isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
     getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
-    getAllFeaturedBike, capitalizeFirstWord, getMyAds, MarkBikeAsSold
+    getAllFeaturedBike, capitalizeFirstWord, getMyAds, MarkBikeAsSold, sendEmailLetter
 }

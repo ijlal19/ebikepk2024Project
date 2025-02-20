@@ -6,6 +6,7 @@ import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-mat
 import { useState } from "react";
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { sendEmailLetter, validateEmail } from "@/ebikeWeb/functions/globalFuntions"
 
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
@@ -59,14 +60,14 @@ let catagory_arr = [
 
 let brand_arr = [
     { title: "Used Bike by Brand", url: "" },
-    { title: "Honda Bikes", url: "" },
-    { title: "United Bikes", url: "" },
-    { title: "Zxmco Bikes", url: "" },
-    { title: "Unique Bikes", url: "" },
-    { title: "Yamaha Bikes", url: "" },
-    { title: "Road Prince", url: "" },
-    { title: "Super Power", url: "" },
-    { title: "Super Star", url: "" }
+    { title: "Honda Bikes", url: "/used-bikes/bike-by-brand/honda/1" },
+    { title: "United Bikes", url: "/used-bikes/bike-by-brand/united/8" },
+    { title: "Zxmco Bikes", url: "/used-bikes/bike-by-brand/zxmco/10" },
+    { title: "Unique Bikes", url: "/used-bikes/bike-by-brand/unique/16" },
+    { title: "Yamaha Bikes", url: "/used-bikes/bike-by-brand/yamaha/7" },
+    { title: "Road Prince", url: "/used-bikes/bike-by-brand/road_prince/19" },
+    { title: "Super Power", url: "/used-bikes/bike-by-brand/super_power/5" },
+    { title: "Hi Speed", url: "/used-bikes/bike-by-brand/hi_speed/24" }
 ]
 
 let headerlink_arr = [
@@ -83,9 +84,16 @@ export default function Footer() {
     const isMobile = useMediaQuery('(max-width: 768px)');
     const isMobileUl = useMediaQuery('(max-width: 580px)');
 
-    function SendMail(e: any) {
+    async function SendMail(e: any) {
         e.preventDefault()
-        alert(Mail)
+        if(validateEmail(Mail)) {
+            let obj = {email: Mail}
+            let res = await sendEmailLetter(obj)
+            alert('Email Submitted Successfully')
+        }
+        else {
+            alert('please enter correct email')
+        }
     }
 
     function FooterLinks(arr: any) {
@@ -136,9 +144,9 @@ export default function Footer() {
                                 {FooterLinks(catagory_arr)}
                             </Grid>
 
-                            {/* <Grid item xs={isMobileUl ? 6 : 4}>
+                            <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(brand_arr)}
-                            </Grid> */}
+                            </Grid>
 
                             <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(headerlink_arr)}

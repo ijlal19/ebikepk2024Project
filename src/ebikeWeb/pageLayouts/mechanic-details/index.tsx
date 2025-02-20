@@ -54,7 +54,7 @@ const MechanicsDetails = () => {
     var shop_name = bike.shop_name;
     shop_name = shop_name.replace(/\s+/g, '-');
     var lowerTitle = shop_name.toLowerCase();
-    router.push(`/dealers/${lowerTitle}/${bike.id}`)
+    router.push(`/mechanics/${lowerTitle}/${bike.id}`)
 }
 
 const isMobile = useMediaQuery('(max-width:562px)')
@@ -75,7 +75,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
             <div className={styles.main_card_details}>
               <p className={styles.shop_name}>{MechanicsDetails?.shop_name}</p>
               <p className={styles.address}><BadgeIcon
-              className={styles.icon}/>Mechanic in - {MechanicsDetails?.address?.slice(36)}</p>
+              className={styles.icon}/>Mechanic in - {MechanicsDetails?.city?.city_name}</p>
               <p className={styles.full_address}><LocationOnIcon
               className={styles.icon}/>{MechanicsDetails?.address}</p>
               <p className={styles.phone}><PhoneIcon
@@ -88,7 +88,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
         <div className={styles.more_dealers}>
           <div className={styles.similar_dealer_heading_box}>
             <p className={styles.heading}>Similar Mechanics</p>
-            <p onClick={()=> router.push('/dealers') } className={styles.view_all_dealers}>View All Dealers</p>
+            <p onClick={()=> router.push('/mechanics') } className={styles.view_all_dealers}>View All Mechanics</p>
           </div>
           <div className={styles.more_dealers_card}>
             {
@@ -133,10 +133,10 @@ const isMobile = useMediaQuery('(max-width:562px)')
     </>
     :
     <div className={styles.load_main}>
-          <div className={styles.load_div}>
-            <Loader isLoading={isLoading} />
-          </div>
-          </div>
+      <div className={styles.load_div}>
+        <Loader isLoading={isLoading} />
+      </div>
+    </div>
     }
     </>
 
