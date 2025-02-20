@@ -15,15 +15,15 @@ import Modal from '@mui/material/Modal';
 function Allforums() {
     const isMobile = useMediaQuery('(max-width:768px)');
     const [isLoading, setIsLoading] = useState(false);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [threadTitle,setTitle]=useState('')
     const [threadMessage,setMessage]=useState('')
     const [threadTag,setTag]=useState('')
     const {slug2 } = useParams()
     const router = useRouter()
 
-    const userdata = data.find(item => item.id === Number(slug2));
-
+    const userdata = data.find(item => item.c_id === Number(slug2));
+console.log(userdata)
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -45,11 +45,11 @@ function Allforums() {
     };
 
     const handleRoute = (forumsinfo: any) => {
-        var title = forumsinfo.title;
-        title = title.replace(/\s+/g, '-');
-        var lowerTitle = title.toLowerCase();
+        var name = forumsinfo.name;
+        name = name.replace(/\s+/g, '-');
+        var lowerTitle = name.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        router.push(`/threads/${lowerTitle}/${forumsinfo.id}`);
+        router.push(`/threads/${lowerTitle}/${forumsinfo.s_id}`);
     };
 
     const style = {
@@ -81,7 +81,7 @@ function Allforums() {
             <Box className={styles.heading_box}>
                 <Box className={styles.heading_inner_box}>
                     <Typography className={styles.banner_heading}>
-                        {userdata?.title}
+                        {userdata?.name}
                     </Typography>
                     <Button className={styles.pencil_btn} onClick={handleOpen}>
                         <CreateIcon className={styles.pencil_icon} /> Creat thread
@@ -106,8 +106,8 @@ function Allforums() {
                                             <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                                 <Grid container>
                                                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                        <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.title}</Typography>
-                                                        <Typography className={styles.card_desc}>{e?.username}<span style={{ marginLeft: 4, marginRight: 4, fontWeight: 'bold' }}>·</span>{e?.postdate}</Typography>
+                                                        <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.name}</Typography>
+                                                        <Typography className={styles.card_desc}>{e?.user_name}<span style={{ marginLeft: 4, marginRight: 4, fontWeight: 'bold' }}>·</span>{e?.postdate}</Typography>
                                                     </Grid>
 
                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>

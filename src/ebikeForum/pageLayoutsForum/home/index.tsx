@@ -12,12 +12,12 @@ const Home = () => {
     const router = useRouter()
 
     const handleRoute = (forumsinfo: any) => {
-        var title = forumsinfo.title;
-        title = title.replace(/\s+/g, '-');
-        title = title.replace('\/', '-');
-        var lowerTitle = title.toLowerCase();
+        var name = forumsinfo.name;
+        name = name.replace(/\s+/g, '-');
+        name = name.replace('\/', '-');
+        var lowerTitle = name.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        router.push(`/forums/${lowerTitle}/${forumsinfo.id}`);
+        router.push(`/forums/${lowerTitle}/${forumsinfo.c_id}`);
       };
     return (
         <Box sx={{ backgroundColor: '#f2f2f2', }}>
@@ -43,7 +43,7 @@ const Home = () => {
                                         <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                             <Grid container>
                                                 <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                    <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.title}</Typography>
+                                                    <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.name}</Typography>
                                                     <Typography className={styles.card_desc}  sx={{display:isMobile ? 'none':''}}>{e?.description.slice(0, 80)}</Typography>
                                                 </Grid>
 

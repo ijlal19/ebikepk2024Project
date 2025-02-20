@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from './index.module.scss';
 import Loader from "@/ebikeForum/sharedComponentsForum/loader/loader";
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
-import  data  from "../home/data";
+import data from "../home/data";
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -16,27 +16,40 @@ const Forum_details = () => {
     const [reply, setReply] = useState('')
     const params = useParams();
     const { slug2 } = params;
-    const singledata = data.find(item => item.id === Number(slug2));
-    const userdata = singledata?.comment.find(items => items.id === Number(slug2));
-    console.log('klkl',userdata)
+    const singledata = data.find(item => item.c_id === Number(slug2));
+    const userdata = singledata?.comment.find(items => items.s_id === Number(slug2));
+    console.log('klkl', userdata)
+
     const PostReply = () => {
         if (reply) {
-            alert(reply)
+            // alert(reply)
+            const obj = {
+                "id": 12,
+                "title": 'Zahoor',
+                "views": '32',
+                "participants": '24',
+                "username": 'Zahid',
+                "totalpost": '110',
+                "joindate": '2016',
+                "postdate": '27-feb-2025',
+                "shortDescription": reply
+            }
             setReply('')
+            data[0].comment[0].reply.push(obj)
         }
         else {
             alert('please write your reply')
         }
     }
+
     return (
         <Box className={styles.main}>
             {
                 !isLoading ?
                     <Grid container className={styles.forums_details_main} sx={{ display: 'flex', justifyContent: 'space-between', boxSizing: 'border-box' }}>
-                        {/* Data Grid */}
                         <Grid item xs={isMobile ? 12 : 8.5} className={styles.details_box}>
                             <Box className={styles.user_detail_box}>
-                                <Typography className={styles.title}>{userdata?.title}</Typography>
+                                <Typography className={styles.title}>{userdata?.name}</Typography>
                                 <Box className={styles.analys_box}>
                                     <Button disableRipple className={styles.analys_btn}><RemoveRedEyeOutlinedIcon className={styles.analys_icon} /> {userdata?.views} views</Button>
                                     <Button disableRipple className={styles.analys_btn}><CommentOutlinedIcon className={styles.analys_icon} /> {userdata?.reply?.length} replies</Button>
@@ -45,18 +58,18 @@ const Forum_details = () => {
                                 <Box className={styles.logo_grid}>
                                     <Box
                                         className={styles.logo}>
-                                        {singledata?.username?.slice(0, 1)}
+                                        {singledata?.user_name?.slice(0, 1)}
                                     </Box>
                                     <Box className={styles.user_details_box}>
                                         <Box>
-                                            <Typography className={styles.username}>{singledata?.username}</Typography>
+                                            <Typography className={styles.username}>{singledata?.user_name}</Typography>
                                             <Typography className={styles.post_join}>{userdata?.totalpost} post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {userdata?.joindate}</Typography>
                                         </Box>
                                     </Box>
                                     <Typography className={styles.days_ago}>#1<span style={{ marginLeft: 4, marginRight: 4 }}>·</span>2d ago</Typography>
                                 </Box>
                                 <Box className={styles.desc_box}>
-                                    <Typography className={styles.shortdesc}>{userdata?.shortDescription}</Typography>
+                                    <Typography className={styles.shortdesc}>{userdata?.description}</Typography>
                                 </Box>
                             </Box>
                             <Box className={styles.sort_by}>
@@ -89,12 +102,12 @@ const Forum_details = () => {
                                 })
                             }
                             <Box className={styles.comment_box}>
-                                <textarea name="" id="" className={styles.textarea} onChange={(e) => setReply(e.target.value)} placeholder="Write your reply..."></textarea>
+                                <textarea name="" id="" value={reply} className={styles.textarea} onChange={(e) => setReply(e.target.value)} placeholder="Write your reply..."></textarea>
                             </Box>
                             <Button className={styles.postcmnt_btn} onClick={PostReply}>Post Reply</Button>
                         </Grid>
                         {/* ADD Grid */}
-                        <Grid item xs={isMobile ? 12 : 3.5} className={styles.side_grid} sx={{display:isMobile ? 'none':''}}>
+                        <Grid item xs={isMobile ? 12 : 3.5} className={styles.side_grid} sx={{ display: isMobile ? 'none' : '' }}>
                             <Motorforums />
                             <Topcontributer />
                             <Communities />
