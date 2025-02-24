@@ -1,7 +1,7 @@
-import Forum_details from "@/ebikeForum/pageLayoutsForum/forums_detail"
-import Home from "@/ebikeForum/pageLayoutsForum/allforums"
-import Header from "@/ebikeForum/sharedComponentsForum/header"
-import Allforums from "@/ebikeForum/pageLayoutsForum/allforums"
+import Forum_details from "@/ebikeForum/forumPages/threads_detail"
+import Home from "@/ebikeForum/forumPages/sub_category"
+import Header from "@/ebikeForum/forumSharedComponent/header"
+import Allforums from "@/ebikeForum/forumPages/sub_category"
 
 const forums_details = () => {
     return (

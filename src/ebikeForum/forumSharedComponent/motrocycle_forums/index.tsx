@@ -4,7 +4,23 @@ import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 import CommentIcon from '@mui/icons-material/Comment';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useEffect, useState } from 'react';
+import { isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
 const Motorforums = () => {
+    const [isUserLogin, setUserLogin] = useState<any>('not_login');
+    const [Isdisplay,setDisplay]= useState(false);
+    useEffect(() => {
+        let _isLoginUser = isLoginUser()
+        if (_isLoginUser?.login) {
+            setUserLogin(_isLoginUser.info)
+            setDisplay(true)
+        }
+        else {
+            setUserLogin("not_login")
+            setDisplay(false)
+        }
+    }, [])
+
     return (
         <Box className={styles.motorcycle_forum}>
             <Typography className={styles.heading}>Motorcycle Forum</Typography>
@@ -35,8 +51,8 @@ const Motorforums = () => {
                 Yamaha, and BMW. Come join the discussion abdout performance modifications,
                 troubleshooting, maintenance and more!
             </Typography>
-            <Button className={styles.join_btn} disableRipple>
-                <PermIdentityOutlinedIcon sx={{ fontSize: '18px' }} />
+            <Button className={styles.join_btn} disableRipple sx={{display:Isdisplay ? "none":"flex" }}>
+                <PermIdentityOutlinedIcon sx={{ fontSize: '18px'}} />
                 Join Community
             </Button>
             <Button className={styles.grow_bussines_btn} disableRipple>
@@ -130,7 +146,7 @@ const Communities = () => {
     )
 }
 
-const Topforums =()=>{
+const Topforums = () => {
     const Topforums = [
         {
             "id": 1,
@@ -163,29 +179,29 @@ const Topforums =()=>{
             "views": '38M'
         },
     ]
-    return(
+    return (
         <Box className={styles.motorcycle_forum}>
-                                        <Typography className={styles.heading}>Our Top Forums</Typography>
-                                        <Box className={styles.top_forums_card} >
-                                        {
-                                            Topforums?.map((e: any, i: any) => {
-                                                return (<>
-                                                        <Typography key={i} className={styles.top_forums_title}>{e?.title}</Typography>
-                                                        <Typography className={styles.top_forums_analys}>
-                                                            <Typography className={styles.comments_}>
-                                                                <CommentIcon  sx={{fontSize:'14px',color:'#191500',display:'inline-block',alignItems:'center'}}/> {e?.comment}
-                                                            </Typography>
-                                                            <Typography className={styles.view_box}>
-                                                                <VisibilityIcon sx={{fontSize:'14px',color:'#191500',display:'inline-block',alignItems:'center'}}/> {e?.views}
-                                                            </Typography>
-                                                        </Typography>
-                                                </>
-                                                )
-                                            })
-                                        }
-                                        </Box>
-                                    </Box>
+            <Typography className={styles.heading}>Our Top Forums</Typography>
+            <Box className={styles.top_forums_card} >
+                {
+                    Topforums?.map((e: any, i: any) => {
+                        return (<>
+                            <Typography key={i} className={styles.top_forums_title}>{e?.title}</Typography>
+                            <Typography className={styles.top_forums_analys}>
+                                <Typography className={styles.comments_}>
+                                    <CommentIcon sx={{ fontSize: '14px', color: '#191500', display: 'inline-block', alignItems: 'center' }} /> {e?.comment}
+                                </Typography>
+                                <Typography className={styles.view_box}>
+                                    <VisibilityIcon sx={{ fontSize: '14px', color: '#191500', display: 'inline-block', alignItems: 'center' }} /> {e?.views}
+                                </Typography>
+                            </Typography>
+                        </>
+                        )
+                    })
+                }
+            </Box>
+        </Box>
     )
 }
 
-export { Motorforums, Topcontributer ,Communities,Topforums}
+export { Motorforums, Topcontributer, Communities, Topforums }

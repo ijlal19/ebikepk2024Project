@@ -1,5 +1,5 @@
 'use client'
-import {Communities, Motorforums, Topcontributer} from "@/ebikeForum/sharedComponentsForum/motrocycle_forums";
+import {Communities, Motorforums, Topcontributer} from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import styles from './index.module.scss';
 import data from "./data";
@@ -17,7 +17,7 @@ const Home = () => {
         name = name.replace('\/', '-');
         var lowerTitle = name.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        router.push(`/forums/${lowerTitle}/${forumsinfo.c_id}`);
+        router.push(`/forums/${lowerTitle}/${forumsinfo.id}`);
       };
     return (
         <Box sx={{ backgroundColor: '#f2f2f2', }}>
@@ -49,8 +49,8 @@ const Home = () => {
 
                                                 <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                     <Typography className={styles.view_box}>
-                                                        <span className={styles.view_box_inner}><CommentIcon className={styles.analys_icon} /> {e?.comment?.length}K</span>
-                                                        <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.view}M</span></Typography>
+                                                        {/* <span className={styles.view_box_inner}><CommentIcon className={styles.analys_icon} /> {e?.comment?.length}K</span> */}
+                                                        <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.view}K</span></Typography>
                                                     <Typography className={styles.timeago}>{e?.timeago}h ago</Typography>
                                                 </Grid>
                                             </Grid>

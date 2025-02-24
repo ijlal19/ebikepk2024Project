@@ -2,13 +2,13 @@
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import styles from './index.module.scss';
-import Loader from "@/ebikeForum/sharedComponentsForum/loader/loader";
+import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import data from "../home/data";
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/sharedComponentsForum/motrocycle_forums";
+import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
 
 const Forum_details = () => {
     const isMobile = useMediaQuery('(max-width:768px)');
@@ -16,8 +16,8 @@ const Forum_details = () => {
     const [reply, setReply] = useState('')
     const params = useParams();
     const { slug2 } = params;
-    const singledata = data.find(item => item.c_id === Number(slug2));
-    const userdata = singledata?.comment.find(items => items.s_id === Number(slug2));
+    const singledata = data.find(item => item.id === Number(slug2));
+    const userdata = singledata?.sub_category.find(items => items.id === Number(slug2));
     console.log('klkl', userdata)
 
     const PostReply = () => {
@@ -35,7 +35,7 @@ const Forum_details = () => {
                 "shortDescription": reply
             }
             setReply('')
-            data[0].comment[0].reply.push(obj)
+            data[0].sub_category[0].threads.push(obj)
         }
         else {
             alert('please write your reply')
@@ -50,11 +50,11 @@ const Forum_details = () => {
                         <Grid item xs={isMobile ? 12 : 8.5} className={styles.details_box}>
                             <Box className={styles.user_detail_box}>
                                 <Typography className={styles.title}>{userdata?.name}</Typography>
-                                <Box className={styles.analys_box}>
+                                {/* <Box className={styles.analys_box}>
                                     <Button disableRipple className={styles.analys_btn}><RemoveRedEyeOutlinedIcon className={styles.analys_icon} /> {userdata?.views} views</Button>
-                                    <Button disableRipple className={styles.analys_btn}><CommentOutlinedIcon className={styles.analys_icon} /> {userdata?.reply?.length} replies</Button>
+                                    <Button disableRipple className={styles.analys_btn}><CommentOutlinedIcon className={styles.analys_icon} /> {userdata?.treads?.length} replies</Button>
                                     <Button disableRipple className={styles.analys_btn}><PersonOutlineOutlinedIcon className={styles.analys_icon} /> {userdata?.participants} participants</Button>
-                                </Box>
+                                </Box> */}
                                 <Box className={styles.logo_grid}>
                                     <Box
                                         className={styles.logo}>
@@ -72,11 +72,8 @@ const Forum_details = () => {
                                     <Typography className={styles.shortdesc}>{userdata?.description}</Typography>
                                 </Box>
                             </Box>
-                            <Box className={styles.sort_by}>
-                                Sort By <span>Oldest first</span>
-                            </Box>
                             {
-                                userdata?.reply.map((e: any, i: any) => {
+                                userdata?.threads.map((e: any, i: any) => {
                                     return (
                                         <>
                                             <Box className={styles.reply_box}>

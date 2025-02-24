@@ -51,9 +51,9 @@
                 box-sizing: border-box;
                 font-size: 14px;
                 height: auto;
-                padding: 20px 0px 20px 0px !important;
+                padding: 20px 10px 20px 10px !important;
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: space-between;
                 align-items: center !important;
 
                 @media (max-width:768px) {
