@@ -1,0 +1,20 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    .category_main,.subcatgegory{
+        width: 100%;
+        padding: 5px 0px !important;
+
+        .catgegory_select,.subcatgegory_select{
+            width: 100%;
+            border: 1px solid #b4b2b2;
+            outline: none;
+            padding: 2px 0px !important;
+            font-size: 14px;
+            font-weight: bold;
+            color: rgb(111, 106, 106);
+        }
+    }
+}

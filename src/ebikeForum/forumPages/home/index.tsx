@@ -1,5 +1,5 @@
 'use client'
-import {Communities, Motorforums, Topcontributer} from "@/ebikeForum/sharedComponentsForum/motrocycle_forums";
+import {Communities, Motorforums, Topcontributer} from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import styles from './index.module.scss';
 import data from "./data";
@@ -12,10 +12,10 @@ const Home = () => {
     const router = useRouter()
 
     const handleRoute = (forumsinfo: any) => {
-        var title = forumsinfo.title;
-        title = title.replace(/\s+/g, '-');
-        title = title.replace('\/', '-');
-        var lowerTitle = title.toLowerCase();
+        var name = forumsinfo.name;
+        name = name.replace(/\s+/g, '-');
+        name = name.replace('\/', '-');
+        var lowerTitle = name.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
         router.push(`/forums/${lowerTitle}/${forumsinfo.id}`);
       };
@@ -43,14 +43,14 @@ const Home = () => {
                                         <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                             <Grid container>
                                                 <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                    <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.title}</Typography>
+                                                    <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.name}</Typography>
                                                     <Typography className={styles.card_desc}  sx={{display:isMobile ? 'none':''}}>{e?.description.slice(0, 80)}</Typography>
                                                 </Grid>
 
                                                 <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                     <Typography className={styles.view_box}>
-                                                        <span className={styles.view_box_inner}><CommentIcon className={styles.analys_icon} /> {e?.comment?.length}K</span>
-                                                        <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.view}M</span></Typography>
+                                                        {/* <span className={styles.view_box_inner}><CommentIcon className={styles.analys_icon} /> {e?.comment?.length}K</span> */}
+                                                        <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.view}K</span></Typography>
                                                     <Typography className={styles.timeago}>{e?.timeago}h ago</Typography>
                                                 </Grid>
                                             </Grid>

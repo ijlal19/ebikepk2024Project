@@ -1,5 +1,5 @@
 import Allforums from "@/ebikeForum/pageLayoutsForum/allforums"
-import Forum_details from "@/ebikeForum/pageLayoutsForum/forums_detail"
+import Forum_details from "@/ebikeForum/forumPages/threads_detail"
 
 const threads = ()=>{
     return(
