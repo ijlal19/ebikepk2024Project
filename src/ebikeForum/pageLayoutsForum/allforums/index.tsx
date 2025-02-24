@@ -3,26 +3,28 @@ import React, { useState } from 'react';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss';
 // import data from './data';
-import Loader from '@/ebikeForum/sharedComponentsForum/loader/loader';
+import Loader from '@/ebikeForum/forumSharedComponent/loader/loader';
 import CommentIcon from '@mui/icons-material/Comment';
 import { useParams, useRouter } from 'next/navigation';
-import { Motorforums, Topforums } from '../../sharedComponentsForum/motrocycle_forums/index'
-import data from '../home/data';
+import { Motorforums, Topforums } from '../../forumSharedComponent/motrocycle_forums/index'
+import data from '@/ebikeForum/forumPages/home/data';
 import CreateIcon from '@mui/icons-material/Create';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Modal from '@mui/material/Modal';
 
 function Allforums() {
+    
     const isMobile = useMediaQuery('(max-width:768px)');
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(true);
     const [threadTitle,setTitle]=useState('')
     const [threadMessage,setMessage]=useState('')
     const [threadTag,setTag]=useState('')
+    
     const {slug2 } = useParams()
     const router = useRouter()
 
-    const userdata = data.find(item => item.id === Number(slug2));
+    const userdata:any = data ? data.find(item => item.id === Number(slug2)) : {};
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -52,17 +54,6 @@ function Allforums() {
         router.push(`/threads/${lowerTitle}/${forumsinfo.id}`);
     };
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
     const handlePost=()=>{
         if(!threadTitle || !threadMessage || !threadTag){
             alert('Please fill required all inform')
@@ -76,7 +67,9 @@ function Allforums() {
             )
         }
     }
+
     return (
+        userdata ? 
         <Box>
             <Box className={styles.heading_box}>
                 <Box className={styles.heading_inner_box}>
@@ -167,8 +160,7 @@ function Allforums() {
                     </Box>
                 </Modal>
             </div>
-        </Box>
-
+        </Box> : <></> 
     );
 }
 

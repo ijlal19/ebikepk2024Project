@@ -10,7 +10,7 @@ import { useParams, useRouter } from 'next/navigation';
 import CommentIcon from '@mui/icons-material/Comment';
 import CreateIcon from '@mui/icons-material/Create';
 import styles from './index.module.scss';
-import data from '../home/data';
+import data from '@/ebikeForum/forumPages/home/data';
 
 function Allforums() {
 
@@ -71,7 +71,7 @@ function Allforums() {
                             <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
                                 {userdata?.sub_category?.map((e: any, i: any) => {
                                     return (
-                                        <Grid container className={styles.forums_box}>
+                                        <Grid container className={styles.forums_box} key={i}>
                                             <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
                                                 <Box className={styles.logo}>
                                                     <CommentIcon className={styles.comment_icon} />
