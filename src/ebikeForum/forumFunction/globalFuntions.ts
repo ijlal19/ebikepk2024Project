@@ -11,7 +11,7 @@ function isLoginUser() {
 }
 
 function getMainCategory() {
-    return fetch(`localhost:3005`, {
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/get-new-forum-main-categ`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -39,7 +39,7 @@ function getmainCatgeorybyId(id:any) {
 }
 
 function getSubCategory() {
-    return fetch(`localhost:3005`, {
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/get-new-forum-sub-categ`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })

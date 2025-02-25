@@ -1,27 +1,29 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Motorforums, Topforums } from '../../forumSharedComponent/motrocycle_forums/index'
+import { getMainCategory, getSubCategory, isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
 import Create_thread_popup from '@/ebikeForum/forumSharedComponent/thread_popup';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
 import Loader from '@/ebikeForum/forumSharedComponent/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
 import CommentIcon from '@mui/icons-material/Comment';
 import CreateIcon from '@mui/icons-material/Create';
 import styles from './index.module.scss';
-import data from '@/ebikeForum/forumPages/home/data';
 
 function Allforums() {
 
     const isMobile = useMediaQuery('(max-width:768px)');
+    const [IsLogin, setIsLogin] = useState<any>('not_login');
     const [isLoading, setIsLoading] = useState(false);
-    const [IsLogin, setIsLogin] = useState<any>('not_login')
     const [open, setOpen] = useState(false);
+    const [mainCategoryData, setMainCategoryData] = useState<any>()
+    const [SubCatgebyId, setSubCategbyId] = useState<any>();
     const { slug2 } = useParams()
     const router = useRouter()
 
     useEffect(() => {
+        fetchSubCategory()
         let _isLoginUser = isLoginUser()
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
@@ -31,8 +33,32 @@ function Allforums() {
         }
     }, [])
 
-    const userdata = data.find(item => item.id === Number(slug2));
-    console.log(userdata)
+    const fetchSubCategory = async () => {
+        setIsLoading(true);
+
+        try {
+            const main_category = await getMainCategory()
+            const sub_category = await getSubCategory();
+            const findData = main_category.data.find(
+                (item: any) => Number(item.id) === Number(slug2)
+            );
+            setMainCategoryData(findData)
+
+            if (sub_category?.data) {
+                const filteredData = sub_category.data.filter(
+                    (item: any) => Number(item.main_categ_id) === Number(slug2)
+                );
+
+                setSubCategbyId(filteredData);
+            } else {
+                console.log("Error data no found");
+            }
+        } catch (error) {
+            console.error("Error", error);
+        }
+
+        setIsLoading(false);
+    };
 
     const handleOpen = () => {
         if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
@@ -57,7 +83,7 @@ function Allforums() {
             <Box className={styles.heading_box}>
                 <Box className={styles.heading_inner_box}>
                     <Typography className={styles.banner_heading}>
-                        {userdata?.name}
+                        {mainCategoryData?.name}
                     </Typography>
                     <Button disableRipple className={styles.pencil_btn} onClick={handleOpen}>
                         <CreateIcon className={styles.pencil_icon} /> Creat thread
@@ -69,7 +95,7 @@ function Allforums() {
                     <Box className={styles.home_main}>
                         <Grid container className={styles.home_grid_main}>
                             <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
-                                {userdata?.sub_category?.map((e: any, i: any) => {
+                                {SubCatgebyId?.map((e: any, i: any) => {
                                     return (
                                         <Grid container className={styles.forums_box} key={i}>
                                             <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
@@ -81,7 +107,7 @@ function Allforums() {
                                                 <Grid container>
                                                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
                                                         <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.name}</Typography>
-                                                        <Typography className={styles.card_desc}>{e?.user_name}<span style={{ marginLeft: 4, marginRight: 4, fontWeight: 'bold' }}>·</span>{e?.postdate}</Typography>
+                                                        <Typography className={styles.card_desc}>{e?.user_name}<span style={{ marginLeft: 4, marginRight: 4, fontWeight: 'bold' }}>·</span>{e?.createdAt.slice(0, 10)}</Typography>
                                                     </Grid>
 
                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
@@ -92,7 +118,7 @@ function Allforums() {
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                    );
+                                    )
                                 })}
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 3.5} className={styles.inform_cards_grid}>
@@ -109,7 +135,7 @@ function Allforums() {
                     </div>
                 )}
             </Box>
-            <Create_thread_popup open={open} setOpen={setOpen} />
+            <Create_thread_popup open={open} setOpen={setOpen} IsLogin={IsLogin} />
         </Box>
     );
 }

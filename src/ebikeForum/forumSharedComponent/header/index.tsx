@@ -18,6 +18,7 @@ const Header = () => {
             setIsLogin(_isLoginUser.info)
         }
         else {
+            console.log(`login data${_isLoginUser}`)
             setIsLogin("not_login")
         }
     }, [])
@@ -29,6 +30,7 @@ const Header = () => {
         }
         else {
             setOpen(true);
+            // console.log(`login data${IsLogin?.userFullName}`)
         }
     }
 
@@ -62,31 +64,10 @@ const Header = () => {
                             <EditNoteIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
                             <Typography sx={{ fontSize: "14px", color: "inherit", fontWeight: 'bolder' }} onClick={handlepopup}>Create Thread</Typography>
                         </Button>
-
                     </Box>
-                    {/* {
-                        !isMobile ? '' :
-                            <Box className={styles.mobile_input}>
-                                <Paper
-                                    component="form"
-                                    className={styles.input_box}
-                                >
-                                    <InputBase
-                                        className={styles.input}
-                                        sx={{ ml: 1, flex: 1 }}
-                                        placeholder="Search Community"
-                                        inputProps={{ 'aria-label': 'search google maps' }}
-                                    />
-                                    <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                                        <SearchIcon sx={{ color: 'white' }} />
-                                    </IconButton>
-                                </Paper>
-                            </Box>
-                    } */}
-
                 </Box>
             </Box>
-                        <Create_thread_popup open={open} setOpen={setOpen} />
+        <Create_thread_popup open={open} setOpen={setOpen} IsLogin={IsLogin}/>
         </Box>
     )
 }
