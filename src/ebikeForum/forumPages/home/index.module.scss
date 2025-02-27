@@ -16,13 +16,21 @@
 
         .welcome_heading {
             box-sizing: border-box;
-            margin: 0px 0px 12px;
+            margin: 0px 0px 0px 0px;
             color: #414141;
-            font-size: 24px;
+            font-size: 20px;
             @media (max-width:768px) {
                 font-size: 20px;
                 padding: 0px 0px 0px 9px;
-                
+            }
+        }
+        .heading_desc{
+            font-size: 12px;
+            margin: 0px 0px 3px ;
+            color: #3c3c3c;
+            @media (max-width:768px) {
+                font-size: 12px;
+                padding: 0px 0px 0px 9px;
             }
         }
 
@@ -32,6 +40,9 @@
             margin: 0px 0px 9px;
             background-color: #ffffff;
             border-radius: .5rem;
+            @media (max-width:768px) {
+                border-radius: 0px;
+            }
             .logo_grid{
                 display: flex;
                 justify-content: center;

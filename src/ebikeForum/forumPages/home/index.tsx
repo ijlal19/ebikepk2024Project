@@ -19,17 +19,17 @@ const Home = () => {
 
     useEffect(() => {
         fetchMainCategory()
-        // setIsLoading(true)
-    },[])
+    }, [])
 
     const fetchMainCategory = async () => {
         setIsLoading(true)
         const main_category = await getMainCategory()
         setMainCategoryData(main_category?.data)
+        console.log("IDS", main_category?.data)
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
-          }, 1000);
+        }, 1000);
     }
 
     const handleRoute = (forumsinfo: any) => {
@@ -48,16 +48,18 @@ const Home = () => {
                     <Box sx={{ backgroundColor: '#f2f2f2', }}>
                         <Grid container className={styles.forums_container}>
                             <Grid item xs={isMobile ? 12 : 8.5} className={styles.content_grid}>
-                                <Box>
-                                    <Typography className={styles.welcome_heading}>
-                                        Welcome To EbikeForum.com
-                                    </Typography>
-                                    <Typography className={styles.welcome_heading}>
-                                        General Forums
-                                    </Typography>
-                                    {
-                                        mainCategoryData?.map((e: any, i: any) => {
-                                            return (
+                                {
+                                    [...(mainCategoryData || [])].reverse().map((e: any, i: any) => {
+                                        return (
+                                            <Box key={i}>
+                                                <Typography className={styles.welcome_heading}>
+                                                    {e?.name}
+                                                </Typography>
+                                                <Typography className={styles.heading_desc}>
+                                                    {e?.description}
+                                                </Typography>
+                                                {e?.subCategories?.map((data:any,i:any)=>{
+                                        return(
                                                 <Grid container className={styles.forums_box} key={i}>
                                                     <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
                                                         <Box className={styles.logo}>
@@ -67,8 +69,8 @@ const Home = () => {
                                                     <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                                         <Grid container>
                                                             <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                                <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.name}</Typography>
-                                                                <Typography className={styles.card_desc} sx={{ display: isMobile ? 'none' : '' }}>{e?.description}</Typography>
+                                                                <Typography className={styles.card_title} onClick={() => handleRoute(data)}>{data?.name}</Typography>
+                                                                <Typography className={styles.card_desc} sx={{ display: isMobile ? 'none' : '' }}>{data?.description}</Typography>
                                                             </Grid>
 
                                                             <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
@@ -79,11 +81,12 @@ const Home = () => {
                                                             </Grid>
                                                         </Grid>
                                                     </Grid>
-                                                </Grid>
-                                            )
-                                        })
-                                    }
-                                </Box>
+                                                </Grid>)
+})}
+                                            </Box>
+                                        )
+                                    })
+                                }
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 3.5} sx={{ display: isMobile ? 'none' : '' }}>
                                 <Motorforums />

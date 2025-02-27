@@ -11,7 +11,7 @@ function isLoginUser() {
 }
 
 function getMainCategory() {
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/get-new-forum-main-categ`, {
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/get-new-forum-main-categ`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
