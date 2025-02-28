@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
+import { isLoginUser, postThread } from '@/ebikeForum/forumFunction/globalFuntions';
 import  Thread_dropdown from '../thread_dropdown';
 import Button from '@mui/material/Button';
 import styles from './index.module.scss';
@@ -27,7 +27,7 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
     const [SubCateg,setSubCatgeId]=React.useState('')
     const handleClose = () => setOpen(false);
 
-    const handlePost = () => {
+    const handlePost =async () => {
         if (!threadTitle || !threadMessage || !threadTag || !SubCateg) {
             alert('Please fill in all required fields before posting your thread.')
             return
@@ -44,7 +44,10 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
                 sub_categ_id:SubCateg,
                 threadTag:threadTag
             }
-            console.log('data' , obj)
+            const threadPost = await postThread(obj)
+            if(threadPost){
+                window.location.reload()
+            }
         }
     }
 
