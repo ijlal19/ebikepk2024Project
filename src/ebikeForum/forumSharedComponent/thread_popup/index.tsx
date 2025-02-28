@@ -24,11 +24,11 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
     const [threadTitle, setTitle] = React.useState('')
     const [threadTag, setTag] = React.useState('')
     const [MainCatge,setMainCatge]=React.useState<number | null>(null)
-    const [SubCateg,setSubCatge]=React.useState('')
+    const [SubCateg,setSubCatgeId]=React.useState('')
     const handleClose = () => setOpen(false);
 
     const handlePost = () => {
-        if (!threadTitle || !threadMessage || !threadTag) {
+        if (!threadTitle || !threadMessage || !threadTag || !SubCateg) {
             alert('Please fill in all required fields before posting your thread.')
             return
         }
@@ -37,10 +37,11 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
                 title:threadTitle,
                 description:threadMessage,
                 user_name:IsLogin?.userFullName,
+                image:"",
+                video_url:"",
                 user_id:IsLogin?.id,
                 isVerified:IsLogin?.isVerified,
-                foriegn_key_main:MainCatge,
-                foriegn_key_sub:SubCateg,
+                sub_categ_id:SubCateg,
                 threadTag:threadTag
             }
             console.log('data' , obj)
@@ -66,7 +67,7 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
                                 <label htmlFor="44" className={styles.label}>Message<span style={{ color: 'red' }}>*</span></label>
                                 <textarea name="" id="44" className={styles.message_box} onChange={(e) => setMessage(e.target.value)}></textarea>
                             </Box>
-                            <Thread_dropdown setMainCatge={setMainCatge} setSubCatge={setSubCatge} />
+                            <Thread_dropdown setMainCatge={setMainCatge} setSubCatgeId={setSubCatgeId} />
                             <Box>
                                 <label htmlFor="" className={styles.label}>Tags</label>
                                 <input type="text" className={styles.tag_input} onChange={(e) => setTag(e.target.value)} />
@@ -82,4 +83,4 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
         </div>
     );
 }
-// https://ebikepk-server-nodejs.herokuapp.com/api/brand/get-brand
+// "https://ebikepk-server-nodejs.herokuapp.com/api/brand/get-brand

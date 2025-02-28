@@ -1,18 +1,35 @@
 import * as React from 'react';
-import data from '../../forumPages/home/data';
 import styles from './index.module.scss';
+import { getMainCategory } from '@/ebikeForum/forumFunction/globalFuntions';
 
-function Thread_dropdown({ setMainCatge, setSubCatge }: any) {
+function Thread_dropdown({ setMainCatge, setSubCatgeId }: any) {
 
   const [selectedCategory, setSelectedCategory] = React.useState<number | null>(null);
+  const [mainCategoryData, setMainCategoryData] = React.useState([])
+  const [subCategoryData, setSubCategoryData] = React.useState<any>()
+
+  React.useEffect(() => {
+    fetchMainCategory()
+  }, [])
+
+  const fetchMainCategory = async () => {
+    const main_category = await getMainCategory()
+    setMainCategoryData(main_category?.data)
+    console.log("popo", main_category?.data[0].subCategories)
+    setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 1000);
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(Number(event.target.value));
-    setSubCatge(Number(event.target.value));
+    setMainCatge(Number(event.target.value));
+    const subdata = mainCategoryData.find((e: any) => e.id == event.target.value)
+    setSubCategoryData(subdata);
   };
 
   const handleSubcategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setMainCatge(Number(event.target.value));
+    setSubCatgeId(Number(event.target.value));
   };
 
   return (
@@ -22,7 +39,7 @@ function Thread_dropdown({ setMainCatge, setSubCatge }: any) {
         <select name="category" id="category-select" onChange={handleChange} className={styles.catgegory_select}>
           <option value="" disabled hidden selected className={styles.catgegory_def_opt}>Select Category</option>
           {
-            data?.map((e: any, i: any) => {
+            mainCategoryData?.map((e: any, i: any) => {
               return (
                 <option key={i} value={e?.id} className={styles.catgegory_options}>{e?.name}</option>
               )
@@ -37,13 +54,11 @@ function Thread_dropdown({ setMainCatge, setSubCatge }: any) {
             Select Subcategory
           </option>
           {selectedCategory ?
-            (data
-              .find((e: any) => e.id == selectedCategory)
-              ?.sub_category.map((e: any, i: number) => (
-                <option key={i} value={e?.id} className={styles.subcatgegory_options}>
-                  {e?.name}
-                </option>
-              ))) :
+            subCategoryData?.subCategories?.map((e: any, i: number) => (
+              <option key={i} value={e?.id} className={styles.subcatgegory_options}>
+                {e?.name}
+              </option>
+            )) :
             <option value='' disabled className={styles.subcatgegory_options}>
               Select a category first to see subcategories.
             </option>

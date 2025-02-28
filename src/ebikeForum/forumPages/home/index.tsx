@@ -25,7 +25,6 @@ const Home = () => {
         setIsLoading(true)
         const main_category = await getMainCategory()
         setMainCategoryData(main_category?.data)
-        console.log("IDS", main_category?.data)
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
