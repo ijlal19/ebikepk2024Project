@@ -53,7 +53,7 @@ function getSubCategory() {
 }
 
 function getSubCatgeorybyId(id:any) {
-    return fetch(`localhost:3005/${id}`, {
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/new-forum-sub-categ-byId/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -104,7 +104,7 @@ function getthreadbyId(id:any){
 }
 
 function postthreadComment(data:any){
-    return fetch(`localhost:3005`,{
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/crete-new-forum-comment`,{
         method:'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

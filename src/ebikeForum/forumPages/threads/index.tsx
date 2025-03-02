@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { getAllthread, getMainCategory, getSubCategory, isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
+import { getAllthread, getMainCategory, getSubCategory, getSubCatgeorybyId, isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
 import { Motorforums, Topforums } from '../../forumSharedComponent/motrocycle_forums/index'
 import Create_thread_popup from '@/ebikeForum/forumSharedComponent/thread_popup';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
@@ -13,9 +13,8 @@ import styles from './index.module.scss';
 
 function Allforums() {
 
-    const [SubCategoryfilter, setSubCategoryfilter] = useState<any>()
+    const [SubCategorybyId, setSubCategbyId] = useState<any>([])
     const [IsLogin, setIsLogin] = useState<any>('not_login');
-    const [SubCatgebyId, setSubCategbyId] = useState<any>();
     const isMobile = useMediaQuery('(max-width:768px)');
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
@@ -37,24 +36,10 @@ function Allforums() {
     const fetchSubCategory = async () => {
         setIsLoading(true)
         try {
-
-            const sub_acteg = await getSubCategory();
-            const filtersub = sub_acteg?.data?.find((e: any) => e.id == IDnumber)
-            setSubCategoryfilter(filtersub)
-
-            const Allthreads = await getAllthread();
-            console.log("dta",Allthreads.data)
-            if (Allthreads?.data){
-                const filteredData = Allthreads?.data.filter(
-                    (e: any) => Number(e.sub_categ_id) === Number(slug2)
-                )
-                setSubCategbyId(filteredData);
-            }
-            else{
-                console.log("Error data no found");
-            }
+            const sub_categry_byID = await getSubCatgeorybyId(IDnumber);
+            setSubCategbyId(sub_categry_byID?.data)
         }
-        catch (error){
+        catch (error) {
             console.error("Error", error);
         }
 
@@ -88,7 +73,7 @@ function Allforums() {
             <Box className={styles.heading_box}>
                 <Box className={styles.heading_inner_box}>
                     <Typography className={styles.banner_heading}>
-                        {SubCategoryfilter?.name}
+                        {SubCategorybyId?.name}
 
                     </Typography>
                     <Button disableRipple className={styles.pencil_btn} onClick={handleOpen}>
@@ -101,7 +86,7 @@ function Allforums() {
                     <Box className={styles.home_main}>
                         <Grid container className={styles.home_grid_main}>
                             <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
-                                {SubCatgebyId?.map((e: any, i: any) => {
+                                {SubCategorybyId?.threads?.map((e: any, i: any) => {
                                     return (
                                         <Grid container className={styles.forums_box} key={i}>
                                             <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
@@ -117,8 +102,24 @@ function Allforums() {
                                                     </Grid>
 
                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
-                                                        <Typography className={styles.view_box}>
-                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.views}K</span></Typography>
+                                                        {
+                                                            e?.ViewCount && e.ViewCount.length > 0 ? (
+                                                                e?.ViewCount.map((count: any) => (
+                                                                    <Typography className={styles.view_box} key={count?.id}>
+                                                                        <span className={styles.view_box_inner}>
+                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {count?.count}K
+                                                                        </span>
+                                                                    </Typography>
+                                                                ))
+                                                            ) : (
+                                                                <Typography className={styles.view_box}>
+                                                                    <span className={styles.view_box_inner}>
+                                                                        <VisibilityOutlinedIcon className={styles.analys_icon} /> 0K
+                                                                    </span>
+                                                                </Typography>
+                                                            )
+                                                        }
+
                                                         <Typography className={styles.timeago}>3h ago</Typography>
                                                     </Grid>
                                                 </Grid>
