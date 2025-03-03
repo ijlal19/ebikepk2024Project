@@ -40,8 +40,6 @@ const Home = () => {
 
     const handleRoute = async (forumsinfo: any, viewCount: any) => {
 
-
-        console.log("data" , forumsinfo)
         const [{ main_categ_id, count }] = viewCount?.ViewCount
         const mainCountObj = {
             main_categ_id: main_categ_id,
