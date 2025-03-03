@@ -24,40 +24,40 @@ const Home = () => {
         setIsLoading(true)
         const main_category = await getMainCategory()
         setMainCategoryData(main_category?.data)
-        // console.log("data",main_category?.data)
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
 
-    const handleRoute = async (forumsinfo: any, viewCount: any) => {
+    const handleRoute = async (subCateginfo: any, mainCateginfo: any) => {
 
-        const [{ main_categ_id, count }] = viewCount?.ViewCount
+        const [{ main_categ_id, count }] = mainCateginfo?.ViewCount
         const mainCountObj = {
             main_categ_id: main_categ_id,
             count: count + 1,
         }
+
         const mainCategoryCount = await ViewCountAdd(mainCountObj)
 
-        const subcategorycount = await getSubCatgeorybyId(forumsinfo?.id)
-        if (subcategorycount) {
-            const [{ sub_categ_id, count }] = subcategorycount?.data?.ViewCount
+        if (subCateginfo) {
+            const [{ count }] = subCateginfo?.ViewCount
             const subCountObj = {
-                sub_categ_id: sub_categ_id,
+                sub_categ_id: subCateginfo.id,
                 count: count + 1,
             }
+            console.log("data" , subCountObj)
             const subCategoryCount = await ViewCountAdd(subCountObj)
+            console.log("data" , mainCategoryCount , subCategoryCount)
+            console.log("data" , mainCountObj)
         }
 
-        var name = forumsinfo.name;
+        var name = subCateginfo.name;
         name = name.replace(/\s+/g, '-');
         name = name.replace('\/', '-');
         var lowerTitle = name.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        console.log("data",`/forum/${lowerTitle}/${forumsinfo.id}`)
-        console.log("data",forumsinfo , viewCount)
-        router.push(`/forum/${lowerTitle}/${forumsinfo.id}`);
+        router.push(`/forum/${lowerTitle}/${subCateginfo?.id}`);
     };
 
     return (
@@ -79,7 +79,7 @@ const Home = () => {
                                                 </Typography>
                                                 {e?.subCategories?.map((data: any, i: any) => {
                                                     return (
-                                                        <Grid container className={styles.forums_box} key={i}  onClick={() => handleRoute(data, e)}>
+                                                        <Grid container className={styles.forums_box} key={i}>
                                                             <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
                                                                 <Box className={styles.logo}>
                                                                     <CommentIcon className={styles.comment_icon} />
@@ -88,14 +88,14 @@ const Home = () => {
                                                             <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                                                 <Grid container>
                                                                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                                        <Typography className={styles.card_title} >{data?.name}</Typography>
+                                                                        <Typography className={styles.card_title} onClick={() => handleRoute(data, e)}>{data?.name}</Typography>
                                                                         <Typography className={styles.card_desc} sx={{ display: isMobile ? 'none' : '' }}>{data?.description}</Typography>
                                                                     </Grid>
 
                                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                                         <Typography className={styles.view_box}>
-                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />0 K</span></Typography>
-                                                                        <Typography className={styles.timeago}>{data?.updatedAt.slice(18, 19)} h ago</Typography>
+                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />{data?.ViewCount[0]?.count}</span></Typography>
+                                                                        <Typography className={styles.timeago}>{data?.createdAt.slice(18, 19)}h ago</Typography>
                                                                     </Grid>
                                                                 </Grid>
                                                             </Grid>
@@ -120,7 +120,6 @@ const Home = () => {
                     </div>
             }
         </Box>
-
     )
 }
 

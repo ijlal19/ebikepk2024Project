@@ -1,11 +1,12 @@
-import { Box, Button, Typography } from '@mui/material';
-import styles from './index.module.scss';
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
-import CommentIcon from '@mui/icons-material/Comment';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useEffect, useState } from 'react';
 import { isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
+import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Box, Button, Typography } from '@mui/material';
+import CommentIcon from '@mui/icons-material/Comment';
+import { useEffect, useState } from 'react';
+import styles from './index.module.scss';
+
 const Motorforums = () => {
     const [isUserLogin, setUserLogin] = useState<any>('not_login');
     const [Isdisplay,setDisplay]= useState(false);
@@ -26,7 +27,7 @@ const Motorforums = () => {
             <Typography className={styles.heading}>Motorcycle Forum</Typography>
             <Typography className={styles.forum_analys}>
                 <span style={{ fontWeight: 'bold', fontSize: '14px', color: '#191500' }}>
-                    975k
+                    100+
                 </span>{' '}
                 posts{' '}
                 <span
@@ -40,7 +41,7 @@ const Motorforums = () => {
                     ·
                 </span>
                 <span style={{ fontWeight: 'bold', fontSize: '14px', color: '#191500' }}>
-                    133k
+                    1k+
                 </span>{' '}
                 members{' '}
                 <span style={{ marginLeft: 4, marginRight: 4, fontWeight: 'bold' }}>·</span> Since
@@ -55,10 +56,6 @@ const Motorforums = () => {
                 <PermIdentityOutlinedIcon sx={{ fontSize: '18px'}} />
                 Join Community
             </Button>
-            <Button className={styles.grow_bussines_btn} disableRipple>
-                <StoreOutlinedIcon sx={{ fontSize: '18px', color: '#191500' }} />
-                Grow Your Bussiness
-            </Button>
         </Box>
     )
 }
@@ -66,15 +63,15 @@ const Motorforums = () => {
 const Topcontributer = () => {
     const data = [
         {
-            "uname": 'abdw',
+            "uname": 'Abdullah',
             "totalpost": '32',
         },
         {
-            "uname": 'Jisis',
+            "uname": 'Shahzad',
             "totalpost": '22',
         },
         {
-            "uname": 'kkks',
+            "uname": 'Asif',
             "totalpost": '32',
         },
     ]
@@ -106,19 +103,19 @@ const Topcontributer = () => {
 const Communities = () => {
     const data = [
         {
-            "uname": 'abdw',
+            "uname": 'Ebike Forums',
             "totalpost": '32',
-            "view": '72'
+            "view": '1'
         },
         {
-            "uname": 'Jisis',
+            "uname": 'Motorcycle Related News',
             "totalpost": '22',
-            "view": '25'
+            "view": '1'
         },
         {
-            "uname": 'kkks',
+            "uname": 'General Forums',
             "totalpost": '32',
-            "view": '22'
+            "view": '1'
         },
     ]
     return (
@@ -135,7 +132,7 @@ const Communities = () => {
                             <Box className={styles.user_details_box}>
                                 <Box>
                                     <Typography className={styles.username}>{e?.uname}</Typography>
-                                    <Typography className={styles.post_join}>{e?.view}M members</Typography>
+                                    <Typography className={styles.post_join}>{e?.view}K members</Typography>
                                 </Box>
                             </Box>
                         </Box>
@@ -151,32 +148,32 @@ const Topforums = () => {
         {
             "id": 1,
             "title": 'Motorcycle discusion',
-            "comment": '375K',
-            "views": '73M'
+            "comment": '1K+',
+            "views": '1K+'
         },
         {
             "id": 2,
             "title": 'Motorcycle Repair',
-            "comment": '245K',
-            "views": '69M'
+            "comment": '1K+',
+            "views": '1K+'
         },
         {
             "id": 3,
             "title": 'First Rider',
-            "comment": '223K',
-            "views": '58M'
+            "comment": '1K+',
+            "views": '1K+'
         },
         {
             "id": 4,
             "title": 'Amazing Bike',
-            "comment": '180K',
-            "views": '40M'
+            "comment": '1K+',
+            "views": '1K+'
         },
         {
             "id": 5,
             "title": 'Last Model',
-            "comment": '156K',
-            "views": '38M'
+            "comment": '1K+',
+            "views": '1K+'
         },
     ]
     return (

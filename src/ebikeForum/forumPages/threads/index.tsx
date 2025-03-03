@@ -38,7 +38,6 @@ function Allforums() {
         try {
             const sub_categry_byID = await getSubCatgeorybyId(IDnumber);
             setSubCategbyId(sub_categry_byID?.data)
-            console.log("data",sub_categry_byID?.data)
         }
         catch (error) {
             console.error("Error", error);
@@ -61,22 +60,21 @@ function Allforums() {
         }
     }
 
-    const handleRoute =async (forumsinfo: any) => {
-
+    const handleRoute =async (Threadinfo: any) => {
+console.log("data" , Threadinfo)
         const threadcount =
             {
-                thread_id:forumsinfo.id,
-                count: forumsinfo?.ViewCount?.length > 0 ? forumsinfo?.ViewCount[0].count + 1 : 1
+                thread_id:Threadinfo.id,
+                count: Threadinfo?.ViewCount[0]?.count + 1
         }
 
         const ThreadViewCount = await ViewCountAdd(threadcount)
-            console.log("data", ThreadViewCount)
 
-        var title = forumsinfo.title;
+        var title = Threadinfo.title;
         title = title.replace(/\s+/g, '-');
         var lowerTitle = title.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        router.push(`/threads/${lowerTitle}/${forumsinfo.id}`);
+        router.push(`/threads/${lowerTitle}/${Threadinfo.id}`);
     };
 
     return (
@@ -99,7 +97,7 @@ function Allforums() {
                             <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
                                 {SubCategorybyId?.threads?.map((e: any, i: any) => {
                                     return (
-                                        <Grid container className={styles.forums_box} key={i} onClick={() => handleRoute(e)}>
+                                        <Grid container className={styles.forums_box} key={i}>
                                             <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
                                                 <Box className={styles.logo}>
                                                     <CommentIcon className={styles.comment_icon} />
@@ -108,18 +106,17 @@ function Allforums() {
                                             <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                                 <Grid container>
                                                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                        <Typography className={styles.card_title} >{e?.title}</Typography>
+                                                        <Typography className={styles.card_title} onClick={() => handleRoute(e)}>{e?.title}</Typography>
                                                         <Typography className={styles.card_desc}>{e?.user_name}<span style={{ marginLeft: 4, marginRight: 4, fontWeight: 'bold' }}>·</span>{e?.createdAt.slice(0, 10)}</Typography>
                                                     </Grid>
 
                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                                     <Typography className={styles.view_box}>
                                                                         <span className={styles.view_box_inner}>
-                                                                            {/* <VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.ViewCount[0].count}K */}
-                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> 100
+                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.ViewCount[0]?.count}
                                                                         </span>
                                                                     </Typography>
-                                                        <Typography className={styles.timeago}>3h ago</Typography>
+                                                        <Typography className={styles.timeago}>{e?.createdAt.slice(18,19)}h ago</Typography>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>

@@ -44,7 +44,7 @@ const Forum_details = () => {
         }, 1000);
     }
 
-    const PostReply =async () => {
+    const PostReply = async () => {
 
         if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
             alert('You must be logged in to post a Comment.')
@@ -55,20 +55,20 @@ const Forum_details = () => {
         }
         else {
             const obj = {
-                title: 'Try Best Way',
+                title: '',
                 description: reply,
-                image:"",
-                video_url:"",
+                image: "",
+                video_url: "",
                 user_name: IsLogin?.userFullName,
-                user_id:IsLogin?.id,
-                isVerified:IsLogin?.isVerified,
+                user_id: IsLogin?.id,
+                isVerified: IsLogin?.isVerified,
                 thread_id: Idnumber
             }
             const postcomment = await postthreadComment(obj)
-            if(postcomment){
+            if (postcomment) {
                 window.location.reload()
             }
-            else{
+            else {
                 console.log("data error")
             }
         }
@@ -93,13 +93,12 @@ const Forum_details = () => {
                                             <Typography className={styles.post_join}>1 post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {FilterThread?.createdAt.slice(0, 10)}</Typography>
                                         </Box>
                                     </Box>
-                                    <Typography className={styles.days_ago}>#1<span style={{ marginLeft: 4, marginRight: 4 }}>·</span>2d ago</Typography>
+                                    <Typography className={styles.days_ago}>{FilterThread?.createdAt.slice(0, 10)}</Typography>
                                 </Box>
                                 <Box className={styles.desc_box}>
                                     <Typography className={styles.shortdesc}>{FilterThread?.description}</Typography>
                                 </Box>
                             </Box>
-                            {/* Thread Comment Start */}
                             {
                                 FilterThread?.Comments?.map((e: any, i: any) => {
                                     return (
@@ -113,20 +112,19 @@ const Forum_details = () => {
                                                     <Box className={styles.user_details_box}>
                                                         <Box>
                                                             <Typography className={styles.username}>{e?.user_name}</Typography>
-                                                            <Typography className={styles.post_join}>{e?.totalpost} post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {e?.joindate}</Typography>
+                                                            <Typography className={styles.post_join}>Joined {e?.createdAt.slice(0, 10)}</Typography>
                                                         </Box>
                                                     </Box>
-                                                    <Typography className={styles.days_ago}>#{i}<span style={{ marginLeft: 4, marginRight: 4 }}>·</span>2d ago</Typography>
+                                                    <Typography className={styles.days_ago}>{e?.createdAt.slice(0, 10)}</Typography>
                                                 </Box>
                                                 <Box>
-                                                    <Typography className={styles.reply}>{e?.description.slice(0, 180)}...</Typography>
+                                                    <Typography className={styles.reply}>{e?.description}</Typography>
                                                 </Box>
                                             </Box>
                                         </>
                                     )
                                 })
                             }
-                            {/* Thread Comment End */}
                             <Box className={styles.comment_box}>
                                 <textarea name="" id="" value={reply} className={styles.textarea} onChange={(e) => setReply(e.target.value)} placeholder="Write your reply..."></textarea>
                             </Box>

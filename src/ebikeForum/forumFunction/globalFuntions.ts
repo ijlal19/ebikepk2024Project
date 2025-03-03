@@ -1,3 +1,5 @@
+import Gconfig from "globalconfig";
+
 const jsCookie = require('js-cookie');
 
 function isLoginUser() {
@@ -11,7 +13,7 @@ function isLoginUser() {
 }
 
 function getMainCategory() {
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/get-new-forum-main-categ`, {
+    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-main-categ`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -24,22 +26,8 @@ function getMainCategory() {
         })
 }
 
-function getmainCatgeorybyId(id:any) {
-    return fetch(`localhost:3005/${id}`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-    })
-    .then(response => response.json())
-    .then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
-}
-
 function getSubCategory() {
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/get-new-forum-sub-categ`, {
+    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-sub-categ`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -53,7 +41,7 @@ function getSubCategory() {
 }
 
 function getSubCatgeorybyId(id:any) {
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/new-forum-sub-categ-byId/${id}`, {
+    return fetch(Gconfig.ebikeApi + `new-forum/new-forum-sub-categ-byId/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -67,7 +55,7 @@ function getSubCatgeorybyId(id:any) {
 }
 
 function postThread(data:any){
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/crete-new-forum-thread`,{
+    return fetch( Gconfig.ebikeApi + `new-forum/crete-new-forum-thread`,{
         method:'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -80,7 +68,7 @@ function postThread(data:any){
 }
 
 function getAllthread(){
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/get-new-forum-thread`,{
+    return fetch( Gconfig.ebikeApi + `new-forum/get-new-forum-thread`,{
         method:'GET',
         headers: { "Content-Type": "application/json" }
     })
@@ -92,7 +80,7 @@ function getAllthread(){
 }
 
 function getthreadbyId(id:any){
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/get-new-forum-thread/${id}`,{
+    return fetch( Gconfig.ebikeApi + `new-forum/get-new-forum-thread/${id}`,{
         method:'GET',
         headers: { "Content-Type": "application/json" }
     })
@@ -104,7 +92,7 @@ function getthreadbyId(id:any){
 }
 
 function postthreadComment(data:any){
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/crete-new-forum-comment`,{
+    return fetch(Gconfig.ebikeApi + `new-forum/crete-new-forum-comment`,{
         method:'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -116,32 +104,8 @@ function postthreadComment(data:any){
     })
 }
 
-function getAllthreadComment(){
-    return fetch(`localhost:3005`,{
-        method:'GET',
-        headers: { "Content-Type": "application/json" }
-    })
-    .then(res => res.json())
-    .then(data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
-}
-
-function getthreadCommentbyId(id:any){
-    return fetch(`localhost:3005/${id}`,{
-        method:'GET',
-        headers: { "Content-Type": "application/json" }
-    })
-    .then(res => res.json())
-    .then(data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
-}
-
 function ViewCountAdd(data:any){
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/crete-new-forum-view-count`,{
+    return fetch( Gconfig.ebikeApi + `new-forum/crete-new-forum-view-count`,{
         method:'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -156,14 +120,11 @@ function ViewCountAdd(data:any){
 export {
     isLoginUser,
     getMainCategory,
-    getmainCatgeorybyId,
     getSubCategory,
     getSubCatgeorybyId,
     postThread,
     getAllthread,
     getthreadbyId,
     postthreadComment,
-    getAllthreadComment,
-    getthreadCommentbyId,
     ViewCountAdd
 }
