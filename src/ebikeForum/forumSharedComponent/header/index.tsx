@@ -36,13 +36,14 @@ const Header = () => {
 
     return (
         <Box className={styles.banner_box}>
-            <img src="https://www.motorcycleforum.com/cdn-cgi/image/format=auto,onerror=redirect,quality=50,width=720,fit=scale-down/https://images.platforum.cloud/banners/motorcycleforum_com_banner_720w.jpg" alt="" className={styles.image} />
+            <img src="https://res.cloudinary.com/duiuzkifx/image/upload/q_10/v1592657594/staticFiles/1_forum_Main_Banner_Approved_iequ4c_jjijkf.jpg
+" alt="" className={styles.image} />
             <Box className={styles.header_main}>
                 <Box className={styles.header_container}>
                     <Box className={styles.content_box}>
 
                         <Box className={styles.logo_box}>
-                            <img src="https://images.platforum.cloud/logos/motorcycleforum_com.svg" alt="" className={styles.logo_image} />
+                            <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592465223/staticFiles/logon_ayhmct.png " alt="" className={styles.logo_image} />
                         </Box>
                         <Button
                             className={styles.thread_box}
@@ -67,7 +68,7 @@ const Header = () => {
                     </Box>
                 </Box>
             </Box>
-        <Create_thread_popup open={open} setOpen={setOpen} IsLogin={IsLogin}/>
+            <Create_thread_popup open={open} setOpen={setOpen} IsLogin={IsLogin} />
         </Box>
     )
 }

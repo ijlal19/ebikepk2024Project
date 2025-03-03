@@ -1,6 +1,6 @@
 'use client'
 import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
-import { getMainCategory } from "@/ebikeForum/forumFunction/globalFuntions";
+import { getMainCategory, getSubCatgeorybyId, ViewCountAdd } from "@/ebikeForum/forumFunction/globalFuntions";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
@@ -24,18 +24,48 @@ const Home = () => {
         setIsLoading(true)
         const main_category = await getMainCategory()
         setMainCategoryData(main_category?.data)
+        // console.log("data",main_category?.data)
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
 
-    const handleRoute = (forumsinfo: any) => {
+
+
+
+
+
+
+
+    const handleRoute = async (forumsinfo: any, viewCount: any) => {
+
+
+        console.log("data" , forumsinfo)
+        const [{ main_categ_id, count }] = viewCount?.ViewCount
+        const mainCountObj = {
+            main_categ_id: main_categ_id,
+            count: count + 1,
+        }
+        const mainCategoryCount = await ViewCountAdd(mainCountObj)
+
+        const subcategorycount = await getSubCatgeorybyId(forumsinfo?.id)
+        if (subcategorycount) {
+            const [{ sub_categ_id, count }] = subcategorycount?.data?.ViewCount
+            const subCountObj = {
+                sub_categ_id: sub_categ_id,
+                count: count + 1,
+            }
+            const subCategoryCount = await ViewCountAdd(subCountObj)
+        }
+
         var name = forumsinfo.name;
         name = name.replace(/\s+/g, '-');
         name = name.replace('\/', '-');
         var lowerTitle = name.toLowerCase();
         lowerTitle = '' + lowerTitle.replaceAll("?", "")
+        console.log("data",`/forums/${lowerTitle}/${forumsinfo.id}`)
+        console.log("data",forumsinfo , viewCount)
         router.push(`/forums/${lowerTitle}/${forumsinfo.id}`);
     };
 
@@ -67,14 +97,14 @@ const Home = () => {
                                                             <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
                                                                 <Grid container>
                                                                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
-                                                                        <Typography className={styles.card_title} onClick={() => handleRoute(data)}>{data?.name}</Typography>
+                                                                        <Typography className={styles.card_title} onClick={() => handleRoute(data, e)}>{data?.name}</Typography>
                                                                         <Typography className={styles.card_desc} sx={{ display: isMobile ? 'none' : '' }}>{data?.description}</Typography>
                                                                     </Grid>
 
                                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                                         <Typography className={styles.view_box}>
-                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} /> 0K</span></Typography>
-                                                                        <Typography className={styles.timeago}>{data?.updatedAt.slice(18,19)} h ago</Typography>
+                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />0 K</span></Typography>
+                                                                        <Typography className={styles.timeago}>{data?.updatedAt.slice(18, 19)} h ago</Typography>
                                                                     </Grid>
                                                                 </Grid>
                                                             </Grid>

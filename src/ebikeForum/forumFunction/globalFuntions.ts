@@ -140,6 +140,19 @@ function getthreadCommentbyId(id:any){
     })
 }
 
+function ViewCountAdd(data:any){
+    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/new-forum/crete-new-forum-view-count`,{
+        method:'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then( data => {return data})
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
 export {
     isLoginUser,
     getMainCategory,
@@ -152,5 +165,5 @@ export {
     postthreadComment,
     getAllthreadComment,
     getthreadCommentbyId,
-
+    ViewCountAdd
 }

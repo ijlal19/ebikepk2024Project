@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { getAllthread, getMainCategory, getSubCategory, getSubCatgeorybyId, isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
+import { getAllthread, getMainCategory, getSubCategory, getSubCatgeorybyId, isLoginUser, ViewCountAdd } from '@/ebikeForum/forumFunction/globalFuntions';
 import { Motorforums, Topforums } from '../../forumSharedComponent/motrocycle_forums/index'
 import Create_thread_popup from '@/ebikeForum/forumSharedComponent/thread_popup';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
@@ -38,6 +38,7 @@ function Allforums() {
         try {
             const sub_categry_byID = await getSubCatgeorybyId(IDnumber);
             setSubCategbyId(sub_categry_byID?.data)
+            console.log("data",sub_categry_byID?.data)
         }
         catch (error) {
             console.error("Error", error);
@@ -60,7 +61,17 @@ function Allforums() {
         }
     }
 
-    const handleRoute = (forumsinfo: any) => {
+    const handleRoute =async (forumsinfo: any) => {
+
+        const threadcount =
+            {
+                thread_id:forumsinfo.id,
+                count: forumsinfo?.ViewCount[0].count + 1
+        }
+
+        const ThreadViewCount = await ViewCountAdd(threadcount)
+            console.log("data", ThreadViewCount)
+
         var title = forumsinfo.title;
         title = title.replace(/\s+/g, '-');
         var lowerTitle = title.toLowerCase();
@@ -102,24 +113,11 @@ function Allforums() {
                                                     </Grid>
 
                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
-                                                        {
-                                                            e?.ViewCount && e.ViewCount.length > 0 ? (
-                                                                e?.ViewCount.map((count: any) => (
-                                                                    <Typography className={styles.view_box} key={count?.id}>
+                                                                    <Typography className={styles.view_box}>
                                                                         <span className={styles.view_box_inner}>
-                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {count?.count}K
+                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.ViewCount[0].count}K
                                                                         </span>
                                                                     </Typography>
-                                                                ))
-                                                            ) : (
-                                                                <Typography className={styles.view_box}>
-                                                                    <span className={styles.view_box_inner}>
-                                                                        <VisibilityOutlinedIcon className={styles.analys_icon} /> 0K
-                                                                    </span>
-                                                                </Typography>
-                                                            )
-                                                        }
-
                                                         <Typography className={styles.timeago}>3h ago</Typography>
                                                     </Grid>
                                                 </Grid>
