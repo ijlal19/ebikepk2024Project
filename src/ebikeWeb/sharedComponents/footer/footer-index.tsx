@@ -50,7 +50,7 @@ let catagory_arr = [
     { title: "New Bikes", url: "/new-bikes" },
     { title: "Showroom", url: "/dealers" },
     { title: "Videos", url: "https://www.youtube.com/@ebikepk" },
-    { title: "Bikers Forum", url: "" },
+    { title: "Bikers Forum", url: "/forum" },
     { title: "Shop", url: "" },
     { title: "Blog", url: "/blog" },
     { title: "Bikes Price List", url: "/new-bike-price" },

@@ -132,7 +132,7 @@ const Header = () => {
     const navlink = [
         { label: 'New Bikes', url: '/new-bikes' },
         { label: 'My Adds', url: '/my-adds' },
-        { label: 'Bikers Forum', url: '' }
+        { label: 'Bikers Forum', url: '/forum' }
     ]
 
     const DrawerList = (<>

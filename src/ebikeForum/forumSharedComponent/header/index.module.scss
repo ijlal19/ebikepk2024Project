@@ -51,7 +51,7 @@
                 box-sizing: border-box;
                 font-size: 14px;
                 height: auto;
-                padding: 20px 10px 20px 10px !important;
+                padding: 10px 10px 10px 10px !important;
                 display: flex;
                 justify-content: space-between;
                 align-items: center !important;
@@ -63,12 +63,13 @@
 
                 .logo_box {
                     width: 225px;
-                    height: 44px;
+                    height: 60px;
                     display: flex;
                     align-items: center !important;
                     padding: 0px 0px 0px 0px !important;
 
                     .logo_image {
+                        height: 70px;
                         padding: 0px 0px 0px 0px !important;
                         width: 100%
                     }

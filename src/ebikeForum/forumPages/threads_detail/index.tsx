@@ -1,27 +1,26 @@
 'use client';
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import styles from './index.module.scss';
-import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
-import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
-import data from "../home/data";
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import { getthreadbyId, isLoginUser, postthreadComment } from "@/ebikeForum/forumFunction/globalFuntions";
 import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
-import { getAllthread, getthreadbyId, isLoginUser } from "@/ebikeForum/forumFunction/globalFuntions";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
+import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
+import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
+import { useParams } from "next/navigation";
+import styles from './index.module.scss';
+import data from "../home/data";
 
 const Forum_details = () => {
     const isMobile = useMediaQuery('(max-width:768px)');
     const [isLoading, setIsLoading] = useState(false);
     const [FilterThread, setFilterThread] = useState<any>();
-    const [reply, setReply] = useState('')
-    const params = useParams();
     const [IsLogin, setIsLogin] = useState<any>('not_login')
+    const [reply, setReply] = useState('')
+
+    const params = useParams();
     const { slug2 } = params;
     const Idnumber = Number(slug2)
-    const singledata = data.find(item => item.id === Number(slug2));
-    const userdata = singledata?.sub_category.find(items => items.id === Number(slug2));
 
     useEffect(() => {
         fetchthreadbyId()
@@ -35,27 +34,17 @@ const Forum_details = () => {
         }
     }, [])
 
-    const handlepopup = () => {
-        if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
-            alert('You must be logged in to post a thread.')
-            return
-        }
-        else {
-
-        }
-    }
     const fetchthreadbyId = async () => {
         setIsLoading(true)
-        const getthread = await getAllthread()
-        const filter = getthread?.data.find((e: any) => e.id == slug2)
-        setFilterThread(filter)
+        const getthread = await getthreadbyId(slug2)
+        setFilterThread(getthread?.data)
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
 
-    const PostReply = () => {
+    const PostReply =async () => {
 
         if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
             alert('You must be logged in to post a Comment.')
@@ -66,7 +55,7 @@ const Forum_details = () => {
         }
         else {
             const obj = {
-                title: 'Zahoor',
+                title: 'Try Best Way',
                 description: reply,
                 image:"",
                 video_url:"",
@@ -75,7 +64,13 @@ const Forum_details = () => {
                 isVerified:IsLogin?.isVerified,
                 thread_id: Idnumber
             }
-            console.log("reply",obj)
+            const postcomment = await postthreadComment(obj)
+            if(postcomment){
+                window.location.reload()
+            }
+            else{
+                console.log("data error")
+            }
         }
     }
 
@@ -95,7 +90,7 @@ const Forum_details = () => {
                                     <Box className={styles.user_details_box}>
                                         <Box>
                                             <Typography className={styles.username}>{FilterThread?.user_name}</Typography>
-                                            <Typography className={styles.post_join}>{userdata?.totalpost} post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {FilterThread?.createdAt.slice(0, 10)}</Typography>
+                                            <Typography className={styles.post_join}>1 post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {FilterThread?.createdAt.slice(0, 10)}</Typography>
                                         </Box>
                                     </Box>
                                     <Typography className={styles.days_ago}>#1<span style={{ marginLeft: 4, marginRight: 4 }}>·</span>2d ago</Typography>
@@ -105,8 +100,8 @@ const Forum_details = () => {
                                 </Box>
                             </Box>
                             {/* Thread Comment Start */}
-                            {/* {
-                                [FilterThread]?.map((e: any, i: any) => {
+                            {
+                                FilterThread?.Comments?.map((e: any, i: any) => {
                                     return (
                                         <>
                                             <Box className={styles.reply_box}>
@@ -130,7 +125,7 @@ const Forum_details = () => {
                                         </>
                                     )
                                 })
-                            } */}
+                            }
                             {/* Thread Comment End */}
                             <Box className={styles.comment_box}>
                                 <textarea name="" id="" value={reply} className={styles.textarea} onChange={(e) => setReply(e.target.value)} placeholder="Write your reply..."></textarea>
