@@ -80,8 +80,8 @@ export default function LoginPopup({props,values}: any) {
 
     if(res.success && res.login) {
       let userObj = JSON.stringify(res.user)
-      jsCookie.set('userInfo_e', userObj, {expires: 1})
-      jsCookie.set('accessToken_e', res.accessToken, {expires: 1})
+      jsCookie.set('userInfo_e', userObj, {expires: 7})
+      jsCookie.set('accessToken_e', res.accessToken, {expires: 7})
       props.showmodal('showloginpopup')
       props.updateAfterLogin()
     }
