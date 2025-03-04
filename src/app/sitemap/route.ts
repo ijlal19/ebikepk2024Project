@@ -94,7 +94,14 @@ export async function GET() {
         { loc: `${baseUrl}/used-bikes/bike-by-cc/250/8`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-cc/300/9`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes/bike-by-cc/600/15`, lastmod: new Date().toISOString() },
-        { loc: `${baseUrl}/used-bikes`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/honda/1`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/united/8`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/road_prince/19`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/yamaha/7`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/zxmco/10`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/unique/16`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/super_power/5`, lastmod: new Date().toISOString() },
+        { loc: `${baseUrl}/used-bikes/bike-by-brand/hi_speed/24`, lastmod: new Date().toISOString() }
     ];
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

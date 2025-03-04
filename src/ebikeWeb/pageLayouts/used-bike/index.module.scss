@@ -1,6 +1,7 @@
 @import '../../styles/variable';
+
 .main_body {
-    background-color: whitesmoke ;
+    background-color: whitesmoke;
 }
 
 .main_container {
@@ -13,6 +14,7 @@
     justify-content: center;
     background-color: whitesmoke;
     margin: auto;
+
     @media (max-width: 767px) {
         display: block;
         padding: 5px !important;
@@ -26,6 +28,7 @@
     margin: 30px;
     background-color: #fff;
     padding: 20px;
+
     @media (max-width: 767px) {
         width: 93%;
         margin-top: 0;
@@ -43,9 +46,9 @@
     }
 }
 
-.info_content { 
+.info_content {
     text-align: center;
-    
+
     .info_field {
         font-size: 13px;
         margin-bottom: 2px;
@@ -57,22 +60,55 @@
         max-width: 150px;
         overflow: hidden;
         font-size: 12px;
+
         @media (max-width:767px) {
             font-size: 11px;
         }
     }
 }
 
+.contact_box {
+    display: none;
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    z-index: 1000;
+    row-gap: 5px;
+
+    .phone_box,
+    .message_box {
+        border: 1px solid yellowgreen;
+        display: flex;
+        justify-content: right;
+        background-color: yellowgreen;
+        padding: 7px !important;
+        border-radius: 50%;
+        .icon{
+            color: white;
+            font-size: 25px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}
+
+
 .container_one .title {
     font-size: 17px;
     color: $primary_two ;
     font-weight: 500;
     margin-bottom: 10px;
+
     @media (max-width: 767px) {
         font-size: 16px;
         padding: 15px 5px 4px 0px;
         margin-bottom: 0px;
     }
+
     margin-top: 0px;
 }
 
@@ -80,9 +116,11 @@
     font-size: 13px;
     margin-top: 2px;
     margin-bottom: 10px;
+
     @media (max-width: 767px) {
         font-size: 13px;
     }
+
     margin-top: 0px;
 }
 
@@ -90,15 +128,17 @@
     border: none;
     margin-top: 20px;
 }
+
 .container_one table tbody {
     height: 80px;
     background-color: #fff;
 }
+
 .container_one table tr {
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .container_one table td {
@@ -107,12 +147,14 @@
     padding: 10px 0px;
     text-wrap: nowrap;
 }
+
 .container_one .feature_heading {
     margin-top: 40px;
     font-size: 30px;
     font-weight: 400;
     font-size: 20px;
 }
+
 .container_one .feature_class {
     height: 50px;
     display: flex;
@@ -121,6 +163,7 @@
     align-items: center;
     font-size: 13px;
     margin-bottom: 30px;
+
     @media (max-width: 767px) {
         font-size: 12px;
     }
@@ -133,26 +176,30 @@
     line-height: 30px;
     padding-bottom: 10px;
 }
+
 .seller_comments .bike_dec_title {
     font-size: 17px;
     margin: 10px 0px 5px 0px;
     font-weight: 500;
+
     @media (max-width: 767px) {
         font-size: 14px;
         padding: 2px 2px 2px 0px;
     }
 }
+
 .seller_comments .seller_comments_desc {
     font-size: 11px;
     letter-spacing: 0.5px;
     margin: 0;
     line-height: 15px;
+
     @media (max-width: 767px) {
         font-size: 12px;
     }
 }
 
-.container_two { 
+.container_two {
 
     width: 250px;
     margin: 30px;
@@ -161,7 +208,7 @@
     flex-direction: column;
     align-items: center;
     background-color: #fff;
-    justify-content: center ;
+    justify-content: center;
     padding-bottom: 10px;
 
     @media (max-width: 767px) {
@@ -170,7 +217,7 @@
     }
 
     .price_text {
-        
+
         font-size: 17px;
         font-weight: 400;
         color: yellowgreen;
@@ -180,6 +227,7 @@
         padding-bottom: 10px;
         text-wrap: nowrap;
         margin-top: 10px;
+
         @media (max-width:767px) {
             font-size: 16px;
             width: -webkit-fill-available;
@@ -188,7 +236,8 @@
 
     .sellerName {
         font-size: 13px;
-        margin:5px 0px;
+        margin: 5px 0px;
+
         @media (max-width:767px) {
             font-size: 13px;
         }
@@ -208,6 +257,7 @@
         width: 180px;
         margin: auto;
         height: 30px;
+
         @media (max-width:767px) {
             font-size: 12px;
             width: 95%;
@@ -218,6 +268,7 @@
         font-size: 13px;
         margin-bottom: 5px;
         margin-top: 5px;
+
         @media (max-width:767px) {
             font-size: 13px;
         }
@@ -225,7 +276,7 @@
 
 }
 
- .container_three {
+.container_three {
     width: 250px;
     height: 200px;
     border: 1px solid #000;
@@ -235,33 +286,37 @@
     flex-direction: column;
     align-items: center;
     background-color: #fff;
+
     @media (max-width: 767px) {
         width: 370px;
         margin: 10px;
         margin: 13px 2px 2px 22px;
     }
 }
+
 .icons {
     display: flex;
     gap: 10px;
     justify-content: center;
     border: 1px solid #000;
     padding-top: 5px;
-.contact {
-    border: 1px solid #000;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #000;
-    border-radius: 50%;
-}
-.message {
-    border: 1px solid #000;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
+
+    .contact {
+        border: 1px solid #000;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #000;
+        border-radius: 50%;
+    }
+
+    .message {
+        border: 1px solid #000;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
 
     .facebook {
         border: 1px solid #000;
@@ -277,27 +332,32 @@
     border: 1px solid #000;
     text-wrap: nowrap;
     border-bottom: 1px solid #EAEDEF;
-    padding: 5px ;
+    padding: 5px;
     padding-inline: 67px;
 }
+
 .container_three .owner_name small {
     color: whitesmoke;
     border: 1px solid #000;
     display: block;
 }
+
 .container_three .owner_name {
     padding: 5px 10px 5px 10px;
     border: 1px solid #000;
 }
+
 .owner_name p {
     font-size: 13px;
     margin: 0;
     margin-top: 5px;
 }
+
 .owner_name span {
     font-size: 13px;
     color: whitesmoke;
 }
+
 .container_four {
     width: 250px;
     height: auto;
@@ -309,28 +369,33 @@
     align-items: center;
     background-color: #fff;
     position: relative;
+
     @media (max-width: 767px) {
         margin-top: 25px !important;
-        width:99%;
+        width: 99%;
         margin: 5px auto;
     }
 }
-.container_four .transaction .tranc_text  {
+
+.container_four .transaction .tranc_text {
     font-size: 15px;
     border-bottom: 1px solid #d3d5d6;
     padding-bottom: 5px;
     text-wrap: nowrap;
     font-weight: normal;
 }
+
 .container_four ol li {
     font-size: 11px;
     padding: 5px;
 }
+
 .container_four ol {
     text-align: justify;
     padding-left: 20px;
-   
+
 }
+
 .container_four p {
     color: whitesmoke;
     position: absolute;
@@ -339,6 +404,7 @@
     cursor: pointer;
 
 }
+
 .container_five .notify {
     border: 1px solid whitesmoke;
     text-align: center;
@@ -349,11 +415,13 @@
     margin-left: 30px;
     font-size: 13px;
     cursor: pointer;
+
     @media (max-width: 767px) {
         width: 370px;
-        margin-left: 10px ;
+        margin-left: 10px;
     }
 }
+
 .container_five .report {
     border: 1px solid whitesmoke;
     text-align: center;
@@ -376,36 +444,38 @@
     max-width: 1000px;
     margin: auto;
     padding: 20px 0px;
-    
+
     @media (max-width:767px) {
-        padding: 0px;  
-        
+        padding: 0px;
+
     }
-    
+
     .similar_heading {
-      margin-top: 0px;
-      margin-left: 5px;
-      font-size: 18px;
-      padding: 2px 2px 2px 5px;
-      margin-bottom: 0px;
-      font-weight: normal;
-      @media (max-width:767px) {
-        margin-top: 5px;
-        margin-left: 10px;
-     }
+        margin-top: 0px;
+        margin-left: 5px;
+        font-size: 18px;
+        padding: 2px 2px 2px 5px;
+        margin-bottom: 0px;
+        font-weight: normal;
+
+        @media (max-width:767px) {
+            margin-top: 5px;
+            margin-left: 10px;
+        }
     }
 
 
 
 }
 
-.load_main{
+.load_main {
     width: 100%;
     height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    .load_div{
+
+    .load_div {
         border: 1px solid #000;
         height: auto;
         display: flex;
@@ -414,20 +484,22 @@
 
     }
 }
+
 @media (max-width:768px) {
-    .load_main{
+    .load_main {
         width: 100%;
         height: 50vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        .load_div{
+
+        .load_div {
             border: 1px solid #000;
             height: auto;
             display: flex;
             justify-content: center;
             align-items: center;
-    
+
         }
     }
 }

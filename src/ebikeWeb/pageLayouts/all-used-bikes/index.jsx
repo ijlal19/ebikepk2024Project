@@ -71,7 +71,7 @@ const AllUsedBike = () => {
 
                 <Grid container className={styles.long_card} key={ind} onClick={() => { goToDetailPage(val) }}>
                     <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
-                        {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
+                        {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />}
                     </Grid>
 
                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
@@ -93,7 +93,7 @@ const AllUsedBike = () => {
                     </Grid>
 
                     <Grid item className={styles.price_section_desktop}>
-                        <span> PKR {priceWithCommas(val?.price)}  </span>
+                        <span> PKR {priceWithCommas(val?.price)}</span>
                     </Grid>
 
                 </Grid>
@@ -109,7 +109,7 @@ const AllUsedBike = () => {
             <Grid container className={styles.grid_card} key={ind} onClick={() => { goToDetailPage(val) }}>
 
                 <Grid item className={styles.grid_image_box}>
-                    {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
+                    {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />}
                 </Grid>
 
                 <Grid item className={styles.grid_card_info}>

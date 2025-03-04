@@ -61,6 +61,7 @@ let catagory_arr = [
 let brand_arr = [
     { title: "Used Bike by Brand", url: "" },
     { title: "Honda Bikes", url: "/used-bikes/bike-by-brand/honda/1" },
+    { title: "Suzuki", url: "/used-bikes/bike-by-brand/suzuki/6" },
     { title: "United Bikes", url: "/used-bikes/bike-by-brand/united/8" },
     { title: "Zxmco Bikes", url: "/used-bikes/bike-by-brand/zxmco/10" },
     { title: "Unique Bikes", url: "/used-bikes/bike-by-brand/unique/16" },
