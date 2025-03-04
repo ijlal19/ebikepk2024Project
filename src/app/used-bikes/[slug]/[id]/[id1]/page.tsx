@@ -29,6 +29,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title = 'Used Bikes & Motorcycles for Sale in ' + city + ' | ebike.pk'
       description = 'Used bikes & motorcycles for sale in ' + city + ' find wide range of honda used bikes and yamaha motorcycles for sale in Karachi pakistan.'
   }
+  else if(from?.indexOf('brand') > -1) {
+    let brand = id
+    title = brand?.charAt(0)?.toUpperCase() + brand?.slice(1) + ' Used Motorcycles in Pakistan  | ebike.pk'
+    description = brand + ' Used Motorcycles for sale in Pakistan. Find best ' + brand + ' used motorcycles of your choice according to your needs on ebike.pk.'
+  }
 
   return {
     title: title,
