@@ -7,7 +7,7 @@ body {
     pointer-events: none;
 }
 
-.cursorpointer{
+.cursorpointer {
     cursor: pointer;
 }
 
@@ -20,6 +20,7 @@ body {
             align-items: center;
             background-color: white;
             opacity: 0.6;
+
             // border-radius: 50%;
             &::after {
                 font-size: 16px !important;
@@ -35,6 +36,7 @@ body {
             background-color: white;
             // border-radius: 50%;
             opacity: 0.6;
+
             &::after {
                 font-size: 16px !important;
                 font-weight: bolder;
@@ -44,23 +46,37 @@ body {
 }
 
 
-.swiper_card_con, .swiper_card_brand {
+.swiper_card_con,
+.swiper_card_brand {
     .swiper {
         .swiper-button-prev {
-            color: black !important;
-            background-color: azure;
+            color: #15191c !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
             &::after {
-                font-size: 20px !important;
-                font-weight: 500;
+                font-size: 15px !important;
+                font-weight: bolder;
             }
         }
 
         .swiper-button-next {
-            color: black !important;
-            background-color: azure;
+            color: #15191c !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+
             &::after {
-                font-size: 20px !important;
-                font-weight: 500;
+                font-size: 15px !important;
+                font-weight: bolder;
             }
         }
     }
@@ -70,6 +86,7 @@ body {
     .swiper {
         .swiper-wrapper {
             align-items: center;
+
             .swiper-slide {
                 text-align: center;
             }
@@ -94,13 +111,16 @@ body {
             margin-left: -10px;
             border: solid 1px rgb(231, 229, 229);
             transition: all 1s ease;
+
             @media (max-width:768px) {
                 height: 25px;
                 width: 25px;
             }
-            &.swiper-button-prev:hover{
+
+            &.swiper-button-prev:hover {
                 background: rgb(240, 240, 240) !important;
             }
+
             &::after {
                 font-size: 10px !important;
                 font-weight: 500;
@@ -122,13 +142,16 @@ body {
             margin-right: -10px;
             border: solid 1px rgb(231, 229, 229);
             transition: all 1s ease;
+
             @media (max-width:768px) {
                 height: 25px;
                 width: 25px;
             }
-            &.swiper-button-next:hover{
+
+            &.swiper-button-next:hover {
                 background: rgb(240, 240, 240) !important;
             }
+
             &::after {
                 font-size: 10px !important;
                 font-weight: 500;
@@ -144,44 +167,55 @@ body {
 }
 
 .header_drawer {
-    .MuiTypography-root{
+    .MuiTypography-root {
         font-size: 13px !important;
+
         @media (max-width:768px) {
             font-size: 12px;
         }
+
         // &:hover {
         //     font-weight: bold;
         // }
     }
-    .MuiCollapse-root{
+
+    .MuiCollapse-root {
         // padding-left: 20px;
         font-weight: normal !important;
     }
-    .MuiListItemText-root,.MuiButtonBase-root{
+
+    .MuiListItemText-root,
+    .MuiButtonBase-root {
         font-size: 13px !important;
+
         // margin-left: 10px;
         @media (max-width:768px) {
             font-size: 12px;
         }
     }
-    
-    .MuiButtonBase-root{
+
+    .MuiButtonBase-root {
         padding: 13px !important;
+
         @media (max-width:768px) {
             font-size: 12px;
         }
     }
-    .MuiBox-root{
+
+    .MuiBox-root {
         padding: 0px !important;
     }
-    .MuiList-padding{
+
+    .MuiList-padding {
         padding-top: 0px !important;
         padding-bottom: 0px !important;
 
     }
-    .MuiSvgIcon-root{
+
+    .MuiSvgIcon-root {
         font-size: 20px !important;
     }
+
     // .MuiListItemText-primary{
     //     font-size: 13px !important;
     // }
@@ -196,7 +230,7 @@ body {
         display: flex;
         justify-content: center;
     }
-   
+
 
     .swiper-button-prev {
         color: black !important;
@@ -207,6 +241,7 @@ body {
         width: 35px;
         margin-left: -10px;
         border: solid 1px rgb(231, 229, 229);
+
         &::after {
             font-size: 15px !important;
             font-weight: 500;
@@ -222,6 +257,7 @@ body {
         width: 35px;
         margin-right: -10px;
         border: solid 1px rgb(231, 229, 229);
+
         &::after {
             font-size: 15px !important;
             font-weight: 500;
@@ -240,7 +276,7 @@ body {
     background-color: rgb(218, 86, 86);
 }
 
-#login_with_FB{
+#login_with_FB {
     cursor: pointer;
     border: none;
     margin-top: 10px;
@@ -248,5 +284,5 @@ body {
     height: 40px;
     color: #ffffff;
     text-align: center;
-    background-color: rgb(53, 116, 188); 
+    background-color: rgb(53, 116, 188);
 }
