@@ -4,11 +4,12 @@ const MainCatgeoryCard = ({props}:any)=>{
     return(
         <div className={styles.main}>
             <div className={styles.image_box}>
-                <img src='https://imtiazautos.pk/wp-content/uploads/2022/09/IMG_9598-600x600.jpg' alt="" className={styles.image}/>
+                <img src={props.images[0]} alt="" className={styles.image}/>
             </div>
             <div className={styles.price_box}>
-                <p className={styles.name}>{props.name}</p>
-                <p className={styles.price}>RS:12000</p>
+                <p className={styles.name}>{props.product_name.slice(0,25)}</p>
+                <p className={styles.price}>PKR:{props?.product_price}</p>
+                <button className={styles.button}>ADD TO BAG</button>
             </div>
         </div>
     )

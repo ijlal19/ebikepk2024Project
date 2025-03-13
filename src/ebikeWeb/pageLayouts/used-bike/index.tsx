@@ -64,23 +64,27 @@ export default function UsedBike() {
   let bikeBrand = getBrandFromId(bikeDetail?.brandId, BrandArr)
   let bikeCity = getCityFromId(bikeDetail?.cityId, CityArr)
   let bikeYear = getYearFromId(bikeDetail?.yearId, YearArr)
-  return (<>
-  <div style={{display: bikeDetail?.mobileNumber? "flex" : "none"}}>
-    <div className={styles.contact_box}>
-      <a href={`tel:${bikeDetail?.mobileNumber}`}>
-        <div className={styles.phone_box}><PhoneIcon className={styles.icon} /></div>
-      </a>
-      <a href={`sms:${bikeDetail?.mobileNumber}`}>
-        <div className={styles.message_box}><ChatIcon className={styles.icon} /></div>
-      </a>
-      <a href={`https://wa.me/${bikeDetail?.mobileNumber}`} target="_blank" rel="noopener noreferrer">
-    <div className={styles.message_box}>
-        <WhatsAppIcon className={styles.icon} />
-    </div>
-</a>
 
+  return (<>
+    <div style={{ display: bikeDetail?.mobileNumber ? "flex" : "none" }}>
+      <div className={styles.contact_box}>
+
+        <a href={`https://wa.me/${bikeDetail?.mobileNumber}`} target="_blank" rel="noopener noreferrer">
+          <div className={styles.message_box}>
+            <WhatsAppIcon className={styles.icon} />
+          </div>
+        </a>
+
+        <a href={`sms:${bikeDetail?.mobileNumber}`}>
+          <div className={styles.message_box} style={{ color: "#1976d2", backgroundColor: "#1976d2", border: "1px solid #1976d2" }}><ChatIcon className={styles.icon} /></div>
+        </a>
+
+        <a href={`tel:${bikeDetail?.mobileNumber}`}>
+          <div className={styles.phone_box}><PhoneIcon className={styles.icon} /></div>
+        </a>
+
+      </div>
     </div>
-  </div>
     {
       !isLoading && bikeDetail ?
         <div className={styles.main_body}>

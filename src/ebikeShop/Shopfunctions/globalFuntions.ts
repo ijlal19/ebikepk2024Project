@@ -13,7 +13,7 @@ function isLoginUser() {
 }
 
 function getShopMainCategory() {
-    return fetch(Gconfig.ebikeApi + `shop/get-all-main-catagory-data`, {
+    return fetch(Gconfig.ebikeApi + `shop/get-main-catagory-data`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })

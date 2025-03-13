@@ -7,13 +7,8 @@ import 'swiper/swiper-bundle.css';
 const Banner = () => {
 
     const sliderData = [
-        {
-            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/c_scale,h_400,w_auto,q_auto,f_auto,dpr_auto/v1592637714/staticFiles/shop_asujgk.jpg"
-        },
-        {
-            img_url: "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,h_400,w_auto,q_auto,f_auto,dpr_auto/v1565247355/ebike-graphics/banners/Untitled-1.jpg"
-        }
-    ];
+       'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,h_400,w_auto,q_auto,f_auto,dpr_auto/v1565247355/ebike-graphics/banners/Untitled-1.jpg' ,
+  'https://res.cloudinary.com/duiuzkifx/image/upload/c_scale,h_400,w_auto,q_auto,f_auto,dpr_auto/v1592637714/staticFiles/shop_asujgk.jpg']
 
     return (
         <div className={`${styles.swiper_brand_card_conatainer} swiper_card_brand`}>
@@ -41,7 +36,7 @@ const Banner = () => {
                 {sliderData.length > 0 &&
                     sliderData.map((item, index) => (
                         <SwiperSlide key={index}>
-                            <img className={styles.brand_img} src={item.img_url} alt="banner.image" />
+                            <img className={styles.brand_img} src={item} alt="banner.image" />
                         </SwiperSlide>
                     ))}
             </Swiper>

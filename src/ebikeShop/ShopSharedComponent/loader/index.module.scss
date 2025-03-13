@@ -1,0 +1,55 @@
+
+.loader_main {
+    .loader_inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 180px;
+        height: auto;
+        background-color: rgba(218, 203, 203, 0.509);
+        border: '2px solid #000';
+        text-align: center;
+        padding-top: 0px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+
+        @media (max-width:767px){
+            top: 30%; 
+        }
+    }
+
+    .logo_image {
+        width: 130px;
+        height: auto;
+        border: none;
+        transition: all 1s ease;
+        animation: spin 1s linear infinite; // Add animation property
+    }
+    
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg); // Start position
+        }
+        100% {
+            transform: rotate(360deg); // End position
+        }
+    }
+    
+
+    .progress {
+        width: 40px;
+        display: block;
+        text-align: center;
+        margin: 0px auto;
+    }
+
+    .text {
+        font-size: 16px;
+        text-align: center;
+        font-weight: 400;
+        color: black;
+        margin: 5px auto;
+    }
+}
