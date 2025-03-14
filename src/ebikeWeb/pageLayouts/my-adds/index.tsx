@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation'
 import { Box, Typography, useMediaQuery } from '@mui/material'
-import { getAllFeaturedBike, isLoginUser, getMyAds, MarkBikeAsSold } from '@/ebikeWeb/functions/globalFuntions'
+import { getAllFeaturedBike,  getMyAds, MarkBikeAsSold } from '@/ebikeWeb/functions/globalFuntions'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
+import {isLoginUser} from "@/genericFunctions/geneFunc";
 import ImgCard from '@/ebikeWeb/sharedComponents/itemCard'
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider'
 

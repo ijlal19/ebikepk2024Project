@@ -3,8 +3,9 @@ import { TextareaAutosize, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation';
-import { numericOnly, isLoginUser, publishAd, uplaodImageFunc, createdealer } from "@/ebikeWeb/functions/globalFuntions"
+import { numericOnly, publishAd, uplaodImageFunc, createdealer } from "@/ebikeWeb/functions/globalFuntions"
 import { BrandArr, CcArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
+import {isLoginUser } from '@/genericFunctions/geneFunc'
 
 const DealerRegistration = () => {
   // const [isLoading, setIsLoading] = useState(false)

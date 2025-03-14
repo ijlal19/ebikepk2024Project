@@ -190,16 +190,6 @@ function verifyUserFromAuthenticationEmail(email: any, token: any) {
     })
 }
 
-function isLoginUser() {
-    let obj = jsCookie.get('userInfo_e')
-    if (obj) {
-        return { login: true, info: JSON.parse(obj) }
-    }
-    else {
-        return { login: false, info: null }
-    }
-}
-
 function publishAd(data: any) {
     let token = jsCookie.get('accessToken_e')
     return fetch(Gconfig.ebikeApi + `classified/crete-add`, {
@@ -471,13 +461,15 @@ function getPostBlogcomment(data: any) {
     }
 
 export {
-    getPostcomment,getPostBlogcomment,getAllBlogComment,
+    getPostcomment,
+    getPostBlogcomment,
+    getAllBlogComment,
      getSingleBlogData, createmechanic, createdealer,
     numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode,
     noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore,
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
     getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
-    isLoginUser, publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
+     publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
     getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
     getAllFeaturedBike, capitalizeFirstWord, getMyAds, MarkBikeAsSold, sendEmailLetter
 }

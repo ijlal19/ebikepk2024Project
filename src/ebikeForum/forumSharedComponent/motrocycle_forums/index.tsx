@@ -1,6 +1,6 @@
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
-import { isLoginUser } from '@/ebikeForum/forumFunction/globalFuntions';
 import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
+import { isLoginUser } from '@/genericFunctions/geneFunc';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button, Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';

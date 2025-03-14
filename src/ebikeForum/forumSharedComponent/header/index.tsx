@@ -1,11 +1,11 @@
 'use client'
-import { Box, Button, IconButton, InputBase, Paper, TextField, Typography, useMediaQuery } from "@mui/material"
-import styles from './index.module.scss'
+import { Box, Button, IconButton, InputBase, Paper, TextField, Typography, useMediaQuery } from "@mui/material";
+import { isLoginUser } from "@/genericFunctions/geneFunc";
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import SearchIcon from '@mui/icons-material/Search';
-import { useEffect, useState } from "react";
-import { isLoginUser } from "@/ebikeForum/forumFunction/globalFuntions";
 import Create_thread_popup from "../thread_popup";
+import { useEffect, useState } from "react";
+import styles from './index.module.scss';
 
 const Header = () => {
     const isMobile = useMediaQuery("(max-width:600px)")

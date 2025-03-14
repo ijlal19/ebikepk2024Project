@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getShopMainCategory } from '@/ebikeShop/Shopfunctions/globalFuntions';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
@@ -8,19 +9,42 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import styles from './index.module.scss';
 const TopCategories = () => {
 
+
+    const [data, setData] = useState<any>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        fetchShopMainCategory()
+    }, [])
+
+    const fetchShopMainCategory = async () => {
+        setIsLoading(true)
+        const res = await getShopMainCategory()
+        setData(res)
+        setIsLoading(false)
+        console.log("data", res)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000);
+    }
+
     const isMobile = useMediaQuery("(max-width:769px)");
 
     const sliderData = [
         {
+            id: 1,
             img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/10_wnqxwp.jpg"
         },
         {
+            id: 2,
             img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592646355/staticFiles/8_nvtgfq.jpg"
         },
         {
+            id: 3,
             img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/9_fflcti.jpg"
         },
         {
+            id: 4,
             img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/7_mamkaj.jpg"
         }
     ];
@@ -90,7 +114,7 @@ const TopCategories = () => {
                     breakpoints={{
                         768: {
                             slidesPerView: 2,
-                            slidesPerGroup: 1,
+                            slidesPerGroup: 2,
                             spaceBetween: 25
                         },
                     }}>
@@ -101,9 +125,9 @@ const TopCategories = () => {
 
                                 <Grid item xs={12} className={styles.grid}>
                                     <Box className={styles.grid_card}>
-                                        <a href="">
+                                        {/* <a href=""> */}
                                         <img src={item.img_url} alt="" className={styles.image} />
-                                        </a>
+                                        {/* </a> */}
                                     </Box>
                                 </Grid>
 
@@ -116,7 +140,7 @@ const TopCategories = () => {
 
             <div className={styles.add}>
                 <a href="https://www.youtube.com/channel/UCmudYXR1HtpZTIBFeDYn2fg?sub_confirmation=1" target='blank'>
-                <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592568914/staticFiles/7_Ebikeshop_3rd_Banner_Approved_tw5f0h.jpg" alt="Add_Image"  className={styles.add_image}/>
+                    <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592568914/staticFiles/7_Ebikeshop_3rd_Banner_Approved_tw5f0h.jpg" alt="Add_Image" className={styles.add_image} />
                 </a>
             </div>
 

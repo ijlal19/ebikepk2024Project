@@ -15,7 +15,7 @@ import DealerList from './findDealers/index';
 import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
 import { usePathname, useRouter } from 'next/navigation';
-import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
+import {isLoginUser} from '../../../genericFunctions/geneFunc'
 import { Label } from '@mui/icons-material';
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');

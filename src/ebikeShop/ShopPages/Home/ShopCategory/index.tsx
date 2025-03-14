@@ -10,10 +10,10 @@ const ShopMainCategory = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        fetch()
+        fetchShopMainCategory()
     }, [])
 
-    const fetch = async () => {
+    const fetchShopMainCategory = async () => {
         setIsLoading(true)
         const res = await getShopMainCategory()
         setData(res)
@@ -30,18 +30,18 @@ const ShopMainCategory = () => {
                 !isLoading ?
                     <div className={styles.container}>
                         {
-                            data?.slice(0, 7)?.map((e: any) => {
+                            data?.slice(0, 7)?.map((e: any,i:any) => {
                                 return (
-                                    <div className={styles.main_category}>
+                                    <div className={styles.main_category} key={i}>
 
                                         <div className={styles.heading_box}>
                                             <p className={styles.heading}>{e?.name}</p>
                                         </div>
 
                                         <div className={styles.product_main}>
-                                            {e?.products?.slice(0, 4).map((eProduct: any) => {
+                                            {e?.products?.slice(0, 4).map((eProduct: any, index:any) => {
                                                 return (
-                                                    <div>
+                                                    <div key={index}>
                                                         <MainCatgeoryCard props={eProduct} />
                                                     </div>
                                                 )

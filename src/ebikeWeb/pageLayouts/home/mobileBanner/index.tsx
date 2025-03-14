@@ -2,7 +2,7 @@
 import { Box, Grid, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss';
 import Link from 'next/link';
-import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
+import {isLoginUser} from "@/genericFunctions/geneFunc";
 import { useRouter } from 'next/navigation';
 
 const MobileBanner = () => {
