@@ -1,7 +1,7 @@
 import { Box, Button, Paper, Typography } from '@mui/material'
 import { TiTick } from "react-icons/ti";
 import styles from './index.module.scss'
-import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
+import {isLoginUser} from "@/genericFunctions/geneFunc";
 import { useRouter } from 'next/navigation';
 
 const FeatureCard = (props :any) => {

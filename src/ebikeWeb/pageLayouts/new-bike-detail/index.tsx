@@ -4,7 +4,8 @@ import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss'
 import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { getnewBikedetailsData, isLoginUser } from '@/ebikeWeb/functions/globalFuntions';
+import { getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions';
+import {isLoginUser} from "@/genericFunctions/geneFunc";
 import { useParams, useRouter } from 'next/navigation';
 import { WriteModal, MoreReviewModal } from '@/ebikeWeb/sharedComponents/Review-popup';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider';

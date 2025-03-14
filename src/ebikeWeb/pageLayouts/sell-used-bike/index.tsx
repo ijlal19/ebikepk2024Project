@@ -4,7 +4,8 @@ import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalData'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
-import { numericOnly, isLoginUser, publishAd, uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
+import {isLoginUser} from "@/genericFunctions/geneFunc";
+import { numericOnly, publishAd, uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
 
 const SellUsedBike = () => {
 

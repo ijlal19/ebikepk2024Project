@@ -10,7 +10,7 @@ import Ourvideos from './ourVideos/index'
 import MobileBanner from './mobileBanner/index'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import {  isLoginUser } from '@/ebikeWeb/functions/globalFuntions'
+import {isLoginUser} from "@/genericFunctions/geneFunc";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 
 import blogData from './blogSection/Data'
