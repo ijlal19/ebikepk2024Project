@@ -1,11 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
-import styles from './index.module.scss'
-import { FeatureDelers } from './feature-dealers';
-import { FeaturedDealerData } from './Data';
-import { DealerInPakistan } from './dealer-in-pakistan';
-import { getFeaturedDealer, getAllDealer } from "@/ebikeWeb/functions/globalFuntions"
+import { getFeaturedDealer, getAllDealer } from "@/ebikeWeb/functions/globalFuntions";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { DealerInPakistan } from './dealer-in-pakistan';
+import { FeatureDelers } from './feature-dealers';
+import { useEffect, useState } from 'react';
+import styles from './index.module.scss';
 
 const Dealer = () => {
 

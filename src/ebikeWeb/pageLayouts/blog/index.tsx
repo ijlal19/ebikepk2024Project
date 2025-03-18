@@ -1,12 +1,11 @@
 'use client';
-import { Box, Container, Grid, useMediaQuery, Typography, Pagination } from '@mui/material';
-import { useEffect, useState } from 'react';
-import styles from './index.module.scss';
-import { useRouter } from 'next/navigation'
-import OurVideos from '../home/ourVideos';
-import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions'
+import { Box, Grid, useMediaQuery, Typography, Pagination } from '@mui/material';
+import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-// import Adsense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import OurVideos from '../home/ourVideos';
+import styles from './index.module.scss';
 
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');

@@ -1,14 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
-import styles from './index.module.scss'
-import { DealerDetailData ,moreDealers} from './Data'
+import { getSimilarDealers, getSingleDealerDetails } from "@/ebikeWeb/functions/globalFuntions";
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { useRouter, useParams } from 'next/navigation';
 import PhoneIcon from '@mui/icons-material/Phone';
 import BadgeIcon from '@mui/icons-material/Badge';
 import { useMediaQuery } from '@mui/material';
-import { getSimilarDealers, getSingleDealerDetails } from "@/ebikeWeb/functions/globalFuntions"
-import { useRouter, useParams } from 'next/navigation'
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { useEffect, useState } from 'react';
+import styles from './index.module.scss';
 
 const DealerDetails = () => {
   const [dealersDetails, setDealerDetails]:any = useState([])

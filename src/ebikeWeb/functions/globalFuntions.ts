@@ -3,41 +3,6 @@ import Gconfig from 'globalconfig'
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
 
-function capitalizeFirstWord(str:any) {
-    return str?.replace(/^\w/, (c:any) => c.toUpperCase());
-}
-
-const numericOnly = (value: string) => {
-    if (value == 'e') return false;
-    return /^[0-9]*$/gm.test(value);
-};
-const alphabetOnly = (value: string) => {
-    if (value.length == 1 && /\s/.test(value) == true) return false;
-    return /^[a-zA-Z\s]*$/gm.test(value);
-};
-const alphaNumeric = (value: string) => {
-    // only hash, dot and dash allowed
-    if (value.length == 1 && (/\s/).test(value) == true) { return "" }
-    return value.replace(/[^a-zA-Z0-9\s#/.-]/g, "")
-}
-const validateEmail = (email: string) => {
-    return (/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(email);
-}
-const validateMobileNumber = (number: string) => {
-    return number.length >= 11 && number.length <= 12;
-}
-const validateZipCode = (zip: string) => {
-    return zip.length == 5;
-}
-const noSpecialCharacters = (value: string) => {
-    return value.replace(/[^a-zA-Z0-9]/g, "")
-}
-const noSpecialCharactersButSpace = (value: string) => {
-    return value.replace(/[^a-zA-Z0-9\s]/g, "")
-}
-const noSpecialCharactersExceptDotUderscore = (str: string) => {
-    return str.replace(/[^a-zA-Z0-9._]/g, "")
-}
 function getAllbikesDetail(page: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-adds-with-offset/${page}/12`, {
         method: 'GET',
@@ -161,45 +126,7 @@ function getAllBlog() {
         })
 }
 
-function userLogin(data: any) {
-    return fetch(Gconfig.ebikeApi + `user/login`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
 
-function userSignup(data: any) {
-    return fetch(Gconfig.ebikeApi + `user/createUser`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
-
-function verifyUserFromAuthenticationEmail(email: any, token: any) {
-    return fetch(Gconfig.ebikeApi + `user/verification/${email}/${token}`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" }
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
-
-function publishAd(data: any) {
-    let token = jsCookie.get('accessToken_e')
-    return fetch(Gconfig.ebikeApi + `classified/crete-add`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json", "x-access-token": token },
-        body: JSON.stringify(data)
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
 function createmechanic(data: any) {
     let token = jsCookie.get('accessToken_e')
     return fetch(Gconfig.ebikeApi + `dealers/crete-dealer`, {
@@ -264,11 +191,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
         })
     }
 }
-function priceWithCommas(x: any) {
-    if (x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-}
+
 
 
 
@@ -465,11 +388,8 @@ export {
     getPostBlogcomment,
     getAllBlogComment,
      getSingleBlogData, createmechanic, createdealer,
-    numericOnly, alphabetOnly, alphaNumeric, validateEmail, validateMobileNumber, validateZipCode,
-    noSpecialCharacters, noSpecialCharactersButSpace, noSpecialCharactersExceptDotUderscore,
     getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
-    getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, userLogin, userSignup, verifyUserFromAuthenticationEmail,
-     publishAd, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, priceWithCommas, getAllDealer, getFeaturedDealer,
+    getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, getAllDealer, getFeaturedDealer,
     getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
-    getAllFeaturedBike, capitalizeFirstWord, getMyAds, MarkBikeAsSold, sendEmailLetter
+    getAllFeaturedBike, getMyAds, MarkBikeAsSold, sendEmailLetter
 }

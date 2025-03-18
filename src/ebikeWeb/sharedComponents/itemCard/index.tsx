@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import styles from './index.module.scss'
 import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation'
-import { priceWithCommas } from '@/ebikeWeb/functions/globalFuntions'
+import { priceWithCommas } from '@/genericFunctions/geneFunc'
 
 export default function NewUsedBikesCard(props:any) {
 

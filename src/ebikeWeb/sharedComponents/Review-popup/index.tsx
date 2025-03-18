@@ -10,7 +10,6 @@ import { Avatar, Rating, TextareaAutosize } from '@mui/material';
 import { ConstructionOutlined } from '@mui/icons-material';
 import { useParams } from 'next/navigation';
 import { getPostcomment } from '@/ebikeWeb/functions/globalFuntions';
-// import { getPostcomment } from '@/functions/globalFuntions';
 
 const style = {
   position: 'absolute',

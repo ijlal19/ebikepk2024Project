@@ -1,12 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
-// import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
+import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { getShopMainCategory } from '@/ebikeShop/Shopfunctions/globalFuntions';
-// import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
-// import Search from "@mui/icons-material";
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 
@@ -26,7 +23,9 @@ const TopbarCategory = () => {
     }
 
     function goToRoute(data: any) {
-        // router.push(data.url)
+        let urlTitle = '' + data?.name.toLowerCase().replaceAll(' ', '-')
+        router.push(`/shop/${urlTitle}/${data?.id}`)
+        console.log("data" , data)
     }
 
     const toggleDrawer = (newOpen: boolean) => () => {

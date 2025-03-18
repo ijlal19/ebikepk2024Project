@@ -5,6 +5,7 @@ import styles from './index.module.scss'
 import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions';
+import {priceWithCommas } from '@/genericFunctions/geneFunc';
 import {isLoginUser} from "@/genericFunctions/geneFunc";
 import { useParams, useRouter } from 'next/navigation';
 import { WriteModal, MoreReviewModal } from '@/ebikeWeb/sharedComponents/Review-popup';
@@ -126,7 +127,7 @@ export default function NewBikeBrand() {
                       <Grid item xs={isMobile ? 12 : 3} className={styles.bike_review_box}>
 
                         <Box className={styles.price_box}>
-                          Rs: {e?.bike?.price}
+                          Rs: { priceWithCommas(e?.bike?.price)}
                         </Box>
                         {
                           e?.bike?.newbike_ratings?.length > 0 ?

@@ -1,9 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId, priceWithCommas } from "@/ebikeWeb/functions/globalFuntions";
+import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId } from "@/ebikeWeb/functions/globalFuntions";
+import {  numericOnly,  priceWithCommas } from "@/genericFunctions/geneFunc";
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { Navigation, FreeMode, Pagination } from 'swiper/modules';
+import { Navigation, FreeMode } from 'swiper/modules';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Swiper, SwiperSlide } from 'swiper/react';

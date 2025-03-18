@@ -1,5 +1,6 @@
-import styles from './index.module.scss'
-import { FeatureDealerCard } from '../Card'
+import { FeatureDealerCard } from '../Card';
+import styles from './index.module.scss';
+
 export const FeatureDelers =({featuredDealers}:any)=>{
 return(
     <div className={styles.featuremain}>

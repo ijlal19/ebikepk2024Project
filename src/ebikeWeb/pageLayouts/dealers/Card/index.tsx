@@ -1,9 +1,9 @@
 'use client'
-import { useMediaQuery } from '@mui/material';
-import styles from './index.module.scss'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useRouter, useParams } from 'next/navigation';
+import { useMediaQuery } from '@mui/material';
+import styles from './index.module.scss';
 import { useState } from 'react';
-import { useRouter, useParams } from 'next/navigation'
 
 export const FeatureDealerCard = ({ props }: any) => {
 

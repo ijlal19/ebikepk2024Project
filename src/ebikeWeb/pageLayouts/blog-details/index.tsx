@@ -1,13 +1,13 @@
 'use client';
-import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import styles from './index.module.scss';
-import { useParams } from 'next/navigation';
-import ShareIcon from '@mui/icons-material/Share';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, MailruShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
+import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
 import {  getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
+import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button } from '@mui/material';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import ShareIcon from '@mui/icons-material/Share';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import styles from './index.module.scss';
 
 const BlogDetails = () => {
   const [displayicon, setDisplayIcon] = useState(true)

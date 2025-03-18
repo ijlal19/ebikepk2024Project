@@ -1,7 +1,8 @@
 import * as React from 'react';
 import MechanicsDetails from '@/ebikeWeb/pageLayouts/mechanic-details';
 import { Metadata } from 'next'
-import { getSimilarMechanics, getSingleMechanicsDetails, capitalizeFirstWord } from '@/ebikeWeb/functions/globalFuntions';
+import { getSimilarMechanics, getSingleMechanicsDetails } from '@/ebikeWeb/functions/globalFuntions';
+import { capitalizeFirstWord } from '@/genericFunctions/geneFunc'
 import Head from 'next/head';
 import Script from 'next/script';
 

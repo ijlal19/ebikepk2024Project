@@ -1,10 +1,10 @@
 'use client'
-import { Box, Button, Container, Grid, TextField, Typography, useMediaQuery } from "@mui/material"
-import  styles from  './index.module.scss'
-import { useState } from "react"
+import { Box, Button, TextField, Typography } from "@mui/material";
+import  styles from  './index.module.scss';
+import { useState } from "react";
 
 const ContactUS = () => {
-  // const isMobile = useMediaQuery('(max-width:768px)')
+
   const [name,setName]=useState('')
   const [email,setEmail]=useState('')
   const [message,setMessage]=useState('')

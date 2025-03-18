@@ -1,13 +1,14 @@
 'use client'
-import { Box, Grid, Typography, useMediaQuery } from '@mui/material'
-import styles from './index.module.scss'
-import React, { useState, useEffect } from 'react'
-import { getBikesBySpecificFilter, priceWithCommas, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions"
+import { getBikesBySpecificFilter, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
+import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
 import { Apps, FormatListBulleted } from '@mui/icons-material';
-import { useRouter, useParams } from 'next/navigation'
-import Filters from '@/ebikeWeb/sharedComponents/filters'
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
-import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData"
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import {priceWithCommas} from '@/genericFunctions/geneFunc';
+import Filters from '@/ebikeWeb/sharedComponents/filters';
+import { useRouter, useParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import styles from './index.module.scss';
 
 const AllUsedBikeByFilter = () => {
     const isMobile = useMediaQuery('(max-width:991px)')

@@ -2,12 +2,14 @@
 import ShopMainCategory from "./ShopCategory";
 import TopCategories from "./topCategories";
 import Banner from "./banner";
+import HeadersCategory from '@/ebikeShop/ShopSharedComponent/Header'
 
 const Index = () => {
     return (
         <div>
+            <HeadersCategory />
             <Banner />
-            <TopCategories/>
+            <TopCategories />
             <ShopMainCategory />
         </div>
     )

@@ -5,7 +5,8 @@ import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalDa
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
 import {isLoginUser} from "@/genericFunctions/geneFunc";
-import { numericOnly, publishAd, uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
+import { numericOnly, publishAd } from "@/genericFunctions/geneFunc"
+import {  uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
 
 const SellUsedBike = () => {
 

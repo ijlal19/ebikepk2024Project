@@ -6,7 +6,8 @@ import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-mat
 import { useState } from "react";
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { sendEmailLetter, validateEmail } from "@/ebikeWeb/functions/globalFuntions"
+import {  validateEmail } from "@/genericFunctions/geneFunc";
+import { sendEmailLetter } from "@/ebikeWeb/functions/globalFuntions"
 
 let cities_arr = [
     { title: "Used Bike by City", url: "" },

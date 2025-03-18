@@ -1,9 +1,9 @@
 
 'use client'
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { validateEmail, verifyUserFromAuthenticationEmail } from "@/ebikeWeb/functions/globalFuntions"
-import Link from 'next/link'
+import { validateEmail, verifyUserFromAuthenticationEmail } from "@/genericFunctions/geneFunc";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function AuthenticateUser() { 
 

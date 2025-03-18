@@ -22,7 +22,6 @@ const TopCategories = () => {
         const res = await getShopMainCategory()
         setData(res)
         setIsLoading(false)
-        console.log("data", res)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);

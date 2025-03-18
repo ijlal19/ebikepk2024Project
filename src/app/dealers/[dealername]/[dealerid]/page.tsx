@@ -1,7 +1,8 @@
 import * as React from 'react';
 import DealerDetails from '@/ebikeWeb/pageLayouts/dealer-details/index'; 
 import { Metadata } from 'next'
-import { getSingleDealerDetails, capitalizeFirstWord } from "@/ebikeWeb/functions/globalFuntions"
+import {  capitalizeFirstWord } from "@/genericFunctions/geneFunc"
+import { getSingleDealerDetails } from "@/ebikeWeb/functions/globalFuntions"
 import Head from 'next/head';
 import Script from 'next/script';
 

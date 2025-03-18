@@ -2,7 +2,6 @@
 import React from 'react'
 import styles from './index.module.scss'
 import { Box, Grid, Typography } from '@mui/material'
-// import {isLoginUser} from ''
 import { useRouter } from 'next/navigation';
 import { isLoginUser } from '@/genericFunctions/geneFunc';
 

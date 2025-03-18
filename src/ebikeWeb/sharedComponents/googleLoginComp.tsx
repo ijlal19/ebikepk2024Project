@@ -100,7 +100,7 @@ declare global {
 "use client";
 
 import { useEffect } from "react";
-import { userSignup } from "@/ebikeWeb/functions/globalFuntions"
+import { userSignup } from "@/genericFunctions/geneFunc"
 const jsCookie = require('js-cookie');
 import { useRouter } from 'next/navigation'
 
