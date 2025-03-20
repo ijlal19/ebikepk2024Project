@@ -24,6 +24,44 @@
       font-size: 17px;
       color: #3c3c3c;
       align-items: center;
+      @media (max-width:768px) {
+         display: none;
+      }
+   }
+
+   .input_main{
+      width: 100%;
+      max-width: 330px;
+      display: flex;
+      flex-direction: row;
+      @media (max-width:500px) {
+         max-width: 100%;
+      }
+
+      .input{
+         width: 100%;
+         max-width: 220px;
+         border-radius: 0px;
+         outline: none;
+         padding: 7px 7px 7px 10px;
+         font-size: 16px;
+         border: 1px solid #65606090;
+         background-color: transparent;
+         @media (max-width:500px) {
+            padding: 10px 10px 10px 10px;
+            max-width: 100%;
+         }
+      }
+      .button{
+         width: 80%;
+         background-color: $primary_two;
+         color: white;
+         border: 1px solid $primary_two;
+         max-width: 100px;
+         text-transform: uppercase;
+         border-radius: 0px;
+         cursor: pointer;
+      }
    }
 }
 
@@ -84,6 +122,10 @@
          display: flex;
          align-items: start;
          padding: 0px 0px 0px 0px !important;
+         @media (max-width:768px) {
+            padding: 0px 0px 0px 10px !important;
+            
+         }
 
          .blog_card_title {
             transition: all 1s ease;
