@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
+import { GiConsoleController } from 'react-icons/gi';
 
 const Blog = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -19,15 +20,36 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
   const [isFilterApply, setisFilterApply] = useState(false);
+  const [BlogNews,setBlognews] = useState([]);
+  const [BlogSafety,setBlogSafety] = useState([]);
+  const [BlogBikeCare,setBlogBikeCare] = useState([]);
 
   useEffect(() => {
     getAllBlogList()
   }, [])
 
+  useEffect(() => {
+    setisFilterApply(true)
+  }, [filteredResults])
+
   async function getAllBlogList() {
     setIsLoading(true)
     let res = await getAllBlog()
     setBlogData(res)
+    // console.log("data" , res)
+    res.map((e:any)=>{
+      const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
+      const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
+      const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
+      // console.log("data",e?.blog_category?.name)
+      // console.log("data", newsBlogs);
+      setBlognews(newsBlogs)
+      setBlogSafety(safetyBlogs)
+      setBlogBikeCare(Bike_Care)
+      // console.log("data", safetyBlogs);
+      // console.log("data", Bike_Care);
+      
+    })
     setisFilterApply(false)
     setIsLoading(false)
     setTimeout(() => {
@@ -54,20 +76,18 @@ const Blog = () => {
     lowerTitle = '' + lowerTitle.replaceAll("?", "")
     router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
   };
-  useEffect(() => {
-    console.log("datar", "hello world", filteredResults)
-    setisFilterApply(true)
-  }, [filteredResults])
+
   const handleSearch = () => {
     const results = BlogData.filter((item: any) =>
       item.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredResults(results);
-    console.log("datar", results);
   };
+
   const SearchTerm = (e: any) => {
     setSearchTerm(e.target.value)
   }
+
   return (
     <>
       {
@@ -82,12 +102,15 @@ const Blog = () => {
                 </button>
               </Box>
             </Box>
+
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
+
             <Typography className={styles.blog_heading}>
               Blogs & Articles
             </Typography>
+
             <Grid container className={styles.blog_grid}>
-              <Grid item xs={isMobile ? 12 : 9} sx={{ paddingRight: '15px' }}>
+              <Grid item xs={isMobile ? 12 : 8.5} sx={{ paddingRight: '15px' }}>
                 {
                   !isFilterApply ?
                     <Grid container>
@@ -143,8 +166,62 @@ const Blog = () => {
                   />
                 </Box>
               </Grid>
-              <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3}>
+              <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3.5}>
                 <Box className={styles.add_area_content}>
+                  <Box className={styles.shortBlog_main}>
+                    <Typography className={styles.shortblogheading}>News <span className={styles.underline}></span></Typography>
+                  {
+                    BlogNews.slice(0,5).map((e:any,i:any)=>{
+                      console.log("data",e)
+                      return(
+                        <Box className={styles.shot_blog_card} key={i} >
+                          <Box className={styles.image_box}>
+                          <img src={e?.featuredImage} alt="" className={styles.image}/>
+                          </Box>
+                          <Box className={styles.title_box}>
+                          <p className={styles.title}>{e?.blogTitle}</p>
+                          </Box>
+                        </Box>
+                      )
+                    })
+                  }
+                  </Box>
+                  <Box className={styles.shortBlog_main}>
+                    <Typography className={styles.shortblogheading}>Safety <span className={styles.underline}></span></Typography>
+                  {
+                    BlogSafety.slice(0,5).map((e:any,i:any)=>{
+                      console.log("data",e)
+                      return(
+                        <Box className={styles.shot_blog_card} key={i} >
+                          <Box className={styles.image_box}>
+                          <img src={e?.featuredImage} alt="" className={styles.image}/>
+                          </Box>
+                          <Box className={styles.title_box}>
+                          <p className={styles.title}>{e?.blogTitle}</p>
+                          </Box>
+                        </Box>
+                      )
+                    })
+                  }
+                  </Box>
+                  <Box className={styles.shortBlog_main}>
+                    <Typography className={styles.shortblogheading}>Bike Care <span className={styles.underline}></span></Typography>
+                  {
+                    BlogBikeCare.slice(0,5).map((e:any,i:any)=>{
+                      console.log("data",e)
+                      return(
+                        <Box className={styles.shot_blog_card} key={i} >
+                          <Box className={styles.image_box}>
+                          <img src={e?.featuredImage} alt="" className={styles.image}/>
+                          </Box>
+                          <Box className={styles.title_box}>
+                          <p className={styles.title}>{e?.blogTitle}</p>
+                          </Box>
+                        </Box>
+                      )
+                    })
+                  }
+                  </Box>
                 </Box>
               </Grid>
             </Grid>

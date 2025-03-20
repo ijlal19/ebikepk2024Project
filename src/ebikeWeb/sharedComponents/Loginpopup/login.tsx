@@ -84,6 +84,7 @@ export default function LoginPopup({props,values}: any) {
       jsCookie.set('accessToken_e', res.accessToken, {expires: 7})
       props.showmodal('showloginpopup')
       props.updateAfterLogin()
+      window.location.reload()
     }
     else {
       setError(res.info)
