@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from '@mui/material'
+import { Box, Button, Link, Paper, Typography } from '@mui/material'
 import { TiTick } from "react-icons/ti";
 import styles from './index.module.scss'
 import {isLoginUser} from "@/genericFunctions/geneFunc";
@@ -42,7 +42,7 @@ const FeatureCard = (props :any) => {
               <TiTick style={{color:'yellowgreen'}}/>
                {data.txt3}
             </Typography>
-            <Button className={styles._btn} onClick={()=> goToRoute(data.url)} >{data.button}</Button>
+            <Link href="" className={styles.anchor}><Button className={styles._btn} onClick={()=> goToRoute(data.url)} >{data.button}</Button></Link>
         </Box>
     </Paper> : <></>
   )

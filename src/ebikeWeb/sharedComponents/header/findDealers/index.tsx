@@ -6,7 +6,8 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useRouter } from 'next/navigation';
-
+import styles from '../index.module.scss';
+import { Link } from '@mui/material';
 
 export default function DealerList({props}:any) {
   
@@ -56,9 +57,11 @@ export default function DealerList({props}:any) {
           {
             findmechanics.map((e:any,i:any)=>{
               return(
+                                        <Link href="" className={styles.anchor}>
                 <ListItemButton sx={{ pl: 4 }} onClick={()=>goToRoute(e)}  key={i}>
                   <ListItemText style={{ marginLeft:"10px" }} primary={e.label} />
                 </ListItemButton>
+                </Link>
               )
             })
           }

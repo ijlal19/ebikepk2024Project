@@ -117,7 +117,7 @@ export default function Footer() {
         )
     }
 
-    return (
+return (
         <Box className={styles.box}>
             <Container>
                 <Grid container className={styles.main}>
@@ -139,8 +139,6 @@ export default function Footer() {
                             {/* <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(cc_arr_2)}
                             </Grid> */}
-
-                            
 
                             <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(catagory_arr)}
