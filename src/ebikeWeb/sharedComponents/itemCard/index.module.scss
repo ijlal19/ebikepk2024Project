@@ -6,9 +6,9 @@
         border-radius: 0px;
         margin: auto 10px;
         border: 1px solid #e4e4e4;
-        @media (max-width:767px) {
-                max-width: 250px;
-                margin: auto 10px !important;
+        @media (max-width:550px) {
+                max-width: 165px;
+                margin: auto 0px !important;
         }
 
         .card_info {

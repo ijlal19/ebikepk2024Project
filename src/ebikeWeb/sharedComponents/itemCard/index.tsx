@@ -58,7 +58,7 @@ export default function NewUsedBikesCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {priceWithCommas(bike.price)}
+                    {bike?.price ? priceWithCommas(bike?.price) : "0"}
                 </Typography>
 
                 { props.from == "usedBikeComp" ? 
