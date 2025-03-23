@@ -14,8 +14,8 @@ export default function BuyandSell({ props }: any) {
   const Router = useRouter()
 
   const buysellarr = [
-    { label: 'Find Used Bikes', url: '/used-bikes' },
-    { label: 'Sell Your Bike', url: '/used-bikes/sell-used-bike' }
+    { label: 'Find Used Bikes', url: '/used-bikes', isLoginReq: false },
+    { label: 'Sell Your Bike', url: '/used-bikes/sell-used-bike' , isLoginReq: true }
   ]
 
 
@@ -59,6 +59,13 @@ export default function BuyandSell({ props }: any) {
           {
             buysellarr.map((e: any, i: any) => {
               return (
+                  !e.isLoginReq ? 
+                  <Link className={styles.anchor} key={i} href={e.url}>
+                      <ListItemButton sx={{ pl: 4 }}>
+                        <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                      </ListItemButton>
+                  </Link> 
+                  :
                   <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
                     <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
                   </ListItemButton>
