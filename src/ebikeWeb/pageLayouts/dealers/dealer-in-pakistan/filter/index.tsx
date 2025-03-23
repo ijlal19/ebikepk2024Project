@@ -1,6 +1,5 @@
 import { BrandArr, CityArr } from '../../../../constants/globalData';
-import styles from './index.module.scss'
-import { useState } from 'react';
+import styles from './index.module.scss';
 
 export const DealerinPakFilter = () => {
     function updateFilterValue(event:any, from:any) {

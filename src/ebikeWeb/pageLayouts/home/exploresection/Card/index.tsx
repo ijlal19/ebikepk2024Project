@@ -2,8 +2,8 @@
 import React from 'react'
 import styles from './index.module.scss'
 import { Box, Grid, Typography } from '@mui/material'
-import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
 import { useRouter } from 'next/navigation';
+import { isLoginUser } from '@/genericFunctions/geneFunc';
 
 const Card = (props:any) => {
   

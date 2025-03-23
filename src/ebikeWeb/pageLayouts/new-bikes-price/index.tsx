@@ -1,10 +1,10 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import BikePriceData from './data'
 import styles from './index.module.scss'
 import { useParams } from 'next/navigation'
-import { getdealerData, getnewBikeData, getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions'
+import { getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
+
 export default function NewBikePrice() {
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
   const [brandname, setbrandName] = useState('')

@@ -1,13 +1,13 @@
-import styles from './index.module.scss'
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import { Pagination, useMediaQuery } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import { DealerinPakFilter } from './filter';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import { DealerinPakFilter } from './filter';
-import MenuIcon from '@mui/icons-material/Menu';
-import { AllDealerData } from '../Data';
 import { DealerinPakCard } from '../Card';
-import { Pagination, useMediaQuery } from '@mui/material';
+import styles from './index.module.scss';
+import { AllDealerData } from '../Data';
+import Box from '@mui/material/Box';
+import * as React from 'react';
 
 export const DealerInPakistan = ({ dealers}: any) => {
     const [open, setOpen] = React.useState(false);

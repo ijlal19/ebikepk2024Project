@@ -3,12 +3,15 @@ import { TextareaAutosize, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation';
-import { numericOnly, isLoginUser, publishAd, uplaodImageFunc, createmechanic } from "@/ebikeWeb/functions/globalFuntions"
+import { numericOnly } from "@/genericFunctions/geneFunc";
+import { createmechanic } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CcArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
+import {isLoginUser} from "@/genericFunctions/geneFunc";
+
 
 const MechanicRegistration = () => {
-  // const [isLoading, setIsLoading] = useState(false)
-  const Router = useRouter()
+
+    const Router = useRouter()
   const [ShopName, setShopName] = useState('');
   const [city, setCity] = useState('');
   const [brand, setBrand] = useState('');

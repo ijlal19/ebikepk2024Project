@@ -1,13 +1,14 @@
 'use client';
+import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
+import { getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import styles from './index.module.scss';
-import { useParams } from 'next/navigation';
-import ShareIcon from '@mui/icons-material/Share';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, MailruIcon, MailruShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
-import {  getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import ShareIcon from '@mui/icons-material/Share';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import styles from './index.module.scss';
+import { isLoginUser } from '@/genericFunctions/geneFunc';
 
 const BlogDetails = () => {
   const [displayicon, setDisplayIcon] = useState(true)
@@ -17,12 +18,26 @@ const BlogDetails = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [Comment, setComment] = useState('')
   const [CommentArr, setCommentArr]: any = useState()
+  const [IsLogin, setIsLogin] = useState<any>('not_login');
+
 
   const params = useParams()
   const id = params?.id
 
   useEffect(() => {
+    // fetchSubCategory()
+  }, [])
+
+
+  useEffect(() => {
     fetchBrandInfo()
+    let _isLoginUser = isLoginUser()
+    if (_isLoginUser?.login) {
+      setIsLogin(_isLoginUser.info)
+    }
+    else {
+      setIsLogin("not_login")
+    }
     setHref(window.location.href)
 
   }, [])
@@ -37,9 +52,9 @@ const BlogDetails = () => {
     setDataBlog(res)
     setCommentArr(res.blog_comments)
     setIsLoading(false)
-   setTimeout(() => {
-          window.scrollTo(0, 0)
-        }, 1000);
+    setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 1000);
   }
 
   const handleicons = () => {
@@ -47,14 +62,18 @@ const BlogDetails = () => {
   }
 
   const handlePost = () => {
-    if (Comment.trim() === '') {
+    if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
+      alert('You must be logged in to post a comment.')
+      return
+    }
+    else if (Comment.trim() === '') {
       alert('Please write your comment');
       return;
     }
     const CommentObj = {
-      "uid": null,
+      "uid": IsLogin?.id,
       "blog_id": id,
-      "user_name": "ebiker",
+      "user_name": IsLogin?.userFullName,
       "comment": Comment
     }
     fetchuserComment(CommentObj)
@@ -164,7 +183,7 @@ const BlogDetails = () => {
                             />
                           </div>
                           <span className={styles.user_comment_details}>
-                            <p style={{ margin: 0, fontSize: '14px', paddingBottom: 3 }}>
+                            <p style={{ margin: 0, fontSize: '14px', paddingBottom: 3 ,fontFamily:"sans-serif"}}>
                               {data?.user_name}
                             </p>
                             <p style={{ margin: 0, fontSize: '10px', color: 'grey' }}>
@@ -196,7 +215,7 @@ const BlogDetails = () => {
           <div className={styles.load_div}>
             <Loader isLoading={isLoading} />
           </div>
-          </div>
+        </div>
       }
     </Box>
   );

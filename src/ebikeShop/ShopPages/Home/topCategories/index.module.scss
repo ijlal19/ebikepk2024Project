@@ -1,0 +1,154 @@
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 40px 0px 10px 0px;
+
+    .ebikelink {
+        display: flex;
+        justify-content: space-evenly;
+        padding: 0px 10px 20px 10px !important;
+
+        .link_box {
+            width: 250px;
+            cursor: pointer;
+            max-width: 180px;
+            min-width: 100px;
+            background-color: whitesmoke;
+            border-radius: 22px;
+            display: flex;
+            justify-content: center;
+            column-gap: 7px;
+            padding: 10px 0px !important;
+            transition: all 0.5s ease;
+            align-items: center;
+            text-decoration: none !important;
+
+            @media (max-width:768px) {
+                width: auto;
+                max-width: auto;
+                min-width: 50px;
+            }
+
+            &:hover {
+                box-shadow: 0px 0px 6px rgb(194, 192, 192);
+            }
+
+            .icon {
+                margin: 0px !important;
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .image {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .icons {
+                    font-size: 20px;
+                }
+            }
+
+            .text {
+                margin: 0px !important;
+                padding: 0px !important;
+                font-size: 14px;
+                font-weight: 600;
+                font-family: sans-serif;
+                text-decoration: none !important;
+                color: black;
+
+                @media (max-width:768px) {
+                    visibility: hidden;
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .heading {
+        text-align: center;
+        margin: 10px 0px 10px 0px;
+        padding: 10px 0px 10px 0px;
+        font-weight: bold;
+    }
+
+    .swiper_brand_card_conatainer{
+// padding: 0px 35px !important;
+width: 90%;
+margin: auto;
+@media (max-width:768px) {
+    width:100%;
+}
+        .top_categories_grid {
+            display: flex;
+            box-sizing: border-box;
+            flex-direction: row;
+            padding: 0px 0px 10px 0px !important;
+    
+            @media (max-width:768px) {
+                padding: 10px 10px !important;
+                row-gap: 15px;
+            }
+    
+            .grid {
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: row;
+                padding: 0px 0px !important;
+    
+                @media (max-width:768px) {
+                    row-gap: 15px;
+                    padding: 0px 0px !important;
+    
+                }
+    
+                .grid_card {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    box-sizing: border-box;
+                    align-items: center;
+                    height: auto;
+                    padding: 5px !important;
+                    box-shadow: 0px 0px 10px rgb(210, 206, 206);
+    
+                    .image {
+                        width: 100%;
+                        height: 180px;
+                    }
+                }
+            }
+        }
+    }
+
+    .add {
+        width: 100%;
+        max-width: 600px;
+        min-width: 100px;
+        margin: 50px auto 10px auto;
+        box-sizing: border-box;
+        height: 60px;
+
+        @media (max-width:768px) {
+            margin: 20px auto 10px auto !important;
+            width: 300px;
+            box-sizing: border-box;
+            min-width: 100px;
+            height: 40px;
+            display: none;
+            padding: 0px 20px !important;
+        }
+
+        .add_image {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+    }
+}

@@ -1,13 +1,15 @@
 'use client';
+import { BrandArr,CityArr } from '@/ebikeWeb/constants/globalData';
+import { createdealer } from "@/ebikeWeb/functions/globalFuntions";
+import { numericOnly } from "@/genericFunctions/geneFunc";
 import { TextareaAutosize, Typography } from '@mui/material';
+import {isLoginUser } from '@/genericFunctions/geneFunc';
 import { useEffect, useState } from 'react';
-import styles from './index.module.scss'
 import { useRouter } from 'next/navigation';
-import { numericOnly, isLoginUser, publishAd, uplaodImageFunc, createdealer } from "@/ebikeWeb/functions/globalFuntions"
-import { BrandArr, CcArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
+import styles from './index.module.scss';
 
 const DealerRegistration = () => {
-  // const [isLoading, setIsLoading] = useState(false)
+
   const Router = useRouter()
   const [ShopName, setShopName] = useState('');
   const [city, setCity] = useState('');
@@ -15,7 +17,6 @@ const DealerRegistration = () => {
   const [Phone, setPhone] = useState('');
   const [Phone2, setPhone2] = useState('');
   const [Address, setAddress] = useState('');
-  // const [isAggreed, setIsAggreed] = useState(false)
   const [customer, setCustomer]  = useState<any>('not_login')
 
   useEffect(() => {

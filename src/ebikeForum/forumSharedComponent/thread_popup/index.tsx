@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { isLoginUser, postThread } from '@/ebikeForum/forumFunction/globalFuntions';
+import { postThread } from '@/ebikeForum/forumFunction/globalFuntions';
 import  Thread_dropdown from '../thread_dropdown';
 import Button from '@mui/material/Button';
 import styles from './index.module.scss';

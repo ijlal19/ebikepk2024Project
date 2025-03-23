@@ -1,13 +1,12 @@
 'use client'
 import styles from './index.module.scss'
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Link, Typography } from '@mui/material';
 import Data from './Data';
 import * as React from 'react';
 import BrandCard from './Card/index'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -81,7 +80,7 @@ function BrandSection() {
                 })
               }
 
-              <Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
+<Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple><Link href="" className={styles.anchor}>View More Brands</Link></Button>
             </Box>
           </CustomTabPanel>
           </Box>

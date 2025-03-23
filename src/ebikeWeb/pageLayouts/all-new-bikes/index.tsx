@@ -1,15 +1,14 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { bikesDataArr, dealerDataArr } from './data';
-import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
-import styles from './index.module.scss';
-import ImgCard from '@/ebikeWeb/sharedComponents/itemCard';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions';
-import { useParams, useRouter } from 'next/navigation';
+import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import ImgCard from '@/ebikeWeb/sharedComponents/itemCard';
+import { useParams, useRouter } from 'next/navigation';
+import styles from './index.module.scss';
 
 export default function AllNewBikes() {
 

@@ -1,15 +1,16 @@
 'use client'
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material'
-import styles from './index.module.scss'
-import React, { useState, useEffect } from 'react'
-import { getAllbikesDetail, priceWithCommas, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions"
-import { Apps, FormatListBulleted } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
-import Filters from '@/ebikeWeb/sharedComponents/filters';
+import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions"
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import ItemCard from '@/ebikeWeb/sharedComponents/itemCard/index';
+import { Apps, FormatListBulleted } from '@mui/icons-material';
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import {priceWithCommas} from '@/genericFunctions/geneFunc';
+import Filters from '@/ebikeWeb/sharedComponents/filters';
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import styles from './index.module.scss';
 
 const AllUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:991px)');

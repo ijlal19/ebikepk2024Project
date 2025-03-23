@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import styles from './index.module.scss'
 import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation'
-import { priceWithCommas } from '@/ebikeWeb/functions/globalFuntions'
+import { priceWithCommas } from '@/genericFunctions/geneFunc'
 
 export default function NewUsedBikesCard(props:any) {
 
@@ -58,7 +58,7 @@ export default function NewUsedBikesCard(props:any) {
                 </Typography>
                 
                 <Typography className={styles.card_price}>
-                    {priceWithCommas(bike.price)}
+                    {bike?.price ? priceWithCommas(bike?.price) : "0"}
                 </Typography>
 
                 { props.from == "usedBikeComp" ? 
@@ -67,7 +67,7 @@ export default function NewUsedBikesCard(props:any) {
                     </Typography>
                     : ""
                 }
-                { props.from != "myAdsComp" ? <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(bike) }} > View Detail </Button> : "" }
+                { props.from != "myAdsComp" ? <a href="" className={styles.anchor}><Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(bike) }} > View Detail </Button></a> : "" }
 
                 {  props.from == "myAdsComp" && bike.is_sold == false ? <Button className={styles.view_detail_btn} onClick={()=>{ props.onBtnClick(bike) }} > Mark as Sold </Button> : "" }
             </CardContent>

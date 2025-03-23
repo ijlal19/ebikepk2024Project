@@ -8,8 +8,8 @@ import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Link from 'next/link';
-import { validateEmail, userLogin } from "@/ebikeWeb/functions/globalFuntions"
-// import jsCookie from 'js-cookie'
+import { validateEmail, userLogin } from "@/genericFunctions/geneFunc";
+
 const jsCookie = require('js-cookie');
 import GoogleLoginButton from '../googleLoginComp';
 
@@ -84,6 +84,7 @@ export default function LoginPopup({props,values}: any) {
       jsCookie.set('accessToken_e', res.accessToken, {expires: 7})
       props.showmodal('showloginpopup')
       props.updateAfterLogin()
+      window.location.reload()
     }
     else {
       setError(res.info)

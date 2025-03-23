@@ -1,4 +1,4 @@
-import Allforums from "@/ebikeForum/pageLayoutsForum/allforums"
+// import Allforums from "@/ebikeForum/pageLayoutsForum/allforums"
 import Forum_details from "@/ebikeForum/forumPages/threads_detail"
 
 const threads = ()=>{

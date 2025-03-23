@@ -1,18 +1,20 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { getSinglebikesDetail, numericOnly, getBrandFromId, getCityFromId, getYearFromId, priceWithCommas } from "@/ebikeWeb/functions/globalFuntions";
+import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId } from "@/ebikeWeb/functions/globalFuntions";
+import {  numericOnly,  priceWithCommas } from "@/genericFunctions/geneFunc";
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { Navigation, FreeMode, Pagination } from 'swiper/modules';
+import { Navigation, FreeMode } from 'swiper/modules';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
+import { useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import styles from "./index.module.scss";
 import 'swiper/swiper-bundle.css';
 import Data from './data'
-import { useMediaQuery } from '@mui/material';
 
 export default function UsedBike() {
 
@@ -63,17 +65,27 @@ export default function UsedBike() {
   let bikeBrand = getBrandFromId(bikeDetail?.brandId, BrandArr)
   let bikeCity = getCityFromId(bikeDetail?.cityId, CityArr)
   let bikeYear = getYearFromId(bikeDetail?.yearId, YearArr)
+
   return (<>
-  <div style={{display: bikeDetail?.mobileNumber? "flex" : "none"}}>
-    <div className={styles.contact_box}>
-      <a href={`tel:${bikeDetail?.mobileNumber}`}>
-        <div className={styles.phone_box}><PhoneIcon className={styles.icon} /></div>
-      </a>
-      <a href={`sms:${bikeDetail?.mobileNumber}`}>
-        <div className={styles.message_box}><ChatIcon className={styles.icon} /></div>
-      </a>
+    <div style={{ display: bikeDetail?.mobileNumber ? "flex" : "none" }}>
+      <div className={styles.contact_box}>
+
+        <a href={`https://wa.me/${bikeDetail?.mobileNumber}`} target="_blank" rel="noopener noreferrer">
+          <div className={styles.message_box}>
+            <WhatsAppIcon className={styles.icon} />
+          </div>
+        </a>
+
+        <a href={`sms:${bikeDetail?.mobileNumber}`}>
+          <div className={styles.message_box} style={{ color: "#1976d2", backgroundColor: "#1976d2", border: "1px solid #1976d2" }}><ChatIcon className={styles.icon} /></div>
+        </a>
+
+        <a href={`tel:${bikeDetail?.mobileNumber}`}>
+          <div className={styles.phone_box}><PhoneIcon className={styles.icon} /></div>
+        </a>
+
+      </div>
     </div>
-  </div>
     {
       !isLoading && bikeDetail ?
         <div className={styles.main_body}>

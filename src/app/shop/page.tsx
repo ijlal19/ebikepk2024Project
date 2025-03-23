@@ -1,11 +1,8 @@
-import ShopFooter from '@/ebikeShop/sharedComponentsShop/shopfooter';
-import ShopHeader from '@/ebikeShop/sharedComponentsShop/shopheader';
+import Index from '@/ebikeShop/ShopPages/Home';
 import * as React from 'react';
-export default function Profile() {
+
+export default function Shop() {
     return (
-        <>
-        <ShopHeader/>
-        <ShopFooter/>
-        </>
+        <Index/>
     )
 }

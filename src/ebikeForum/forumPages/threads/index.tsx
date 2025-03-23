@@ -1,11 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { getAllthread, getMainCategory, getSubCategory, getSubCatgeorybyId, isLoginUser, ViewCountAdd } from '@/ebikeForum/forumFunction/globalFuntions';
+import {getSubCatgeorybyId, ViewCountAdd } from '@/ebikeForum/forumFunction/globalFuntions';
 import { Motorforums, Topforums } from '../../forumSharedComponent/motrocycle_forums/index'
 import Create_thread_popup from '@/ebikeForum/forumSharedComponent/thread_popup';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Loader from '@/ebikeForum/forumSharedComponent/loader/loader';
+import {isLoginUser } from '@/genericFunctions/geneFunc';
 import { useParams, useRouter } from 'next/navigation';
 import CommentIcon from '@mui/icons-material/Comment';
 import CreateIcon from '@mui/icons-material/Create';

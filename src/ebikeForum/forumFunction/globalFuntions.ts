@@ -1,17 +1,5 @@
 import Gconfig from "globalconfig";
 
-const jsCookie = require('js-cookie');
-
-function isLoginUser() {
-    let obj = jsCookie.get('userInfo_e')
-    if (obj) {
-        return { login: true, info: JSON.parse(obj) }
-    }
-    else {
-        return { login: false, info: null }
-    }
-}
-
 function getMainCategory() {
     return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-main-categ`, {
         method: 'GET',
@@ -118,7 +106,6 @@ function ViewCountAdd(data:any){
 }
 
 export {
-    isLoginUser,
     getMainCategory,
     getSubCategory,
     getSubCatgeorybyId,

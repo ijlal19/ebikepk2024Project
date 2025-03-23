@@ -3,7 +3,7 @@ import React, {useState} from "react"
 import { Avatar, Grid, Button, TextField, Typography, Box, Container, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
 import styles from './index.module.scss'
 import { Visibility, VisibilityOff } from "@mui/icons-material"
-import { validateEmail, userSignup } from "@/ebikeWeb/functions/globalFuntions"
+import { validateEmail, userSignup } from "@/genericFunctions/geneFunc"
 import { useRouter } from 'next/navigation'
 
 const Signup = () => {

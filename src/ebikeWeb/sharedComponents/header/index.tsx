@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Box, Button, List, Typography } from '@mui/material'
+import { Box, Button, Link, List, Typography } from '@mui/material'
 import styles from './index.module.scss'
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -15,9 +15,9 @@ import DealerList from './findDealers/index';
 import MechanicsList from './findMechanic/index';
 import LoginPopup from '../Loginpopup/login';
 import { usePathname, useRouter } from 'next/navigation';
-import {isLoginUser} from '@/ebikeWeb/functions/globalFuntions'
+import {isLoginUser} from '../../../genericFunctions/geneFunc'
 import { Label } from '@mui/icons-material';
-// import jsCookie from 'js-cookie'
+
 const jsCookie = require('js-cookie');
 
 
@@ -146,11 +146,13 @@ const Header = () => {
                     if(data.label == "My Adds" && customer == "not_login") return;
                     return(
                         <>
+                        <Link href="" className={styles.anchor}>
                             <ListItem key={index} disablePadding>
                                 <ListItemButton onClick={()=>goToRoute(data)}>
                                     <ListItemText primary={data.label} className={styles.listText}/>
                                 </ListItemButton>
                             </ListItem>
+                            </Link>
                             <Divider />
                         </>
                     )
@@ -162,11 +164,13 @@ const Header = () => {
                 <MechanicsList props={OptionFindMechanics} />
                 <Divider />
 
+                        <Link href="" className={styles.anchor}>
                 <ListItem sx={{ padding: 0 }} disablePadding>
                     <ListItemButton onClick={()=> goToRoute({url:"/blog"}) }>
                         <ListItemText primary='Blog' />
                     </ListItemButton>
                 </ListItem>
+                        </Link>
                 <Divider/>
 
                 <MoreList props={Optionmore} />
@@ -210,7 +214,8 @@ const Header = () => {
                 </Box>
 
                 <div className={styles.header_btn_sec}>
-                    {customer == 'not_login' ? "" : <button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button> }
+                        
+                        {customer == 'not_login' ? "" :<Link href="" className={styles.anchor}> <button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button></Link> }
                     {customer == 'not_login' ?
                         <Box className={styles.header_buttons_group}>
                             <LoginPopup 
