@@ -67,7 +67,7 @@ export default function NewUsedBikesCard(props:any) {
                     </Typography>
                     : ""
                 }
-                { props.from != "myAdsComp" ? <a href="" className={styles.anchor}><Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(bike) }} > View Detail </Button></a> : "" }
+                { props.from != "myAdsComp" ? <Button className={styles.view_detail_btn} onClick={()=>{ goToDetailPage(bike) }} > View Detail </Button> : "" }
 
                 {  props.from == "myAdsComp" && bike.is_sold == false ? <Button className={styles.view_detail_btn} onClick={()=>{ props.onBtnClick(bike) }} > Mark as Sold </Button> : "" }
             </CardContent>

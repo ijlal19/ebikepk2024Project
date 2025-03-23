@@ -146,13 +146,11 @@ const Header = () => {
                     if(data.label == "My Adds" && customer == "not_login") return;
                     return(
                         <>
-                        <Link href="" className={styles.anchor}>
                             <ListItem key={index} disablePadding>
                                 <ListItemButton onClick={()=>goToRoute(data)}>
                                     <ListItemText primary={data.label} className={styles.listText}/>
                                 </ListItemButton>
                             </ListItem>
-                            </Link>
                             <Divider />
                         </>
                     )
@@ -164,13 +162,11 @@ const Header = () => {
                 <MechanicsList props={OptionFindMechanics} />
                 <Divider />
 
-                        <Link href="" className={styles.anchor}>
                 <ListItem sx={{ padding: 0 }} disablePadding>
                     <ListItemButton onClick={()=> goToRoute({url:"/blog"}) }>
                         <ListItemText primary='Blog' />
                     </ListItemButton>
                 </ListItem>
-                        </Link>
                 <Divider/>
 
                 <MoreList props={Optionmore} />
@@ -215,7 +211,7 @@ const Header = () => {
 
                 <div className={styles.header_btn_sec}>
                         
-                        {customer == 'not_login' ? "" :<Link href="" className={styles.anchor}> <button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button></Link> }
+                        {customer == 'not_login' ? "" :<button className={styles.sell_bike_btn} onClick={() => router.push('/used-bikes/sell-used-bike') }> Sell Your Bike </button>}
                     {customer == 'not_login' ?
                         <Box className={styles.header_buttons_group}>
                             <LoginPopup 

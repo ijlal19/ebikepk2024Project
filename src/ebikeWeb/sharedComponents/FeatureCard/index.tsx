@@ -42,7 +42,7 @@ const FeatureCard = (props :any) => {
               <TiTick style={{color:'yellowgreen'}}/>
                {data.txt3}
             </Typography>
-            <Link href="" className={styles.anchor}><Button className={styles._btn} onClick={()=> goToRoute(data.url)} >{data.button}</Button></Link>
+           <Button className={styles._btn} onClick={()=> goToRoute(data.url)} >{data.button}</Button>
         </Box>
     </Paper> : <></>
   )
