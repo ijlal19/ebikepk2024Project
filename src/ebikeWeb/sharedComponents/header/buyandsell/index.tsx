@@ -59,11 +59,9 @@ export default function BuyandSell({ props }: any) {
           {
             buysellarr.map((e: any, i: any) => {
               return (
-                <Link href="" className={styles.anchor} key={"fbmk"+i}>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
                     <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
                   </ListItemButton>
-                </Link>
               )
             })
           }

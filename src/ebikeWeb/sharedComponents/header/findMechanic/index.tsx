@@ -57,11 +57,9 @@ export default function MechanicsList({ props }: any) {
           {
             finddealerarr.map((e: any, i: any) => {
               return (
-                <Link href="" className={styles.anchor} key={"mmk"+i}>
                   <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
                     <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
                   </ListItemButton>
-                </Link>
               )
             })
           }
