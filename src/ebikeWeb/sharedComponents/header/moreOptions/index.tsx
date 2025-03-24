@@ -15,10 +15,10 @@ export default function MoreList({ props }: any) {
   const Router = useRouter()
 
   const morear = [
-    { label: 'Bike Video', url: 'https://www.youtube.com/@ebikepk' },
+    { label: 'Bike Video', url: 'https://www.youtube.com/@ebikepk' ,isLoginReq: false },
     // {label: 'MTMIS Pakistan',url:''},
-    { label: 'Bike Verification Sindh', url: '/mtmis-sindh' },
-    { label: 'Bike Verification Punjab', url: '/mtmis-punjab' }
+    { label: 'Bike Verification Sindh', url: '/mtmis-sindh',isLoginReq: false  },
+    { label: 'Bike Verification Punjab', url: '/mtmis-punjab' ,isLoginReq: false }
   ]
 
   function goToRoute(data: any) {
@@ -42,9 +42,16 @@ export default function MoreList({ props }: any) {
       <Collapse in={props.options} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {
-            morear.map((e: any, i: any) => {
+          morear.map((e: any, i: any) => {
               return (
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i} className={styles.greys}>
+                  !e.isLoginReq ? 
+                  <Link className={styles.anchor} key={i} href={e.url}>
+                      <ListItemButton sx={{ pl: 4 }}>
+                        <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                      </ListItemButton>
+                  </Link> 
+                  :
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
                     <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
                   </ListItemButton>
               )

@@ -1,13 +1,12 @@
 "use client";
 import { Box, Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
-import styles from './footer-index.module.scss'
-import FacebookIcon from '@mui/icons-material/Facebook';
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
-import { useState } from "react";
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { sendEmailLetter } from "@/ebikeWeb/functions/globalFuntions";
 import {  validateEmail } from "@/genericFunctions/geneFunc";
-import { sendEmailLetter } from "@/ebikeWeb/functions/globalFuntions"
+import FacebookIcon from '@mui/icons-material/Facebook';
+import styles from './footer-index.module.scss';
+import { useState } from "react";
+import Link from 'next/link';
 
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
@@ -20,6 +19,7 @@ let cities_arr = [
     { title: "City Islamabad", url: "/used-bikes/bike-by-city/islamabad/3" },
     { title: "City Rawalpindi", url: "/used-bikes/bike-by-city/rawalpindi/8" }
 ]
+
 let year_arr = [
     { title: "Used Bike by Year", url: "" },
     { title: "Years 2025", url: "/used-bikes/bike-by-year/2025/58" },
@@ -32,6 +32,7 @@ let year_arr = [
     { title: "Years 2018", url: "/used-bikes/bike-by-year/2018/51" },
     { title: "Years 2017", url: "/used-bikes/bike-by-year/2017/50" }
 ]
+
 let cc_arr = [
     { title: "Used Bike by CC", url: "" },
     { title: "50cc", url: "/used-bikes/bike-by-cc/50/1" },
@@ -76,26 +77,30 @@ let headerlink_arr = [
     { title: "Ebike.pk", url: "/" },
     { title: "Contact us", url: "/contact-us" },
     { title: "About us", url: "/page/about-us/14" },
-    // { title: "MTMIS Pakistan", url: "" },
     { title: "Bike Verification Sindh", url: "/mtmis-sindh" },
     { title: "Bike Verification Punjab", url: "/mtmis-punjab" }
 ]
+
 export default function Footer() {
 
-    const [Mail, setMail] = useState('')
+    const [Mail, setMail] = useState('');
     const isMobile = useMediaQuery('(max-width: 768px)');
     const isMobileUl = useMediaQuery('(max-width: 580px)');
 
     async function SendMail(e: any) {
-        e.preventDefault()
+
+        e.preventDefault();
+
         if(validateEmail(Mail)) {
             let obj = {email: Mail}
             let res = await sendEmailLetter(obj)
             alert('Email Submitted Successfully')
         }
+
         else {
             alert('please enter correct email')
         }
+
     }
 
     function FooterLinks(arr: any) {
@@ -136,10 +141,6 @@ return (
                                 {FooterLinks(cc_arr)}
                             </Grid>
 
-                            {/* <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(cc_arr_2)}
-                            </Grid> */}
-
                             <Grid item xs={isMobileUl ? 6 : 4}>
                                 {FooterLinks(catagory_arr)}
                             </Grid>
@@ -155,15 +156,20 @@ return (
                     </Grid>
 
                     <Grid item xs={isMobile ? 12 : 4} className={styles.mail}>
+
                         <Typography className={styles.subscribe_heading}>
                             Subscribe to our Newsletter
                             <Typography className={styles.getUser_mail}>
+
                                 <form action="" className={styles.getUser_mail} onSubmit={SendMail}>
+
                                     <input type="email" value={Mail} onChange={(e) => setMail(e.target.value)} className={styles.TextField} placeholder="User@gmail.com" required />
                                     <Button variant="contained" type="submit" sx={{ borderRadius: 0 }}>Send</Button>
+
                                 </form>
                             </Typography>
                         </Typography>
+
                         <Typography className={styles.follow_heading}>
                             Follow Us
                             <Typography className={styles.Social_Links}>
@@ -194,24 +200,32 @@ return (
 
                             </Typography>
                         </Typography>
+
                         <Typography className={styles.download_app}>
                             Download our mobile app
                             <Box className={styles.download_image}>
                                 <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
                             </Box>
                         </Typography>
+
                     </Grid>
+
                     <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
+
                         <Typography className={styles.copyright}>
                             Copyright © 2017 - 2024 ebike.pk - All Rights Reserved.
                         </Typography>
+
                         <Typography className={styles.term_policy}>
                             <Link href="/page/terms-and-conditions/25" className={styles.link}> Terms of Service </Link>  | <Link href="/page/privacy-policy/13" className={styles.link}> Privacy Policy </Link> 
                         </Typography>
+
                         <Typography className={styles.permission}>
                             Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.
                         </Typography>
+
                     </Grid>
+
                 </Grid>
             </Container>
         </Box>

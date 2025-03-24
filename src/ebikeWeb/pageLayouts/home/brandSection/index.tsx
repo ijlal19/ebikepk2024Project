@@ -80,7 +80,7 @@ function BrandSection() {
                 })
               }
 
-<Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple>View More Brands</Button>
+<Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple><Link className={styles.anchor} href="/new-bikes">View More Brands</Link></Button>
             </Box>
           </CustomTabPanel>
           </Box>

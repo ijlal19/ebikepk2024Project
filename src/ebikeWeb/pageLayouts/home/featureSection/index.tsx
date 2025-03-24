@@ -17,7 +17,8 @@ const Section2 = () => {
               txt2:'Post your Bike Video Picture and ADD For Free',
               txt3:'Sell Your Bike at the Best Price',
               button:'Post Bike Add',
-              url:"/used-bikes/sell-used-bike/"
+              url:"/used-bikes/sell-used-bike/",
+              isLoginreq:false
     },
     {
               heading:'Register Dealer',
@@ -25,7 +26,8 @@ const Section2 = () => {
               txt2:'Get more business Leads from ebike.pk users',
               txt3:'Enhance your business revenue',
               button:'Register Dealer',
-              url:"/dealers/register"
+              url:"/dealers/register",
+              isLoginreq:false
     },
     {
               heading:'Register Mechanic',
@@ -33,7 +35,8 @@ const Section2 = () => {
               txt2:'Get more business Leads from ebike.pk users',
               txt3:'Enhance your business revenue',
               button:'Register Mechanic',
-              url:"/mechanics/register"
+              url:"/mechanics/register",
+              isLoginreq:false
     }
   ]
 

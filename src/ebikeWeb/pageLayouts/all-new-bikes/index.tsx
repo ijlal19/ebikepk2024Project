@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions';
-import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -140,7 +140,7 @@ export default function AllNewBikes() {
                             )
                           })
                         }
-                        <Button className={styles.view_detail_btn} onClick={()=>{router.push('/dealers')}}> View Related Dealers <KeyboardArrowRightIcon /></Button>
+                        <Button className={styles.view_detail_btn} onClick={()=>{router.push('/dealers')}}><Link href="/dealers" className={styles.Link_tag}>View Related Dealers <KeyboardArrowRightIcon /></Link></Button>
                       </Box> </> : ''
                 }
               </Grid>

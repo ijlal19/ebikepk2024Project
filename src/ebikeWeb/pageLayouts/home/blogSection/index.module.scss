@@ -102,3 +102,14 @@
      
 }
 }
+
+.link_tag{
+   text-decoration: none;
+   color: black;
+   font-size: 14px;
+   transition:  0.7s ease;
+}
+
+.link_tag:hover{
+   color: $primary_two;
+}
