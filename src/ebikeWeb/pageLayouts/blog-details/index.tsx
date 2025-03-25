@@ -4,20 +4,20 @@ import { getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/glob
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button } from '@mui/material';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { isLoginUser } from '@/genericFunctions/geneFunc';
 import ShareIcon from '@mui/icons-material/Share';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import styles from './index.module.scss';
-import { isLoginUser } from '@/genericFunctions/geneFunc';
 
 const BlogDetails = () => {
-  const [displayicon, setDisplayIcon] = useState(true)
-  const isMobile = useMediaQuery('(max-width:768px)')
-  const [DataBlog, setDataBlog]: any = useState(null)
-  const [Href, setHref] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [Comment, setComment] = useState('')
-  const [CommentArr, setCommentArr]: any = useState()
+  const [displayicon, setDisplayIcon] = useState(true);
+  const isMobile = useMediaQuery('(max-width:768px)');
+  const [DataBlog, setDataBlog]: any = useState(null);
+  const [Href, setHref] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [Comment, setComment] = useState('');
+  const [CommentArr, setCommentArr]: any = useState();
   const [IsLogin, setIsLogin] = useState<any>('not_login');
 
 

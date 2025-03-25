@@ -1,16 +1,17 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import { WriteModal, MoreReviewModal } from '@/ebikeWeb/sharedComponents/Review-popup';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
-import styles from './index.module.scss'
-import StarIcon from '@mui/icons-material/Star';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions';
-import {priceWithCommas } from '@/genericFunctions/geneFunc';
-import {isLoginUser} from "@/genericFunctions/geneFunc";
-import { useParams, useRouter } from 'next/navigation';
-import { WriteModal, MoreReviewModal } from '@/ebikeWeb/sharedComponents/Review-popup';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { priceWithCommas } from '@/genericFunctions/geneFunc';
+import { isLoginUser } from "@/genericFunctions/geneFunc";
+import { useParams, useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import StarIcon from '@mui/icons-material/Star';
+import styles from './index.module.scss';
+import { newBikeData } from './data';
 
 export default function NewBikeBrand() {
   const isMobile = useMediaQuery('(max-width:768px)')
@@ -60,7 +61,7 @@ export default function NewBikeBrand() {
       alert('You must be logged in to submit a review.')
       return
     }
-    else{
+    else {
       setWritePopup(true)
     }
   }
@@ -69,7 +70,7 @@ export default function NewBikeBrand() {
     setWritePopup(false)
   }
   const moreOpen = () => {
-      setMorePopup(true)
+    setMorePopup(true)
   }
   const moreClose = () => {
     setMorePopup(false)
@@ -115,6 +116,7 @@ export default function NewBikeBrand() {
           <Box className={styles.dealers_main}>
             {
               AllnewBikeDetailsArr.map((e: any, i: any) => {
+              // [newBikeData].map((e: any, i: any) => {
                 return (
                   <>
                     <Grid key={i} container className={styles.bikre_review_grid}>
@@ -127,14 +129,16 @@ export default function NewBikeBrand() {
                       <Grid item xs={isMobile ? 12 : 3} className={styles.bike_review_box}>
 
                         <Box className={styles.price_box}>
-                          Rs: { priceWithCommas(e?.bike?.price)}
+                          <Box className={styles.price}>
+                            Rs: {priceWithCommas(e?.bike?.price)}
+                          </Box>
+                          {
+                            e?.bike?.newbike_ratings?.length > 0 ?
+                              <Box className={styles.rating_box}>
+                                <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e?.bike?.newbike_ratings[0]?.rating} | 4 Reviews
+                              </Box> : ""
+                          }
                         </Box>
-                        {
-                          e?.bike?.newbike_ratings?.length > 0 ?
-                            <Box className={styles.rating_box}>
-                              <StarIcon sx={{ color: 'yellow', fontSize: '15px' }} />{e?.bike?.newbike_ratings[0]?.rating} | 4 Reviews
-                            </Box> : ""
-                        }
 
                         {e?.bike?.newbike_comments?.length > 0 ? <Box className={styles.comment_box}>
                           Reviews
@@ -177,7 +181,7 @@ export default function NewBikeBrand() {
                       <Grid item xs={isMobile ? 12 : 9} className={styles.bike_information_grid1}>
                         {/* <Typography className={styles.title}>{e?.bike?.title}</Typography> */}
 
-                        <Typography style={{ margin: "10px" }} className={styles.desc} dangerouslySetInnerHTML={{ __html: e?.bike?.description }}></Typography>
+                        <Typography style={{ margin: "10px" ,color:"grey",fontSize:"12px"}} className={styles.desc} dangerouslySetInnerHTML={{ __html: e?.bike?.description }}></Typography>
 
                         <Box className={styles.information_table}>
                           <Grid container>
@@ -255,33 +259,33 @@ export default function NewBikeBrand() {
                     </Grid>
                     {
                       e?.bike?.videoUrl ?
-                    <Grid container className={styles.bike_video_grid}>
-                      <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
-                        <Box className={styles.bike_video}>
-                          <iframe
-                            src={embebedYoutubeVideoId(e?.bike?.videoUrl)}
-                            title="YouTube video player"
-                            className={styles.bike_video}
-                            // frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          // allowfullscreen  
-                          ></iframe>
-                        </Box>
-                      </Grid>
-                      <Grid item xs={isMobile ? 12 : 3}></Grid>
-                    </Grid>:''}
+                        <Grid container className={styles.bike_video_grid}>
+                          <Grid item xs={isMobile ? 12 : 9} className={styles.bike_video_box}>
+                            <Box className={styles.bike_video}>
+                              <iframe
+                                src={embebedYoutubeVideoId(e?.bike?.videoUrl)}
+                                title="YouTube video player"
+                                className={styles.bike_video}
+                                // frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              // allowfullscreen  
+                              ></iframe>
+                            </Box>
+                          </Grid>
+                          <Grid item xs={isMobile ? 12 : 3}></Grid>
+                        </Grid> : ''}
                   </>)
               })}
           </Box>
           <Box className={styles.other_card}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' onBtnClick={()=>{}}  />
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' onBtnClick={() => { }} />
           </Box>
         </> :
-         <div className={styles.load_main}>
-         <div className={styles.load_div}>
-           <Loader isLoading={isLoading} />
-         </div>
-         </div>
+          <div className={styles.load_main}>
+            <div className={styles.load_div}>
+              <Loader isLoading={isLoading} />
+            </div>
+          </div>
       }
     </>
   );
