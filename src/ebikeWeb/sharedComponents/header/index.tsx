@@ -136,7 +136,7 @@ const Header = () => {
 
     const navlink = [
         { label: 'New Bikes', url: '/new-bikes', isLoginReq: false },
-        { label: 'My Adds', url: '/my-adds', isLoginReq: false },
+        { label: 'My Ads', url: '/my-adds', isLoginReq: false },
         { label: 'Bikers Forum', url: '/forum', isLoginReq: false }
     ]
 

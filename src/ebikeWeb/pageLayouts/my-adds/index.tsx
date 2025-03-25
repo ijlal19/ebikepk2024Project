@@ -68,7 +68,7 @@ const MyAddComponent = () => {
         <Box className={styles.add_main}>
             < Box className={styles.slider_main}>
             <Typography className={styles.heading}>
-                My-Adds
+                My Ads
             </Typography>
             {
                 !isLoading ?

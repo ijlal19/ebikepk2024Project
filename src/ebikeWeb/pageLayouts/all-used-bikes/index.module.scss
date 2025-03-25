@@ -49,6 +49,7 @@
   .main_box {
     padding: 0px 10px !important;
     width: 100% !important;
+    box-sizing: border-box;
     height: 100%;
     max-width: 800px;
     margin: 20px auto 0px auto;
@@ -101,7 +102,7 @@
       cursor: pointer;
 
       @media (max-width:600px) {
-        width: 44%;
+        width: 46%;
       }
   
       .grid_image_box {

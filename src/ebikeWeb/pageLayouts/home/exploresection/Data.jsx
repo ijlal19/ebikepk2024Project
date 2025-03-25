@@ -9,7 +9,7 @@ export const Data = [
       img_url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1607758959/Youtube%20Ad%20banners/Forum_dhrwhi.jpg",
       title: "Motorcycle Forum For Bikers",
       description: "Platform for bikers to discuss their issues and queries related to motorcycles",
-      url: ""
+      url: "/forum"
     },
    {
       img_url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1607925812/Youtube%20Ad%20banners/Deal_vx9z6b.jpg",

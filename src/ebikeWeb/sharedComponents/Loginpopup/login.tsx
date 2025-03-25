@@ -191,7 +191,7 @@ export default function LoginPopup({props,values}: any) {
 
               <button id="login_with_FB" onClick={handleFacebookLogin}>Login with Facebook</button>
 
-              <div style={{ marginTop:"10px", textAlign:"center" }}>
+              <div className={styles.google_box}>
                   <GoogleLoginButton  
                     showmodal = {() => props.showmodal('showloginpopup')}
                     updateAfterLogin = {() => props.updateAfterLogin()}
