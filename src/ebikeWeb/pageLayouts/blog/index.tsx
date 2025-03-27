@@ -36,19 +36,13 @@ const Blog = () => {
     setIsLoading(true)
     let res = await getAllBlog()
     setBlogData(res)
-    // console.log("data" , res)
     res.map((e:any)=>{
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
-      // console.log("data",e?.blog_category?.name)
-      // console.log("data", newsBlogs);
       setBlognews(newsBlogs)
       setBlogSafety(safetyBlogs)
       setBlogBikeCare(Bike_Care)
-      // console.log("data", safetyBlogs);
-      // console.log("data", Bike_Care);
-      
     })
     setisFilterApply(false)
     setIsLoading(false)
@@ -80,7 +74,6 @@ const Blog = () => {
   const handleSearch = (e:any) => {
     const results = BlogData.filter((item: any) =>
       item.blogTitle.toLowerCase().includes(e?.target?.value?.toLowerCase())
-      // item.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredResults(results);
   };

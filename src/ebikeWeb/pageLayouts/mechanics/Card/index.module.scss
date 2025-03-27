@@ -3,6 +3,7 @@
 // Feature Car Styling
 .feature_card_main {
     width: 100%;
+    font-family: sans-serif;
     max-width: 210px;
     height: auto;
     padding: 15px 0px;
@@ -141,7 +142,7 @@
         color: $primary_two;
         font-weight: bolder;
         margin: 0px;
-        padding: 0px 0px 5px 0px;
+        padding: 10px 0px 2.5px 0px;
 
         @media (max-width:768px) {
             text-align: center !important;
@@ -157,7 +158,7 @@
     .city {
         font-size: 14px;
         color: $primary_two;
-        padding: 5px 0px 5px 0px;
+        padding: 2.5px 0px 2.5px 0px;
         margin: 0px;
 
         @media (max-width:768px) {
@@ -175,7 +176,7 @@
         font-size: 12px;
         margin: 0px;
         display: flex;
-        padding: 5px 0px 0px 0px;
+        padding: 2.5px 0px 0px 0px;
         color: grey;
 
         .dealer_address {
@@ -210,7 +211,7 @@
     .more_button {
         font-size: 14px;
         display: flex;
-        margin: 15px 15px 5px auto;
+        margin: 0px 15px 0px auto;
         padding: 6px 15px;
         border-radius: 0px;
         border: none;

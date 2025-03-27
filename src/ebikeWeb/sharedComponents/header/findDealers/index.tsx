@@ -9,34 +9,34 @@ import { useRouter } from 'next/navigation';
 import styles from '../index.module.scss';
 import { Link } from '@mui/material';
 
-export default function DealerList({props}:any) {
-  
+export default function DealerList({ props }: any) {
+
   const Router = useRouter()
 
   const findmechanics = [
-    {label: 'Showrooms', url:'/dealers'},
-    {label: 'Registration', url:'/dealers/register'}
+    { label: 'Showrooms', url: '/dealers',isLoginReq: false  },
+    { label: 'Registration', url: '/dealers/register',isLoginReq: true}
   ]
 
-  function goToRoute(data:any) {
-    console.log('data',data)
-    if(data?.url?.indexOf('register') > -1) {
-      if(props.customer == "not_login") {
+  function goToRoute(data: any) {
+    console.log('data', data)
+    if (data?.url?.indexOf('register') > -1) {
+      if (props.customer == "not_login") {
         // alert('Please Login to continue')
-        if(document.getElementById('general_login_btn')) { 
+        if (document.getElementById('general_login_btn')) {
           document.getElementById('general_login_btn')?.click()
         }
       }
       else {
         props.toggleDrawers(false)
-        setTimeout(()=>{
+        setTimeout(() => {
           Router.push(data.url)
         }, 100)
       }
     }
     else {
       props.toggleDrawers(false)
-      setTimeout(()=>{
+      setTimeout(() => {
         Router.push(data.url)
       }, 100)
     }
@@ -44,22 +44,29 @@ export default function DealerList({props}:any) {
 
   return (
     <List
-      sx={{ width: '100%', maxWidth: 360, padding:0}}
+      sx={{ width: '100%', maxWidth: 360, padding: 0 }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={()=>props.togglers('finddealer')} disableRipple>
+      <ListItemButton onClick={() => props.togglers('finddealer')} disableRipple>
         <ListItemText primary={props.title} />
         {props.options ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={props.options} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {
-            findmechanics.map((e:any,i:any)=>{
-              return(
-                <ListItemButton sx={{ pl: 4 }} onClick={()=>goToRoute(e)}  key={i}>
-                  <ListItemText style={{ marginLeft:"10px" }} primary={e.label} />
-                </ListItemButton>
+            findmechanics.map((e: any, i: any) => {
+              return (
+                !e.isLoginReq ?
+                  <Link className={styles.anchor} key={i} href={e.url}>
+                    <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                    </ListItemButton>
+                  </Link>
+                  :
+                  <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
+                    <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                  </ListItemButton>
               )
             })
           }

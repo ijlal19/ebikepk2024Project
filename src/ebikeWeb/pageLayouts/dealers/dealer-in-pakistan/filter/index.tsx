@@ -5,12 +5,10 @@ export const DealerinPakFilter = () => {
     function updateFilterValue(event:any, from:any) {
         if(from == 'city') {
         if(event.target.checked == true){
-            console.log('Sure City')
         }
         }
         else if(from == 'brand') {
             if(event.target.checked == true){
-                console.log('Sure Brand')
             }
         }
     }
