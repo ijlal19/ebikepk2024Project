@@ -2,6 +2,7 @@
 import MainCatgeoryCard from "@/ebikeShop/ShopSharedComponent/MainCategoryCard";
 import { getShopCategory } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
+import Filters from "@/ebikeShop/ShopSharedComponent/filters";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
@@ -9,40 +10,49 @@ import styles from './index.module.scss';
 const CategoryDetails = () => {
     const { slug, slug2 } = useParams()
     const [isLoading, setIsLoading] = useState(false)
-    const [Data, setData] = useState<any>([])
+    const [CategoryData, setCategoryData] = useState<any>([])
 
     useEffect(() => {
-        fetch()
+        fetchShopCategory()
     }, [])
 
-    const fetch = async () => {
+    const fetchShopCategory = async () => {
         setIsLoading(true)
         const obj = {
             id: slug2
         }
         const res = await getShopCategory(obj)
         if (res) {
-            setData(res)
+            setCategoryData(res)
         }
         else {
             alert('Check Your Internet!')
         }
-        setIsLoading(false) 
+        setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
-    const staticRatings = [4.5, 3.8, 5, 2, 3.5, 1.5,2.5,2,3.4,4.9];
+    const staticRatings = [4.5, 3.8, 5, 2, 3.5, 1.5, 2.5, 2, 3.4, 4.9];
 
     return (
         <div className={styles.main}>
             {
                 !isLoading ?
                     <div className={styles.container}>
-                        <div className={styles.heading}>{Data[0]?.shop_main_catagory?.name}</div>
+                        {
+                            !isLoading ?
+                                <Filters
+                                    setLoader={setIsLoading}
+                                    updateData={setCategoryData}
+                                    fetchBikeInfo={fetchShopCategory}
+                                />
+                                : ""
+                        }
+                        <div className={styles.heading}>{CategoryData[0]?.shop_main_catagory?.name}</div>
                         <div className={styles.cardmain}>
                             {
-                                Data?.map((e: any, i: any) => {
+                                CategoryData?.map((e: any, i: any) => {
                                     return (
                                         <MainCatgeoryCard props={e} key={i} rating={staticRatings[i % staticRatings.length]} />
                                     )

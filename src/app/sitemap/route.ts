@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-    const baseUrl = 'https://ebike.pk';
+    const baseUrl = 'https://www.ebike.pk/';
     const urls = [
         { loc: `${baseUrl}/`, lastmod: new Date().toISOString() },
         { loc: `${baseUrl}/used-bikes`, lastmod: new Date().toISOString() },

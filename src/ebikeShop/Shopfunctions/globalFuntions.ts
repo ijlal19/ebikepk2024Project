@@ -14,9 +14,23 @@ function getShopMainCategory() {
         })
 }
 
+function getProductCompany() {
+    return fetch(Gconfig.ebikeApi + `shop/get-product-company-data`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 
 function getShopCategory(data: any) {
-    return fetch(`https://ebikepk-server-nodejs.herokuapp.com/api/shop/product/get-product-by-catagory/`, {
+    return fetch(Gconfig.ebikeApi + `shop/product/get-product-by-catagory/`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -32,5 +46,6 @@ function getShopCategory(data: any) {
 
 export {
     getShopMainCategory,
-    getShopCategory
+    getShopCategory,
+    getProductCompany
 }
