@@ -7,25 +7,9 @@ import { Box, Grid, useMediaQuery } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Swiper, SwiperSlide } from "swiper/react";
 import styles from './index.module.scss';
+
+
 const TopCategories = () => {
-
-
-    const [data, setData] = useState<any>([]);
-    const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        fetchShopMainCategory()
-    }, [])
-
-    const fetchShopMainCategory = async () => {
-        setIsLoading(true)
-        const res = await getShopMainCategory()
-        setData(res)
-        setIsLoading(false)
-        setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000);
-    }
 
     const isMobile = useMediaQuery("(max-width:769px)");
 

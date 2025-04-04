@@ -1,17 +1,21 @@
 .main {
     width: 100%;
-    max-width: 220px;
+    max-width: 230px;
     box-sizing: border-box;
-    height: 330px;
+    height: 320px;
     max-height: 450px;
     border: 1px solid #c5c1c1;
     min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     padding: 5px 5px 20px 5px !important;
     transition: all 0.5s ease;
     @media (max-width:768px) {
         padding: 0px 0px 20px 0px !important;
         max-width: 165px;
-        height: 245px;
+        height: 265px;
+        row-gap: 2px;
         margin: 5px 0px !important;
     }
 
@@ -21,9 +25,10 @@
 
         .image {
             width: 100%;
-            height: 250px;
+            height: 220px;
             @media (max-width:768px) {
-            height: 180px;    }
+            height: 180px;    
+        }
         }
     }
 
@@ -35,6 +40,7 @@
         box-sizing: border-box;
         flex-direction: column;
         justify-content: center;
+        margin: auto 0px;
         text-align: center;
 
         .name {
@@ -45,8 +51,10 @@
                 font-size: 14px;
             }
         }
-
-        .price {
+.product_price{
+    padding: 0px 0px 0px 30px !important;
+}
+        .sell_price ,.product_price{
             color: rgb(0, 0, 0);
             font-size: 12px;
             margin: 0px 0px 0px 0px !important;

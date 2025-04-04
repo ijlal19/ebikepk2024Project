@@ -23,7 +23,7 @@ const optimizeImage = (url:any, h:any, w:any) => {
   let cloudinary_name;
   let oldUrl;
 
-  if (url.includes('ic-solutions')) {
+  if (url?.includes('ic-solutions')) {
     cloudinary_name = 'ic-solutions';
   } else {
     cloudinary_name = 'dtroqldun';

@@ -18,9 +18,11 @@
     padding: 5px;
     box-sizing: 'border-box';
     border-radius:5px ;
+    border: none;
+    outline: none;
 
     @media (max-width:767px) {
-      top: 35%;
+      top: 50%;
       width: 90%;
     }
 
@@ -56,7 +58,12 @@
     flex-wrap: wrap;
     justify-content: space-around;
     overflow: scroll;
+
     overflow-x: hidden;
+
+    @media (max-width:768px) {
+      justify-content: left;
+    }
 
     .option_values {
         display: flex;
