@@ -23,8 +23,10 @@ const MainCatgeoryCard = ({ props, rating }: any) => {
                     {add3Dots(props.product_name, 18)}
                     </p>
                 }
-                <p className={styles.sell_price}>{props?.sell_price === '0' || props?.sell_price?.trim() === "" ? "PKR: 0" : <>PKR: <span style={{color:"green"}}>{props?.sell_price}</span></>}</p>
-                <p className={styles.product_price}><del>{props?.product_price === '0' || props?.product_price?.trim() === "" ? "0" : <span style={{color:"red"}}>{props?.product_price}</span>}</del></p>
+                <span className={styles.all_price}>
+                <p className={styles.sell_price}>{props?.sell_price === '0' || props?.sell_price?.trim() === "" ? "" : <>PKR: <span style={{color:"green"}}>{props?.sell_price}</span></>}</p>
+                <p className={styles.product_price}><del>{props?.product_price === '0' || props?.product_price?.trim() === "" ? "" :<>PKR: <span style={{color:"red"}}>{props?.product_price}</span></>}</del></p>
+                </span>
                 <Box className={styles.rating}>
                     <Rating
                         name="read-only-rating"

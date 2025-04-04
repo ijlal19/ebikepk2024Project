@@ -41,10 +41,12 @@ const ShopMainCategory = ({ props }: any) => {
                                         showfilter ? <Filters
                                             setLoader={setIsLoading}
                                             mainCategoryData={props}
+                                            selectedCategoryId=""
                                         /> : '' :
                                         <Filters
                                             setLoader={setIsLoading}
                                             mainCategoryData={props}
+                                            selectedCategoryId=""
                                         />
                                 }
                             </Grid>

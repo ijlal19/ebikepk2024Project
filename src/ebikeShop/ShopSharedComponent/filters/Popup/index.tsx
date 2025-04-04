@@ -56,7 +56,7 @@ export default function MoreOptionPopup(props:any) {
                                 return (
                                     <Typography className={styles.option_values} key={i}>
                                         <input 
-                                            type="radio"
+                                            type="checkbox"
                                             checked = { newApplyFilter?.indexOf(data.id.toString()) > -1 }
                                             onChange={(event) => { updateFilterValue(event) }}
                                             id={data.id}
