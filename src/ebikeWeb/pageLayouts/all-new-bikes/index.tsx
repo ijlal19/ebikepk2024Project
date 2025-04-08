@@ -45,22 +45,6 @@ export default function AllNewBikes() {
       let DealerDataRes = await getdealerData(res[0].brandId)
       setAllDelaerArr(DealerDataRes.dealers)
     }
-
-
-
-
-    // if (!DealerDataRes) {
-    //   setIsLoading(true)
-    // }
-    // else {
-    //   setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
-    //   let res = await getnewBikeData({ brand: brandName })
-    //   setAllnewBikeArr(res)
-    //   setIsLoading(false)
-    //  setTimeout(() => {
-    //   window.scrollTo(0, 0)
-    // }, 1000);
-    // }
   }
 
 

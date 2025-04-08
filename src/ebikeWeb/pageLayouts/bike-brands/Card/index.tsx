@@ -1,6 +1,6 @@
 'use client'
-import { Box } from '@mui/material';
-import { useRouter , useParams} from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import { Box, Link } from '@mui/material';
 import styles from './index.module.scss';
 import React from 'react';
 
@@ -8,23 +8,21 @@ const BikesBrandCard = ({ data }: any) => {
   const router = useRouter()
   const params = useParams()
 
-  const handleNavigate =(id:any, brandName:any)=>{
-    if(window?.location?.pathname.indexOf('new-bike-price') > -1) {
-      router.push(`new-bike-price/${id}`)
-    }
-    else  {
-      router.push(`new-bikes/${brandName}`)
-    }
-  }
- 
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+
+  const hrefLink = currentPath.includes('new-bike-price')
+    ? `new-bike-price/${data?.id}`
+    : `new-bikes/${data?.brandName}`;
+
   return (
-      <Box className={styles.card_main}>
-        <Box className={styles.card_image} onClick={() => handleNavigate(data.id, data.brandName)}>
-        <img src={data.logoUrl} alt={data.brandName} className={styles.image} />
-        </Box>
-      </Box>
+        <Box className={styles.card_main}>
+      <Link  href={hrefLink}
+        rel="noopener noreferrer" 
+        className={styles.card_image}>
+          <img src={data.logoUrl} alt={data.brandName} className={styles.image} />
+      </Link>
+    </Box>
   );
 };
-
 
 export default BikesBrandCard

@@ -20,8 +20,8 @@ export default function NewBikePrice() {
   async function fetchBrandInfo() {
     setIsLoading(true)
     let DealerDataRes = await getdealerData(bikeId)
-    const brandName = (DealerDataRes.dealers[0].bike_brand.brandName)
-    setbrandName(DealerDataRes.dealers[0].bike_brand.brandName)
+    const brandName = (DealerDataRes?.dealers[0]?.bike_brand?.brandName)
+    setbrandName(DealerDataRes?.dealers[0]?.bike_brand?.brandName)
     if (!DealerDataRes) {
       setIsLoading(true)
     }
