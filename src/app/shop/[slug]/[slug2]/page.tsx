@@ -1,4 +1,4 @@
-import CategoryDetails from "@/ebikeShop/ShopPages/ShopCategoryDetail"
+import CategoryDetails from "@/ebikeShop/ShopPages/ShopCategoryDetail";
 
 const Shop_category = ()=>{
     return(

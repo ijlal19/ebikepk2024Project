@@ -63,6 +63,9 @@
 
             .product_price {
                 padding: 0px 0px 0px 30px !important;
+                @media (max-width:768px) {
+                    padding: 0px 0px 0px 10px !important;
+                }
             }
 
             .sell_price,

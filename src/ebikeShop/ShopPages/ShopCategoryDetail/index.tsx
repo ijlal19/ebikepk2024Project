@@ -88,7 +88,7 @@ const CategoryDetails = () => {
                                         {CategoryData?.map((eProduct: any, index: any) => {
                                             return (
                                                 <div key={index}>
-                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]} />
+                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]} CategoryName={CategoryData[0]?.shop_main_catagory?.name}/>
                                                 </div>
                                             )
                                         })}
