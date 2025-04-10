@@ -1,5 +1,4 @@
 "use client"
-import React, { useEffect, useState } from 'react';
 import { getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -8,19 +7,20 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import ImgCard from '@/ebikeWeb/sharedComponents/itemCard';
 import { useParams, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
 export default function AllNewBikes() {
 
-  const [Showmore, setShowmore] = useState(true);
+  const [allnewBikeArr, setAllnewBikeArr] = useState([]);
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [allnewBikeArr, setAllnewBikeArr] = useState([])
-  const [allDealerArr, setAllDelaerArr] = useState([])
-  const [brandname, setbrandName]: any = useState('')
-  const [desc, setDesc] = useState('')
-  const [logo, setLogo] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [allDealerArr, setAllDelaerArr] = useState([]);
+  const [brandname, setbrandName]: any = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [Showmore, setShowmore] = useState(true);
+  const [desc, setDesc] = useState('');
+  const [logo, setLogo] = useState('');
+  const router = useRouter();
 
   const params = useParams()
   const brandName = params.slug

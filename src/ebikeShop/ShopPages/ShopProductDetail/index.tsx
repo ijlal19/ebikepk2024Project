@@ -1,9 +1,10 @@
 "use client"
 import { getProduct } from "@/ebikeShop/Shopfunctions/globalFuntions";
+import { Box, Button, Grid, Rating, Typography } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
-import { Box, Button, Grid, Typography } from "@mui/material";
 import { priceWithCommas } from '@/genericFunctions/geneFunc';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Person2Icon from '@mui/icons-material/Person2';
 import { Navigation, FreeMode } from 'swiper/modules';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,20 +17,20 @@ import styles from './index.module.scss';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+
 import 'swiper/swiper-bundle.css';
 import '@/app/globals.scss';
 
 const ProductDetail = () => {
 
-    const theme = useTheme();
-    const params = useParams()
-    const { slug3 } = params
-    const [ProductDetail, setProductDetail] = useState<any>([])
-    const [quantity, setQuantity] = useState(1);
-    const [IsLoading, setIsLoading] = useState<boolean>(false)
-    const [value, setValue] = useState(0);
-
+    const [IsLoading, setIsLoading] = useState<boolean>(false);
+    const [ProductDetail, setProductDetail] = useState<any>([]);
     const isMobile = useMediaQuery('(max-width:600px)');
+    const [quantity, setQuantity] = useState(1);
+    const [value, setValue] = useState(0);
+    const params = useParams();
+    const { slug2 } = params
+    const theme = useTheme();
 
     useEffect(() => {
         fetchproductdetail()
@@ -38,7 +39,7 @@ const ProductDetail = () => {
     const fetchproductdetail = async () => {
         setIsLoading(true)
         const obj = {
-            id: slug3
+            id: slug2
         }
         const res = await getProduct(obj)
         if (res) {
@@ -103,6 +104,12 @@ const ProductDetail = () => {
             'aria-controls': `full-width-tabpanel-${index}`,
         };
     }
+
+    const reViewData = [
+        { rating: 4, comment: 'Geniun product available with discounted prices at ebikeshop.pk ', submited: '3 days ago', by: 'Ali' },
+        { rating: 5, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '4 days ago', by: 'faizan' },
+        { rating: 3, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '7 days ago', by: 'agha' },
+    ]
 
     return (
         <Box className={styles.main}>
@@ -196,8 +203,6 @@ const ProductDetail = () => {
                                     </Tabs>
                                 </AppBar>
 
-
-
                                 <TabPanel value={value} index={0} dir={theme.direction}>
                                     <Grid container className={styles.product_detail_grid_main}>
                                         <Grid item xs={isMobile ? 12 : 5.5} className={styles.product_tab_info}>
@@ -267,13 +272,39 @@ const ProductDetail = () => {
                                     </Grid>
                                 </TabPanel>
 
-
-
-
-
                                 <TabPanel value={value} index={1} dir={theme.direction}>
-                                    Item Two
+                                    <Box className={styles.customer_review}>
+                                        <Typography className={styles.heading}>CUSTOMER REVIEWS</Typography>
+                                            {
+                                                reViewData?.map((e: any, i: any) => {
+                                                    return (
+                                                        <Box className={styles.card_main} key={i}>
+                                                            <Box className={styles.descritpion_box}>
+                                                                <Box className={styles.rating}>
+                                                                    <Rating
+                                                                        name="read-only-rating"
+                                                                        value={e?.rating}
+                                                                        precision={0.5}
+                                                                        readOnly
+                                                                        sx={{ color: "orange", fontSize: "20px" }}
+                                                                        emptyIcon={<StarIcon style={{ opacity: 0.55, color: "gray", fontSize: "20px" }} fontSize="inherit" />}
+                                                                    />
+                                                                </Box>
+                                                                <Typography className={styles.description}>
+                                                                    {e?.comment}
+                                                                </Typography>
+                                                            </Box>
+                                                            <Box className={styles.author_detail}>
+                                                                <Typography className={styles.day_ago}>Submited : {e?.submited}</Typography>
+                                                                <Typography className={styles.name}><Person2Icon className={styles.person_icon}/> {e?.by}</Typography>
+                                                            </Box>
+                                                        </Box>
+                                                    )
+                                                })
+                                            }
+                                    </Box>
                                 </TabPanel>
+
                                 <TabPanel value={value} index={2} dir={theme.direction}>
                                     Item Three
                                 </TabPanel>

@@ -25,10 +25,9 @@
                 padding: 0px 0px 10px 0px;
                 font-family: sans-serif;
                 .heading{
-                    // border-bottom: 1px solid black;
                     font-size: 18px;
                     cursor: pointer;
-                    padding: 10px 0px 0px 30px;
+                    padding: 10px 0px 0px 130px;
                     margin: 0px !important;
                     text-transform: uppercase !important;
                     font-weight: bold;
@@ -59,14 +58,3 @@
         }
     }
 }
-
-
-.filter_button{
-    background-color: yellowgreen !important;
-    color: white !important;
-    z-index: 1000;
-    position: fixed;
-    top: 117px;
-    right: 5px;
-    width: 110px;
-  }

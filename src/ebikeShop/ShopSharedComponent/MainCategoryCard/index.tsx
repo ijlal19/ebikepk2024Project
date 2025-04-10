@@ -3,14 +3,13 @@ import { Box, Link, Rating, useMediaQuery } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import styles from './index.module.scss';
 
-const MainCatgeoryCard = ({ props, rating,CategoryName }: any) => {
-    const isMobile = useMediaQuery('(max-width:768px')
-    console.log("data", props)
+const MainCatgeoryCard = ({ props, rating }: any) => {
 
+    const isMobile = useMediaQuery('(max-width:768px')
     const title = props?.product_name || '';
     const id = props?.id || '';
     const urlTitle = title.toLowerCase().replaceAll(' ', '-');
-    const href = `/shop/${CategoryName}/${urlTitle}/${id}`;
+    const href = `/shop/product/${urlTitle}/${id}`;
 
     return (
         <Link href={href} sx={{ textDecoration: "none" }}>
@@ -30,8 +29,8 @@ const MainCatgeoryCard = ({ props, rating,CategoryName }: any) => {
                             </p>
                     }
                     <span className={styles.all_price}>
-                        <p className={styles.sell_price}>{props?.sell_price === '0' || props?.sell_price?.trim() === "" ? "" : <>PKR: <span style={{ color: "green" }}>{props?.sell_price}</span></>}</p>
-                        <p className={styles.product_price}><del>{props?.product_price === '0' || props?.product_price?.trim() === "" ? "" : <>PKR: <span style={{ color: "red" }}>{props?.product_price}</span></>}</del></p>
+                        <p className={styles.product_price}><del>{props?.product_price === '0' || props?.product_price?.trim() === "" ? <span style={{color:"red"}}>PKR:0</span> : <span style={{fontSize:"14px", color:"red"}}>PKR:<span style={{ color: "red" , fontWeight:"bolder"}}>{props?.product_price}</span></span>}</del></p> 
+                        <p className={styles.sell_price}>{props?.sell_price === '0' || props?.sell_price?.trim() === "" ? <span style={{color:"green"}}>PKR:0</span> : <span style={{color:"green",fontSize:"13"}}>PKR:<span style={{ color: "green" ,fontWeight:"bolder"}}>{props?.sell_price}</span></span>}</p>
                     </span>
                     <Box className={styles.rating}>
                         <Rating

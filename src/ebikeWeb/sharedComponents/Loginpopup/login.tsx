@@ -1,14 +1,14 @@
 "use client"
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
 import { Avatar, Container, Divider, Grid, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, OutlinedInput, TextField, Typography } from '@mui/material'
-import styles from './index.module.scss'
-import LoginIcon from '@mui/icons-material/Login';
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import Link from 'next/link';
 import { validateEmail, userLogin } from "@/genericFunctions/geneFunc";
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import React, { useState, useEffect } from 'react';
+import LoginIcon from '@mui/icons-material/Login';
+import Button from '@mui/material/Button';
+import styles from './index.module.scss';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Link from 'next/link';
 
 const jsCookie = require('js-cookie');
 import GoogleLoginButton from '../googleLoginComp';
@@ -24,30 +24,26 @@ export default function LoginPopup({props,values}: any) {
  
 
   useEffect(() => {
-  
-    // Load the Facebook SDK script
+
     (window as any).fbAsyncInit = function () {
       (window as any).FB.init({
-        appId: '217553265854765', // Replace with your Facebook App ID
+        appId: '217553265854765', 
         cookie: true,
         xfbml: true,
-        // version: 'v19.0'
         version: 'v3.2' 
       });
 
       (window as any).FB.AppEvents.logPageView();
 
-      // You can add additional FB event handlers or login logic here
     };
 
-    // Load the Facebook SDK script dynamically
     (function (d, s, id) {
       let js: HTMLScriptElement;
-      const fjs = d.createElement(s) as HTMLScriptElement; // Cast to HTMLScriptElement
+      const fjs = d.createElement(s) as HTMLScriptElement;
       if (d.getElementById(id)) return;
       fjs.id = id;
       fjs.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.async = true; // Recommended for non-blocking load
+      fjs.async = true;
       d.getElementsByTagName("head")[0].appendChild(fjs);
     })(document, "script", "facebook-jssdk");
   }, []);
@@ -100,12 +96,11 @@ export default function LoginPopup({props,values}: any) {
       (response:any) => {
         if (response.authResponse) {
           console.log('User logged in successfully:', response);
-          // Handle successful login (e.g., send authResponse to your backend)
         } else {
           console.log('User cancelled login or did not fully authorize.');
         }
       },
-      { scope: 'public_profile' } // Add required permissions
+      { scope: 'public_profile' }
     );
   };
 

@@ -49,8 +49,8 @@ export default function MechanicsList({ props }: any) {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={() => props.togglers('findmachenics')} disableRipple>
-        <ListItemText primary={props.title} />
+      <ListItemButton onClick={() => props.togglers('findmachenics')} disableRipple sx={{ paddingTop:"0px",paddingBottom:"0px"}} >
+        <ListItemText primary={props.title}  sx={{marginTop:"0px",marginBottom:"0px" }} />
         {props.options ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={props.options} timeout="auto" unmountOnExit>
@@ -60,13 +60,13 @@ export default function MechanicsList({ props }: any) {
               return (
                   !e.isLoginReq ? 
                   <Link className={styles.anchor} key={i} href={e.url}>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                      <ListItemButton sx={{ pl: 4  ,paddingTop:"0px",paddingBottom:"0px"}}>
+                        <ListItemText style={{ marginLeft: "10px",marginTop:"0px",marginBottom:"0px"  }} primary={e.label} />
                       </ListItemButton>
                   </Link>
                   :
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
-                    <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                  <ListItemButton sx={{ pl: 4 ,paddingTop:"0px",paddingBottom:"0px" }} onClick={() => goToRoute(e)} key={i}>
+                    <ListItemText style={{ marginLeft: "10px",marginTop:"0px",marginBottom:"0px"  }} primary={e.label} />
                   </ListItemButton>
               )
             })

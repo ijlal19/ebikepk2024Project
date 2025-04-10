@@ -24,7 +24,7 @@ const TopbarCategory = () => {
 
     function goToRoute(data: any) {
         let urlTitle = '' + data?.name.toLowerCase().replaceAll(' ', '-')
-        router.push(`/shop/${urlTitle}/${data?.id}`)
+        router.push(`/shop/collection/${urlTitle}/${data?.id}`)
         console.log("data" , data)
     }
 
@@ -41,8 +41,8 @@ const TopbarCategory = () => {
                         return (
                             <>
                                 <ListItem key={index} disablePadding>
-                                    <ListItemButton onClick={() => goToRoute(data)}>
-                                        <ListItemText primary={data?.name} className={styles.listText} />
+                                    <ListItemButton onClick={() => goToRoute(data)}  sx={{ paddingTop:"0px",paddingBottom:"0px"}} >
+                                        <ListItemText primary={data?.name} className={styles.listText}  sx={{marginTop:"0px",marginBottom:"0px" }} />
                                     </ListItemButton>
                                 </ListItem>
                                 <Divider />

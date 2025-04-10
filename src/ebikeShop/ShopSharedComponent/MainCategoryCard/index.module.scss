@@ -58,15 +58,16 @@
         .all_price {
             display: flex;
             justify-content: center;
+            column-gap: 10px;
             height: 12px;
             padding: 2px 0px;
 
-            .product_price {
-                padding: 0px 0px 0px 30px !important;
-                @media (max-width:768px) {
-                    padding: 0px 0px 0px 10px !important;
-                }
-            }
+            // .product_price {
+            //     padding: 0px 0px 0px 30px !important;
+            //     @media (max-width:768px) {
+            //         padding: 0px 0px 0px 10px !important;
+            //     }
+            // }
 
             .sell_price,
             .product_price {
@@ -81,20 +82,10 @@
         }
 
         .rating {
-            // box-sizing: border-box;
-            // padding: 5px 0px 5px 0px !important;
-            // margin: 0px !important;
+            padding: 5px 0px 5px 0px !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            // font-size: 12px;
-            padding: 0px !important;
-            // color: grey;
-
-            // .rate_icon{
-            //     font-size: 14px;
-            //     color: yellow;
-            // }
         }
     }
 

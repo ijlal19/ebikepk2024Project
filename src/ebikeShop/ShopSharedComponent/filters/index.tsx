@@ -84,7 +84,7 @@ function Filters({ mainCategoryData, selectedCategoryId }: any) {
 
   const handleCategoryCheck = ({ data }: any) => {
     let urlTitle = "" + data?.name.toLowerCase().replaceAll(" ", "-");
-    router.push(`/shop/${urlTitle}/${data?.id}`);
+    router.push(`/shop/collection/${urlTitle}/${data?.id}`);
   };
 
   const getCompanyDataByFilter = async (event: any,id:any) => {

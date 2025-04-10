@@ -185,15 +185,16 @@
 
     }
 
-    .tab_grid_box{
+    .tab_grid_box {
         width: 100%;
         box-sizing: border-box;
         box-shadow: 0px 0px 15px grey;
+
         @media (max-width:768px) {
             box-shadow: none;
         }
-        
-        .product_detail_grid_main{
+
+        .product_detail_grid_main {
             padding: 0px 10px !important;
             width: 100%;
             box-sizing: border-box;
@@ -201,10 +202,10 @@
             column-gap: 20px;
             justify-content: center;
 
-            .product_tab_info{
+            .product_tab_info {
                 width: 100%;
 
-                .heading{
+                .heading {
                     width: 100%;
                     font-size: 16px;
                     padding: 10px 0px 10px 0px !important;
@@ -213,12 +214,13 @@
                     border-bottom: 1px solid grey;
                 }
 
-                .table_box{
+                .table_box {
                     margin: 15px 0px 20px 0px !important;
                     width: 100%;
                     border-collapse: collapse;
-                    .table_head{
-                        .th{
+
+                    .table_head {
+                        .th {
                             background-color: #1976d2;
                             color: white;
                             font-size: 16px;
@@ -229,35 +231,118 @@
 
                             &:nth-child(1) {
                                 width: 110px;
+
                                 @media (max-width:786px) {
                                     width: 100px !important;
                                 }
-                              }
+                            }
                         }
                     }
-                    .table_body{
-                        .td{
-                                font-size: 14px;
-                                padding: 5px 0px 5px 15px;
-                                text-align: left;
-                                color: rgb(42, 40, 40);
-                                font-weight: none;
-    
-                                &:nth-child(1) {
-                                    width: 130px;
-                                    color: navy;
-                                    @media (max-width:786px) {
-                                        width: 100px !important;
-                                    }
-                                  }
+
+                    .table_body {
+                        .td {
+                            font-size: 14px;
+                            padding: 5px 0px 5px 15px;
+                            text-align: left;
+                            color: rgb(42, 40, 40);
+                            font-weight: none;
+
+                            &:nth-child(1) {
+                                width: 130px;
+                                color: navy;
+
+                                @media (max-width:786px) {
+                                    width: 100px !important;
+                                }
+                            }
                         }
+                    }
+                }
+            }
+        }
+
+        .customer_review {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 5px 19px 10px !important;
+            box-sizing: border-box;
+            justify-content: center;
+
+            .heading {
+                padding: 5px 0px 5px 60px;
+                color: rgb(32, 31, 31);
+                font-size: 18px;
+            }
+
+            .card_main {
+                width: 90%;
+                display: flex;
+                justify-content: center;
+                column-gap: 250px;
+                margin: 0px auto;
+                padding: 10px 5px !important;
+                box-sizing: border-box;
+                @media (max-width:768px) {
+                    flex-direction: column;
+                }
+                border-bottom: 1px solid rgba(100, 98, 98, 0.568);
+
+                .descritpion_box {
+                    display: flex;
+                    flex-direction: column;
+
+                    .rating {
+                        display: flex;
+                        align-items: center;
+                        padding: 7px 0px;
+                    }
+
+                    .description {
+                        font-size: 14px;
+                        color: rgb(32, 31, 31);
+                        padding: 10px 0px !important;
+                    }
+                }
+
+                .author_detail {
+                    display: flex;
+                    padding: 10px 0px;
+                    flex-direction: column;
+
+                    .day_ago {
+                        display: flex;
+                        align-items: center;
+                        padding: 0px;
+                        color: rgb(32, 31, 31);
+                        font-size: 14px;
+                    }
+
+                    .person_icon {
+                        font-size: 22px;
+                        display: flex;
+                        align-items: center !important;
+                        color: skyblue;
+                        padding: 7px 0px !important;
+                        margin-right: 4px;
+
+                    }
+
+                    .name {
+                        color: rgb(32, 31, 31);
+                        padding: 5px 0px;
+                        font-size: 14px;
+                        margin: 0px;
+                        display: flex;
+                        align-items: center !important;
                     }
                 }
             }
         }
     }
 }
-.video_box{
+
+.video_box {
     width: 100%;
     height: 200px;
     margin: 15px 0px 0px 0px !important;

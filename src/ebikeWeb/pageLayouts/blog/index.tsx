@@ -2,27 +2,27 @@
 import { Box, Grid, useMediaQuery, Typography, Pagination, Button } from '@mui/material';
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import Autocomplete from '@mui/material/Autocomplete';
+import { GiConsoleController } from 'react-icons/gi';
+import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
-import { GiConsoleController } from 'react-icons/gi';
 
 const Blog = () => {
-  const isMobile = useMediaQuery('(max-width: 768px)');
-  const router = useRouter()
-  const [currentPage, setCurrentPage] = useState(1);
-  const [BlogData, setBlogData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
   const [isFilterApply, setisFilterApply] = useState(false);
-  const [BlogNews,setBlognews] = useState([]);
-  const [BlogSafety,setBlogSafety] = useState([]);
-  const [BlogBikeCare,setBlogBikeCare] = useState([]);
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const [BlogBikeCare, setBlogBikeCare] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [BlogSafety, setBlogSafety] = useState([]);
+  const [BlogData, setBlogData] = useState([]);
+  const [BlogNews, setBlognews] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     getAllBlogList()
@@ -36,7 +36,7 @@ const Blog = () => {
     setIsLoading(true)
     let res = await getAllBlog()
     setBlogData(res)
-    res.map((e:any)=>{
+    res.map((e: any) => {
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
@@ -71,7 +71,7 @@ const Blog = () => {
     router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
   };
 
-  const handleSearch = (e:any) => {
+  const handleSearch = (e: any) => {
     const results = BlogData.filter((item: any) =>
       item.blogTitle.toLowerCase().includes(e?.target?.value?.toLowerCase())
     );
@@ -80,19 +80,19 @@ const Blog = () => {
 
   const SearchTerm = (e: any) => {
     setSearchTerm(e.target.value)
-    
+
   }
 
-  const blogCardMini = (e:any, i:any) => {
+  const blogCardMini = (e: any, i: any) => {
     return (
-      <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor:"pointer"}} >
+      <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={e?.featuredImage} alt="" className={styles.image}/>
+          <img src={e?.featuredImage} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{e?.blogTitle}</p>
         </Box>
-    </Box>
+      </Box>
     )
   }
 
@@ -103,23 +103,22 @@ const Blog = () => {
           <Box className={styles.blog_main}>
 
             <Box className={styles.FrontAdd_box}>
-              <Box className={styles.trending}><b style={{ color: 'black', fontFamily: "sans-serif" }}>Trending Videos</b></Box>
-              <Box className={styles.input_main}></Box>
+              <Box className={styles.trending}><b style={{ color: 'black', fontFamily: "sans-serif",display: isMobile? "none":"flex" }}>Trending Videos</b></Box>
             </Box>
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
+            <Box className={styles.blog_header}>
+              <Typography className={styles.blog_heading}>
+                Blogs & Articles
+              </Typography>
 
-            <Typography className={styles.blog_heading}>
-              Blogs & Articles
-            </Typography>
-
-            <Box className={styles.FrontAdd_box}>
-              <Box className={styles.trending}></Box>
-              <Box className={styles.input_main}>
-                <input type="text" placeholder='Search Blog Here...' onChange={(e)=>handleSearch(e)} className={styles.input}/>
+              <Box className={styles.FrontAdd_box}>
+                <Box className={styles.input_main}>
+                  <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
+                </Box>
               </Box>
             </Box>
 
-            <hr/>
+            <hr />
 
             <Grid container className={styles.blog_grid}>
               <Grid item xs={isMobile ? 12 : 8.5} sx={{ paddingRight: '15px' }}>
@@ -128,12 +127,12 @@ const Blog = () => {
                     <Grid container>
                       {currentBlogs.length > 0 && currentBlogs.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
-                          <Grid container onClick={() => handleRoute(e)} style={{ cursor:"pointer"}}>
+                          <Grid container onClick={() => handleRoute(e)} style={{ cursor: "pointer" }}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
                               <img src={e.featuredImage} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2} >
-                              <Box style={isMobile ? {} :{ paddingLeft:"9px"}}>
+                              <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} >{e.blogTitle}</Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
@@ -148,12 +147,12 @@ const Blog = () => {
                     <Grid container>
                       {filterBlogs.length > 0 && filterBlogs.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
-                          <Grid container onClick={() => handleRoute(e)} style={{ cursor:"pointer"}}>
+                          <Grid container onClick={() => handleRoute(e)} style={{ cursor: "pointer" }}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
                               <img src={e.featuredImage} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2}>
-                              <Box style={isMobile ? {} :{ paddingLeft:"9px"}}>
+                              <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} >{e.blogTitle}</Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
@@ -182,33 +181,33 @@ const Blog = () => {
                 <Box className={styles.add_area_content}>
                   <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>News <span className={styles.underline}></span></Typography>
-                  {
-                    BlogNews.slice(0,5).map((e:any,i:any)=>{
-                      return(
-                        blogCardMini(e, i)
-                      )
-                    })
-                  }
+                    {
+                      BlogNews.slice(0, 5).map((e: any, i: any) => {
+                        return (
+                          blogCardMini(e, i)
+                        )
+                      })
+                    }
                   </Box>
                   <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Safety <span className={styles.underline}></span></Typography>
-                  {
-                    BlogSafety.slice(0,5).map((e:any,i:any)=>{
-                      return(
-                        blogCardMini(e, i)
-                      )
-                    })
-                  }
+                    {
+                      BlogSafety.slice(0, 5).map((e: any, i: any) => {
+                        return (
+                          blogCardMini(e, i)
+                        )
+                      })
+                    }
                   </Box>
                   <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Bike Care <span className={styles.underline}></span></Typography>
-                  {
-                    BlogBikeCare.slice(0,5).map((e:any,i:any)=>{
-                      return(
-                        blogCardMini(e, i)
-                      )
-                    })
-                  }
+                    {
+                      BlogBikeCare.slice(0, 5).map((e: any, i: any) => {
+                        return (
+                          blogCardMini(e, i)
+                        )
+                      })
+                    }
                   </Box>
                 </Box>
               </Grid>

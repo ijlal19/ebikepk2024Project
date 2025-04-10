@@ -1,35 +1,38 @@
 'use client';
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
-import { getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
-import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button } from '@mui/material';
+import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
+import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button, Link } from '@mui/material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { add3Dots, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import { isLoginUser } from '@/genericFunctions/geneFunc';
+import { useParams, useRouter } from 'next/navigation';
+import { GiConsoleController } from 'react-icons/gi';
 import ShareIcon from '@mui/icons-material/Share';
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
 import styles from './index.module.scss';
 
 const BlogDetails = () => {
+  const [IsLogin, setIsLogin] = useState<any>('not_login');
+  const [allDealerArr, setAllDelaerArr] = useState([]);
+  const [featuredData, setFeaturedData] = useState([]);
   const [displayicon, setDisplayIcon] = useState(true);
   const isMobile = useMediaQuery('(max-width:768px)');
   const [DataBlog, setDataBlog]: any = useState(null);
-  const [Href, setHref] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [Comment, setComment] = useState('');
   const [CommentArr, setCommentArr]: any = useState();
-  const [IsLogin, setIsLogin] = useState<any>('not_login');
+  const [isLoading, setIsLoading] = useState(false);
+  const [BlogData, setBlogData] = useState([]);
+  const [Comment, setComment] = useState('');
+  const [Href, setHref] = useState('');
 
-
+  const router = useRouter()
   const params = useParams()
   const id = params?.id
 
   useEffect(() => {
-    // fetchSubCategory()
-  }, [])
-
-
-  useEffect(() => {
+    fetchFeaturedBike()
+    fetchDealerinfo()
+    getAllBlogList()
     fetchBrandInfo()
     let _isLoginUser = isLoginUser()
     if (_isLoginUser?.login) {
@@ -39,11 +42,39 @@ const BlogDetails = () => {
       setIsLogin("not_login")
     }
     setHref(window.location.href)
-
   }, [])
 
-  async function fetchBrandInfo() {
+  async function getAllBlogList() {
+    setIsLoading(true);
+    let res = await getAllBlog();
+    if (res?.length > 0 && id) {
+      const filteredBlogs = res.filter((blog: any) => blog.id.toString() !== id.toString());
+      setBlogData(filteredBlogs);
+    }
+}
+
+  async function fetchFeaturedBike() {
+    let res = await getAllFeaturedBike();
+    if (res?.length > 0) {
+      setFeaturedData(res)
+    }
+    else {
+      setFeaturedData([])
+    }
+  }
+
+  const brandName = ['honda', 'zxmco', 'united', 'crown', 'yamaha'];
+  async function fetchDealerinfo() {
     setIsLoading(true)
+    const randomBrand = brandName[Math.floor(Math.random() * brandName.length)];
+    let res = await getnewBikeData({ brand: randomBrand })
+    if (res?.length > 0) {
+      let DealerDataRes = await getdealerData(res[0].brandId)
+      setAllDelaerArr(DealerDataRes.dealers)
+    }
+  }
+
+  async function fetchBrandInfo() {
     let res = await getSingleBlogData(id)
 
     if (res.bloghtml) {
@@ -86,12 +117,60 @@ const BlogDetails = () => {
       return
     }
   }
+
+  const handletrendingRoute = (e: any) => {
+    var title = e.title;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+    lowerTitle = '' + lowerTitle.replaceAll("?", "")
+    router.push(`/used-bikes/${lowerTitle}/${e?.id}`);
+  };
+
+  const handleRoute = (blogInfo: any) => {
+    var title = blogInfo.blogTitle;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+    lowerTitle = '' + lowerTitle.replaceAll("?", "")
+    router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+  };
+
+  const trendingCardMini = (e: any, i: any) => {
+    return (
+      <Box className={styles.shot_blog_card} key={i}
+        onClick={() => handletrendingRoute(e)}
+        style={{ cursor: "pointer" }} >
+        <Box className={styles.image_box}>
+          <img src={e?.images[0]} alt="" className={styles.image} />
+        </Box>
+        <Box className={styles.title_box}>
+          <p className={styles.title}>{add3Dots(e?.title, 25)}
+          </p>
+          <p className={styles.price}>PKR:{priceWithCommas(e?.price)}</p>
+        </Box>
+      </Box>
+    )
+  }
+
+  const blogCardMini = (e: any, i: any) => {
+    return (
+      <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
+        <Box className={styles.image_box}>
+          <img src={e?.featuredImage} alt="" className={styles.image} />
+        </Box>
+        <Box className={styles.title_box}>
+          <p className={styles.title}>{add3Dots(e?.blogTitle, 25)}</p>
+          <p className={styles.name}>{e?.authorname}</p>
+        </Box>
+      </Box>
+    )
+  }
+
   return (
     <Box className={styles.blog_details_main}>
       {!isLoading ?
         <> {DataBlog ?
           <Grid container className={styles.gird_box_main}>
-            <Grid item xs={isMobile ? 12 : 8} className={styles.blog_details_card}>
+            <Grid item xs={isMobile ? 12 : 8.5} className={styles.blog_details_card}>
 
               <Box className={styles.image_box}>
                 <img src={DataBlog.featuredImage} alt="" className={styles.image} />
@@ -170,8 +249,8 @@ const BlogDetails = () => {
                   <textarea name="" id="" className={styles.your_comment_input} placeholder="Enter your comment"
                     onChange={(e) => setComment(e.target.value)}></textarea>
                 </Box>
-                <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button><hr />
-                <div className={styles.user_comment_box}>
+                <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button>
+                <div className={styles.user_comment_box} style={{display:CommentArr && CommentArr.length > 0 ? "" :"none"}}>
                   {CommentArr && CommentArr.length > 0 ? (
                     [...CommentArr].reverse().map((data: any, i: any) => (
                       <div key={i} className={styles.user_comment}>
@@ -183,7 +262,7 @@ const BlogDetails = () => {
                             />
                           </div>
                           <span className={styles.user_comment_details}>
-                            <p style={{ margin: 0, fontSize: '14px', paddingBottom: 3 ,fontFamily:"sans-serif"}}>
+                            <p style={{ margin: 0, fontSize: '14px', paddingBottom: 3, fontFamily: "sans-serif" }}>
                               {data?.user_name}
                             </p>
                             <p style={{ margin: 0, fontSize: '10px', color: 'grey' }}>
@@ -194,18 +273,56 @@ const BlogDetails = () => {
                         <p className={styles.user_main_comment}>{data?.comment}</p>
                       </div>
                     ))
-                  ) : (
-                    <p style={{ textAlign: 'center', color: 'grey', fontSize: '14px' }}>
-                      No comments yet
-                    </p>
-                  )}
+                  ) :""}
 
                 </div>
               </Box>
             </Grid>
 
-            <Grid item xs={isMobile ? 12 : 4} className={styles.moreBlog}>
-              <Box>More Blogs</Box>
+            <Grid item xs={isMobile ? 12 : 3} className={styles.moreBlog}>
+              {
+                allDealerArr.length > 0 ?
+                  <> <Typography className={styles.heading}>Our Dealers</Typography>
+                    <Box className={styles.Dealers_card}>
+                      {
+                        allDealerArr?.map((e: any, i: any) => {
+                          return (
+                            <Box className={styles.card_main} key={i}>
+                              <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
+                              <Box className={styles.card_text}>
+                                <Typography className={styles.card_title}>{e?.shop_name}</Typography>
+                                <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
+                              </Box>
+                            </Box>
+                          )
+                        })
+                      }
+                      <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/dealers" className={styles.Link_tag}>View More Dealers <KeyboardArrowRightIcon /></Link></Button>
+                    </Box> </> : ''
+              }
+
+              <Box className={styles.shortBlog_main}>
+                <Typography className={styles.heading}>Trending Bikes</Typography>
+                {
+                  featuredData.slice(0, 5).map((e: any, i: any) => {
+                    return (
+                      trendingCardMini(e, i)
+                    )
+                  })
+                }
+              </Box>
+
+              <Box className={styles.shortBlog_main}>
+                <Typography className={styles.heading}>More Blog</Typography>
+                {
+                  BlogData.slice(0, 5).map((e: any, i: any) => {
+                    console.log("data", e)
+                    return (
+                      blogCardMini(e, i)
+                    )
+                  })
+                }
+              </Box>
             </Grid>
 
           </Grid>

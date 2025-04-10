@@ -35,8 +35,8 @@ export default function MoreList({ props }: any) {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={() => props.togglers('moreoption')} disableRipple>
-        <ListItemText primary="More" />
+      <ListItemButton onClick={() => props.togglers('moreoption')} disableRipple sx={{ paddingTop:"0px",paddingBottom:"0px"}} >
+        <ListItemText primary="More"  sx={{marginTop:"0px",marginBottom:"0px" }} />
         {props.options ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={props.options} timeout="auto" unmountOnExit>
@@ -46,13 +46,13 @@ export default function MoreList({ props }: any) {
               return (
                   !e.isLoginReq ? 
                   <Link className={styles.anchor} key={i} href={e.url}>
-                      <ListItemButton sx={{ pl: 4 }}>
-                        <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                      <ListItemButton sx={{ pl: 4  ,paddingTop:"0px",paddingBottom:"0px"}}>
+                        <ListItemText style={{ marginLeft: "10px" ,marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
                       </ListItemButton>
                   </Link> 
                   :
-                  <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
-                    <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                  <ListItemButton sx={{ pl: 4  ,paddingTop:"0px",paddingBottom:"0px"}} onClick={() => goToRoute(e)} key={i}>
+                    <ListItemText style={{ marginLeft: "10px" ,marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
                   </ListItemButton>
               )
             })

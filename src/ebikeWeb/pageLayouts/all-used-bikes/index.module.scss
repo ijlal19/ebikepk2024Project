@@ -421,10 +421,19 @@
 
   .add_area {
     width: 150px;
-    // min-width: 100px;
-    margin-top: 20px;
-    background: white;
-    color: rgb(0, 0, 0);
+    margin-top: 10px;
+
+    .add_box{
+      row-gap: 30px;
+      background-color: whitesmoke;
+      display: flex;
+      flex-direction: column;
+
+      .add_image{
+        width: 100%;
+      }
+
+    }
 
     @media (max-width:768px) {
       display: none;

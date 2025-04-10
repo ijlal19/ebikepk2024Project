@@ -23,16 +23,16 @@ const jsCookie = require('js-cookie');
 
 const Header = () => {
 
-    const router = useRouter()
     const pathname = usePathname();
+    const router = useRouter();
 
-    const [open, setOpen] = useState(false);
-    const [options, setOptions] = useState(false);
-    const [buysellmenu, setBuySellmenu] = useState(false);
-    const [findDealer, setFindDealer] = useState(false);
     const [findMechanics, setFindMechanics] = useState(false);
+    const [buysellmenu, setBuySellmenu] = useState(false);
+    const [customer, setCustomer] = useState('not_login');
+    const [findDealer, setFindDealer] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
-    const [customer, setCustomer] = useState('not_login')
+    const [options, setOptions] = useState(false);
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         authenticateUser()
@@ -156,16 +156,16 @@ const Header = () => {
                                 !e.isLoginReq ?
                                     <>
                                         <Link className={styles.anchor} key={i} href={e.url}>
-                                            <ListItemButton sx={{ pl: 4 }}>
-                                                <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                                            <ListItemButton sx={{ pl: 4 ,paddingTop:"0px",paddingBottom:"0px"}}>
+                                                <ListItemText style={{ marginLeft: "10px",marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
                                             </ListItemButton>
                                         </Link>
                                         <Divider />
                                     </>
                                     :
                                     <>
-                                        <ListItemButton sx={{ pl: 4 }} onClick={() => goToRoute(e)} key={i}>
-                                            <ListItemText style={{ marginLeft: "10px" }} primary={e.label} />
+                                        <ListItemButton sx={{ pl: 4  ,paddingTop:"0px",paddingBottom:"0px"}} onClick={() => goToRoute(e)} key={i}>
+                                            <ListItemText style={{ marginLeft: "10px" ,marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
                                         </ListItemButton>
                                         <Divider />
                                     </>
@@ -181,8 +181,8 @@ const Header = () => {
 
                     <Link href='/blog' className={styles.anchor}>
                         <ListItem sx={{ padding: 0 }} disablePadding>
-                            <ListItemButton onClick={() => goToRoute({ url: "/blog" })}>
-                                <ListItemText primary='Blog' />
+                            <ListItemButton onClick={() => goToRoute({ url: "/blog" })} sx={{paddingTop:"0px",paddingBottom:"0px"}} >
+                                <ListItemText primary='Blog' sx={{marginTop:"0px",marginBottom:"0px" }}/>
                             </ListItemButton>
                         </ListItem>
                     </Link>

@@ -13,73 +13,75 @@
    }
 }
 
-.FrontAdd_box {
-   margin: 10px 0px !important;
-   padding: 10px 10px !important;
+.blog_header {
    display: flex;
-   justify-content: space-between;
    align-items: center;
+   justify-content: space-between;
+   padding: 0px 0px 10px 0px !important;
+   
+   @media (max-width:768px) {
+      padding: 0px 0px 10px 0px !important;
+   }
 
-   .trending {
+   .FrontAdd_box {
+   
+      margin: 0px 0px !important;
+      padding: 0px 0px !important;
       display: flex;
-      gap: 10px;
-      font-size: 17px;
-      color: #3c3c3c;
+      justify-content: space-between;
       align-items: center;
 
-      @media (max-width:768px) {
-         display: none;
-      }
-   }
-
-   .input_main {
-      width: 100%;
-      max-width: 330px;
-      display: flex;
-      flex-direction: row;
-
-      @media (max-width:500px) {
-         max-width: 100%;
-      }
-
-      .input {
+      .input_main {
          width: 100%;
-         max-width: 220px;
-         border-radius: 0px;
-         outline: none;
-         padding: 7px 7px 7px 10px;
-         font-size: 16px;
-         border: 1px solid #65606090;
-         background-color: transparent;
+         max-width: 330px;
+         display: flex;
+         margin: 0px;
+         flex-direction: row;
 
          @media (max-width:500px) {
-            padding: 10px 10px 10px 10px;
-            max-width: 100%;
+            max-width: 200px;
+         }
+
+         .input {
+            width: 100%;
+            max-width: 220px;
+            border-radius: 0px;
+            outline: none;
+            padding: 7px 7px 7px 10px;
+            font-size: 16px;
+            border: 1px solid #65606090;
+            background-color: transparent;
+            
+            @media (max-width:500px) {
+               padding: 7px 7px 7px 10px;
+               max-width: 150px;
+               margin-right: 2px;
+            }
+         }
+
+         .button {
+            width: 80%;
+            background-color: $primary_two;
+            color: white;
+            border: 1px solid $primary_two;
+            max-width: 100px;
+            text-transform: uppercase;
+            border-radius: 0px;
+            cursor: pointer;
          }
       }
-
-      .button {
-         width: 80%;
-         background-color: $primary_two;
-         color: white;
-         border: 1px solid $primary_two;
-         max-width: 100px;
-         text-transform: uppercase;
-         border-radius: 0px;
-         cursor: pointer;
-      }
    }
-}
 
-.blog_heading {
-   font-size: 24px;
-   font-weight: 700;
-   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-   color: $primary_two;
-   padding-left: 10px;
+   .blog_heading {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      color: $primary_two;
+      padding-left: 10px;
 
-   @media (max-width:768px) {
-      font-size: 20px;
+      @media (max-width:768px) {
+         font-size: 18px;
+      }
    }
 }
 
@@ -235,7 +237,7 @@
             overflow: hidden;
             margin: 0px 0px 20px 0px !important;
 
-            .shortblogheading{
+            .shortblogheading {
                font-size: 20px;
                font-family: sans-serif;
                font-weight: bolder;
@@ -246,7 +248,8 @@
                justify-content: left;
                align-items: center;
                column-gap: 20px;
-               .underline{
+
+               .underline {
                   height: 1px;
                   border: 2px solid #00000012;
                   background-color: #00000012;
@@ -255,28 +258,31 @@
                }
             }
 
-            .shot_blog_card{
+            .shot_blog_card {
                display: flex;
                justify-content: left;
                margin: 10px 0px;
 
-               .image_box{
+               .image_box {
                   width: 100%;
                   max-width: 86px;
                   height: 63px;
                   padding: 0px !important;
-                  .image{
+
+                  .image {
                      width: 100%;
                      height: 100%;
                   }
                }
-               .title_box{
+
+               .title_box {
                   display: flex;
                   justify-content: left;
                   text-align: left;
                   font-family: sans-serif;
                   padding: 0px 0px 0px 10px !important;
-                  .title{
+
+                  .title {
                      margin: 0px !important;
                      font-size: 15px;
                      font-weight: bold;
@@ -349,7 +355,7 @@
    align-items: center;
 
    .load_div {
-      border: 1px solid #000;
+   
       height: auto;
       display: flex;
       justify-content: center;
@@ -367,7 +373,7 @@
       align-items: center;
 
       .load_div {
-         border: 1px solid #000;
+      
          height: auto;
          display: flex;
          justify-content: center;

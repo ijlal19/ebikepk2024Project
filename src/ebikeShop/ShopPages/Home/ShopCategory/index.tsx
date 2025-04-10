@@ -7,51 +7,24 @@ import styles from './index.module.scss';
 import { useState } from "react";
 
 const ShopMainCategory = ({ props }: any) => {
-    const [showfilter, setshowfilter] = useState(false);
     const IsMobile = useMediaQuery('(max-width:768px');
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
     function goToRoute(data: any) {
         let urlTitle = '' + data?.name.toLowerCase().replaceAll(' ', '-')
-        router.push(`/shop/${urlTitle}/${data?.id}`)
-        console.log("data", data)
+        router.push(`/shop/collection/${urlTitle}/${data?.id}`)
     }
 
-    const staticRatings = [4.5, 3.8, 5, 2, 3.5, 1.5, 2.5, 2, 3.4, 4.9];
-
-    const filtershow = () => {
-        setshowfilter(!showfilter);
-        window.scrollTo(0, 0);
-    }
+    const staticRatings = [4.5, 3.8, 5, 2, 3.5, 4.5, 2.5, 2, 3.4, 4.9];
 
     return (
         <div className={styles.main}>
             {
                 !isLoading ?
                     <>
-                        {
-                            IsMobile ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
-                        }
                         <Grid container>
-
-                            <Grid item xs={IsMobile ? 12 : 2.5}>
-                                {
-                                    IsMobile ?
-                                        showfilter ? <Filters
-                                            setLoader={setIsLoading}
-                                            mainCategoryData={props}
-                                            selectedCategoryId=""
-                                        /> : '' :
-                                        <Filters
-                                            setLoader={setIsLoading}
-                                            mainCategoryData={props}
-                                            selectedCategoryId=""
-                                        />
-                                }
-                            </Grid>
-
-                            <Grid item xs={IsMobile ? 12 : 9.5}>
+                            <Grid item xs={IsMobile ? 12 : 12}>
                                 <div className={styles.container}>
                                     {
                                         props?.slice(0, 7)?.map((e: any, i: any) => {
@@ -66,7 +39,7 @@ const ShopMainCategory = ({ props }: any) => {
                                                         {e?.products?.slice(0, 4).map((eProduct: any, index: any) => {
                                                             return (
                                                                 <div key={index}>
-                                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[i % staticRatings.length]} CategoryName={e?.name}/>
+                                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[i % staticRatings.length]}/>
                                                                 </div>
                                                             )
                                                         })}
