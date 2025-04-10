@@ -282,7 +282,7 @@ const BlogDetails = () => {
             <Grid item xs={isMobile ? 12 : 3} className={styles.moreBlog}>
               {
                 allDealerArr.length > 0 ?
-                  <> <Typography className={styles.heading}>Our Dealers</Typography>
+                  <> <Typography className={styles.heading}>Dealers</Typography>
                     <Box className={styles.Dealers_card}>
                       {
                         allDealerArr?.map((e: any, i: any) => {
@@ -302,7 +302,7 @@ const BlogDetails = () => {
               }
 
               <Box className={styles.shortBlog_main}>
-                <Typography className={styles.heading}>Trending Bikes</Typography>
+                <Typography className={styles.heading}>Featured Used Bikes</Typography>
                 {
                   featuredData.slice(0, 5).map((e: any, i: any) => {
                     return (
@@ -313,7 +313,7 @@ const BlogDetails = () => {
               </Box>
 
               <Box className={styles.shortBlog_main}>
-                <Typography className={styles.heading}>More Blog</Typography>
+                <Typography className={styles.heading}>More Blogs</Typography>
                 {
                   BlogData.slice(0, 5).map((e: any, i: any) => {
                     console.log("data", e)
