@@ -1,8 +1,8 @@
 "use client"
-import { getProduct } from "@/ebikeShop/Shopfunctions/globalFuntions";
-import { Box, Button, Grid, Rating, Typography } from "@mui/material";
+import { priceWithCommas, add3Dots } from '@/genericFunctions/geneFunc';
+import { getProduct, getShopCategory } from "@/ebikeShop/Shopfunctions/globalFuntions";
+import { Box, Button, Grid, Link, Rating, Typography } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
-import { priceWithCommas } from '@/genericFunctions/geneFunc';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Person2Icon from '@mui/icons-material/Person2';
 import { Navigation, FreeMode } from 'swiper/modules';
@@ -12,25 +12,29 @@ import StarIcon from '@mui/icons-material/Star';
 import { useTheme } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import data from './data';
 
 import 'swiper/swiper-bundle.css';
 import '@/app/globals.scss';
+import MainCatgeoryCard from '@/ebikeShop/ShopSharedComponent/MainCategoryCard';
 
 const ProductDetail = () => {
 
     const [IsLoading, setIsLoading] = useState<boolean>(false);
     const [ProductDetail, setProductDetail] = useState<any>([]);
+    const [filterProduct, setfilterproduct] = useState<any>([]);
     const isMobile = useMediaQuery('(max-width:600px)');
     const [quantity, setQuantity] = useState(1);
     const [value, setValue] = useState(0);
     const params = useParams();
     const { slug2 } = params
     const theme = useTheme();
+    const router = useRouter()
 
     useEffect(() => {
         fetchproductdetail()
@@ -45,11 +49,27 @@ const ProductDetail = () => {
         if (res) {
             setProductDetail(res.data)
         }
+
+        const obj2 = {
+            id: res.data[0]?.main_catagory_id
+        }
+        const allproduct = await getShopCategory(obj2);
+        if (allproduct?.length > 0 && slug2) {
+            const allfilterproduct = allproduct.filter((blog: any) => blog.id.toString() !== slug2.toString());
+            setfilterproduct(allfilterproduct);
+        }
+        else {
+            alert('Check Your Internet!');
+        }
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0);
         }, 1000);
     }
+
+    const staticRatings = [
+        4.5, 3.8, 5, 2, 3.5, 1.5, 2.5, 2, 3.4, 4.9
+    ];
 
     const reviewNum = [
         '4.8', '4.5', '4.9', '4.6', '4.7', '5.0'
@@ -111,6 +131,11 @@ const ProductDetail = () => {
         { rating: 3, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '7 days ago', by: 'agha' },
     ]
 
+    function goToRoute(data: any) {
+        let urlTitle = '' + data?.product_name.toLowerCase().replaceAll(' ', '-')
+        router.push(`/shop/product/${urlTitle}/${data?.id}`)
+    }
+
     return (
         <Box className={styles.main}>
             {
@@ -120,11 +145,10 @@ const ProductDetail = () => {
 
                         <Grid container className={styles.detail_grid_box}>
 
-                            <Grid item xs={isMobile ? 12 : 9} className={styles.product_detail}>
+                            <Grid item xs={isMobile ? 12 : 8.5} className={styles.product_detail}>
                                 {
                                     ProductDetail.map((e: any, i: any) => {
                                         return (
-
                                             <Grid container key={i}>
 
                                                 <Grid item xs={isMobile ? 12 : 6}>
@@ -157,7 +181,7 @@ const ProductDetail = () => {
 
                                                 <Grid item xs={isMobile ? 12 : 6}>
                                                     <Box className={styles.product_info}>
-                                                        <Typography className={styles.name}>{e?.product_name}</Typography>
+                                                        <Typography className={styles.name}>{add3Dots(e?.product_name, 30)}</Typography>
                                                         <Typography className={styles.desc}>{e?.product_description}</Typography>
                                                         <Typography className={styles.sell_price}>Rs: {priceWithCommas(e?.sell_price)} </Typography>
                                                         <Typography className={styles.pro_price}><del>Rs: {priceWithCommas(e?.product_price)}</del></Typography>
@@ -179,8 +203,34 @@ const ProductDetail = () => {
                                 }
                             </Grid>
 
-                            <Grid item xs={isMobile ? 12 : 3} className={styles.related_box}>
-                                related product
+                            <Grid item xs={isMobile ? 12 : 3.5} className={styles.related_box}>
+                                <Typography className={styles.gurante_heading}>Guranteed Low Price</Typography>
+                                <Typography className={styles.related_product_heading}>Related Product</Typography>
+                                <Box className={styles.realted_content}>
+                                    {
+                                        data?.slice(0, 3).map((e: any, i: any) => {
+                                            return (
+                                                <Box className={styles.related_card_main} key={i} onClick={() => goToRoute(e)}>
+                                                    <Box className={styles.image_box}>
+                                                        <img src={e?.images[0]} alt="" className={styles.image} />
+                                                    </Box>
+                                                    <Box className={styles.card_content}>
+                                                        <Typography className={styles.card_name}>
+                                                            <Link
+                                                                href={`/shop/product/${e?.product_name?.toLowerCase().replaceAll(' ', '-')}/${e?.id}`}
+                                                                className={styles.card_name_link}>
+                                                                {add3Dots(e?.product_name, 25)}
+                                                            </Link>
+                                                        </Typography>
+                                                        <Typography className={styles.card_price}>{e?.sell_price}</Typography>
+
+                                                        <Typography className={styles.card_rating}><StarIcon sx={{ color: "orange", fontSize: "14px" }} />{`(${reviewNum[i]})`}</Typography>
+                                                    </Box>
+                                                </Box>
+                                            )
+                                        })
+                                    }
+                                </Box>
                             </Grid>
 
                         </Grid>
@@ -275,39 +325,88 @@ const ProductDetail = () => {
                                 <TabPanel value={value} index={1} dir={theme.direction}>
                                     <Box className={styles.customer_review}>
                                         <Typography className={styles.heading}>CUSTOMER REVIEWS</Typography>
-                                            {
-                                                reViewData?.map((e: any, i: any) => {
-                                                    return (
-                                                        <Box className={styles.card_main} key={i}>
-                                                            <Box className={styles.descritpion_box}>
-                                                                <Box className={styles.rating}>
-                                                                    <Rating
-                                                                        name="read-only-rating"
-                                                                        value={e?.rating}
-                                                                        precision={0.5}
-                                                                        readOnly
-                                                                        sx={{ color: "orange", fontSize: "20px" }}
-                                                                        emptyIcon={<StarIcon style={{ opacity: 0.55, color: "gray", fontSize: "20px" }} fontSize="inherit" />}
-                                                                    />
-                                                                </Box>
-                                                                <Typography className={styles.description}>
-                                                                    {e?.comment}
-                                                                </Typography>
+                                        {
+                                            reViewData?.map((e: any, i: any) => {
+                                                return (
+                                                    <Box className={styles.card_main} key={i}>
+                                                        <Box className={styles.descritpion_box}>
+                                                            <Box className={styles.rating}>
+                                                                <Rating
+                                                                    name="read-only-rating"
+                                                                    value={e?.rating}
+                                                                    precision={0.5}
+                                                                    readOnly
+                                                                    sx={{ color: "orange", fontSize: "20px" }}
+                                                                    emptyIcon={<StarIcon style={{ opacity: 0.55, color: "gray", fontSize: "20px" }} fontSize="inherit" />}
+                                                                />
                                                             </Box>
-                                                            <Box className={styles.author_detail}>
-                                                                <Typography className={styles.day_ago}>Submited : {e?.submited}</Typography>
-                                                                <Typography className={styles.name}><Person2Icon className={styles.person_icon}/> {e?.by}</Typography>
-                                                            </Box>
+                                                            <Typography className={styles.description}>
+                                                                {e?.comment}
+                                                            </Typography>
                                                         </Box>
-                                                    )
-                                                })
-                                            }
+                                                        <Box className={styles.author_detail}>
+                                                            <Typography className={styles.day_ago}>Submited : {e?.submited}</Typography>
+                                                            <Typography className={styles.name}><Person2Icon className={styles.person_icon} /> {e?.by}</Typography>
+                                                        </Box>
+                                                    </Box>
+                                                )
+                                            })
+                                        }
                                     </Box>
                                 </TabPanel>
 
                                 <TabPanel value={value} index={2} dir={theme.direction}>
-                                    Item Three
+                                    <Box className={styles.shipping_detail_box}>
+                                        <Typography className={styles.shipping_heading}>SHIPPING DETAILS</Typography>
+                                        <Box className={styles.Shippin_detail_info}>
+                                            <Typography className={styles.shipping_text}>
+                                                <Typography className={styles.shipping_conetnt}>1.</Typography>
+                                                <Typography className={styles.shipping_conetnt}>
+                                                    PAKISTAN WIDE SHIPPING.(Except some Places.)
+                                                </Typography>
+                                            </Typography>
+                                            <Typography className={styles.shipping_text}>
+                                                <Typography className={styles.shipping_conetnt}>2.</Typography>
+                                                <Typography className={styles.shipping_conetnt}>
+                                                    Orders processed timely after the customer verification.
+                                                </Typography>
+                                            </Typography>
+                                            <Typography className={styles.shipping_text}>
+                                                <Typography className={styles.shipping_conetnt}>3.</Typography>
+                                                <Typography className={styles.shipping_conetnt}>
+                                                    Slandered delivery time is 1-4 working days.
+                                                </Typography>
+                                            </Typography>
+                                            <Typography className={styles.shipping_text}>
+                                                <Typography className={styles.shipping_conetnt}>4.</Typography>
+                                                <Typography className={styles.shipping_conetnt}>
+                                                    Due to stock status and time differences, we will choose to ship your item from our first available warehouse for fast delivery.
+                                                </Typography>
+                                            </Typography>
+                                            <Typography className={styles.shipping_text}>
+                                                <Typography className={styles.shipping_conetnt}>5.</Typography>
+                                                <Typography className={styles.shipping_conetnt}>
+                                                    SERVICE TRANSIT TIME is provided by the carrier and excludes weekends and holidays. Transit times may vary, particularly during the holiday season.
+                                                </Typography>
+                                            </Typography>
+                                        </Box>
+                                    </Box>
                                 </TabPanel>
+                            </Box>
+                        </Box>
+
+                        <Box className={styles.similar_product}>
+                            <Typography className={styles.similar_heading}>Similar Product</Typography>
+                            <Box className={styles.similar_card}>
+                                {
+                                    filterProduct?.slice(0, 4).map((e: any, i: any) => {
+                                        return (
+                                            // <div key={i} >
+                                                <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i}/>
+                                            // </div>
+                                        )
+                                    })
+                                }
                             </Box>
                         </Box>
 

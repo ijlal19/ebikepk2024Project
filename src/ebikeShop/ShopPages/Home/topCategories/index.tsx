@@ -122,7 +122,7 @@ const TopCategories = () => {
             </div>
 
             <div className={styles.add}>
-                <a href="https://www.youtube.com/channel/UCmudYXR1HtpZTIBFeDYn2fg?sub_confirmation=1" target='blank'>
+                <a href="https://www.youtube.com/@ebikepk" target='blank'>
                     <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592568914/staticFiles/7_Ebikeshop_3rd_Banner_Approved_tw5f0h.jpg" alt="Add_Image" className={styles.add_image} />
                 </a>
             </div>
