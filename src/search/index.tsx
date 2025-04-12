@@ -6,13 +6,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import { postSearch, priceWithCommas } from '@/genericFunctions/geneFunc'
 import NewUsedBikesCard from "@/ebikeWeb/sharedComponents/itemCard";
 import { useRouter } from "next/navigation";
+import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 
 export default function SearchPage() {
     const [SearchValue, setSearchValue] = useState('')
     const [ads, setAds] = useState([])
     const router = useRouter()
+    const [IsLoading, setIsLoading] = useState(false)
 
     const handlepost = async () => {
+        setIsLoading(true)
         if (!SearchValue) {
             alert('Pleas fill rquire field')
             return
@@ -24,17 +27,16 @@ export default function SearchPage() {
         }
 
         const Post = await postSearch(obj)
-
-        console.log("data", Post)
-        console.log("data", Post.total)
-        console.log("data", Post.currentPage)
-        console.log("data", Post.totalPages)
         if (Post?.ads?.length > 0) {
-            // Post?.ads?.map((data:any)=>{
-            //     data['data'] =  data?.images?.length > 0 ? data.images[0] : ""
-            // })
+            setAds(Post.ads)
+            setIsLoading(false)
+            setTimeout(() => {
+                window.scrollTo(0, 0)
+            }, 1000);
         }
-        setAds(Post.ads)
+        // Post?.ads?.map((data:any)=>{
+        //     data['data'] =  data?.images?.length > 0 ? data.images[0] : ""
+        // })
     }
 
     function goToDetailPage(val: any) {
@@ -86,27 +88,38 @@ export default function SearchPage() {
 
     return (
         <Box className={styles.main}>
-            <Box className={styles.main_header}>
-                <Box className={styles.input_box}>
-                    <input type="text" placeholder="search" className={styles.input} onChange={(e) => setSearchValue(e.target.value)} />
-                    <Button className={styles.search_button} onClick={() => handlepost()}><SearchIcon className={styles.icon} /></Button>
-                </Box>
-            </Box>
-            <Box>
-                <Box className={styles.grid_bike_list}>
-                    {
-                        ads?.map((e: any, i: any) => {
-                            // console.log("data", e)
-                            return (
-                                GridCard(e, i) 
-                            )
-                    })
-                    }
-                </Box>
-            </Box>
-            {/* <Box className={styles.pagination}>
+            {
+                !IsLoading ?
+                    <>
+                        <Box className={styles.main_header}>
+                            <Box className={styles.input_box}>
+                                <input type="text" placeholder="search" className={styles.input} onChange={(e) => setSearchValue(e.target.value)} />
+                                <Button className={styles.search_button} onClick={() => handlepost()}><SearchIcon className={styles.icon} /></Button>
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Box className={styles.grid_bike_list}>
+                                {
+                                    ads?.map((e: any, i: any) => {
+                                        // console.log("data", e)
+                                        return (
+                                            GridCard(e, i)
+                                        )
+                                    })
+                                }
+                            </Box>
+                        </Box>
+                        {/* <Box className={styles.pagination}>
                 <Box className={styles.pagination_box}>1</Box>
-            </Box> */}
+                </Box> */}
+                    </>
+                    :
+                    <div className={styles.load_main}>
+                        <div className={styles.load_div}>
+                            <Loader isLoading={IsLoading} />
+                        </div>
+                    </div>
+            }
         </Box>
     )
 }
