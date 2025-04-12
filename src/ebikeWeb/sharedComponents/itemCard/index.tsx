@@ -13,11 +13,11 @@ export default function NewUsedBikesCard(props: any) {
 
     let imgUrl = ''
 
-    if (props.data.img_url) {
+    if (props?.data?.img_url) {
         imgUrl = props.data.img_url
     }
 
-    else if (props.data.images && props.data?.images?.length > 0) {
+    else if (props?.data?.images && props.data?.images?.length > 0) {
         imgUrl = props.data?.images[0]
     }
 
