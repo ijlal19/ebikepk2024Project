@@ -133,6 +133,19 @@ function publishAd(data: any) {
   })
 }
 
+function postSearch(data:any){
+    return fetch( 'http://localhost:4000/api/new_search',{
+        method:'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then( data => {return data})
+    .catch((err) => {
+        console.log(err)
+    })
+}
+
 export {
   add3Dots,
   optimizeImage,
@@ -148,5 +161,6 @@ export {
   noSpecialCharactersExceptDotUderscore, userLogin, userSignup, verifyUserFromAuthenticationEmail,
   publishAd,
   priceWithCommas,
-  capitalizeFirstWord
+  capitalizeFirstWord,
+  postSearch
 }
