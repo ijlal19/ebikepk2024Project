@@ -59,9 +59,25 @@ function getProduct(data: any) {
         })
 }
 
+function getProductByFilter(data: any) {
+    return fetch(Gconfig.ebikeApi + `shop/product/get-product-by-Filter`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+}
+
 export {
     getShopMainCategory,
     getShopCategory,
     getProductCompany,
-    getProduct
+    getProduct,
+    getProductByFilter
 }

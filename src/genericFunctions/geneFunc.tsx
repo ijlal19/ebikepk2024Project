@@ -13,7 +13,7 @@ function isLoginUser() {
 
 function add3Dots(str:any, limit:any) {
   var dots = " ... ";
-  if (str.length > limit) {
+  if (str?.length > limit) {
     str = str.substring(0, limit) + dots;
   }
   return str;

@@ -1,5 +1,5 @@
 "use client"
-import { priceWithCommas, add3Dots } from '@/genericFunctions/geneFunc';
+import { priceWithCommas, add3Dots, optimizeImage } from '@/genericFunctions/geneFunc';
 import { getProduct, getShopCategory } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import { Box, Button, Grid, Link, Rating, Typography } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
@@ -51,12 +51,13 @@ const ProductDetail = () => {
         }
 
         const obj2 = {
-            id: res.data[0]?.main_catagory_id
+            id: res?.data[0]?.main_catagory_id
         }
         const allproduct = await getShopCategory(obj2);
         if (allproduct?.length > 0 && slug2) {
             const allfilterproduct = allproduct.filter((blog: any) => blog.id.toString() !== slug2.toString());
             setfilterproduct(allfilterproduct);
+            console.log("data" , allfilterproduct)
         }
         else {
             alert('Check Your Internet!');
@@ -129,6 +130,11 @@ const ProductDetail = () => {
         { rating: 4, comment: 'Geniun product available with discounted prices at ebikeshop.pk ', submited: '3 days ago', by: 'Ali' },
         { rating: 5, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '4 days ago', by: 'faizan' },
         { rating: 3, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '7 days ago', by: 'agha' },
+        { rating: 3, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '1 days ago', by: 'aslam' },
+        { rating: 5, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '6 days ago', by: 'farooq' },
+        { rating: 4, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '5 days ago', by: 'fahad' },
+        { rating: 3, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '4 days ago', by: 'ismail' },
+        { rating: 6, comment: 'Geniun product available with discounted prices at ebikeshop.pk', submited: '3 days ago', by: 'khurram' },
     ]
 
     function goToRoute(data: any) {
@@ -168,12 +174,16 @@ const ProductDetail = () => {
                                                                 e?.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image_box}>
-                                                                            <img src={imgUrl} alt="" className={styles.image} />
+                                                                            <img src={
+                                                                                optimizeImage(imgUrl , 'h_350' , 'w_350')
+                                                                            } alt="" className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
                                                                 <SwiperSlide key=''>
-                                                                    <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt='' className={styles.slider_img} />
+                                                                    <img src={
+                                                                        optimizeImage('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' , 'h_250' , 'w_350')
+                                                                    } alt='' className={styles.slider_img} />
                                                                 </SwiperSlide>
                                                         }
                                                     </Swiper>
@@ -193,7 +203,11 @@ const ProductDetail = () => {
                                                             {quantity}
                                                             <AddIcon className={styles.action_icon} onClick={handleIncrease} />
                                                         </Box>
-                                                        <Button disableRipple className={styles.add_btn}>Add to Cart</Button>
+                                                        {
+                                                            e?.stocks && e?.stocks.length > 0 ?
+                                                            <Button disableRipple className={styles.add_btn}>Add to Cart</Button>
+                                                            :""
+                                                        }
                                                     </Box>
                                                 </Grid>
 
@@ -208,11 +222,13 @@ const ProductDetail = () => {
                                 <Typography className={styles.related_product_heading}>Related Product</Typography>
                                 <Box className={styles.realted_content}>
                                     {
-                                        data?.slice(0, 3).map((e: any, i: any) => {
+                                        filterProduct?.slice(4, 7).map((e: any, i: any) => {
                                             return (
                                                 <Box className={styles.related_card_main} key={i} onClick={() => goToRoute(e)}>
                                                     <Box className={styles.image_box}>
-                                                        <img src={e?.images[0]} alt="" className={styles.image} />
+                                                        <img src={
+                                                            optimizeImage(e?.images[0] , 'h_330' , 'w_350')
+                                                        } alt="" className={styles.image} />
                                                     </Box>
                                                     <Box className={styles.card_content}>
                                                         <Typography className={styles.card_name}>
@@ -399,10 +415,10 @@ const ProductDetail = () => {
                             <Typography className={styles.similar_heading}>Similar Product</Typography>
                             <Box className={styles.similar_card}>
                                 {
-                                    filterProduct?.slice(0, 4).map((e: any, i: any) => {
+                                    filterProduct?.slice(7, 11).map((e: any, i: any) => {
                                         return (
                                             // <div key={i} >
-                                                <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i}/>
+                                            <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i} />
                                             // </div>
                                         )
                                     })

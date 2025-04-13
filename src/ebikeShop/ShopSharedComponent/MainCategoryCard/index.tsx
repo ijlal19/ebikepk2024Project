@@ -11,8 +11,12 @@ const MainCatgeoryCard = ({ props, rating }: any) => {
     const urlTitle = title.toLowerCase().replaceAll(' ', '-');
     const href = `/shop/product/${urlTitle}/${id}`;
 
+    const handleClick = ()=>{
+        localStorage.setItem("rating" , JSON.stringify({rating:rating}))
+    }
+
     return (
-        <Link href={href} sx={{ textDecoration: "none" }}>
+        <Link href={href} sx={{ textDecoration: "none" }} onClick={()=>handleClick()} >
             <div className={styles.main}>
                 <div className={styles.image_box}>
                     <img src={optimizeImage(props?.images[0], 'h_250', 'w_350')} alt="" className={styles.image} />

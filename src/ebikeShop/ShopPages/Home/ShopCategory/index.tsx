@@ -39,7 +39,7 @@ const ShopMainCategory = ({ props }: any) => {
                                                         {e?.products?.slice(0, 4).map((eProduct: any, index: any) => {
                                                             return (
                                                                 <div key={index}>
-                                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[i % staticRatings.length]}/>
+                                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[i % staticRatings.length]} />
                                                                 </div>
                                                             )
                                                         })}

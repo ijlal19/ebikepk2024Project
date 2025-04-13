@@ -1,21 +1,27 @@
 'use client'
 import { getShopCategory, getShopMainCategory } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import MainCatgeoryCard from "@/ebikeShop/ShopSharedComponent/MainCategoryCard";
+import { Button, Grid, IconButton, useMediaQuery } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Filters from "@/ebikeShop/ShopSharedComponent/filters";
-import { Button, Grid, useMediaQuery } from "@mui/material";
-import { useParams } from "next/navigation";
+import Badge, { BadgeProps } from '@mui/material/Badge';
+import { useParams, useRouter } from "next/navigation";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
 
+
 const CategoryDetails = () => {
 
+    const [filteredData, setFilteredData] = useState([]);
     const [CategoryData, setCategoryData] = useState<any>([]);
     const [MainCategory, setMainCategory] = useState([]);
     const [showfilter, setshowfilter] = useState(false);
     const IsMobile = useMediaQuery('(max-width:768px');
     const [isLoading, setIsLoading] = useState(false);
     const { slug2 } = useParams();
+    const Router = useRouter()
 
 
     useEffect(() => {
@@ -50,6 +56,26 @@ const CategoryDetails = () => {
         window.scrollTo(0, 0);
     }
 
+    const StyledBadge = styled(Badge)<BadgeProps>(({ theme }: any) => ({
+        '& .MuiBadge-badge': {
+            right: -3,
+            top: 13,
+            border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
+            padding: '0 4px',
+        },
+    }));
+
+    const handleCart = () => {
+        Router.push('/shop/cart')
+    }
+
+    const propsData = {
+        selectedCategoryId: slug2,
+        MainCategoryData: MainCategory,
+        setLoader: setIsLoading,
+        setFilteredData: setFilteredData
+    }
+
     return (
         <div className={styles.main}>
             {!isLoading ?
@@ -59,46 +85,56 @@ const CategoryDetails = () => {
                     }
                     <Grid container>
 
-                        <Grid item xs={IsMobile ? 12 : 2.5} className={styles.filter_grid}>
+                        <Grid item xs={IsMobile ? 12 : 2} className={styles.filter_grid}>
                             {
                                 IsMobile ?
-                                    showfilter ? <Filters
-                                        setLoader={setIsLoading}
-                                        selectedCategoryId={slug2}
-                                        mainCategoryData={MainCategory}
-                                    /> : '' :
-                                    <Filters
-                                        selectedCategoryId={slug2}
-                                        setLoader={setIsLoading}
-                                        mainCategoryData={MainCategory}
+                                    showfilter ?
+                                        <Filters props={propsData} mainCategoryData={MainCategory}
+                                        />
+                                        : '' :
+                                    <Filters props={propsData} mainCategoryData={MainCategory}
                                     />
                             }
                         </Grid>
 
-                        <Grid item xs={IsMobile ? 12 : 9.5}>
+                        <Grid item xs={IsMobile ? 12 : 10}>
                             <div className={styles.container}>
                                 <div className={styles.main_category}>
 
                                     <div className={styles.heading_box}>
                                         <p className={styles.heading}
                                         >{CategoryData[0]?.shop_main_catagory?.name}</p>
+                                        <IconButton aria-label="cart" className={styles.cartbutton} onClick={() => handleCart()}>
+                                            <StyledBadge badgeContent={1} color="primary">
+                                                <ShoppingCartIcon />
+                                            </StyledBadge>
+                                        </IconButton>
                                     </div>
 
                                     <div className={styles.product_main}>
-                                        {CategoryData?.map((eProduct: any, index: any) => {
-                                            return (
-                                                <div key={index}>
-                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]}/>
-                                                </div>
-                                            )
-                                        })}
+                                        {
+                                            filteredData && filteredData.length > 0 ?
+                                                filteredData.map((eProduct: any, index: any) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]} />
+                                                        </div>
+                                                    )
+                                                }) :
+                                                CategoryData?.map((eProduct: any, index: any) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]} />
+                                                        </div>
+                                                    )
+                                                })}
                                     </div>
                                 </div>
                             </div>
                         </Grid>
 
                     </Grid>
-                    </>
+                </>
                 : (
                     <div className={styles.load_main}>
                         <div className={styles.load_div}>
