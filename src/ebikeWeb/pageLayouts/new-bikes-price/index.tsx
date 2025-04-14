@@ -40,7 +40,7 @@ export default function NewBikePrice() {
         <>
           <div className={styles.bike_price_main}>
             <div className={styles.heading_box}>
-              <p className={styles.heading}>{brandname} Bike Price in Pakistan 2024</p></div>
+              <p className={styles.heading}>{brandname} Bike Price in Pakistan 2025</p></div>
 
             <table
               border={1}
