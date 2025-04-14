@@ -1,12 +1,18 @@
 @import '../ebikeWeb/styles/variable';
 
 .main {
-    width: 100%;
+    width: 90%;
     display: flex;
+    margin: auto;
     justify-content: center;
     flex-direction: column;
+    min-height: 70vh;
+    @media (max-width:767px) {
+      width: 100%;
+    }
 
     .main_header {
+        // min-height: 50vh;
         width: 100%;
         padding: 5px 0px !important;
         display: flex;
@@ -30,6 +36,7 @@
 
             .search_button {
                 color: black;
+                // background-color: blue;
                 padding: 0px;
                 width: 20px !important;
                 background-color: transparent;
@@ -44,10 +51,12 @@
         }
     }
 
-    .pagination{
+    .pagination {
         width: 100%;
         display: flex;
         justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
 
         .pagination_box{
             width: 15px;
@@ -71,7 +80,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  
+
     .grid_card {
   
       width: 28%;
@@ -80,6 +89,7 @@
       background: white;
       border: 1px solid #e6e6e6;
       margin: 10px 5px;
+      max-width: 300px;
       cursor: pointer;
 
       @media (max-width:600px) {
@@ -170,4 +180,8 @@
   
     }
   
-  }
+}
+
+.load_main {
+  min-height: 50vh;
+}

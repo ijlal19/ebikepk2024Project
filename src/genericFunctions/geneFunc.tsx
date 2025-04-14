@@ -134,7 +134,7 @@ function publishAd(data: any) {
 }
 
 function postSearch(data:any){
-    return fetch( 'http://localhost:4000/api/new_search',{
+    return fetch( Gconfig.ebikeApi + 'new_search',{
         method:'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

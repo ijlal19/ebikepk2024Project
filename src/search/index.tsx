@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import { Box, Button, Grid, Link, Typography } from "@mui/material";
+import { Box, Button, Grid, Link, Typography, Pagination } from "@mui/material";
 import styles from './index.module.scss';
 import SearchIcon from '@mui/icons-material/Search';
 import { postSearch, priceWithCommas } from '@/genericFunctions/geneFunc'
@@ -13,8 +13,14 @@ export default function SearchPage() {
     const [ads, setAds] = useState([])
     const router = useRouter()
     const [IsLoading, setIsLoading] = useState(false)
+    const [currentpage, setCurrentPage] = useState(1)
+    const [totalPage, setTotalPage] = useState(1)
+    const [message, setMessage] = useState('')
 
-    const handlepost = async () => {
+    const handlepost = async (event:any, page: number) => {
+        
+        console.log('_currentPage', page)
+        setMessage("")
         setIsLoading(true)
         if (!SearchValue) {
             alert('Pleas fill rquire field')
@@ -22,7 +28,7 @@ export default function SearchPage() {
         }
         const obj = {
             search: SearchValue,
-            page: 1,
+            page: page,
             limit: '12'
         }
 
@@ -32,11 +38,15 @@ export default function SearchPage() {
             setIsLoading(false)
             setTimeout(() => {
                 window.scrollTo(0, 0)
-            }, 1000);
+            }, 300);
+            setTotalPage(Post?.totalPages)
         }
-        // Post?.ads?.map((data:any)=>{
-        //     data['data'] =  data?.images?.length > 0 ? data.images[0] : ""
-        // })
+        else {
+            setAds([])
+            setIsLoading(false)
+            setTotalPage(0)
+            setMessage("No Result Found!")
+        }
     }
 
     function goToDetailPage(val: any) {
@@ -46,8 +56,6 @@ export default function SearchPage() {
     }
 
     function GridCard(val: any, ind: any) {
-        // let brand = getBrandFromId(val?.brandId, BrandArr)
-        // let city = getCityFromId(val?.cityId, CityArr)
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         let href = `/used-bikes/${urlTitle}/${val.id}`
@@ -93,25 +101,28 @@ export default function SearchPage() {
                     <>
                         <Box className={styles.main_header}>
                             <Box className={styles.input_box}>
-                                <input type="text" placeholder="search" className={styles.input} onChange={(e) => setSearchValue(e.target.value)} />
-                                <Button className={styles.search_button} onClick={() => handlepost()}><SearchIcon className={styles.icon} /></Button>
+                                <input type="text" placeholder="search bike here..." className={styles.input} onChange={(e) => setSearchValue(e.target.value)} value={SearchValue} />
+                                <Button className={styles.search_button} onClick={() => handlepost("",1)}><SearchIcon className={styles.icon} /></Button>
                             </Box>
                         </Box>
+                        { message ? <p className="mt-5" > {message} </p> : "" }  
                         <Box>
                             <Box className={styles.grid_bike_list}>
                                 {
                                     ads?.map((e: any, i: any) => {
-                                        // console.log("data", e)
                                         return (
                                             GridCard(e, i)
                                         )
                                     })
                                 }
                             </Box>
-                        </Box>
-                        {/* <Box className={styles.pagination}>
-                <Box className={styles.pagination_box}>1</Box>
-                </Box> */}
+                        </Box>    
+                        {ads?.length > 0 ? <Box className={styles.pagination}>
+                            <Pagination
+                                count={totalPage}
+                                onChange={handlepost}
+                            />
+                        </Box>  : "" }     
                     </>
                     :
                     <div className={styles.load_main}>
@@ -120,6 +131,7 @@ export default function SearchPage() {
                         </div>
                     </div>
             }
+            
         </Box>
     )
 }
