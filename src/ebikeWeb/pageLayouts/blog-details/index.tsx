@@ -2,9 +2,9 @@
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
 import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button, Link } from '@mui/material';
+import { add3Dots, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { add3Dots, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
 import { GiConsoleController } from 'react-icons/gi';

@@ -48,7 +48,7 @@ const CartIcon = () => {
 
     return (
         <IconButton aria-label="cart" className={styles.cart_button} onClick={() => handleCart()}>
-            <StyledBadge badgeContent={MyCartdata?.length > 0 ? MyCartdata?.length : 0} color="primary">
+            <StyledBadge badgeContent={MyCartdata?.length > 0 ? MyCartdata?.length : '0'} color="primary">
                 <ShoppingCartIcon />
             </StyledBadge>
         </IconButton>
