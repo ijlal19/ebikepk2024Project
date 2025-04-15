@@ -1,11 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Divider, Drawer, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Box, Button, Divider, Drawer, IconButton, Link, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { getShopMainCategory } from '@/ebikeShop/Shopfunctions/globalFuntions';
 import SearchIcon from '@mui/icons-material/Search';
+import React, { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+import CartIcon from '../cartIcon';
 
 const TopbarCategory = () => {
     const [open, setOpen] = useState(false);
@@ -25,7 +26,6 @@ const TopbarCategory = () => {
     function goToRoute(data: any) {
         let urlTitle = '' + data?.name.toLowerCase().replaceAll(' ', '-')
         router.push(`/shop/collection/${urlTitle}/${data?.id}`)
-        console.log("data" , data)
     }
 
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -41,9 +41,14 @@ const TopbarCategory = () => {
                         return (
                             <>
                                 <ListItem key={index} disablePadding>
-                                    <ListItemButton onClick={() => goToRoute(data)}  sx={{ paddingTop:"0px",paddingBottom:"0px"}} >
-                                        <ListItemText primary={data?.name} className={styles.listText}  sx={{marginTop:"0px",marginBottom:"0px" }} />
-                                    </ListItemButton>
+                                    <Link
+                                        href={`/shop/collection/${data?.name.toLowerCase().replaceAll(' ', '-')}/${data?.id}`}
+                                        style={{ width: "100%", textDecoration: 'none', color: "black" }}
+                                    >
+                                        <ListItemButton onClick={() => goToRoute(data)} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
+                                            <ListItemText primary={data?.name} className={styles.listText} sx={{ marginTop: "0px", marginBottom: "0px" }} />
+                                        </ListItemButton>
+                                    </Link>
                                 </ListItem>
                                 <Divider />
                             </>
@@ -63,16 +68,19 @@ const TopbarCategory = () => {
                     <SearchIcon className={styles.searchIcon} />
                 </div>
             </Box>
-            <Box>
-            <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
-                <MenuIcon />
-            </Button>
+            <Box className={styles.cart_btn_main}>
+                <Box className={styles.cart_button}>
+                    <CartIcon />
+                </Box>
+                <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
+                    <MenuIcon className={styles.menu_icon} />
+                </Button>
             </Box>
 
-            <Drawer className={`${styles.drawer} header_drawer`}anchor="right"  open={open} onClose={toggleDrawer(false)} >
+            <Drawer className={`${styles.drawer} header_drawer`} anchor="right" open={open} onClose={toggleDrawer(false)} >
                 {DrawerList}
             </Drawer>
-            </Box>
+        </Box>
     );
 };
 

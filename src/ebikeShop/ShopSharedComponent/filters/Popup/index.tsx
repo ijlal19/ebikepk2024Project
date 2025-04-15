@@ -7,34 +7,24 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState, useEffect } from 'react';
+import { getProductByFilter } from '@/ebikeShop/Shopfunctions/globalFuntions';
 
-export default function MoreOptionPopup(props:any) {
+export default function MoreOptionPopup(props: any, getCompanyDataByFilter: any ) {
 
 
-    const [newApplyFilter, setNewApplyFilters]:any = useState(props.filterdData)
+    const [selectedId, setSelectedId] = useState()
+    const [event, setEvent] = useState()
+    // const [filter, setFilter] = useState<any>({ company_filter: [] });
 
-    function updateFilterValue(event:any) {
-        let filterData = [...newApplyFilter]
-        if(event.target.checked) {
-            if(filterData.indexOf(event.target.id.toString()) == -1) {
-                filterData.push(event.target.id.toString())
-            }
-        }
-        else {
-            if(filterData.indexOf(event.target.id.toString()) > -1) {
-                filterData = filterData.filter((val:any) => event.target.id != val)
-            }
-        }
-
-        setNewApplyFilters(filterData)
-        console.log('appliedFilters', filterData)
+    const handleChange = (e: any, id: any) => {
+        setSelectedId(id)
+        setEvent(e)
+        // console.log("data", filtered)
     }
-
-    function submitUpdatedFilter(from:any) {
-        props.updateFilteredData(from == 'clear' ? [] : newApplyFilter, props.from)
+    const submitfilterdata = () => {
+        props?.getCompanyDataByFilter(event, selectedId);
         props.modalData.showmodal('close')
     }
-    
 
     return (
         <div>
@@ -55,13 +45,17 @@ export default function MoreOptionPopup(props:any) {
                             props.modalData.popupdata.map((data: any, i: any) => {
                                 return (
                                     <Typography className={styles.option_values} key={i}>
-                                        <input 
+                                        <input
                                             type="checkbox"
-                                            checked = { newApplyFilter?.indexOf(data.id.toString()) > -1 }
-                                            onChange={(event) => { updateFilterValue(event) }}
-                                            id={data.id}
+                                            name='company'
+                                            value={data?.id}
+                                            // checked={(filter.company_filter || []).includes(company.id.toString())}
+                                            // checked={props?.Applyfiltered.includes(data?.id.toString())}
+                                            // onChange={(e) => props?.getCompanyDataByFilter(e, data?.id)}
+                                            onChange={(e) => handleChange(e, data?.id)}
+                                            id={data?.id.toString()}
                                         />
-                                        { props.from == 'category' ? data?.name: data?.name }
+                                        {props.from == 'category' ? data?.name : data?.name}
                                     </Typography>
                                 )
                             })
@@ -69,8 +63,8 @@ export default function MoreOptionPopup(props:any) {
                     </Box>
 
                     <Box className={styles.modal_footer}>
-                        <Typography className={styles.footer_clear} onClick={ () => submitUpdatedFilter('clear') } > Clear </Typography>
-                        <Button className={styles.btn_submit}  onClick={ () => submitUpdatedFilter('update') } > Submit </Button>
+                        {/* <Typography className={styles.footer_clear} onClick={() => submitUpdatedFilter('clear')} > Clear </Typography> */}
+                        <Button className={styles.btn_submit} onClick={() => submitfilterdata()} > Submit </Button>
                     </Box>
 
                 </Box>

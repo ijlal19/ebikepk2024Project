@@ -1,5 +1,5 @@
 "use client";
-import { getProductCompany } from "@/ebikeShop/Shopfunctions/globalFuntions";
+import { getProductByFilter, getProductCompany } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Box, Typography } from "@mui/material";
@@ -7,30 +7,24 @@ import { useState, useEffect } from "react";
 import styles from "./index.module.scss";
 import MoreOptionPopup from "./Popup";
 
-interface FiltersProps {
-  mainCategoryData: any[];
-  selectedCategoryId: string | null;
-}
-
-interface FilterState {
-  company_filter: string[];
-}
-
-function Filters({ mainCategoryData, selectedCategoryId }: any) {
+// function Filters({ mainCategoryData, selectedCategoryId }: any) {
+function Filters({ props, mainCategoryData }: any) {
 
   const [productCompanyData, setProductCompanyData] = useState<any>([]);
   const [filter, setFilter] = useState<any>({ company_filter: [] });
   const [companyData, setCompanyData] = useState<any>([]);
   const [modalOpenFor, setModalOpenFor] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
   const [popupData, setPopupData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const searchParams = useSearchParams();
+
   const router = useRouter();
 
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    selectedCategoryId || null
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    props?.selectedCategoryId || null
   );
 
 
@@ -44,10 +38,10 @@ function Filters({ mainCategoryData, selectedCategoryId }: any) {
   }, []);
 
   useEffect(() => {
-    if (selectedCategoryId) {
-      setSelectedCategory(selectedCategoryId);
+    if (props?.selectedCategoryId) {
+      setSelectedCategory(props?.selectedCategoryId);
     }
-  }, [selectedCategoryId]);
+  }, [props?.selectedCategoryId]);
 
   const fetchProductCompanies = async () => {
     setIsLoading(true);
@@ -87,40 +81,64 @@ function Filters({ mainCategoryData, selectedCategoryId }: any) {
     router.push(`/shop/collection/${urlTitle}/${data?.id}`);
   };
 
-  const getCompanyDataByFilter = async (event: any,id:any) => {
-
+  const getCompanyDataByFilter = (event: any, id: any) => {
     if (event.target.checked) {
-      const updatedFilter = {
-        ...filter,
-        company_filter: [...filter.company_filter, id],
-      };
+      setFilter((prevFilter: any) => {
+        const updatedCompanyFilter = [...(prevFilter.company_filter || []), id.toString()];
 
-      setFilter(updatedFilter);
-      console.log("err" , updatedFilter)
-
-      try {
-
-        const response = await fetch("https://ebikepk-server-nodejs.herokuapp.com/api/shop/product/get-product-by-Filter", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({ data: updatedFilter })
-        })
-
-        const json = await response.json();
-        console.log("err" , json)
-        if (json.length) {
-          setProductCompanyData(json);
+        const obj = {
+          data:
+          {
+            amount_filter: "",
+            company_filter: updatedCompanyFilter,
+            onsell_filter: false
+          }
         }
+        // console.log("data" , obj)
+        sendFilterToAPI(obj);
+        return {
+          ...prevFilter,
+          company_filter: updatedCompanyFilter
+        };
+      });
+    } else {
+      setFilter((prevFilter: any) => {
+        const updatedCompanyFilter = prevFilter.company_filter.filter((item: any) => item !== id.toString());
 
-      }
-      catch (err) {
-        console.log("err" , err)
+        const obj = {
+          data:
+          {
+            amount_filter: "",
+            company_filter: updatedCompanyFilter,
+            onsell_filter: false
+          }
+        }
+        // console.log("data" , obj)
+        sendFilterToAPI(obj);
+        return {
+          ...prevFilter,
+          company_filter: updatedCompanyFilter
+        };
+      });
+    }
+  };
+
+  const sendFilterToAPI = async (filterObj: any) => {
+
+    try {
+      const filterProduct = await getProductByFilter(filterObj);
+      console.log("data:", filterProduct);
+
+      if (filterProduct && filterProduct.length > 0) {
+        props.setFilteredData(filterProduct)
       }
 
+      else {
+        props.setFilteredData()
+      }
+    }
+    catch (error) {
+      console.error("API Error:", error);
     }
   }
 
@@ -139,25 +157,26 @@ function Filters({ mainCategoryData, selectedCategoryId }: any) {
           </Box>
 
           <Box className={styles.city_options}>
-            {mainCategoryData?.map((data: any, i: any) => (
-              <Typography className={styles.option_values} key={i}>
+            {
+              mainCategoryData?.map((data: any, i: any) => (
+                <Typography className={styles.option_values} key={i}>
 
-                <input
-                  type="radio"
-                  checked={selectedCategory === data?.id.toString()}
-                  onChange={() => handleCategoryCheck({ data })}
-                  id={data.id.toString()}
-                  name="category"
-                />
+                  <input
+                    type="radio"
+                    checked={selectedCategory === data?.id.toString()}
+                    onChange={() => handleCategoryCheck({ data })}
+                    id={data.id.toString()}
+                    name="category"
+                  />
+                  {data?.name}
+                </Typography>
 
-                {data?.name}
-              </Typography>
-
-            ))}
+              ))}
 
           </Box>
 
           {/* Company Filter */}
+
           <Box className={styles.heading_brand}>
             <Typography className={styles.brand_text}> Product Company </Typography>
           </Box>
@@ -168,10 +187,9 @@ function Filters({ mainCategoryData, selectedCategoryId }: any) {
 
                 <input
                   type="checkbox"
-                  checked={selectedCompany == data?.id.toString()}
                   id={data.id.toString()}
                   name="company"
-                  onChange={(e) => getCompanyDataByFilter(e,data?.id)}
+                  onChange={(e) => getCompanyDataByFilter(e, data?.id)}
                 />
 
                 {data?.name}
@@ -188,6 +206,7 @@ function Filters({ mainCategoryData, selectedCategoryId }: any) {
           {/* Popup Modal */}
           {openModal && (
             <MoreOptionPopup
+              getCompanyDataByFilter={(e: any, id: any) => getCompanyDataByFilter(e, id)}
               modalData={ModalData}
               from={modalOpenFor === "category" ? "category" : "company"}
               filterdData={modalOpenFor === "category" ? selectedCategory : selectedCompany}

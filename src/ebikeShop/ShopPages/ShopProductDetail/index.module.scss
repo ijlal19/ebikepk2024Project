@@ -11,6 +11,17 @@
         box-sizing: border-box;
     }
 
+    .cart_button{
+        position: fixed;
+        right: 30px;
+        @media (max-width:768px) {
+            right: 10px;
+            z-index: 1000;
+            top: 40px;
+            margin: 10px 0px !important;
+        }
+    }
+
     .container {
         max-width: 1000px;
         margin: 10px auto;
@@ -20,8 +31,9 @@
         flex-direction: column;
         row-gap: 70px;
         padding: 10px 0px !important;
-
+        
         @media (max-width:768px) {
+            row-gap: 20px;
             padding: 10px 10px !important;
         }
     }
@@ -183,6 +195,89 @@
             }
         }
 
+        .related_box {
+            padding: 5px 0px 0px 0px;
+            display: flex;
+            flex-direction: column;
+
+            .gurante_heading{
+                font-size: 16px;
+                padding: 5px 0px !important;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.506);
+                text-align: center;
+                color: green;
+            }
+
+            .related_product_heading{
+                font-size: 16px;
+                padding: 5px 0px;
+                margin: 0px 0px 5px 0px !important;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.469);
+                text-align: center;
+                color: grey;
+            }
+
+            .realted_content{
+                box-sizing: border-box;
+                padding: 0px !important;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                row-gap: 10px;
+
+                .related_card_main{
+                    display: flex;
+                    align-items: center;
+                    padding: 0px !important;
+
+
+                    .image_box{
+                        width: 70px;
+                        .image{
+                            margin: 0px !important;
+                            width: 100%;
+                        }
+                    }
+
+                    .card_content{
+                        display: flex;
+                        flex-direction: column;
+                        padding: 0px 0px 0px 0px !important;
+
+                        .card_name{
+                            color: black;
+                            padding: 0px 0px 0px 5px !important;
+                            text-decoration: none;
+                            font-size: 14px;
+                            .card_name_link{
+                                text-decoration: none;
+                                color: black;
+                                padding: 0px 0px 0px 0px !important;
+                                font-size: 14px;
+                            }
+                        }
+                        
+                        .card_price{
+                            padding: 0px 0px 0px 5px !important;
+                            margin: 0px !important;
+                            font-size: 14px;
+                            font-weight: bold;
+                            color: green;
+                        }
+                        
+                        .card_rating{
+                            padding: 0px 0px 0px 5px !important;
+                            margin: 0px !important;
+                            display: flex;
+                            align-items: center;
+                            column-gap: 3px;
+                            color: grey;
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     .tab_grid_box {
@@ -283,9 +378,11 @@
                 margin: 0px auto;
                 padding: 10px 5px !important;
                 box-sizing: border-box;
+
                 @media (max-width:768px) {
                     flex-direction: column;
                 }
+
                 border-bottom: 1px solid rgba(100, 98, 98, 0.568);
 
                 .descritpion_box {
@@ -338,6 +435,62 @@
                     }
                 }
             }
+        }
+    }
+
+    .shipping_detail_box {
+        width: 100%;
+        padding: 5px 0px 5px 0px !important;
+        box-sizing: border-box;
+
+        .shipping_heading {
+            font-size: 18px;
+            color: rgb(116, 112, 112);
+            text-align: center;
+            padding: 10px 0px !important;
+        }
+
+        .Shippin_detail_info {
+            box-sizing: border-box;
+            border-top: 1px solid rgba(128, 128, 128, 0.641);
+            width: 100%;
+            max-width: 850px;
+            padding: 10px 20px !important;
+            margin: 0px auto 20px auto !important;
+
+            .shipping_text {
+                font-size: 14px;
+                color: grey;
+                display: flex;
+                column-gap: 3px;
+
+                .shipping_conetnt {
+                    font-size: 14px;
+                    color: grey;
+                    padding: 5px 0px !important;
+
+                }
+            }
+        }
+    }
+
+    .similar_product{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .similar_heading{
+            color: rgb(94, 93, 93);
+            font-size: 20px;
+            padding: 10px 0px !important;
+            text-align: center;
+
+        }
+        .similar_card{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
     }
 }
