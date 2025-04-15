@@ -11,6 +11,17 @@
         box-sizing: border-box;
     }
 
+    .cart_button{
+        position: fixed;
+        right: 30px;
+        @media (max-width:768px) {
+            right: 10px;
+            z-index: 1000;
+            top: 40px;
+            margin: 10px 0px !important;
+        }
+    }
+
     .container {
         max-width: 1000px;
         margin: 10px auto;

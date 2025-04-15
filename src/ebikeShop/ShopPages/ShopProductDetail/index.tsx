@@ -1,9 +1,12 @@
 "use client"
-import { priceWithCommas, add3Dots, optimizeImage } from '@/genericFunctions/geneFunc';
-import { getProduct, getShopCategory } from "@/ebikeShop/Shopfunctions/globalFuntions";
+import { priceWithCommas, add3Dots, optimizeImage, isLoginUser } from '@/genericFunctions/geneFunc';
+import { getProduct, getShopCategory, PostAddCart } from "@/ebikeShop/Shopfunctions/globalFuntions";
+import MainCatgeoryCard from '@/ebikeShop/ShopSharedComponent/MainCategoryCard';
 import { Box, Button, Grid, Link, Rating, Typography } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
+import CartIcon from '@/ebikeShop/ShopSharedComponent/cartIcon';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useParams, useRouter } from "next/navigation";
 import Person2Icon from '@mui/icons-material/Person2';
 import { Navigation, FreeMode } from 'swiper/modules';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -12,32 +15,45 @@ import StarIcon from '@mui/icons-material/Star';
 import { useTheme } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import data from './data';
-
 import 'swiper/swiper-bundle.css';
 import '@/app/globals.scss';
-import MainCatgeoryCard from '@/ebikeShop/ShopSharedComponent/MainCategoryCard';
 
 const ProductDetail = () => {
 
-    const [IsLoading, setIsLoading] = useState<boolean>(false);
+    const [selectedReviews, setSelectedReviews] = useState<any>([]);
     const [ProductDetail, setProductDetail] = useState<any>([]);
     const [filterProduct, setfilterproduct] = useState<any>([]);
+    const [IsLoading, setIsLoading] = useState<boolean>(false);
+    const [IsLogin, setIsLogin] = useState<any>('not_login');
     const isMobile = useMediaQuery('(max-width:600px)');
     const [quantity, setQuantity] = useState(1);
+    const [rating,setRating] = useState('');
     const [value, setValue] = useState(0);
     const params = useParams();
-    const { slug2 } = params
+    const router = useRouter();
     const theme = useTheme();
-    const router = useRouter()
+    const { slug2 } = params
+
 
     useEffect(() => {
         fetchproductdetail()
+        let _isLoginUser = isLoginUser()
+        if (_isLoginUser?.login) {
+            setIsLogin(_isLoginUser.info)
+        }
+        else {
+            setIsLogin("not_login")
+        }
+        const shuffled = [...reViewData].sort(() => 0.5 - Math.random());
+        setSelectedReviews(shuffled.slice(0, 3));
+
+        const storedRating = JSON.parse(localStorage.getItem("rating") || "{}");
+        setRating(storedRating?.rating);
+
     }, [])
 
     const fetchproductdetail = async () => {
@@ -57,7 +73,6 @@ const ProductDetail = () => {
         if (allproduct?.length > 0 && slug2) {
             const allfilterproduct = allproduct.filter((blog: any) => blog.id.toString() !== slug2.toString());
             setfilterproduct(allfilterproduct);
-            console.log("data" , allfilterproduct)
         }
         else {
             alert('Check Your Internet!');
@@ -87,7 +102,6 @@ const ProductDetail = () => {
             setQuantity((prev) => prev - 1);
         }
     };
-
     interface TabPanelProps {
         children?: React.ReactNode;
         dir?: string;
@@ -142,8 +156,31 @@ const ProductDetail = () => {
         router.push(`/shop/product/${urlTitle}/${data?.id}`)
     }
 
+    const handleAddCart = async () => {
+        if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
+            alert('You must be logged in to shoping.')
+            return
+        }
+        else {
+            const cartObj = {
+                userId: IsLogin?.id,
+                productId: ProductDetail[0]?.id,
+                size: "medium",
+                quantity: quantity
+            }
+
+            const postdata = await PostAddCart(cartObj)
+            if (postdata) {
+                window.location.reload()
+            }
+        }
+    }
+
     return (
         <Box className={styles.main}>
+            <Box className={styles.cart_button}>
+                <CartIcon />
+            </Box>
             {
                 !IsLoading ?
 
@@ -175,14 +212,14 @@ const ProductDetail = () => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image_box}>
                                                                             <img src={
-                                                                                optimizeImage(imgUrl , 'h_350' , 'w_350')
+                                                                                optimizeImage(imgUrl, 'h_350', 'w_350')
                                                                             } alt="" className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
                                                                 <SwiperSlide key=''>
                                                                     <img src={
-                                                                        optimizeImage('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' , 'h_250' , 'w_350')
+                                                                        optimizeImage('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png', 'h_250', 'w_350')
                                                                     } alt='' className={styles.slider_img} />
                                                                 </SwiperSlide>
                                                         }
@@ -195,7 +232,7 @@ const ProductDetail = () => {
                                                         <Typography className={styles.desc}>{e?.product_description}</Typography>
                                                         <Typography className={styles.sell_price}>Rs: {priceWithCommas(e?.sell_price)} </Typography>
                                                         <Typography className={styles.pro_price}><del>Rs: {priceWithCommas(e?.product_price)}</del></Typography>
-                                                        <Typography className={styles.review}><StarIcon className={styles.rating_icon} /> {`(${reviewNum[i]})`}</Typography>
+                                                        <Typography className={styles.review}><StarIcon className={styles.rating_icon} /> {`(${rating})`}</Typography>
 
                                                         <Box className={styles.quantity_box}>
                                                             Qunatity:
@@ -205,8 +242,8 @@ const ProductDetail = () => {
                                                         </Box>
                                                         {
                                                             e?.stocks && e?.stocks.length > 0 ?
-                                                            <Button disableRipple className={styles.add_btn}>Add to Cart</Button>
-                                                            :""
+                                                                <Button disableRipple className={styles.add_btn} onClick={() => handleAddCart()}>Add to Cart</Button>
+                                                                : ""
                                                         }
                                                     </Box>
                                                 </Grid>
@@ -222,12 +259,12 @@ const ProductDetail = () => {
                                 <Typography className={styles.related_product_heading}>Related Product</Typography>
                                 <Box className={styles.realted_content}>
                                     {
-                                        filterProduct?.slice(4, 7).map((e: any, i: any) => {
+                                        filterProduct?.slice(0, 3).map((e: any, i: any) => {
                                             return (
                                                 <Box className={styles.related_card_main} key={i} onClick={() => goToRoute(e)}>
                                                     <Box className={styles.image_box}>
                                                         <img src={
-                                                            optimizeImage(e?.images[0] , 'h_330' , 'w_350')
+                                                            optimizeImage(e?.images[0], 'h_330', 'w_350')
                                                         } alt="" className={styles.image} />
                                                     </Box>
                                                     <Box className={styles.card_content}>
@@ -342,7 +379,7 @@ const ProductDetail = () => {
                                     <Box className={styles.customer_review}>
                                         <Typography className={styles.heading}>CUSTOMER REVIEWS</Typography>
                                         {
-                                            reViewData?.map((e: any, i: any) => {
+                                            selectedReviews?.map((e: any, i: any) => {
                                                 return (
                                                     <Box className={styles.card_main} key={i}>
                                                         <Box className={styles.descritpion_box}>
@@ -415,14 +452,22 @@ const ProductDetail = () => {
                             <Typography className={styles.similar_heading}>Similar Product</Typography>
                             <Box className={styles.similar_card}>
                                 {
-                                    filterProduct?.slice(7, 11).map((e: any, i: any) => {
-                                        return (
-                                            // <div key={i} >
-                                            <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i} />
-                                            // </div>
+                                    isMobile ? (
+                                        filterProduct?.slice(4, 6).map((e: any, i: any) => {
+                                            return (
+                                                <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i} />
+                                            )
+                                        })
+                                    )
+                                        :
+                                        (filterProduct?.slice(4, 8).map((e: any, i: any) => {
+                                            return (
+                                                <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i} />
+                                            )
+                                        })
                                         )
-                                    })
                                 }
+
                             </Box>
                         </Box>
 

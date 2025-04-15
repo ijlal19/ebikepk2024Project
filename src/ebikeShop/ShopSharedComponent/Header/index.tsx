@@ -1,15 +1,12 @@
 "use client"
-import { Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Box, Button, Divider, Drawer, IconButton, Link, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { getShopMainCategory } from '@/ebikeShop/Shopfunctions/globalFuntions';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import Badge, { BadgeProps } from '@mui/material/Badge';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useEffect, useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+import CartIcon from '../cartIcon';
 
 const TopbarCategory = () => {
     const [open, setOpen] = useState(false);
@@ -29,7 +26,6 @@ const TopbarCategory = () => {
     function goToRoute(data: any) {
         let urlTitle = '' + data?.name.toLowerCase().replaceAll(' ', '-')
         router.push(`/shop/collection/${urlTitle}/${data?.id}`)
-        console.log("data", data)
     }
 
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -45,9 +41,14 @@ const TopbarCategory = () => {
                         return (
                             <>
                                 <ListItem key={index} disablePadding>
-                                    <ListItemButton onClick={() => goToRoute(data)} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
-                                        <ListItemText primary={data?.name} className={styles.listText} sx={{ marginTop: "0px", marginBottom: "0px" }} />
-                                    </ListItemButton>
+                                    <Link
+                                        href={`/shop/collection/${data?.name.toLowerCase().replaceAll(' ', '-')}/${data?.id}`}
+                                        style={{ width: "100%", textDecoration: 'none', color: "black" }}
+                                    >
+                                        <ListItemButton onClick={() => goToRoute(data)} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
+                                            <ListItemText primary={data?.name} className={styles.listText} sx={{ marginTop: "0px", marginBottom: "0px" }} />
+                                        </ListItemButton>
+                                    </Link>
                                 </ListItem>
                                 <Divider />
                             </>
@@ -58,20 +59,6 @@ const TopbarCategory = () => {
         </>
     );
 
-    const StyledBadge = styled(Badge)<BadgeProps>(({ theme }:any) => ({
-        '& .MuiBadge-badge': {
-          right: -3,
-          top: 13,
-          border: `2px solid ${(theme.vars ?? theme).palette.background.paper}`,
-          padding: '0 4px',
-        },
-      }));
-
-      const handleCart =()=>{
-        router.push('/shop/cart')
-    }
-
-
     return (
         <Box className={styles.headers_main}>
 
@@ -81,14 +68,12 @@ const TopbarCategory = () => {
                     <SearchIcon className={styles.searchIcon} />
                 </div>
             </Box>
-            <Box>
-                <IconButton aria-label="cart"  className={styles.cart_button} onClick={()=>handleCart()}>
-                    <StyledBadge badgeContent={1} color="primary">
-                        <ShoppingCartIcon />
-                    </StyledBadge>
-                </IconButton>
+            <Box className={styles.cart_btn_main}>
+                <Box className={styles.cart_button}>
+                    <CartIcon />
+                </Box>
                 <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
-                    <MenuIcon />
+                    <MenuIcon className={styles.menu_icon} />
                 </Button>
             </Box>
 

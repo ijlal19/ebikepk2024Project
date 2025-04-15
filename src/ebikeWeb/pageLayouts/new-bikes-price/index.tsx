@@ -4,6 +4,7 @@ import styles from './index.module.scss'
 import { useParams } from 'next/navigation'
 import { getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
+import { priceWithCommas } from '@/genericFunctions/geneFunc'
 
 export default function NewBikePrice() {
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
@@ -61,7 +62,7 @@ export default function NewBikePrice() {
                     <tr key={i}>
                       <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{i + 1}</td>
                       <td className={styles.td}>{e?.title ? e.title : '-'}</td>
-                      <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{e?.price ? e.price : '-'}</td>
+                      <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{priceWithCommas(e?.price ? e.price : '-')}</td>
                       <td className={styles.td}>{e?.updatedAt ? e.updatedAt.slice(0, 10) : '-'}</td>
                     </tr>
                   ))

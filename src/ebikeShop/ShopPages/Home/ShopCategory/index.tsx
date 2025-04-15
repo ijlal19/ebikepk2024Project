@@ -16,7 +16,13 @@ const ShopMainCategory = ({ props }: any) => {
         router.push(`/shop/collection/${urlTitle}/${data?.id}`)
     }
 
-    const staticRatings = [4.5, 3.8, 5, 2, 3.5, 4.5, 2.5, 2, 3.4, 4.9];
+    const reviewNum = [
+        '4.5', '3.5', '4.7', '3'
+    ]
+
+    const reviewNum2 = [
+        '5', '3.5', '4', '4.5'
+    ]
 
     return (
         <div className={styles.main}>
@@ -28,6 +34,7 @@ const ShopMainCategory = ({ props }: any) => {
                                 <div className={styles.container}>
                                     {
                                         props?.slice(0, 7)?.map((e: any, i: any) => {
+                                            const ratingData = i % 2 === 0 ? reviewNum : reviewNum2; // alternate arrays
                                             return (
                                                 <div className={styles.main_category} key={i}>
 
@@ -39,7 +46,7 @@ const ShopMainCategory = ({ props }: any) => {
                                                         {e?.products?.slice(0, 4).map((eProduct: any, index: any) => {
                                                             return (
                                                                 <div key={index}>
-                                                                    <MainCatgeoryCard props={eProduct} rating={staticRatings[i % staticRatings.length]} />
+                                                                    <MainCatgeoryCard props={eProduct} rating={ratingData} i={index} />
                                                                 </div>
                                                             )
                                                         })}

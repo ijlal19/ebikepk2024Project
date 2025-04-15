@@ -74,10 +74,60 @@ function getProductByFilter(data: any) {
         })
 }
 
+function PostAddCart(data: any) {
+    return fetch(Gconfig.ebikeApi + `cart/add-user-cart-item`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+}
+
+function GetUserCart(data: any) {
+    return fetch(Gconfig.ebikeApi + `cart/get-user-cart-item`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+}
+
+function DeleteuserCart(id: any) {
+    return fetch(`${Gconfig.ebikeApi}cart/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log('err', err);
+        });
+}
+
+
 export {
     getShopMainCategory,
     getShopCategory,
     getProductCompany,
     getProduct,
-    getProductByFilter
+    getProductByFilter,
+    PostAddCart,
+    GetUserCart,
+    DeleteuserCart
 }

@@ -4,6 +4,7 @@ import MainCatgeoryCard from "@/ebikeShop/ShopSharedComponent/MainCategoryCard";
 import { Button, Grid, IconButton, useMediaQuery } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CartIcon from "@/ebikeShop/ShopSharedComponent/cartIcon";
 import Filters from "@/ebikeShop/ShopSharedComponent/filters";
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { useParams, useRouter } from "next/navigation";
@@ -36,7 +37,6 @@ const CategoryDetails = () => {
 
         const res = await getShopCategory(obj);
         if (res) {
-            console.log("data", res)
             setCategoryData(res);
         } else {
             alert('Check Your Internet!');
@@ -48,8 +48,6 @@ const CategoryDetails = () => {
         }, 1000);
 
     };
-
-    const staticRatings = [4.5, 3.8, 5, 2, 3.5, 1.5, 2.5, 2, 3.4, 4.9];
 
     const filtershow = () => {
         setshowfilter(!showfilter);
@@ -75,6 +73,14 @@ const CategoryDetails = () => {
         setLoader: setIsLoading,
         setFilteredData: setFilteredData
     }
+
+    const reviewNum = [
+        '3.7', '3.5', '4.7', '4.5'
+    ]
+
+    const reviewNum2 = [
+        '5', '3', '4', '6'
+    ]
 
     return (
         <div className={styles.main}>
@@ -104,27 +110,25 @@ const CategoryDetails = () => {
                                     <div className={styles.heading_box}>
                                         <p className={styles.heading}
                                         >{CategoryData[0]?.shop_main_catagory?.name}</p>
-                                        <IconButton aria-label="cart" className={styles.cartbutton} onClick={() => handleCart()}>
-                                            <StyledBadge badgeContent={1} color="primary">
-                                                <ShoppingCartIcon />
-                                            </StyledBadge>
-                                        </IconButton>
+                                        <CartIcon />
                                     </div>
 
                                     <div className={styles.product_main}>
                                         {
                                             filteredData && filteredData.length > 0 ?
                                                 filteredData.map((eProduct: any, index: any) => {
+                                                    const selectedRating = index % 2 === 0 ? reviewNum2 : reviewNum;
                                                     return (
                                                         <div key={index}>
-                                                            <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]} />
+                                                            <MainCatgeoryCard props={eProduct} rating={selectedRating} i={index} />
                                                         </div>
                                                     )
                                                 }) :
                                                 CategoryData?.map((eProduct: any, index: any) => {
+                                                    const selectedRating = index % 2 === 0 ? reviewNum2 : reviewNum;
                                                     return (
                                                         <div key={index}>
-                                                            <MainCatgeoryCard props={eProduct} rating={staticRatings[index % staticRatings.length]} />
+                                                            <MainCatgeoryCard props={eProduct} rating={selectedRating} i={index} />
                                                         </div>
                                                     )
                                                 })}

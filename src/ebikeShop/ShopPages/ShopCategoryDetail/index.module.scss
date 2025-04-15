@@ -4,7 +4,7 @@
     box-sizing: border-box;
 
     @media (max-width:768px) {
-        padding: 20px 5px !important; 
+        padding: 0px 5px 20px 5px!important; 
     }
 
     .filter_grid{
@@ -43,8 +43,8 @@
                 }
                 @media (max-width:768px) {
                     margin: 0px 0px !important;
-                    padding: 0px !important;
-                    justify-content: center;
+                    padding: 0px 10px !important;
+                    justify-content: space-between;
                 }
             }
             .product_main{
