@@ -30,9 +30,9 @@ export default function NewBikePrice() {
       let res = await getnewBikeData({ brand: brandName })
       setAllnewBikeArr(res)
       setIsLoading(false)
-     setTimeout(() => {
-          window.scrollTo(0, 0)
-        }, 1000);
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 1000);
     }
   }
   return (
@@ -77,7 +77,7 @@ export default function NewBikePrice() {
           <div className={styles.load_div}>
             <Loader isLoading={isLoading} />
           </div>
-          </div>
+        </div>
       }
     </>
   )
