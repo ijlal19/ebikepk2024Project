@@ -104,6 +104,21 @@ function GetUserCart(data: any) {
         })
 }
 
+function PostOrder(data: any) {
+    return fetch(Gconfig.ebikeApi + `shop/order-details/create-order`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            return err;
+        })
+}
+
 function DeleteuserCart(id: any) {
     return fetch(`${Gconfig.ebikeApi}cart/delete/${id}`, {
         method: 'DELETE',
@@ -120,6 +135,19 @@ function DeleteuserCart(id: any) {
         });
 }
 
+function getMyOrder(userId: any) {
+    return fetch(Gconfig.ebikeApi + `shop/oder-data/get-user-oders-detail/${userId}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
 
 export {
     getShopMainCategory,
@@ -129,5 +157,7 @@ export {
     getProductByFilter,
     PostAddCart,
     GetUserCart,
-    DeleteuserCart
+    DeleteuserCart,
+    PostOrder,
+    getMyOrder
 }

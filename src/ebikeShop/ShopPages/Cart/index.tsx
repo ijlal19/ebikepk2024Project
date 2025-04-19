@@ -1,6 +1,6 @@
 'use client'
 import { add3Dots, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
-import { DeleteuserCart, GetUserCart } from "@/ebikeShop/Shopfunctions/globalFuntions";
+import { DeleteuserCart, getMyOrder, GetUserCart, PostOrder } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import { Box, Grid, useMediaQuery, Typography, Button } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,29 +12,36 @@ import Modal from '@mui/material/Modal';
 
 
 const MyCart = () => {
+    const [PaymentMethod, setPaymentMethod] = useState<any>('');
     const [IsLogin, setIsLogin] = useState<any>('not_login');
-    const[PaymentMethod,setPaymentMethod]=useState<any>('');
     const IsMobile = useMediaQuery('(max-width:768px)');
+    const [OrderNote, setOrderNote] = useState<any>('');
+    const [UserAddress, setAddress] = useState<any>('');
     const [isLoading, setIsLoading] = useState(false);
     const [MyCartdata, setMyCart] = useState<any>([]);
-    const[OrderNote,setOrderNote]=useState<any>('');
-    const[UserAddress,setAddress]=useState<any>('');
-    const[UserEmail,setEmail]=useState<any>('');
-    const[UserPhone,setPhone]=useState<number>();
-    const[UserName,setName]=useState<any>('');
+    const [UserEmail, setEmail] = useState<any>('');
+    const [UserPhone, setPhone] = useState<any>();
+    const [UserName, setName] = useState<any>('');
     const handleClose = () => setOpen(false);
-    const handleOpen = () => setOpen(true);
     const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
 
     useEffect(() => {
         let _isLoginUser = isLoginUser();
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info);
             fecthUserCart(_isLoginUser?.info?.id);
+            // getorder(_isLoginUser?.info?.id)
+            // getorder()
         } else {
             setIsLogin("not_login");
         }
     }, []);
+
+    // const getorder = async (id:any) => {
+    //     const res = await getMyOrder(id)
+    //     console.log('data' , res)
+    // }
 
     const fecthUserCart = async (id: any) => {
         setIsLoading(true)
@@ -84,27 +91,41 @@ const MyCart = () => {
             setTimeout(() => {
                 window.scrollTo(0, 0);
             }, 1000);
-            window.location.reload()
+            // window.location.reload()
         }
         else {
-            alert("please wait!")
+            console.log("error")
         }
     }
 
-    console.log("data" , UserName)
-    const handlesubmit =(e:any)=>{
+    const handlesubmit = async (e: any) => {
         e?.preventDefault()
-        const obj ={
-           Userame:UserName,
-           UserEail:UserEmail,
-           UsePhone:UserPhone,
-           OrerNote:OrderNote,
-           UsrAddress:UserAddress,
-           PmentMethod:PaymentMethod
-        }
-        console.log("data" , obj)
-    }
+        if (UserName.length > 3 && UserEmail.length > 5 && UserPhone.length > 10 && UserAddress.length > 5 && OrderNote.length > 1 && PaymentMethod.length > 3) {
 
+            const obj = {
+                uid: IsLogin?.id,
+                name: UserName,
+                email: UserEmail,
+                postal_address: UserAddress,
+                contact_number: UserPhone,
+                description: OrderNote,
+                payment_type: PaymentMethod
+            }
+            console.log("data" , obj)
+            const postorder = await PostOrder(
+                { orderForm: obj, orders: groupedCart }
+            )
+            if (postorder) {
+                groupedCart.map((e: any, i: any) => {
+                    deleteCartFunc(e?.id)
+                })
+            }
+            console.log('data' , postorder)
+        }
+        else {
+            console.log('data', 'error')
+        }
+    }
     return (
         <Box className={styles.main}>
             {
@@ -168,31 +189,31 @@ const MyCart = () => {
                             <Box className={styles.popup_box}>
                                 <Box className={styles.popup_header}>
                                     <Typography className={styles.heading}>Order Form</Typography>
-                                    <Typography className={styles.icon_box}><CloseIcon className={styles.icon}  onClick={handleClose} /></Typography>
+                                    <Typography className={styles.icon_box}><CloseIcon className={styles.icon} onClick={handleClose} /></Typography>
                                 </Box>
                                 <form action="" className={styles.form_box} onSubmit={handlesubmit}>
                                     <Box className={styles.input_main}>
                                         <label htmlFor="Name" className={styles.input_label}>Name:</label>
-                                        <input type="text" id="Name" placeholder="asad"  className={styles.inputs} onChange={(e:any)=>setName(e?.taret?.value)} required />
+                                        <input type="text" id="Name" placeholder="asad" className={styles.inputs} onChange={(e) => setName(e?.target?.value)} required />
                                     </Box>
                                     <Box className={styles.input_main}>
                                         <label htmlFor="Email" className={styles.input_label}>Email:</label>
-                                        <input type="email" id="Email" placeholder="asad@yopmail.com"  className={styles.inputs}  onChange={(e:any)=>setEmail(e?.taret?.value)} required />
+                                        <input type="email" id="Email" placeholder="asad@yopmail.com" className={styles.inputs} onChange={(e) => setEmail(e?.target?.value)} required />
                                     </Box>
                                     <Box className={styles.input_main}>
                                         <label htmlFor="Phone" className={styles.input_label}>Phone No:</label>
-                                        <input type="number" id="Phone" placeholder="Phone No"  className={styles.inputs}  onChange={(e:any)=>setPhone(e?.taret?.value)} required />
+                                        <input type="number" id="Phone" placeholder="Phone No" className={styles.inputs} onChange={(e) => setPhone(e?.target?.value)} required />
                                     </Box>
                                     <Box className={styles.input_main}>
                                         <label htmlFor="Order" className={styles.input_label}>Order Note:</label>
-                                        <input type="text" id="Order" placeholder="Order Note"  className={styles.inputs}  onChange={(e:any)=>setOrderNote(e?.taret?.value)} required />
+                                        <input type="text" id="Order" placeholder="Order Note" className={styles.inputs} onChange={(e) => setOrderNote(e?.target?.value)} required />
                                     </Box>
                                     <Box className={styles.input_main}>
                                         <label htmlFor="Address" className={styles.input_label}>Address:</label>
-                                        <textarea id="Address" placeholder="Address" className={styles.textarea}  onChange={(e:any)=>setAddress(e?.taret?.value)} required ></textarea>
+                                        <textarea id="Address" placeholder="Address" className={styles.textarea} onChange={(e) => setAddress(e?.target?.value)} required ></textarea>
                                     </Box>
                                     <Box className={styles.input_main}>
-                                        <select name="" id="" className={styles.select_main} onChange={(e:any)=>setPaymentMethod(e?.target?.value)}>
+                                        <select name="" id="" className={styles.select_main} onChange={(e) => setPaymentMethod(e?.target?.value)}>
                                             <option value="" className={styles.select_options} selected disabled hidden>Select Payment Method</option>
                                             <option value="cash" className={styles.select_options}>Cash on Delivery</option>
                                             <option value="easy paisa" className={styles.select_options}>Easy Paisa Transfer</option>

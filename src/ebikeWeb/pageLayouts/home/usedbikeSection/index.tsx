@@ -1,12 +1,16 @@
 'use client'
-import styles from './index.module.scss'
-import { Box, Container, Typography } from '@mui/material';
-import Data from './Data';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
-import * as React from 'react';
+import { getAllFeaturedBike } from '@/ebikeWeb/functions/globalFuntions';
+import { priceWithCommas } from '@/genericFunctions/geneFunc';
+import { Box, Container, Typography } from '@mui/material';
+import styles from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Link from 'next/link'
+import { useEffect } from 'react';
+import * as React from 'react';
+import Link from 'next/link';
+import Data from './Data';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -36,42 +40,69 @@ function a11yProps(index: number) {
   };
 }
 
-function UsedBikesSection({from, featuredData, usedBikeData}:any) {
+
+function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
+
+  const [featuredBikes, setFeaturedBikes] = React.useState([]);
   const [value, setValue] = React.useState(0);
+
+  useEffect(() => {
+    fetchfeatuerBike()
+  }, [])
+
+  const fetchfeatuerBike = async () => {
+
+    let res = await getAllFeaturedBike();
+    if (res?.length > 0) {
+      const bikes = res.slice(0, 5).map((e: any) => {
+        return {
+          id: `${e?.id}`,
+          title: e?.title,
+          price: `PKR ${priceWithCommas(e?.price)}`,
+          img_url: e?.images[0],
+          url: ''
+        };
+      });
+      setFeaturedBikes(bikes);
+
+    }
+    else {
+      console.log("data", 'err')
+    }
+  }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-
   return (
     <Box className={styles.usedbike_main}>
       <Container>
-        <Typography className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `  } >
-         {from == 'featuredBike' ? 'Featured Bikes': 'Used Bikes'} 
-         {from != 'featuredBike' ?  
-           <Link className={styles.view_new_bik_btn}  href={'/used-bikes'}> 
+        <Typography className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `} >
+          {from == 'featuredBike' ? 'Featured Bikes' : 'Used Bikes'}
+          {from != 'featuredBike' ?
+            <Link className={styles.view_new_bik_btn} href={'/used-bikes'}>
               <span> View Used Bikes </span>
-            </Link>  : "" }
+            </Link> : ""}
         </Typography>
-        
-        { from == 'featuredBike' ?
-        <Box sx={{ width: '100%' }}>
-          <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={from == 'featuredBike' ? (featuredData?.length > 0 ?  featuredData : Data) : Data}  from='usedBikeComp' currentpage="used_bike" onBtnClick={()=>{}}  />
-        </Box> :
-        
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} textColor="primary"
-                  indicatorColor="primary" aria-label="basic tabs example">
-              <Tab label="Bikes" {...a11yProps(0)} />
-            </Tabs>
-          </Box>
-          <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={usedBikeData} from='usedBikeComp' currentpage='used_bike' onBtnClick={()=>{}}  />
-          </CustomTabPanel>
-        </Box> }
-        
+
+        {from == 'featuredBike' ?
+          <Box sx={{ width: '100%' }}>
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={from == 'featuredBike' ? (featuredData?.length > 0 ? featuredData : Data) : Data} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+          </Box> :
+
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} textColor="primary"
+                indicatorColor="primary" aria-label="basic tabs example">
+                <Tab label="Bikes" {...a11yProps(0)} />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={featuredBikes} from='usedBikeComp' currentpage='used_bike' onBtnClick={() => { }} />
+            </CustomTabPanel>
+          </Box>}
+
       </Container>
     </Box>
   )
