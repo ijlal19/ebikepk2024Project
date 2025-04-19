@@ -43,7 +43,7 @@ const TopbarCategory = () => {
                                 <ListItem key={index} disablePadding>
                                     <Link
                                         href={`/shop/collection/${data?.name.toLowerCase().replaceAll(' ', '-')}/${data?.id}`}
-                                        style={{ width: "100%", textDecoration: 'none', color: "black" }}
+                                        style={{ width: "100%", textDecoration: 'none', color: "black" }} className={styles.Link}
                                     >
                                         <ListItemButton onClick={() => goToRoute(data)} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
                                             <ListItemText primary={data?.name} className={styles.listText} sx={{ marginTop: "0px", marginBottom: "0px" }} />

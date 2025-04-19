@@ -199,6 +199,7 @@
         .cart_total_grid {
             padding: 10px 20px 20px 20px !important;
             box-sizing: border-box;
+
             .total_box_main {
                 box-sizing: border-box;
                 display: flex;
@@ -206,6 +207,7 @@
                 justify-content: center;
                 box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.535);
                 padding: 10px 0px !important;
+
                 .heading {
                     font-size: 16px;
                     padding: 5px 0px;
@@ -217,8 +219,9 @@
                     display: flex;
                     flex-direction: row;
                     column-gap: 10px;
-                    padding: 10px 10px !important ;
+                    padding: 10px 10px !important;
                     align-items: center;
+
                     .total {
                         font-size: 14px;
                         color: black;
@@ -235,7 +238,7 @@
                     border-radius: 0px;
                     width: 100%;
                     font-size: 15px;
-                    padding: 4px 0px ;
+                    padding: 4px 0px;
                     color: white;
                     background-color: yellowgreen;
                     max-width: 200px;
@@ -244,6 +247,8 @@
         }
     }
 
+
+
     @media (max-width:768px) {
         padding: 10px 0px !important;
 
@@ -251,6 +256,197 @@
             box-shadow: none;
 
             .cart_grid {}
+        }
+    }
+}
+
+.popup_main {
+    width: 100%;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    outline: none;
+    box-sizing: border-box;
+
+    .popup_box {
+        box-sizing: border-box;
+        width: 540px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        outline: none;
+        margin: auto;
+        border: 1px solid #999292ad;
+        border-radius: 10px;
+        background-color: white !important;
+        padding: 10px 20px !important;
+        box-sizing: border-box;
+
+        .popup_header {
+            display: flex;
+            width: 100% !important;
+            flex-direction: row;
+            justify-content: space-between;
+            box-sizing: border-box;
+            border-bottom: 1px solid #999292ad;
+            padding: 4px 0px 10px 0px !important;
+            align-items: center;
+
+            .heading {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .icon_box {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .icon {
+                    cursor: pointer;
+                    color: grey;
+                    font-size: 20px;
+
+                }
+            }
+
+            @media (max-width:768px) {
+                padding: 0px 0px 10px 0px !important;
+
+                .heading {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .form_box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .input_main {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                margin: 5px 0px !important;
+
+                .input_label {
+                    font-size: 16px;
+                    color: black;
+                    font-weight: 500;
+                    padding: 0px 0px 3px 0px !important;
+                }
+
+                .inputs {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 7px 0px 7px 10px !important;
+                    outline: none;
+                    border: 1px solid #999292ad;
+                    font-size: 14px;
+                }
+
+                .textarea {
+                    border: 1px solid #999292ad;
+                    padding: 7px 7px 7px 10px !important;
+                    width: 100%;
+                    outline: none;
+                    max-width: 100%;
+                    min-width: 100%;
+                    box-sizing: border-box;
+                    height: 100%;
+                    max-height: 80px;
+                    min-height: 40px;
+                }
+
+                .select_main {
+                    width: 100%;
+                    border: 1px solid #999292ad;
+                    outline: none;
+                    padding: 7px 7px 7px 10px;
+
+                    .select_options {
+                        padding: 7px 7px 7px 10px !important;
+                        background-color: white !important;
+                        color: rgb(0, 0, 0);
+                        font-size: 14px !important;
+                        font-weight: 500 !important;
+
+                    }
+                }
+            }
+
+            .submit_btn {
+                width: 100%;
+                margin: 10px 0px 5px 0px !important;
+                padding: 3px 0px !important;
+                background-color: yellowgreen;
+                border: 1px solid yellowgreen;
+                text-align: center;
+                font-size: 16px;
+                color: white;
+
+            }
+
+            @media (max-width:768px) {
+                .input_main {
+                    margin: 3px 0px !important;
+
+                    .input_label {
+                        font-size: 14px;
+                        font-weight: none !important;
+                    }
+
+                    .inputs {
+                        padding: 4px 0px 4px 10px !important;
+                        font-size: 13px !important;
+                    }
+
+                    .textarea {
+                        height: 100% !important;
+                        max-height: 60px !important;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 100% !important;
+                        min-height: 30px !important;
+                        padding: 5px 4px 4px 10px !important;
+                    }
+
+                    .select_main {
+                        padding: 4px 4px 4px 10px !important;
+                        font-size: 13px !important;
+
+                        .select_options {
+                            padding: 4px 4px 4px 10px !important;
+                            background-color: white !important;
+                            color: rgb(0, 0, 0);
+                            font-size: 13px !important;
+                            font-weight: 500 !important;
+
+                        }
+                    }
+                }
+
+                .submit_btn {
+                    width: 100%;
+                    margin: 10px 0px 5px 0px !important;
+                    padding: 2px 0px !important;
+                    background-color: yellowgreen;
+                    border: 1px solid yellowgreen;
+                    text-align: center;
+                    font-size: 14px;
+                    color: white;
+
+                }
+            }
+        }
+
+        @media (max-width:768px) {
+            padding: 15px 10px 5px 10px !important;
+            margin: 0px 15px !important;
         }
     }
 }

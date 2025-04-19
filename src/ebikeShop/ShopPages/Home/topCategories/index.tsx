@@ -3,7 +3,7 @@ import { getShopMainCategory } from '@/ebikeShop/Shopfunctions/globalFuntions';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import ForumRoundedIcon from '@mui/icons-material/ForumRounded';
-import { Box, Grid, useMediaQuery } from '@mui/material';
+import { Box, Grid, Link, useMediaQuery } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Swiper, SwiperSlide } from "swiper/react";
 import styles from './index.module.scss';
@@ -16,19 +16,23 @@ const TopCategories = () => {
     const sliderData = [
         {
             id: 1,
-            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/10_wnqxwp.jpg"
+            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/10_wnqxwp.jpg",
+            url:'shop/collection/motorcycles/1'
         },
         {
             id: 2,
-            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592646355/staticFiles/8_nvtgfq.jpg"
+            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592646355/staticFiles/8_nvtgfq.jpg",
+            url:'shop/collection/safety-gears/2'
         },
         {
             id: 3,
-            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/9_fflcti.jpg"
+            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/9_fflcti.jpg",
+            url:'shop/collection/spare-parts/8'
         },
         {
             id: 4,
-            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/7_mamkaj.jpg"
+            img_url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1592628433/staticFiles/7_mamkaj.jpg",
+            url:'shop/collection/accessories/6'
         }
     ];
 
@@ -108,9 +112,9 @@ const TopCategories = () => {
 
                                 <Grid item xs={12} className={styles.grid}>
                                     <Box className={styles.grid_card}>
-                                        {/* <a href=""> */}
-                                        <img src={item.img_url} alt="" className={styles.image} />
-                                        {/* </a> */}
+                                        <Link href={item?.url}>
+                                        <img src={item?.img_url} alt="" className={styles.image} />
+                                        </Link>
                                     </Box>
                                 </Grid>
 
