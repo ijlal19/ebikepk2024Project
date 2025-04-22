@@ -43,7 +43,7 @@ const CartIcon = () => {
     }));
 
     const handleCart = () => {
-        router.push('/shop/mycart')
+        router.push('/shop/cart')
     }
 
     return (

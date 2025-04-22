@@ -25,6 +25,7 @@ const MyCart = () => {
     const handleClose = () => setOpen(false);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
+    const [AllOrder, setOrder] = useState<any>([]);
 
     useEffect(() => {
         let _isLoginUser = isLoginUser();
@@ -83,6 +84,40 @@ const MyCart = () => {
     const groupedCart = groupCartItems(MyCartdata);
     const cartTotal = groupedCart.reduce((acc: any, item: any) => acc + item?.totalPrice, 0);
 
+    // if (groupedCart) {
+    //     const obj = groupedCart?.map((e: any) => {
+    //         return {
+    //             uid: e?.userId,
+    //             productId: e?.productId,
+    //             quantity: e?.quantity,
+    //             product_size: e?.size,
+    //             product_price: e?.quantity * e?.totalPrice,
+    //             discount_price: e?.quantity * e?.totalPrice
+    //         };
+    //     });
+
+    //     setOrder(obj);
+    //     console.log("data", obj);
+    // }
+
+
+    useEffect(() => {
+        if (groupedCart && groupedCart.length > 0) {
+            const obj = groupedCart.map((e: any) => {
+                return {
+                    uid: e?.userId,
+                    productId: e?.productId,
+                    quantity: e?.quantity,
+                    product_size: e?.size,
+                    product_price: e?.quantity * e?.totalPrice,
+                    discount_price: e?.quantity * e?.totalPrice
+                };
+            });
+            setOrder(obj);
+        }
+    }, [groupedCart]);
+
+
     const deleteCartFunc = async (id: any) => {
         setIsLoading(true)
         const deleteCartbyID = await DeleteuserCart(id)
@@ -91,7 +126,7 @@ const MyCart = () => {
             setTimeout(() => {
                 window.scrollTo(0, 0);
             }, 1000);
-            // window.location.reload()
+            window.location.reload()
         }
         else {
             console.log("error")
@@ -103,27 +138,26 @@ const MyCart = () => {
         if (UserName.length > 3 && UserEmail.length > 5 && UserPhone.length > 10 && UserAddress.length > 5 && OrderNote.length > 1 && PaymentMethod.length > 3) {
 
             const obj = {
-                uid: IsLogin?.id,
                 name: UserName,
                 email: UserEmail,
                 postal_address: UserAddress,
                 contact_number: UserPhone,
                 description: OrderNote,
-                payment_type: PaymentMethod
+                payment_type: PaymentMethod,
+                uid: IsLogin?.id,
             }
-            console.log("data" , obj)
             const postorder = await PostOrder(
-                { orderForm: obj, orders: groupedCart }
+                { orderForm: obj, orders: AllOrder }
             )
             if (postorder) {
-                groupedCart.map((e: any, i: any) => {
+                groupedCart?.map((e: any) => {
                     deleteCartFunc(e?.id)
                 })
+                console.log("data", postorder)
             }
-            console.log('data' , postorder)
-        }
-        else {
-            console.log('data', 'error')
+            else {
+                console.log('data error ', 'error')
+            }
         }
     }
     return (

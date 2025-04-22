@@ -44,6 +44,7 @@ const ProductDetail = () => {
         let _isLoginUser = isLoginUser()
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
+            console.log("data" , _isLoginUser?.info?.id)
         }
         else {
             setIsLogin("not_login")
