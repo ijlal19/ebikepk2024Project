@@ -1,28 +1,37 @@
 'use client'
 import { getBikesBySpecificFilter, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { Box, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, Link, Typography, useMediaQuery } from '@mui/material';
+import BrandFilter from "@/ebikeWeb/sharedComponents/brand_filter";
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import {priceWithCommas} from '@/genericFunctions/geneFunc';
+import { priceWithCommas } from '@/genericFunctions/geneFunc';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import { useRouter, useParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 
 const AllUsedBikeByFilter = () => {
-    const isMobile = useMediaQuery('(max-width:991px)')
-    const [allBikesArr, setAllBikesArr] = useState([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [heading, setHeading] = useState('')
-    const [getAdFrom, setGetAdFrom] = useState(-10)
-    const [isGridSelected, setIsGridSelected] = useState(false)
-
+    const isMobile = useMediaQuery('(max-width:991px)');
+    const IsMobile2 = useMediaQuery('(max-width:768px)');
+    const [allBikesArr, setAllBikesArr] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [heading, setHeading] = useState('');
+    const [getAdFrom, setGetAdFrom] = useState(-10);
+    const [isGridSelected, setIsGridSelected] = useState(false);
+    const [filterShow, setFilterShow] = useState(false)
     const params = useParams()
     const router = useRouter()
+    console.log("data", params.slug)
 
     useEffect(() => {
         fetchBikeInfo()
+        if (params.slug == "bike-by-brand") {
+            setFilterShow(true)
+        }
+        else {
+            setFilterShow(false)
+        }
     }, [])
 
     const capitalizeFirstWord = (str) => {
@@ -44,6 +53,7 @@ const AllUsedBikeByFilter = () => {
                 window.scrollTo(0, 0)
             }, 1000);
         }
+
         else if (from?.indexOf('cc') > -1) {
             let id = params.id
             let res = await getBikesBySpecificFilter('cc', id, getAdFrom + 10)
@@ -53,6 +63,7 @@ const AllUsedBikeByFilter = () => {
                 window.scrollTo(0, 0)
             }, 1000);
         }
+
         else if (from?.indexOf('city') > -1) {
             let id = params.id1
             let res = await getBikesBySpecificFilter('city', id, getAdFrom + 10)
@@ -62,6 +73,7 @@ const AllUsedBikeByFilter = () => {
                 window.scrollTo(0, 0)
             }, 1000);
         }
+
         else if (from?.indexOf('brand') > -1) {
             let id = params.id1
             let res = await getBikesBySpecificFilter('brand', id, getAdFrom + 10)
@@ -78,7 +90,6 @@ const AllUsedBikeByFilter = () => {
         }, 1000);
 
     }
-
 
     function goToDetailPage(val) {
         let title = val.title
@@ -161,43 +172,76 @@ const AllUsedBikeByFilter = () => {
 
     return (
         <Box className={styles.main}>
+            <h5 className={styles.heading1}> {heading}</h5>
             {
                 !isLoading ?
+                    <Grid container className={styles.grid_container}>
 
-                    <Box className={styles.all_bike_main}>
+                        <Grid item xs={IsMobile2 ? 12 : 2.5} className={styles.filter_grid} >
+                            {
+                                filterShow ?
+                                    <BrandFilter /> : ""
+                            }
+                        </Grid>
 
-                        <div className={styles.main_box}>
+                        <Grid item xs={IsMobile2 ? 12 : 7.5} className={styles.cards_grid} >
+                            <h5 className={styles.heading2}> {heading}</h5>
 
-                            <h5 className={styles.heading}> {heading}</h5>
+                            <Box className={styles.all_bike_main}>
+                                <div className={styles.main_box}>
 
-                            <div className={styles.navigation}>
-                                <div className={styles.text_container}>
-                                    <span className={styles.bike_text}> Used Bikes </span>
+                                    {/* <h5 className={styles.heading}> {heading}</h5> */}
+
+                                    <div className={styles.navigation}>
+                                        <div className={styles.text_container}>
+                                            <span className={styles.bike_text}> Used Bikes </span>
+                                        </div>
+                                        <div className={styles.swap_button_container}>
+                                            <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                            <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                        </div>
+                                    </div>
+
+                                    <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                                        {allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
+                                            return (
+                                                isGridSelected ? GridCard(val, ind) : longCard(val, ind)
+                                            )
+                                        })}
+                                    </div>
+
+                                    <div className={styles.viewMoreBtnContainer} >
+                                        <button onClick={() => { fetchBikeInfo() }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
+                                    </div>
+
                                 </div>
-                                <div className={styles.swap_button_container}>
-                                    <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                    <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                </div>
-                            </div>
+                            </Box>
+                        </Grid>
+                        <Grid item xs={IsMobile2 ? 12 : 2} className={styles.add_area}>
+                            <Box className={styles.add_box}>
+                                <Link href="https://youtube.com/ebikepk" target="_blank" rel="noopener noreferrer">
+                                    <img
+                                        src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif"
+                                        alt="eBike YouTube Banner"
+                                        className={styles.add_image} />
+                                </Link>
+                                <Link href="/forum" rel="noopener noreferrer">
+                                    <img
+                                        src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg
+                                            "
+                                        alt="/forum"
+                                        className={styles.add_image} />
+                                </Link>
+                                <Link href="/blog" rel="noopener noreferrer">
+                                    <img
+                                        src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg                                            "
+                                        alt="/forum"
+                                        className={styles.add_image} />
+                                </Link>
+                            </Box>
+                        </Grid>
+                    </Grid>
 
-                            <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                                {allBikesArr.length > 0 && allBikesArr.map((val, ind) => {
-                                    return (
-                                        isGridSelected ? GridCard(val, ind) : longCard(val, ind)
-                                    )
-                                })}
-                            </div>
-
-                            <div className={styles.viewMoreBtnContainer} >
-                                <button onClick={() => { fetchBikeInfo() }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
-                            </div>
-
-                        </div>
-
-                        <Box className={styles.add_area}>
-
-                        </Box>
-                    </Box>
                     :
                     <div className={styles.load_main}>
                         <div className={styles.load_div}>
@@ -209,4 +253,4 @@ const AllUsedBikeByFilter = () => {
     )
 }
 
-export default AllUsedBikeByFilter; 
+export default AllUsedBikeByFilter;
