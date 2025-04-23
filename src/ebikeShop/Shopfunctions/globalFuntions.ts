@@ -140,13 +140,13 @@ function getMyOrder(userId: any) {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
-        .then(response => response.json())
-        .then(data => {
-            return data
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    .then(response => response.json())
+    .then(data => {
+        return data
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 }
 
 export {
