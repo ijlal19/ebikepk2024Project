@@ -52,8 +52,8 @@ const Blog = () => {
   }
 
   const blogsPerPage = 10;
-  const totalPages = Math.ceil(BlogData.length / blogsPerPage);
-  const currentBlogs = BlogData.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
+  const totalPages = Math.ceil(BlogData?.length / blogsPerPage);
+  const currentBlogs = BlogData?.slice((currentPage - 1) * blogsPerPage, currentPage * blogsPerPage);
 
   const filterblogsPerPage = 10;
   const totalfilterPages = Math.ceil(filteredResults.length / filterblogsPerPage);

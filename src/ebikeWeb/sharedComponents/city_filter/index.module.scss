@@ -1,0 +1,95 @@
+@import '../../styles/variable';
+.filter_box {
+    height: fit-content;
+    box-shadow: 0px 0px 5px rgb(183, 181, 181);
+    max-width: 200px;
+    padding: 0px !important;
+    background: white;
+    margin: auto;
+    margin-top: 20px;
+   
+  
+    @media (max-width:768px) {
+      max-width: 300px !important;
+      width: 300px !important;
+    }
+
+    .heading_resultby {
+      width: 200px;
+      @media (max-width:768px) {
+        max-width: 300px;
+        width: 300px;
+      }
+      background: $primary_two;
+      padding: 10px 0px !important;
+      color: rgb(255, 255, 255);
+      text-align: center;
+    }
+    .heading_city ,.heading_years{
+      border-top: 1px solid rgb(235, 231, 231);
+    }
+    .heading_city ,.heading_city,.heading_years{
+      width: 200px;
+      border-bottom: 1px solid rgb(235, 231, 231);
+      padding: 9px 0px !important;
+      color: black;
+      margin-top: 5px;
+
+      @media (max-width:767px) {
+        width: 300px;
+      }
+
+      .city_text,.city_text,.years_text {
+        padding-left: 10px;
+        font-size: 12px;
+      }
+
+    }
+    .city_options ,.city_options,.years_options{
+      width: 200px;
+      padding: 15px 0px !important;
+      color: black;
+      margin-top: 5px;
+      font-size: 12px;
+
+      @media (max-width:767px) {
+        width: 300px;
+      }
+      
+      .option_values{
+        gap: 5px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 2px 0px 2px 10px !important;
+        font-size: 12px;
+      }
+      .option_values .MuiMenuItem-root {
+        font-size: 12px;
+        padding: 4px 10px;
+      }
+      .option_values .MuiMenuItem-root:hover {
+        background-color: #f0f0f0;
+    }
+      .seeMore{
+        color: $primary_two;
+        padding: 5px 0px 5px 13px !important;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .clear_btn {
+    border-radius: 0px;
+    height: 25px;
+    background-color: $primary_two;
+    display: block;
+    width: 120px;
+    font-size: 12px;
+    margin: 20px auto;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-wrap: nowrap;
+  }
