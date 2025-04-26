@@ -286,3 +286,35 @@ body {
     text-align: center;
     background-color: rgb(53, 116, 188);
 }
+
+.thumbSwiper {
+    .swiper-wrapper{
+        cursor: pointer;
+        height: 100px;
+        img{
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
+
+.review_section_swiper {
+
+    .swiper-pagination {
+        display: none;
+    }
+
+    .swiper-button-prev {
+        color: white;
+        background: grey;
+        padding: 10px;
+        opacity: 0.8;
+    }
+
+    .swiper-button-next {
+        color: white;
+        background: grey;
+        padding: 10px;
+        opacity: 0.8;
+    }
+}

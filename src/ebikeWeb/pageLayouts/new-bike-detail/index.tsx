@@ -12,6 +12,17 @@ import React, { useState, useEffect } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import styles from './index.module.scss';
 import { newBikeData } from './data';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
+import { Thumbs } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+import 'swiper/css/free-mode';
+import FeatureSection from '@/ebikeWeb/pageLayouts/home/featureSection/index'
+import ReviewSection from "@/ebikeWeb/sharedComponents/reviewSection/index"
+
 
 export default function NewBikeBrand() {
 
@@ -22,9 +33,10 @@ export default function NewBikeBrand() {
   const [allDealerArr, setAllDelaerArr] = useState([]);
   const [writePopup, setWritePopup] = useState(false);
   const isMobile = useMediaQuery('(max-width:768px)');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [morePopup, setMorePopup] = useState(false);
   const [similarBrandUsedBike, setSimilarBrandUsedBike] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
 
   const router = useRouter()
   const params = useParams()
@@ -57,6 +69,28 @@ export default function NewBikeBrand() {
     if (responsedetails.length > 0) {
       if (responsedetails[0]?.bike?.description) {
         responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
+      }
+
+      if(responsedetails[0]?.bike?.images) {
+        let imgArr = responsedetails[0]?.bike?.images
+        let totalRequiredImageCount = 4 - imgArr?.length
+        if(totalRequiredImageCount > 0) {
+        [...Array(totalRequiredImageCount)].map((val:any) => {
+          if(responsedetails[0]?.bike?.images?.length > 0) {
+            imgArr.push(responsedetails[0]?.bike?.images[0])
+          }
+        })
+        }
+       
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
+        // console.log('imgArr', imgArr)
+        responsedetails[0].bike.images = imgArr
       }
     }
 
@@ -155,13 +189,51 @@ export default function NewBikeBrand() {
                     <Grid key={i} container className={styles.bikre_review_grid}>
 
                       <Grid item xs={isMobile ? 12 : 8.9} className={styles.bike_image_box}>
-
+                      
                         {/* Bike IMAGE OR TITLE */}
                         <Box>
-                          <Typography className={styles.title}>{e?.bike?.title}</Typography>
-                          <Box className={styles.bike_image}>
-                            <img src={e?.bike?.images[0]} alt={e?.bike?.title} className={styles.image} />
-                          </Box>
+                          
+                            <Typography className={styles.title}>{e?.bike?.title}</Typography>
+                          
+                            {/* <Box className={styles.bike_image}>
+                              <img src={e?.bike?.images[0]} alt={e?.bike?.title} className={styles.image} />
+                            </Box> */}
+
+                            
+                            <Swiper
+                              onSwiper={setThumbsSwiper}
+                              direction="horizontal"
+                              spaceBetween={10}
+                              slidesPerView={4}
+                              freeMode={true}
+                              watchSlidesProgress={true}
+                              modules={[Thumbs]}
+                              className="w-20 h-[400px] thumbSwiper"
+                            >
+                              { e?.bike?.images.map((img:any, index:any) => (
+                                <SwiperSlide key={index}>
+                                  <img src={img} alt={`thumb-${index}`} className="cursor-pointer object-cover" />
+                                </SwiperSlide>
+                              ))}
+                            </Swiper>
+
+                            <Swiper
+                                modules={[Navigation, Autoplay, Thumbs]}
+                                className={styles.swiper}
+                                loop={true}
+                                slidesPerView={1}
+                                thumbs={{ swiper: thumbsSwiper }}
+                                simulateTouch={true}
+                              >
+                                {e?.bike?.images && e?.bike?.images?.length > 0 && e?.bike?.images.map((item:any, index:any) => (
+                                    <SwiperSlide key={index}>
+                                      <Box className={styles.bike_image}>
+                                          <img src={item} alt={e?.bike?.title} className={styles.image} />
+                                      </Box>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+
                         </Box>
 
                         {/* BIKE REVIEW BOX */}
@@ -296,7 +368,7 @@ export default function NewBikeBrand() {
                         <Box className={styles.bike_video_box}>
                           <Box className={styles.bike_video}>
                             <iframe
-                              src={embebedYoutubeVideoId(e?.bike?.videoUrl)}
+                              src={e?.bike?.videoUrl ? embebedYoutubeVideoId(e?.bike?.videoUrl) : "https://www.youtube.com/embed/9g0U8s83jkw"}
                               title="YouTube video player"
                               className={styles.bike_video}
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -314,12 +386,12 @@ export default function NewBikeBrand() {
                             <Box className={styles.price}>
                               Rs: {priceWithCommas(e?.bike?.price)}
                             </Box>
-                            {
+                            {/* {
                               e?.bike?.newbike_ratings?.length > 0 ?
                                 <Box className={styles.rating_box}>
                                   <StarIcon sx={{ color: 'orange', fontSize: '15px' }} /> {e?.bike?.newbike_ratings[0]?.rating} | 4 Reviews
                                 </Box> : ""
-                            }
+                            } */}
                           </Box>
 
                           {e?.bike?.newbike_comments?.length > 0 ? <Box className={styles.comment_box}>
@@ -406,6 +478,14 @@ export default function NewBikeBrand() {
               })}
           </Box>
 
+          <div className={styles.review_section_newbikes}>
+            <ReviewSection />
+          </div>
+          
+          <div className={styles.feature_section_newbikes}>
+            <FeatureSection />
+          </div>
+
           { AllnewBikeCardArr && AllnewBikeCardArr.length > 0 ?
             <>
               <Box className={styles.other_card}>
@@ -427,6 +507,8 @@ export default function NewBikeBrand() {
               : "" 
             }
           </div>
+
+
 
 
         </> :

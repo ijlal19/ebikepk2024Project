@@ -1,6 +1,6 @@
 'use client'
 import { Box, Container, Grid, Typography } from '@mui/material';
-import styles from './index.module.scss';
+import styles from '@/ebikeWeb/pageLayouts/home/featureSection/index.module.scss';
 // import Card from './Card/index';
 import { SendToMobile } from '@mui/icons-material';
 import { useState } from 'react';
