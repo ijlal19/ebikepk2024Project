@@ -235,9 +235,21 @@ const AllUsedBike = () => {
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>
+                                    <Link href="/dealers" rel="noopener noreferrer">
+                                        <img
+                                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
+                                            alt="/dealer"
+                                            className={styles.add_image} />
+                                    </Link>
+                                    <Link href="/mechanics" rel="noopener noreferrer">
+                                        <img
+                                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
+                                            alt="/mechanic"
+                                            className={styles.add_image} />
+                                    </Link>
                                     <Link href="/blog" rel="noopener noreferrer">
                                         <img
-                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg                                            "
+                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>

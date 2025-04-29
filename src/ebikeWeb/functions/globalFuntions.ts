@@ -395,14 +395,54 @@ function getdatabycitybrand(brandId: any, cityId: any, limit: any) {
         })
 }
 
+function getDealerByFilter(data: any) {
+
+    return fetch(Gconfig.ebikeApi + `dealers/get-dealer-by-filter`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            return err
+        });
+}
+
 export {
     getPostcomment,
     getPostBlogcomment,
     getAllBlogComment,
-    getSingleBlogData, createmechanic, createdealer,
-    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
-    getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, getAllDealer, getFeaturedDealer,
-    getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
-    getAllFeaturedBike, getMyAds, MarkBikeAsSold, sendEmailLetter
-    , getdatabycitybrand
+    getSingleBlogData,
+    createmechanic,
+    createdealer,
+    getAllbikesDetail,
+    getSinglebikesDetail,
+    getBrandFromId,
+    getCityFromId,
+    getYearFromId,
+    getFilteredAllbikesDetail,
+    getbrandData,
+    getnewBikeData,
+    getdealerData,
+    getnewBikedetailsData,
+    uplaodImageFunc,
+    getBikesBySpecificFilter,
+    getAllBlog,
+    getAllDealer,
+    getFeaturedDealer,
+    getSingleDealerDetails,
+    getSimilarDealers,
+    getFeaturedMechanics,
+    getAllMechanics,
+    getSingleMechanicsDetails,
+    getSimilarMechanics,
+    getAllFeaturedBike,
+    getMyAds,
+    MarkBikeAsSold,
+    sendEmailLetter
+    , getdatabycitybrand,
+    getDealerByFilter
 }

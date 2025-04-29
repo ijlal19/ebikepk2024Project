@@ -1,18 +1,50 @@
+import { getDealerByFilter } from '@/ebikeWeb/functions/globalFuntions';
 import { BrandArr, CityArr } from '../../../../constants/globalData';
 import styles from './index.module.scss';
 
 export const DealerinPakFilter = () => {
-    function updateFilterValue(event:any, from:any) {
-        if(from == 'city') {
-        if(event.target.checked == true){
-        }
-        }
-        else if(from == 'brand') {
-            if(event.target.checked == true){
+
+    let brand_filter: any[] = [];
+    let city_filter: any[] = [];
+    let mergedata: any[] = [];
+    const updateFilterValue = async (event: any, from: any, data: any) => {
+        const id = data?.id;
+        const isChecked = event.target.checked;
+
+        if (from === 'city') {
+            if (isChecked) {
+                if (!city_filter.includes(id)) {
+                    city_filter.push(id);
+                }
+            } else {
+                city_filter = city_filter.filter((item) => item !== id);
             }
         }
-    }
- return (
+        else if (from === 'brand') {
+            if (isChecked) {
+                if (!brand_filter.includes(id)) {
+                    brand_filter.push(id);
+                }
+            } else {
+                brand_filter = brand_filter.filter((item) => item !== id);
+            }
+        }
+
+        const object = {
+            brand_filter: brand_filter,
+            city_filter: city_filter
+        }
+        const res = await getDealerByFilter(object);
+        res.map((e: any) => {
+            if (!mergedata.includes(e?.id)) {
+                mergedata.push(e)
+            }
+        })
+        console.log("data", mergedata)
+    };
+
+
+    return (
         <div className={styles.filter_main}>
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By Brand</p>
@@ -23,7 +55,7 @@ export const DealerinPakFilter = () => {
                                 <p className={styles.option_values} key={i}>
                                     <input
                                         type="checkbox"
-                                          onChange={(event) => { updateFilterValue(event, 'city') }}
+                                        onChange={(event) => { updateFilterValue(event, 'brand', data) }}
                                         id={data.id}
                                     />
                                     {data.brandName}
@@ -43,7 +75,7 @@ export const DealerinPakFilter = () => {
                                 <p className={styles.option_values} key={i}>
                                     <input
                                         type="checkbox"
-                                          onChange={(event) => { updateFilterValue(event, 'brand') }}
+                                        onChange={(event) => { updateFilterValue(event, 'city', data) }}
                                         id={data.id}
                                     />
                                     {data.city_name}
