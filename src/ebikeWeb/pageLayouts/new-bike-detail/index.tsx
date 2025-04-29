@@ -11,8 +11,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import StarIcon from '@mui/icons-material/Star';
 import styles from './index.module.scss';
-import { newBikeData } from './data';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { Thumbs } from 'swiper/modules';
@@ -22,9 +21,15 @@ import 'swiper/css/thumbs';
 import 'swiper/css/free-mode';
 import FeatureSection from '@/ebikeWeb/pageLayouts/home/featureSection/index'
 import ReviewSection from "@/ebikeWeb/sharedComponents/reviewSection/index"
+import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
+import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+
+type NewBikeDetailsCompProps = {
+  _responsedetails: any;
+};
 
 
-export default function NewBikeBrand() {
+export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompProps) {
 
   const [AllnewBikeDetailsArr, setAllnewBikeDetailsArr]: any = useState([]);
   const [AllnewBikeCardArr, setAllnewBikeCardArr]: any = useState();
@@ -44,8 +49,7 @@ export default function NewBikeBrand() {
   const detailsId = params.slug3
 
   useEffect(() => {
-    fetchDealerinfo()
-    fetchBrandInfo()
+    fetchNewBikeInfo()
     let _isLoginUser = isLoginUser()
     if (_isLoginUser?.login) {
       setCustomer(_isLoginUser.info)
@@ -55,17 +59,18 @@ export default function NewBikeBrand() {
     }
   }, [])
 
-  async function fetchSimilarBrandUsedBike(brandId:any) {
-    let res = await getBikesBySpecificFilter('brand', brandId, 0)
-    setSimilarBrandUsedBike(res)
-    console.log('res ===========================>', res)
-  }
+  async function fetchNewBikeInfo() {
 
-  async function fetchBrandInfo() {
+    console.log('_responsedetails', _responsedetails)
 
-    setIsLoading(true)
-
-    const responsedetails: any = await getnewBikedetailsData(detailsId)
+    let responsedetails: any = null 
+    if(_responsedetails?.length > 0) {
+      responsedetails = _responsedetails
+    }
+    else {
+      responsedetails = await getnewBikedetailsData(detailsId)
+    }
+    
     if (responsedetails.length > 0) {
       if (responsedetails[0]?.bike?.description) {
         responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
@@ -81,33 +86,41 @@ export default function NewBikeBrand() {
           }
         })
         }
-       
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // imgArr.push('http://res.cloudinary.com/ic-solutions/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1744100393/new-bikes/zhi6onmoq0fafwjvn9jf.jpg')
-        // console.log('imgArr', imgArr)
         responsedetails[0].bike.images = imgArr
       }
     }
-
-    setAllnewBikeDetailsArr(responsedetails)
-    setAllnewBikeCardArr(responsedetails[0].bikes)
 
     if (responsedetails?.length > 0) {
       setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
     }
 
+    setAllnewBikeDetailsArr(responsedetails)
+    setAllnewBikeCardArr(responsedetails[0].bikes)
+    setIsLoading(false)
+
     console.log('res ===========================> 1', responsedetails)
     fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
+    let brand = getBrandFromId(responsedetails[0]?.bike?.brandId, BrandArr)
+    let brandName = brand && brand?.length > 0 ? brand[0].brandName : "honda"
+    fetchDealerinfo(brandName)
+    
+    // getBikesBySpecificFilter('cc', id, getAdFrom + 10)
 
-    setIsLoading(false)
     setTimeout(() => {
       window.scrollTo(0, 0)
     }, 1000);
+  }
+
+  async function fetchSimilarBrandUsedBike(brandId:any) {
+    let res = await getBikesBySpecificFilter('brand', brandId, 0)
+    setSimilarBrandUsedBike(res)
+    console.log('res ===========================>', res)
+  }
+
+  async function fetchSimilarCCUsedBike(brandId:any) {
+    let res = await getBikesBySpecificFilter('brand', brandId, 0)
+    setSimilarBrandUsedBike(res)
+    console.log('res ===========================>', res)
   }
 
   const writeopen = () => {
@@ -164,11 +177,11 @@ export default function NewBikeBrand() {
     }
   }
 
-  const brandName = ['honda', 'zxmco', 'united', 'crown', 'yamaha'];
-  async function fetchDealerinfo() {
-    setIsLoading(true)
-    const randomBrand = brandName[Math.floor(Math.random() * brandName.length)];
-    let res = await getnewBikeData({ brand: randomBrand })
+  async function fetchDealerinfo(brandName: any) {
+    const _brandName = ['honda', 'zxmco', 'united', 'crown', 'yamaha'];
+    const randomBrand = brandName[Math.floor(Math.random() * _brandName.length)];
+    // let res = await getnewBikeData({ brand: randomBrand })
+    let res = await getnewBikeData({ brand: brandName })
     if (res?.length > 0) {
       let DealerDataRes = await getdealerData(res[0].brandId)
       setAllDelaerArr(DealerDataRes.dealers)

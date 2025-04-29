@@ -7,23 +7,31 @@ type Props = {
   params: { slug3: string }
 }
 
-export async function generateMetadata({ params } : Props): Promise<Metadata> {
-  const { slug3 } = params
-  const responsedetails:any = await getnewBikedetailsData(slug3)
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug3 } = params;
+  const responsedetails: any = await getnewBikedetailsData(slug3);
+
+  const metaTitle = responsedetails?.length > 0 ? responsedetails[0]?.bike?.meta_title : "";
+  const metaDescription = responsedetails?.length > 0 ? responsedetails[0]?.bike?.meta_description : "";
 
   return {
-    title:  responsedetails?.length > 0 ? responsedetails[0].bike?.meta_title + ' | ebike.pk' : "",
-    description: responsedetails?.length > 0 ? responsedetails[0]?.bike?.meta_description + ' | ebike.pk' : "",
+    title: metaTitle ? `${metaTitle} | ebike.pk` : "ebike.pk",
+    description: metaDescription ? `${metaDescription} | ebike.pk` : "New Bikes for sale in pakistan | ebike.pk",
     openGraph: {
-        title:  responsedetails?.length > 0 ? responsedetails.bike?.meta_title + ' | ebike.pk' : "",
-        description: responsedetails?.length > 0 ? responsedetails?.bike?.meta_description + ' | ebike.pk' : "",
-    }
-  }
+      title: metaTitle ? `${metaTitle} | ebike.pk` : "ebike.pk",
+      description: metaDescription ? `${metaDescription} | ebike.pk` : "New Bikes for sale in pakistan | ebike.pk",
+    },
+  };
 }
 
 
-export default function NewBikeDetail() {
-    return (
-        <NewBikeDetailsComp /> 
-    )
+
+// ⭐ Notice we added { params } here
+export default async function NewBikeDetail({ params }: Props) {
+  const { slug3 } = params;
+  const responsedetails: any = await getnewBikedetailsData(slug3);
+
+  return (
+    <NewBikeDetailsComp _responsedetails={responsedetails} />
+  );
 }
