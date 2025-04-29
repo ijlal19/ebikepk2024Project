@@ -3,6 +3,8 @@ import NewBikeDetailsComp from "@/ebikeWeb/pageLayouts/new-bike-detail/index"
 import { Metadata } from 'next'
 import {getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions';
 
+export const revalidate = 60; 
+
 type Props = {
   params: { slug3: string }
 }
