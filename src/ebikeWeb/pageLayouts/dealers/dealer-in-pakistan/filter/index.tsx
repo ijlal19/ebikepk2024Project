@@ -1,12 +1,14 @@
 import { getDealerByFilter } from '@/ebikeWeb/functions/globalFuntions';
 import { BrandArr, CityArr } from '../../../../constants/globalData';
 import styles from './index.module.scss';
+import { useState } from 'react';
 
 export const DealerinPakFilter = () => {
 
+const [DataByFilter , setDatabyFilter] = useState<any>([]);
     let brand_filter: any[] = [];
     let city_filter: any[] = [];
-    let mergedata: any[] = [];
+
     const updateFilterValue = async (event: any, from: any, data: any) => {
         const id = data?.id;
         const isChecked = event.target.checked;
@@ -35,12 +37,8 @@ export const DealerinPakFilter = () => {
             city_filter: city_filter
         }
         const res = await getDealerByFilter(object);
-        res.map((e: any) => {
-            if (!mergedata.includes(e?.id)) {
-                mergedata.push(e)
-            }
-        })
-        console.log("data", mergedata)
+        console.log("data" , res)
+        setDatabyFilter(res)
     };
 
 

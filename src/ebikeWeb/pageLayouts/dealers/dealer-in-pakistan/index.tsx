@@ -1,6 +1,7 @@
 import { Pagination, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { DealerinPakFilter } from './filter';
+import { useState, useEffect } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { DealerinPakCard } from '../Card';
@@ -8,12 +9,12 @@ import styles from './index.module.scss';
 import { AllDealerData } from '../Data';
 import Box from '@mui/material/Box';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 
 export const DealerInPakistan = ({ dealers }: any) => {
 
     const [filteredResults, setFilteredResults] = useState(dealers);
     const [isFilterApply, setisFilterApply] = useState(false);
+    const [ dataByfilter,setDatabyFilter] = useState<any>()
     const [currentPage, setCurrentPage] = useState(1);
     const [open, setOpen] = useState(false);
 
@@ -56,10 +57,9 @@ export const DealerInPakistan = ({ dealers }: any) => {
         if (!value) {
             setFilteredResults(dealers);
         } else {
-            const results = dealers.filter((item: any) =>
-                item.shop_name.toLowerCase().includes(value)
-            );
-            setFilteredResults(results);
+            const results = dealers?.filter((item: any) =>
+                item?.shop_name.toLowerCase().includes(value))
+                setFilteredResults(results);
         }
     };
 
