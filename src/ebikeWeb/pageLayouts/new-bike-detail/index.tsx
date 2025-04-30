@@ -42,6 +42,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   const [isLoading, setIsLoading] = useState(true);
   const [morePopup, setMorePopup] = useState(false);
   const [similarBrandUsedBike, setSimilarBrandUsedBike] = useState([]);
+  const [similarCCUsedBike, setSimilarCCUsedBike] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [allMechanicArr, setAllMechanicArr]: any = useState([]);
 
@@ -74,6 +75,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
     }
     
     if (responsedetails.length > 0) {
+      
       if (responsedetails[0]?.bike?.description) {
         responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
       }
@@ -90,29 +92,29 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
         }
         responsedetails[0].bike.images = imgArr
       }
-    }
 
-    if (responsedetails?.length > 0) {
+      let CC = 70
+      if (responsedetails[0]?.bike?.displacement?.indexOf(',') > -1) {
+        responsedetails[0].bike.displacement = responsedetails[0]?.bike?.displacement?.split(',')[0]
+        CC = responsedetails[0]?.bike?.displacement?.split(',')[1] ? responsedetails[0]?.bike?.displacement?.split(',')[1] : 70; 
+      }
+
       setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
-    }
-
-    setAllnewBikeDetailsArr(responsedetails)
-    setAllnewBikeCardArr(responsedetails[0].bikes)
-    setIsLoading(false)
-
-    console.log('res ===========================> 1', responsedetails)
-
-    fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
-    fetchSimilarBrandDealerInfo(responsedetails[0]?.bike?.brandId)
-    fetchSimilarBrandMechanicInfo(responsedetails[0]?.bike?.brandId)
     
-    // let brand = getBrandFromId(responsedetails[0]?.bike?.brandId, BrandArr)
-    // let brandName = brand && brand?.length > 0 ? brand[0].brandName : "honda"
-    // getBikesBySpecificFilter('cc', id, getAdFrom + 10)
-
-    setTimeout(() => {
-      window.scrollTo(0, 0)
-    }, 1000);
+      setAllnewBikeDetailsArr(responsedetails)
+      setAllnewBikeCardArr(responsedetails[0].bikes)
+      setIsLoading(false)
+  
+      fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
+      fetchSimilarBrandDealerInfo(responsedetails[0]?.bike?.brandId)
+      fetchSimilarBrandMechanicInfo(responsedetails[0]?.bike?.brandId)
+      fetchSimilarCCUsedBike(CC)
+      
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 1000);
+    }
+    
   }
 
   async function fetchSimilarBrandUsedBike(brandId:any) {
@@ -121,10 +123,10 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
     console.log('res ===========================>', res)
   }
 
-  async function fetchSimilarCCUsedBike(brandId:any) {
-    let res = await getBikesBySpecificFilter('brand', brandId, 0)
-    setSimilarBrandUsedBike(res)
-    console.log('res ===========================>', res)
+  async function fetchSimilarCCUsedBike(cc:any) {
+    let res = await getBikesBySpecificFilter('cc', cc, 0)
+    setSimilarCCUsedBike(res)
+    console.log('res ===========================> fetchSimilarCCUsedBike', res)
   }
 
   async function fetchSimilarBrandMechanicInfo(brandId: any) {    
@@ -145,14 +147,14 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   }
 
   async function fetchSimilarBrandDealerInfo(brandId: any) {
-    // const _brandName = ['honda', 'zxmco', 'united', 'crown', 'yamaha'];
-    // const randomBrand = brandName[Math.floor(Math.random() * _brandName.length)];
-    
     let DealerDataRes = await getdealerData(brandId)
-    console.log('DealerDataRes', DealerDataRes)
-    setAllDelaerArr(DealerDataRes.dealers)
+    if(DealerDataRes?.dealers?.length > 0) {
+      setAllDelaerArr(DealerDataRes.dealers)
+    }
+    else {
+      setAllDelaerArr(initialDealers)
+    }
   }
-  
 
   const writeopen = () => {
     if (!customer || customer == "not_login" || customer?.id == undefined) {
@@ -472,7 +474,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                         <Box className={styles.dealers_box}  sx={{ display: isMobile ? 'none' : 'flex' }}>
                           {
                             allDealerArr.length > 0 ?
-                              <> <Typography className={styles.heading}>Dealers</Typography>
+                              <> <Typography className={styles.heading}>Related Dealers</Typography>
                                 <Box className={styles.Dealers_card}>
                                   {
                                     allDealerArr?.map((e: any, i: any) => {
@@ -496,7 +498,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                         <Box className={styles.dealers_box}  sx={{ display: isMobile ? 'none' : 'flex' }}>
                           {
                             allMechanicArr.length > 0 ?
-                              <> <Typography className={styles.heading}> Mechanics </Typography>
+                              <> <Typography className={styles.heading}>Related Mechanics </Typography>
                                 <Box className={styles.Dealers_card}>
                                   {
                                     allMechanicArr?.map((e: any, i: any) => {
@@ -552,6 +554,18 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                 <Box className={styles.other_card}>
                 <Typography className={styles.other_card_title}> Similar Brand Used Bikes </Typography>
                   <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarBrandUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={()=>{}}  />
+                </Box> 
+              </>
+              : "" 
+            }
+          </div>
+
+          <div style={{ marginTop:"20px" }}>
+            { similarCCUsedBike && similarCCUsedBike.length > 0 ?  
+              <>
+                <Box className={styles.other_card}>
+                <Typography className={styles.other_card_title}> Similar CC Used Bikes </Typography>
+                  <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarCCUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={()=>{}}  />
                 </Box> 
               </>
               : "" 
