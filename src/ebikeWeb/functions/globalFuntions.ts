@@ -200,12 +200,12 @@ function getFeaturedDealer() {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
     })
-    .then(response => response.json()).then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 
@@ -221,30 +221,30 @@ function getAllDealer() {
 }
 
 
-function getSingleDealerDetails(id:any) {
+function getSingleDealerDetails(id: any) {
     return fetch(Gconfig.ebikeApi + `dealer/get-dealer-by-id/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
-    .then(response => response.json()).then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
-function getSimilarDealers(id:any) {
+function getSimilarDealers(id: any) {
     return fetch(Gconfig.ebikeApi + `dealer/dealer-by-brand/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
-    .then(response => response.json()).then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 // -----------------
@@ -253,15 +253,15 @@ function getFeaturedMechanics() {
     return fetch(Gconfig.ebikeApi + `mechanic/get-featured-mechanic`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body:JSON.stringify({ payload: 8 })
+        body: JSON.stringify({ payload: 8 })
     })
-    .then(response => response.json()).then(data => {
-        console.log('data', data)
-        return data
-    })
-    .catch((err) => {
-        return { success: false }
-    })
+        .then(response => response.json()).then(data => {
+            console.log('data', data)
+            return data
+        })
+        .catch((err) => {
+            return { success: false }
+        })
 }
 
 
@@ -277,30 +277,30 @@ function getAllMechanics() {
 }
 
 
-function getSingleMechanicsDetails(id:any) {
+function getSingleMechanicsDetails(id: any) {
     return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic-by-id/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
-    .then(response => response.json()).then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
-function getSimilarMechanics(id:any) {
+function getSimilarMechanics(id: any) {
     return fetch(Gconfig.ebikeApi + `dealer/dealer-by-brand/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
-    .then(response => response.json()).then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 function getPostBlogcomment(data: any) {
@@ -315,81 +315,134 @@ function getPostBlogcomment(data: any) {
         })
 }
 
-    function getAllBlogComment() {
-        return fetch(Gconfig.ebikeApi + `news/pakistani-startup-introduces-electric-vehicle-scooter/646`)
-            .then(response => response.json()).then(data => {
-                return data
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-
-
-    function getAllFeaturedBike() {
-        return fetch(Gconfig.ebikeApi + `classified/get-featured-ads`, {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
-            })
-            .then(response => response.json()).then(data => {
-                return data
-            })
-            .catch((err) => {
-                console.log(err) 
-            })
-    }
-
-    function getMyAds(uid:any) {
-        return fetch(Gconfig.ebikeApi + `classified/get-user-adds/${uid}`, {
-                method: 'GET',
-                headers: { "Content-Type": "application/json" },
-                // body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
-            })
-            .then(response => response.json()).then(data => {
-                return data
-            })
-            .catch((err) => {
-                return { success: false }
-            })
-    }
-
-    function MarkBikeAsSold(id:any, data:any) {
-        return fetch(Gconfig.ebikeApi + `classified/sold-used-bike/${id}`, {
-                method: 'PUT',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json()).then(data => {
-                return data
-            })
-            .catch((err) => {
-                console.log(err) 
-            })
-    }
-    
-
-    function sendEmailLetter(data:any) {
-        return fetch(Gconfig.ebikeApi + `news-letter/create`, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        })
+function getAllBlogComment() {
+    return fetch(Gconfig.ebikeApi + `news/pakistani-startup-introduces-electric-vehicle-scooter/646`)
         .then(response => response.json()).then(data => {
             return data
         })
         .catch((err) => {
-            console.log(err) 
+            console.log(err)
         })
-    }
+}
+
+
+function getAllFeaturedBike() {
+    return fetch(Gconfig.ebikeApi + `classified/get-featured-ads`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "type": "CLASSIFIED_AD_FEATURED" })
+    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function getMyAds(uid: any) {
+    return fetch(Gconfig.ebikeApi + `classified/get-user-adds/${uid}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+        // body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
+    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+}
+
+function MarkBikeAsSold(id: any, data: any) {
+    return fetch(Gconfig.ebikeApi + `classified/sold-used-bike/${id}`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+
+function sendEmailLetter(data: any) {
+    return fetch(Gconfig.ebikeApi + `news-letter/create`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function getdatabycitybrand(brandId: any, cityId: any, limit: any) {
+    return fetch(`http://localhost:4001/api/classified/get-bike-data-by-city-brand/${brandId}/${cityId}/5/${limit}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" }
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+        .catch((err) => {
+            console.log("error", err)
+        })
+}
+
+function getDealerByFilter(data: any) {
+
+    return fetch(Gconfig.ebikeApi + `dealers/get-dealer-by-filter`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            return err
+        });
+}
 
 export {
     getPostcomment,
     getPostBlogcomment,
     getAllBlogComment,
-     getSingleBlogData, createmechanic, createdealer,
-    getAllbikesDetail, getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getFilteredAllbikesDetail,
-    getbrandData, getnewBikeData, getdealerData, getnewBikedetailsData, uplaodImageFunc, getBikesBySpecificFilter, getAllBlog, getAllDealer, getFeaturedDealer,
-    getSingleDealerDetails, getSimilarDealers, getFeaturedMechanics, getAllMechanics, getSingleMechanicsDetails, getSimilarMechanics,
-    getAllFeaturedBike, getMyAds, MarkBikeAsSold, sendEmailLetter
+    getSingleBlogData,
+    createmechanic,
+    createdealer,
+    getAllbikesDetail,
+    getSinglebikesDetail,
+    getBrandFromId,
+    getCityFromId,
+    getYearFromId,
+    getFilteredAllbikesDetail,
+    getbrandData,
+    getnewBikeData,
+    getdealerData,
+    getnewBikedetailsData,
+    uplaodImageFunc,
+    getBikesBySpecificFilter,
+    getAllBlog,
+    getAllDealer,
+    getFeaturedDealer,
+    getSingleDealerDetails,
+    getSimilarDealers,
+    getFeaturedMechanics,
+    getAllMechanics,
+    getSingleMechanicsDetails,
+    getSimilarMechanics,
+    getAllFeaturedBike,
+    getMyAds,
+    MarkBikeAsSold,
+    sendEmailLetter
+    , getdatabycitybrand,
+    getDealerByFilter
 }

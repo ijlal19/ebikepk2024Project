@@ -1,67 +1,55 @@
 'use client'
-import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+import {getBrandFromId, getCityFromId, getdatabycitybrand } from "@/ebikeWeb/functions/globalFuntions";
 import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
-import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import ItemCard from '@/ebikeWeb/sharedComponents/itemCard/index';
+import CityFilter from "@/ebikeWeb/sharedComponents/city_filter";
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { priceWithCommas } from '@/genericFunctions/geneFunc';
-import Filters from '@/ebikeWeb/sharedComponents/filters';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 
 const AllUsedBike = () => {
-    const isMobile = useMediaQuery('(max-width:991px)');
-    const isMobile2 = useMediaQuery('(max-width:766px)');
-    const [allBikesArr, setAllBikesArr] = useState([]);
-    const [pageNo, setPageNo] = useState(-12);
-    const [isLoading, setIsLoading] = useState(false);
-    const [featuredData, setFeaturedData] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
+    const isMobile2 = useMediaQuery('(max-width:768px)');
+    const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
+    const [allBikesArr, setAllBikesArr] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const router = useRouter()
+    const params = useParams();
+    console.log("data", params);
 
     useEffect(() => {
-        fetchBikeInfo(pageNo)
-        fetchFeaturedBike()
+        fetachdatabrandandcity()
     }, [])
 
-    async function fetchBikeInfo(_pageNo) {
-        let curentFetchPage = _pageNo + 12
-        setPageNo(curentFetchPage)
+    const fetachdatabrandandcity = async () => {
         setIsLoading(true)
-        let res = await getAllbikesDetail(curentFetchPage)
-        setAllBikesArr(res)
+        const getdata = await getdatabycitybrand(params.slugbrandid, params.slugcityid, '12')
+        if (getdata?.data.length > 0) {
+            setAllBikesArr(getdata?.data)
+        }
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
 
-    async function fetchFeaturedBike() {
-        let res = await getAllFeaturedBike();
-        if (res?.length > 0) {
-            setFeaturedData(res)
-        }
-        else {
-            setFeaturedData([])
-        }
-    }
-
-    function goToDetailPage(val) {
+    function goToDetailPage(val: any) {
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
 
 
-    function longCard(val, ind) {
+    function longCard(val: any, ind: any) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        let year = getCityFromId(val?.yearId, YearArr)
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         let href = `/used-bikes/${urlTitle}/${val.id}`
@@ -95,7 +83,7 @@ const AllUsedBike = () => {
                         <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
 
                         <Typography className={styles.bike_details}>
-                            {val?.year?.year}
+                            {year && year?.length > 0 && year[0].year}
                             <span className={styles.verticl_line}> | </span>
                             <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
                             <span className={styles.verticl_line}> | </span>
@@ -117,9 +105,10 @@ const AllUsedBike = () => {
         )
     }
 
-    function GridCard(val, ind) {
+    function GridCard(val: any, ind: any) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        let year = getCityFromId(val?.yearId, YearArr)
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         let href = `/used-bikes/${urlTitle}/${val.id}`
@@ -146,7 +135,7 @@ const AllUsedBike = () => {
                         <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
 
                         <Typography className={styles.grid_bike_details}>
-                            {val?.year?.year}
+                            {year && year?.length > 0 && year[0].year}
                             <span className={styles.grid_verticl_line}> | </span>
                             <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
                             <span className={styles.grid_verticl_line}> | </span>
@@ -167,31 +156,9 @@ const AllUsedBike = () => {
             {
                 !isLoading ?
                     <>
-                        {
-                            isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
-                        }
-
-                        <Box className={styles.usedBike_headingBpx}>
-                            <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
-                            <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
-                        </Box>
-
-                        <UsedBikesSection from='featuredBike' featuredData={featuredData} />
-
                         <Box className={styles.all_bike_main}>
-                            {
-                                isMobile2 ?
-                                    showfilter ? <Filters
-                                        setLoader={setIsLoading}
-                                        updateData={setAllBikesArr}
-                                        fetchBikeInfo={fetchBikeInfo}
-                                    /> : '' :
-                                    <Filters
-                                        setLoader={setIsLoading}
-                                        updateData={setAllBikesArr}
-                                        fetchBikeInfo={fetchBikeInfo}
-                                    />
-                            }
+
+                            <CityFilter />
                             <div className={styles.main_box}>
                                 <div className={styles.navigation}>
                                     <div className={styles.text_container}>
@@ -202,11 +169,9 @@ const AllUsedBike = () => {
                                         <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
                                     </div>
                                 </div>
-
-
-
                                 <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
                                     {allBikesArr?.length > 0 && allBikesArr.map((val, ind) => {
+                                        console.log("data", val)
                                         return (
                                             isGridSelected ? GridCard(val, ind) : longCard(val, ind)
                                         )
@@ -215,7 +180,7 @@ const AllUsedBike = () => {
 
 
                                 <div className={styles.viewMoreBtnContainer} >
-                                    <button onClick={() => { fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
+                                    <button onClick={() => { fetachdatabrandandcity }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
                                 </div>
                             </div>
 
@@ -235,21 +200,9 @@ const AllUsedBike = () => {
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>
-                                    <Link href="/dealers" rel="noopener noreferrer">
-                                        <img
-                                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
-                                            alt="/dealer"
-                                            className={styles.add_image} />
-                                    </Link>
-                                    <Link href="/mechanics" rel="noopener noreferrer">
-                                        <img
-                                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
-                                            alt="/mechanic"
-                                            className={styles.add_image} />
-                                    </Link>
                                     <Link href="/blog" rel="noopener noreferrer">
                                         <img
-                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
+                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg                                            "
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>

@@ -26,8 +26,8 @@ const My_Order = () => {
     }, [])
 
     const fetchMyOrder = async (id: any) => {
-        setIsLoading(true)
-        const getOrder = await  (id)
+        setIsLoading(false)
+        const getOrder = await getMyOrder(id)
         console.log("data", getOrder?.oders)
         if (getOrder?.oders?.length > 0) {
             setMyAllOrder(getOrder?.oders)

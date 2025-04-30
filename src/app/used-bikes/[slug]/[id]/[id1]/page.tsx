@@ -24,6 +24,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title = 'Used Bikes ' + cc +'cc'+ ' for Sale in Pakistan |ebike.pk';
     description ='Used bikes '+ cc + 'cc' + ' for sale in Pakistan. Get complete '+ cc + "cc" + ' used bikes details with pics and video on Pakistans Ist Exclusive motorcycle portal ebike.pk'
   }
+  else if(from?.indexOf('city') > -1 && from?.indexOf('brand') > -1) {
+    let city = id
+    title = 'Used Bikes & Motorcycles for Sale in ' + city + ' | ebike.pk'
+    description = 'Used bikes & motorcycles for sale in ' + city + ' find wide range of honda used bikes and yamaha motorcycles for sale in Karachi pakistan.'
+  }
   else if(from?.indexOf('city') > -1) {
       let city = id
       title = 'Used Bikes & Motorcycles for Sale in ' + city + ' | ebike.pk'
