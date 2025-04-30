@@ -396,20 +396,36 @@ function getdatabycitybrand(brandId: any, cityId: any, limit: any) {
 }
 
 function getDealerByFilter(data: any) {
-
     return fetch(Gconfig.ebikeApi + `dealers/get-dealer-by-filter`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch((err) => {
-            return err
-        });
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch((err) => {
+        return err
+    });
 }
+
+function getMechanicByBrandId(idArr :any) {
+    return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic-by-filter`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ brand_filter: idArr, city_filter: []  })
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch((err) => {
+        return err
+    });
+}
+
+
 
 export {
     getPostcomment,
@@ -444,5 +460,6 @@ export {
     MarkBikeAsSold,
     sendEmailLetter
     , getdatabycitybrand,
-    getDealerByFilter
+    getDealerByFilter,
+    getMechanicByBrandId
 }

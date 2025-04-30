@@ -2,7 +2,7 @@
 import { WriteModal, MoreReviewModal } from '@/ebikeWeb/sharedComponents/Review-popup';
 import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { getdealerData, getnewBikeData, getnewBikedetailsData, getBikesBySpecificFilter } from '@/ebikeWeb/functions/globalFuntions';
+import { getdealerData, getnewBikeData, getnewBikedetailsData, getBikesBySpecificFilter, getMechanicByBrandId } from '@/ebikeWeb/functions/globalFuntions';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { priceWithCommas } from '@/genericFunctions/geneFunc';
@@ -23,6 +23,7 @@ import FeatureSection from '@/ebikeWeb/pageLayouts/home/featureSection/index'
 import ReviewSection from "@/ebikeWeb/sharedComponents/reviewSection/index"
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+import { initialDealers, initialMechanics } from "./dummy_data"
 
 type NewBikeDetailsCompProps = {
   _responsedetails: any;
@@ -35,13 +36,14 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   const [AllnewBikeCardArr, setAllnewBikeCardArr]: any = useState();
   const [customer, setCustomer] = useState<any>('not_login');
   const [moreReviewArray, setmoreReviewArray] = useState();
-  const [allDealerArr, setAllDelaerArr] = useState([]);
+  const [allDealerArr, setAllDelaerArr]:any = useState([]);
   const [writePopup, setWritePopup] = useState(false);
   const isMobile = useMediaQuery('(max-width:768px)');
   const [isLoading, setIsLoading] = useState(true);
   const [morePopup, setMorePopup] = useState(false);
   const [similarBrandUsedBike, setSimilarBrandUsedBike] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
+  const [allMechanicArr, setAllMechanicArr]: any = useState([]);
 
   const router = useRouter()
   const params = useParams()
@@ -99,11 +101,13 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
     setIsLoading(false)
 
     console.log('res ===========================> 1', responsedetails)
+
     fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
-    let brand = getBrandFromId(responsedetails[0]?.bike?.brandId, BrandArr)
-    let brandName = brand && brand?.length > 0 ? brand[0].brandName : "honda"
-    fetchDealerinfo(brandName)
+    fetchSimilarBrandDealerInfo(responsedetails[0]?.bike?.brandId)
+    fetchSimilarBrandMechanicInfo(responsedetails[0]?.bike?.brandId)
     
+    // let brand = getBrandFromId(responsedetails[0]?.bike?.brandId, BrandArr)
+    // let brandName = brand && brand?.length > 0 ? brand[0].brandName : "honda"
     // getBikesBySpecificFilter('cc', id, getAdFrom + 10)
 
     setTimeout(() => {
@@ -122,6 +126,33 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
     setSimilarBrandUsedBike(res)
     console.log('res ===========================>', res)
   }
+
+  async function fetchSimilarBrandMechanicInfo(brandId: any) {    
+    let arr = []
+    arr.push(brandId)
+    let mechanicDataRes = await getMechanicByBrandId(arr)
+    if(mechanicDataRes.length > 0) {
+      if(mechanicDataRes.length > 4) {
+        setAllMechanicArr(mechanicDataRes?.slice(0,4))
+      }
+      else {
+        setAllMechanicArr(mechanicDataRes)
+      }
+    }
+    else {
+      setAllMechanicArr(initialMechanics)
+    }
+  }
+
+  async function fetchSimilarBrandDealerInfo(brandId: any) {
+    // const _brandName = ['honda', 'zxmco', 'united', 'crown', 'yamaha'];
+    // const randomBrand = brandName[Math.floor(Math.random() * _brandName.length)];
+    
+    let DealerDataRes = await getdealerData(brandId)
+    console.log('DealerDataRes', DealerDataRes)
+    setAllDelaerArr(DealerDataRes.dealers)
+  }
+  
 
   const writeopen = () => {
     if (!customer || customer == "not_login" || customer?.id == undefined) {
@@ -174,17 +205,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
     }
     else {
       return ""
-    }
-  }
-
-  async function fetchDealerinfo(brandName: any) {
-    const _brandName = ['honda', 'zxmco', 'united', 'crown', 'yamaha'];
-    const randomBrand = brandName[Math.floor(Math.random() * _brandName.length)];
-    // let res = await getnewBikeData({ brand: randomBrand })
-    let res = await getnewBikeData({ brand: brandName })
-    if (res?.length > 0) {
-      let DealerDataRes = await getdealerData(res[0].brandId)
-      setAllDelaerArr(DealerDataRes.dealers)
     }
   }
 
@@ -295,7 +315,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             </Typography>
                           </Box> : ""}
 
-                          {e?.bike?.newbike_comments?.length > 0 ? <Button className={styles.view_detail_btn} disableRipple onClick={() => { moreOpen() }}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button> : ""}
+                          {/* {e?.bike?.newbike_comments?.length > 0 ? <Button className={styles.view_detail_btn} disableRipple onClick={() => { moreOpen() }}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button> : ""} */}
                           <MoreReviewModal props={morepopupData} closeFunctionmore={moreClose} />
                           <Button className={styles.view_detail_btn} disableRipple onClick={() => { writeopen() }}> Write Your Review</Button>
                           <WriteModal props={writepopupData} closeFunction={writeclose} />
@@ -407,7 +427,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             } */}
                           </Box>
 
-                          {e?.bike?.newbike_comments?.length > 0 ? <Box className={styles.comment_box}>
+                          {/* {e?.bike?.newbike_comments?.length > 0 ? <Box className={styles.comment_box}>
                             Recent Reviews
                             <Typography className={styles.comment_box_data}>
                               <Typography className={styles.data_heading}>Name :</Typography>
@@ -425,7 +445,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                     <StarIcon sx={{ color: 'orange', fontSize: '15px' }} />
                                     <StarIcon sx={{ color: 'orange', fontSize: '15px' }} />
                                     <StarIcon sx={{ color: 'orange', fontSize: '15px' }} />
-                                    {/* ({e?.bike?.newbike_comments[0]?.rating}) */}
                                   </Typography> : '-'}
                             </Typography>
                             <Typography className={styles.comment_box_data}>
@@ -442,9 +461,9 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                 </Typography> : '-'
                               }
                             </Typography>
-                          </Box> : ""}
+                          </Box> : ""} */}
 
-                          {e?.bike?.newbike_comments?.length > 0 ? <Button className={styles.view_detail_btn} disableRipple onClick={() => { moreOpen() }}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button> : ""}
+                          {/* {e?.bike?.newbike_comments?.length > 0 ? <Button className={styles.view_detail_btn} disableRipple onClick={() => { moreOpen() }}> More Reviews <KeyboardArrowRightIcon sx={{ fontSize: '18px' }} /></Button> : ""} */}
                           <MoreReviewModal props={morepopupData} closeFunctionmore={moreClose} />
                           <Button className={styles.view_detail_btn} disableRipple onClick={() => { writeopen() }}> Write Your Review</Button>
                           <WriteModal props={writepopupData} closeFunction={writeclose} />
@@ -468,16 +487,34 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       )
                                     })
                                   }
-                                  <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/dealers" className={styles.Link_tag}>View More Dealers <KeyboardArrowRightIcon /></Link></Button>
+                                  <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/dealers" className={styles.Link_tag}>More Dealers <KeyboardArrowRightIcon /></Link></Button>
                                 </Box> </> : ''
                           }
                         </Box>
 
-                        {/* <Box sx={{ display: isMobile ? 'none' : 'flex' }}>
-                          <Link href='/blog'>
-                            <img style={{ width: "100%" }} src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" />
-                          </Link>
-                        </Box> */}
+
+                        <Box className={styles.dealers_box}  sx={{ display: isMobile ? 'none' : 'flex' }}>
+                          {
+                            allMechanicArr.length > 0 ?
+                              <> <Typography className={styles.heading}> Mechanics </Typography>
+                                <Box className={styles.Dealers_card}>
+                                  {
+                                    allMechanicArr?.map((e: any, i: any) => {
+                                      return (
+                                        <Box className={styles.card_main} key={i}>
+                                          <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
+                                          <Box className={styles.card_text}>
+                                            <Typography className={styles.card_title}>{e?.shop_name}</Typography>
+                                            <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
+                                          </Box>
+                                        </Box>
+                                      )
+                                    })
+                                  }
+                                  <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/mechanics" className={styles.Link_tag}>More Mechanics <KeyboardArrowRightIcon /></Link></Button>
+                                </Box> </> : ''
+                          }
+                        </Box>
 
                         <Box sx={{ display: isMobile ? 'none' : 'flex' }}>
                           <Link href='/forum'>
@@ -520,9 +557,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
               : "" 
             }
           </div>
-
-
-
 
         </> :
           <div className={styles.load_main}>
