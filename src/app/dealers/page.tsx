@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Dealer from '@/ebikeWeb/pageLayouts/dealers/index';
 import { Metadata } from 'next'
-import Head from 'next/head';
-import Script from 'next/script';
+import { getFeaturedDealer, getAllDealer } from "@/ebikeWeb/functions/globalFuntions";
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -15,22 +14,16 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
 
-export default function Dealers() { 
-    return (
+export default async function Dealers() { 
+  let delaer = await getAllDealer() 
+  let featuredDelaer = await getFeaturedDealer() 
+
+  return (
       <>
-        {/* <link
-          rel="preload"
-          href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-          as="script"
-          crossOrigin="anonymous" // Add this
-        /> */}
-        {/* <Script
-         strategy="beforeInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-          crossOrigin="anonymous"
-        ></Script> */}
-      
-        <Dealer/>
-        </>
+        <Dealer 
+          featuredDelaer={featuredDelaer} 
+          delaer={delaer}
+        />
+      </>
     )
 }

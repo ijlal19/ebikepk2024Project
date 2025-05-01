@@ -17,6 +17,8 @@ export const DealerInPakistan = ({ dealers }: any) => {
     const [ dataByfilter,setDatabyFilter] = useState<any>()
     const [currentPage, setCurrentPage] = useState(1);
     const [open, setOpen] = useState(false);
+    const [filteredCities, setFilteredCities] = useState([])
+    const [filteredBrand, setFilteredBrrand] = useState([])
 
 
     useEffect(() => {
@@ -40,6 +42,8 @@ export const DealerInPakistan = ({ dealers }: any) => {
     const totalPages = Math.ceil(dealers?.length / DealerPerPage);
     const currentData = dealers?.slice((currentPage - 1) * DealerPerPage, currentPage * DealerPerPage);
 
+    console.log('currentData', currentData)
+
     const filterDealerPerPage = 10;
     const filterPages = Math.ceil(filteredResults?.length / filterDealerPerPage);
     const filterData = filteredResults?.slice((currentPage - 1) * filterDealerPerPage, currentPage * filterDealerPerPage);
@@ -54,12 +58,30 @@ export const DealerInPakistan = ({ dealers }: any) => {
 
         const value = e.target.value.toLowerCase();
 
-        if (!value) {
+        // if no filter apply
+        if (!value && filteredCities.length == 0 && filteredBrand.length == 0) {
             setFilteredResults(dealers);
-        } else {
-            const results = dealers?.filter((item: any) =>
-                item?.shop_name.toLowerCase().includes(value))
-                setFilteredResults(results);
+        } 
+        else {
+            // if filters apply
+            let results:any = [...dealers]
+            let updatedResult = []
+            
+            console.log('results 1', results, value)
+            if(value) {
+              results = results.filter((item: any) => item?.shop_name.toLowerCase().includes(value) )
+            }
+           
+            if(filteredCities.length > 0) {
+                results = results.filter((item: any) => filteredCities.indexOf(item?.city_id) > -1 )
+            }
+
+            if(filteredBrand.length > 0) {
+                results =  results.filter((item: any) => filteredBrand.indexOf(item?.brand_id) > -1 )
+            }
+
+            console.log('results 2', results)
+            setFilteredResults(results);
         }
     };
 

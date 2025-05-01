@@ -6,31 +6,54 @@ import { FeatureDelers } from './feature-dealers';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 
-const Dealer = () => {
+type DealerComp = {
+  featuredDelaer: any;
+  delaer: any;
+};
+
+const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
 
   const [allDealers, setAllDealers] = useState([])
   const [featuredDealers, setFeaturedDealers] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetchInfo()
   }, [])
 
   async function fetchInfo() {
-    setIsLoading(true)
-    let res = await getAllDealer()
-    setAllDealers(res)
-    if(!res){
-      setIsLoading(true)
+    
+    let res1:any = null
+    let res2:any = null
+
+    if(featuredDelaer?.length > 0) {
+      setFeaturedDealers(featuredDelaer)
     }
-    else{
-      let res1 = await getFeaturedDealer()
-      setFeaturedDealers(res1)
-      setIsLoading(false)
-     setTimeout(() => {
-          window.scrollTo(0, 0)
-        }, 1000);
+    else {
+      res1 = await getFeaturedDealer()
+      if(res1?.length > 0) {
+        setFeaturedDealers(res1)
+      }
+      else {
+        setFeaturedDealers([])
+      }
     }
+  
+    if(delaer?.length > 0) {
+      setAllDealers(delaer)
+    }
+    else {
+      res2 = await getAllDealer()
+      if(res2?.length > 0) {
+        setAllDealers(res2)
+      }
+      else {
+        setAllDealers([])
+      }
+    }
+
+    setIsLoading(false)
+
   }
 
   return (
@@ -39,15 +62,16 @@ const Dealer = () => {
         isLoading ?
          <>
           {<div className={styles.load_main}>
-          <div className={styles.load_div}>
-            <Loader isLoading={isLoading} />
-          </div>
+            <div className={styles.load_div}>
+              <Loader isLoading={isLoading} />
+            </div>
           </div>}
          </>
           : 
           <>
-            <FeatureDelers featuredDealers={featuredDealers}/>
-            <DealerInPakistan dealers={allDealers}  />
+            {featuredDealers?.length > 0 ? <FeatureDelers featuredDealers={featuredDealers}/> : "" }
+            {allDealers?.length > 0 ? <DealerInPakistan dealers={allDealers}  /> : "" }
+            { featuredDealers?.length == 0 &&  allDealers?.length == 0 ? <p> No Dealer Data Found </p> : "" }
           </>
       }
     </div>
