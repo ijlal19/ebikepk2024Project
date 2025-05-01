@@ -66,7 +66,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
                 <div className={styles.heading_box}>
                     <p className={styles.showrooms_heading}>Bike Showrooms / Mechanics in Pkaistan</p>
                     <div className={styles.search_box}>
-                        <Button onClick={() => { }} className={styles.drawer_button}><MenuIcon /></Button>
+                        <Button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon /></Button>
                         <Drawer open={open} onClose={toggleDrawer(false)}>
                             {DrawerList}
                         </Drawer>
