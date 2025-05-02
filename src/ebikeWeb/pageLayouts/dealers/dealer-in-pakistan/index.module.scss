@@ -1,24 +1,27 @@
 @import '../../../styles/variable';
-.filter_drawer_main{
+
+.filter_drawer_main {
     width: 250px;
     padding: 0px !important;
     overflow-y: auto;
-    
+
     scroll-behavior: smooth;
 
-            &::-webkit-scrollbar {
-                width: 6px;
-            }
-            &::-webkit-scrollbar-thumb {
-                background-color: #d2d2d2;
-                border-radius: 10px;
-            }
-            &::-webkit-scrollbar-track {
-                background-color: #f0f0f0;
-            }
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #d2d2d2;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #f0f0f0;
+    }
 }
 
-.Dealer_pakistan_main{
+.Dealer_pakistan_main {
     width: 100%;
     font-family: sans-serif;
     max-width: 900px;
@@ -31,34 +34,39 @@
         padding: 0px !important;
     }
 
-    .heading_box{
+    .heading_box {
         width: 100%;
         padding: 10px 10px 0px 10px;
         box-sizing: border-box;
         height: auto;
         border: 1px solid #d2d2d2;
+
         @media (max-width:768px) {
             // max-width: ;
             width: 95%;
             margin: auto;
         }
 
-        .showrooms_heading{
-            font-size:16px;
+        .showrooms_heading {
+            font-size: 16px;
             margin: 0px;
             padding: 5px 0px 5px 0px;
             text-align: center;
             color: $primary_two;
         }
 
-        .search_box{
+        .search_box {
             width: 100%;
             padding: 5px 0px 20px 0px;
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            justify-content: left;
+            column-gap: 200px;
 
-            .drawer_button{
+            @media (max-width:768px) {
+                column-gap: 10px;
+            }
+
+            .drawer_button {
                 background: $primary_two;
                 color: white;
                 font-size: 12px;
@@ -67,11 +75,13 @@
                 font-weight: bolder;
                 display: flex;
             }
-            .input{
+
+            .input {
                 padding: 9px 0px 9px 15px;
                 width: 40%;
                 border: 1px solid #d2d2d2;
                 outline: none;
+
                 @media (max-width:768px) {
                     width: 80%;
                 }
@@ -79,7 +89,7 @@
         }
     }
 
-    .dealer_card_section{
+    .dealer_card_section {
         margin: 20px 0px 10px 0px;
         padding: 10px 0px;
 
@@ -91,8 +101,9 @@
         }
     }
 }
+
 .pagination {
     display: flex;
     justify-content: center;
     margin-top: 10px;
- }
+}

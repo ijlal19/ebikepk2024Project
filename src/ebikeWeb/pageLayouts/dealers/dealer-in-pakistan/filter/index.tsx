@@ -1,89 +1,113 @@
-import { getDealerByFilter } from '@/ebikeWeb/functions/globalFuntions';
 import { BrandArr, CityArr } from '../../../../constants/globalData';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
-import { useState } from 'react';
 
-export const DealerinPakFilter = () => {
+export const DealerinPakFilter = ({ setFilterobject }: any) => {
 
-const [DataByFilter , setDatabyFilter] = useState<any>([]);
-    let brand_filter: any[] = [];
-    let city_filter: any[] = [];
+    const router = useRouter()
+    const [brandFilter, setBrandFilter] = useState<any[]>([]);
+    const [cityFilter, setCityFilter] = useState<any[]>([]);
 
-    const updateFilterValue = async (event: any, from: any, data: any) => {
+    const parseFromLocalStorage = (key: string) => {
+        try {
+            const value = localStorage.getItem(key);
+            return value ? JSON.parse(value) : [];
+        } catch (error) {
+            console.error("error", error);
+            return [];
+        }
+    };
+
+    useEffect(() => {
+        const selectedBrand = parseFromLocalStorage("brand_filter");
+        const selectedCity = parseFromLocalStorage("city_filter");
+        setBrandFilter(selectedBrand);
+        setCityFilter(selectedCity);
+    }, []);
+
+    const updateFilterValue = async (event: any, from: string, data: any) => {
         const id = data?.id;
         const isChecked = event.target.checked;
 
-        if (from === 'city') {
-            if (isChecked) {
-                if (!city_filter.includes(id)) {
-                    city_filter.push(id);
-                }
-            } else {
-                city_filter = city_filter.filter((item) => item !== id);
-            }
-        }
-        else if (from === 'brand') {
-            if (isChecked) {
-                if (!brand_filter.includes(id)) {
-                    brand_filter.push(id);
-                }
-            } else {
-                brand_filter = brand_filter.filter((item) => item !== id);
-            }
+        if (from === "city") {
+            const updatedCityFilter = isChecked ?
+                [...cityFilter, id].filter((val, ind, array) => array.indexOf(val) === ind)
+                : cityFilter.filter((item) => item !== id);
+            setCityFilter(updatedCityFilter);
+            localStorage.setItem("city_filter", JSON.stringify(updatedCityFilter));
+            setFilterobject({ brand_filter: brandFilter, city_filter: updatedCityFilter });
         }
 
-        const object = {
-            brand_filter: brand_filter,
-            city_filter: city_filter
+        else if (from === "brand") {
+            const updatedBrandFilter = isChecked ?
+                [...brandFilter, id].filter((val, ind, array) => array.indexOf(val) === ind)
+                : brandFilter.filter((item) => item !== id);
+            setBrandFilter(updatedBrandFilter);
+            localStorage.setItem("brand_filter", JSON.stringify(updatedBrandFilter));
+            setFilterobject({ brand_filter: updatedBrandFilter, city_filter: cityFilter });
         }
-        const res = await getDealerByFilter(object);
-        console.log("data" , res)
-        setDatabyFilter(res)
     };
 
+    const removeFilters = (e: any) => {
+        if (e == "brand") {
+            localStorage.removeItem("brand_filter");
+            setBrandFilter([]);
+            setFilterobject({ brand_filter: [], city_filter: [] });
+        }
+        else {
+            localStorage.removeItem("city_filter");
+            setCityFilter([]);
+            setFilterobject({ brand_filter: [], city_filter: [] });
+        }
+    };
 
     return (
         <div className={styles.filter_main}>
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By Brand</p>
                 <div className={styles.city_options}>
-                    {
-                        BrandArr.map((data: any, i: any) => {
-                            return (
-                                <p className={styles.option_values} key={i}>
-                                    <input
-                                        type="checkbox"
-                                        onChange={(event) => { updateFilterValue(event, 'brand', data) }}
-                                        id={data.id}
-                                    />
-                                    {data.brandName}
-                                </p>
-                            );
-                        })
-                    }
+                    {BrandArr.map((data: any, i: any) => (
+                        <p className={styles.option_values} key={i}>
+                            <input
+                                type="checkbox"
+                                checked={brandFilter.includes(data?.id)}
+                                onChange={(event) => updateFilterValue(event, 'brand', data)}
+                                id={data.id}
+                            />
+                            {data.brandName}
+                        </p>
+                    ))}
                 </div>
-                <button className={styles.brand_filter}>Remove Brand Filters</button>
+                <button
+                    className={styles.brand_filter}
+                    onClick={() => removeFilters('brand')}
+                >
+                    Remove Brand Filters
+                </button>
             </div>
+
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By City</p>
                 <div className={styles.city_options}>
-                    {
-                        CityArr.map((data: any, i: any) => {
-                            return (
-                                <p className={styles.option_values} key={i}>
-                                    <input
-                                        type="checkbox"
-                                        onChange={(event) => { updateFilterValue(event, 'city', data) }}
-                                        id={data.id}
-                                    />
-                                    {data.city_name}
-                                </p>
-                            );
-                        })
-                    }
+                    {CityArr.map((data: any, i: any) => (
+                        <p className={styles.option_values} key={i}>
+                            <input
+                                type="checkbox"
+                                checked={cityFilter.includes(data?.id)}
+                                onChange={(event) => updateFilterValue(event, 'city', data)}
+                                id={data.id}
+                            />
+                            {data.city_name}
+                        </p>
+                    ))}
                 </div>
-                <button className={styles.brand_filter}>Remove City Filters</button>
+                <button
+                    className={styles.brand_filter}
+                    onClick={() => removeFilters('city')}>
+                    Remove City Filters
+                </button>
             </div>
         </div>
-    )
-}
+    );
+};

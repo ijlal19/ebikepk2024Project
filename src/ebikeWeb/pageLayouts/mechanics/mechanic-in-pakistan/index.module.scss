@@ -55,8 +55,12 @@
             width: 100%;
             padding: 5px 0px 20px 0px;
             display: flex;
-            justify-content: center;
-            gap: 10px;
+            justify-content: left;
+            column-gap: 200px;
+
+            @media (max-width:768px) {
+                column-gap: 10px;
+            }
 
             .drawer_button{
                 background: $primary_two;

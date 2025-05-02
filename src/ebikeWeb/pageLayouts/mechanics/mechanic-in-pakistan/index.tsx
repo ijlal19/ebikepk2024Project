@@ -1,18 +1,19 @@
-import styles from './index.module.scss'
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import MenuIcon from '@mui/icons-material/Menu';
-import { AllDealerData } from '../Data';
+'use client'
 import { Pagination, useMediaQuery } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { MechanicinPakFilter } from './filter';
 import { MechanicinPakCard } from '../Card';
 import { useState, useEffect } from 'react';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import styles from './index.module.scss';
+import Box from '@mui/material/Box';
+import * as React from 'react';
 
 export const MechanicsInPakistan = ({ mechanics }: any) => {
     const [filteredResults, setFilteredResults] = useState(mechanics);
     const [isFilterApply, setisFilterApply] = useState(false);
+    const [Filterobject, setFilterobject] = useState<any>()
     const [currentPage, setCurrentPage] = useState(1);
     const [open, setOpen] = useState(false);
 
@@ -25,6 +26,10 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
         setisFilterApply(false);
     }, [mechanics]);
 
+    useEffect(() => {
+        handleSearch({ target: { value: '' } })
+    }, [Filterobject])
+
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     }
@@ -33,7 +38,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
         setCurrentPage(page);
     };
     const mechanicPerPage = 10;
-    const totalPages = Math.ceil(mechanics.length / mechanicPerPage);
+    const totalPages = Math.ceil(mechanics?.length / mechanicPerPage);
     const currentData = mechanics.slice((currentPage - 1) * mechanicPerPage, currentPage * mechanicPerPage);
 
     const filtermechanicPerPage = 10;
@@ -42,20 +47,27 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
 
     const DrawerList = (
         <Box className={styles.filter_drawer_main} role="presentation" >
-            <MechanicinPakFilter />
+            <MechanicinPakFilter  setFilterobject={setFilterobject} />
         </Box>
     );
 
     const handleSearch = (e: any) => {
 
         const value = e.target.value.toLowerCase();
-
-        if (!value) {
+        if (!value && Filterobject?.city_filter?.length == 0 && Filterobject?.brand_filter?.length == 0) {
             setFilteredResults(mechanics);
-        } else {
-            const results = mechanics.filter((item: any) =>
-                item.shop_name.toLowerCase().includes(value)
-            );
+        }
+        else {
+            let results:any = [...mechanics]
+            if (value) {
+                results = results.filter((item: any) => item?.shop_name.toLowerCase().includes(value))
+            }
+            if (Filterobject?.brand_filter?.length > 0) {
+                results = results.filter((item: any) => Filterobject?.brand_filter.indexOf(item?.brand_id) > -1)
+            }
+            if (Filterobject?.city_filter?.length > 0) {
+                results = results.filter((item: any) => Filterobject?.city_filter.indexOf(item?.city_id) > -1)
+            }
             setFilteredResults(results);
         }
     };

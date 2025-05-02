@@ -28,11 +28,13 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
 
     if(featuredDelaer?.length > 0) {
       setFeaturedDealers(featuredDelaer)
+      // setFeaturedDealers([])
     }
     else {
       res1 = await getFeaturedDealer()
       if(res1?.length > 0) {
         setFeaturedDealers(res1)
+        // setFeaturedDealers([])
       }
       else {
         setFeaturedDealers([])
@@ -41,11 +43,13 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
   
     if(delaer?.length > 0) {
       setAllDealers(delaer)
+      // setAllDealers([])
     }
     else {
       res2 = await getAllDealer()
       if(res2?.length > 0) {
         setAllDealers(res2)
+        // setAllDealers([])
       }
       else {
         setAllDealers([])
@@ -53,7 +57,9 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
     }
 
     setIsLoading(false)
-
+    setTimeout(() => {
+         window.scrollTo(0, 0)
+       }, 1000);
   }
 
   return (
@@ -71,7 +77,7 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
           <>
             {featuredDealers?.length > 0 ? <FeatureDelers featuredDealers={featuredDealers}/> : "" }
             {allDealers?.length > 0 ? <DealerInPakistan dealers={allDealers}  /> : "" }
-            { featuredDealers?.length == 0 &&  allDealers?.length == 0 ? <p> No Dealer Data Found </p> : "" }
+            { featuredDealers?.length == 0 &&  allDealers?.length == 0 ? <p className={styles.noData} > No Dealer Data Found </p> : "" }
           </>
       }
     </div>
