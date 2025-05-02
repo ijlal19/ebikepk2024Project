@@ -93,6 +93,11 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
         responsedetails[0].bike.images = imgArr
       }
 
+      if(responsedetails[0]?.bike?.brandId) {
+        let brand = getBrandFromId(responsedetails[0]?.bike?.brandId, BrandArr)
+        responsedetails[0].bike.brandName = brand?.length > 0 ? brand[0].brandName : "Similar Brand"
+      }
+
       let CC = 70
       if (responsedetails[0]?.bike?.displacement?.indexOf(',') > -1) {
         responsedetails[0].bike.displacement = responsedetails[0]?.bike?.displacement?.split(',')[0]
@@ -541,7 +546,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
           { AllnewBikeCardArr && AllnewBikeCardArr.length > 0 ?
             <>
               <Box className={styles.other_card}>
-              <Typography className={styles.other_card_title}> Similar Brand New Bikes </Typography>
+              <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} New Bikes </Typography>
                 <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' onBtnClick={() => { }} />
               </Box>
             </> 
@@ -552,7 +557,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
             { similarBrandUsedBike && similarBrandUsedBike.length > 0 ?  
               <>
                 <Box className={styles.other_card}>
-                <Typography className={styles.other_card_title}> Similar Brand Used Bikes </Typography>
+                <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} Used Bikes </Typography>
                   <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarBrandUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={()=>{}}  />
                 </Box> 
               </>
@@ -564,7 +569,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
             { similarCCUsedBike && similarCCUsedBike.length > 0 ?  
               <>
                 <Box className={styles.other_card}>
-                <Typography className={styles.other_card_title}> Similar CC Used Bikes </Typography>
+                <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} CC Used Bikes </Typography>
                   <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarCCUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={()=>{}}  />
                 </Box> 
               </>
