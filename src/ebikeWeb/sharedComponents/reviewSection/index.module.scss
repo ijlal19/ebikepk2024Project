@@ -1,5 +1,61 @@
+@import '../../styles//variable';
 .review_card {
     width: 300px;
     border: solid 1px grey;
-    
+
+}
+
+.main {
+    box-sizing: border-box;
+    margin: 0px 0px 20px 0px !important;
+
+    .heading {
+        font-size: 20px;
+        margin:5px 0px 15px 0px !important;
+        box-sizing: border-box;
+        @media (max-width:768px) {
+            padding: 0px 0px 0px 10px !important;
+            box-sizing: border-box;
+        }
+    }
+
+    .grid_main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+
+        .grid_item {
+            box-sizing: border-box;
+            .avatar {
+                margin: 4px auto 3px auto ;
+                background-color: $primary_two;
+                width: 30px;
+                height: 30px;
+                .icon {}
+            }
+
+            .user_name {
+                font-size: 16px;
+                padding: 2px 0px 0px 10px;
+                font-weight: bold;
+            }
+            
+            .rating {
+                font-size: 14px;
+                padding: 0px 0px 0px 10px;
+            }
+            
+            .date {
+                font-size: 12px;
+                padding: 0px 0px 5px 10px;
+            }
+            
+            .comment_text {
+                font-size: 14px;
+                color: black;
+                padding: 0px 0px 5px 10px;
+            }
+        }
+    }
 }

@@ -288,12 +288,19 @@ body {
 }
 
 .thumbSwiper {
+    box-sizing: border-box;
+    @media (max-width:768px) {
+        display: none !important;
+    }
     .swiper-wrapper{
         cursor: pointer;
+        box-sizing: border-box;
         height: 100px;
         img{
             height: 100%;
-            width: 100%;
+            box-sizing: border-box;
+            width: 99%;
+            border: 1px solid #716e6e87;
         }
     }
 }
@@ -316,5 +323,50 @@ body {
         background: grey;
         padding: 10px;
         opacity: 0.8;
+    }
+}
+
+.swiper-button-next{
+    color: red;
+    
+}
+
+.swiper-button-prev {
+    color: black !important;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 2px 0 4px 0 rgba(0, 0, 0, .15);
+    height: 35px;
+    width: 35px;
+    margin-left: -10px;
+    font-size: 10px;
+    border: solid 1px rgb(231, 229, 229);
+
+    &::after {
+        font-size: 10px !important;
+        font-weight: 500;
+    }
+    @media (max-width:768px) {
+        margin-left: 0px;
+    }
+}
+
+.swiper-button-next {
+    color: black !important;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: -1px 0 4px 0 rgba(0, 0, 0, .15);
+    height: 35px;
+    width: 35px;
+    font-size: 10px;
+    margin-right: -10px;
+    border: solid 1px rgb(231, 229, 229);
+
+    &::after {
+        font-size: 10px !important;
+        font-weight: 500;
+    }
+    @media (max-width:768px) {
+        margin-right: 0px;
     }
 }
