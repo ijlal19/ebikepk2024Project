@@ -13,6 +13,8 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        // height: 210px;
+        // overflow: hidden;
 
         .bike_image_box {
             width: 100%;
@@ -66,7 +68,7 @@
 
             .bike_review_box {
                 padding: 10px !important;
-                box-shadow: 0px 0px 5px grey;
+                // box-shadow: 0px 0px 5px grey;
                 // flex-direction: column;
                 margin: 55px 0px 0px 0px !important;
                 height: fit-content;
@@ -74,7 +76,7 @@
                 align-items: center;
 
                 @media (max-width:768px) {
-                    border: 1px solid #86838367;
+                    border: none;
                     margin: 0px 0px 0px 0px !important;
                     display: flex;
                     flex-direction: column;
@@ -110,6 +112,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            border-bottom: none
                         }
                     }
 
@@ -189,6 +192,7 @@
 
                                 @media (max-width:768px) {
                                     font-size: 12px;
+                                    width: 100px;
                                 }
                             }
                         }
@@ -227,12 +231,12 @@
                 padding: 10px !important;
                 // box-shadow: 0px 0px 5px grey;
                 flex-direction: column;
-                margin: 40px 0px 0px 0px !important;
+                margin: 12px 0px 0px 0px !important;
                 height: fit-content;
                 // min-height: 408px;
 
                 @media (max-width:768px) {
-                    border: 1px solid #978e8e67;
+                    border: none;
                     margin: 10px 10px 0px 10px !important;
                     box-sizing: border-box;
                     box-shadow: none;
@@ -356,7 +360,7 @@
                 flex-direction: column;
                 justify-content: center;
                 @media (max-width:768px) {
-                    border: 1px solid #bab7b778;
+                    // border: 1px solid #bab7b778;
                     margin: 0px 10px !important;
                     padding: 0px 0px 5px 0px !important;
                     box-sizing: border-box;

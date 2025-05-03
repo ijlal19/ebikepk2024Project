@@ -27,6 +27,8 @@
 
         .grid_item {
             box-sizing: border-box;
+            height: 210px;
+            overflow: hidden;
             .avatar {
                 margin: 4px auto 3px auto ;
                 background-color: $primary_two;
@@ -55,6 +57,7 @@
                 font-size: 14px;
                 color: black;
                 padding: 0px 0px 5px 10px;
+                text-overflow: ellipsis;
             }
         }
     }

@@ -22,6 +22,15 @@ export const DealerInPakistan = ({ dealers }: any) => {
     // const [filteredCities, setFilteredCities] = useState([])
     // const [filteredBrand, setFilteredBrrand] = useState([])
 
+    useEffect(()=>{
+        if(location?.search?.indexOf('brand=') > -1) {
+           let brandId = location?.search?.split('=')[1]
+           if(brandId) {
+            setFilterobject({ brand_filter: [Number(brandId)], city_filter: [] });
+            setisFilterApply(true)
+           }
+        }
+    },[])
 
     useEffect(() => {
         setisFilterApply(true)

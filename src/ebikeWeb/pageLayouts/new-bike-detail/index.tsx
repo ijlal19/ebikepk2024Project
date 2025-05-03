@@ -104,6 +104,8 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
         CC = responsedetails[0]?.bike?.displacement?.split(',')[1] ? responsedetails[0]?.bike?.displacement?.split(',')[1] : 70;
       }
 
+      responsedetails[0].bike.bikeCC = CC
+
       setmoreReviewArray(responsedetails[0]?.bike?.newbike_comments)
 
       setAllnewBikeDetailsArr(responsedetails)
@@ -412,7 +414,18 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                         )
                                       })
                                     }
-                                    <Button className={styles.view_detail_btn} onClick={() => { router.push(`/dealers?brand=${e?.brand_id}`) }}><Link href={`/dealers?brand=${e?.brand_id}`} className={styles.Link_tag}>More Dealers <KeyboardArrowRightIcon /></Link></Button>
+                                    
+                                    <Button className={styles.view_detail_btn} 
+                                      onClick={() => { allDealerArr?.length > 0 ? 
+                                         router.push(`/dealers?brand=${allDealerArr[0]?.brand_id}`) 
+                                         : 
+                                         router.push(`/dealers`) 
+                                    }}> 
+                                      <Link href={allDealerArr.length > 0 ? `/dealers?brand=${allDealerArr[0]?.brand_id}` : '/dealers'} className={styles.Link_tag}> 
+                                        More Dealers <KeyboardArrowRightIcon />
+                                      </Link>
+                                    </Button>
+
                                   </Box> </> : ''
                             }
                           </Box>
@@ -454,7 +467,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
             </Box>
 
             <div className={styles.review_section_newbikes}>
-              <ReviewSection />
+              <ReviewSection orignal_review={AllnewBikeDetailsArr[0]?.bike?.newbike_comments?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.newbike_comments : []} />
             </div> 
 
             <div className={styles.feature_section_newbikes}>
@@ -487,7 +500,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
               {similarCCUsedBike && similarCCUsedBike.length > 0 ?
                 <>
                   <Box className={styles.other_card}>
-                    <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} CC Used Bikes </Typography>
+                    <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} { AllnewBikeDetailsArr[0]?.bike?.bikeCC} CC Used Bikes </Typography>
                     <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarCCUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
                   </Box>
                 </>

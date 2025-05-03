@@ -92,9 +92,11 @@ const reviews = [
   }
 ];
 
+type reviewProps = {
+  orignal_review: any
+}
 
-
-export default function ReviewSwiper() {
+export default function ReviewSwiper({orignal_review}:reviewProps) {
   return (
     <div className={styles.main}>
       <h2 className={styles.heading}>Latest Reviews</h2>
@@ -122,7 +124,7 @@ export default function ReviewSwiper() {
         }}
         simulateTouch={true}
       >
-        {reviews.map((review) => (
+        {reviews.concat(orignal_review).reverse().map((review) => (
           <SwiperSlide key={review.id}>
             <Box
               sx={{

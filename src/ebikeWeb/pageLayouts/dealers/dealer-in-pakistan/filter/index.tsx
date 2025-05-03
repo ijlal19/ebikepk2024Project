@@ -38,7 +38,6 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
             localStorage.setItem("city_filter", JSON.stringify(updatedCityFilter));
             setFilterobject({ brand_filter: brandFilter, city_filter: updatedCityFilter });
         }
-
         else if (from === "brand") {
             const updatedBrandFilter = isChecked ?
                 [...brandFilter, id].filter((val, ind, array) => array.indexOf(val) === ind)
