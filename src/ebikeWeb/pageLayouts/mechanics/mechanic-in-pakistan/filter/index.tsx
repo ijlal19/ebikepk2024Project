@@ -36,7 +36,6 @@ export const MechanicinPakFilter = ({ setFilterobject }: any) => {
             localStorage.setItem("mechanic_city_filter", JSON.stringify(updatedCityFilter));
             setFilterobject({ brand_filter: brandFilter, city_filter: updatedCityFilter });
         }
-
         else if (from === 'brand') {
             const updatedBrandFilter = isChecked ?
                 [...brandFilter, id].filter((val, ind, array) => array.indexOf(val) === ind)
@@ -65,45 +64,42 @@ export const MechanicinPakFilter = ({ setFilterobject }: any) => {
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By Brand</p>
                 <div className={styles.city_options}>
-                    {
-                        BrandArr.map((data: any, i: any) => {
-                            return (
-                                <p className={styles.option_values} key={i}>
-                                    <input
-                                        type="checkbox"
-                                        checked={brandFilter.includes(data?.id)}
-                                        onChange={(event) => { updateFilterValue(event, 'brand', data) }}
-                                        id={data.id}
-                                    />
-                                    {data.brandName}
-                                </p>
-                            );
-                        })
-                    }
+                    {BrandArr.map((data: any, i: any) => (
+                        <p className={styles.option_values} key={i}>
+                            <input
+                                type="checkbox"
+                                checked={brandFilter.includes(data?.id)}
+                                onChange={(event) => { updateFilterValue(event, 'brand', data) }}
+                                id={data.id}
+                            />
+                            {data.brandName}
+                        </p>
+                    ))}
                 </div>
-                <button className={styles.brand_filter} onClick={() => removeFilters('brand')}>Remove Brand Filters</button>
+                <button className={styles.brand_filter}
+                    onClick={() => removeFilters('brand')}>
+                    Remove Brand Filters</button>
             </div>
+
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By City</p>
                 <div className={styles.city_options}>
-                    {
-                        CityArr.map((data: any, i: any) => {
-                            return (
-                                <p className={styles.option_values} key={i}>
-                                    <input
-                                        type="checkbox"
-                                        checked={cityFilter.includes(data?.id)}
-                                        onChange={(event) => { updateFilterValue(event, 'city', data) }}
-                                        id={data.id}
-                                    />
-                                    {data.city_name}
-                                </p>
-                            );
-                        })
-                    }
+                    {CityArr.map((data: any, i: any) => (
+                        <p className={styles.option_values} key={i}>
+                            <input
+                                type="checkbox"
+                                checked={cityFilter.includes(data?.id)}
+                                onChange={(event) => { updateFilterValue(event, 'city', data) }}
+                                id={data.id}
+                            />
+                            {data.city_name}
+                        </p>
+                    ))}
                 </div>
-                <button className={styles.brand_filter} onClick={() => removeFilters('city')}>Remove City Filters</button>
+                <button className={styles.brand_filter}
+                    onClick={() => removeFilters('city')}>
+                    Remove City Filters</button>
             </div>
         </div>
-    )
-}
+    );
+};

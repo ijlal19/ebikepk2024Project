@@ -12,6 +12,7 @@ type MechanicComp = {
 };
 
 const Mechanic = ({ featuredMechanic, mechanic }: MechanicComp) => {
+
   const [allMechanics, setAllMechanics]: any = useState([])
   const [featuredMechanics, setFeaturedMechanics]: any = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -21,6 +22,7 @@ const Mechanic = ({ featuredMechanic, mechanic }: MechanicComp) => {
   }, [])
 
   async function fetchInfo() {
+
     let res1: any = null
     let res2: any = null
 
@@ -55,6 +57,7 @@ const Mechanic = ({ featuredMechanic, mechanic }: MechanicComp) => {
       window.scrollTo(0, 0)
     }, 1000);
   }
+
   return (
     <div className={styles.main_dealer}>
       {

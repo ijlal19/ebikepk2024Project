@@ -217,8 +217,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
     }
   }
 
-  console.log("data" , similarCCUsedBike)
-
   return (
     <>
       {
@@ -402,7 +400,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                   <Box className={styles.Dealers_card}>
                                     {
                                       allDealerArr?.map((e: any, i: any) => {
-                                        console.log('data' , e)
                                         return (
                                           <Box className={styles.card_main} key={i}>
                                             <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
@@ -449,7 +446,17 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                         )
                                       })
                                     }
-                                    <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/mechanics" className={styles.Link_tag}>More Mechanics <KeyboardArrowRightIcon /></Link></Button>
+                                    <Button className={styles.view_detail_btn} 
+                                      onClick={() => { allMechanicArr?.length > 0 ? 
+                                         router.push(`/mechanics?brand=${allMechanicArr[0]?.brand_id}`) 
+                                         : 
+                                         router.push(`/mechanics`) 
+                                    }}> 
+                                      <Link href={allMechanicArr.length > 0 ? `/mechanics?brand=${allMechanicArr[0]?.brand_id}` : '/mechanics'} className={styles.Link_tag}> 
+                                        More Dealers <KeyboardArrowRightIcon />
+                                      </Link>
+                                    </Button>
+                                    {/* <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/mechanics" className={styles.Link_tag}>More Mechanics <KeyboardArrowRightIcon /></Link></Button> */}
                                   </Box> </> : ''
                             }
                           </Box>

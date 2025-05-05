@@ -156,16 +156,16 @@ const Header = () => {
                                 !e.isLoginReq ?
                                     <>
                                         <Link className={styles.anchor} key={i} href={e.url}>
-                                            <ListItemButton sx={{ pl: 4 ,paddingTop:"0px",paddingBottom:"0px"}}>
-                                                <ListItemText style={{ marginLeft: "10px",marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
+                                            <ListItemButton sx={{ pl: 0 ,paddingTop:"0px",paddingBottom:"0px"}}>
+                                                <ListItemText style={{ marginLeft: "0px",marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
                                             </ListItemButton>
                                         </Link>
                                         <Divider />
                                     </>
                                     :
                                     <>
-                                        <ListItemButton sx={{ pl: 4  ,paddingTop:"0px",paddingBottom:"0px"}} onClick={() => goToRoute(e)} key={i}>
-                                            <ListItemText style={{ marginLeft: "10px" ,marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
+                                        <ListItemButton sx={{ pl: 0  ,paddingTop:"0px",paddingBottom:"0px"}} onClick={() => goToRoute(e)} key={i}>
+                                            <ListItemText style={{ marginLeft: "0px" ,marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
                                         </ListItemButton>
                                         <Divider />
                                     </>

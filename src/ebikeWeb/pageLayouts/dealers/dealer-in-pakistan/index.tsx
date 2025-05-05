@@ -1,8 +1,8 @@
 'use client'
-import { Pagination, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { DealerinPakFilter } from './filter';
 import { useState, useEffect } from 'react';
+import { Pagination } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { DealerinPakCard } from '../Card';
@@ -18,19 +18,15 @@ export const DealerInPakistan = ({ dealers }: any) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [open, setOpen] = useState(false);
 
-    // const [dataByfilter, setDatabyFilter] = useState<any>()
-    // const [filteredCities, setFilteredCities] = useState([])
-    // const [filteredBrand, setFilteredBrrand] = useState([])
-
-    useEffect(()=>{
-        if(location?.search?.indexOf('brand=') > -1) {
-           let brandId = location?.search?.split('=')[1]
-           if(brandId) {
-            setFilterobject({ brand_filter: [Number(brandId)], city_filter: [] });
-            setisFilterApply(true)
-           }
+    useEffect(() => {
+        if (location?.search?.indexOf('brand=') > -1) {
+            let brandId = location?.search?.split('=')[1]
+            if (brandId) {
+                setFilterobject({ brand_filter: [Number(brandId)], city_filter: [] });
+                setisFilterApply(true)
+            }
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         setisFilterApply(true)
@@ -68,6 +64,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
     )
 
     const handleSearch = (e: any) => {
+
         const value = e.target.value.toLowerCase();
 
         // if no filter apply
@@ -92,6 +89,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
             }
 
             setFilteredResults(results);
+
         }
     };
 

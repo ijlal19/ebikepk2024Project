@@ -1,11 +1,9 @@
 import { BrandArr, CityArr } from '../../../../constants/globalData';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 
 export const DealerinPakFilter = ({ setFilterobject }: any) => {
 
-    const router = useRouter()
     const [brandFilter, setBrandFilter] = useState<any[]>([]);
     const [cityFilter, setCityFilter] = useState<any[]>([]);
 
@@ -78,12 +76,9 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
                         </p>
                     ))}
                 </div>
-                <button
-                    className={styles.brand_filter}
-                    onClick={() => removeFilters('brand')}
-                >
-                    Remove Brand Filters
-                </button>
+                <button className={styles.brand_filter}
+                    onClick={() => removeFilters('brand')}>
+                    Remove Brand Filters</button>
             </div>
 
             <div className={styles.by_brand}>
@@ -101,11 +96,9 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
                         </p>
                     ))}
                 </div>
-                <button
-                    className={styles.brand_filter}
+                <button className={styles.brand_filter}
                     onClick={() => removeFilters('city')}>
-                    Remove City Filters
-                </button>
+                    Remove City Filters</button>
             </div>
         </div>
     );
