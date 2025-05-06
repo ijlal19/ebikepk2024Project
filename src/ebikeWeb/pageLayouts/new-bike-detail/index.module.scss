@@ -46,6 +46,7 @@
                 padding: 10px;
                 font-size: 12px;
                 margin: 10px;
+                text-align: justify !important;
                 @media (max-width:768px) {
                     text-align: justify !important;
                 }
@@ -181,6 +182,10 @@
                         border-collapse: collapse;
                         margin: 10px 5px 10px 5px !important;
                         text-align: center;
+
+                        @media (max-width:767px) {
+                            width: 98%;
+                        }
 
                         .tr {
                             border-bottom: 1px solid #e0e0e0;

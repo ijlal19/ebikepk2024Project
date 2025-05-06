@@ -453,7 +453,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                          router.push(`/mechanics`) 
                                     }}> 
                                       <Link href={allMechanicArr.length > 0 ? `/mechanics?brand=${allMechanicArr[0]?.brand_id}` : '/mechanics'} className={styles.Link_tag}> 
-                                        More Dealers <KeyboardArrowRightIcon />
+                                        More Mechanics <KeyboardArrowRightIcon />
                                       </Link>
                                     </Button>
                                     {/* <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/mechanics" className={styles.Link_tag}>More Mechanics <KeyboardArrowRightIcon /></Link></Button> */}
