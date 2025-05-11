@@ -123,6 +123,10 @@
         width: 100%;
         padding-left: 10px;
         padding-bottom: 10px;
+.grid_icon_title{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 
         .grid_card_title {
           color: $black;
@@ -140,7 +144,22 @@
             width: 130px;
           }
         }
-  
+
+        .icon_box{
+          display: flex;
+          padding: 5px 0px !important;
+          justify-content: center !important;
+          align-items: center !important;
+          width: 35px; 
+          margin-right: 5px;
+          height: 20px;
+          background-color: whitesmoke;
+          .icon{
+            font-size: 16px;
+            color: grey;
+          }
+        }
+      }  
         .grid_card_location {
           padding: 0px 0px 0px;
           font-size: 13px;
@@ -232,6 +251,7 @@
           width: 220px;
           padding: 0px 10px;
           display: flex;
+          box-sizing: border-box;
           justify-content: center;
           // border: solid 1px;
           min-width: 220px;
@@ -263,16 +283,14 @@
       .card_info {
 
         height: 148px;
-        padding: 0px 10px;
-        margin-top: 20px;
-        margin-left: 10px;
+        padding: 20px 10px 10px 0px;
 
         @media (max-width:1050px) {
-          margin-left: 40px;
+          padding-left: 10px;
         }
 
         @media (max-width:800px) {
-          margin-left: 10px;
+          padding-left: 10px;
         }
 
         @media (max-width:600px) {
@@ -357,17 +375,20 @@
           }
 
         }
-
+        box-sizing: border-box;
       }
 
       // grid 3
       .price_section_desktop {
         display: flex;
         height: 148px;
-        align-items: flex-start;
-        margin-right: 10px;
-        margin-top: 20px;
+        box-sizing: border-box;
+        justify-content: right !important;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 65px;
         white-space: nowrap;
+        padding: 20px 0px 0px 0px ;
 
         @media (max-width:600px) {
           display: none;
@@ -375,7 +396,48 @@
 
         span {
           color: #1976d2;
+          width: 100%;
+          text-align: right;
+          box-sizing: border-box;
+          padding: 0px 10px 0px 0px !important;
           font-size: 16px;
+        }
+        .fav_box{
+          display: flex;
+          column-gap: 5px !important;
+          flex-direction: row;
+          margin: 0px 10px 0px 5px !important;
+          box-sizing: border-box;
+          .icon_box{
+            display: flex;
+            padding: 5px 0px !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 35px; 
+            height: 20px;
+            background-color: whitesmoke;
+            .icon{
+              font-size: 16px;
+              color: grey;
+            }
+          }
+          .phone_box{
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            column-gap: 5px;
+            border-radius: 2px;
+            padding: 0px 5px !important;
+            box-sizing: border-box;
+            border: 1px solid yellowgreen;
+            background-color: yellowgreen;
+            font-size: 11px;
+            color: white;
+            .icon{
+              font-size: 16px;
+              color: white;
+            }
+          }
         }
 
       }

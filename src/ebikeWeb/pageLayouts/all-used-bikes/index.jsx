@@ -3,14 +3,17 @@ import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId, g
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ItemCard from '@/ebikeWeb/sharedComponents/itemCard/index';
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import { priceWithCommas } from '@/genericFunctions/geneFunc';
+import { isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+
 
 const AllUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:991px)');
@@ -24,10 +27,18 @@ const AllUsedBike = () => {
    
     const [totalPage, setTotalPage] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
+    const [IsLogin, setIsLogin] = useState('not_login');
 
     const router = useRouter()
 
     useEffect(() => {
+        let _isLoginUser = isLoginUser()
+        if (_isLoginUser?.login) {
+            setIsLogin(_isLoginUser.info)
+        }
+        else {
+            setIsLogin("not_login")
+        }
         fetchBikeInfo(1)
         fetchFeaturedBike(1)
     }, [])
@@ -86,6 +97,19 @@ const AllUsedBike = () => {
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
 
+    const AddFavourite = (id) => {
+        if(!IsLogin){
+            alert('Please Login To Add Favourite')
+        }
+        else{
+            const object  = { 
+                userId:IsLogin?.id,
+                bikeId:id
+            }
+            console.log("data", object)
+        }
+    }
+
 
     function longCard(val, ind) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
@@ -93,32 +117,21 @@ const AllUsedBike = () => {
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         let href = `/used-bikes/${urlTitle}/${val.id}`
-
-
         return (
             <>
-
                 {ind % 4 == 0 ?
                     <div className={styles.banner}>
                         <img className={styles.baner_image} src={isMobile ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} />
                     </div> : ""}
 
-
-                <Grid container key={ind} className={styles.long_card} onClick={() => { goToDetailPage(val) }}>
-                    {/* <Link
-                    href={href}
-                    rel="noopener noreferrer"
-                    key={ind}
-                    className={styles.long_card_link}
-                    // sx={{textDecoration:"none"}}
-                > */}
+                <Grid container key={ind} className={styles.long_card}>
                     <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
                         {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />}
                     </Grid>
 
                     <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
 
-                        <Typography className={styles.card_title}> {val?.title} </Typography>
+                        <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
 
                         <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
 
@@ -136,6 +149,14 @@ const AllUsedBike = () => {
 
                     <Grid item className={styles.price_section_desktop}>
                         <span> PKR {priceWithCommas(val?.price)}</span>
+                        <Box className={styles.fav_box}>
+                            <Box className={styles.icon_box} onClick={()=>AddFavourite(val?.id)}>
+                                <FavoriteBorderIcon className={styles.icon} />
+                            </Box>
+                            <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
+                                < LocalPhoneIcon className={styles.icon} /> Show Phone No
+                            </Box>
+                        </Box>
                     </Grid>
 
                 </Grid>
@@ -159,7 +180,7 @@ const AllUsedBike = () => {
                 className={styles.grid_card}
                 sx={{ textDecoration: "none" }}
             >
-                <Grid container onClick={() => { goToDetailPage(val) }}>
+                <Grid container >
 
                     <Grid item className={styles.grid_image_box}>
                         {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />}
@@ -167,7 +188,12 @@ const AllUsedBike = () => {
 
                     <Grid item className={styles.grid_card_info}>
 
-                        <Typography className={styles.grid_card_title}> {val?.title} </Typography>
+                        <Box className={styles.grid_icon_title}>
+                            <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
+                            <Box className={styles.icon_box} onClick={()=>AddFavourite(val?.id)}>
+                                <FavoriteBorderIcon className={styles.icon} />
+                            </Box>
+                        </Box>
 
                         <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
 
