@@ -144,10 +144,13 @@ function updateFilterDataFromDropdown(value:any, isStarValue:any, from:any) {
 async function fetchedFilterData() {
   if(selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) {
     let obj = {
-      "city_filter": selectedCity,
-      "brand_filter": selectedBrand,
-      "years_filter": selectedYear,
-      "cc": selectedCC
+      "city_filter"  : selectedCity,
+      "brand_filter" : selectedBrand,
+      "years_filter" : selectedYear,
+      "cc" : selectedCC,
+      "page" : 3,
+      "adslimit" : 24,
+      "search" : ""
     }
   
     setIsLoading(true)

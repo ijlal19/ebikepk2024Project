@@ -1,6 +1,6 @@
 'use client'
-import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
-import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
+import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
+import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import ItemCard from '@/ebikeWeb/sharedComponents/itemCard/index';
@@ -16,36 +16,64 @@ const AllUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:991px)');
     const isMobile2 = useMediaQuery('(max-width:766px)');
     const [allBikesArr, setAllBikesArr] = useState([]);
-    const [pageNo, setPageNo] = useState(-12);
+    // const [pageNo, setPageNo] = useState(-12);
     const [isLoading, setIsLoading] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [showfilter, setshowfilter] = useState(false);
-
+   
+    const [totalPage, setTotalPage] = useState(null)
+    const [currentPage, setCurrentPage] = useState(1)
 
     const router = useRouter()
 
     useEffect(() => {
-        fetchBikeInfo(pageNo)
-        fetchFeaturedBike()
+        fetchBikeInfo(1)
+        fetchFeaturedBike(1)
     }, [])
 
+    const handlePaginationChange = async (event, page) => { 
+        fetchBikeInfo(page)
+    }
+
     async function fetchBikeInfo(_pageNo) {
-        let curentFetchPage = _pageNo + 12
-        setPageNo(curentFetchPage)
+        // let curentFetchPage = _pageNo
+        // setPageNo(curentFetchPage)
         setIsLoading(true)
-        let res = await getAllbikesDetail(curentFetchPage)
-        setAllBikesArr(res)
+        // let res = await getAllbikesDetail(curentFetchPage)
+        let obj = {
+            adslimit: 12, 
+            page : _pageNo
+        }
+        let res = await getCustomBikeAd(obj);
         setIsLoading(false)
+        if(res?.data?.length > 0) {
+            console.log('res used bike', res, res?.pages)
+            setCurrentPage(res?.currentPage)
+            setAllBikesArr(res?.data)
+            setTotalPage(res?.pages)
+        }
+        else {
+            setCurrentPage(res?.data?.currentPage)
+            setAllBikesArr([])
+            setTotalPage(0)
+        }
+      
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
 
     async function fetchFeaturedBike() {
-        let res = await getAllFeaturedBike();
-        if (res?.length > 0) {
-            setFeaturedData(res)
+        let obj = {
+            isFeatured: true,
+            random: true,
+            adslimit: 20
+        }
+        let res = await getCustomBikeAd(obj);
+        // console.log(res, 'featured ads')
+        if (res?.data?.length > 0) {
+            setFeaturedData(res.data)
         }
         else {
             setFeaturedData([])
@@ -213,10 +241,20 @@ const AllUsedBike = () => {
                                     })}
                                 </div>
 
+                                {allBikesArr?.length > 0 ? 
+                                
+                                <Box className={styles.used_bike_list_pagination}>
+                                    <Pagination
+                                        count={totalPage}
+                                        onChange={handlePaginationChange}
+                                        page={currentPage}
+                                    />
+                                </Box>  : "" }   
 
-                                <div className={styles.viewMoreBtnContainer} >
+
+                                {/* <div className={styles.viewMoreBtnContainer} >
                                     <button onClick={() => { fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
-                                </div>
+                                </div> */}
                             </div>
 
 

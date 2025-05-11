@@ -425,6 +425,17 @@ function getMechanicByBrandId(idArr :any) {
     });
 }
 
+function getCustomBikeAd(obj:any){
+    // return fetch(Gconfig.ebikeApi + `classified/get-custom-ads`, {
+    return fetch(`http://localhost:4001/api/classified/get-custom-ads`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(obj)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
 
 
 export {
@@ -461,5 +472,6 @@ export {
     sendEmailLetter
     , getdatabycitybrand,
     getDealerByFilter,
-    getMechanicByBrandId
+    getMechanicByBrandId,
+    getCustomBikeAd
 }

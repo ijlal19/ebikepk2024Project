@@ -483,3 +483,25 @@
       }
   }
 }
+
+.used_bike_list_pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .pagination_box{
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
+      border: 1px solid #434242;
+      padding: 0px !important;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      font-size: 12px;
+      cursor: pointer;
+  }
+}
