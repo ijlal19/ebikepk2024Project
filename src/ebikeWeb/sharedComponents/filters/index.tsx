@@ -6,23 +6,25 @@ import { useState, useEffect } from 'react';
 import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
-import { getFilteredAllbikesDetail } from "@/ebikeWeb/functions/globalFuntions"
+import { getCustomBikeAd, getFilteredAllbikesDetail } from "@/ebikeWeb/functions/globalFuntions"
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 
 
 let selectedCity: any = []
-let selectedBrand:any = []
-let CCvalues:any =  {start:'', end:''}
-let yearValues:any =  {start:'', end:''}
-let selectedCC:any = []
-let selectedYear:any = []
+let selectedBrand: any = []
+let CCvalues: any = { start: '', end: '' }
+let yearValues: any = { start: '', end: '' }
+let selectedCC: any = []
+let selectedYear: any = []
 
-function Filters(props:any) {
-  const [popupData, setpopupData]:any = useState([])
+function Filters(props: any , {updateData}:any) {
+  const [popupData, setpopupData]: any = useState([])
   const [openmodal, setOpenModal] = useState(false)
-  const [modalOpenFor, setModalOpenFor ] = useState('')
+  const [modalOpenFor, setModalOpenFor] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isFilterChange, setIsFilterChange] = useState(false)
+  // const [totalPage, setTotalPage] = useState(null)
+  // const [currentPage, setCurrentPage] = useState(1)
 
   const ModalData = {
     showmodal: toggle,
@@ -31,7 +33,7 @@ function Filters(props:any) {
   }
 
 
-  function toggle(from:any) {
+  function toggle(from: any) {
     if (from == 'city') {
       setModalOpenFor(from)
       setpopupData(CityArr)
@@ -49,158 +51,164 @@ function Filters(props:any) {
     }
   }
 
+  const handlePaginationChange = async (event: any, page: any) => {
+    fetchedFilterData(page)
+  }
 
-  function updateFilterValue(event:any, from:any) {
-    if(from == 'city') {
+  function updateFilterValue(event: any, from: any) {
+    if (from == 'city') {
       let filterData = [...selectedCity]
-      if(event.target.checked) {
-        if(filterData.indexOf(event.target.id.toString()) == -1) {
+      if (event.target.checked) {
+        if (filterData.indexOf(event.target.id.toString()) == -1) {
           filterData.push(event.target.id.toString())
           selectedCity = filterData
         }
       }
       else {
-        if(filterData.indexOf(event.target.id.toString()) > -1) {
-          filterData = filterData.filter((val:any) => event.target.id != val)
+        if (filterData.indexOf(event.target.id.toString()) > -1) {
+          filterData = filterData.filter((val: any) => event.target.id != val)
           selectedCity = filterData
         }
       }
-        fetchedFilterData()
+      fetchedFilterData(1)
     }
-    else if(from == 'brand') {
+
+    else if (from == 'brand') {
       let filterData = [...selectedBrand]
-      if(event.target.checked) {
-        if(filterData.indexOf(event.target.id) == -1) {
+      if (event.target.checked) {
+        if (filterData.indexOf(event.target.id) == -1) {
           filterData.push(event.target.id)
-          selectedBrand = filterData 
-        }
-      }
-      else {
-        if(filterData.indexOf(event.target.id) > -1) {
-          filterData = filterData.filter((val:any) => event.target.id != val)
           selectedBrand = filterData
         }
       }
-    
-      fetchedFilterData()
+      else {
+        if (filterData.indexOf(event.target.id) > -1) {
+          filterData = filterData.filter((val: any) => event.target.id != val)
+          selectedBrand = filterData
+        }
+      }
+      fetchedFilterData(1)
     }
-}
-
-function updateFilterDataFromModel(updatedValue:any, from:any) {
-  if(from == "city") {
-    selectedCity = updatedValue
-    fetchedFilterData()
   }
-  else if(from == "brand"){
-    selectedBrand = updatedValue
-    fetchedFilterData()
-  } 
-}
 
-function updateFilterDataFromDropdown(value:any, isStarValue:any, from:any) {
-  // console.log('selectedYear', value)
-  if(from == "cc") {
-    if(isStarValue) {
-      CCvalues.start = value
+  function updateFilterDataFromModel(updatedValue: any, from: any) {
+    if (from == "city") {
+      selectedCity = updatedValue
+      fetchedFilterData(1)
     }
-    else {
-      CCvalues.end = value
+    else if (from == "brand") {
+      selectedBrand = updatedValue
+      fetchedFilterData(1)
+    }
+  }
+
+  function updateFilterDataFromDropdown(value: any, isStarValue: any, from: any) {
+    // console.log('selectedYear', value)
+    if (from == "cc") {
+      if (isStarValue) {
+        CCvalues.start = value
+      }
+      else {
+        CCvalues.end = value
+      }
+
+      if (CCvalues.start != "" && CCvalues.end != "") {
+        console.log('selectedYear', CCvalues)
+        selectedCC[0] = CCvalues.start
+        selectedCC[1] = CCvalues.end
+        fetchedFilterData(1)
+      }
+      else {
+        selectedCC = []
+      }
+
+    }
+    else if (from == "year") {
+      if (isStarValue) {
+        yearValues.start = value
+      }
+      else {
+        yearValues.end = value
+      }
+
+      if (yearValues.start != "" && yearValues.end != "") {
+        console.log('selectedYear', CCvalues)
+        selectedYear[0] = yearValues.start
+        selectedYear[1] = yearValues.end
+        fetchedFilterData(1)
+      }
+      else {
+        selectedYear = []
+      }
     }
 
-    if(CCvalues.start != "" && CCvalues.end != "") {
-      console.log('selectedYear', CCvalues)
-      selectedCC[0] = CCvalues.start
-      selectedCC[1] = CCvalues.end
-      fetchedFilterData()
+    setIsFilterChange(prev => !prev)
+
+  }
+
+  async function fetchedFilterData(_page: any) {
+    setIsLoading(true)
+    if (selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) {
+      let obj = {
+        "city_filter": selectedCity,
+        "brand_filter": selectedBrand,
+        "years_filter": selectedYear,
+        "cc": selectedCC,
+        "page": _page,
+        "adslimit": 12,
+        "search": ""
+      }
+
+      let res = await getCustomBikeAd(obj)
+
+      if (res.data.length > 0) {
+        props.updateData(res.data)
+        props.CurrentPage(res.currentPage)
+        props.TotalPage(res.pages)
+      }
+      setIsLoading(false)
+      window.scrollTo(0, 0)
     }
+
     else {
+      props.fetchBikeInfo(1)
+    }
+
+  }
+
+  function clearFilters(from: any) {
+    if (from == 'city') {
+      selectedCity = []
+    }
+    else if (from == "brand") {
+      selectedBrand = []
+    }
+    else if (from == "year") {
+      yearValues.start = ""
+      yearValues.end = ""
+      selectedYear = []
+    }
+    else if (from == "cc") {
+      CCvalues.start = ""
+      CCvalues.end = ""
+      selectedCC = []
+    }
+    else if (from == "all") {
+      selectedCity = []
+      selectedBrand = []
+
+      yearValues.start = ""
+      yearValues.end = ""
+      selectedYear = []
+
+      CCvalues.start = ""
+      CCvalues.end = ""
       selectedCC = []
     }
 
-  }
-  else if(from == "year") {
-    if(isStarValue) {
-      yearValues.start = value
-    }
-    else {
-      yearValues.end = value
-    }
+    fetchedFilterData(1)
 
-    if(yearValues.start != "" && yearValues.end != "") {
-      console.log('selectedYear', CCvalues)
-      selectedYear[0] = yearValues.start
-      selectedYear[1] = yearValues.end
-      fetchedFilterData()
-    }
-    else {
-      selectedYear = []
-    }
   }
-  
-  setIsFilterChange(prev => !prev)
-  
-}
-
-async function fetchedFilterData() {
-  if(selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) {
-    let obj = {
-      "city_filter"  : selectedCity,
-      "brand_filter" : selectedBrand,
-      "years_filter" : selectedYear,
-      "cc" : selectedCC,
-      "page" : 3,
-      "adslimit" : 24,
-      "search" : ""
-    }
-  
-    setIsLoading(true)
-    let res = await getFilteredAllbikesDetail(obj)
-    setIsLoading(false)
-  
-    if(res && res.length > 0) {
-      props.updateData(res)
-      window.scrollTo(0, 0)
-    }
-  }
-  else {
-    props.fetchBikeInfo(1)
-  }
- 
-}
-
-function clearFilters(from:any) {
-  if(from == 'city') {
-    selectedCity = []
-  }
-  else if(from == "brand") {
-    selectedBrand = []
-  }
-  else if(from == "year") {
-    yearValues.start = ""
-    yearValues.end = ""
-    selectedYear = []
-  }
-  else if(from == "cc") {
-    CCvalues.start = ""
-    CCvalues.end = ""
-    selectedCC = []
-  }
-  else if(from == "all") {
-    selectedCity = []
-    selectedBrand = []
-    
-    yearValues.start = ""
-    yearValues.end = ""
-    selectedYear = []
-    
-    CCvalues.start = ""
-    CCvalues.end = ""
-    selectedCC = []
-  } 
-
-  fetchedFilterData()
-
-}
 
 
   return (
@@ -209,11 +217,11 @@ function clearFilters(from:any) {
         <Typography> Show Result By: </Typography>
       </Box>
 
-      { (selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) ?
-            <button onClick={()=>{ clearFilters('all') }} className={styles.clear_btn} > Clear All Filter </button> :
-            ""     
+      {(selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) ?
+        <button onClick={() => { clearFilters('all') }} className={styles.clear_btn} > Clear All Filter </button> :
+        ""
       }
-      
+
       {/* city filter */}
       <Box className={styles.heading_city}>
         <Typography className={styles.city_text}>CITY</Typography>
@@ -225,7 +233,7 @@ function clearFilters(from:any) {
               <Typography className={styles.option_values} key={i}>
                 <input
                   type="checkbox"
-                  checked={selectedCity.indexOf(data.id.toString()) > -1 }
+                  checked={selectedCity.indexOf(data.id.toString()) > -1}
                   onChange={(event) => { updateFilterValue(event, 'city') }}
                   id={data.id}
                 />
@@ -235,12 +243,12 @@ function clearFilters(from:any) {
           })
         }
 
-        <p onClick={()=> toggle('city')} className={styles.seeMore} > More Cities </p>
-        
+        <p onClick={() => toggle('city')} className={styles.seeMore} > More Cities </p>
+
         {
           selectedCity.length > 0 ?
-          <button onClick={()=>{ clearFilters('city') }} className={styles.clear_btn} > Clear City Filter </button> : 
-          ""
+            <button onClick={() => { clearFilters('city') }} className={styles.clear_btn} > Clear City Filter </button> :
+            ""
         }
 
       </Box>
@@ -265,12 +273,12 @@ function clearFilters(from:any) {
           })
         }
 
-        <p onClick={()=> toggle('brand')} className={styles.seeMore} > More Brands </p>
+        <p onClick={() => toggle('brand')} className={styles.seeMore} > More Brands </p>
 
         {
           selectedBrand.length > 0 ?
-          <button onClick={()=>{ clearFilters('brand') }} className={styles.clear_btn} > Clear Brand Filter </button> : 
-          ""
+            <button onClick={() => { clearFilters('brand') }} className={styles.clear_btn} > Clear Brand Filter </button> :
+            ""
         }
 
       </Box>
@@ -280,7 +288,7 @@ function clearFilters(from:any) {
         <Typography className={styles.years_text}>YEARS</Typography>
       </Box>
       <Box className={styles.years_options}>
-        
+
         <FilterDropdown
           dropvalues='years'
           values='from'
@@ -294,7 +302,7 @@ function clearFilters(from:any) {
           }}
           data={yearValues}
         />
-        
+
         <FilterDropdown
           dropvalues='years'
           values='To'
@@ -311,13 +319,13 @@ function clearFilters(from:any) {
 
         {
           selectedYear.length > 0 ?
-          <button onClick={()=>{ clearFilters('year') }} className={styles.clear_btn} > Clear Years Filter </button> : 
-          ""
+            <button onClick={() => { clearFilters('year') }} className={styles.clear_btn} > Clear Years Filter </button> :
+            ""
         }
 
       </Box>
 
-       {/* CC filter */}
+      {/* CC filter */}
       <Box className={styles.heading_years}>
         <Typography className={styles.years_text}>ENGINE CC</Typography>
       </Box>
@@ -335,7 +343,7 @@ function clearFilters(from:any) {
           }}
           data={CCvalues}
         />
-        
+
         <FilterDropdown
           values='To'
           className={styles.option_values}
@@ -351,21 +359,21 @@ function clearFilters(from:any) {
 
         {
           selectedCC.length > 0 ?
-          <button onClick={()=>{ clearFilters('cc') }} className={styles.clear_btn} > Clear CC Filter </button> : 
-          ""
+            <button onClick={() => { clearFilters('cc') }} className={styles.clear_btn} > Clear CC Filter </button> :
+            ""
         }
 
       </Box>
 
-       {openmodal ?  
-        <MoreOptionPopup 
-          modalData={ ModalData } 
-          from = { modalOpenFor == 'city' ? 'city' : 'brand' } 
-          updateFilteredData = { updateFilterDataFromModel } 
-          filterdData= { modalOpenFor == 'city' ? selectedCity : selectedBrand } 
-        /> : "" }
+      {openmodal ?
+        <MoreOptionPopup
+          modalData={ModalData}
+          from={modalOpenFor == 'city' ? 'city' : 'brand'}
+          updateFilteredData={updateFilterDataFromModel}
+          filterdData={modalOpenFor == 'city' ? selectedCity : selectedBrand}
+        /> : ""}
 
-        <Loader isLoading={isLoading} />
+      <Loader isLoading={isLoading} />
 
     </Box>
   )

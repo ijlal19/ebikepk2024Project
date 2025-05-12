@@ -1,7 +1,7 @@
 'use client'
-import { getBikesBySpecificFilter, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { Box, Grid, Link, Typography, useMediaQuery } from '@mui/material';
+import { Box, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
 import BrandFilter from "@/ebikeWeb/sharedComponents/brand_filter";
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
@@ -20,9 +20,12 @@ const AllUsedBikeByFilter = () => {
     const [getAdFrom, setGetAdFrom] = useState(-10);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [filterShow, setFilterShow] = useState(false)
+
+    const [totalPage, setTotalPage] = useState(null)
+    const [currentPage, setCurrentPage] = useState(1)
+
     const params = useParams()
     const router = useRouter()
-    console.log("data", params.slug)
 
     useEffect(() => {
         fetchBikeInfo()
@@ -38,50 +41,133 @@ const AllUsedBikeByFilter = () => {
         return str.replace(/^\s*\w/, (match) => match.toUpperCase());
     };
 
-    async function fetchBikeInfo() {
+    const handlePaginationChange = async (event, page) => {
+        fetchBikeInfo(page)
+    }
+
+    async function fetchBikeInfo(_page) {
+
         setGetAdFrom(getAdFrom + 10)
         let from = params.slug
         setIsLoading(true)
 
         if (from?.indexOf('year') > -1) {
-            let id = params.id1
-            let res = await getBikesBySpecificFilter('year', id, getAdFrom + 10)
-            setHeading('Used Bike For Year ' + params.id)
-            console.log(res)
-            setAllBikesArr(res)
-            setTimeout(() => {
-                window.scrollTo(0, 0)
-            }, 1000);
+            let id = params?.id1
+            let Obj = {
+                years_filter: [id],
+                page:_page,
+                adslimit:12
+            }
+            let res = await getCustomBikeAd(Obj)
+
+            if (res?.data?.length > 0) {
+                setCurrentPage(res?.currentPage)
+                setAllBikesArr(res?.data)
+                setTotalPage(res?.pages)
+                setHeading('Used Bike For Year ' + params.id)
+                console.log("data", res)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
         }
 
         else if (from?.indexOf('cc') > -1) {
             let id = params.id
-            let res = await getBikesBySpecificFilter('cc', id, getAdFrom + 10)
-            setHeading('Used Bike By ' + params.id + ' CC')
-            setAllBikesArr(res)
-            setTimeout(() => {
-                window.scrollTo(0, 0)
-            }, 1000);
+            let Obj = {
+                cc: [id],
+                page: _page,
+                adslimit: 12
+            }
+
+            let res = await getCustomBikeAd(Obj)
+            console.log("data" , res)
+
+            if (res?.data?.length > 0) {
+                setHeading('Used Bike By ' + capitalizeFirstWord(params.id) + "CC")
+                setCurrentPage(res?.currentPage)
+                setAllBikesArr(res?.data)
+                setTotalPage(res?.pages)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
+        }
+
+        else if (from?.indexOf('brand-and-city') > -1) {
+          let BrandId = params.id
+          let CityId = params.id1
+            let Obj = {
+                city_filter: [CityId],
+                brand_filter: [BrandId],
+                page: _page,
+                adslimit: 12
+            }
+
+            let res = await getCustomBikeAd(Obj)
+            console.log("data" , res)
+
+            if (res?.data?.length > 0) {
+                setHeading('Used Bike By ' + capitalizeFirstWord(res?.data[0]?.bike_brand?.brandName) + " in " + capitalizeFirstWord(res?.data[0]?.city?.city_name))
+                setCurrentPage(res?.currentPage)
+                setAllBikesArr(res?.data)
+                setTotalPage(res?.pages)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
         }
 
         else if (from?.indexOf('city') > -1) {
-            let id = params.id1
-            let res = await getBikesBySpecificFilter('city', id, getAdFrom + 10)
-            setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
-            setAllBikesArr(res)
-            setTimeout(() => {
-                window.scrollTo(0, 0)
-            }, 1000);
+          let id = params.id1
+            let Obj = {
+                city_filter: [id],
+                page: _page,
+                adslimit: 12
+            }
+
+            let res = await getCustomBikeAd(Obj)
+
+            if (res?.data?.length > 0) {
+                setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
+                setCurrentPage(res?.currentPage)
+                setAllBikesArr(res?.data)
+                setTotalPage(res?.pages)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
         }
 
         else if (from?.indexOf('brand') > -1) {
             let id = params.id1
-            let res = await getBikesBySpecificFilter('brand', id, getAdFrom + 10)
-            setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
-            setAllBikesArr(res)
-            setTimeout(() => {
-                window.scrollTo(0, 0)
-            }, 1000);
+            let Obj = {
+                brand_filter: [id],
+                page: _page,
+                adslimit: 12
+            }
+
+            let res = await getCustomBikeAd(Obj)
+
+            if (res?.data?.length > 0) {
+                setHeading('Used Bike By ' + capitalizeFirstWord(params.id))
+                setCurrentPage(res?.currentPage)
+                setAllBikesArr(res?.data)
+                setTotalPage(res?.pages)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
         }
 
         setIsLoading(false)
@@ -210,9 +296,19 @@ const AllUsedBikeByFilter = () => {
                                         })}
                                     </div>
 
-                                    <div className={styles.viewMoreBtnContainer} >
+                                    {/* <div className={styles.viewMoreBtnContainer} >
                                         <button onClick={() => { fetchBikeInfo() }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
-                                    </div>
+                                    </div> */}
+
+                                    {allBikesArr?.length > 0 ?
+                                        <Box className={styles.used_bike_list_pagination}>
+                                            <Pagination
+                                                count={totalPage}
+                                                onChange={handlePaginationChange}
+                                                page={currentPage}
+                                            />
+                                        </Box>
+                                        : ""}
 
                                 </div>
                             </Box>

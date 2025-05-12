@@ -1,33 +1,30 @@
 'use client'
-import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
+import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
-import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
+import { isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ItemCard from '@/ebikeWeb/sharedComponents/itemCard/index';
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import { isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 
-
 const AllUsedBike = () => {
-    const isMobile = useMediaQuery('(max-width:991px)');
-    const isMobile2 = useMediaQuery('(max-width:766px)');
-    const [allBikesArr, setAllBikesArr] = useState([]);
-    const [pageNo, setPageNo] = useState(-12);
-    const [isLoading, setIsLoading] = useState(false);
-    const [featuredData, setFeaturedData] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
+    const [featuredData, setFeaturedData] = useState([]);
+    const isMobile2 = useMediaQuery('(max-width:768px)');
+    const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
-   
-    const [totalPage, setTotalPage] = useState(null)
-    const [currentPage, setCurrentPage] = useState(1)
     const [IsLogin, setIsLogin] = useState('not_login');
+    const [allBikesArr, setAllBikesArr] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(null);
+    const [pageNo, setPageNo] = useState(-12);
 
     const router = useRouter()
 
@@ -39,79 +36,50 @@ const AllUsedBike = () => {
         else {
             setIsLogin("not_login")
         }
-
-        fetchBikeInfo(pageNo)
-        fetchFeaturedBike()
-
-        // fetchBikeInfo(1)
-        // fetchFeaturedBike(1)
-
-
+        fetchBikeInfo(1)
+        fetchFeaturedBike(1)
     }, [])
 
-    const handlePaginationChange = async (event, page) => { 
+    const handlePaginationChange = async (event, page) => {
         fetchBikeInfo(page)
     }
 
-    // async function fetchBikeInfo(_pageNo) {
-    //     setIsLoading(true)
-    //     let obj = {
-    //         adslimit: 12, 
-    //         page : _pageNo
-    //     }
-    //     let res = await getCustomBikeAd(obj);
-    //     setIsLoading(false)
-    //     if(res?.data?.length > 0) {
-    //         console.log('res used bike', res, res?.pages)
-    //         setCurrentPage(res?.currentPage)
-    //         setAllBikesArr(res?.data)
-    //         setTotalPage(res?.pages)
-    //     }
-    //     else {
-    //         setCurrentPage(res?.data?.currentPage)
-    //         setAllBikesArr([])
-    //         setTotalPage(0)
-    //     }
-      
-    //     setTimeout(() => {
-    //         window.scrollTo(0, 0)
-    //     }, 1000);
-    // }
-
-    // async function fetchFeaturedBike() {
-        
-    //     let obj = {
-    //         isFeatured: true,
-    //         random: true,
-    //         adslimit: 20
-    //     }
-
-    //     let res = await getCustomBikeAd(obj);
-    //     if (res?.data?.length > 0) {
-    //         setFeaturedData(res.data)
-    //     }
-    //     else {
-    //         setFeaturedData([])
-    //     }
-    // }
-
-
     async function fetchBikeInfo(_pageNo) {
-        let curentFetchPage = _pageNo + 12
-        setPageNo(curentFetchPage)
         setIsLoading(true)
-        let res = await getAllbikesDetail(curentFetchPage)
+        let obj = {
+            adslimit: 12,
+            page: _pageNo
+        }
+
+        let res = await getCustomBikeAd(obj);
+        if (res?.data?.length > 0) {
+            setCurrentPage(res?.currentPage)
+            setAllBikesArr(res?.data)
+            setTotalPage(res?.pages)
+        }
+        else {
+            setCurrentPage(res?.data?.currentPage)
+            setAllBikesArr([])
+            setTotalPage(0)
+        }
+
         setIsLoading(false)
-        setAllBikesArr(res)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
     }
 
     async function fetchFeaturedBike() {
-        let res = await getAllFeaturedBike();
-        if (res?.length > 0) {
-            setFeaturedData(res)
+
+        let obj = {
+            isFeatured: true,
+            random: true,
+            adslimit: 20
+        }
+
+        let res = await getCustomBikeAd(obj);
+        if (res?.data?.length > 0) {
+            setFeaturedData(res.data)
         }
         else {
             setFeaturedData([])
@@ -125,18 +93,17 @@ const AllUsedBike = () => {
     }
 
     const AddFavourite = (id) => {
-        if(!IsLogin){
+        if (!IsLogin) {
             alert('Please Login To Add Favourite')
         }
-        else{
-            const object  = { 
-                userId:IsLogin?.id,
-                bikeId:id
+        else {
+            const object = {
+                userId: IsLogin?.id,
+                bikeId: id
             }
             console.log("data", object)
         }
     }
-
 
     function longCard(val, ind) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
@@ -177,7 +144,7 @@ const AllUsedBike = () => {
                     <Grid item className={styles.price_section_desktop}>
                         <span> PKR {priceWithCommas(val?.price)}</span>
                         <Box className={styles.fav_box}>
-                            <Box className={styles.icon_box} onClick={()=>AddFavourite(val?.id)}>
+                            <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
                                 <FavoriteBorderIcon className={styles.icon} />
                             </Box>
                             <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
@@ -217,7 +184,7 @@ const AllUsedBike = () => {
 
                         <Box className={styles.grid_icon_title}>
                             <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
-                            <Box className={styles.icon_box} onClick={()=>AddFavourite(val?.id)}>
+                            <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
                                 <FavoriteBorderIcon className={styles.icon} />
                             </Box>
                         </Box>
@@ -243,6 +210,118 @@ const AllUsedBike = () => {
         setshowfilter(!showfilter);
         window.scrollTo(0, 0);
     }
+
+    const HondaArray = [
+        {
+            brandName: "Honda",
+            bike_location: "Honda Bikess in Karachi",
+            url: "used-bike-by-brand-and-city/1/1"
+        },
+        {
+            brandName: "Honda",
+            bike_location: "Honda Bikess in Islamabad",
+            url: "used-bike-by-brand-and-city/1/3"
+        },
+        {
+            brandName: "Honda",
+            bike_location: "Honda Bikes in Peshawar",
+            url: "used-bike-by-brand-and-city/1/4"
+        },
+        {
+            brandName: "Honda",
+            bike_location: "Honda Bikes in Lahore",
+            url: "used-bike-by-brand-and-city/1/2"
+        },
+        {
+            brandName: "Honda",
+            bike_location: "Honda Bikes in Faisalabad",
+            url: "used-bike-by-brand-and-city/1/6"
+        },
+    ]
+    const SuzukiArray = [
+        {
+            brandName: "Suzuki",
+            bike_location: "Suzuki Bikes in Karachi",
+            url: "used-bike-by-brand-and-city/6/1"
+        },
+        {
+            brandName: "Suzuki",
+            bike_location: "Suzuki Bikes in Islamabad",
+            url: "used-bike-by-brand-and-city/6/3"
+        },
+        {
+            brandName: "Suzuki",
+            bike_location: "Suzuki Bikes in Peshawar",
+            url: "used-bike-by-brand-and-city/6/4"
+        },
+        {
+            brandName: "Suzuki",
+            bike_location: "Suzuki Bikes in Lahore",
+            url: "used-bike-by-brand-and-city/6/2"
+        },
+        {
+            brandName: "Suzuki",
+            bike_location: "Suzuki Bikes in Faisalbad",
+            url: "used-bike-by-brand-and-city/6/6"
+        },
+    ]
+    const ZxmcoArray = [
+        {
+            brandName: "Zxmco",
+            bike_location: "Zxmco Bikes in Karachi",
+            url: "used-bike-by-brand-and-city/10/1"
+        },
+        {
+            brandName: "Zxmco",
+            bike_location: "Zxmco Bikes in Islamabad",
+            url: "used-bike-by-brand-and-city/10/3"
+        },
+        {
+            brandName: "Zxmco",
+            bike_location: "Zxmco Bikes in Peshawar",
+            url: "used-bike-by-brand-and-city/10/4"
+        },
+        {
+            brandName: "Zxmco",
+            bike_location: "Zxmco Bikes in Lahore",
+            url: "used-bike-by-brand-and-city/10/2"
+        },
+        {
+            brandName: "Zxmco",
+            bike_location: "Zxmco Bikes in Faisalabad",
+            url: "used-bike-by-brand-and-city/10/6"
+        },
+    ]
+    const UnitedArray = [
+        {
+            brandName: "United",
+            bike_location: "United Bikes in Karachi",
+            url: "used-bike-by-brand-and-city/8/1"
+        },
+        {
+            brandName: "United",
+            bike_location: "United Bikes in Islamabad",
+            url: "used-bike-by-brand-and-city/8/3"
+        },
+        {
+            brandName: "United",
+            bike_location: "United Bikes in Peshawar",
+            url: "used-bike-by-brand-and-city/8/4"
+        },
+        {
+            brandName: "United",
+            bike_location: "United Bikes in Lahore",
+            url: "used-bike-by-brand-and-city/8/2"
+        },
+        {
+            brandName: "United",
+            bike_location: "United Bikes in Faisalabad",
+            url: "used-bike-by-brand-and-city/8/6"
+        },
+    ]
+
+    console.log("data", BrandArr)
+
     return (
         <Box className={styles.main}>
             {
@@ -266,14 +345,18 @@ const AllUsedBike = () => {
                                         setLoader={setIsLoading}
                                         updateData={setAllBikesArr}
                                         fetchBikeInfo={fetchBikeInfo}
+                                        CurrentPage={setCurrentPage}
+                                        TotalPage={setTotalPage}
                                     /> : '' :
                                     <Filters
                                         setLoader={setIsLoading}
                                         updateData={setAllBikesArr}
                                         fetchBikeInfo={fetchBikeInfo}
+                                        CurrentPage={setCurrentPage}
+                                        TotalPage={setTotalPage}
                                     />
                             }
-                            
+
                             <div className={styles.main_box}>
                                 <div className={styles.navigation}>
                                     <div className={styles.text_container}>
@@ -295,22 +378,17 @@ const AllUsedBike = () => {
                                     })}
                                 </div>
 
-                                {/* { allBikesArr?.length > 0 ? 
+                                {allBikesArr?.length > 0 ?
                                     <Box className={styles.used_bike_list_pagination}>
                                         <Pagination
                                             count={totalPage}
                                             onChange={handlePaginationChange}
                                             page={currentPage}
                                         />
-                                    </Box>  
-                                : "" }    */}
+                                    </Box>
+                                    : ""}
 
-
-                                <div className={styles.viewMoreBtnContainer} >
-                                    <button onClick={() => { fetchBikeInfo(pageNo) }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
-                                </div>
                             </div>
-
 
                             <Box className={styles.add_area}>
                                 <Box className={styles.add_box}>
@@ -347,7 +425,60 @@ const AllUsedBike = () => {
                                     </Link>
                                 </Box>
                             </Box>
-                        </Box></>
+                        </Box>
+                        <Box className={styles.browser}>
+                            <Box className={styles.container}>
+                                <Typography className={styles.heading}>Browse More Used Bikes</Typography>
+                            <Grid container className={styles.main_container}>
+                                <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                                    <ul className={styles.ul}>
+                                        {
+                                            HondaArray.map((data, i) => {
+                                                return (
+                                                    <li  key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </Grid>
+                                <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                                    <ul className={styles.ul}>
+                                        {
+                                            UnitedArray.map((data, i) => {
+                                                return (
+                                                    <li  key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </Grid>
+                                <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                                    <ul className={styles.ul}>
+                                        {
+                                            ZxmcoArray.map((data, i) => {
+                                                return (
+                                                    <li  key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </Grid>
+                                <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                                    <ul className={styles.ul}>
+                                        {
+                                            SuzukiArray.map((data, i) => {
+                                                return (
+                                                    <li key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </Grid>
+                            </Grid>
+                            </Box>
+
+                        </Box>
+                    </>
                     :
                     <div className={styles.load_main}>
                         <div className={styles.load_div}>

@@ -1,252 +1,267 @@
 @import '../../styles/variable';
-.main{
+
+.main {
   width: 100%;
   padding: 0px;
   background: #f2f3f3;
   min-height: 50vh;
   font-family: sans-serif;
+
   @media (max-width:991px) {
     padding: 0px 10px !important;
   }
+
   @media (max-width:600px) {
     padding: 0px !important;
   }
-  .usedBike_headingBpx{
+
+  .usedBike_headingBpx {
     width: 100%;
     max-width: 1200px;
     padding: 0px 0px 0px 10px;
     margin: auto;
+
     @media (max-width:768px) {
-      padding:10px 0px 0px 20px !important;
+      padding: 10px 0px 0px 20px !important;
       max-width: 90%;
     }
+
     .headinh_sale {
       font-size: 24px;
       color: $primary_two;
       margin: 0px 0px -2px;
       font-weight: normal;
     }
-    .path_text{
+
+    .path_text {
       font-size: 12px;
       color: #7b8397;
       margin: 0px 15px 0px 0px;
     }
   }
-.all_bike_main {
-  display: flex;
-  padding: 0px 10px;
-  width: 100% !important;
-  max-width: 1200px;
-  margin: auto;
-  align-items: start;
-  gap: 15px;
 
-  @media (max-width:767px) {
-    flex-direction: column;
-    width: 90% !important;
-  }
-
-  .main_box {
-    padding: 0px 10px !important;
+  .all_bike_main {
+    display: flex;
+    padding: 0px 10px;
     width: 100% !important;
-    box-sizing: border-box;
-    height: 100%;
-    max-width: 800px;
-    margin: 20px auto 0px auto;
+    max-width: 1200px;
+    margin: auto;
+    align-items: start;
+    gap: 15px;
 
-    .navigation {
+    @media (max-width:767px) {
+      flex-direction: column;
+      width: 90% !important;
+    }
+
+    .main_box {
+      padding: 0px 10px !important;
+      width: 100% !important;
+      box-sizing: border-box;
+      height: 100%;
       max-width: 800px;
-      height: 30px;
-      background: white;
-      border: 1px solid #e6e6e6;
-      padding: 10px;
-      margin: auto;
-      position: relative;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
+      margin: 20px auto 0px auto;
 
-      @media (max-width:900px) {
-        width: 95%;
-      }
+      .navigation {
+        max-width: 800px;
+        height: 30px;
+        background: white;
+        border: 1px solid #e6e6e6;
+        padding: 10px;
+        margin: auto;
+        position: relative;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
 
-      .bike_text {
-        font-size: 16px;
-        float: left;
-      }
+        @media (max-width:900px) {
+          width: 95%;
+        }
 
-      .swap_button_container {
-        .swap_icon {
-          font-size: 20px;
-          cursor: pointer;
+        .bike_text {
+          font-size: 16px;
+          float: left;
+        }
+
+        .swap_button_container {
+          .swap_icon {
+            font-size: 20px;
+            cursor: pointer;
+          }
         }
       }
     }
-  }
 
-  .grid_bike_list {
+    .grid_bike_list {
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  
-    .grid_card {
-  
-      width: 28%;
-      height: auto;
-      padding: 0px !important;
-      background: white;
-      border: 1px solid #e6e6e6;
-      margin: 10px 5px;
-      cursor: pointer;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
 
-      @media (max-width:600px) {
-        width: 46%;
-      }
-  
-      .grid_image_box {
-        width: 100%;
+      .grid_card {
+
+        width: 28%;
+        height: auto;
+        padding: 0px !important;
+        background: white;
+        border: 1px solid #e6e6e6;
+        margin: 10px 5px;
+        cursor: pointer;
+
+        @media (max-width:600px) {
+          width: 46%;
+        }
+
+        .grid_image_box {
+          width: 100%;
+
           img {
             width: 100%;
             height: 140px;
           }
-      }
-  
-      .grid_card_info {
-  text-decoration: none;
-        height: auto;
-        padding: 0px;
-        max-width: 100%;   
-        margin-top: 0px;
-        margin-left: 0px;  
-        width: 100%;
-        padding-left: 10px;
-        padding-bottom: 10px;
-.grid_icon_title{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-        .grid_card_title {
-          color: $black;
-          font-weight: bold;
-          font-size: 14px;
-          width: 100%;
-          max-width: 150px;
-          padding: 5px 0px 4px 0px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          overflow: hidden;
-          display: block;
-          @media (max-width:430px) {
-            width: 130px;
-          }
         }
 
-        .icon_box{
-          display: flex;
-          padding: 5px 0px !important;
-          justify-content: center !important;
-          align-items: center !important;
-          width: 35px; 
-          margin-right: 5px;
-          height: 20px;
-          background-color: whitesmoke;
-          .icon{
-            font-size: 16px;
-            color: grey;
+        .grid_card_info {
+          text-decoration: none;
+          height: auto;
+          padding: 0px;
+          max-width: 100%;
+          margin-top: 0px;
+          margin-left: 0px;
+          width: 100%;
+          padding-left: 10px;
+          padding-bottom: 10px;
+
+          .grid_icon_title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+
+            .grid_card_title {
+              color: $black;
+              font-weight: bold;
+              font-size: 14px;
+              width: 100%;
+              max-width: 150px;
+              padding: 5px 0px 4px 0px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              overflow: hidden;
+              display: block;
+
+              @media (max-width:430px) {
+                width: 130px;
+              }
+            }
+
+            .icon_box {
+              display: flex;
+              padding: 5px 0px !important;
+              justify-content: center !important;
+              align-items: center !important;
+              width: 35px;
+              margin-right: 5px;
+              height: 20px;
+              background-color: whitesmoke;
+
+              .icon {
+                font-size: 16px;
+                color: grey;
+              }
+            }
           }
-        }
-      }  
-        .grid_card_location {
-          padding: 0px 0px 0px;
-          font-size: 13px;
-          color: #434343;
-        }
-  
-        .grid_card_price {
-          width: 100%;
-          white-space: nowrap;
-          font-size: 13px;
-          font-weight: bolder;
-          color:  $primary_two;
-          margin-top: 10px;
-          margin-bottom: 10px;
-        }
-  
-        .grid_bike_details {
-          font-size: 13px;
-          color: #434343;
-          padding: 0px 0px 0px;
-          width: 100%;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          overflow: hidden;
-          display: block;
-          @media (max-width:430px) {
-            max-width: 130px;
+
+          .grid_card_location {
+            padding: 0px 0px 0px;
+            font-size: 13px;
+            color: #434343;
+          }
+
+          .grid_card_price {
+            width: 100%;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: bolder;
+            color: $primary_two;
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+
+          .grid_bike_details {
+            font-size: 13px;
+            color: #434343;
+            padding: 0px 0px 0px;
+            width: 100%;
+            text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
-            text-overflow: ellipsis;
+            overflow: hidden;
             display: block;
-          }
-            
+
+            @media (max-width:430px) {
+              max-width: 130px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: block;
+            }
+
             .grid_verticl_line {
               padding-right: 2px;
               padding-left: 2px;
+
               @media (max-width:440px) {
                 padding-right: 0px;
                 padding-left: 0px;
               }
             }
+          }
+
         }
-  
+
       }
-  
-    }
-  
-  }
 
-  .bike_ad_list {
-
-    @media (max-width:600px) {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
     }
 
-    .long_card {
-
-      display: flex;
-      padding: 10px 0px !important;
-      margin: 0px 0px 20px;
-      background: white;
-      border: 1px solid #e6e6e6;
-      height: 155px;
-      align-items: center;
-      flex-wrap: nowrap;
-      cursor: pointer;
-      flex-direction: row;
-      padding-left: 2px !important;
+    .bike_ad_list {
 
       @media (max-width:600px) {
-        height: auto !important;
-        padding: 0px !important;
-        flex-direction: column;
-        max-width: 250px;
-        margin: 5px 8px !important;
-        border: 1px solid #e4e4e4;
-        background: rgb(249, 249, 249);
-        border-radius: 0;
-        width: 44%;
-        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
-      // grid 1
-      .bike_image_box {
+      .long_card {
+
+        display: flex;
+        padding: 10px 0px !important;
+        margin: 0px 0px 20px;
+        background: white;
+        border: 1px solid #e6e6e6;
+        height: 155px;
+        align-items: center;
+        flex-wrap: nowrap;
+        cursor: pointer;
+        flex-direction: row;
+        padding-left: 2px !important;
+
+        @media (max-width:600px) {
+          height: auto !important;
+          padding: 0px !important;
+          flex-direction: column;
+          max-width: 250px;
+          margin: 5px 8px !important;
+          border: 1px solid #e4e4e4;
+          background: rgb(249, 249, 249);
+          border-radius: 0;
+          width: 44%;
+          overflow: hidden;
+        }
+
+        // grid 1
+        .bike_image_box {
           height: 150px;
           width: 220px;
           padding: 0px 10px;
@@ -258,12 +273,12 @@
           max-width: 220px;
 
           @media (max-width:600px) {
-            width: 100%; 
-            max-width: 100%;   
-            height: 120px;  
+            width: 100%;
+            max-width: 100%;
+            height: 120px;
             padding: 0px;
           }
-          
+
           img {
             height: 100%;
             width: fit-content;
@@ -271,240 +286,251 @@
 
             @media (max-width:600px) {
               height: 120px;
-              width: 100%;     
+              width: 100%;
               min-width: unset;
               max-width: unset;
             }
 
           }
-      }
-
-      // grid 2
-      .card_info {
-
-        height: 148px;
-        padding: 20px 10px 10px 0px;
-
-        @media (max-width:1050px) {
-          padding-left: 10px;
         }
 
-        @media (max-width:800px) {
-          padding-left: 10px;
-        }
+        // grid 2
+        .card_info {
 
-        @media (max-width:600px) {
-          height: auto;
-          padding: 0px;
-          max-width: 100%;   
-          margin-top: 0px;
-          margin-left: 0px;  
-          width: 100%;
-          padding-left: 10px;
-        }
+          height: 148px;
+          padding: 20px 10px 10px 0px;
 
-          
+          @media (max-width:1050px) {
+            padding-left: 10px;
+          }
+
+          @media (max-width:800px) {
+            padding-left: 10px;
+          }
+
+          @media (max-width:600px) {
+            height: auto;
+            padding: 0px;
+            max-width: 100%;
+            margin-top: 0px;
+            margin-left: 0px;
+            width: 100%;
+            padding-left: 10px;
+          }
+
+
           .card_title {
-              max-width: 250px;
-              font-size: 14px;
-              padding: 0px;
-              display: flex;
-              align-items: center;
-              color: $black;
-              font-weight: bold;
+            max-width: 250px;
+            font-size: 14px;
+            padding: 0px;
+            display: flex;
+            align-items: center;
+            color: $black;
+            font-weight: bold;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+
+            @media (max-width:600px) {
+              font-size: 13px;
               width: 100%;
+              max-width: 130px;
+              padding: 5px 0px 4px 0px;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
-             
-              @media (max-width:600px) {
-                font-size: 13px;
-                width: 100%;
-                max-width: 130px;
-                padding: 5px 0px 4px 0px;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                overflow: hidden;
-                display: block;
-                width: 140px;
-              }
+              overflow: hidden;
+              display: block;
+              width: 140px;
+            }
           }
-          
+
           .card_price_mobile {
             width: 100%;
             white-space: nowrap;
             font-size: 13px;
             font-weight: bolder;
-            color:  $primary_two;
+            color: $primary_two;
             margin-top: 10px;
             margin-bottom: 10px;
-    
+
             @media (min-width:600px) {
               display: none;
             }
           }
-        
 
-        .card_location {
-          padding: 7px 0px 0px;
-          font-size: 13px;
-          color: #434343;
-        }
 
-        .bike_details {
-          font-size: 13px;
-          color: #434343;
-          padding: 5px 0px 0px;
-          width: 100%;
-          @media (max-width:500px) {
-            max-width: 150px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
+          .card_location {
+            padding: 7px 0px 0px;
+            font-size: 13px;
+            color: #434343;
           }
 
-          .verticl_line {
-            padding-right: 7px;
-            padding-left: 7px;
-            @media (max-width:440px) {
-              padding-right: 0px;
-              padding-left: 0px;
+          .bike_details {
+            font-size: 13px;
+            color: #434343;
+            padding: 5px 0px 0px;
+            width: 100%;
+
+            @media (max-width:500px) {
+              max-width: 150px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: block;
             }
+
+            .verticl_line {
+              padding-right: 7px;
+              padding-left: 7px;
+
+              @media (max-width:440px) {
+                padding-right: 0px;
+                padding-left: 0px;
+              }
+            }
+
           }
 
-        }
-        box-sizing: border-box;
-      }
-
-      // grid 3
-      .price_section_desktop {
-        display: flex;
-        height: 148px;
-        box-sizing: border-box;
-        justify-content: right !important;
-        flex-direction: column;
-        align-items: center;
-        row-gap: 65px;
-        white-space: nowrap;
-        padding: 20px 0px 0px 0px ;
-
-        @media (max-width:600px) {
-          display: none;
-        }
-
-        span {
-          color: #1976d2;
-          width: 100%;
-          text-align: right;
           box-sizing: border-box;
-          padding: 0px 10px 0px 0px !important;
-          font-size: 16px;
         }
-        .fav_box{
+
+        // grid 3
+        .price_section_desktop {
           display: flex;
-          column-gap: 5px !important;
-          flex-direction: row;
-          margin: 0px 10px 0px 5px !important;
+          height: 148px;
           box-sizing: border-box;
-          .icon_box{
-            display: flex;
-            padding: 5px 0px !important;
-            justify-content: center !important;
-            align-items: center !important;
-            width: 35px; 
-            height: 20px;
-            background-color: whitesmoke;
-            .icon{
-              font-size: 16px;
-              color: grey;
-            }
+          justify-content: right !important;
+          flex-direction: column;
+          align-items: center;
+          row-gap: 65px;
+          white-space: nowrap;
+          padding: 20px 0px 0px 0px;
+
+          @media (max-width:600px) {
+            display: none;
           }
-          .phone_box{
-            display: flex;
-            justify-content: left;
-            align-items: center;
-            column-gap: 5px;
-            border-radius: 2px;
-            padding: 0px 5px !important;
+
+          span {
+            color: #1976d2;
+            width: 100%;
+            text-align: right;
             box-sizing: border-box;
-            border: 1px solid yellowgreen;
-            background-color: yellowgreen;
-            font-size: 11px;
-            color: white;
-            .icon{
-              font-size: 16px;
+            padding: 0px 10px 0px 0px !important;
+            font-size: 16px;
+          }
+
+          .fav_box {
+            display: flex;
+            column-gap: 5px !important;
+            flex-direction: row;
+            margin: 0px 10px 0px 5px !important;
+            box-sizing: border-box;
+
+            .icon_box {
+              display: flex;
+              padding: 5px 0px !important;
+              justify-content: center !important;
+              align-items: center !important;
+              width: 35px;
+              height: 20px;
+              background-color: whitesmoke;
+
+              .icon {
+                font-size: 16px;
+                color: grey;
+              }
+            }
+
+            .phone_box {
+              display: flex;
+              justify-content: left;
+              align-items: center;
+              column-gap: 5px;
+              border-radius: 2px;
+              padding: 0px 5px !important;
+              box-sizing: border-box;
+              border: 1px solid yellowgreen;
+              background-color: yellowgreen;
+              font-size: 11px;
               color: white;
+
+              .icon {
+                font-size: 16px;
+                color: white;
+              }
             }
           }
+
         }
 
       }
 
-    }
+      .banner {
+        width: 500px;
 
-    .banner {
-      width: 500px;
-      @media (max-width:991px) {
-        width: 300px;
+        @media (max-width:991px) {
+          width: 300px;
+        }
+
+        text-align: center;
+        margin: 10px auto;
+
+        .baner_image {
+          width: 100%;
+        }
       }
-      text-align: center;
-      margin: 10px auto;
-      .baner_image {
-        width: 100%;
-      }
-    }  
-  }
-
-
-  .viewMoreBtnContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 40px auto;
-
-    .viewMoreBtn {
-      padding: 10px 30px;
-      background-color: $primary_two;
-      color: #fff;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
     }
 
-    .viewMoreBtnDisabled {
-      pointer-events: none;
-    }
 
-  }
-
-
-
-  .add_area {
-    width: 150px;
-    margin-top: 10px;
-
-    .add_box{
-      row-gap: 30px;
-      background-color: whitesmoke;
+    .viewMoreBtnContainer {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 40px auto;
 
-      .add_image{
-        width: 100%;
+      .viewMoreBtn {
+        padding: 10px 30px;
+        background-color: $primary_two;
+        color: #fff;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .viewMoreBtnDisabled {
+        pointer-events: none;
       }
 
     }
 
-    @media (max-width:768px) {
-      display: none;
+
+
+    .add_area {
+      width: 150px;
+      margin-top: 10px;
+
+      .add_box {
+        row-gap: 30px;
+        background-color: whitesmoke;
+        display: flex;
+        flex-direction: column;
+
+        .add_image {
+          width: 100%;
+        }
+
+      }
+
+      @media (max-width:768px) {
+        display: none;
+      }
     }
   }
 }
-}
 
-.filter_button{
+.filter_button {
   background-color: yellowgreen !important;
   color: white !important;
   z-index: 1000;
@@ -513,36 +539,40 @@
   right: 0px;
   width: 110px;
 }
-.load_main{
+
+.load_main {
   width: 100%;
   height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  .load_div{
+
+  .load_div {
+    border: 1px solid #000;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+}
+
+@media (max-width:768px) {
+  .load_main {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .load_div {
       border: 1px solid #000;
       height: auto;
       display: flex;
       justify-content: center;
       align-items: center;
 
-  }
-}
-@media (max-width:768px) {
-  .load_main{
-      width: 100%;
-      height: 50vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .load_div{
-          border: 1px solid #000;
-          height: auto;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-  
-      }
+    }
   }
 }
 
@@ -553,17 +583,92 @@
   margin-top: 20px;
   margin-bottom: 20px;
 
-  .pagination_box{
-      width: 15px;
-      height: 15px;
-      border-radius: 3px;
-      border: 1px solid #434242;
-      padding: 0px !important;
+  .pagination_box {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    border: 1px solid #434242;
+    padding: 0px !important;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
+
+.browser {
+  width: 100%;
+  height: auto;
+  padding: 10px 0px !important;
+  background: whitesmoke;
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+    .heading {
+      width: 100%;
+      font-size: 18px;
+      margin: 0px;
+      font-weight: 500;
+
+      @media (max-width:768px) {
+        padding-left: 10px !important;
+      }
+    }
+
+    .main_container {
+      width: 100%;
+      height: auto;
       display: flex;
       justify-content: center;
-      text-align: center;
-      align-items: center;
-      font-size: 12px;
-      cursor: pointer;
+      margin: auto;
+      padding: 0px 0px !important;
+
+
+
+      .grid_list {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        box-sizing: border-box;
+        padding: 0px !important;
+        justify-content: left;
+        flex-direction: column;
+
+        .ul {
+            list-style-type: none;
+            padding: 0px !important;
+          @media (max-width:768px) {
+            
+          }
+          .li {
+            color: #1976d2;
+            text-decoration: none;
+            transition: all 1s ease;
+            font-size: 12px;
+            box-sizing: border-box;
+            padding: 4px 0px;
+            cursor: pointer;
+            &:hover {
+              color: grey;
+              text-decoration: underline;
+            }
+            @media (max-width:768px) {
+              padding: 4px 0px 4px 5px !important;
+            }
+          }
+        }
+      }
+    }
   }
 }
