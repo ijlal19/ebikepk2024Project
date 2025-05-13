@@ -11,17 +11,12 @@ import * as React from 'react';
 
 export default function MoreOptionPopup(props: any) {
 
-    const { id1 } = useParams()
-    const router = useRouter()
-
-    function updateFilterValue(event: any, data: any) {
-        if (event.target.checked) {
-            router.push(`/used-bikes/bike-by-brand/${data?.brandName}/${data?.id}`)
-        }
-    }
+    const GetArray = props.from == 'city' ?
+        JSON.parse(localStorage.getItem("selectedDataByCity") || "[]")
+        : JSON.parse(localStorage.getItem("selectedDataByBrand") || "[]")
 
     return (
-        <div>
+        <Box>
             <Modal open={props.modalData.openmodal} onClose={() => props.modalData.showmodal('close')} >
                 <Box className={styles.Modal_box}>
 
@@ -41,8 +36,8 @@ export default function MoreOptionPopup(props: any) {
                                     <Typography className={styles.option_values} key={i}>
                                         <input
                                             type="checkbox"
-                                            checked={data?.id == id1}
-                                            onChange={(event) => { updateFilterValue(event, data) }}
+                                            checked={GetArray?.includes(data?.id)}
+                                            onChange={(e) => { props.updateFilterValue(e, props.from == 'city' ? "city" : "brand") }}
                                             id={data.id}
                                         />
                                         {props.from == 'city' ? data.city_name : data.brandName}
@@ -53,6 +48,6 @@ export default function MoreOptionPopup(props: any) {
                     </Box>
                 </Box>
             </Modal>
-        </div>
+        </Box>
     );
 }

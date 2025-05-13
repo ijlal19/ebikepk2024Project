@@ -2,16 +2,20 @@
 import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { Box, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
-import BrandFilter from "@/ebikeWeb/sharedComponents/brand_filter";
-import { Apps, FormatListBulleted } from '@mui/icons-material';
+import { BrandFilter, CC_Filter, CityFilter, YearFilter } from "@/ebikeWeb/sharedComponents/brand_filter";
+import { Apps, FormatListBulleted, PagesRounded } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { priceWithCommas } from '@/genericFunctions/geneFunc';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import { useRouter, useParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
+import { CgCalculator } from "react-icons/cg";
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const AllUsedBikeByFilter = () => {
+
     const isMobile = useMediaQuery('(max-width:991px)');
     const IsMobile2 = useMediaQuery('(max-width:768px)');
     const [allBikesArr, setAllBikesArr] = useState([]);
@@ -20,16 +24,51 @@ const AllUsedBikeByFilter = () => {
     const [getAdFrom, setGetAdFrom] = useState(-10);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [filterShow, setFilterShow] = useState(false)
-
     const [totalPage, setTotalPage] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
+    const [YearsData, setYearsdata] = useState([])
+    const [CCsData, setCCsData] = useState([])
+    const [BrandArray, setBrandArray] = useState([])
+    const [CityArray, setCityArray] = useState([])
+
+    const SelectedYearData = []
+    const SelectedCCData = []
 
     const params = useParams()
     const router = useRouter()
 
     useEffect(() => {
+        if (BrandArray && BrandArray.length > 0) {
+            fetchBrandData(1)
+        }
+        else {
+            fetchBikeInfo(1)
+        }
+    }, [BrandArray.length])
+
+    useEffect(() => {
+        if (CityArray && CityArray.length > 0) {
+            fetchCityData(1)
+        }
+        else {
+            fetchBikeInfo(1)
+        }
+    }, [CityArray.length])
+
+    useEffect(() => {
         fetchBikeInfo()
         if (params.slug == "bike-by-brand") {
+            setFilterShow(true)
+            localStorage.clear()
+        }
+        else if (params.slug == "bike-by-city") {
+            setFilterShow(true)
+            localStorage.clear()
+        }
+        else if (params.slug == "bike-by-year") {
+            setFilterShow(true)
+        }
+        else if (params.slug == "bike-by-cc") {
             setFilterShow(true)
         }
         else {
@@ -41,8 +80,43 @@ const AllUsedBikeByFilter = () => {
         return str.replace(/^\s*\w/, (match) => match.toUpperCase());
     };
 
-    const handlePaginationChange = async (event, page) => {
-        fetchBikeInfo(page)
+    const handlePaginationChange = (event, page) => {
+        const from = params.slug
+        if (from == 'bike-by-year') {
+            if (YearsData.length == 2) {
+                fetchedYearData(page, true)
+            }
+            else {
+                fetchBikeInfo(page)
+            }
+        }
+        else if (from == 'bike-by-cc') {
+            if (CCsData.length == 2) {
+                fetchedCCData(page, true)
+            }
+            else {
+                fetchBikeInfo(page)
+            }
+        }
+        else if (from == 'bike-by-brand') {
+            if (BrandArray.length > 0) {
+                fetchBrandData(page)
+            }
+            else {
+                fetchBikeInfo(page)
+            }
+        }
+        else if (from == 'bike-by-city') {
+            if (CityArray.length > 0) {
+                fetchCityData(page)
+            }
+            else {
+                fetchBikeInfo(page)
+            }
+        }
+        else {
+            fetchBikeInfo(1)
+        }
     }
 
     async function fetchBikeInfo(_page) {
@@ -55,17 +129,15 @@ const AllUsedBikeByFilter = () => {
             let id = params?.id1
             let Obj = {
                 years_filter: [id],
-                page:_page,
-                adslimit:12
+                page: _page,
+                adslimit: 12
             }
             let res = await getCustomBikeAd(Obj)
-
             if (res?.data?.length > 0) {
                 setCurrentPage(res?.currentPage)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
                 setHeading('Used Bike For Year ' + params.id)
-                console.log("data", res)
             }
             else {
                 setCurrentPage(res?.data?.currentPage)
@@ -83,7 +155,6 @@ const AllUsedBikeByFilter = () => {
             }
 
             let res = await getCustomBikeAd(Obj)
-            console.log("data" , res)
 
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(params.id) + "CC")
@@ -99,8 +170,8 @@ const AllUsedBikeByFilter = () => {
         }
 
         else if (from?.indexOf('brand-and-city') > -1) {
-          let BrandId = params.id
-          let CityId = params.id1
+            let BrandId = params.id
+            let CityId = params.id1
             let Obj = {
                 city_filter: [CityId],
                 brand_filter: [BrandId],
@@ -109,7 +180,6 @@ const AllUsedBikeByFilter = () => {
             }
 
             let res = await getCustomBikeAd(Obj)
-            console.log("data" , res)
 
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(res?.data[0]?.bike_brand?.brandName) + " in " + capitalizeFirstWord(res?.data[0]?.city?.city_name))
@@ -125,7 +195,7 @@ const AllUsedBikeByFilter = () => {
         }
 
         else if (from?.indexOf('city') > -1) {
-          let id = params.id1
+            let id = params.id1
             let Obj = {
                 city_filter: [id],
                 page: _page,
@@ -218,7 +288,15 @@ const AllUsedBikeByFilter = () => {
                     </Grid>
 
                     <Grid item className={styles.price_section_desktop}>
-                        <span> PKR {priceWithCommas(val?.price)}  </span>
+                        <span> PKR {priceWithCommas(val?.price)}</span>
+                        <Box className={styles.fav_box}>
+                            <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
+                                <FavoriteBorderIcon className={styles.icon} />
+                            </Box>
+                            <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
+                                < LocalPhoneIcon className={styles.icon} /> Show Phone No
+                            </Box>
+                        </Box>
                     </Grid>
 
                 </Grid>
@@ -229,32 +307,232 @@ const AllUsedBikeByFilter = () => {
     function GridCard(val, ind) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        let title = val.title
+        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+        let href = `/used-bikes/${urlTitle}/${val.id}`
         return (
-            <Grid container className={styles.grid_card} key={ind} onClick={() => { goToDetailPage(val) }}>
+            <Link
+                href={href}
+                key={ind}
+                className={styles.grid_card}
+                sx={{ textDecoration: "none" }}
+            >
+                <Grid container>
 
-                <Grid item className={styles.grid_image_box}>
-                    {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
+                    <Grid item className={styles.grid_image_box}>
+                        {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt={'a'} /> : ""}
+                    </Grid>
+
+                    <Grid item className={styles.grid_card_info}>
+
+                        <Box className={styles.grid_icon_title}>
+                            <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
+                            <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
+                                <FavoriteBorderIcon className={styles.icon} />
+                            </Box>
+                        </Box>
+                        <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
+
+                        <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
+
+                        <Typography className={styles.grid_bike_details}>
+                            {val?.year?.year}
+                            <span className={styles.grid_verticl_line}> | </span>
+                            <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                            <span className={styles.grid_verticl_line}> | </span>
+                            <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                        </Typography>
+                    </Grid>
                 </Grid>
-
-                <Grid item className={styles.grid_card_info}>
-
-                    <Typography className={styles.grid_card_title}> {val?.title} </Typography>
-
-                    <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
-
-                    <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
-
-                    <Typography className={styles.grid_bike_details}>
-                        {val?.year?.year}
-                        <span className={styles.grid_verticl_line}> | </span>
-                        <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                        <span className={styles.grid_verticl_line}> | </span>
-                        <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
-                    </Typography>
-                </Grid>
-            </Grid>
+            </Link >
         )
     }
+
+    const fetchedYearData = async (_page, from) => {
+        setIsLoading(true)
+
+        if (!from) {
+            setYearsdata(SelectedYearData[0])
+        }
+        else {
+            setYearsdata(YearsData)
+        }
+
+        const MakeObj = () => {
+            if (from) {
+                return ({
+                    years_filter: YearsData,
+                    page: _page,
+                    adslimit: 12
+                })
+            }
+            else {
+                return ({
+                    years_filter: SelectedYearData[0],
+                    page: _page,
+                    adslimit: 12
+                })
+            }
+        }
+
+        const obj = MakeObj()
+
+        const res = await getCustomBikeAd(obj)
+        if (res && res?.data?.length > 0) {
+            setAllBikesArr(res?.data)
+            setCurrentPage(res?.currentPage)
+            setTotalPage(res?.pages)
+        }
+        else {
+            setCurrentPage(res?.data?.currentPage)
+            setAllBikesArr([])
+            setTotalPage(0)
+        }
+
+        setIsLoading(false)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000);
+
+    }
+
+    const fetchedCCData = async (_page, from) => {
+        setIsLoading(true)
+        if (!from) {
+            setCCsData(SelectedCCData[0])
+        }
+        else {
+            setCCsData(CCsData)
+        }
+
+        const MakeOjForCC = () => {
+            if (from) {
+                return ({
+                    cc: CCsData,
+                    page: _page,
+                    adslimit: 12
+                })
+            }
+            else {
+                return ({
+                    cc: SelectedCCData[0],
+                    page: _page,
+                    adslimit: 12
+                })
+            }
+        }
+
+        const obj = MakeOjForCC()
+
+        const res = await getCustomBikeAd(obj)
+        if (res && res?.data?.length > 0) {
+            setAllBikesArr(res?.data)
+            setCurrentPage(res?.currentPage)
+            setTotalPage(res?.pages)
+        }
+        else {
+            setCurrentPage(res?.data?.currentPage)
+            setAllBikesArr([])
+            setTotalPage(0)
+        }
+
+        setIsLoading(false)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000);
+    }
+
+    const fetchBrandData = async (_page) => {
+        if (BrandArray && BrandArray.length > 0) {
+            const obj = {
+                brand_filter: BrandArray,
+                page: _page,
+                adslimit: 12
+            }
+            const res = await getCustomBikeAd(obj)
+            if (res && res?.data?.length > 0) {
+                setAllBikesArr(res?.data)
+                setCurrentPage(res?.currentPage)
+                setTotalPage(res?.pages)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
+            setTimeout(() => {
+                window.scrollTo(0, 0)
+            }, 1000);
+        }
+    }
+
+    const fetchCityData = async (_page) => {
+        if (CityArray && CityArray.length > 0) {
+            const obj = {
+                city_filter: CityArray,
+                page: _page,
+                adslimit: 12
+            }
+            const res = await getCustomBikeAd(obj)
+            if (res && res?.data?.length > 0) {
+                setAllBikesArr(res?.data)
+                setCurrentPage(res?.currentPage)
+                setTotalPage(res?.pages)
+            }
+            else {
+                setCurrentPage(res?.data?.currentPage)
+                setAllBikesArr([])
+                setTotalPage(0)
+            }
+            setTimeout(() => {
+                window.scrollTo(0, 0)
+            }, 1000);
+        }
+    }
+
+    const FilterChange = () => {
+        if (params.slug == "bike-by-brand") {
+            return <BrandFilter setBrandArray={setBrandArray} />
+        }
+        else if (params.slug == "bike-by-city") {
+            return <CityFilter setCityArray={setCityArray} />
+        }
+        else if (params.slug == "bike-by-year") {
+            return <YearFilter fetchedYearData={fetchedYearData} SelectedYearData={SelectedYearData} />
+        }
+        else if (params.slug == "bike-by-cc") {
+            return <CC_Filter fetchedCCData={fetchedCCData} SelectedCCData={SelectedCCData} />
+        }
+    }
+
+    const AdsArray = [
+        {
+            href: 'https://youtube.com/ebikepk',
+            alt: 'eBike YouTube Banner',
+            url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif",
+            target: "_blank"
+        },
+        {
+            href: '/forum',
+            alt: '/forum',
+            url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg"
+        },
+        {
+            href: '/dealers',
+            alt: '/dealer',
+            url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
+        },
+        {
+            href: '/mechanics',
+            alt: '/mechanic',
+            url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
+        },
+        {
+            href: '/blog',
+            alt: '/blog',
+            url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
+        }
+    ]
 
     return (
         <Box className={styles.main}>
@@ -266,7 +544,7 @@ const AllUsedBikeByFilter = () => {
                         <Grid item xs={IsMobile2 ? 12 : 2.5} className={styles.filter_grid} >
                             {
                                 filterShow ?
-                                    <BrandFilter /> : ""
+                                    FilterChange() : ""
                             }
                         </Grid>
 
@@ -296,44 +574,33 @@ const AllUsedBikeByFilter = () => {
                                         })}
                                     </div>
 
-                                    {/* <div className={styles.viewMoreBtnContainer} >
-                                        <button onClick={() => { fetchBikeInfo() }} className={`${styles.viewMoreBtn} ${isLoading ? styles.viewMoreBtnDisabled : ""}`} > View More </button>
-                                    </div> */}
-
-                                    {allBikesArr?.length > 0 ?
-                                        <Box className={styles.used_bike_list_pagination}>
-                                            <Pagination
-                                                count={totalPage}
-                                                onChange={handlePaginationChange}
-                                                page={currentPage}
-                                            />
-                                        </Box>
-                                        : ""}
 
                                 </div>
                             </Box>
+                            {allBikesArr?.length > 0 ?
+                                <Box className={styles.used_bike_list_pagination}>
+                                    <Pagination
+                                        count={totalPage}
+                                        onChange={handlePaginationChange}
+                                        page={currentPage}
+                                    />
+                                </Box>
+                                : ""}
                         </Grid>
                         <Grid item xs={IsMobile2 ? 12 : 2} className={styles.add_area}>
                             <Box className={styles.add_box}>
-                                <Link href="https://youtube.com/ebikepk" target="_blank" rel="noopener noreferrer">
-                                    <img
-                                        src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif"
-                                        alt="eBike YouTube Banner"
-                                        className={styles.add_image} />
-                                </Link>
-                                <Link href="/forum" rel="noopener noreferrer">
-                                    <img
-                                        src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg
-                                            "
-                                        alt="/forum"
-                                        className={styles.add_image} />
-                                </Link>
-                                <Link href="/blog" rel="noopener noreferrer">
-                                    <img
-                                        src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg                                            "
-                                        alt="/forum"
-                                        className={styles.add_image} />
-                                </Link>
+                                {
+                                    AdsArray?.map((e, i) => {
+                                        return (
+                                            <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                                <img
+                                                    src={e?.url}
+                                                    alt={e?.alt}
+                                                    className={styles.add_image} />
+                                            </Link>
+                                        )
+                                    })
+                                }
                             </Box>
                         </Grid>
                     </Grid>
