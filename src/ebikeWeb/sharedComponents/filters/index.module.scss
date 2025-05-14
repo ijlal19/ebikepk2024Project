@@ -3,7 +3,7 @@
     height: fit-content;
     box-shadow: 0px 0px 5px rgb(183, 181, 181);
     max-width: 200px;
-    padding: 0px !important;
+    padding: 0px 0px 0px 0px !important;
     background: white;
     margin: auto;
     margin-top: 20px;
@@ -12,44 +12,51 @@
     @media (max-width:768px) {
       max-width: 300px !important;
       width: 300px !important;
+      margin-top: 0px;
+      margin-left: 14px;
     }
 
     .heading_resultby {
       width: 200px;
-      @media (max-width:768px) {
-        max-width: 300px;
-        width: 300px;
-      }
       background: $primary_two;
       padding: 10px 0px !important;
       color: rgb(255, 255, 255);
       text-align: center;
+      @media (max-width:768px) {
+        max-width: 300px;
+        width: 300px;
+      }
     }
-    .heading_brand ,.heading_years{
+
+      .heading_city ,.heading_brand,.heading_years{
       border-top: 1px solid rgb(235, 231, 231);
-    }
-    .heading_city ,.heading_brand,.heading_years{
       width: 200px;
       border-bottom: 1px solid rgb(235, 231, 231);
       padding: 9px 0px !important;
       color: black;
-      margin-top: 5px;
+      box-sizing: border-box;
 
       @media (max-width:767px) {
         width: 300px;
+        margin: auto;
+        box-sizing: border-box;
       }
 
       .city_text,.brand_text,.years_text {
         padding-left: 10px;
-        font-size: 12px;
+        font-size: 13px;
+        font-weight: 500;
+        box-sizing: border-box;
       }
 
     }
+
     .city_options ,.brand_options,.years_options{
       width: 200px;
-      padding: 15px 0px !important;
+      padding: 15px 0px 0px 0px !important;
       color: black;
-      margin-top: 5px;
+      box-sizing: border-box;
+      margin-top: -5px;
       font-size: 12px;
 
       @media (max-width:767px) {
@@ -59,6 +66,7 @@
       .option_values{
         gap: 5px;
         width: 100%;
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         padding: 2px 0px 2px 10px !important;
@@ -82,14 +90,16 @@
 
   .clear_btn {
     border-radius: 0px;
-    height: 25px;
-    background-color: $primary_two;
+    height: auto;
+    background-color: $primary_one;
     display: block;
     width: 120px;
-    font-size: 12px;
-    margin: 20px auto;
+    font-size: 14px;
+    margin: 10px auto 10px auto;
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 3px;
     text-wrap: nowrap;
+    padding: 7px 0px !important;
   }

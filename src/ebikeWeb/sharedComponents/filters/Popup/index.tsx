@@ -69,7 +69,7 @@ export default function MoreOptionPopup(props:any) {
                     </Box>
 
                     <Box className={styles.modal_footer}>
-                        <Typography className={styles.footer_clear} onClick={ () => submitUpdatedFilter('clear') } > Clear </Typography>
+                        <Button className={styles.footer_clear} onClick={ () => submitUpdatedFilter('clear') } > cancel </Button>
                         <Button className={styles.btn_submit}  onClick={ () => submitUpdatedFilter('update') } > Submit </Button>
                     </Box>
 

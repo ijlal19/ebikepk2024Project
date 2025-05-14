@@ -32,7 +32,6 @@ function Filters(props: any , {updateData}:any) {
     popupdata: popupData,
   }
 
-
   function toggle(from: any) {
     if (from == 'city') {
       setModalOpenFor(from)
@@ -210,7 +209,6 @@ function Filters(props: any , {updateData}:any) {
 
   }
 
-
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
@@ -255,7 +253,7 @@ function Filters(props: any , {updateData}:any) {
 
       {/* Brand Filter  */}
       <Box className={styles.heading_brand}>
-        <Typography className={styles.brand_text}> Brand </Typography>
+        <Typography className={styles.brand_text}>BRAND</Typography>
       </Box>
       <Box className={styles.brand_options}>
         {

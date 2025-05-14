@@ -6,10 +6,6 @@ import { CcArr, YearArr } from '@/ebikeWeb/constants/globalData';
 import { useState } from 'react';
 
 export default function FilterDropdown({ values, dropvalues, updateFilterValue, from, data }: any) {
-    // const [YearFrom, setYearFrom] = useState('');
-    // const [YearTo, setYearTo] = useState('');
-    // const [CCFrom, setCCFrom] = useState('');
-    // const [CCTo, setCCTo] = useState('');
 
     let dataArr = dropvalues == 'years' ? YearArr : CcArr
 
@@ -27,7 +23,6 @@ export default function FilterDropdown({ values, dropvalues, updateFilterValue, 
                                     label='from'
                                     value={data.start}
                                     onChange={(e)=>updateFilterValue(e.target.value, true, from)}
-                                    // onClick={(e) => { updateFilterValue(e.target.id, true, from) }}
                                 >
                                     {dataArr.map((val: any, i: any) => {
                                         return <MenuItem id={dropvalues == 'years' ? val.id : val} key={i} value={dropvalues == 'years' ? val.id : val}>  { dropvalues == 'years' ? val.year : val}</MenuItem>
@@ -37,7 +32,7 @@ export default function FilterDropdown({ values, dropvalues, updateFilterValue, 
                         </>
                         :
                         <>
-                            <FormControl sx={{ m: 1, width: '90%' }} size="small">
+                            <FormControl sx={{ m: 1, width: '90%' , mb :2 }} size="small">
                                 <InputLabel id="demo-select-small-label">To</InputLabel>
                                 <Select
                                     labelId="demo-select-small-label"

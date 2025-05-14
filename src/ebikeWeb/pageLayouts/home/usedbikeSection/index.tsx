@@ -1,6 +1,6 @@
 'use client'
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
-import { getAllFeaturedBike } from '@/ebikeWeb/functions/globalFuntions';
+import { getCustomBikeAd } from '@/ebikeWeb/functions/globalFuntions';
 import { priceWithCommas } from '@/genericFunctions/geneFunc';
 import { Box, Container, Typography } from '@mui/material';
 import styles from './index.module.scss';
@@ -47,29 +47,26 @@ function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
   const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    fetchfeatuerBike()
+    fetchFeaturedBike()
   }, [])
 
-  const fetchfeatuerBike = async () => {
+    async function fetchFeaturedBike() {
+  
+          let obj = {
+              isFeatured: true,
+              random: true,
+              adslimit: 20
+          }
+  
+          let res = await getCustomBikeAd(obj);
+          if (res?.data?.length > 0) {
+              setFeaturedBikes(res.data)
+          }
+          else {
+              setFeaturedBikes([])
+          }
+      }
 
-    let res = await getAllFeaturedBike();
-    if (res?.length > 0) {
-      const bikes = res.slice(0, 5).map((e: any) => {
-        return {
-          id: `${e?.id}`,
-          title: e?.title,
-          price: `PKR ${priceWithCommas(e?.price)}`,
-          img_url: e?.images[0],
-          url: ''
-        };
-      });
-      setFeaturedBikes(bikes);
-
-    }
-    else {
-      console.log("data", 'err')
-    }
-  }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

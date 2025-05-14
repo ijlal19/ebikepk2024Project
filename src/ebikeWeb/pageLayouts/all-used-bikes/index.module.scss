@@ -5,6 +5,7 @@
   padding: 0px;
   background: #f2f3f3;
   min-height: 50vh;
+  box-sizing: border-box;
   font-family: sans-serif;
 
   @media (max-width:991px) {
@@ -52,6 +53,16 @@
     @media (max-width:767px) {
       flex-direction: column;
       width: 90% !important;
+    }
+
+    .used_bike_filter {
+      position: sticky;
+      top: 0px;
+      margin-bottom: 20px;
+
+      @media (max-width:768px) {
+        position: unset;
+      }
     }
 
     .main_box {
@@ -115,6 +126,7 @@
 
         .grid_image_box {
           width: 100%;
+          height: 140px;
 
           img {
             width: 100%;
@@ -153,22 +165,6 @@
 
               @media (max-width:430px) {
                 width: 130px;
-              }
-            }
-
-            .icon_box {
-              display: flex;
-              padding: 5px 0px !important;
-              justify-content: center !important;
-              align-items: center !important;
-              width: 35px;
-              margin-right: 5px;
-              height: 20px;
-              background-color: whitesmoke;
-
-              .icon {
-                font-size: 16px;
-                color: grey;
               }
             }
           }
@@ -268,15 +264,17 @@
           display: flex;
           box-sizing: border-box;
           justify-content: center;
-          // border: solid 1px;
-          min-width: 220px;
-          max-width: 220px;
+          align-items: center;
 
+          // border: solid 1px;
           @media (max-width:600px) {
-            width: 100%;
-            max-width: 100%;
-            height: 120px;
-            padding: 0px;
+            height: 150px !important;
+            width: 220px;
+            padding: 0px 0px;
+            // display: flex;
+            box-sizing: border-box;
+            // justify-content: center;
+            // align-items: center;
           }
 
           img {
@@ -439,7 +437,6 @@
 
               .icon {
                 font-size: 16px;
-                color: grey;
               }
             }
 
@@ -536,8 +533,11 @@
   z-index: 1000;
   position: fixed;
   top: 117px;
+  text-align: left !important;
+  display: flex;
+  justify-content: left !important;
   right: 0px;
-  width: 110px;
+  width: 100px;
 }
 
 .load_main {
@@ -576,24 +576,61 @@
   }
 }
 
-.used_bike_list_pagination {
+.used_bike_desktop_pagination {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
+  column-gap: 60px !important;
 
-  .pagination_box {
-    width: 15px;
-    height: 15px;
-    border-radius: 3px;
-    border: 1px solid #434242;
-    padding: 0px !important;
+}
+
+.main_pagination {
+  max-width: 400px !important;
+  width: 100%;
+  flex-wrap: nowrap;
+  margin-left: 0px !important;
+  margin: 0px 0px 5px 0px;
+
+  .used_bike_mobile_pagination {
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
-    text-align: center;
-    align-items: center;
-    font-size: 12px;
-    cursor: pointer;
+    margin: 20px auto;
+    flex-wrap: nowrap;
+
+    .pagintation {
+      width: 100%;
+      display: flex;
+      border-radius: 3px;
+      padding: 0px !important;
+      box-sizing: border-box;
+      flex-wrap: nowrap;
+      margin: auto;
+      text-overflow: ellipsis;
+      font-size: 1px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+  }
+
+
+}
+
+.icon_box {
+  display: flex;
+  padding: 5px 0px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 30px;
+  margin-left: auto;
+  margin-right: 5px;
+  border-radius: 50%;
+  height: 18px;
+
+  .icon {
+    font-size: 18px;
   }
 }
