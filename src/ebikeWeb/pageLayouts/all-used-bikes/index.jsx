@@ -15,7 +15,36 @@ import { useRouter } from 'next/navigation';
 import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike'
 import styles from './index.module.scss';
 
-const AllUsedBike = () => {
+const AdsArray = [
+    {
+        href: 'https://youtube.com/ebikepk',
+        alt: 'eBike YouTube Banner',
+        url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif",
+        target: "_blank"
+    },
+    {
+        href: '/forum',
+        alt: '/forum',
+        url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg"
+    },
+    {
+        href: '/dealers',
+        alt: '/dealer',
+        url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
+    },
+    {
+        href: '/mechanics',
+        alt: '/mechanic',
+        url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
+    },
+    {
+        href: '/blog',
+        alt: '/blog',
+        url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
+    }
+]
+
+export default function AllUsedBike ({ _allFeaturedBike, _allUsedBike }) {
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
     const handleImage = useMediaQuery('(max-width:600px)')
@@ -45,17 +74,22 @@ const AllUsedBike = () => {
     }, [])
 
     const handlePaginationChange = async (event, page) => {
-        fetchBikeInfo(page)
+        fetchBikeInfo(page , true)
     }
 
-    async function fetchBikeInfo(_pageNo) {
+    async function fetchBikeInfo(_pageNo, fromPagination) {
+       
         setIsLoading(true)
         let obj = {
             adslimit: 12,
             page: _pageNo
         }
 
-        let res = await getCustomBikeAd(obj);
+        let res = _allUsedBike
+        if(!res || fromPagination) {
+            res = await getCustomBikeAd(obj);
+        }
+
         if (res?.data?.length > 0) {
             setCurrentPage(res?.currentPage)
             setAllBikesArr(res?.data)
@@ -68,9 +102,24 @@ const AllUsedBike = () => {
         }
 
         setIsLoading(false)
-        setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000);
+
+        if(fromPagination) {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 300,
+                    behavior: 'smooth'
+                  });
+            }, 500);
+        }
+        else {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                  });
+            }, 500);
+        }
+       
     }
 
     async function fetchFeaturedBike() {
@@ -81,7 +130,11 @@ const AllUsedBike = () => {
             adslimit: 20
         }
 
-        let res = await getCustomBikeAd(obj);
+        let res = _allFeaturedBike
+        if(!res) {
+            res = await getCustomBikeAd(obj);
+        }
+        
         if (res?.data?.length > 0) {
             setFeaturedData(res.data)
         }
@@ -259,151 +312,119 @@ const AllUsedBike = () => {
         window.scrollTo(0, 0);
     }
 
-    const AdsArray = [
-        {
-            href: 'https://youtube.com/ebikepk',
-            alt: 'eBike YouTube Banner',
-            url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif",
-            target: "_blank"
-        },
-        {
-            href: '/forum',
-            alt: '/forum',
-            url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg"
-        },
-        {
-            href: '/dealers',
-            alt: '/dealer',
-            url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
-        },
-        {
-            href: '/mechanics',
-            alt: '/mechanic',
-            url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
-        },
-        {
-            href: '/blog',
-            alt: '/blog',
-            url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
-        }
-    ]
-
     return (
         <Box className={styles.main}>
-            {
-                !isLoading ?
-                    <>
+            <> 
+                {
+                    isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
+                }
+
+                <Box className={styles.usedBike_headingBpx}>
+                    <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
+                    <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
+                </Box>
+
+                <UsedBikesSection from='featuredBike' featuredData={featuredData} />
+
+                <Box className={styles.all_bike_main}>
+                    
+                    <Box className={styles.used_bike_filter}>
                         {
-                            isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
+                            isMobile2 ?
+                                showfilter ? <Filters
+                                    setLoader={setIsLoading}
+                                    updateData={setAllBikesArr}
+                                    fetchBikeInfo={fetchBikeInfo}
+                                    CurrentPage={setCurrentPage}
+                                    TotalPage={setTotalPage}
+                                /> : '' :
+                                <Filters
+                                    className={styles.used_bike_filter}
+                                    setLoader={setIsLoading}
+                                    updateData={setAllBikesArr}
+                                    fetchBikeInfo={fetchBikeInfo}
+                                    CurrentPage={setCurrentPage}
+                                    TotalPage={setTotalPage}
+                                />
                         }
-
-                        <Box className={styles.usedBike_headingBpx}>
-                            <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
-                            <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
-                        </Box>
-
-                        <UsedBikesSection from='featuredBike' featuredData={featuredData} />
-
-                        <Box className={styles.all_bike_main}>
-                            <Box className={styles.used_bike_filter}>
-                                {
-                                    isMobile2 ?
-                                        showfilter ? <Filters
-                                            setLoader={setIsLoading}
-                                            updateData={setAllBikesArr}
-                                            fetchBikeInfo={fetchBikeInfo}
-                                            CurrentPage={setCurrentPage}
-                                            TotalPage={setTotalPage}
-                                        /> : '' :
-                                        <Filters
-                                            className={styles.used_bike_filter}
-                                            setLoader={setIsLoading}
-                                            updateData={setAllBikesArr}
-                                            fetchBikeInfo={fetchBikeInfo}
-                                            CurrentPage={setCurrentPage}
-                                            TotalPage={setTotalPage}
-                                        />
-                                }
-                            </Box>
-                            <div className={styles.main_box}>
-                                <div className={styles.navigation}>
-                                    <div className={styles.text_container}>
-                                        <span className={styles.bike_text}> Used Bikes </span>
-                                    </div>
-                                    <div className={styles.swap_button_container}>
-                                        <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                        <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                    </div>
-                                </div>
-
-
-
-                                <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                                    {allBikesArr?.length > 0 && allBikesArr.map((val, ind) => {
-                                        return (
-                                            isGridSelected ? GridCard(val, ind) : longCard(val, ind)
-                                        )
-                                    })}
-                                </div>
-
-                                {
-                                    !handleImage ?
-                                        allBikesArr?.length > 0 ?
-                                            <Box className={styles.used_bike_desktop_pagination}>
-                                                <Pagination
-                                                    count={totalPage}
-                                                    onChange={handlePaginationChange}
-                                                    page={currentPage}
-                                                />
-                                            </Box>
-                                            : "" : ""
-                                }
+                    </Box>
+                    
+                    <div className={styles.main_box}>
+                        <div className={styles.navigation}>
+                            <div className={styles.text_container}>
+                                <span className={styles.bike_text}> Used Bikes </span>
                             </div>
+                            <div className={styles.swap_button_container}>
+                                <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                            </div>
+                        </div>
 
 
-                            <Box className={styles.add_area}>
-                                <Box className={styles.add_box}>
-                                    {
-                                        AdsArray?.map((e, i) => {
-                                            return (
-                                                <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
-                                                    <img
-                                                        src={e?.url}
-                                                        alt={e?.alt}
-                                                        className={styles.add_image} />
-                                                </Link>
-                                            )
-                                        })
-                                    }
-                                </Box>
-                            </Box>
-                        </Box>
-                        <Box className={styles.main_pagination}>
+
+                        <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                            {allBikesArr?.length > 0 && allBikesArr.map((val, ind) => {
+                                return (
+                                    isGridSelected ? GridCard(val, ind) : longCard(val, ind)
+                                )
+                            })}
+                        </div>
+
+                        {
+                            !handleImage ?
+                                allBikesArr?.length > 0 ?
+                                    <Box className={styles.used_bike_desktop_pagination}>
+                                        <Pagination
+                                            count={totalPage}
+                                            onChange={handlePaginationChange}
+                                            page={currentPage}
+                                        />
+                                    </Box>
+                                    : "" : ""
+                        }
+                    </div>
+
+
+                    <Box className={styles.add_area}>
+                        <Box className={styles.add_box}>
                             {
-                                handleImage ?
-                                    allBikesArr?.length > 0 ?
-                                        <Box className={styles.used_bike_mobile_pagination}>
-                                            <Pagination
-                                                count={totalPage}
-                                                onChange={handlePaginationChange}
-                                                page={currentPage}
-                                                className={styles.pagintation}
-                                            />
-                                        </Box>
-                                        : "" : ""
+                                AdsArray?.map((e, i) => {
+                                    return (
+                                        <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                            <img
+                                                src={e?.url}
+                                                alt={e?.alt}
+                                                className={styles.add_image} />
+                                        </Link>
+                                    )
+                                })
                             }
                         </Box>
-                        <BrowseUsedBike />
-                    </>
-                    :
-                    <div className={styles.load_main}>
-                        <div className={styles.load_div}>
-                            <Loader isLoading={isLoading} />
-                        </div>
-                    </div>
-            }
+                    </Box>
+                </Box>
+                <Box className={styles.main_pagination}>
+                    {
+                        handleImage ?
+                            allBikesArr?.length > 0 ?
+                                <Box className={styles.used_bike_mobile_pagination}>
+                                    <Pagination
+                                        count={totalPage}
+                                        onChange={handlePaginationChange}
+                                        page={currentPage}
+                                        className={styles.pagintation}
+                                    />
+                                </Box>
+                                : "" : ""
+                    }
+                </Box>
+                <BrowseUsedBike />
+            </>
+
+            <div className={styles.load_main}>
+                <div className={styles.load_div}>
+                    <Loader isLoading={isLoading} />
+                </div>
+            </div>
         </Box>
     )
 }
-
-export default AllUsedBike;

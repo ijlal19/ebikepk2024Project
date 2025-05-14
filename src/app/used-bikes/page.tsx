@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AllUsedBikeComp from "@/ebikeWeb/pageLayouts/all-used-bikes/index"
 import { Metadata } from 'next'
+import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 
 export async function generateMetadata(): Promise<Metadata> {
 
@@ -14,8 +15,25 @@ export async function generateMetadata(): Promise<Metadata> {
     }
   }
 
-export default function AboutUs() {
+export default async function AllUsedBikes() {
+
+        let obj = {
+            adslimit: 12,
+            page: 1
+        }
+        let allUsedBike = await getCustomBikeAd(obj);
+       
+        let obj1 = {
+            isFeatured: true,
+            random: true,
+            adslimit: 20
+        }
+        let allFeaturedBike = await getCustomBikeAd(obj1);
+       
     return (
-        <AllUsedBikeComp /> 
+        <AllUsedBikeComp 
+          _allFeaturedBike={allFeaturedBike} 
+          _allUsedBike={allUsedBike}
+        /> 
     )
 }
