@@ -681,3 +681,20 @@
     cursor: pointer;
   }
 }
+
+
+.icon_box {
+  display: flex;
+  padding: 5px 0px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 30px;
+  margin-left: auto;
+  margin-right: 5px;
+  border-radius: 50%;
+  height: 18px;
+
+  .icon {
+    font-size: 18px;
+  }
+}

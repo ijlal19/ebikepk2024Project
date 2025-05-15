@@ -87,10 +87,17 @@
         justify-content: space-between;
         margin-bottom: 20px;
         display: flex;
+        flex-wrap: nowrap;
         align-items: center;
 
         @media (max-width:900px) {
           width: 95%;
+        }
+
+        @media (max-width:600px) {
+          flex-wrap: wrap;
+          height: auto  ;
+          row-gap: 10px;
         }
 
         .bike_text {
@@ -103,6 +110,53 @@
             font-size: 20px;
             cursor: pointer;
           }
+        }
+
+        .search_box {
+          width: 100%;
+          display: flex;
+          max-width: 300px;
+          justify-content: left;
+
+          @media (max-width:600px) {
+            // flex-wrap: wrap;
+            max-width: 100%;
+          }
+
+          .search_box_inner {
+            width: 100%;
+            border: 1px solid #84818194;
+            display: flex;
+            justify-content: center;
+            border-radius: 5px;
+
+            .search_input {
+              padding-left: 10px;
+              font-size: 14px;
+              color: black;
+              border: none;
+              border-top-left-radius: 10px;
+              border-bottom-left-radius: 10px;
+              outline: none;
+              width: 100%;
+              background: transparent;
+            }
+
+            .search_btn {
+              border-top-right-radius: 10px;
+              border: none;
+              background: transparent;
+              color: rgb(0, 0, 0);
+              border-left: 1px solid rgba(128, 128, 128, 0.543);
+              padding: 4px 7px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-bottom-right-radius: 10px;
+              cursor: pointer;
+            }
+          }
+
         }
       }
     }
@@ -536,16 +590,15 @@
   z-index: 1000;
   position: fixed;
   top: 117px;
+  right: 20px;
   text-align: left !important;
   display: flex;
   justify-content: left !important;
-  right: 0px;
-  width: 100px;
+  width: 80px;
 }
 
 .load_main {
   width: 100%;
-  // height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -637,4 +690,10 @@
   .icon {
     font-size: 18px;
   }
+}
+
+.not_found {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
 }
