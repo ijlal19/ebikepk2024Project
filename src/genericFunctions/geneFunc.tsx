@@ -146,6 +146,19 @@ function postSearch(data:any){
     })
 }
 
+function getFavouriteAds(userId: any) {
+  // return fetch(Gconfig.ebikeApi + `favourite/getFavourite/${userId}`, {
+  return fetch(Gconfig.ebikeApi + `favourite/getFavourite/2274bfde0b-49e9-41a7-828a-e8c118ee17b2`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json" }
+  }).then(response => response.json()).then(data => {
+      return data
+  })
+  .catch((err)=>{
+    return err
+  })
+}
+
 export {
   add3Dots,
   optimizeImage,
@@ -162,5 +175,6 @@ export {
   publishAd,
   priceWithCommas,
   capitalizeFirstWord,
-  postSearch
+  postSearch,
+  getFavouriteAds
 }

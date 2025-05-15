@@ -2,7 +2,7 @@
 import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
-import { isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike';
@@ -70,13 +70,21 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         let _isLoginUser = isLoginUser()
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
+            fetchFavouriteAds(_isLoginUser?.info?.id)
         }
         else {
             setIsLogin("not_login")
         }
         fetchBikeInfo(1)
-        fetchFeaturedBike(1)
+        fetchFeaturedBike()
     }, [])
+
+    const fetchFavouriteAds = async (uid) => {
+        const res = await getFavouriteAds(uid)
+        if (res) {
+            console.log("data", res, uid)
+        }
+    }
 
     const handlePaginationChange = async (event, page) => {
         if (SearchApply) {
@@ -136,8 +144,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         let obj = {
             isFeatured: true,
-            random: true,
-            adslimit: 20
+            page: 1,
+            adslimit: 20,
+            random: true
         }
 
         let res = _allFeaturedBike
@@ -145,7 +154,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             res = await getCustomBikeAd(obj);
         }
 
-        if (res?.data?.length > 0) {
+        if (res && res?.data?.length > 0) {
             setFeaturedData(res.data)
         }
         else {
@@ -388,7 +397,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             <div className={styles.text_container}>
                                 <span className={styles.bike_text}> Used Bikes </span>
                             </div>
-                            <div className={styles.search_box} style={{display:!handleImage ? "flex" : "none"}} >
+                            <div className={styles.search_box} style={{ display: !handleImage ? "flex" : "none" }} >
                                 <div className={styles.search_box_inner}>
                                     <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
                                     <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
@@ -398,7 +407,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
                                 <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
                             </div>
-                            <div className={styles.search_box}  style={{display:handleImage ? "flex" : "none"}}>
+                            <div className={styles.search_box} style={{ display: handleImage ? "flex" : "none" }}>
                                 <div className={styles.search_box_inner}>
                                     <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
                                     <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
