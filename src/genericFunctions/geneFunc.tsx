@@ -11,7 +11,7 @@ function isLoginUser() {
   }
 }
 
-function add3Dots(str:any, limit:any) {
+function add3Dots(str: any, limit: any) {
   var dots = " ... ";
   if (str?.length > limit) {
     str = str.substring(0, limit) + dots;
@@ -19,7 +19,7 @@ function add3Dots(str:any, limit:any) {
   return str;
 }
 
-const optimizeImage = (url:any, h:any, w:any) => {
+const optimizeImage = (url: any, h: any, w: any) => {
   let cloudinary_name;
   let oldUrl;
 
@@ -51,112 +51,150 @@ const optimizeImage = (url:any, h:any, w:any) => {
 }
 
 
-function capitalizeFirstWord(str:any) {
-    return str?.replace(/^\w/, (c:any) => c.toUpperCase());
+function capitalizeFirstWord(str: any) {
+  return str?.replace(/^\w/, (c: any) => c.toUpperCase());
 }
 
 const numericOnly = (value: string) => {
-    if (value == 'e') return false;
-    return /^[0-9]*$/gm.test(value);
+  if (value == 'e') return false;
+  return /^[0-9]*$/gm.test(value);
 };
 const alphabetOnly = (value: string) => {
-    if (value.length == 1 && /\s/.test(value) == true) return false;
-    return /^[a-zA-Z\s]*$/gm.test(value);
+  if (value.length == 1 && /\s/.test(value) == true) return false;
+  return /^[a-zA-Z\s]*$/gm.test(value);
 };
 const alphaNumeric = (value: string) => {
-    // only hash, dot and dash allowed
-    if (value.length == 1 && (/\s/).test(value) == true) { return "" }
-    return value.replace(/[^a-zA-Z0-9\s#/.-]/g, "")
+  // only hash, dot and dash allowed
+  if (value.length == 1 && (/\s/).test(value) == true) { return "" }
+  return value.replace(/[^a-zA-Z0-9\s#/.-]/g, "")
 }
 const validateEmail = (email: string) => {
-    return (/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(email);
+  return (/^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/).test(email);
 }
 const validateMobileNumber = (number: string) => {
-    return number.length >= 11 && number.length <= 12;
+  return number.length >= 11 && number.length <= 12;
 }
 const validateZipCode = (zip: string) => {
-    return zip.length == 5;
+  return zip.length == 5;
 }
 const noSpecialCharacters = (value: string) => {
-    return value.replace(/[^a-zA-Z0-9]/g, "")
+  return value.replace(/[^a-zA-Z0-9]/g, "")
 }
 const noSpecialCharactersButSpace = (value: string) => {
-    return value.replace(/[^a-zA-Z0-9\s]/g, "")
+  return value.replace(/[^a-zA-Z0-9\s]/g, "")
 }
 const noSpecialCharactersExceptDotUderscore = (str: string) => {
-    return str.replace(/[^a-zA-Z0-9._]/g, "")
+  return str.replace(/[^a-zA-Z0-9._]/g, "")
 }
 
 function priceWithCommas(x: any) {
-    if (x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+  if (x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 }
 
 function userLogin(data: any) {
   return fetch(Gconfig.ebikeApi + `user/login`, {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
   }).then(response => response.json()).then(data => {
-      return data
+    return data
   })
 }
 
 function userSignup(data: any) {
   return fetch(Gconfig.ebikeApi + `user/createUser`, {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
   }).then(response => response.json()).then(data => {
-      return data
+    return data
   })
 }
 
 function verifyUserFromAuthenticationEmail(email: any, token: any) {
   return fetch(Gconfig.ebikeApi + `user/verification/${email}/${token}`, {
-      method: 'GET',
-      headers: { "Content-Type": "application/json" }
+    method: 'GET',
+    headers: { "Content-Type": "application/json" }
   }).then(response => response.json()).then(data => {
-      return data
+    return data
   })
 }
 
 function publishAd(data: any) {
   let token = jsCookie.get('accessToken_e')
   return fetch(Gconfig.ebikeApi + `classified/crete-add`, {
-      method: 'POST',
-      headers: { "Content-Type": "application/json", "x-access-token": token },
-      body: JSON.stringify(data)
+    method: 'POST',
+    headers: { "Content-Type": "application/json", "x-access-token": token },
+    body: JSON.stringify(data)
   }).then(response => response.json()).then(data => {
-      return data
+    return data
   })
 }
 
-function postSearch(data:any){
-    return fetch( Gconfig.ebikeApi + 'new_search',{
-        method:'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    })
+function postSearch(data: any) {
+  return fetch(Gconfig.ebikeApi + 'new_search', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
     .then(res => res.json())
-    .then( data => {return data})
+    .then(data => { return data })
     .catch((err) => {
-        console.log(err)
+      console.log(err)
     })
 }
 
 function getFavouriteAds(userId: any) {
-  // return fetch(Gconfig.ebikeApi + `favourite/getFavourite/${userId}`, {
-  return fetch(Gconfig.ebikeApi + `favourite/getFavourite/2274bfde0b-49e9-41a7-828a-e8c118ee17b2`, {
-      method: 'GET',
-      headers: { "Content-Type": "application/json" }
+  return fetch(Gconfig.ebikeApi + `favourite/getFavourite/${userId}`, {
+    // return fetch(Gconfig.ebikeApi + `favourite/getFavourite/2274bfde0b-49e9-41a7-828a-e8c118ee17b2`, {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" }
   }).then(response => response.json()).then(data => {
-      return data
+    return data
   })
-  .catch((err)=>{
-    return err
+    .catch((err) => {
+      return err
+    })
+}
+
+function GetFavouriteObject(userId: any, PageFrom: string, SelectedAds: any, adId: any) {
+  const GetObject = (data: any) => {
+    if (PageFrom == "usedBikeIds") {
+      return {
+        userId: userId,
+        favouriteData: {
+          usedBikeIds: data
+        }
+      }
+    }
+    else if (PageFrom == "newBikeIds") {
+      return {
+        userId: userId,
+        favouriteData: {
+          newBikeIds: data
+        }
+      }
+    }
+    else {
+      return 'Data not Found'
+    }
+  }
+
+  const obj = GetObject(SelectedAds?.length > 0 ? SelectedAds : [])
+
+  return fetch(Gconfig.ebikeApi + 'favourite/addUpdateFavourite', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(obj)
   })
+    .then(res => res.json())
+    .then(data => { return data })
+    .catch((err) => {
+      console.log(err)
+    })
+
 }
 
 export {
@@ -166,15 +204,16 @@ export {
   numericOnly,
   alphabetOnly,
   alphaNumeric,
-  validateEmail, 
-  validateMobileNumber, 
+  validateEmail,
+  validateMobileNumber,
   validateZipCode,
-  noSpecialCharacters, 
+  noSpecialCharacters,
   noSpecialCharactersButSpace,
   noSpecialCharactersExceptDotUderscore, userLogin, userSignup, verifyUserFromAuthenticationEmail,
   publishAd,
   priceWithCommas,
   capitalizeFirstWord,
   postSearch,
-  getFavouriteAds
+  getFavouriteAds,
+  GetFavouriteObject
 }

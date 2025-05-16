@@ -96,7 +96,7 @@
 
         @media (max-width:600px) {
           flex-wrap: wrap;
-          height: auto  ;
+          height: auto;
           row-gap: 10px;
         }
 
@@ -478,7 +478,7 @@
 
           .fav_box {
             display: flex;
-            column-gap: 5px !important;
+            column-gap: 2px !important;
             flex-direction: row;
             margin: 0px 10px 0px 5px !important;
             box-sizing: border-box;
@@ -488,12 +488,16 @@
               padding: 5px 0px !important;
               justify-content: center !important;
               align-items: center !important;
-              width: 35px;
+              width: 30px;
+              border-radius: 20px;
               height: 20px;
-              background-color: whitesmoke;
+              overflow: hidden;
+              // background-color: rgba(158, 156, 156, 0.429);
 
               .icon {
-                font-size: 16px;
+                // box-shadow: 0px 0px 10px black;
+                filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.635));
+                font-size: 18px;
               }
             }
 
@@ -684,11 +688,13 @@
   width: 30px;
   margin-left: auto;
   margin-right: 5px;
-  border-radius: 50%;
+  // border-radius: 50%;
   height: 18px;
 
   .icon {
     font-size: 18px;
+    filter: drop-shadow(0px 0px 10px rgb(0, 0, 0));
+    // color: rgb(129, 125, 125);
   }
 }
 

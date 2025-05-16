@@ -2,7 +2,7 @@
 import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
-import { getFavouriteAds, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike';
@@ -46,10 +46,14 @@ const AdsArray = [
     }
 ]
 
+let SelectedADD = []
+
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [isGridSelected, setIsGridSelected] = useState(false);
+    const [FavouriteData, setFavouriteData] = useState([]);
+    const handleImage = useMediaQuery('(max-width:600px)');
+    const [SearchApply, setSearchApply] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
-    const handleImage = useMediaQuery('(max-width:600px)')
     const isMobile2 = useMediaQuery('(max-width:768px)');
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
@@ -58,11 +62,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null);
-    const [isFavourite, setIsFavourite] = useState(false)
-    const [SearchValue, setSearchValue] = useState('')
-    const [SearchApply, setSearchApply] = useState(false)
+    const [SearchValue, setSearchValue] = useState('');
+    const [LikeTrue, setLikeTrue] = useState([]);
+    const [Array, setArray] = useState([]);
     const [pageNo, setPageNo] = useState(-12);
-    const [LikeTrue, setLikeTrue] = useState([])
 
     const router = useRouter()
 
@@ -71,6 +74,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
             fetchFavouriteAds(_isLoginUser?.info?.id)
+            // console.log("data",_isLoginUser?.info?.id)
         }
         else {
             setIsLogin("not_login")
@@ -82,7 +86,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const fetchFavouriteAds = async (uid) => {
         const res = await getFavouriteAds(uid)
         if (res) {
-            console.log("data", res, uid)
+            setFavouriteData(res)
+            SelectedADD = res?.data?.favouriteArr?.usedBikeIds?.length> 0 ? res.data.favouriteArr.usedBikeIds : []
+            console.log("data", res?.data?.favouriteArr?.usedBikeIds?.length> 0 ? res.data.favouriteArr.usedBikeIds : [])
         }
     }
 
@@ -168,22 +174,23 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
     }
 
-    const AddFavourite = (id) => {
-        if (!IsLogin) {
+    const AddFavourite = async (id) => {
+        if (!IsLogin && IsLogin == "not_login") {
             alert('Please Login To Add Favourite')
         }
         else {
-            setIsFavourite(!isFavourite)
-            if (LikeTrue.includes(id)) {
-                setLikeTrue(LikeTrue.filter(cardId => cardId !== id));
-            } else {
-                setLikeTrue([...LikeTrue, id]);
+            const index = SelectedADD.length > 0 ? SelectedADD.indexOf(id) : -1;
+            if (index !== -1) {
+                SelectedADD.splice(index, 1);
             }
-            // const object = {
-            //     userId: IsLogin?.id,
-            //     bikeId: id
-            // }
-            // console.log("data", object)
+            else {
+                SelectedADD.push(id)
+            }
+            const res = await GetFavouriteObject(IsLogin?.id, 'usedBikeIds', SelectedADD, id)
+            if (res) {
+                console.log("data", res)
+                fetchFavouriteAds(IsLogin?.id)
+            }
         }
     }
 
@@ -214,7 +221,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             {
                                 handleImage ?
                                     <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                        <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'gray' }} />
+                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
+                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: 'red' : 'green' }} /> */}
                                     </Box> : ""
                             }
                         </Box>
@@ -245,7 +253,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             !handleImage ?
                                 <Box className={styles.fav_box}>
                                     <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                        <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'gray' }} />
+                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
+                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'grey' }} /> */}
                                     </Box>
                                     <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
                                         < LocalPhoneIcon className={styles.icon} /> Show Phone No
@@ -290,7 +299,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             width: '100%',
                         }}>
                         <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                            <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'gray' }} />
+                            <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                         </Box>
                     </Box>
                     {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
