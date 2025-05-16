@@ -193,7 +193,7 @@ function GetFavouriteObject(userId: any, PageFrom: string, SelectedAds: any, adI
     .then(data => { return data })
     .catch((err) => {
       console.log(err)
-    })
+    }) 
 
 }
 
