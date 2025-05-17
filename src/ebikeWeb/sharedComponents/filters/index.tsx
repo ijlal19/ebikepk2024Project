@@ -147,7 +147,7 @@ function Filters(props: any , {updateData}:any) {
 
   async function fetchedFilterData(_page: any) {
     setIsLoading(true)
-    if (selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0) {
+    if (selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0 || props.SearchValue !== "") {
       let obj = {
         "city_filter": selectedCity,
         "brand_filter": selectedBrand,
@@ -155,7 +155,7 @@ function Filters(props: any , {updateData}:any) {
         "cc": selectedCC,
         "page": _page,
         "adslimit": 12,
-        "search": ""
+        "search": props.SearchValue == "" ? '' : props.SearchValue
       }
 
       let res = await getCustomBikeAd(obj)
@@ -168,10 +168,11 @@ function Filters(props: any , {updateData}:any) {
       setIsLoading(false)
       window.scrollTo(0, 0)
     }
-
     else {
-      props.fetchBikeInfo(1)
+      props.fetchBikeInfo(1, true)
     }
+    setIsLoading(false)
+    window.scrollTo(0, 0)
 
   }
 
@@ -357,7 +358,7 @@ function Filters(props: any , {updateData}:any) {
 
         {
           selectedCC.length > 0 ?
-            <button onClick={() => { clearFilters('cc') }} className={styles.clear_btn} > Clear CC Filter </button> :
+            <button onClick={() => { clearFilters('cc') }} className={styles.clear_btn_last}> Clear CC Filter </button> :
             ""
         }
 

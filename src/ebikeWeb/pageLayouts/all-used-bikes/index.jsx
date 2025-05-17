@@ -74,7 +74,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
             fetchFavouriteAds(_isLoginUser?.info?.id)
-            // console.log("data",_isLoginUser?.info?.id)
         }
         else {
             setIsLogin("not_login")
@@ -88,7 +87,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         if (res) {
             setFavouriteData(res)
             SelectedADD = res?.data?.favouriteArr?.usedBikeIds?.length> 0 ? res.data.favouriteArr.usedBikeIds : []
-            console.log("data", res?.data?.favouriteArr?.usedBikeIds?.length> 0 ? res.data.favouriteArr.usedBikeIds : [])
         }
     }
 
@@ -175,8 +173,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     }
 
     const AddFavourite = async (id) => {
-        if (!IsLogin && IsLogin == "not_login") {
+        if (!IsLogin || IsLogin == "not_login") {
             alert('Please Login To Add Favourite')
+            return
         }
         else {
             const index = SelectedADD.length > 0 ? SelectedADD.indexOf(id) : -1;
@@ -188,7 +187,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             }
             const res = await GetFavouriteObject(IsLogin?.id, 'usedBikeIds', SelectedADD, id)
             if (res) {
-                console.log("data", res)
                 fetchFavouriteAds(IsLogin?.id)
             }
         }
@@ -389,6 +387,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     fetchBikeInfo={fetchBikeInfo}
                                     CurrentPage={setCurrentPage}
                                     TotalPage={setTotalPage}
+                                    SearchValue={SearchValue}
                                 /> : '' :
                                 <Filters
                                     className={styles.used_bike_filter}
@@ -397,6 +396,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     fetchBikeInfo={fetchBikeInfo}
                                     CurrentPage={setCurrentPage}
                                     TotalPage={setTotalPage}
+                                    SearchValue={SearchValue}
                                 />
                         }
                     </Box>
