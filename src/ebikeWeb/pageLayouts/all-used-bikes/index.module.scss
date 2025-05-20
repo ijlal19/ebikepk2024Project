@@ -703,3 +703,33 @@
   text-align: center;
   font-size: 18px;
 }
+
+.similarBikeDiv {
+  background-color: whitesmoke;
+  max-width: 1000px;
+  margin: 0px auto !important;
+  padding: 0px 0px !important;
+
+  @media (max-width:767px) {
+    padding: 0px;
+  }
+
+  .similar_heading {
+    text-align: center;
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+    color: #1976d2;
+    font-size: 22px;
+    font-weight: normal !important;
+
+    @media (max-width:767px) {
+      margin-top: 5px !important;
+      display: block;
+      font-size: 19px;
+      margin-bottom: 0px;
+    }
+  }
+
+
+
+}

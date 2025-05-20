@@ -401,41 +401,55 @@ function getDealerByFilter(data: any) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(data => {
-        return data;
-    })
-    .catch((err) => {
-        return err
-    });
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            return err
+        });
 }
 
-function getMechanicByBrandId(idArr :any) {
+function getMechanicByBrandId(idArr: any) {
     return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic-by-filter`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ brand_filter: idArr, city_filter: []  })
+        body: JSON.stringify({ brand_filter: idArr, city_filter: [] })
     })
-    .then(response => response.json())
-    .then(data => {
-        return data;
-    })
-    .catch((err) => {
-        return err
-    });
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            return err
+        });
 }
 
-function getCustomBikeAd(obj:any){
+function getCustomBikeAd(obj: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-custom-ads`, {
-    // return fetch(`http://localhost:4001/api/classified/get-custom-ads`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(obj)
     }).then(response => response.json()).then(data => {
         return data
     })
+        .catch((err) => {
+            return err
+        })
 }
 
+function getFavouriteBikeById(Data: any) {
+    return fetch(`http://localhost:4000/api/classified/get-classified-by-id-with-random-favourite-adds`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+        .catch((err) => {
+            return err
+        })
+}
 
 
 export {
@@ -473,5 +487,6 @@ export {
     , getdatabycitybrand,
     getDealerByFilter,
     getMechanicByBrandId,
-    getCustomBikeAd
+    getCustomBikeAd,
+    getFavouriteBikeById
 }

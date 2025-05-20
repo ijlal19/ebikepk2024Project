@@ -1,8 +1,9 @@
 'use client'
-import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
+import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike';
@@ -66,6 +67,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [LikeTrue, setLikeTrue] = useState([]);
     const [Array, setArray] = useState([]);
     const [pageNo, setPageNo] = useState(-12);
+    const [AllFavouriteBike, setAllFavouriteBike] = useState([])
 
     const router = useRouter()
 
@@ -83,11 +85,30 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     }, [])
 
     const fetchFavouriteAds = async (uid) => {
+        setIsLoading(true)
         const res = await getFavouriteAds(uid)
         if (res) {
             setFavouriteData(res)
             SelectedADD = res?.data?.favouriteArr?.usedBikeIds?.length> 0 ? res.data.favouriteArr.usedBikeIds : []
         }
+
+        if (res?.data?.favouriteArr?.usedBikeIds) {
+            const obj = {
+                ids: res?.data?.favouriteArr?.usedBikeIds.length > 0 ? res?.data?.favouriteArr?.usedBikeIds : []
+            }
+            const getFavBike = await getFavouriteBikeById(obj)
+
+            if (getFavBike && getFavBike?.data?.length > 0) {
+                setAllFavouriteBike(getFavBike?.data)
+            } else {
+                setAllFavouriteBike([])
+            }
+        }
+
+        setIsLoading(false)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
     }
 
     const handlePaginationChange = async (event, page) => {
@@ -375,6 +396,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 </Box>
 
                 <UsedBikesSection from='featuredBike' featuredData={featuredData} />
+                {
+                    AllFavouriteBike.length > 0 ?
+                        <div className={styles.similarBikeDiv}>
+                            <h6 className={styles.similar_heading}> Favourite Bikes </h6>
+                            <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+                        </div> : ''
+                }
 
                 <Box className={styles.all_bike_main}>
 
