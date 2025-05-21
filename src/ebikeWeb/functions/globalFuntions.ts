@@ -439,7 +439,7 @@ function getCustomBikeAd(obj: any) {
 }
 
 function getFavouriteBikeById(Data: any) {
-    return fetch(`http://localhost:4000/api/classified/get-classified-by-id-with-random-favourite-adds`, {
+    return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-favourite-adds`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Data)
@@ -448,7 +448,7 @@ function getFavouriteBikeById(Data: any) {
     })
         .catch((err) => {
             return err
-        })
+    })
 }
 
 
