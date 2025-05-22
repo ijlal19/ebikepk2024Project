@@ -80,8 +80,16 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         else {
             setIsLogin("not_login")
         }
-        fetchBikeInfo(1)
         fetchFeaturedBike()
+
+        const PageNo = Number(localStorage.getItem('PageNo'));
+        if (typeof PageNo === "number" && !isNaN(PageNo)) {
+            fetchBikeInfo(PageNo? PageNo : 1 ,true );
+        }
+        else {
+            fetchBikeInfo(1);
+        }
+
     }, [])
 
     const fetchFavouriteAds = async (uid) => {
@@ -89,7 +97,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         const res = await getFavouriteAds(uid)
         if (res) {
             setFavouriteData(res)
-            SelectedADD = res?.data?.favouriteArr?.usedBikeIds?.length> 0 ? res.data.favouriteArr.usedBikeIds : []
+            SelectedADD = res?.data?.favouriteArr?.usedBikeIds?.length > 0 ? res.data.favouriteArr.usedBikeIds : []
         }
 
         if (res?.data?.favouriteArr?.usedBikeIds) {
@@ -106,12 +114,17 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
 
         setIsLoading(false)
+        const GetScroll = Number(localStorage.getItem("WindowScroll"));
         setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000)
+            window.scrollTo({
+                top: GetScroll || 0,
+                behavior: 'smooth'
+            });
+        }, 500);
     }
 
     const handlePaginationChange = async (event, page) => {
+        localStorage.setItem("PageNo", page);
         if (SearchApply) {
             handleSearch(page)
         }
@@ -155,9 +168,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             }, 500);
         }
         else {
+            const GetScroll = Number(localStorage.getItem("WindowScroll"));
             setTimeout(() => {
                 window.scrollTo({
-                    top: 0,
+                    top: GetScroll || 0,
                     behavior: 'smooth'
                 });
             }, 500);
@@ -188,9 +202,11 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     }
 
     function goToDetailPage(val) {
-        let title = val.title
-        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        localStorage.setItem("PageNo", currentPage);
+        localStorage.setItem("WindowScroll", window.scrollY);
+        let title = val.title;
+        let urlTitle = title.toLowerCase().replaceAll(' ', '-');
+        router.push(`/used-bikes/${urlTitle}/${val.id}`);
     }
 
     const AddFavourite = async (id) => {
@@ -374,9 +390,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 setTotalPage(0)
             }
             setIsLoading(false)
+            const GetScroll = Number(localStorage.getItem("WindowScroll"));
             setTimeout(() => {
-                window.scrollTo(0, 0)
-            }, [1000])
+                window.scrollTo({
+                    top: GetScroll || 0,
+                    behavior: 'smooth'
+                });
+            }, 500);
         }
         else {
             alert('Please Search Used Bike by (Brand , City , Years , CC)')

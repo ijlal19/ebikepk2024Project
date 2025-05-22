@@ -85,7 +85,7 @@ function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
 
         {from == 'featuredBike' ?
           <Box sx={{ width: '100%' }}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={from == 'featuredBike' ? (featuredData?.length > 0 ? featuredData : []) : Data} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={from == 'featuredBike' ? (featuredData?.length > 0 ? featuredData : []) : Data} from='usedBikeComp' currentpage={from == 'featuredBike' ? "featured_bike":"used_bike"} onBtnClick={() => { }} />
           </Box> :
 
           <Box sx={{ width: '100%' }}>
