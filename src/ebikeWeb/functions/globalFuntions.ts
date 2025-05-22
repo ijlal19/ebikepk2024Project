@@ -433,13 +433,13 @@ function getCustomBikeAd(obj: any) {
     }).then(response => response.json()).then(data => {
         return data
     })
-        .catch((err) => {
-            return err
-        })
+    .catch((err) => {
+        return err
+    })
 }
 
 function getFavouriteBikeById(Data: any) {
-    return fetch(`http://localhost:4000/api/classified/get-classified-by-id-with-random-favourite-adds`, {
+    return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-favourite-adds`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Data)
