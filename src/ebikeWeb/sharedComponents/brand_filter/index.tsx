@@ -12,7 +12,7 @@ import { getCustomBikeAd } from '@/ebikeWeb/functions/globalFuntions';
 
 let selectedBrand: any = []
 
-function BrandFilter({ setBrandArray }: any) {
+function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
 
   const [modalOpenFor, setModalOpenFor] = useState('');
   const [popupData, setpopupData]: any = useState([]);
@@ -23,6 +23,14 @@ function BrandFilter({ setBrandArray }: any) {
     openmodal: openmodal,
     popupdata: popupData,
   }
+
+  function clearFilters(from: any) {
+  if (from == 'brand') {
+    selectedBrand = []
+    localStorage.removeItem('selectedDataByBrand')
+    fetchBikeInfo(1)
+  }
+}
 
   function toggle(from: any) {
     if (from == 'brand') {
@@ -89,6 +97,12 @@ function BrandFilter({ setBrandArray }: any) {
 
         <p onClick={() => toggle('brand')} className={styles.seeMore} > More Brands </p>
 
+        {
+          selectedBrand.length > 0 ?
+            <button onClick={() => { clearFilters('brand') }} className={styles.clear_btn} > Clear Brand Filter </button> :
+            ""
+        }
+
       </Box>
 
       {openmodal ?
@@ -104,13 +118,12 @@ function BrandFilter({ setBrandArray }: any) {
 }
 
 let selectedCity: any = []
-function CityFilter({ setCityArray }: any) {
+function CityFilter({ setCityArray , fetchBikeInfo}: any) {
 
   const [modalOpenFor, setModalOpenFor] = useState('');
   const [popupData, setpopupData]: any = useState([]);
   const [openmodal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
 
   const ModalData = {
     showmodal: toggle,
@@ -155,6 +168,14 @@ function CityFilter({ setCityArray }: any) {
     }
   }
 
+   function clearFilters(from: any) {
+  if (from == 'city') {
+    selectedCity = []
+    localStorage.removeItem('selectedDataByCity')
+    fetchBikeInfo(1)
+  }
+}
+
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
@@ -181,7 +202,11 @@ function CityFilter({ setCityArray }: any) {
         }
 
         <p onClick={() => toggle('city')} className={styles.seeMore} > More Cities </p>
-
+{
+          selectedCity.length > 0 ?
+            <button onClick={() => { clearFilters('city') }} className={styles.clear_btn} > Clear City Filter </button> :
+            ""
+        }
       </Box>
 
       {openmodal ?
@@ -200,7 +225,7 @@ function CityFilter({ setCityArray }: any) {
 
 let yearValues: any = { start: '', end: '' }
 let selectedYear: any = []
-function YearFilter({ fetchedYearData, SelectedYearData }: any) {
+function YearFilter({ fetchedYearData, SelectedYearData , fetchBikeInfo}: any) {
 
   const [isFilterChange, setIsFilterChange] = useState(false)
 
@@ -240,7 +265,7 @@ function YearFilter({ fetchedYearData, SelectedYearData }: any) {
       yearValues.start = ""
       yearValues.end = ""
       selectedYear = []
-      window.location.reload()
+    fetchBikeInfo(1)
     }
   }
 
@@ -296,7 +321,7 @@ function YearFilter({ fetchedYearData, SelectedYearData }: any) {
 
 let CCValues: any = { start: '', end: '' }
 let selectedCC: any = []
-function CC_Filter({ fetchedCCData, SelectedCCData }: any) {
+function CC_Filter({ fetchedCCData, SelectedCCData , fetchBikeInfo}: any) {
 
   const [isFilterChange, setIsFilterChange] = useState(false)
 
@@ -336,7 +361,7 @@ function CC_Filter({ fetchedCCData, SelectedCCData }: any) {
       CCValues.start = ""
       CCValues.end = ""
       selectedCC = []
-      window.location.reload()
+      fetchBikeInfo(1)
     }
   }
 

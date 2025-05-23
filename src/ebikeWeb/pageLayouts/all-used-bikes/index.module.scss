@@ -119,7 +119,6 @@
           justify-content: left;
 
           @media (max-width:600px) {
-            // flex-wrap: wrap;
             max-width: 100%;
           }
 
@@ -313,7 +312,6 @@
           overflow: hidden;
         }
 
-        // grid 1
         .bike_image_box {
           height: 150px;
           width: 220px;
@@ -323,15 +321,11 @@
           justify-content: center;
           align-items: center;
 
-          // border: solid 1px;
           @media (max-width:600px) {
             height: 150px !important;
             width: 220px;
             padding: 0px 0px;
-            // display: flex;
             box-sizing: border-box;
-            // justify-content: center;
-            // align-items: center;
           }
 
           img {
@@ -349,7 +343,6 @@
           }
         }
 
-        // grid 2
         .card_info {
 
           height: 148px;
@@ -451,7 +444,6 @@
           box-sizing: border-box;
         }
 
-        // grid 3
         .price_section_desktop {
           display: flex;
           height: 148px;
@@ -492,10 +484,8 @@
               border-radius: 20px;
               height: 20px;
               overflow: hidden;
-              // background-color: rgba(158, 156, 156, 0.429);
 
               .icon {
-                // box-shadow: 0px 0px 10px black;
                 filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.635));
                 font-size: 18px;
               }
@@ -620,7 +610,6 @@
 @media (max-width:768px) {
   .load_main {
     width: 100%;
-    // height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -688,13 +677,11 @@
   width: 30px;
   margin-left: auto;
   margin-right: 5px;
-  // border-radius: 50%;
   height: 18px;
 
   .icon {
     font-size: 18px;
     filter: drop-shadow(0px 0px 10px rgb(0, 0, 0));
-    // color: rgb(129, 125, 125);
   }
 }
 

@@ -84,7 +84,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         const PageNo = Number(localStorage.getItem('PageNo'));
         if (typeof PageNo === "number" && !isNaN(PageNo)) {
-            fetchBikeInfo(PageNo? PageNo : 1 ,true );
+            fetchBikeInfo(PageNo ? PageNo : 1, true);
         }
         else {
             fetchBikeInfo(1);
@@ -314,12 +314,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         let href = `/used-bikes/${urlTitle}/${val.id}`
 
         return (
-            // <Link
-            //     href={href}
-            //     key={ind}
-            //     className={styles.grid_card}
-            //     sx={{ textDecoration: "none" }}
-            // >
             <Grid container key={ind} className={styles.grid_card}>
 
                 <Grid item className={styles.grid_image_box}
@@ -359,7 +353,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     </Typography>
                 </Grid>
             </Grid>
-            // </Link>
         )
     }
 
