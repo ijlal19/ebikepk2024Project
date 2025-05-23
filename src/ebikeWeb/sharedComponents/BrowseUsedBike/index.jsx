@@ -8,108 +8,108 @@ const HondaArray = [
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Karachi",
-            url: "used-bike-by-brand-and-city/1/1"
+            url: "1/1"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Islamabad",
-            url: "used-bike-by-brand-and-city/1/3"
+            url: "1/3"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Peshawar",
-            url: "used-bike-by-brand-and-city/1/4"
+            url: "1/4"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Lahore",
-            url: "used-bike-by-brand-and-city/1/2"
+            url: "1/2"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Faisalabad",
-            url: "used-bike-by-brand-and-city/1/6"
+            url: "1/6"
         },
     ]
     const SuzukiArray = [
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Karachi",
-            url: "used-bike-by-brand-and-city/6/1"
+            url: "6/1"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Islamabad",
-            url: "used-bike-by-brand-and-city/6/3"
+            url: "6/3"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Peshawar",
-            url: "used-bike-by-brand-and-city/6/4"
+            url: "6/4"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Lahore",
-            url: "used-bike-by-brand-and-city/6/2"
+            url: "6/2"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Faisalbad",
-            url: "used-bike-by-brand-and-city/6/6"
+            url: "6/6"
         },
     ]
-    const ZxmcoArray = [
+    const YamahaArray = [
         {
-            brandName: "Zxmco",
-            bike_location: "Zxmco Bikes in Karachi",
-            url: "used-bike-by-brand-and-city/10/1"
+            brandName: "Yamaha",
+            bike_location: "Yamaha Bikes in Karachi",
+            url: "7/1"
         },
         {
-            brandName: "Zxmco",
-            bike_location: "Zxmco Bikes in Islamabad",
-            url: "used-bike-by-brand-and-city/10/3"
+            brandName: "Yamaha",
+            bike_location: "Yamaha Bikes in Islamabad",
+            url: "7/3"
         },
         {
-            brandName: "Zxmco",
-            bike_location: "Zxmco Bikes in Peshawar",
-            url: "used-bike-by-brand-and-city/10/4"
+            brandName: "Yamaha",
+            bike_location: "Yamaha Bikes in Peshawar",
+            url: "7/4"
         },
         {
-            brandName: "Zxmco",
-            bike_location: "Zxmco Bikes in Lahore",
-            url: "used-bike-by-brand-and-city/10/2"
+            brandName: "Yamaha",
+            bike_location: "Yamaha Bikes in Lahore",
+            url: "7/2"
         },
         {
-            brandName: "Zxmco",
-            bike_location: "Zxmco Bikes in Faisalabad",
-            url: "used-bike-by-brand-and-city/10/6"
+            brandName: "Yamaha",
+            bike_location: "Yamaha Bikes in Faisalabad",
+            url: "7/6"
         },
     ]
     const UnitedArray = [
         {
             brandName: "United",
             bike_location: "United Bikes in Karachi",
-            url: "used-bike-by-brand-and-city/8/1"
+            url: "8/1"
         },
         {
             brandName: "United",
             bike_location: "United Bikes in Islamabad",
-            url: "used-bike-by-brand-and-city/8/3"
+            url: "8/3"
         },
         {
             brandName: "United",
             bike_location: "United Bikes in Peshawar",
-            url: "used-bike-by-brand-and-city/8/4"
+            url: "8/4"
         },
         {
             brandName: "United",
             bike_location: "United Bikes in Lahore",
-            url: "used-bike-by-brand-and-city/8/2"
+            url: "8/2"
         },
         {
             brandName: "United",
             bike_location: "United Bikes in Faisalabad",
-            url: "used-bike-by-brand-and-city/8/6"
+            url: "8/6"
         },
     ]
     return (
@@ -122,7 +122,7 @@ const HondaArray = [
                             {
                                 HondaArray.map((data, i) => {
                                     return (
-                                        <li key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                        <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
                                     )
                                 })
                             }
@@ -133,7 +133,7 @@ const HondaArray = [
                             {
                                 UnitedArray.map((data, i) => {
                                     return (
-                                        <li key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                        <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
                                     )
                                 })
                             }
@@ -142,9 +142,9 @@ const HondaArray = [
                     <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
-                                ZxmcoArray.map((data, i) => {
+                                YamahaArray.map((data, i) => {
                                     return (
-                                        <li key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                        <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
                                     )
                                 })
                             }
@@ -155,7 +155,7 @@ const HondaArray = [
                             {
                                 SuzukiArray.map((data, i) => {
                                     return (
-                                        <li key={i} className={styles.li}><Link href={`used-bikes/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                        <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
                                     )
                                 })
                             }

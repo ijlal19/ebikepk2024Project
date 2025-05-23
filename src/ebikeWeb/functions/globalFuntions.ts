@@ -433,9 +433,9 @@ function getCustomBikeAd(obj: any) {
     }).then(response => response.json()).then(data => {
         return data
     })
-        .catch((err) => {
-            return err
-        })
+    .catch((err) => {
+        return err
+    })
 }
 
 function getFavouriteBikeById(Data: any) {

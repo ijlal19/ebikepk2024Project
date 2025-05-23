@@ -74,7 +74,9 @@ export default function NewUsedBikesCard(props: any) {
     return (
         <>
             <Card className={styles.itemCard}>
-
+                {props.currentpage === 'featured_bike' ?
+                    <span className={styles.featured_tag}>FEATURED</span>
+                    : ""}
                 <CardMedia
                     component="img"
                     alt={bike.title}
