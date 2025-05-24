@@ -1,23 +1,22 @@
 'use client'
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { getCustomBikeAd } from '@/ebikeWeb/functions/globalFuntions';
 import { BrandArr, CityArr } from '@/ebikeWeb/constants/globalData';
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
 import { Box, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import styles from './index.module.scss';
+import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import * as React from 'react';
-import FilterDropdown from './DropDown';
-import { getCustomBikeAd } from '@/ebikeWeb/functions/globalFuntions';
 
-let selectedBrand: any = []
-
-function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
+function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesArr, setCurrentPage }: any) {
 
   const [modalOpenFor, setModalOpenFor] = useState('');
   const [popupData, setpopupData]: any = useState([]);
   const [openmodal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
   const ModalData = {
     showmodal: toggle,
     openmodal: openmodal,
@@ -25,12 +24,11 @@ function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
   }
 
   function clearFilters(from: any) {
-  if (from == 'brand') {
-    selectedBrand = []
-    localStorage.removeItem('selectedDataByBrand')
-    fetchBikeInfo(1)
+    if (from == 'brand') {
+      localStorage.removeItem('selectedDataByBrand')
+      fetchBikeInfo(1)
+    }
   }
-}
 
   function toggle(from: any) {
     if (from == 'brand') {
@@ -44,31 +42,35 @@ function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
     }
   }
 
-  const GetArray = JSON.parse(localStorage.getItem("selectedDataByBrand") || "[]");
+  const selectedBrand: number[] = JSON.parse(localStorage.getItem("selectedDataByBrand") || "[]");
 
-  const updateFilterValue = (event: any, from: any) => {
-    const isChecked = event.target.checked
-    const BikeId = Number(event.target.id)
-    if (from == "brand") {
+  const updateFilterValue = (event: any, from: string) => {
+    const isChecked = event.target.checked;
+    const BikeId = Number(event.target.id);
+
+    if (from === "brand") {
+      let updatedBrandArray: number[] = [];
+
       if (isChecked) {
         if (!selectedBrand.includes(BikeId)) {
-          selectedBrand.push(BikeId);
-          setBrandArray((prev: any) => [...prev, BikeId])
+          updatedBrandArray = [...selectedBrand, BikeId];
+          setBrandArray((prev: any) => [...prev, BikeId]);
+        } else {
+          updatedBrandArray = [...selectedBrand];
         }
       }
       else {
+        updatedBrandArray = selectedBrand.filter((id) => id !== BikeId);
         setBrandArray((prev: any) => prev.filter((id: any) => id !== BikeId));
-        const index = selectedBrand.indexOf(BikeId);
-
-        if (index !== -1) {
-          selectedBrand.splice(index, 1);
-        }
       }
-      if (selectedBrand && selectedBrand.length > 0) {
-        localStorage.setItem("selectedDataByBrand", JSON.stringify(selectedBrand))
+
+      if (updatedBrandArray.length > 0) {
+        localStorage.setItem("selectedDataByBrand", JSON.stringify(updatedBrandArray));
+      } else {
+        localStorage.removeItem("selectedDataByBrand");
       }
     }
-  }
+  };
 
   return (
     <Box className={styles.filter_box}>
@@ -86,7 +88,7 @@ function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
               <Typography className={styles.option_values} key={i}>
                 <input
                   type="checkbox"
-                  checked={GetArray?.includes(data?.id)}
+                  checked={selectedBrand?.includes(data?.id)}
                   onChange={(event) => updateFilterValue(event, 'brand')}
                   id={data.id}
                 />
@@ -108,8 +110,11 @@ function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
       {openmodal ?
         <MoreOptionPopup
           modalData={ModalData}
-          from={'brand'}
+          from='brand'
           updateFilterValue={updateFilterValue}
+          setTotalPage={setTotalPage}
+          setCurrentPage={setCurrentPage}
+          setAllBikesArr={setAllBikesArr}
         /> : ""}
       <Loader isLoading={isLoading} />
 
@@ -117,8 +122,7 @@ function BrandFilter({ setBrandArray , fetchBikeInfo}: any) {
   )
 }
 
-let selectedCity: any = []
-function CityFilter({ setCityArray , fetchBikeInfo}: any) {
+function CityFilter({ setCityArray, fetchBikeInfo, setTotalPage, setAllBikesArr, setCurrentPage }: any) {
 
   const [modalOpenFor, setModalOpenFor] = useState('');
   const [popupData, setpopupData]: any = useState([]);
@@ -142,39 +146,43 @@ function CityFilter({ setCityArray , fetchBikeInfo}: any) {
       setOpenModal(false)
     }
   }
-  const GetArray = JSON.parse(localStorage.getItem("selectedDataByCity") || "[]");
+  const selectedCity: number[] = JSON.parse(localStorage.getItem("selectedDataByCity") || "[]");
 
   function updateFilterValue(event: any, from: any) {
     const isChecked = event.target.checked
-    const Biekid = Number(event.target.id);
-    if (from == 'city') {
+    const BikeId = Number(event.target.id);
+    if (from === 'city') {
+      let updatedCityArray: number[] = [];
+
       if (isChecked) {
-        if (!selectedCity.includes(Biekid)) {
-          selectedCity.push(Biekid);
-          setCityArray((prev: any) => [...prev, Biekid])
+        if (!selectedCity.includes(BikeId)) {
+          updatedCityArray = [...selectedCity, BikeId];
+          setCityArray((prev: any) => [...prev, BikeId])
+        }
+        else {
+          updatedCityArray = [...selectedCity];
         }
       }
       else {
-        setCityArray((prev: any) => prev.filter((id: any) => id !== Biekid));
-        const index = selectedCity.indexOf(Biekid);
+        updatedCityArray = selectedCity.filter((id) => id !== BikeId);
+        setCityArray((prev: any) => prev.filter((id: any) => id !== BikeId));
 
-        if (index !== -1) {
-          selectedCity.splice(index, 1);
-        }
       }
-      if (selectedCity && selectedCity.length > 0) {
-        localStorage.setItem("selectedDataByCity", JSON.stringify(selectedCity))
+
+      if (updatedCityArray.length > 0) {
+        localStorage.setItem("selectedDataByCity", JSON.stringify(updatedCityArray));
+      } else {
+        localStorage.removeItem("selectedDataByCity");
       }
     }
   }
 
-   function clearFilters(from: any) {
-  if (from == 'city') {
-    selectedCity = []
-    localStorage.removeItem('selectedDataByCity')
-    fetchBikeInfo(1)
+  function clearFilters(from: any) {
+    if (from == 'city') {
+      localStorage.removeItem('selectedDataByCity')
+      fetchBikeInfo(1)
+    }
   }
-}
 
   return (
     <Box className={styles.filter_box}>
@@ -192,7 +200,7 @@ function CityFilter({ setCityArray , fetchBikeInfo}: any) {
               <Typography className={styles.option_values} key={i}>
                 <input
                   type="checkbox"
-                  checked={GetArray?.includes(data?.id)}
+                  checked={selectedCity?.includes(data?.id)}
                   onChange={(event) => { updateFilterValue(event, 'city') }}
                   id={data.id}
                 />
@@ -202,7 +210,7 @@ function CityFilter({ setCityArray , fetchBikeInfo}: any) {
         }
 
         <p onClick={() => toggle('city')} className={styles.seeMore} > More Cities </p>
-{
+        {
           selectedCity.length > 0 ?
             <button onClick={() => { clearFilters('city') }} className={styles.clear_btn} > Clear City Filter </button> :
             ""
@@ -212,9 +220,11 @@ function CityFilter({ setCityArray , fetchBikeInfo}: any) {
       {openmodal ?
         <MoreOptionPopup
           modalData={ModalData}
-          from={'city'}
+          from='city'
           updateFilterValue={updateFilterValue}
-
+          setTotalPage={setTotalPage}
+          setCurrentPage={setCurrentPage}
+          setAllBikesArr={setAllBikesArr}
         /> : ""}
 
       <Loader isLoading={isLoading} />
@@ -225,7 +235,7 @@ function CityFilter({ setCityArray , fetchBikeInfo}: any) {
 
 let yearValues: any = { start: '', end: '' }
 let selectedYear: any = []
-function YearFilter({ fetchedYearData, SelectedYearData , fetchBikeInfo}: any) {
+function YearFilter({ fetchedYearData, SelectedYearData, fetchBikeInfo }: any) {
 
   const [isFilterChange, setIsFilterChange] = useState(false)
 
@@ -265,7 +275,7 @@ function YearFilter({ fetchedYearData, SelectedYearData , fetchBikeInfo}: any) {
       yearValues.start = ""
       yearValues.end = ""
       selectedYear = []
-    fetchBikeInfo(1)
+      fetchBikeInfo(1)
     }
   }
 
@@ -321,7 +331,7 @@ function YearFilter({ fetchedYearData, SelectedYearData , fetchBikeInfo}: any) {
 
 let CCValues: any = { start: '', end: '' }
 let selectedCC: any = []
-function CC_Filter({ fetchedCCData, SelectedCCData , fetchBikeInfo}: any) {
+function CC_Filter({ fetchedCCData, SelectedCCData, fetchBikeInfo }: any) {
 
   const [isFilterChange, setIsFilterChange] = useState(false)
 
