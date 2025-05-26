@@ -248,8 +248,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
                         <Box
                             sx={{
-                                backgroundImage: `url(${val?.images[0]})`,
-                                backgroundSize: handleImage ? '100% 100%' : 'cover',
+                                backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                backgroundSize: handleImage ? '100% 100%' : '100% 140px',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
                                 height: handleImage ? '150px' : "90%",
@@ -322,7 +322,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 >
                     <Box
                         sx={{
-                            backgroundImage: `url(${val?.images[0]})`,
+                            backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
