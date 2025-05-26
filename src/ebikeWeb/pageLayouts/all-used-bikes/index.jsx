@@ -50,6 +50,7 @@ const AdsArray = [
 let SelectedADD = []
 
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
+    const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [FavouriteData, setFavouriteData] = useState([]);
     const handleImage = useMediaQuery('(max-width:600px)');
@@ -67,7 +68,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [LikeTrue, setLikeTrue] = useState([]);
     const [Array, setArray] = useState([]);
     const [pageNo, setPageNo] = useState(-12);
-    const [AllFavouriteBike, setAllFavouriteBike] = useState([])
 
     const router = useRouter()
 

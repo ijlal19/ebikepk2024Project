@@ -1,11 +1,11 @@
 'use client'
-import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
+import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandFilter, CC_Filter, CityFilter, YearFilter } from "@/ebikeWeb/sharedComponents/brand_filter";
 import { Box, Button, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
 import { Apps, FormatListBulleted, PagesRounded } from '@mui/icons-material';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import { priceWithCommas } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -15,15 +15,21 @@ import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 import BrowseUsedBike from "@/ebikeWeb/sharedComponents/BrowseUsedBike";
 
+let SelectedADD = []
+
 const AllUsedBikeByFilter = () => {
 
+    const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
+    const [FavouriteData, setFavouriteData] = useState([]);
     const handleImage = useMediaQuery('(max-width:600px)');
     const [SearchApply, setSearchApply] = useState(false);
+    const [InputPlaceholder, setPlaceHolder] = useState('')
     const IsMobile2 = useMediaQuery('(max-width:768px)');
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
     const [filterShow, setFilterShow] = useState(false);
+    const [IsLogin, setIsLogin] = useState('not_login');
     const [SearchValue, setSearchValue] = useState('');
     const [allBikesArr, setAllBikesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +41,6 @@ const AllUsedBikeByFilter = () => {
     const [YearsData, setYearsdata] = useState([]);
     const [CCsData, setCCsData] = useState([]);
     const [heading, setHeading] = useState('');
-    const [InputPlaceholder, setPlaceHolder] = useState('')
     const SelectedYearData = []
     const SelectedCCData = []
 
@@ -61,16 +66,24 @@ const AllUsedBikeByFilter = () => {
     }, [CityArray.length])
 
     useEffect(() => {
+        let _isLoginUser = isLoginUser()
+        if (_isLoginUser?.login) {
+            setIsLogin(_isLoginUser.info)
+            fetchFavouriteAds(_isLoginUser?.info?.id)
+        }
+        else {
+            setIsLogin("not_login")
+        }
         fetchBikeInfo()
         if (params.slug == "bike-by-brand") {
             setPlaceHolder('Brand')
             setFilterShow(true)
-            localStorage.clear()
+            localStorage.removeItem('selectedDataByBrand')
         }
         else if (params.slug == "bike-by-city") {
             setPlaceHolder('City')
             setFilterShow(true)
-            localStorage.clear()
+            localStorage.removeItem('selectedDataByCity')
         }
         else if (params.slug == "bike-by-year") {
             setPlaceHolder('Year')
@@ -84,6 +97,37 @@ const AllUsedBikeByFilter = () => {
             setFilterShow(false)
         }
     }, [])
+
+    const fetchFavouriteAds = async (uid) => {
+        setIsLoading(true)
+        const res = await getFavouriteAds(uid)
+        if (res) {
+            setFavouriteData(res)
+            SelectedADD = res?.data?.favouriteArr?.usedBikeIds?.length > 0 ? res.data.favouriteArr.usedBikeIds : []
+        }
+
+        if (res?.data?.favouriteArr?.usedBikeIds) {
+            const obj = {
+                ids: res?.data?.favouriteArr?.usedBikeIds.length > 0 ? res?.data?.favouriteArr?.usedBikeIds : []
+            }
+            const getFavBike = await getFavouriteBikeById(obj)
+
+            if (getFavBike && getFavBike?.data?.length > 0) {
+                setAllFavouriteBike(getFavBike?.data)
+            } else {
+                setAllFavouriteBike([])
+            }
+        }
+
+        setIsLoading(false)
+        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        setTimeout(() => {
+            window.scrollTo({
+                top: GetScroll || 0,
+                behavior: 'smooth'
+            });
+        }, 500);
+    }
 
     const capitalizeFirstWord = (str) => {
         return str.replace(/^\s*\w/, (match) => match.toUpperCase());
@@ -113,7 +157,9 @@ const AllUsedBikeByFilter = () => {
             }
         }
         else if (from == 'bike-by-brand') {
-            if (BrandArray.length > 0) {
+            const savedArray = JSON.parse(localStorage.getItem("selectedDataByBrand") || "[]");
+
+            if (savedArray.length > 0) {
                 fetchBrandData(page)
             }
             else {
@@ -121,7 +167,8 @@ const AllUsedBikeByFilter = () => {
             }
         }
         else if (from == 'bike-by-city') {
-            if (CityArray.length > 0) {
+            const savedArray = JSON.parse(localStorage.getItem("selectedDataByCity") || "[]");
+            if (savedArray.length > 0) {
                 fetchCityData(page)
             }
             else {
@@ -255,7 +302,7 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-        const GetScroll = Number(localStorage.getItem("WindowScroll"));
+        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
         setTimeout(() => {
             window.scrollTo({
                 top: GetScroll || 0,
@@ -266,8 +313,8 @@ const AllUsedBikeByFilter = () => {
     }
 
     function goToDetailPage(val) {
-        localStorage.setItem("PageNo", currentPage);
-        localStorage.setItem("WindowScroll", window.scrollY);
+        localStorage.setItem("FilterPageNo", currentPage);
+        localStorage.setItem("WindowScrollbyFilter", window.scrollY);
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
@@ -297,12 +344,13 @@ const AllUsedBikeByFilter = () => {
                                 height: handleImage ? '150px' : "90%",
                                 width: handleImage ? '100%' : "100%",
                             }}>
+                            {FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ?
+                                <span className={styles.featured_tag}>FAVOURITE</span>
+                                : ""}
                             {
                                 handleImage ?
                                     <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} /> */}
-                                        <FavoriteIcon className={styles.icon} sx={{ color: 'white' }} />
-                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: 'red' : 'green' }} /> */}
+                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                                     </Box> : ""
                             }
                         </Box>
@@ -333,9 +381,7 @@ const AllUsedBikeByFilter = () => {
                             !handleImage ?
                                 <Box className={styles.fav_box}>
                                     <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} /> */}
-                                        <FavoriteIcon className={styles.icon} sx={{ color: 'white' }} />
-                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'grey' }} /> */}
+                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                                     </Box>
                                     <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
                                         < LocalPhoneIcon className={styles.icon} /> Show Phone No
@@ -372,9 +418,11 @@ const AllUsedBikeByFilter = () => {
                             height: '100%',
                             width: '100%',
                         }}>
+                        {FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ?
+                            <span className={styles.featured_tag}>FAVOURITE</span>
+                            : ""}
                         <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                            <FavoriteIcon className={styles.icon} sx={{ color: 'white' }} />
-                            {/* <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} /> */}
+                            <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                         </Box>
                     </Box>
                     {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
@@ -444,13 +492,13 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-         const GetScroll = Number(localStorage.getItem("WindowScroll"));
-            setTimeout(() => {
-                window.scrollTo({
-                    top: GetScroll || 0,
-                    behavior: 'smooth'
-                });
-            }, 500);
+        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        setTimeout(() => {
+            window.scrollTo({
+                top: GetScroll || 0,
+                behavior: 'smooth'
+            });
+        }, 500);
 
     }
 
@@ -495,23 +543,26 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-         const GetScroll = Number(localStorage.getItem("WindowScroll"));
-            setTimeout(() => {
-                window.scrollTo({
-                    top: GetScroll || 0,
-                    behavior: 'smooth'
-                });
-            }, 500);
+        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        setTimeout(() => {
+            window.scrollTo({
+                top: GetScroll || 0,
+                behavior: 'smooth'
+            });
+        }, 500);
     }
 
     const fetchBrandData = async (_page) => {
         setIsLoading(true)
-        if (BrandArray && BrandArray.length > 0) {
+        const savedArray = JSON.parse(localStorage.getItem("selectedDataByBrand") || "[]");
+
+        if (savedArray && savedArray.length > 0) {
             const obj = {
-                brand_filter: BrandArray,
+                brand_filter: savedArray,
                 page: _page,
                 adslimit: 12
             }
+
             const res = await getCustomBikeAd(obj)
             if (res && res?.data?.length > 0) {
                 setAllBikesArr(res?.data)
@@ -523,8 +574,9 @@ const AllUsedBikeByFilter = () => {
                 setAllBikesArr([])
                 setTotalPage(0)
             }
+
             setIsLoading(false)
-             const GetScroll = Number(localStorage.getItem("WindowScroll"));
+            const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
             setTimeout(() => {
                 window.scrollTo({
                     top: GetScroll || 0,
@@ -536,9 +588,11 @@ const AllUsedBikeByFilter = () => {
 
     const fetchCityData = async (_page) => {
         setIsLoading(true)
-        if (CityArray && CityArray.length > 0) {
+        const savedArray = JSON.parse(localStorage.getItem("selectedDataByCity") || "[]");
+        
+        if (savedArray && savedArray.length > 0) {
             const obj = {
-                city_filter: CityArray,
+                city_filter: savedArray,
                 page: _page,
                 adslimit: 12
             }
@@ -554,7 +608,7 @@ const AllUsedBikeByFilter = () => {
                 setTotalPage(0)
             }
             setIsLoading(false)
-             const GetScroll = Number(localStorage.getItem("WindowScroll"));
+            const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
             setTimeout(() => {
                 window.scrollTo({
                     top: GetScroll || 0,
@@ -569,17 +623,17 @@ const AllUsedBikeByFilter = () => {
             return (
                 IsMobile2 ?
                     showfilter ?
-                        <BrandFilter setBrandArray={setBrandArray} fetchBikeInfo={fetchBikeInfo} />
+                        <BrandFilter setBrandArray={setBrandArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} />
                         : '' :
-                    <BrandFilter setBrandArray={setBrandArray} fetchBikeInfo={fetchBikeInfo} />
+                    <BrandFilter setBrandArray={setBrandArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} />
             )
         }
         else if (params.slug == "bike-by-city") {
             return (
                 IsMobile2 ?
                     showfilter ?
-                        <CityFilter setCityArray={setCityArray} fetchBikeInfo={fetchBikeInfo} /> : '' :
-                    <CityFilter setCityArray={setCityArray} fetchBikeInfo={fetchBikeInfo} />
+                        <CityFilter setCityArray={setCityArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} /> : '' :
+                    <CityFilter setCityArray={setCityArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} />
             )
         }
         else if (params.slug == "bike-by-year") {
@@ -667,6 +721,26 @@ const AllUsedBikeByFilter = () => {
     const filtershow = () => {
         setshowfilter(!showfilter);
         window.scrollTo(0, 0);
+    }
+
+    const AddFavourite = async (id) => {
+        if (!IsLogin || IsLogin == "not_login") {
+            alert('Please Login To Add Favourite')
+            return
+        }
+        else {
+            const index = SelectedADD.length > 0 ? SelectedADD.indexOf(id) : -1;
+            if (index !== -1) {
+                SelectedADD.splice(index, 1);
+            }
+            else {
+                SelectedADD.push(id)
+            }
+            const res = await GetFavouriteObject(IsLogin?.id, 'usedBikeIds', SelectedADD, id)
+            if (res) {
+                fetchFavouriteAds(IsLogin?.id)
+            }
+        }
     }
 
     return (

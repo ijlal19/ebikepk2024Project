@@ -232,11 +232,39 @@
             .grid_image_box {
               width: 100%;
               height: 140px;
+              position: relative;
 
               img {
                 width: 100%;
                 height: 140px;
               }
+
+
+              .featured_tag {
+                background-color: yellowgreen;
+                color: white;
+                box-sizing: border-box;
+                width: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: flex-end;
+                padding-bottom: 4px !important;
+                padding-left: 0px !important;
+                height: 22px !important;
+                font-size: 11px !important;
+                position: absolute;
+                top: 0px;
+
+                @media (max-width:768px) {
+                  width: 70px;
+                  padding-bottom: 3px !important;
+                  font-size: 10px;
+                  height: 22px !important;
+                  top: 0px;
+
+                }
+              }
+
             }
 
             .grid_card_info {
@@ -369,6 +397,7 @@
               box-sizing: border-box;
               justify-content: center;
               align-items: center;
+              position: relative;
 
               @media (max-width:600px) {
                 height: 150px !important;
@@ -747,15 +776,40 @@
     margin-top: 0px;
   }
 }
+
 .filter_button {
   background-color: yellowgreen !important;
   color: white !important;
   z-index: 1000;
   position: fixed;
-  top: 117px;
+  top: 75px;
   right: 20px;
   text-align: left !important;
   display: flex;
   justify-content: left !important;
   width: 80px;
+}
+
+.featured_tag {
+  background-color: yellowgreen;
+  color: white;
+  box-sizing: border-box;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 4px !important;
+  padding-left: 0px !important;
+  height: 22px !important;
+  font-size: 11px !important;
+  position: absolute;
+  top: 5px;
+
+  @media (max-width:768px) {
+    width: 70px;
+    padding: 0px 0px 4px 0px !important;
+    font-size: 10px;
+    height: 24px !important;
+    top: -2px;
+  }
 }

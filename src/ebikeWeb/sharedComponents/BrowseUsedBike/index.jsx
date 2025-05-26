@@ -112,12 +112,66 @@ const HondaArray = [
             url: "8/6"
         },
     ]
+    const SuperPowerArray = [
+        {
+            brandName: "Super Power",
+            bike_location: "Super Power Bikes in Karachi",
+            url: "5/1"
+        },
+        {
+            brandName: "Super Power",
+            bike_location: "Super Power Bikes in Islamabad",
+            url: "5/3"
+        },
+        {
+            brandName: "Super Power",
+            bike_location: "Super Power Bikes in Peshawar",
+            url: "5/4"
+        },
+        {
+            brandName: "Super Power",
+            bike_location: "Super Power Bikes in Lahore",
+            url: "5/2"
+        },
+        {
+            brandName: "Super Power",
+            bike_location: "Super Power Bike in Faisalabad",
+            url: "5/6"
+        },
+    ]
+    const UniqueArray = [
+        {
+            brandName: "Unique",
+            bike_location: "Unique Bikes in Karachi",
+            url: "16/1"
+        },
+        {
+            brandName: "Unique",
+            bike_location: "Unique Bikes in Islamabad",
+            url: "16/3"
+        },
+        {
+            brandName: "Unique",
+            bike_location: "Unique Bikes in Peshawar",
+            url: "16/4"
+        },
+        {
+            brandName: "Unique",
+            bike_location: "Unique Bikes in Lahore",
+            url: "16/2"
+        },
+        {
+            brandName: "Unique",
+            bike_location: "Unique Bikes in Faisalabad",
+            url: "16/6"
+        },
+    ]
     return (
         <Box className={styles.browser}>
             <Box className={styles.container}>
                 <Typography className={styles.heading}>Browse More Used Bikes</Typography>
                 <Grid container className={styles.main_container}>
-                    <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 HondaArray.map((data, i) => {
@@ -128,10 +182,10 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
-                            {
-                                UnitedArray.map((data, i) => {
+                              {
+                                SuzukiArray.map((data, i) => {
                                     return (
                                         <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
                                     )
@@ -139,7 +193,7 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 YamahaArray.map((data, i) => {
@@ -150,10 +204,32 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 3} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
-                                SuzukiArray.map((data, i) => {
+                                UnitedArray.map((data, i) => {
+                                    return (
+                                        <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </Grid>
+                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                        <ul className={styles.ul}>
+                            {
+                                UniqueArray.map((data, i) => {
+                                    return (
+                                        <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </Grid>
+                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                        <ul className={styles.ul}>
+                            {
+                                SuperPowerArray.map((data, i) => {
                                     return (
                                         <li key={i} className={styles.li}><Link href={`used-bikes/used-bike-by-brand-and-city/${data?.url}`} className={styles.li} >{data?.bike_location}</Link></li>
                                     )
