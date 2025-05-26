@@ -448,7 +448,7 @@ function getFavouriteBikeById(Data: any) {
     })
         .catch((err) => {
             return err
-        })
+    })
 }
 
 

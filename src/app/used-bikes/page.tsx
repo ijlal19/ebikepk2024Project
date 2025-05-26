@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AllUsedBikes() {
 
-        let obj = {
+  let obj = {
     adslimit: 12,
     page: 1
   }
@@ -25,8 +25,7 @@ export default async function AllUsedBikes() {
 
   let obj1 = {
     isFeatured: true,
-    page: 1,
-    random: true,
+    // random: true,
     adslimit: 20
   }
   let allFeaturedBike = await getCustomBikeAd(obj1);

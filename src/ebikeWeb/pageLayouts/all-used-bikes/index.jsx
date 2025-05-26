@@ -141,7 +141,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             page: _pageNo
         }
 
-        let res = _allUsedBike
+        console.log('_allUsedBike', _allUsedBike)
+        // let res = _allUsedBike
+        let res = null
         if (!res || fromPagination) {
             res = await getCustomBikeAd(obj);
         }
