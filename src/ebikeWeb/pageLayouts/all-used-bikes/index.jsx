@@ -247,6 +247,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 <Grid container key={ind} className={styles.long_card}>
                     <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
                         <Box
+
+                            className={styles.long_card_img}
+
                             sx={{
                                 backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                 backgroundSize: handleImage ? '100% 100%' : '100% 140px',
