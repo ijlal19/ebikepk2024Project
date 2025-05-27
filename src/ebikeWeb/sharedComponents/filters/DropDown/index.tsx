@@ -15,7 +15,7 @@ export default function FilterDropdown({ values, dropvalues, updateFilterValue, 
                 <> {
                     values == "from" ?
                         <>
-                            <FormControl sx={{ m: 1, width: '90%' }} size="small">
+                            <FormControl sx={{ ml: 1, width: '90%' }} size="small">
                                 <InputLabel id="demo-select-small-label">From</InputLabel>
                                 <Select
                                     labelId="demo-select-small-label"
@@ -48,45 +48,6 @@ export default function FilterDropdown({ values, dropvalues, updateFilterValue, 
                             </FormControl>
                         </>
                 }</> 
-                // <>
-                //     {
-                //         values == "from" ?
-                //             <>
-                //                 <FormControl sx={{ m: 1, width: '90%' }} size="small">
-                //                     <InputLabel id="demo-select-small-label">From</InputLabel>
-                //                     <Select
-                //                         labelId="demo-select-small-label"
-                //                         id="demo-select-small"
-                //                         label='from'
-                //                         value={CCFrom}
-                //                         onChange={(e) => updateFilterValue(e.target.id, true, from)}
-                                        
-                //                     >
-                //                         {CcArr.map((e: any, i: any) => {
-                //                             return <MenuItem key={i} value={e}>{e} CC</MenuItem>
-                //                         })}
-                //                     </Select>
-                //                 </FormControl>
-                //             </>
-                //             :
-                //             <>
-                //                 <FormControl sx={{ m: 1, width: '90%' }} size="small">
-                //                     <InputLabel id="demo-select-small-label">To</InputLabel>
-                //                     <Select
-                //                         labelId="demo-select-small-label"
-                //                         id="demo-select-small"
-                //                         label='from'
-                //                         value={CCTo}
-                //                         onChange={(e) => updateFilterValue(e.target.id, false, from)}
-                //                     >
-                //                         {[...CcArr].reverse().map((e: any, i: any) => {
-                //                             return <MenuItem key={i} value={e}>{e} CC</MenuItem>;
-                //                         })}
-                //                     </Select>
-                //                 </FormControl>
-                //             </>
-                //     }
-                // </>
         }
         </>
 

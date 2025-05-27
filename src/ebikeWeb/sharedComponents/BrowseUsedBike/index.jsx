@@ -3,7 +3,8 @@ import styles from './index.module.scss';
 import { Box, Grid, Link, Typography, useMediaQuery } from "@mui/material";
 
 const BrowseUsedBike = () => {
-    const isMobile = useMediaQuery('(max-width:768px)');
+    const isMobile = useMediaQuery('(max-width:1120px)');
+    const isMobile2 = useMediaQuery('(max-width:768px)');
 const HondaArray = [
         {
             brandName: "Honda",
@@ -171,7 +172,7 @@ const HondaArray = [
             <Box className={styles.container}>
                 <Typography className={styles.heading}>Browse More Used Bikes</Typography>
                 <Grid container className={styles.main_container}>
-                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2? 6 : 4 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 HondaArray.map((data, i) => {
@@ -182,7 +183,7 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2? 6 : 4 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                               {
                                 SuzukiArray.map((data, i) => {
@@ -193,7 +194,7 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2? 6 : 4 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 YamahaArray.map((data, i) => {
@@ -204,7 +205,7 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2? 6 : 4 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 UnitedArray.map((data, i) => {
@@ -215,7 +216,7 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2? 6 : 4 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 UniqueArray.map((data, i) => {
@@ -226,7 +227,7 @@ const HondaArray = [
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? 6 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2? 6 : 4 : 2} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 SuperPowerArray.map((data, i) => {

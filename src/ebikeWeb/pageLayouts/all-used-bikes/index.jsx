@@ -56,7 +56,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const handleImage = useMediaQuery('(max-width:600px)');
     const [SearchApply, setSearchApply] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
-    const isMobile2 = useMediaQuery('(max-width:768px)');
+    const isMobile2 = useMediaQuery('(max-width:910px)');
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
@@ -399,142 +399,142 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     }
 
     return (
-        <Box className={styles.main}>
-            <>
-                {
-                    isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
-                }
+        <>
+            {
+                isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
+            }
+            <Box className={styles.main}>
+                <>
 
-                <Box className={styles.usedBike_headingBpx}>
-                    <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
-                    <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
-                </Box>
-
-                <UsedBikesSection from='featuredBike' featuredData={featuredData} />
-                {
-                    AllFavouriteBike.length > 0 ?
-                        <div className={styles.similarBikeDiv}>
-                            <h6 className={styles.similar_heading}> Favourite Bikes </h6>
-                            <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
-                        </div> : ''
-                }
-
-                <Box className={styles.all_bike_main}>
-
-                    <Box className={styles.used_bike_filter}>
-                        {
-                            isMobile2 ?
-                                showfilter ? <Filters
-                                    setLoader={setIsLoading}
-                                    updateData={setAllBikesArr}
-                                    fetchBikeInfo={fetchBikeInfo}
-                                    CurrentPage={setCurrentPage}
-                                    TotalPage={setTotalPage}
-                                    SearchValue={SearchValue}
-                                /> : '' :
-                                <Filters
-                                    className={styles.used_bike_filter}
-                                    setLoader={setIsLoading}
-                                    updateData={setAllBikesArr}
-                                    fetchBikeInfo={fetchBikeInfo}
-                                    CurrentPage={setCurrentPage}
-                                    TotalPage={setTotalPage}
-                                    SearchValue={SearchValue}
-                                />
-                        }
+                    <Box className={styles.usedBike_headingBpx}>
+                        <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
+                        <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
                     </Box>
 
-                    <div className={styles.main_box}>
-                        <div className={styles.navigation}>
-                            <div className={styles.text_container}>
-                                <span className={styles.bike_text}> Used Bikes </span>
-                            </div>
-                            <div className={styles.search_box} style={{ display: !handleImage ? "flex" : "none" }} >
-                                <div className={styles.search_box_inner}>
-                                    <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
-                                    <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
+                    <UsedBikesSection from='featuredBike' featuredData={featuredData} />
+                    {
+                        AllFavouriteBike.length > 0 ?
+                            <div className={styles.similarBikeDiv}>
+                                <h6 className={styles.similar_heading}> Favourite Bikes </h6>
+                                <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+                            </div> : ''
+                    }
+
+                    <Box className={styles.all_bike_main}>
+
+                        <Box className={styles.used_bike_filter}>
+                            {
+                                isMobile2 ?
+                                    showfilter ? <Filters
+                                        setLoader={setIsLoading}
+                                        updateData={setAllBikesArr}
+                                        fetchBikeInfo={fetchBikeInfo}
+                                        CurrentPage={setCurrentPage}
+                                        TotalPage={setTotalPage}
+                                        SearchValue={SearchValue}
+                                    /> : '' :
+                                    <Filters
+                                        className={styles.used_bike_filter}
+                                        setLoader={setIsLoading}
+                                        updateData={setAllBikesArr}
+                                        fetchBikeInfo={fetchBikeInfo}
+                                        CurrentPage={setCurrentPage}
+                                        TotalPage={setTotalPage}
+                                        SearchValue={SearchValue}
+                                    />
+                            }
+                        </Box>
+
+                        <div className={styles.main_box}>
+                            <div className={styles.navigation}>
+                                <div className={styles.text_container}>
+                                    <span className={styles.bike_text}> Used Bikes </span>
+                                </div>
+                                <div className={styles.search_box} style={{ display: !handleImage ? "flex" : "none" }} >
+                                    <div className={styles.search_box_inner}>
+                                        <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
+                                        <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
+                                    </div>
+                                </div>
+                                <div className={styles.swap_button_container}>
+                                    <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                    <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                </div>
+                                <div className={styles.search_box} style={{ display: handleImage ? "flex" : "none" }}>
+                                    <div className={styles.search_box_inner}>
+                                        <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
+                                        <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
+                                    </div>
                                 </div>
                             </div>
-                            <div className={styles.swap_button_container}>
-                                <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+
+                            <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                                {allBikesArr?.length > 0 ?
+                                    allBikesArr.map((val, ind) => {
+                                        return (
+                                            isGridSelected ? GridCard(val, ind) : longCard(val, ind)
+                                        )
+                                    }) :
+                                    <p className={styles.not_found}>No results found.</p>
+                                }
                             </div>
-                            <div className={styles.search_box} style={{ display: handleImage ? "flex" : "none" }}>
-                                <div className={styles.search_box_inner}>
-                                    <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
-                                    <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
-                                </div>
-                            </div>
-                        </div>
 
-
-
-                        <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                            {allBikesArr?.length > 0 ?
-                                allBikesArr.map((val, ind) => {
-                                    return (
-                                        isGridSelected ? GridCard(val, ind) : longCard(val, ind)
-                                    )
-                                }) :
-                                <p className={styles.not_found}>No results found.</p>
+                            {
+                                !handleImage ?
+                                    allBikesArr?.length > 0 ?
+                                        <Box className={styles.used_bike_desktop_pagination}>
+                                            <Pagination
+                                                count={totalPage}
+                                                onChange={handlePaginationChange}
+                                                page={currentPage}
+                                            />
+                                        </Box>
+                                        : "" : ""
                             }
                         </div>
 
+
+                        <Box className={styles.add_area}>
+                            <Box className={styles.add_box}>
+                                {
+                                    AdsArray?.map((e, i) => {
+                                        return (
+                                            <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                                <img
+                                                    src={e?.url}
+                                                    alt={e?.alt}
+                                                    className={styles.add_image} />
+                                            </Link>
+                                        )
+                                    })
+                                }
+                            </Box>
+                        </Box>
+                    </Box>
+                    <Box className={styles.main_pagination}>
                         {
-                            !handleImage ?
+                            handleImage ?
                                 allBikesArr?.length > 0 ?
-                                    <Box className={styles.used_bike_desktop_pagination}>
+                                    <Box className={styles.used_bike_mobile_pagination}>
                                         <Pagination
                                             count={totalPage}
                                             onChange={handlePaginationChange}
                                             page={currentPage}
+                                            className={styles.pagintation}
                                         />
                                     </Box>
                                     : "" : ""
                         }
-                    </div>
-
-
-                    <Box className={styles.add_area}>
-                        <Box className={styles.add_box}>
-                            {
-                                AdsArray?.map((e, i) => {
-                                    return (
-                                        <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
-                                            <img
-                                                src={e?.url}
-                                                alt={e?.alt}
-                                                className={styles.add_image} />
-                                        </Link>
-                                    )
-                                })
-                            }
-                        </Box>
                     </Box>
-                </Box>
-                <Box className={styles.main_pagination}>
-                    {
-                        handleImage ?
-                            allBikesArr?.length > 0 ?
-                                <Box className={styles.used_bike_mobile_pagination}>
-                                    <Pagination
-                                        count={totalPage}
-                                        onChange={handlePaginationChange}
-                                        page={currentPage}
-                                        className={styles.pagintation}
-                                    />
-                                </Box>
-                                : "" : ""
-                    }
-                </Box>
-                <BrowseUsedBike />
-            </>
+                </>
 
-            <div className={styles.load_main}>
-                <div className={styles.load_div}>
-                    <Loader isLoading={isLoading} />
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
                 </div>
-            </div>
-        </Box>
+            </Box>
+            <BrowseUsedBike />
+        </>
     )
 }

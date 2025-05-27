@@ -7,7 +7,6 @@
   padding: 0px 0px 0px 0px !important;
   background: white;
   margin: auto;
-  border: 1px solid transparent;
   margin-top: 20px;
 
 
@@ -19,7 +18,7 @@
   }
 
   .heading_resultby {
-    width: 200px;
+    width: 100%;
     background: $primary_two;
     padding: 10px 0px !important;
     color: rgb(255, 255, 255);
@@ -37,7 +36,7 @@
     border-top: 1px solid rgb(235, 231, 231);
     width: 200px;
     border-bottom: 1px solid rgb(235, 231, 231);
-    padding: 9px 0px !important;
+    padding: 4px 0px !important;
     color: black;
     box-sizing: border-box;
 
@@ -52,7 +51,7 @@
     .years_text {
       padding-left: 10px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight:bolder;
       box-sizing: border-box;
     }
 
@@ -96,6 +95,7 @@
       padding: 5px 0px 5px 13px !important;
       font-size: 12px;
       cursor: pointer;
+      margin: 2px 0px 4px 0px !important;
     }
   }
 }

@@ -1,4 +1,5 @@
 @import '../../../styles/variable';
+
 .usedbike_main {
     width: 100%;
     height: auto;
@@ -7,7 +8,7 @@
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    
+
     .heading {
         padding: 0px !important;
         font-size: 21px;
@@ -15,6 +16,7 @@
         color: black;
         padding: 10px 0px;
         margin-bottom: -18px;
+
         @media (max-width:768px) {
             font-size: 19px;
             display: flex;
@@ -25,6 +27,7 @@
             @media (min-width:768px) {
                 display: none;
             }
+
             text-decoration: none;
             font-size: 11px;
             margin: auto;
@@ -40,6 +43,7 @@
     .featuredHeading {
         text-align: center;
         margin-bottom: 10px;
+        font-size: 25px;
         color: #1976d2;
         font-weight: normal !important;
 
@@ -47,6 +51,7 @@
             margin-top: 20px;
             display: block;
             margin-bottom: 0px;
+            font-size: 22px;
         }
     }
 
