@@ -200,7 +200,8 @@
         @media (max-width:600px) {
           width: 46%;
           border: 1px solid rgba(179, 179, 179, 0.216);
-          background-color: rgba(231, 231, 231, 0.737);
+          // background-color: rgba(231, 231, 231, 0.737);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .grid_image_box {
@@ -321,6 +322,7 @@
         cursor: pointer;
         flex-direction: row;
         padding-left: 2px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
         @media (max-width:600px) {
           height: auto !important;
@@ -329,10 +331,19 @@
           max-width: 250px;
           margin: 5px 8px !important;
           border: 1px solid rgba(179, 179, 179, 0.216);
-          background-color: rgba(231, 231, 231, 0.737);
+          // background-color: rgba(231, 231, 231, 0.737);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
           border-radius: 0;
           width: 44%;
           overflow: hidden;
+        }
+
+        .long_card_img {
+          @media (min-width:767px) {
+            -webkit-background-size: contain;
+            background-size: contain;
+            -webkit-background-position: center;
+          }
         }
 
         .bike_image_box {
