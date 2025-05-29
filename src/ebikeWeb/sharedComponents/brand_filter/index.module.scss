@@ -16,13 +16,7 @@
   }
 
   .heading_resultby {
-    width: 200px;
-
-    @media (max-width:768px) {
-      max-width: 300px;
-      width: 300px;
-    }
-
+    width: 100%;
     background: $primary_two;
     padding: 10px 0px !important;
     color: rgb(255, 255, 255);
@@ -52,8 +46,8 @@
     .years_text {
       padding-left: 10px;
       font-size: 12px;
+      font-weight: bolder;
     }
-
   }
 
   .city_options,

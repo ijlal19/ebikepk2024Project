@@ -75,7 +75,7 @@ function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesAr
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
-        <Typography> Show Result By: </Typography>
+        <Typography> Show Result By Brand </Typography>
       </Box>
       {/* Brand Filter  */}
       <Box className={styles.heading_brand}>
@@ -187,7 +187,7 @@ function CityFilter({ setCityArray, fetchBikeInfo, setTotalPage, setAllBikesArr,
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
-        <Typography> Show Result By: </Typography>
+        <Typography> Show Result By City </Typography>
       </Box>
       {/* Brand Filter  */}
       <Box className={styles.heading_brand}>
@@ -282,7 +282,7 @@ function YearFilter({ fetchedYearData, SelectedYearData, fetchBikeInfo }: any) {
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
-        <Typography> Show Result By: </Typography>
+        <Typography> Show Result By Year </Typography>
       </Box>
       <Box className={styles.heading_years}>
         <Typography className={styles.years_text}>YEARS</Typography>
@@ -378,7 +378,7 @@ function CC_Filter({ fetchedCCData, SelectedCCData, fetchBikeInfo }: any) {
   return (
     <Box className={styles.filter_box}>
       <Box className={styles.heading_resultby}>
-        <Typography> Show Result By: </Typography>
+        <Typography> Show Result By CC </Typography>
       </Box>
       <Box className={styles.heading_years}>
         <Typography className={styles.years_text}>CC</Typography>

@@ -1,12 +1,13 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId } from "@/ebikeWeb/functions/globalFuntions";
-import {  numericOnly,  priceWithCommas } from "@/genericFunctions/geneFunc";
+import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { Navigation, FreeMode } from 'swiper/modules';
+import { numericOnly, priceWithCommas } from "@/genericFunctions/geneFunc";
+import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { Navigation, FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -46,9 +47,15 @@ export default function UsedBike() {
               res.add.mobileNumber = '0' + res.add.mobileNumber
             }
             setBikeDetail(res?.add)
-
+            const obj = {
+              brand_filter: res.add.brandId ? [res.add.brandId] : [],
+              cc: res.add.cc? [res.add.cc] : [],
+              adslimit: 4,
+              random: true
+            }
+            const getSimilarBike = await getCustomBikeAd(obj)
+            setSimilarBikeArr(getSimilarBike?.data)
           }
-          setSimilarBikeArr(res.bikes)
           setShowPhoneNo(false)
           setTimeout(() => {
             window.scrollTo(0, 0)
@@ -201,6 +208,7 @@ export default function UsedBike() {
             <Loader isLoading={isLoading} />
           </div>
         </div>}
+    <BrowseUsedBike />
   </>
   );
 

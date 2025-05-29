@@ -1,11 +1,12 @@
 'use client'
 import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { BrandFilter, CC_Filter, CityFilter, YearFilter } from "@/ebikeWeb/sharedComponents/brand_filter";
 import { Box, Button, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
 import { Apps, FormatListBulleted, PagesRounded } from '@mui/icons-material';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
+import BrowseUsedBike from "@/ebikeWeb/sharedComponents/BrowseUsedBike";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -13,7 +14,6 @@ import { useRouter, useParams } from 'next/navigation';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
-import BrowseUsedBike from "@/ebikeWeb/sharedComponents/BrowseUsedBike";
 
 let SelectedADD = []
 
@@ -22,10 +22,11 @@ const AllUsedBikeByFilter = () => {
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [FavouriteData, setFavouriteData] = useState([]);
-    const handleImage = useMediaQuery('(max-width:600px)');
     const [SearchApply, setSearchApply] = useState(false);
     const [InputPlaceholder, setPlaceHolder] = useState('')
-    const IsMobile2 = useMediaQuery('(max-width:768px)');
+    const handleImage = useMediaQuery('(max-width:600px)');
+    const handleCardSize = useMediaQuery('(max-width:1200px)');
+    const IsMobile2 = useMediaQuery('(max-width:910px)');
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
     const [filterShow, setFilterShow] = useState(false);
@@ -337,7 +338,7 @@ const AllUsedBikeByFilter = () => {
                     <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
                         <Box
                             sx={{
-                                backgroundImage: `url(${val?.images[0]})`,
+                                backgroundImage: `url(${val?.images[0] ? val.images[0] : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                 backgroundSize: handleImage ? '100% 100%' : 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -411,7 +412,7 @@ const AllUsedBikeByFilter = () => {
                 >
                     <Box
                         sx={{
-                            backgroundImage: `url(${val?.images[0]})`,
+                            backgroundImage: `url(${val?.images[0] ? val.images[0] : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
@@ -589,7 +590,7 @@ const AllUsedBikeByFilter = () => {
     const fetchCityData = async (_page) => {
         setIsLoading(true)
         const savedArray = JSON.parse(localStorage.getItem("selectedDataByCity") || "[]");
-        
+
         if (savedArray && savedArray.length > 0) {
             const obj = {
                 city_filter: savedArray,
@@ -754,7 +755,7 @@ const AllUsedBikeByFilter = () => {
                     <>
                         <Grid container className={styles.grid_container}>
 
-                            <Grid item xs={IsMobile2 ? 12 : 2.5} className={styles.filter_grid} >
+                            <Grid item xs={IsMobile2 ? 12 : handleCardSize ? 3 : 2.5} className={styles.filter_grid} >
                                 {
                                     filterShow ?
                                         <Box className={styles.filter_box_main}>
@@ -764,7 +765,7 @@ const AllUsedBikeByFilter = () => {
                                 }
                             </Grid>
 
-                            <Grid item xs={IsMobile2 ? 12 : 7.5} className={styles.cards_grid} >
+                            <Grid item xs={IsMobile2 ? 12 : handleCardSize ? 8.5 : 7.5} className={styles.cards_grid} >
                                 <h5 className={styles.heading2}> {heading}</h5>
 
                                 <Box className={styles.all_bike_main}>

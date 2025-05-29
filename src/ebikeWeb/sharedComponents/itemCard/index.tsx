@@ -81,7 +81,7 @@ export default function NewUsedBikesCard(props: any) {
                     component="img"
                     alt={bike.title}
                     height="230"
-                    image={imgUrl}
+                    image={imgUrl ? imgUrl : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'}
                     className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height : ""}`}
                 />
 

@@ -1,7 +1,7 @@
 .browser {
     width: 100%;
     height: auto;
-    padding: 10px 0px !important;
+    padding: 10px 0px 20px 0px !important;
     background: white;
     color: rgb(0, 0, 0);
     display: flex;
@@ -9,6 +9,9 @@
     align-items: center;
     box-sizing: border-box;
     width: 100%;
+    @media (max-width:768px) {
+        padding: 10px 0px 10px 0px !important;
+    }
 
     .container {
         width: 100%;
@@ -22,12 +25,14 @@
             width: 100%;
             box-sizing: border-box;
             font-size: 18px;
+            padding-bottom: 10px;
             margin: 0px;
             font-weight: 500;
 
             @media (max-width:768px) {
                 padding-left: 15px !important;
                 margin-bottom: 5px ;
+                text-align: center;
             }
             @media (max-width:1120px) {
                 padding-left: 15px !important;

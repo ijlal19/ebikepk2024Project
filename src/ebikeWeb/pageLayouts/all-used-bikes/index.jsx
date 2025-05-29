@@ -52,11 +52,12 @@ let SelectedADD = []
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
-    const [FavouriteData, setFavouriteData] = useState([]);
+    const handleCardSize = useMediaQuery('(max-width:1200px)');
     const handleImage = useMediaQuery('(max-width:600px)');
+    const [FavouriteData, setFavouriteData] = useState([]);
+    const IsMobile2 = useMediaQuery('(max-width:910px)');
     const [SearchApply, setSearchApply] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
-    const isMobile2 = useMediaQuery('(max-width:910px)');
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
@@ -404,7 +405,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     return (
         <>
             {
-                isMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
+                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
             }
             <Box className={styles.main}>
                 <>
@@ -422,82 +423,87 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
                             </div> : ''
                     }
+                    <Grid container className={styles.grid_container}>
 
-                    <Box className={styles.all_bike_main}>
-
-                        <Box className={styles.used_bike_filter}>
+                        <Grid item xs={IsMobile2 ? 12 : handleCardSize ? 2.5 : 2.5} className={styles.filter_grid} >
                             {
-                                isMobile2 ?
-                                    showfilter ? <Filters
-                                        setLoader={setIsLoading}
-                                        updateData={setAllBikesArr}
-                                        fetchBikeInfo={fetchBikeInfo}
-                                        CurrentPage={setCurrentPage}
-                                        TotalPage={setTotalPage}
-                                        SearchValue={SearchValue}
-                                    /> : '' :
-                                    <Filters
-                                        className={styles.used_bike_filter}
-                                        setLoader={setIsLoading}
-                                        updateData={setAllBikesArr}
-                                        fetchBikeInfo={fetchBikeInfo}
-                                        CurrentPage={setCurrentPage}
-                                        TotalPage={setTotalPage}
-                                        SearchValue={SearchValue}
-                                    />
-                            }
-                        </Box>
-
-                        <div className={styles.main_box}>
-                            <div className={styles.navigation}>
-                                <div className={styles.text_container}>
-                                    <span className={styles.bike_text}> Used Bikes </span>
-                                </div>
-                                <div className={styles.search_box} style={{ display: !handleImage ? "flex" : "none" }} >
-                                    <div className={styles.search_box_inner}>
-                                        <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
-                                        <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
-                                    </div>
-                                </div>
-                                <div className={styles.swap_button_container}>
-                                    <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                    <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                </div>
-                                <div className={styles.search_box} style={{ display: handleImage ? "flex" : "none" }}>
-                                    <div className={styles.search_box_inner}>
-                                        <input type="text" value={SearchValue} className={styles.search_input} placeholder="Search" onChange={(e) => setSearchValue(e?.target.value)} />
-                                        <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                                {allBikesArr?.length > 0 ?
-                                    allBikesArr.map((val, ind) => {
-                                        return (
-                                            isGridSelected ? GridCard(val, ind) : longCard(val, ind)
-                                        )
-                                    }) :
-                                    <p className={styles.not_found}>No results found.</p>
-                                }
-                            </div>
-
-                            {
-                                !handleImage ?
-                                    allBikesArr?.length > 0 ?
-                                        <Box className={styles.used_bike_desktop_pagination}>
-                                            <Pagination
-                                                count={totalPage}
-                                                onChange={handlePaginationChange}
-                                                page={currentPage}
+                                IsMobile2 ?
+                                    showfilter ?
+                                        <Box className={styles.filter_box_main}>
+                                            <Filters
+                                                setLoader={setIsLoading}
+                                                updateData={setAllBikesArr}
+                                                fetchBikeInfo={fetchBikeInfo}
+                                                CurrentPage={setCurrentPage}
+                                                TotalPage={setTotalPage}
+                                                SearchValue={SearchValue}
                                             />
                                         </Box>
-                                        : "" : ""
+                                        : '' :
+                                    <Box className={styles.filter_box_main}>
+                                        <Filters
+                                            setLoader={setIsLoading}
+                                            updateData={setAllBikesArr}
+                                            fetchBikeInfo={fetchBikeInfo}
+                                            CurrentPage={setCurrentPage}
+                                            TotalPage={setTotalPage}
+                                            SearchValue={SearchValue}
+                                        />
+                                    </Box>
                             }
-                        </div>
+                        </Grid>
+
+                        <Grid item xs={IsMobile2 ? 12 : handleCardSize ? 8.5 : 7.5} className={styles.cards_grid} >
+
+                            <Box className={styles.all_bike_main}>
+                                <div className={styles.main_box}>
+                                    <div className={styles.navigation}>
+                                        <div className={styles.text_container}>
+                                            <span className={styles.bike_text}> Used Bikes </span>
+                                        </div>
+                                        <div className={styles.search_box} style={{ display: !handleImage ? "flex" : "none" }} >
+                                            <div className={styles.search_box_inner}>
+                                                <input type="text" value={SearchValue} className={styles.search_input} placeholder={`Search`} onChange={(e) => setSearchValue(e?.target.value)} />
+                                                <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
+                                            </div>
+                                        </div>
+                                        <div className={styles.swap_button_container}>
+                                            <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                            <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                        </div>
+                                        <div className={styles.search_box} style={{ display: handleImage ? "flex" : "none" }}>
+                                            <div className={styles.search_box_inner}>
+                                                <input type="text" value={SearchValue} className={styles.search_input} placeholder={`Search`} onChange={(e) => setSearchValue(e?.target.value)} />
+                                                <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                                        {allBikesArr?.length > 0 ?
+                                            allBikesArr.map((val, ind) => {
+                                                return (
+                                                    isGridSelected ? GridCard(val, ind) : longCard(val, ind)
+                                                )
+                                            }) :
+                                            <p className={styles.not_found}>No results found.</p>
+                                        }
+                                    </div>
 
 
-                        <Box className={styles.add_area}>
+                                </div>
+                            </Box>
+                            {allBikesArr?.length > 0 ?
+                                <Box className={styles.used_bike_list_pagination}>
+                                    <Pagination
+                                        count={totalPage}
+                                        onChange={handlePaginationChange}
+                                        page={currentPage}
+                                    />
+                                </Box>
+                                : ""}
+                        </Grid>
+                        <Grid item xs={IsMobile2 ? 12 : 2} className={styles.add_area}>
                             <Box className={styles.add_box}>
                                 {
                                     AdsArray?.map((e, i) => {
@@ -512,23 +518,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     })
                                 }
                             </Box>
-                        </Box>
-                    </Box>
-                    <Box className={styles.main_pagination}>
-                        {
-                            handleImage ?
-                                allBikesArr?.length > 0 ?
-                                    <Box className={styles.used_bike_mobile_pagination}>
-                                        <Pagination
-                                            count={totalPage}
-                                            onChange={handlePaginationChange}
-                                            page={currentPage}
-                                            className={styles.pagintation}
-                                        />
-                                    </Box>
-                                    : "" : ""
-                        }
-                    </Box>
+                        </Grid>
+                    </Grid>
                 </>
 
                 <div className={styles.load_main}>

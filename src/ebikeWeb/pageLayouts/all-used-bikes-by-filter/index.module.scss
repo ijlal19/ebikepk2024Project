@@ -60,6 +60,7 @@
 
     .cards_grid {
       padding: 15px 0px 0px 0px !important;
+      box-sizing: border-box;
 
       @media (max-width:768px) {
         padding: 5px 0px 0px 0px !important;
@@ -84,6 +85,7 @@
       .all_bike_main {
         display: flex;
         padding: 0px 10px;
+        box-sizing: border-box;
         width: 100% !important;
         margin: auto;
         align-items: start;
@@ -94,6 +96,10 @@
           height: 100%;
           max-width: 100%;
           margin: 0px auto 0px auto;
+
+          @media (max-width:690px) {
+            padding: 0px 0px !important;
+          }
 
           .navigation {
             max-width: 800px;
@@ -177,40 +183,9 @@
 
             }
           }
-
-          // .navigation {
-          //   max-width: 100%;
-          //   height: 30px;
-          //   background: white;
-          //   border: 1px solid #e6e6e6;
-          //   padding: 10px;
-          //   margin: auto;
-          //   position: relative;
-          //   justify-content: space-between;
-          //   margin-bottom: 20px;
-          //   display: flex;
-          //   align-items: center;
-
-          //   @media (max-width:900px) {
-          //     width: 95%;
-          //   }
-
-          //   .bike_text {
-          //     font-size: 16px;
-          //     float: left;
-          //   }
-
-          //   .swap_button_container {
-          //     .swap_icon {
-          //       font-size: 20px;
-          //       cursor: pointer;
-          //     }
-          //   }
-          // }
         }
 
         .grid_bike_list {
-
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
@@ -360,6 +335,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            box-sizing: border-box;
           }
 
           .long_card {
@@ -631,16 +607,17 @@
 
         }
 
-        .add_area {
-          width: 150px;
-          margin-top: 20px;
-          background: white;
-          color: rgb(0, 0, 0);
+        // .add_area {
+        //   width: 150px;
+        //   margin-top: 20px;
+        //   background: white;
+        //   color: rgb(0, 0, 0);
+        //   border: 1px solid #000;
 
-          @media (max-width:768px) {
-            display: none;
-          }
-        }
+        //   @media (max-width:768px) {
+        //     display: none;
+        //   }
+        // }
       }
     }
 
@@ -658,13 +635,21 @@
           width: 100%;
         }
 
+        @media (max-width:1200px) {
+          display: none;
+        }
+
       }
 
-      @media (max-width:768px) {
+      @media (max-width:1200px) {
         display: none;
       }
     }
 
+    @media (max-width:690px) {
+      padding: 0px 10px !important;
+      box-sizing: border-box;
+    }
   }
 
 }
@@ -770,6 +755,8 @@
   top: 0px;
   margin-bottom: 20px;
 
+
+
   @media (max-width:768px) {
     position: unset;
     margin: auto;
@@ -777,18 +764,6 @@
   }
 }
 
-.filter_button {
-  background-color: yellowgreen !important;
-  color: white !important;
-  z-index: 1000;
-  position: fixed;
-  top: 75px;
-  right: 20px;
-  text-align: left !important;
-  display: flex;
-  justify-content: left !important;
-  width: 80px;
-}
 
 .featured_tag {
   background-color: yellowgreen;
@@ -811,5 +786,27 @@
     font-size: 10px;
     height: 24px !important;
     top: -2px;
+  }
+}
+
+.filter_button {
+  background-color: yellowgreen !important;
+  color: white !important;
+  z-index: 1000;
+  font-size: 20px;
+  position: sticky;
+  font-weight: bolder;
+  top: 0px;
+  display: flex;
+  padding: 4px 0px !important;
+  border-radius: 0px;
+  text-align: center !important;
+  justify-content: center !important;
+  width: 100%;
+
+  @media (max-width:768px) {
+    position: sticky;
+    font-size: 16px;
+    top: 0px;
   }
 }
