@@ -3,13 +3,23 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import { Button, Link } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import Card from '@mui/material/Card';
 
 export default function NewUsedBikesCard(props: any) {
 
+    const [isFeatureTagShow, setIsFeaturedTagShow] = useState(false)
     const Router = useRouter()
+    useEffect(()=>{
+        if (window.location.pathname.indexOf('used-bikes') !== -1) {
+            setIsFeaturedTagShow(true)
+        }
+        else {
+            setIsFeaturedTagShow(false)
+        }
+    },[])
 
     let imgUrl = ''
 
@@ -75,7 +85,8 @@ export default function NewUsedBikesCard(props: any) {
         <>
             <Card className={styles.itemCard}>
                 {props.currentpage === 'featured_bike' ?
-                    <span className={styles.featured_tag}>FEATURED</span>
+                    (isFeatureTagShow ?
+                        <span className={styles.featured_tag}>FEATURED</span> : "")
                     : ""}
                 <CardMedia
                     component="img"

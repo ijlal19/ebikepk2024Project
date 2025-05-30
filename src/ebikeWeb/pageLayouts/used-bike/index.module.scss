@@ -462,6 +462,9 @@
             margin-top: 5px;
             margin-left: 10px;
         }
+        &::first-letter{
+            text-transform: uppercase;
+        }
     }
 
 

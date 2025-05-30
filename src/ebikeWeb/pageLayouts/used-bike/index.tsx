@@ -20,6 +20,8 @@ import Data from './data'
 export default function UsedBike() {
 
   const [similarBikeArr, setSimilarBikeArr]: any = useState([]);
+  const [similarBrandBikeArr, setSimilarBrandBikeArr]: any = useState([]);
+  const [similarCCBikeArr, setSimilarCCBikeArr]: any = useState([]);
   const [bikeDetail, setBikeDetail]: any = useState({});
   const [showPhoneNo, setShowPhoneNo] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,15 +49,28 @@ export default function UsedBike() {
               res.add.mobileNumber = '0' + res.add.mobileNumber
             }
             setBikeDetail(res?.add)
-            const obj = {
+            const objBrand = {
               brand_filter: res.add.brandId ? [res.add.brandId] : [],
-              cc: res.add.cc? [res.add.cc] : [],
-              adslimit: 4,
+              adslimit: 6,
               random: true
             }
-            const getSimilarBike = await getCustomBikeAd(obj)
-            setSimilarBikeArr(getSimilarBike?.data)
+            const getSimilarBikeByBrand = await getCustomBikeAd(objBrand)
+            console.log("data" , getSimilarBikeByBrand.data , objBrand)
+            if(getSimilarBikeByBrand  && getSimilarBikeByBrand?.data?.length > 0){
+              setSimilarBrandBikeArr(getSimilarBikeByBrand?.data)
+            }
+            const objCC = {
+              cc: res.add.cc? [res.add.cc] : [],
+              adslimit: 6,
+              random: true
+            }
+            const getSimilarBikeByCC = await getCustomBikeAd(objCC)
+            console.log("data" , getSimilarBikeByCC.data, objCC)
+            if(getSimilarBikeByCC  && getSimilarBikeByCC?.data?.length > 0){
+              setSimilarCCBikeArr(getSimilarBikeByCC?.data)
+            }
           }
+          setSimilarBikeArr(res?.bikes)
           setShowPhoneNo(false)
           setTimeout(() => {
             window.scrollTo(0, 0)
@@ -199,10 +214,19 @@ export default function UsedBike() {
           </main>
 
           <div className={styles.similarBikeDiv}>
-            <h6 className={styles.similar_heading}> Similar Bikes </h6>
+            <h6 className={styles.similar_heading}>Similar Bikes </h6>
             <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
           </div>
-        </div> :
+          <div className={styles.similarBikeDiv}>
+            <h6 className={styles.similar_heading}>{bikeBrand && bikeBrand?.length > 0 && bikeBrand[0].brandName} Used Bikes</h6>
+            <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarBrandBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+          </div>
+          <div className={styles.similarBikeDiv}>
+            <h6 className={styles.similar_heading}>{bikeDetail.cc} CC Used Bikes</h6>
+            <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarCCBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+          </div>
+        </div>
+         :
         <div className={styles.load_main}>
           <div className={styles.load_div}>
             <Loader isLoading={isLoading} />
