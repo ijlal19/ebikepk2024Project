@@ -798,9 +798,9 @@
   font-weight: bolder;
   top: 0px !important;
   display: flex;
-  padding: 4px 10px 4px 0px !important;
-  text-align: right !important;
-  justify-content: right !important;
+  padding: 4px 10px 4px 10px !important;
+  // text-align: right !important;
+  justify-content: space-between !important;
   width: 100%;
   margin: 0px !important;
   border-radius: 0px !important;
