@@ -749,7 +749,7 @@ const AllUsedBikeByFilter = () => {
     return (
         <>
             {
-                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}><FilterListIcon /></Button> : ''
+                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{marginLeft:1}}/></Button> : ''
             }
         <Box className={styles.main}>
             <h5 className={styles.heading1}>{heading}</h5>

@@ -407,7 +407,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     return (
         <>
             {
-                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}><FilterListIcon /></Button> : ''
+                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{marginLeft:1}}/></Button> : ''
             }
             <Box className={styles.main}>
                 <>
