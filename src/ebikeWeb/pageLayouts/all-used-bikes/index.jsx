@@ -10,12 +10,14 @@ import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike';
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+import "../../../app/globals.scss"
 
 
 const AdsArray = [
@@ -405,7 +407,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     return (
         <>
             {
-                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
+                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}><FilterListIcon /></Button> : ''
             }
             <Box className={styles.main}>
                 <>
@@ -493,15 +495,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                                 </div>
                             </Box>
-                            {allBikesArr?.length > 0 ?
-                                <Box className={styles.used_bike_list_pagination}>
-                                    <Pagination
-                                        count={totalPage}
-                                        onChange={handlePaginationChange}
-                                        page={currentPage}
-                                    />
-                                </Box>
-                                : ""}
                         </Grid>
                         <Grid item xs={IsMobile2 ? 12 : 2} className={styles.add_area}>
                             <Box className={styles.add_box}>
@@ -520,6 +513,15 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             </Box>
                         </Grid>
                     </Grid>
+                    {allBikesArr?.length > 0 ?
+                                <Box className={styles.used_bike_list_pagination}>
+                                    <Pagination
+                                        count={totalPage}
+                                        onChange={handlePaginationChange}
+                                        page={currentPage}
+                                    />
+                                </Box>
+                                : ""}
                 </>
 
                 <div className={styles.load_main}>

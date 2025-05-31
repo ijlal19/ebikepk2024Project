@@ -29,13 +29,25 @@ const Header = () => {
     const [findMechanics, setFindMechanics] = useState(false);
     const [buysellmenu, setBuySellmenu] = useState(false);
     const [customer, setCustomer] = useState('not_login');
+    const [isUsedBike, setIsUserBike] = useState(false);
     const [findDealer, setFindDealer] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
     const [options, setOptions] = useState(false);
     const [open, setOpen] = useState(false);
 
+    let URL = window.location.pathname
+
     useEffect(() => {
         authenticateUser()
+        if(URL.includes('used-bikes/')){
+            setIsUserBike(false)
+        }
+        else if (URL.includes('used-bikes')) {
+            setIsUserBike(true)
+        }
+        else {
+            setIsUserBike(false)
+        }
     }, [])
 
     useEffect(() => {
@@ -156,16 +168,16 @@ const Header = () => {
                                 !e.isLoginReq ?
                                     <>
                                         <Link className={styles.anchor} key={i} href={e.url}>
-                                            <ListItemButton sx={{ pl: 0 ,paddingTop:"0px",paddingBottom:"0px"}}>
-                                                <ListItemText style={{ marginLeft: "0px",marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
+                                            <ListItemButton sx={{ pl: 0, paddingTop: "0px", paddingBottom: "0px" }}>
+                                                <ListItemText style={{ marginLeft: "0px", marginTop: "0px", marginBottom: "0px" }} primary={e.label} />
                                             </ListItemButton>
                                         </Link>
                                         <Divider />
                                     </>
                                     :
                                     <>
-                                        <ListItemButton sx={{ pl: 0  ,paddingTop:"0px",paddingBottom:"0px"}} onClick={() => goToRoute(e)} key={i}>
-                                            <ListItemText style={{ marginLeft: "0px" ,marginTop:"0px",marginBottom:"0px" }} primary={e.label} />
+                                        <ListItemButton sx={{ pl: 0, paddingTop: "0px", paddingBottom: "0px" }} onClick={() => goToRoute(e)} key={i}>
+                                            <ListItemText style={{ marginLeft: "0px", marginTop: "0px", marginBottom: "0px" }} primary={e.label} />
                                         </ListItemButton>
                                         <Divider />
                                     </>
@@ -181,8 +193,8 @@ const Header = () => {
 
                     <Link href='/blog' className={styles.anchor}>
                         <ListItem sx={{ padding: 0 }} disablePadding>
-                            <ListItemButton onClick={() => goToRoute({ url: "/blog" })} sx={{paddingTop:"0px",paddingBottom:"0px"}} >
-                                <ListItemText primary='Blog' sx={{marginTop:"0px",marginBottom:"0px" }}/>
+                            <ListItemButton onClick={() => goToRoute({ url: "/blog" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
+                                <ListItemText primary='Blog' sx={{ marginTop: "0px", marginBottom: "0px" }} />
                             </ListItemButton>
                         </ListItem>
                     </Link>
@@ -211,7 +223,7 @@ const Header = () => {
 
     return (
         <>
-            <Box className={styles.header_main}>
+            <Box className={`${isUsedBike ? styles.header_main_used_bike : styles.header_main}`}>
                 <Box className={styles.logo_side}>
 
                     <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
@@ -244,8 +256,8 @@ const Header = () => {
 
                     {customer == 'not_login' ?
                         <Box className={styles.header_buttons_group}>
-                            <LoginPopup props={ModalData}/>
-                        </Box>:
+                            <LoginPopup props={ModalData} />
+                        </Box> :
 
                         <p className={styles.logout_btn} onClick={() => LogoutUser()}> Logout </p>}
 

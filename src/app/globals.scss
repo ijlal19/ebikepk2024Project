@@ -374,3 +374,11 @@ body {
 .thumbSwiper {
     width: 99%;
 }
+.MuiPaginationItem-root{
+    color: black !important;
+    @media (max-width:370px) {
+        color: black !important;
+        font-size: 12px !important;
+        max-width: 28px !important;
+    }
+}

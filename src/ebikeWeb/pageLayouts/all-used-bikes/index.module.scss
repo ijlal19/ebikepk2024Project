@@ -45,24 +45,23 @@
 }
 
 .filter_button {
-  background-color: yellowgreen !important;
+  background-color: #1976d2 !important;
   color: white !important;
   z-index: 1000;
   font-size: 20px;
-  position: sticky;
+  position: sticky !important;
   font-weight: bolder;
-  top: 0px;
+  top: 56px;
   display: flex;
-  padding: 4px 0px !important;
+  padding: 4px 10px 4px 0px !important;
   border-radius: 0px;
-  text-align: center !important;
-  justify-content: center !important;
+  text-align: right !important;
+  justify-content: right !important;
   width: 100%;
+  border-radius: 0px !important;
 
   @media (max-width:768px) {
-    position: sticky;
     font-size: 16px;
-    top: 30px;
   }
 }
 

@@ -8,12 +8,14 @@ import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import BrowseUsedBike from "@/ebikeWeb/sharedComponents/BrowseUsedBike";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useRouter, useParams } from 'next/navigation';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
+import '../../../app/globals.scss';
 
 let SelectedADD = []
 
@@ -745,11 +747,12 @@ const AllUsedBikeByFilter = () => {
     }
 
     return (
-        <Box className={styles.main}>
+        <>
             {
-                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
+                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}><FilterListIcon /></Button> : ''
             }
-            <h5 className={styles.heading1}> {heading}</h5>
+        <Box className={styles.main}>
+            <h5 className={styles.heading1}>{heading}</h5>
             {
                 !isLoading ?
                     <>
@@ -806,15 +809,6 @@ const AllUsedBikeByFilter = () => {
 
                                     </div>
                                 </Box>
-                                {allBikesArr?.length > 0 ?
-                                    <Box className={styles.used_bike_list_pagination}>
-                                        <Pagination
-                                            count={totalPage}
-                                            onChange={handlePaginationChange}
-                                            page={currentPage}
-                                        />
-                                    </Box>
-                                    : ""}
                             </Grid>
                             <Grid item xs={IsMobile2 ? 12 : 2} className={styles.add_area}>
                                 <Box className={styles.add_box}>
@@ -833,6 +827,15 @@ const AllUsedBikeByFilter = () => {
                                 </Box>
                             </Grid>
                         </Grid>
+                        {allBikesArr?.length > 0 ?
+                            <Box className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                />
+                            </Box>
+                            : ""}
                         <BrowseUsedBike />
                     </>
                     :
@@ -843,6 +846,7 @@ const AllUsedBikeByFilter = () => {
                     </div>
             }
         </Box>
+        </>
     )
 }
 export default AllUsedBikeByFilter;
