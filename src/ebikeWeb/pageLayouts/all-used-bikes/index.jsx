@@ -50,6 +50,7 @@ const AdsArray = [
 ]
 
 let SelectedADD = []
+let GetScroll = Number(localStorage.getItem("WindowScroll"));
 
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
@@ -68,7 +69,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null);
     const [SearchValue, setSearchValue] = useState('');
-    const [LikeTrue, setLikeTrue] = useState([]);
     const [Array, setArray] = useState([]);
     const [pageNo, setPageNo] = useState(-12);
 
@@ -92,7 +92,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         else {
             fetchBikeInfo(1);
         }
-
     }, [])
 
     const fetchFavouriteAds = async (uid) => {
@@ -117,7 +116,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
 
         setIsLoading(false)
-        const GetScroll = Number(localStorage.getItem("WindowScroll"));
+        
         setTimeout(() => {
             window.scrollTo({
                 top: GetScroll || 0,
@@ -167,13 +166,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         if (fromPagination) {
             setTimeout(() => {
                 window.scrollTo({
-                    top: 300,
+                    top: 0,
                     behavior: 'smooth'
                 });
             }, 500);
         }
         else {
-            const GetScroll = Number(localStorage.getItem("WindowScroll"));
+            
             setTimeout(() => {
                 window.scrollTo({
                     top: GetScroll || 0,
@@ -211,7 +210,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         localStorage.setItem("WindowScroll", window.scrollY);
         let title = val.title;
         let urlTitle = title.toLowerCase().replaceAll(' ', '-');
-        router.push(`/used-bikes/${urlTitle}/${val.id}`);
+        // router.push(`/used-bikes/${urlTitle}/${val.id}`);
     }
 
     const AddFavourite = async (id) => {
@@ -391,7 +390,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 setTotalPage(0)
             }
             setIsLoading(false)
-            const GetScroll = Number(localStorage.getItem("WindowScroll"));
+            
             setTimeout(() => {
                 window.scrollTo({
                     top: GetScroll || 0,
@@ -407,7 +406,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     return (
         <>
             {
-                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{marginLeft:1}}/></Button> : ''
+                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
             }
             <Box className={styles.main}>
                 <>
@@ -514,14 +513,14 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                         </Grid>
                     </Grid>
                     {allBikesArr?.length > 0 ?
-                                <Box className={styles.used_bike_list_pagination}>
-                                    <Pagination
-                                        count={totalPage}
-                                        onChange={handlePaginationChange}
-                                        page={currentPage}
-                                    />
-                                </Box>
-                                : ""}
+                        <Box className={styles.used_bike_list_pagination}>
+                            <Pagination
+                                count={totalPage}
+                                onChange={handlePaginationChange}
+                                page={currentPage}
+                            />
+                        </Box>
+                        : ""}
                 </>
 
                 <div className={styles.load_main}>
