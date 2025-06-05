@@ -35,9 +35,10 @@ const Header = () => {
     const [options, setOptions] = useState(false);
     const [open, setOpen] = useState(false);
 
-    let URL = window.location.pathname
+   
 
     useEffect(() => {
+        let URL = window.location.pathname
         authenticateUser()
         if(URL.includes('used-bikes/')){
             setIsUserBike(false)
