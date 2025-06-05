@@ -1,7 +1,7 @@
 'use client'
-import { Box, Typography } from "@mui/material"
-import styles from './index.module.scss'
-import { useState } from "react"
+import { Box, Typography } from "@mui/material";
+import styles from './index.module.scss';
+import { useState } from "react";
 
 const LoginForm = ()=>{
     const [Email , setEmail] = useState('');
@@ -12,6 +12,7 @@ const LoginForm = ()=>{
             Email,
             LoginPassword
         }
+        console.log(obj)
     }
 
     return(

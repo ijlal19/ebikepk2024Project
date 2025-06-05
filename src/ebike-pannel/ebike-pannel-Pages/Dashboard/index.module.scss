@@ -1,0 +1,223 @@
+.main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px 5px !important;
+    box-sizing: border-box;
+    flex-direction: column;
+
+    .header {
+        width: 100%;
+        max-width: 950px;
+        display: flex;
+        flex-direction: row;
+        padding: 10px 20px !important;
+        box-sizing: border-box;
+        justify-content: space-between;
+        background-color: rgba(245, 245, 245, 0.655);
+
+        .back_icon {
+            cursor: pointer;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px !important;
+
+            .icon {
+                background-color: #1976d2;
+                color: white;
+                padding: 3px !important;
+                border-radius: 5px;
+            }
+        }
+
+        .ebiker_box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
+
+            .ebiker_heading {
+                margin: 0px;
+                background-color: #1976d2;
+                color: white;
+                border-radius: 5px;
+                font-size: 14px;
+                padding: 5px 13px !important;
+            }
+        }
+
+        .logout {
+            background-color: #1976d2;
+            color: white;
+            font-size: 12px;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 13px !important;
+            text-transform: capitalize;
+        }
+    }
+
+    .card_section {
+        width: 100%;
+        margin: 20px 0px 0px 0px !important;
+        padding: 10px 0px !important;
+        box-sizing: border-box;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+
+        .search_input {
+            width: 100%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #24242477;
+            border-radius: 2px;
+            box-sizing: border-box;
+            padding: 3px !important;
+
+            .input {
+                width: 100%;
+                font-size: 14px;
+                outline: none;
+                padding: 7px 3px 7px 10px;
+            }
+        }
+
+        .card {
+            width: 100%;
+            padding: 20px 0px !important;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            row-gap: 50px;
+
+            .card_main_box {
+                width: 100%;
+                border: 1px solid rgba(63, 62, 62, 0.296);
+                border-radius: 5px;
+                box-sizing: border-box;
+
+                .heading_box {
+                    width: 100%;
+                    text-align: center;
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                    border-bottom: 1px solid #4847476c;
+                    padding: 7px 0px !important;
+                    background-color: whitesmoke;
+                    font-size: 16px;
+                    margin: 0px;
+                    color: rgb(86, 86, 86);
+
+                    .heading {
+                        margin: 0px;
+                        font-size: 16px;
+                        padding: 7px 0px;
+                    }
+                }
+
+                .card_content {
+                    display: flex;
+                    justify-content: left;
+                    text-align: left;
+                    padding: 10px !important;
+                    box-sizing: border-box;
+
+                    .cardimage_box {
+                        display: flex;
+                        align-items: flex-start;
+                        box-sizing: border-box;
+
+                        .image {
+                            box-sizing: border-box;
+                            border: 1px solid #00000076;
+                            padding: 3px !important;
+                            width: 100%;
+                            height: 150px;
+                        }
+                    }
+
+                    .card_detail {
+                        padding-left: 15px !important;
+
+                        .date {
+                            font-size: 12px;
+                            padding: 2px 0px;
+                            margin: 0px;
+                        }
+
+                        .brand {
+                            margin: 0px;
+                            font-weight: bolder;
+                            font-size: 14px;
+                            padding: 4px 0px;
+                        }
+
+                        .phone {
+                            margin: 0px;
+                            font-size: 13px;
+                            padding: 4px 0px;
+                        }
+
+                        .featured {
+                            margin: 0px;
+                            padding: 10px 0px 0px 0px;
+                            font-size: 16px;
+                            font-weight: bolder;
+                            text-transform: capitalize;
+                        }
+                    }
+                }
+
+                .card_action {
+                    display: flex;
+                    justify-content: center;
+                    column-gap: 10px;
+                    align-items: center;
+                    background-color: rgba(245, 245, 245, 0.655);
+                    padding: 10px 0px !important;
+                    box-sizing: border-box;
+                    border-top: 1px solid rgba(82, 82, 82, 0.419);
+
+                    .action {
+                        background-color: #1976d2;
+                        color: white;
+                        padding: 6px 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 2px;
+                        font-size: 14px;
+                        cursor: pointer;
+                        border: none;
+                    }
+
+                    .action_del {
+                        cursor: pointer;
+                        border-radius: 2px;
+                        background-color: red;
+                        color: white;
+                        padding: 6px 10px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 14px;
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+}

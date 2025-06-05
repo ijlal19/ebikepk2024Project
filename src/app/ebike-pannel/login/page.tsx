@@ -1,4 +1,4 @@
-import LoginForm from "@/ebikeAdminPannel/AdminPannelSharedComp/Login"
+import LoginForm from "@/ebike-pannel/ebike-pannel-sharedComponent/Login"
 
 const Login = ()=>{
     return(
