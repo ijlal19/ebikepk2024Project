@@ -210,7 +210,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         localStorage.setItem("WindowScroll", window.scrollY);
         let title = val.title;
         let urlTitle = title.toLowerCase().replaceAll(' ', '-');
-        // router.push(`/used-bikes/${urlTitle}/${val.id}`);
+        router.push(`/used-bikes/${urlTitle}/${val.id}`);
     }
 
     const AddFavourite = async (id) => {
@@ -529,7 +529,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     </div>
                 </div>
             </Box>
-            <BrowseUsedBike />
+            {/* <BrowseUsedBike /> */}
         </>
     )
 }

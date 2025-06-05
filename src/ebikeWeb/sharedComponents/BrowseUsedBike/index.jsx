@@ -9,81 +9,81 @@ const BrowseUsedBike = () => {
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Karachi",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/1/1"
+            RoutePath: "/used-bikes/honda-bikes-in-karachi/1/1"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Islamabad",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/1/3"
+            RoutePath: "/used-bikes/honda-bikes-in-islamabad/1/3"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Peshawar",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/1/4"
+            RoutePath: "/used-bikes/honda-bikes-in-peshawar/1/4"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Lahore",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/1/2"
+            RoutePath: "/used-bikes/honda-bikes-in-lahore/1/2"
         },
         {
             brandName: "Honda",
             bike_location: "Honda Bikes in Faisalabad",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/1/6"
+            RoutePath: "/used-bikes/honda-bikes-in-faisalabad/1/6"
         },
     ]
     const SuzukiArray = [
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Karachi",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/6/1"
+            RoutePath: "/used-bikes/suzuki-bikes-in-karachi/6/1"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Islamabad",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/6/3"
+            RoutePath: "/used-bikes/suzuki-bikes-in-islamabad/6/3"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Peshawar",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/6/4"
+            RoutePath: "/used-bikes/suzuki-bikes-in-peshawar/6/4"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Lahore",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/6/2"
+            RoutePath: "/used-bikes/suzuki-bikes-in-lahore/6/2"
         },
         {
             brandName: "Suzuki",
             bike_location: "Suzuki Bikes in Faisalbad",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/6/6"
+            RoutePath: "/used-bikes/suzuki-bikes-in-faisalabad/6/6"
         },
     ]
     const YamahaArray = [
         {
             brandName: "Yamaha",
             bike_location: "Yamaha Bikes in Karachi",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/7/1"
+            RoutePath: "/used-bikes/yamaha-bikes-in-karachi/7/1"
         },
         {
             brandName: "Yamaha",
             bike_location: "Yamaha Bikes in Islamabad",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/7/3"
+            RoutePath: "/used-bikes/yamaha-bikes-in-islamabad/7/3"
         },
         {
             brandName: "Yamaha",
             bike_location: "Yamaha Bikes in Peshawar",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/7/4"
+            RoutePath: "/used-bikes/yamaha-bikes-in-peshawar/7/4"
         },
         {
             brandName: "Yamaha",
             bike_location: "Yamaha Bikes in Lahore",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/7/2"
+            RoutePath: "/used-bikes/yamaha-bikes-in-lahore/7/2"
         },
         {
             brandName: "Yamaha",
             bike_location: "Yamaha Bikes in Faisalabad",
-            RoutePath: "/used-bikes/used-bike-by-brand-and-city/7/6"
+            RoutePath: "/used-bikes/yamaha-bikes-in-faisalabad/7/6"
         },
     ]
     const UnitedArray = [

@@ -33,12 +33,17 @@ export default function NewUsedBikesCard(props: any) {
 
     function goToDetailPage(bike: any) {
 
+        console.log(props.currentpage, bike)
+
         if (props.currentpage == 'new_bike') {
             Router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)
         }
 
         else if (props.currentpage == 'featured_bike') {
-            Router.push(bike?.url)
+            // Router.push(bike?.url)
+            let title = bike?.title
+            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            Router.push(`/used-bikes/${urlTitle}/${bike?.id}`)
         }
 
         else if (props.currentpage == 'trending_bike') {
@@ -116,11 +121,11 @@ export default function NewUsedBikesCard(props: any) {
 
                     {props.from != "myAdsComp" ?
 
-                        <Link href={getBikeUrl(bike)}>
+                        // <Link href={getBikeUrl(bike)}>
                             <Button className={styles.view_detail_btn} onClick={() => { goToDetailPage(bike) }}>
-                                View Detail
+                                View Detail 
                             </Button>
-                        </Link>
+                        // </Link>
 
                         : ""}
 

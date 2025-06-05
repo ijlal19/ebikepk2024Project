@@ -213,18 +213,24 @@ export default function UsedBike() {
 
           </main>
 
-          <div className={styles.similarBikeDiv}>
-            <h6 className={styles.similar_heading}>Similar Bikes </h6>
-            <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
-          </div>
+          {similarBikeArr?.length > 0 ? 
+            <div className={styles.similarBikeDiv}>
+              <h6 className={styles.similar_heading}>Similar Bikes </h6>
+              <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+            </div> 
+          : "" }
+
+          {similarBrandBikeArr?.length > 0 ?  
           <div className={styles.similarBikeDiv}>
             <h6 className={styles.similar_heading}>{bikeBrand && bikeBrand?.length > 0 && bikeBrand[0].brandName} Used Bikes</h6>
             <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarBrandBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
-          </div>
-          <div className={styles.similarBikeDiv}>
+          </div> : "" }
+
+         {similarCCBikeArr?.length > 0 ? 
+         <div className={styles.similarBikeDiv}>
             <h6 className={styles.similar_heading}>{bikeDetail.cc} CC Used Bikes</h6>
             <SwiperCarousels sliderName='similarBikeSwiper' sliderData={similarCCBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
-          </div>
+          </div> : "" }
         </div>
          :
         <div className={styles.load_main}>
@@ -232,7 +238,7 @@ export default function UsedBike() {
             <Loader isLoading={isLoading} />
           </div>
         </div>}
-    <BrowseUsedBike />
+    {/* <BrowseUsedBike /> */}
   </>
   );
 
