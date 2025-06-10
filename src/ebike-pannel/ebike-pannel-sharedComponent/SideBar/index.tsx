@@ -1,5 +1,5 @@
 "use client"
-import {  Collapse, List, ListItemIcon } from '@mui/material';
+import { Collapse, Link, List, ListItemIcon } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import ListItemButton from '@mui/material/ListItemButton';
 import PedalBikeIcon from '@mui/icons-material/PedalBike';
@@ -21,7 +21,7 @@ const SideBar = () => {
         }));
     };
 
-    const GetList = (key: string, icon: string, heading: string, options: string[]) => {
+    const GetList = (key: string, icon: string, heading: string, options: string[], urls: string[]) => {
         const isOpen = openSections[key] || false;
 
         return (
@@ -35,11 +35,13 @@ const SideBar = () => {
                 </ListItemButton>
                 {options.map((e, index) => (
                     <Collapse key={index} in={isOpen} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItemButton sx={{ pl: 8 }}>
-                                <ListItemText primary={e} />
-                            </ListItemButton>
-                        </List>
+                        <Link href={`/ebike-pannel/dashboard/${urls[index]}`} sx={{ textDecoration: 'none', color: 'white' }}>
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 8 }}>
+                                    <ListItemText primary={e} />
+                                </ListItemButton>
+                            </List>
+                        </Link>
                     </Collapse>
                 ))}
             </List>
@@ -50,7 +52,8 @@ const SideBar = () => {
         <div className={styles.main_sidebar}>
             <div className={styles.image_box}>
                 <div className={styles.admin_box}>eBike Admin</div>
-                <img src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' alt="" className={styles.image} />
+                <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_thumb,dpr_auto,f_auto,h_40,w_auto,q_auto/v1541058800/ebike-graphics/logos/logo_ebike.pk.png' alt="" className={styles.image} />
+                {/* <img src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' alt="" className={styles.image} /> */}
             </div>
             <div className={styles.list}>
                 <List component="div" disablePadding sx={{ backgroundColor: 'black', color: 'white' }}>
@@ -61,16 +64,16 @@ const SideBar = () => {
                         <ListItemText primary="Dashboard" />
                     </ListItemButton>
                 </List>
-                {GetList('usedBikes', 'bike', 'Used Bikes', ["All Used Bikes", "Sell & Buy"])}
-                {GetList('newBikes', 'bike', 'New Bikes', ["All New Bikes", "Sell & Buy"])}
-                {GetList('blogs', 'blog', 'Blog', ["All Blogs"])}
-                {GetList('pages', 'blog', 'Pages', ["All Pages"])}
-                {GetList('dealers', 'bike', 'Dealers/Mechanics', ["All Dealers", "All Mechanics"])}
-                {GetList('shop', 'shop', 'Shop', ["WorkShop", "Showroom"])}
-                {GetList('general', 'shop', 'General', ["General"])}
-                {GetList('forum', 'bike', 'Bikers Forum', ["Forums"])}
-                {GetList('users', 'shop', 'Users', ["Admin", "Manager"])}
-                {GetList('qrDealers', 'shop', 'QR Dealers', ["Admin", "Manager"])}
+                {GetList('usedBikes', 'bike', 'Used Bikes', ["Classified"], ["view-classified-ads"])}
+                {GetList('newBikes', 'bike', 'New Bikes', ["Add New Bike", "All New Bikes"], ["add-new-bike", "all-new-bikes"])}
+                {GetList('blogs', 'blog', 'Blog', ["All Blogs"], [])}
+                {GetList('pages', 'blog', 'Pages', ["All Pages"], [])}
+                {GetList('dealers', 'bike', 'Dealers/Mechanics', ["All Dealers", "All Mechanics"], [])}
+                {GetList('shop', 'shop', 'Shop', ["WorkShop", "Showroom"], [])}
+                {GetList('general', 'shop', 'General', ["General"], [])}
+                {GetList('forum', 'bike', 'Bikers Forum', ["Forums"], [])}
+                {GetList('users', 'shop', 'Users', ["Admin", "Manager"], [])}
+                {GetList('qrDealers', 'shop', 'QR Dealers', ["Admin", "Manager"], [])}
             </div>
         </div>
     )

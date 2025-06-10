@@ -1,0 +1,338 @@
+.main_used_bike {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    .main_box_card {
+        box-sizing: border-box;
+
+        .card_container_box {
+            width: 100%;
+            max-width: 785px;
+            box-shadow: 0px 0px 10px rgba(179, 177, 177, 0.512);
+            border: 1px solid rgba(63, 62, 62, 0.296);
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 25px 0px !important;
+
+            .heading_box {
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                border-bottom: 1px solid #4847476c;
+                padding: 12px 20px !important;
+                background-color: #00000008;
+                font-size: 16px;
+                margin: 0px;
+                color: #212529;
+
+                .heading {
+                    margin: 0px;
+                    font-size: 16px;
+                }
+            }
+
+            .card_content {
+                display: flex;
+                justify-content: left;
+                text-align: left;
+                padding: 15px 10px !important;
+                box-sizing: border-box;
+
+                .cardimage_box {
+                    display: flex;
+                    align-items: flex-start;
+                    box-sizing: border-box;
+
+                    .image {
+                        box-sizing: border-box;
+                        border: 1px solid #dee2e6;
+                        padding: 4px !important;
+                        width: 100%;
+                        height: 150px;
+                    }
+                }
+
+                .card_detail {
+                    padding-left: 15px !important;
+
+                    .date {
+                        font-size: 14px;
+                        color: #212529;
+                        margin: 0px 0px 16px;
+                    }
+
+                    .brand {
+                        font-size: 16px;
+                        color: #212529;
+                        margin: 0px 0px 8px;
+                        font-weight: 500;
+                        line-height: 1.2;
+                    }
+
+                    .phone {
+                        margin: 0px;
+                        font-size: 14px;
+                        padding: 4px 0px;
+                        line-height: 1.2;
+                    }
+
+                    .featured {
+                        margin: 0px 0px 8px;
+                        line-height: 1.2;
+                        font-weight: 500;
+                        color: #212529;
+                        font-size: 24px;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+
+            .card_action {
+                display: flex;
+                justify-content: center;
+                column-gap: 10px;
+                align-items: center;
+                background-color: #00000008;
+                padding: 12px 20px !important;
+                box-sizing: border-box;
+                border-top: 1px solid rgba(82, 82, 82, 0.419);
+
+                .action {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 6px 12px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: .25rem;
+                    font-size: 16px;
+                    cursor: pointer;
+                    border: 1px solid #007bff;
+                }
+
+                .action_del {
+                    cursor: pointer;
+                    border-radius: .25rem;
+                    background-color: #dc3545;
+                    color: white;
+                    padding: 6px 12px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    border: 1px solid #dc3545;
+                }
+
+            }
+        }
+
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 20px;
+    }
+
+    .search_input {
+        width: 100%;
+        margin: 0px 0px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, .125);
+        box-sizing: border-box;
+        padding: 4px !important;
+        border-radius: 4px;
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+
+        .input {
+            width: 100%;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            outline: none;
+            color: #495057;
+            font-size: 1.25rem;
+            border-radius: .3rem;
+            line-height: 1.5;
+            padding: 8px 16px !important;
+        }
+    }
+}
+
+.main_new_bike {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+
+    .card_main_box {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+
+        .card_container_box {
+            width: 100%;
+            max-width: 785px;
+            box-shadow: 0px 0px 10px rgba(179, 177, 177, 0.512);
+            border: 1px solid rgba(63, 62, 62, 0.296);
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 25px 0px !important;
+
+            .heading_box {
+                width: 100%;
+                box-sizing: border-box;
+                text-align: center;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                border-bottom: 1px solid #4847476c;
+                padding: 12px 20px !important;
+                background-color: #00000008;
+                font-size: 16px;
+                margin: 0px;
+                color: #212529;
+
+                .heading {
+                    margin: 0px;
+                    font-size: 16px;
+                }
+            }
+
+            .card_content {
+                display: flex;
+                justify-content: left;
+                text-align: left;
+                padding: 15px 10px !important;
+                box-sizing: border-box;
+
+                .cardimage_box {
+                    display: flex;
+                    align-items: flex-start;
+                    box-sizing: border-box;
+
+                    .image {
+                        box-sizing: border-box;
+                        border: 1px solid #dee2e6;
+                        padding: 4px !important;
+                        width: 100%;
+                        height: auto;
+                    }
+                }
+
+                .card_detail {
+                    padding-left: 15px !important;
+
+                    .date {
+                        font-size: 14px;
+                        color: #212529;
+                        margin: 0px 0px 16px;
+                    }
+
+                    .brand {
+                        font-size: 16px;
+                        color: #212529;
+                        margin: 0px 0px 8px;
+                        font-weight: 500;
+                        line-height: 1.2;
+                    }
+
+                    .phone {
+                        margin: 0px;
+                        font-size: 14px;
+                        padding: 4px 0px;
+                        line-height: 1.2;
+                    }
+
+                    .featured {
+                        margin: 0px 0px 8px;
+                        line-height: 1.2;
+                        font-weight: 500;
+                        color: #212529;
+                        font-size: 24px;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+
+            .card_action {
+                display: flex;
+                justify-content: center;
+                column-gap: 10px;
+                align-items: center;
+                background-color: #00000008;
+                padding: 12px 20px !important;
+                box-sizing: border-box;
+                border-top: 1px solid rgba(82, 82, 82, 0.419);
+
+                .action {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 6px 12px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: .25rem;
+                    font-size: 16px;
+                    cursor: pointer;
+                    border: 1px solid #007bff;
+                }
+
+                .action_del {
+                    cursor: pointer;
+                    border-radius: .25rem;
+                    background-color: #dc3545;
+                    color: white;
+                    padding: 6px 12px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 16px;
+                    border: 1px solid #dc3545;
+                }
+
+            }
+        }
+
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 20px;
+    }
+
+    .search_input {
+        width: 100%;
+        margin: 0px 0px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, .125);
+        box-sizing: border-box;
+        padding: 4px !important;
+        border-radius: 4px;
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+
+        .input {
+            width: 100%;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            outline: none;
+            color: #495057;
+            font-size: 1.25rem;
+            border-radius: .3rem;
+            line-height: 1.5;
+            padding: 8px 16px !important;
+        }
+    }
+}

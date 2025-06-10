@@ -1,17 +1,17 @@
-.main {
+.main{
     width: 100%;
-    display: flex;
-    align-items: center;
     padding: 20px !important;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
     flex-direction: column;
+}
 
-
-    .card_section {
-        width: 100%;
+.card_section{
+       width: 100%;
         box-sizing: border-box;
         max-width: 800px;
+        margin: auto;
         display: flex;
         flex-direction: column;
-    }
 }

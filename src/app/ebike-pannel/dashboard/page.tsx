@@ -1,11 +1,11 @@
-import Pannel_DashBoard from "@/ebike-pannel/ebike-pannel-Pages/Dashboard";
-import Header from "@/ebike-pannel/ebike-pannel-sharedComponent/SideBar";
+import Main_DashBoard from "@/ebike-pannel/ebike-pannel-Pages/Dashboard";
+import SideBar from "@/ebike-pannel/ebike-pannel-sharedComponent/SideBar";
 
 const DashBoard = () => {
     return (
         <div style={{ display: 'flex' }}>
-            <Header />
-            <Pannel_DashBoard />
+            <SideBar />
+            <Main_DashBoard />
         </div>
     )
 }

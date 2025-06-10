@@ -1,0 +1,69 @@
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 0px 0px 40px !important;
+    padding: 15px 10px !important;
+    box-sizing: border-box;
+    justify-content: center;
+    background-color: rgba(245, 245, 245, 0.655);
+    
+    .wraper {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0px 15px;
+        box-sizing: border-box;
+
+        .back_icon {
+            cursor: pointer;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px !important;
+            padding: 6px 6px !important;
+            background-color: #17a2b8;
+            border: 1px solid #17a2b8;
+            box-sizing: border-box;
+            border-radius: 5px;
+            font-weight: bold !important;
+
+            .icon {
+                color: white;
+                border-radius: 5px;
+                font-weight: bold !important;
+            }
+        }
+        
+        .ebiker_box {
+            border: 1px solid #17a2b8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
+            padding: 6px 12px !important;
+            background-color: #17a2b8;
+            border-radius: 5px;
+            color: white;
+
+
+            .ebiker_heading {
+                margin: 0px;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+        }
+
+        .logout {
+            background-color: #007bff;
+            color: white;
+            font-size: 12px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            font-weight: 400;
+            padding: 6px 12px !important;
+            text-transform: capitalize;
+        }
+    }
+}
