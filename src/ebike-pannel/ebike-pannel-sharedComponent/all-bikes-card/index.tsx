@@ -5,13 +5,16 @@ import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import { priceWithCommas } from "@/genericFunctions/geneFunc";
 import { useEffect, useState } from "react";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
-import { getAllNewBike } from "@/ebike-pannel/ebike-pannel-Function/globalfunction";
+import { DeleteUsedBikeById, getAllNewBike } from "@/ebike-pannel/ebike-pannel-Function/globalfunction";
+import { useRouter } from "next/navigation";
 
 const Used_bike_card = () => {
     const [AllBikeArr, setAllBikeArr] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
+
+    const router = useRouter()
 
     useEffect(() => {
         fetchAllUsedBike(1)
@@ -64,6 +67,10 @@ const Used_bike_card = () => {
             return with_Phone
         }
     }
+    const handleDelete = async (id: any) => {
+        const res = await DeleteUsedBikeById(id)
+        console.log("data", res)
+    }
     return (
         <div className={styles.main_used_bike}>
             <div className={styles.search_input}>
@@ -99,8 +106,8 @@ const Used_bike_card = () => {
                                             <div className={styles.card_action}>
                                                 <button className={styles.action}>Disapprove</button>
                                                 <button className={styles.action}>UnFeatured</button>
-                                                <button className={styles.action_del}>Delete</button>
-                                                <button className={styles.action}>Edit</button>
+                                                <button className={styles.action_del} onClick={() => handleDelete(e?.id)}>Delete</button>
+                                                <button className={styles.action}  >Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -135,6 +142,7 @@ const New_bike_card = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
+    const router = useRouter()
 
     useEffect(() => {
         fetchAllNewBike(1)
@@ -178,6 +186,10 @@ const New_bike_card = () => {
         }
     }
 
+    const handleEdit = (id: any) => {
+        router.push(`/ebike-pannel/dashboard/edit-new-bike/${id}`)
+    }
+
     return (
         <div className={styles.main_new_bike}>
             <div className={styles.search_input}>
@@ -208,7 +220,7 @@ const New_bike_card = () => {
                                             </Grid>
                                             <div className={styles.card_action}>
                                                 <button className={styles.action_del}>Delete</button>
-                                                <button className={styles.action}>Edit</button>
+                                                <button className={styles.action} onClick={() => handleEdit(e?.id)}>Edit</button>
                                             </div>
                                         </div>
                                     </div>

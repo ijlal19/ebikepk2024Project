@@ -14,6 +14,7 @@ const Dashboard_page = () => {
         else if(route == 'all-new-bikes') {
             return <div className={styles.card_section}><New_bike_card /></div>
         }
+        // else if (route == "edit")
     }
 
     return (
