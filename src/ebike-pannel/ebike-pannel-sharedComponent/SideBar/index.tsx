@@ -35,7 +35,7 @@ const SideBar = () => {
                 </ListItemButton>
                 {options.map((e, index) => (
                     <Collapse key={index} in={isOpen} timeout="auto" unmountOnExit>
-                        <Link href={`/ebike-pannel/dashboard/${urls[index]}`} sx={{ textDecoration: 'none', color: 'white' }}>
+                        <Link href={`/ebike-panel/dashboard/${urls[index]}`} sx={{ textDecoration: 'none', color: 'white' }}>
                             <List component="div" disablePadding>
                                 <ListItemButton sx={{ pl: 8 }}>
                                     <ListItemText primary={e} />

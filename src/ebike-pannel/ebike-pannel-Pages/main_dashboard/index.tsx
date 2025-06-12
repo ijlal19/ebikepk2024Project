@@ -7,14 +7,14 @@ import { Grid, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import { Used_bike_card } from "@/ebike-pannel/ebike-pannel-sharedComponent/all-bikes-card";
-import Pannel_header from "@/ebike-pannel/ebike-pannel-sharedComponent/pannel-header";
+import Panel_header from "@/ebike-pannel/ebike-pannel-sharedComponent/panel-header";
 
 const Main_DashBoard = () => {
     const [IsLoading, setIsLoading] = useState(false);
 
     return (
         <div className={styles.main}>
-            <Pannel_header />
+            <Panel_header />
             {
                 !IsLoading ?
                     <div>

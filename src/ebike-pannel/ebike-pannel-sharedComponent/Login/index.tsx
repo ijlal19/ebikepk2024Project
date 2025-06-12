@@ -2,9 +2,9 @@
 import { Box, Typography } from "@mui/material";
 import styles from './index.module.scss';
 import { useState } from "react";
-import { PostLogin } from "@/ebike-pannel/ebike-pannel-Function/globalfunction";
+import { PostLogin } from "@/ebike-pannel/ebike-panel-Function/globalfunction";
 import Passcode_form from "../passcode_form";
-import Pannel_header from "../pannel-header";
+import Panel_header from "../panel-header";
 const jsCookie = require('js-cookie');
 
 const LoginForm = () => {
@@ -37,7 +37,7 @@ const LoginForm = () => {
 
             localStorage.setItem('userData', JSON.stringify(userData));
 
-            jsCookie.set('accessToken_pannel', post_login?.accessToken, { expires: 1 });
+            jsCookie.set('accessToken_panel', post_login?.accessToken, { expires: 1 });
 
             console.log("data", userData);
         } else {
@@ -48,7 +48,7 @@ const LoginForm = () => {
 
     return (
         <Box className={styles.main}>
-            <Pannel_header />
+            <Panel_header />
             <Box className={styles.container}>
                 {
                     !Login ?

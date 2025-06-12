@@ -5,7 +5,7 @@ import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import { priceWithCommas } from "@/genericFunctions/geneFunc";
 import { useEffect, useState } from "react";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
-import { DeleteUsedBikeById, getAllNewBike } from "@/ebike-pannel/ebike-pannel-Function/globalfunction";
+import { DeleteUsedBikeById, getAllNewBike } from "@/ebike-pannel/ebike-panel-Function/globalfunction";
 import { useRouter } from "next/navigation";
 
 const Used_bike_card = () => {
@@ -187,7 +187,7 @@ const New_bike_card = () => {
     }
 
     const handleEdit = (id: any) => {
-        router.push(`/ebike-pannel/dashboard/edit-new-bike/${id}`)
+        router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`)
     }
 
     return (

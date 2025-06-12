@@ -1,6 +1,6 @@
 'use client'
 import { New_bike_card, Used_bike_card } from "@/ebike-pannel/ebike-pannel-sharedComponent/all-bikes-card"
-import Pannel_header from "@/ebike-pannel/ebike-pannel-sharedComponent/pannel-header"
+import Panel_header from "@/ebike-pannel/ebike-pannel-sharedComponent/panel-header"
 import { useParams } from "next/navigation"
 import styles from './index.module.scss';
 
@@ -19,7 +19,7 @@ const Dashboard_page = () => {
 
     return (
         <div className={styles.main}>
-            <Pannel_header />
+            <Panel_header />
             {SetComponent(slug)}
         </div>
     )

@@ -1,9 +1,14 @@
 import DashBoard_form from "@/ebike-pannel/ebike-pannel-Pages/dashboard_form"
 import SideBar from "@/ebike-pannel/ebike-pannel-sharedComponent/SideBar"
+import Head from "next/head"
 
 
-const Dashborad = ()=>{
-    return(
+const Dashborad = () => {
+    <Head>
+        <meta name="robots" content="noindex, nofollow" />
+        <title> Ebike Panel Edit </title>
+    </Head>
+    return (
         <div style={{ display: 'flex' }}>
             <SideBar />
             <DashBoard_form />

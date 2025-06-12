@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useRouter } from 'next/navigation';
 
-const Pannel_header = () => {
+const Panel_header = () => {
     const [displayText, setDisplayText] = useState('login');
     const [displayName, setDisplayName] = useState('ebiker');
     const router = useRouter()
@@ -29,7 +29,7 @@ const Pannel_header = () => {
 
     const handleLogout =()=>{
         localStorage.removeItem('userData')
-        router.push('/ebike-pannel/login')
+        router.push('/ebike-panel/login')
     }
 
     return (
@@ -51,4 +51,4 @@ const Pannel_header = () => {
     );
 };
 
-export default Pannel_header;
+export default Panel_header;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { useParams } from 'next/navigation';
 import { getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions';
-import { UpdateNewBikeById } from '@/ebike-pannel/ebike-pannel-Function/globalfunction';
+import { UpdateNewBikeById } from '@/ebike-pannel/ebike-panel-Function/globalfunction';
 
 
 const EditBikeForm = () => {
@@ -73,13 +73,6 @@ const EditBikeForm = () => {
                 <textarea id="description" name="description" value={BikeData.description} onChange={handleInputChange} className={styles.textarea} />
 
                 {selectedImages.length < 4 && (
-                    // <input
-                    //     type="file"
-                    //     accept="image/*" multiple
-                    //     required
-                    //     className={styles.file_input}
-                    //     onChange={handleImageChange}
-                    // />
                     <input type="file" accept="image/*" multiple onChange={handleImageChange} className={styles.fileInput} />
                 )}
                 {/* Images */}

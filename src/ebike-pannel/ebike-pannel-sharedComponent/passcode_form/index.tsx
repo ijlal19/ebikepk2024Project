@@ -9,7 +9,7 @@ const Passcode_form = () => {
 
     const handlePasscode = async () => {
         if(Passcode == 'Tarrar$$156chin@'){
-            router.push('/ebike-pannel/dashboard')
+            router.push('/ebike-panel/dashboard')
         }
     }
 

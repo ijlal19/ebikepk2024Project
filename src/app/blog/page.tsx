@@ -17,6 +17,10 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
 export default function Blog() { 
+  <Head>
+        <meta name="robots" content="noindex, nofollow" />
+        <title> Blog </title>
+    </Head>
     return (
       <>
         
