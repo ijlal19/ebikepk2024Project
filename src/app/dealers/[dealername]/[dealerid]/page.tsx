@@ -3,7 +3,6 @@ import DealerDetails from '@/ebikeWeb/pageLayouts/dealer-details/index';
 import { Metadata } from 'next'
 import { capitalizeFirstWord } from "@/genericFunctions/geneFunc"
 import { getSingleDealerDetails } from "@/ebikeWeb/functions/globalFuntions"
-import Head from 'next/head';
 import Script from 'next/script';
 
 type Props = {
@@ -25,10 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function DealersDetails() {
-  <Head>
-    <meta name="robots" content="noindex, nofollow" />
-    <title> Dealer Details </title>
-  </Head>
   return (
     <>
       <DealerDetails />

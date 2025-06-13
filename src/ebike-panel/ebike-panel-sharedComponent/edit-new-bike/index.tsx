@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { useParams } from 'next/navigation';
 import { getnewBikedetailsData } from '@/ebikeWeb/functions/globalFuntions';
-import { UpdateNewBikeById } from '@/ebike-pannel/ebike-panel-Function/globalfunction';
+import { UpdateNewBikeById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 
 
 const EditBikeForm = () => {
@@ -119,12 +119,12 @@ const EditBikeForm = () => {
                 </div>
 
                 {/* Others textarea */}
-                <label htmlFor="others" className={styles.label}>Meta Title</label>
-                <textarea id="others" name="others" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="others" className={styles.label}>Meta Description</label>
-                <textarea id="others" name="others" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="others" className={styles.label}>Focus Keyword</label>
-                <textarea id="others" name="others" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                <textarea id="meta_title" name="meta_title" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                <textarea id="meta_description" name="meta_description" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
                 <label htmlFor="others" className={styles.label}>Others</label>
                 <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
 

@@ -2,7 +2,7 @@
 import { Box, Typography } from "@mui/material";
 import styles from './index.module.scss';
 import { useState } from "react";
-import { PostLogin } from "@/ebike-pannel/ebike-panel-Function/globalfunction";
+import { PostLogin } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import Passcode_form from "../passcode_form";
 import Panel_header from "../panel-header";
 const jsCookie = require('js-cookie');

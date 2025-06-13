@@ -1,8 +1,6 @@
 import * as React from 'react';
 import BlogComp from "@/ebikeWeb/pageLayouts/blog/index"
 import { Metadata } from 'next'
-import Head from 'next/head';
-import Script from 'next/script';
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,10 +15,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
 export default function Blog() { 
-  <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Blog </title>
-    </Head>
     return (
       <>
         

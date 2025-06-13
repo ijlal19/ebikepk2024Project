@@ -2,7 +2,6 @@ import * as React from 'react';
 import Dealer from '@/ebikeWeb/pageLayouts/dealers/index';
 import { Metadata } from 'next'
 import { getFeaturedDealer, getAllDealer } from "@/ebikeWeb/functions/globalFuntions";
-import Head from 'next/head';
 
 export async function generateMetadata(): Promise<Metadata> {
     return {
@@ -16,10 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
 export default async function Dealers() { 
-  <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Dealers </title>
-    </Head>
+
   let delaer = await getAllDealer() 
   let featuredDelaer = await getFeaturedDealer() 
 

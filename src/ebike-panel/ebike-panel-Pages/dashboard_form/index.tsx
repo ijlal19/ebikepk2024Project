@@ -1,5 +1,5 @@
 'use client';
-import Edit_newbike_form from "@/ebike-pannel/ebike-pannel-sharedComponent/edit-new-bike";
+import Edit_newbike_form from "@/ebike-panel/ebike-panel-sharedComponent/edit-new-bike";
 import { useParams } from "next/navigation"
 
 

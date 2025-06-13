@@ -1,5 +1,5 @@
-import Main_DashBoard from "@/ebike-pannel/ebike-pannel-Pages/main_dashboard";
-import SideBar from "@/ebike-pannel/ebike-pannel-sharedComponent/SideBar";
+import Main_DashBoard from "@/ebike-panel/ebike-panel-Pages/main_dashboard";
+import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar";
 import Head from "next/head";
 
 const DashBoard = () => {

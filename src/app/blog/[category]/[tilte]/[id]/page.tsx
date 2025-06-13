@@ -2,8 +2,6 @@ import * as React from 'react';
 import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index';
 import { Metadata } from 'next'
 import {getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
-import Head from 'next/head';
-import Script from 'next/script';
 
 type Props = {
     params: { id: string }
@@ -26,10 +24,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
 export default function Blog() {
-  <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Blog Category</title>
-    </Head>
     return (
       <>
       {/* <link

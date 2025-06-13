@@ -1,5 +1,5 @@
-import DashBoard_form from "@/ebike-pannel/ebike-pannel-Pages/dashboard_form"
-import SideBar from "@/ebike-pannel/ebike-pannel-sharedComponent/SideBar"
+import DashBoard_form from "@/ebike-panel/ebike-panel-Pages/dashboard_form"
+import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar"
 import Head from "next/head"
 
 

@@ -1,5 +1,5 @@
-import Dashboard_page from "@/ebike-pannel/ebike-pannel-Pages/card_list_dashboard"
-import SideBar from "@/ebike-pannel/ebike-pannel-sharedComponent/SideBar"
+import Dashboard_page from "@/ebike-panel/ebike-panel-Pages/card_list_dashboard"
+import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar"
 import Head from "next/head"
 
 const Dashboard_slug = () => {

@@ -6,8 +6,8 @@ import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 import { Grid, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
-import { Used_bike_card } from "@/ebike-pannel/ebike-pannel-sharedComponent/all-bikes-card";
-import Panel_header from "@/ebike-pannel/ebike-pannel-sharedComponent/panel-header";
+import { Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-bikes-card";
+import Panel_header from "@/ebike-panel/ebike-panel-sharedComponent/panel-header";
 
 const Main_DashBoard = () => {
     const [IsLoading, setIsLoading] = useState(false);
