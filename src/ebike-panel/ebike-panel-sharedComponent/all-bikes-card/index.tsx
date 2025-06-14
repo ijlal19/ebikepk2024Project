@@ -1,11 +1,11 @@
-import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
+import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import styles from './index.module.scss';
 import { Grid, Pagination } from "@mui/material";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import { priceWithCommas } from "@/genericFunctions/geneFunc";
 import { useEffect, useState } from "react";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
-import { DeleteUsedBikeById, getAllNewBike } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { DeleteNewBikeById, DeleteUsedBikeById, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { useRouter } from "next/navigation";
 
 const Used_bike_card = () => {
@@ -71,6 +71,12 @@ const Used_bike_card = () => {
         const res = await DeleteUsedBikeById(id)
         console.log("data", res)
     }
+
+    const handleEdit = (id: any) => {
+        router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}`)
+    }
+
+
     return (
         <div className={styles.main_used_bike}>
             <div className={styles.search_input}>
@@ -107,7 +113,7 @@ const Used_bike_card = () => {
                                                 <button className={styles.action}>Disapprove</button>
                                                 <button className={styles.action}>UnFeatured</button>
                                                 <button className={styles.action_del} onClick={() => handleDelete(e?.id)}>Delete</button>
-                                                <button className={styles.action}  >Edit</button>
+                                                <button className={styles.action} onClick={() => { handleEdit(e?.id) }} >Edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -186,6 +192,11 @@ const New_bike_card = () => {
         }
     }
 
+    const handleDelete = async (id: any) => {
+        const res = await DeleteNewBikeById(id)
+        console.log("data", res)
+    }
+
     const handleEdit = (id: any) => {
         router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`)
     }
@@ -219,8 +230,8 @@ const New_bike_card = () => {
                                                 </Grid>
                                             </Grid>
                                             <div className={styles.card_action}>
-                                                <button className={styles.action_del}>Delete</button>
                                                 <button className={styles.action} onClick={() => handleEdit(e?.id)}>Edit</button>
+                                                <button className={styles.action_del} onClick={() => { handleDelete(e?.id) }} >Delete</button>
                                             </div>
                                         </div>
                                     </div>
