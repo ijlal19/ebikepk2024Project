@@ -12,14 +12,14 @@ export default function NewUsedBikesCard(props: any) {
 
     const [isFeatureTagShow, setIsFeaturedTagShow] = useState(false)
     const Router = useRouter()
-    useEffect(()=>{
+    useEffect(() => {
         if (window.location.pathname.indexOf('used-bikes') !== -1) {
             setIsFeaturedTagShow(true)
         }
         else {
             setIsFeaturedTagShow(false)
         }
-    },[])
+    }, [])
 
     let imgUrl = ''
 
@@ -67,9 +67,13 @@ export default function NewUsedBikesCard(props: any) {
         if (props.currentpage === 'new_bike') {
             return `/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`;
         }
-
-        else if (props.currentpage === 'featured_bike' || props.currentpage === 'trending_bike') {
+        else if (props.currentpage === 'trending_bike') {
             return bike?.url;
+        }
+        else if (props.currentpage === 'featured_bike') {
+            let title = bike?.title;
+            let urlTitle = title.toLowerCase().replaceAll(' ', '-');
+            return `/used-bikes/${urlTitle}/${bike?.id}`;
         }
 
         else if (props.currentpage === 'used_bike') {
@@ -121,11 +125,11 @@ export default function NewUsedBikesCard(props: any) {
 
                     {props.from != "myAdsComp" ?
 
-                        // <Link href={getBikeUrl(bike)}>
+                        <Link href={getBikeUrl(bike)} sx={{textDecoration:'none'}}>
                             <Button className={styles.view_detail_btn} onClick={() => { goToDetailPage(bike) }}>
-                                View Detail 
+                                View Detail
                             </Button>
-                        // </Link>
+                        </Link>
 
                         : ""}
 

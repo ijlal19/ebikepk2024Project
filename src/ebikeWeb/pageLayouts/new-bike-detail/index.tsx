@@ -98,11 +98,11 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
         responsedetails[0].bike.brandName = brand?.length > 0 ? brand[0].brandName : "Similar Brand"
       }
 
-      let CC = 70
-      if (responsedetails[0]?.bike?.displacement?.indexOf(',') > -1) {
-        responsedetails[0].bike.displacement = responsedetails[0]?.bike?.displacement?.split(',')[0]
-        CC = responsedetails[0]?.bike?.displacement?.split(',')[1] ? responsedetails[0]?.bike?.displacement?.split(',')[1] : 70;
-      }
+      let CC = Number(responsedetails[0]?.bike?.displacement.split(' ')[0]) ? Number(responsedetails[0]?.bike?.displacement.split(' ')[0]) : 70
+      // if (responsedetails[0]?.bike?.displacement?.indexOf('') > -1) {
+      //   responsedetails[0].bike.displacement = responsedetails[0]?.bike?.displacement?.split(',')[0]
+      //   CC = responsedetails[0]?.bike?.displacement?.split(',')[1] ? responsedetails[0]?.bike?.displacement?.split(',')[1] : 70;
+      // }
 
       responsedetails[0].bike.bikeCC = CC
 

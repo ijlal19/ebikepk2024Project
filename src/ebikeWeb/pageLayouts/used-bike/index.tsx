@@ -49,6 +49,7 @@ export default function UsedBike() {
               res.add.mobileNumber = '0' + res.add.mobileNumber
             }
             setBikeDetail(res?.add)
+
             const objBrand = {
               brand_filter: res.add.brandId ? [res.add.brandId] : [],
               adslimit: 6,
@@ -59,18 +60,30 @@ export default function UsedBike() {
             if(getSimilarBikeByBrand  && getSimilarBikeByBrand?.data?.length > 0){
               setSimilarBrandBikeArr(getSimilarBikeByBrand?.data)
             }
+
             const objCC = {
               cc: res.add.cc? [res.add.cc] : [],
               adslimit: 6,
               random: true
             }
             const getSimilarBikeByCC = await getCustomBikeAd(objCC)
-            console.log("data" , getSimilarBikeByCC.data, objCC)
             if(getSimilarBikeByCC  && getSimilarBikeByCC?.data?.length > 0){
               setSimilarCCBikeArr(getSimilarBikeByCC?.data)
             }
+
+            const objSimilarBike = {
+              cc: res.add.cc? [res.add.cc] : [],
+              brand_filter: res.add.brandId ? [res.add.brandId] : [],
+              adslimit: 6,
+              random: true
+            }
+            const getSimilarBike = await getCustomBikeAd(objSimilarBike)
+            console.log("data1234" , getSimilarBike.data, objSimilarBike)
+            if(getSimilarBikeByCC  && getSimilarBike?.data?.length > 0){
+              setSimilarBikeArr(getSimilarBike?.data)
+            }
+
           }
-          setSimilarBikeArr(res?.bikes)
           setShowPhoneNo(false)
           setTimeout(() => {
             window.scrollTo(0, 0)

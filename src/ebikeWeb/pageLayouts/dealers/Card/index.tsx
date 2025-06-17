@@ -1,7 +1,7 @@
 'use client'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useRouter, useParams } from 'next/navigation';
-import { useMediaQuery } from '@mui/material';
+import { Link, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss';
 import { useState } from 'react';
 
@@ -15,18 +15,21 @@ export const FeatureDealerCard = ({ props }: any) => {
         var shop_name = bike.shop_name;
         shop_name = shop_name.replace(/\s+/g, '-');
         var lowerTitle = shop_name.toLowerCase();
-        router.push(`/dealers/${lowerTitle}/${bike.id}`)
+        // router.push(`/dealers/${lowerTitle}/${bike.id}`)
+        return `/dealers/${lowerTitle}/${bike.id}`
     }
 
     return (
-        <div className={styles.feature_card_main} onClick={isMobile ? ()=>goToDetailPage(props):undefined}>
+        <Link href={goToDetailPage(props)}  className={styles.feature_card_main}>
+        {/* <div className={styles.feature_card_main} onClick={isMobile ? ()=>goToDetailPage(props):undefined}> */}
             <p className={styles.shop_name}>{props?.shop_name}</p>
             <img className={styles.logo} src={props?.bike_brand?.logoUrl} alt="" />
             <p className={styles.city}>Dealer in {props?.city?.city_name}</p>
             <p className={styles.address}>{props.address.slice(0, 12)} ...</p>
             <p className={styles.date}>Listen on {props?.updatedAt.slice(0, 10)}</p>
             <button onClick={()=>goToDetailPage(props)} className={styles.more_details_button}>More Details</button>
-        </div>
+        {/* </div> */}
+        </Link>
     )
 }
 
@@ -42,12 +45,15 @@ export const DealerinPakCard = ({ props }: any) => {
         var shop_name = bike.shop_name;
         shop_name = shop_name.replace(/\s+/g, '-');
         var lowerTitle = shop_name.toLowerCase();
-        router.push(`/dealers/${lowerTitle}/${bike.id}`)
+        // router.push(`/dealers/${lowerTitle}/${bike.id}`)
+        return `/dealers/${lowerTitle}/${bike.id}`
     }
 
-    return (<>
+    return (
+    // <Link href={goToDetailPage(props)}>
+    <>
         {isMobile ?            
-            <div onClick={()=>goToDetailPage(props)} className={styles.dealer_card_main}>
+            <Link href={goToDetailPage(props)} className={styles.dealer_card_main}>
                 <p className={styles.shop_name} style={{display:isMobile ? 'flex': 'none'}}>{props.shop_name}</p>
             <div className={styles.image_box}>
                 <img src={props.bike_brand.logoUrl} alt="" className={styles.image} />
@@ -61,9 +67,9 @@ export const DealerinPakCard = ({ props }: any) => {
                 </p>
                 <button className={styles.more_button} >View More Details</button>
             </div>
-        </div>
+        </Link>
             :
-            <div className={styles.dealer_card_main}>
+            <Link href={goToDetailPage(props)} className={styles.dealer_card_main}>
                 <div className={styles.image_box}>
                     <img src={props.bike_brand.logoUrl} alt="" className={styles.image} />
                 </div>
@@ -74,9 +80,10 @@ export const DealerinPakCard = ({ props }: any) => {
                     <span style={{ marginRight: 7, marginLeft: 7 }}><ArrowForwardIcon sx={{ fontSize: 15, margin: 0, color: "green" }} /></span> {props.createdAt.slice(0, 10)}</p>
                     <button onClick={()=>goToDetailPage(props)} className={styles.more_button}>View More Details</button>
                 </div>
-            </div> 
+            </Link> 
         }
 
+    {/* </Link> */}
     </>
     )
 }

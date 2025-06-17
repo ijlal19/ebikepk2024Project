@@ -1,10 +1,12 @@
 @import '../../../styles/variable';
+
 // Feature Car Styling
 .feature_card_main {
     width: 100%;
     max-width: 210px;
     font-family: sans-serif;
     height: auto;
+    text-decoration: none !important;
     padding: 15px 0px;
     border: 1px solid #d2d2d2;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
@@ -12,24 +14,29 @@
     @media (max-width:768px) {
         max-width: 175px;
     }
+
     @media (max-width:400px) {
         max-width: 160px;
     }
 
     .shop_name {
+        text-decoration: none;
         font-size: 14px;
         text-align: center;
         color: $primary_two;
         margin: 0px 0px !important;
         padding: 10px 0px 10px 0px;
+
         @media (max-width:400px) {
             font-size: 12px;
         }
     }
 
     .logo {
+        text-decoration: none;
         margin: auto;
         display: flex;
+
         @media (max-width:400px) {
             width: 100px;
             height: 45px;
@@ -38,10 +45,12 @@
 
     .city {
         font-size: 14px;
+        text-decoration: none;
         text-align: center;
         color: $primary_two;
         margin: 0px 0px !important;
         padding: 15px 0px 5px 0px;
+
         @media (max-width:400px) {
             font-size: 12px;
         }
@@ -50,6 +59,7 @@
     .address {
         font-size: 12px;
         text-align: center;
+        text-decoration: none;
         color: grey;
         margin: 0px 0px !important;
         padding: 8px 0px;
@@ -57,6 +67,7 @@
 
     .date {
         font-size: 12px;
+        text-decoration: none;
         text-align: center;
         color: grey;
         margin: 0px 0px !important;
@@ -65,6 +76,7 @@
         @media (max-width:768px) {
             margin-bottom: 10px !important;
         }
+
         @media (max-width:400px) {
             font-size: 12px;
         }
@@ -92,6 +104,7 @@
 .dealer_card_main {
     width: 100%;
     height: auto;
+    text-decoration: none !important;
     padding: 10px 0px;
     border: 1px solid #d2d2d2;
     margin: 20px 0px 20px 0px;
@@ -104,6 +117,7 @@
         max-width: 175px;
         flex-direction: column;
     }
+
     @media (max-width:400px) {
         border: 1px solid #d2d2d2;
         width: 100%;
@@ -122,6 +136,7 @@
         @media (max-width:768px) {
             margin: 5px 0px;
         }
+
         @media (max-width:400px) {
             .image {
                 width: 70px;
@@ -149,6 +164,7 @@
             margin: 5px 0px;
             justify-content: center;
         }
+
         @media (max-width:400px) {
             font-size: 12px;
         }
@@ -166,6 +182,7 @@
             padding: 10px 0px 5px 0px;
             justify-content: center;
         }
+
         @media (max-width:400px) {
             font-size: 12px;
         }
@@ -185,6 +202,7 @@
                 display: flex;
                 justify-content: center;
             }
+
             @media (max-width:400px) {
                 font-size: 12px;
             }
@@ -197,6 +215,7 @@
                 margin: 0px 0px 10px;
                 padding: 4px 0px;
             }
+
             @media (max-width:400px) {
                 font-size: 11px;
             }

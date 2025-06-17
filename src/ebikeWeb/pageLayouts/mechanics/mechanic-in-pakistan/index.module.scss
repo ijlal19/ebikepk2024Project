@@ -21,7 +21,10 @@
 .Mechanics_pakistan_main{
     width: 100%;
     font-family: sans-serif;
-    max-width: 900px;
+    // max-width: 900px;
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
     box-sizing: border-box;
     margin: 20px auto 10px auto !important;
     padding: 20px 10px 0px 10px;
@@ -55,7 +58,7 @@
             width: 100%;
             padding: 5px 0px 20px 0px;
             display: flex;
-            justify-content: left;
+            justify-content: center;
             column-gap: 200px;
 
             @media (max-width:768px) {
@@ -100,3 +103,33 @@
     justify-content: center;
     margin-top: 10px;
  }
+
+ .inner{
+    width: 100%;
+    max-width: 700px;
+ }
+
+ .add_area {
+      width: 100%;
+      max-width: 150px;
+    padding: 5px 20px 5px 5px !important;
+
+    .add_box {
+      row-gap: 10px;
+      display: flex;
+      flex-direction: column;
+
+      .add_image {
+        width: 100%;
+      }
+
+      @media (max-width:1200px) {
+        display: none;
+      }
+
+    }
+
+    @media (max-width:1200px) {
+      display: none;
+    }
+  }

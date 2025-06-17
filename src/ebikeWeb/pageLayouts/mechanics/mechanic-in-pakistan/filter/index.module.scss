@@ -1,13 +1,14 @@
 @import '../../../../styles/variable';
 .filter_main {
     width: 100%;
+    max-width: 220px;
     box-sizing: border-box;
     padding: 0px 10px 0px 10px !important;
     font-family: sans-serif;
-    
+    position: relative;
 
     .by_brand {
-        margin: 10px 0px;
+        margin: 0px 0px 10px 0px;
         padding: 0px 5px 0px 5px !important;
         border: 1px solid #d2d2d2d2;
         box-sizing: border-box;
@@ -19,13 +20,13 @@
             text-align: center;
             color: $primary_two;
             margin: 0px 0px 15px 0px!important;
-            padding: 20px 0px 20px 0px;
+            padding: 10px 0px 10px 0px;
         }
         .city_options {
             height: 42vh;
             overflow-y: auto;
             overflow-x: hidden;
-            width: 80%;
+            width: 100%;
             margin: auto;
             color: $primary_two;
             box-sizing: border-box;
@@ -45,6 +46,7 @@
         
             .option_values {
                 gap: 5px;
+                text-transform: capitalize;
                 width: 100% !important;
                 margin: 2px 0px;
                 display: flex;
@@ -65,4 +67,10 @@
             padding: 8px 15px;
         }
     }
+}
+
+
+.filter_container{
+    position: sticky;
+    top: 10px;
 }

@@ -236,7 +236,7 @@ function Filters(props: any , {updateData}:any) {
                   onChange={(event) => { updateFilterValue(event, 'city') }}
                   id={data.id}
                 />
-                {data.city_name}
+                {data?.city_name}
               </Typography>
             );
           })
@@ -267,7 +267,7 @@ function Filters(props: any , {updateData}:any) {
                   onChange={(event) => { updateFilterValue(event, 'brand') }}
                   id={data.id}
                 />
-                {data.brandName}
+                {data?.brandName}
               </Typography>)
           })
         }

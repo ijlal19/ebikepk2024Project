@@ -44,7 +44,7 @@ const FeatureCard = (props: any) => {
           </Typography>
           {
             !data.isLoginReq ?
-              <Link className={styles.anchor} href='#'>
+              <Link className={styles.anchor} href='/#'>
                 <Button className={styles._btn} onClick={() => goToRoute(data.url)} >{data.button}</Button>
               </Link>
               :

@@ -51,14 +51,14 @@ function NewBikesSection(props:any) {
         
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
-            <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary">
+            <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary"  >
               <Tab label="Featured" className={styles.tab} sx={{marginRight:2}}/>
               <Tab label="Trending" className={styles.tab} />
             </Tabs>
           </Box>
 
           {props?.featuredData ? <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.featuredData} from='newBikeComp' currentpage="featured_bike" onBtnClick={()=>{}}  />
+            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.featuredData} from='newBikeComp' currentpage="trending_bike" onBtnClick={()=>{}}  />
           </CustomTabPanel> : "" }
           {props?.trendingData ? <CustomTabPanel value={value} index={1}>
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike' onBtnClick={()=>{}} />

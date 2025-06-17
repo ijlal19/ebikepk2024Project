@@ -2,13 +2,43 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { DealerinPakFilter } from './filter';
 import { useState, useEffect } from 'react';
-import { Pagination } from '@mui/material';
+import { Link, Pagination } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { DealerinPakCard } from '../Card';
 import styles from './index.module.scss';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+
+const AdsArray = [
+    {
+        href: 'https://youtube.com/ebikepk',
+        alt: 'eBike YouTube Banner',
+        url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif",
+        target: "_blank"
+    },
+    {
+        href: '/forum',
+        alt: '/forum',
+        url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg"
+    },
+    {
+        href: '/dealers',
+        alt: '/dealer',
+        url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
+    },
+    {
+        href: '/mechanics',
+        alt: '/mechanic',
+        url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
+    },
+    {
+        href: '/blog',
+        alt: '/blog',
+        url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
+    }
+]
+
 
 export const DealerInPakistan = ({ dealers }: any) => {
 
@@ -45,7 +75,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
         setOpen(newOpen);
     }
 
-    const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    const handlePageChange = (event: any, page: number) => {
         setCurrentPage(page);
     }
 
@@ -95,37 +125,57 @@ export const DealerInPakistan = ({ dealers }: any) => {
 
     return (
         <>
+
             <div>
                 <div className={styles.Dealer_pakistan_main}>
-                    <div className={styles.heading_box}>
-                        <p className={styles.showrooms_heading}>Bike Showrooms / Dealers in Pkaistan</p>
-                        <div className={styles.search_box}>
-                            <Button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon /></Button>
+                    <DealerinPakFilter setFilterobject={setFilterobject} />
+                    <div className={styles.inner_box}>
+                        <div className={styles.heading_box}>
+                            <p className={styles.showrooms_heading}>Bike Showrooms / Dealers in Pkaistan</p>
+                            <div className={styles.search_box}>
+                                {/* <Button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon /></Button>
                             <Drawer open={open} onClose={toggleDrawer(false)}>
                                 {DrawerList}
-                            </Drawer>
-                            <input type="text" placeholder='Search Dealer' onChange={(e) => handleSearch(e)} className={styles.input} />
+                            </Drawer> */}
+                                <input type="text" placeholder='Search Dealer' onChange={(e) => handleSearch(e)} className={styles.input} />
+                            </div>
+                        </div>
+                        <div className={styles.dealer_card_section}>
+                            {
+                                !isFilterApply ?
+                                    (
+                                        currentData?.map((e: any, i: any) => {
+                                            return (
+                                                <DealerinPakCard props={e} key={i} />
+                                            )
+                                        })
+                                    )
+                                    : <>
+                                        {filterData?.map((e: any, i: any) => {
+                                            return (
+                                                <DealerinPakCard props={e} key={i} />
+                                            )
+                                        })}
+
+                                    </>
+                            }
                         </div>
                     </div>
-                    <div className={styles.dealer_card_section}>
-                        {
-                            !isFilterApply ?
-                                (
-                                    currentData?.map((e: any, i: any) => {
-                                        return (
-                                            <DealerinPakCard props={e} key={i} />
-                                        )
-                                    })
-                                )
-                                : <>
-                                    {filterData?.map((e: any, i: any) => {
-                                        return (
-                                            <DealerinPakCard props={e} key={i} />
-                                        )
-                                    })}
-
-                                </>
-                        }
+                    <div className={styles.add_area}>
+                        <div className={styles.add_box}>
+                            {
+                                AdsArray?.map((e, i) => {
+                                    return (
+                                        <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                            <img
+                                                src={e?.url}
+                                                alt={e?.alt}
+                                                className={styles.add_image} />
+                                        </Link>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

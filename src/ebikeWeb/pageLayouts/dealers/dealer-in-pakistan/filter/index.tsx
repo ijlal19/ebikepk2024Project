@@ -61,6 +61,7 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
 
     return (
         <div className={styles.filter_main}>
+            <div className={styles.filter_container}>
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By Brand</p>
                 <div className={styles.city_options}>
@@ -100,6 +101,7 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
                     onClick={() => removeFilters('city')}>
                     Remove City Filters</button>
             </div>
+        </div>
         </div>
     );
 };
