@@ -7,6 +7,7 @@
   justify-content: center;
   flex-direction: column;
   background: #f2f3f3;
+  font-family: sans-serif;
 
   .heading1 {
     font-size: 25px;
@@ -187,6 +188,7 @@
 
         .grid_bike_list {
           display: flex;
+          gap: 15px;
           flex-wrap: wrap;
           justify-content: center;
 
@@ -333,6 +335,8 @@
 
           @media (max-width:600px) {
             display: flex;
+            row-gap: 15px;
+            column-gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
             box-sizing: border-box;
@@ -741,6 +745,7 @@
   .icon {
     font-size: 18px;
     filter: drop-shadow(0px 0px 10px rgb(0, 0, 0));
+    margin-top: 10px;
   }
 }
 
@@ -752,7 +757,7 @@
 
 .filter_box_main {
   position: sticky;
-  top: 0px;
+  top: 10px;
   margin-bottom: 20px;
 
 
@@ -807,5 +812,53 @@
 
   @media (max-width:910px) {
     font-size: 16px;
+  }
+}
+.banner_1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px !important;
+
+  @media (max-width:991px) {
+    width: 100%;
+
+  }
+
+
+  .baner_image {
+    box-sizing: border-box;
+    width: 400px;
+    text-align: center;
+    height: 100%;
+    margin: auto !important;
+    float: center;
+
+    @media (max-width:600px) {
+      width: 300px;
+    }
+  }
+}
+
+.item_div {
+  display: none;
+
+  @media (max-width:600px) {
+    width: 200px;
+    max-width: 160px;
+    display: flex;
+    // gap: 10px;
+  }
+}
+
+.item_div1 {
+  display: none;
+
+  @media (max-width:600px) {
+    width: 200px;
+    max-width: 160px;
+    display: flex;
+    // gap: 10px;
   }
 }

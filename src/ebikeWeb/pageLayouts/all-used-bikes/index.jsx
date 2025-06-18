@@ -18,7 +18,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import "../../../app/globals.scss"
-
+import ItemCard from '../../sharedComponents/itemCard'
 
 const AdsArray = [
     {
@@ -249,75 +249,94 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             return `/used-bikes/${urlTitle}/${val.id}`
         }
         return (
-            <Link href={GetHref()} sx={{ textDecoration: 'none' }} onClick={() => { goToDetailPage(val) }}>
+            <>
                 {ind % 4 == 0 ?
-                    <div className={styles.banner}>
-                        <img className={styles.baner_image} src={isMobile ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} />
+                    <div className={styles.banner_1}>
+                        <a href="/">
+                            <img className={styles.baner_image} src={isMobile ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} />
+                        </a>
                     </div> : ""}
+                {!handleImage ?
+                    <Link href={GetHref()} sx={{ textDecoration: 'none' }} onClick={() => { goToDetailPage(val) }}>
+                        {/* <Link href={GetHref()} sx={{ textDecoration: 'none', display: handleImage ? 'none' : 'flex', flexDirection: 'column' }} onClick={() => { goToDetailPage(val) }}> */}
 
-                <Grid container key={ind} className={styles.long_card}>
-                    <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
-                        <Box
+                        <Grid container key={ind} className={styles.long_card}>
+                            <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
+                                <Box
 
-                            className={styles.long_card_img}
+                                    className={styles.long_card_img}
 
-                            sx={{
-                                backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
-                                backgroundSize: handleImage ? '100% 100%' : '100% 140px',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                                height: handleImage ? '150px' : "90%",
-                                width: handleImage ? '100%' : "100%",
-                            }}>
-                            {
-                                handleImage ?
-                                    <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
-                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: 'red' : 'green' }} /> */}
-                                    </Box> : ""
-                            }
-                        </Box>
-                        {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
-                    </Grid>
-
-                    <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
-
-                        <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
-
-                        <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
-
-                        <Typography className={styles.bike_details}>
-                            {val?.year?.year}
-                            <span className={styles.verticl_line}> | </span>
-                            <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                            <span className={styles.verticl_line}> | </span>
-                            <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
-                        </Typography>
-
-                        <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
-
-                    </Grid>
-
-                    <Grid item className={styles.price_section_desktop}>
-                        <span> PKR {priceWithCommas(val?.price)}</span>
-                        {
-                            !handleImage ?
-                                <Box className={styles.fav_box}>
-                                    <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
-                                        {/* <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'grey' }} /> */}
-                                    </Box>
-                                    <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
-                                        < LocalPhoneIcon className={styles.icon} /> Show Phone No
-                                    </Box>
+                                    sx={{
+                                        backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                        backgroundSize: handleImage ? '100% 100%' : 'cover',
+                                        boxSizing: 'border-box',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                        height: handleImage ? '150px' : "95%",
+                                        width: handleImage ? '100%' : "100%"
+                                    }}>
+                                    {
+                                        handleImage ?
+                                            <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
+                                                <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
+                                                {/* <FavoriteIcon className={styles.icon} sx={{ color: 'red' : 'green' }} /> */}
+                                            </Box> : ""
+                                    }
                                 </Box>
-                                : ""
-                        }
-                    </Grid>
+                                {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
+                            </Grid>
 
-                </Grid>
-                {/* </Link> */}
-            </Link>
+                            <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
+
+                                <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
+
+                                <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
+
+                                <Typography className={styles.bike_details}>
+                                    {val?.year?.year}
+                                    <span className={styles.verticl_line}> | </span>
+                                    <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                                    <span className={styles.verticl_line}> | </span>
+                                    <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                </Typography>
+
+                                <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
+
+                            </Grid>
+
+                            <Grid item className={styles.price_section_desktop}>
+                                <span> PKR {priceWithCommas(val?.price)}</span>
+                                {
+                                    !handleImage ?
+                                        <Box className={styles.fav_box}>
+                                            <Box className={styles.icon_box} onClick={(e) => {
+                                                e.preventDefault();     // stop <Link> href navigation
+                                                e.stopPropagation();    // stop event bubbling
+                                                AddFavourite(val?.id);
+                                            }}>
+                                                <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
+                                                {/* <FavoriteIcon className={styles.icon} sx={{ color: LikeTrue.includes(val?.id) ? 'red' : 'grey' }} /> */}
+                                            </Box>
+                                            <Box className={styles.phone_box} onClick={() => { goToDetailPage(val) }} >
+                                                < LocalPhoneIcon className={styles.icon} /> Show Phone No
+                                            </Box>
+                                        </Box>
+                                        : ""
+                                }
+                            </Grid>
+
+                        </Grid>
+                    </Link > :
+                    <div className={styles.item_div}>
+                        <ItemCard
+                            data={val}
+                            from='usedBikeComp'
+                            currentpage='used_bike'
+                            onBtnClick={() => { }}
+                        />
+                    </div>
+                }
+            </>
 
         )
     }
@@ -331,46 +350,58 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             return `/used-bikes/${urlTitle}/${val.id}`
         }
         return (
-            <Link href={GetHref()} key={ind} sx={{ textDecoration: 'none' }} className={styles.grid_card} onClick={() => { goToDetailPage(val) }}>
-                <Grid container >
+            <>
+                {!handleImage ?
+                    <Link href={GetHref()} key={ind} sx={{ textDecoration: 'none' }} className={styles.grid_card} onClick={() => { goToDetailPage(val) }}>
+                        <Grid container >
 
-                    <Grid item className={styles.grid_image_box}>
-                        <Box
-                            sx={{
-                                backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                                height: '100%',
-                                width: '100%',
-                            }}>
-                            <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
-                                <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
-                            </Box>
-                        </Box>
-                        {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
-                    </Grid>
+                            <Grid item className={styles.grid_image_box}>
+                                <Box
+                                    sx={{
+                                        backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                        height: '100%',
+                                        width: '100%',
+                                    }}>
+                                    <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
+                                        <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
+                                    </Box>
+                                </Box>
+                                {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
+                            </Grid>
 
-                    <Grid item className={styles.grid_card_info}>
+                            <Grid item className={styles.grid_card_info}>
 
-                        <Box className={styles.grid_icon_title}>
-                            <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
-                        </Box>
+                                <Box className={styles.grid_icon_title}>
+                                    <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
+                                </Box>
 
-                        <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
+                                <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
 
-                        <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
+                                <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
 
-                        <Typography className={styles.grid_bike_details}>
-                            {val?.year?.year}
-                            <span className={styles.grid_verticl_line}> | </span>
-                            <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                            <span className={styles.grid_verticl_line}> | </span>
-                            <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </Link>
+                                <Typography className={styles.grid_bike_details}>
+                                    {val?.year?.year}
+                                    <span className={styles.grid_verticl_line}> | </span>
+                                    <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                                    <span className={styles.grid_verticl_line}> | </span>
+                                    <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </Link> :
+                    <div className={styles.item_div1}>
+                        <ItemCard
+                            data={val}
+                            from='usedBikeComp'
+                            // sliderData={featuredBikes} from='usedBikeComp' currentpage='used_bike' onBtnClick={() => { }} 
+                            currentpage='used_bike'
+                            onBtnClick={() => { }}
+                        />
+                    </div>}
+            </>
         )
     }
 
@@ -492,14 +523,19 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     </div>
                                     {
                                         !SearchApply ?
-                                            (<div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                                                {allBikesArr.map((val, ind) => {
-                                                    return (
-                                                        isGridSelected ? GridCard(val, ind) : longCard(val, ind)
-                                                    )
-                                                })
-                                                }
-                                            </div>)
+                                            (
+                                                <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                                                    {
+                                                        allBikesArr.map((val, ind) => {
+                                                            return (
+                                                                isGridSelected ?
+                                                                    GridCard(val, ind)
+                                                                    :
+                                                                    longCard(val, ind)
+                                                            )
+                                                        })
+
+                                                    } </div>)
                                             :
                                             (<div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
                                                 {allBikesArr?.length == 0 ?

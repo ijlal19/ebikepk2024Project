@@ -3,7 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { MechanicinPakFilter } from './filter';
 import { MechanicinPakCard } from '../Card';
 import { useState, useEffect } from 'react';
-import { Link, Pagination } from '@mui/material';
+import { Link, Pagination, useMediaQuery } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import styles from './index.module.scss';
@@ -44,6 +44,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
     const [filteredResults, setFilteredResults] = useState(mechanics);
     const [isFilterApply, setisFilterApply] = useState(false);
     const [Filterobject, setFilterobject] = useState<any>()
+    const isMobile = useMediaQuery('(max-width:820px)');
     const [currentPage, setCurrentPage] = useState(1);
     const [open, setOpen] = useState(false);
 
@@ -126,11 +127,20 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
         <>
             <div>
                 <div className={styles.Mechanics_pakistan_main}>
-                    <MechanicinPakFilter setFilterobject={setFilterobject} />
+                    {!isMobile ? <MechanicinPakFilter setFilterobject={setFilterobject} /> : ''}
                     <div className={styles.inner}>
                         <div className={styles.heading_box}>
                             <p className={styles.showrooms_heading}>Bike Showrooms / Mechanics in Pkaistan</p>
                             <div className={styles.search_box}>
+                                {
+                                    isMobile ?
+                                        <div>
+                                            <button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon /></button>
+                                            <Drawer open={open} onClose={toggleDrawer(false)}>
+                                                {DrawerList}
+                                            </Drawer>
+                                        </div>
+                                        : ''}
                                 <input type="text" placeholder='Search Mechanic' onChange={(e) => handleSearch(e)} className={styles.input} />
                             </div>
                         </div>
@@ -159,7 +169,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
                     <div className={styles.add_area}>
                         <div className={styles.add_box}>
                             {
-                                AdsArray?.map((e:any, i:any) => {
+                                AdsArray?.map((e: any, i: any) => {
                                     return (
                                         <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
                                             <img
