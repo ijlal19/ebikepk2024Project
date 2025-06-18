@@ -2,13 +2,14 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import { DealerinPakFilter } from './filter';
 import { useState, useEffect } from 'react';
-import { Link, Pagination } from '@mui/material';
+import { Link, Pagination, useMediaQuery } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { DealerinPakCard } from '../Card';
 import styles from './index.module.scss';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import '../../../../app/globals.scss'
 
 const AdsArray = [
     {
@@ -46,6 +47,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
     const [isFilterApply, setisFilterApply] = useState(false);
     const [Filterobject, setFilterobject] = useState<any>()
     const [currentPage, setCurrentPage] = useState(1);
+    const isMobile = useMediaQuery('(max-width:820px)');
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -128,15 +130,23 @@ export const DealerInPakistan = ({ dealers }: any) => {
 
             <div>
                 <div className={styles.Dealer_pakistan_main}>
-                    <DealerinPakFilter setFilterobject={setFilterobject} />
+                    {
+                        !isMobile ?
+                            <DealerinPakFilter setFilterobject={setFilterobject} /> : ''
+                    }
                     <div className={styles.inner_box}>
                         <div className={styles.heading_box}>
                             <p className={styles.showrooms_heading}>Bike Showrooms / Dealers in Pkaistan</p>
                             <div className={styles.search_box}>
-                                {/* <Button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon /></Button>
-                            <Drawer open={open} onClose={toggleDrawer(false)}>
-                                {DrawerList}
-                            </Drawer> */}
+                                {
+                                    isMobile ?
+                                        <div>
+                                            <button onClick={toggleDrawer(true)} className={styles.drawer_button}><MenuIcon /></button>
+                                            <Drawer open={open} onClose={toggleDrawer(false)}>
+                                                {DrawerList}
+                                            </Drawer>
+                                        </div>
+                                        : ''}
                                 <input type="text" placeholder='Search Dealer' onChange={(e) => handleSearch(e)} className={styles.input} />
                             </div>
                         </div>

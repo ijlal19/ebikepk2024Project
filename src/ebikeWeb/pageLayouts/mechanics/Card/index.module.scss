@@ -9,7 +9,7 @@
     padding: 15px 0px;
     text-decoration: none !important;
     border: 1px solid #d2d2d2;
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+    box-shadow: 0 .5rem 1rem rgba(80, 79, 79, 0.15) !important;
 
     @media (max-width:768px) {
         max-width: 175px;
@@ -34,10 +34,10 @@
     .logo {
         margin: auto;
         display: flex;
-
+        width: 100px;
         @media (max-width:400px) {
-            width: 100px;
-            height: 50px;
+            width: 70px;
+            height: auto;
         }
     }
 
@@ -100,16 +100,16 @@
 .mechanic_card_main {
     width: 100%;
     height: auto;
-    text-decoration: none;
+    text-decoration: none !important;
    padding: 10px 0px;
     border: 1px solid #d2d2d2;
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px 20px 0px !important;
     display: flex;
 
     @media (max-width:768px) {
         border: 1px solid #d2d2d2;
         width: 100%;
-        margin: 3px 0px 0px 0px;
+        margin: 3px 0px 0px 0px !important;
         max-width: 175px;
         flex-direction: column;
     }

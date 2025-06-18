@@ -40,10 +40,10 @@ const Header = () => {
     useEffect(() => {
         let URL = window.location.pathname
         authenticateUser()
-        if(URL.includes('used-bikes/')){
+        if(URL.includes('/used-bikes/')){
             setIsUserBike(false)
         }
-        else if (URL.includes('used-bikes')) {
+        else if (URL.includes('/used-bikes')) {
             setIsUserBike(true)
         }
         else {

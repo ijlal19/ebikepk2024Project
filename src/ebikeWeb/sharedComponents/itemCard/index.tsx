@@ -110,10 +110,15 @@ export default function NewUsedBikesCard(props: any) {
                     <Typography className={styles.card_title}>
                         {bike.title}
                     </Typography>
-
-                    <Typography className={styles.card_price}>
-                        {bike?.price ? priceWithCommas(bike?.price) : "0"}
-                    </Typography>
+                    {props.currentpage === 'featured_bike' ?
+                        (isFeatureTagShow ?
+                            <Typography className={styles.card_price} sx={{color:'#1976d2'}}>
+                                PKR: {bike?.price ? priceWithCommas(bike?.price) : "0"}
+                            </Typography>
+                            : "")
+                        : <Typography className={styles.card_price} sx={{color:'black'}}>
+                            PKR: {bike?.price ? priceWithCommas(bike?.price) : "0"}
+                        </Typography>}
 
                     {props.from == "usedBikeComp" ?
 
@@ -125,7 +130,7 @@ export default function NewUsedBikesCard(props: any) {
 
                     {props.from != "myAdsComp" ?
 
-                        <Link href={getBikeUrl(bike)} sx={{textDecoration:'none'}}>
+                        <Link href={getBikeUrl(bike)} sx={{ textDecoration: 'none' }}>
                             <Button className={styles.view_detail_btn} onClick={() => { goToDetailPage(bike) }}>
                                 View Detail
                             </Button>

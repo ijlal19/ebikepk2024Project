@@ -21,12 +21,12 @@
 
 .header_main {
     width: 100%;
-    padding: 5px 10px;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: solid 1px rgb(221, 220, 220);
-    height: 45px;
+    height: auto;
 
     .logo_side {
         display: flex;
@@ -38,7 +38,11 @@
         }
 
         .logo {
+            height: 100%;
             width: 100px;
+             display: flex;
+            justify-content: center;
+            align-items: center;
 
             .logo_image {
                 cursor: pointer;
@@ -99,18 +103,20 @@
 
 .header_main_used_bike {
     width: 100%;
-    padding: 5px 10px;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center !important;
+    position: relative;
     background-color: white;
     border-bottom: solid 1px rgb(221, 220, 220);
-    height: 45px;
+    height: auto;
 
     .logo_side {
         display: flex;
         justify-content: center;
         align-items: center;
+        box-sizing: border-box;
 
         .menu_button {
             color: grey;
@@ -118,9 +124,14 @@
 
         .logo {
             width: 100px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .logo_image {
                 cursor: pointer;
+                box-sizing: border-box;
                 width: 100%;
             }
         }

@@ -24,7 +24,7 @@
     margin: auto;
 
     @media (max-width:768px) {
-      padding: 10px 0px 0px 20px !important;
+      padding: 10px 0px 0px 0px !important;
       max-width: 90%;
     }
 
@@ -51,7 +51,7 @@
   font-size: 20px;
   position: sticky !important;
   font-weight: bolder;
-  top: 56px;
+  top: 51px;
   display: flex;
   padding: 4px 10px 4px 10px !important;
   border-radius: 0px;
@@ -154,6 +154,7 @@
   height: 18px;
 
   .icon {
+    margin-top: 10px;
     font-size: 18px;
     filter: drop-shadow(0px 0px 10px rgb(0, 0, 0));
   }
@@ -169,10 +170,11 @@
   background-color: whitesmoke;
   max-width: 1000px;
   margin: 0px auto !important;
-  padding: 0px 0px !important;
-
+  padding: 0px !important;
+  
   @media (max-width:767px) {
-    padding: 0px;
+    // padding: 0px;
+    padding: 0px !important;
   }
 
   .similar_heading {
@@ -392,6 +394,7 @@
       .grid_bike_list {
         display: flex;
         flex-wrap: wrap;
+        gap: 15px;
         justify-content: center;
 
         .grid_card {
@@ -534,11 +537,14 @@
       }
 
       .bike_ad_list {
-
         @media (max-width:600px) {
           display: flex;
+          width: 100%;
+          margin-bottom: 20px;
           flex-wrap: wrap;
           justify-content: center;
+          column-gap: 15px;
+          row-gap: 15px;
           box-sizing: border-box;
         }
 
@@ -588,8 +594,10 @@
 
             img {
               height: 100%;
-              width: fit-content;
-              max-width: 100%;
+              // width: fit-content;
+              // object-fit: ;
+              // width: 10%;
+              // max-width: 10%;
 
               @media (max-width:600px) {
                 height: 120px;
@@ -735,12 +743,13 @@
 
               .icon_box {
                 display: flex;
-                padding: 5px 0px !important;
+                // padding: 5px 0px 5px 0px !important;
                 justify-content: center !important;
                 align-items: center !important;
                 width: 30px;
-                border-radius: 20px;
-                height: 20px;
+                // background-color: red !important;
+                border-radius:50%;
+                height: 25px;
                 overflow: hidden;
 
                 .icon {
@@ -771,21 +780,6 @@
 
           }
 
-        }
-
-        .banner {
-          width: 500px;
-
-          @media (max-width:991px) {
-            width: 300px;
-          }
-
-          text-align: center;
-          margin: 10px auto;
-
-          .baner_image {
-            width: 100%;
-          }
         }
 
       }
@@ -879,12 +873,60 @@
 
 .filter_box_main {
   position: sticky;
-  top: -20px;
+  top: 10px;
   margin-bottom: 20px;
 
   @media (max-width:910px) {
     position: unset;
     margin: auto;
     margin-top: 0px;
+  }
+}
+
+.item_div {
+  display: none;
+
+  @media (max-width:600px) {
+    width: 200px;
+    max-width: 160px;
+    display: flex;
+    // gap: 10px;
+  }
+}
+
+.item_div1 {
+  display: none;
+
+  @media (max-width:600px) {
+    width: 200px;
+    max-width: 160px;
+    display: flex;
+  }
+}
+
+.banner_1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px !important;
+
+  @media (max-width:991px) {
+    width: 100%;
+
+  }
+
+
+  .baner_image {
+    box-sizing: border-box;
+    width: 400px;
+    text-align: center;
+    height: 100%;
+    margin: auto !important;
+    float: center;
+
+    @media (max-width:600px) {
+      width: 300px;
+    }
   }
 }
