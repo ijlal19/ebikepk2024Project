@@ -98,11 +98,14 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
         responsedetails[0].bike.brandName = brand?.length > 0 ? brand[0].brandName : "Similar Brand"
       }
 
-      let CC = Number(responsedetails[0]?.bike?.displacement.split(' ')[0]) ? Number(responsedetails[0]?.bike?.displacement.split(' ')[0]) : 70
-      // if (responsedetails[0]?.bike?.displacement?.indexOf('') > -1) {
-      //   responsedetails[0].bike.displacement = responsedetails[0]?.bike?.displacement?.split(',')[0]
-      //   CC = responsedetails[0]?.bike?.displacement?.split(',')[1] ? responsedetails[0]?.bike?.displacement?.split(',')[1] : 70;
-      // }
+      let CC = 0
+      let displacment = responsedetails[0]?.bike?.displacement
+      // debugger
+      // Number(responsedetails[0]?.bike?.displacement.split(',')[0]) ? Number(responsedetails[0]?.bike?.displacement.split(',')[0]) : 0
+      if (responsedetails[0]?.bike?.displacement?.indexOf(',') > -1) {
+        CC = displacment.split(',')[1] ? displacment?.split(',')[1] : 0;
+        // responsedetails[0].bike.displacement = responsedetails[0]?.bike?.displacement?.split(',')[0]
+      }
 
       responsedetails[0].bike.bikeCC = CC
 
@@ -115,7 +118,13 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
       fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
       fetchSimilarBrandDealerInfo(responsedetails[0]?.bike?.brandId)
       fetchSimilarBrandMechanicInfo(responsedetails[0]?.bike?.brandId)
-      fetchSimilarCCUsedBike(CC)
+     
+      // console.log('CCCCCC', CC)
+      if(Number(CC) > 0) {
+        fetchSimilarCCUsedBike(CC)
+      }else {
+        setSimilarCCUsedBike([])
+      }
 
       setTimeout(() => {
         window.scrollTo(0, 0)
@@ -300,7 +309,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                     </tr>
                                     <tr className={styles.tr} >
                                       <td className={styles.column}>Displacement</td>
-                                      <td className={styles.column}>{e?.bike?.displacement ? e.bike.displacement : '-'}</td>
+                                      <td className={styles.column}>{e?.bike?.displacement ? e.bike?.displacement?.split(',')[0] : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
                                       <td className={styles.column}>Dimention</td>

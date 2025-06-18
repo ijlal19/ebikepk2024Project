@@ -123,7 +123,8 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        // const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+         const GetScroll = 0
         setTimeout(() => {
             window.scrollTo({
                 top: GetScroll || 0,
@@ -305,7 +306,8 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        // const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        const GetScroll = 0
         setTimeout(() => {
             window.scrollTo({
                 top: GetScroll || 0,
@@ -316,8 +318,8 @@ const AllUsedBikeByFilter = () => {
     }
 
     function goToDetailPage(val) {
-        localStorage.setItem("FilterPageNo", currentPage);
-        localStorage.setItem("WindowScrollbyFilter", window.scrollY);
+        // localStorage.setItem("FilterPageNo", currentPage);
+        // localStorage.setItem("WindowScrollbyFilter", window.scrollY);
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
         router.push(`/used-bikes/${urlTitle}/${val.id}`)
@@ -495,7 +497,8 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        // const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        const GetScroll = 0;
         setTimeout(() => {
             window.scrollTo({
                 top: GetScroll || 0,
@@ -546,7 +549,8 @@ const AllUsedBikeByFilter = () => {
         }
 
         setIsLoading(false)
-        const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        // const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+        const GetScroll = 0;
         setTimeout(() => {
             window.scrollTo({
                 top: GetScroll || 0,
@@ -579,7 +583,8 @@ const AllUsedBikeByFilter = () => {
             }
 
             setIsLoading(false)
-            const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+            // const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+            const GetScroll = 0;
             setTimeout(() => {
                 window.scrollTo({
                     top: GetScroll || 0,
@@ -611,7 +616,8 @@ const AllUsedBikeByFilter = () => {
                 setTotalPage(0)
             }
             setIsLoading(false)
-            const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+            // const GetScroll = Number(localStorage.getItem("WindowScrollbyFilter"));
+            const GetScroll = 0;
             setTimeout(() => {
                 window.scrollTo({
                     top: GetScroll || 0,
@@ -836,7 +842,7 @@ const AllUsedBikeByFilter = () => {
                                 />
                             </Box>
                             : ""}
-                        <BrowseUsedBike />
+                        {/* <BrowseUsedBike /> */}
                     </>
                     :
                     <div className={styles.load_main}>

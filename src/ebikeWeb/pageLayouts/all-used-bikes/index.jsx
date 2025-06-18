@@ -50,7 +50,8 @@ const AdsArray = [
 ]
 
 let SelectedADD = []
-let GetScroll = Number(localStorage.getItem("WindowScroll"));
+// let GetScroll = Number(localStorage.getItem("WindowScroll"));
+let GetScroll = 0
 
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
@@ -60,7 +61,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [FavouriteData, setFavouriteData] = useState([]);
     const IsMobile2 = useMediaQuery('(max-width:910px)');
     const [SearchApply, setSearchApply] = useState(false);
-    const [featuredData, setFeaturedData] = useState(_allFeaturedBike?.data);
+    const [featuredData, setFeaturedData] = useState([]);
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
@@ -84,7 +85,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             setIsLogin("not_login")
         }
 
-        // fetchFeaturedBike()
+        if(_allFeaturedBike?.data){
+            setFeaturedData(_allFeaturedBike?.data)
+        }
+        else {
+            fetchFeaturedBike()
+        }
+
 
         const pageNoRaw = localStorage.getItem('PageNo');
         if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
@@ -139,31 +146,36 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     async function fetchBikeInfo(_pageNo, fromPagination) {
         setIsLoading(true)
         let res;
-        const pageNoRaw = localStorage.getItem('PageNo');
+        // const pageNoRaw = localStorage.getItem('PageNo');
 
-        if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
-            const PageNo = Number(pageNoRaw);
-            res = null;
-        } else {
-            res = _allUsedBike;
-        }
+        // if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
+        //     const PageNo = Number(pageNoRaw);
+        //     res = null;
+        // } else {
+        //     res = _allUsedBike;
+        // }
 
         let obj = {
             adslimit: 12,
             page: _pageNo
         }
 
-        if (res == null || fromPagination) {
+        if(_allUsedBike && _pageNo == 1) {
+            res = _allUsedBike
+            
+        }
+        else if (res == null || fromPagination) {
             res = await getCustomBikeAd(obj);
         }
 
+        localStorage.removeItem('PageNo')
         if (res?.data?.length > 0) {
             setCurrentPage(res?.currentPage)
             setAllBikesArr(res?.data)
             setTotalPage(res?.pages)
         }
         else {
-            setCurrentPage(res?.data?.currentPage)
+            setCurrentPage(1)
             setAllBikesArr([])
             setTotalPage(0)
         }
@@ -176,46 +188,33 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 behavior: 'smooth'
             });
         }, 500);
-        // }
-        // else {
-        // setIsLoading(false)
-        // setTimeout(() => {
-        //     window.scrollTo({
-        //         top: GetScroll ? GetScroll : 0,
-        //         behavior: 'smooth'
-        //     });
-        // }, 500);
-        // }
-
-
     }
 
-    // async function fetchFeaturedBike() {
+    async function fetchFeaturedBike() {
 
-    //     let obj = {
-    //         isFeatured: true,
-    //         // page: 1,
-    //         adslimit: 20,
-    //         random: true
-    //     }
+        let obj = {
+            isFeatured: true,
+            adslimit: 20,
+            // page: 1,
+            // random: true
+        }
 
-    //     // let res = _allFeaturedBike
-    //     let res = false
-    //     if (!res) {
-    //         res = await getCustomBikeAd(obj);
-    //     }
+        let res = false
+        if (!res) {
+            res = await getCustomBikeAd(obj);
+        }
 
-    //     if (res && res?.data?.length > 0) {
-    //         setFeaturedData(res.data)
-    //     }
-    //     else {
-    //         setFeaturedData([])
-    //     }
-    // }
+        if (res && res?.data?.length > 0) {
+            setFeaturedData(res.data)
+        }
+        else {
+            setFeaturedData([])
+        }
+    }
 
     function goToDetailPage(val) {
         localStorage.setItem("PageNo", currentPage);
-        localStorage.setItem("WindowScroll", window.scrollY);
+        // localStorage.setItem("WindowScroll", window.scrollY);
         let title = val.title;
         let urlTitle = title.toLowerCase().replaceAll(' ', '-');
         router.push(`/used-bikes/${urlTitle}/${val.id}`);

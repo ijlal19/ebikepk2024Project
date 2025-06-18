@@ -25,7 +25,7 @@ export default async function AllUsedBikes() {
 
   let featureObject = {
     isFeatured: true,
-    random: true,
+    // random: true,
     adslimit: 20
   }
   let allFeaturedBike = await getCustomBikeAd(featureObject);
