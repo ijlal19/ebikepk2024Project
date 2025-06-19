@@ -145,7 +145,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
     async function fetchBikeInfo(_pageNo, fromPagination) {
         setIsLoading(true)
-        let res;
+        let res = null;
         // const pageNoRaw = localStorage.getItem('PageNo');
 
         // if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
@@ -160,11 +160,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             page: _pageNo
         }
 
-        if(_allUsedBike && _pageNo == 1) {
-            res = _allUsedBike
+        // if(_allUsedBike && _pageNo == 1) {
+        //     res = _allUsedBike
             
-        }
-        else if (res == null || fromPagination) {
+        // }
+        // else 
+        if (res == null || fromPagination) {
             res = await getCustomBikeAd(obj);
         }
 
