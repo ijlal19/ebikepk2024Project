@@ -30,6 +30,7 @@ const Header = () => {
     const [buysellmenu, setBuySellmenu] = useState(false);
     const [customer, setCustomer] = useState('not_login');
     const [isUsedBike, setIsUserBike] = useState(false);
+    const [IsEbikePanel, setIsEbikePanel] = useState(false);
     const [findDealer, setFindDealer] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
     const [options, setOptions] = useState(false);
@@ -45,6 +46,9 @@ const Header = () => {
         }
         else if (URL.includes('/used-bikes')) {
             setIsUserBike(true)
+        }
+        else if(URL.includes('/ebike-panel')){
+            setIsEbikePanel(true)
         }
         else {
             setIsUserBike(false)
@@ -224,7 +228,7 @@ const Header = () => {
 
     return (
         <>
-            <Box className={`${isUsedBike ? styles.header_main_used_bike : styles.header_main}`}>
+            <Box className={`${isUsedBike ? styles.header_main_used_bike : styles.header_main}`} sx={{display:IsEbikePanel?"none":"flex"}}>
                 <Box className={styles.logo_side}>
 
                     <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>

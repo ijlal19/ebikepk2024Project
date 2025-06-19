@@ -1,10 +1,9 @@
 'use client'
+import { PostLogin } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { Box, Typography } from "@mui/material";
+import Passcode_form from "../passcode_form";
 import styles from './index.module.scss';
 import { useState } from "react";
-import { PostLogin } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import Passcode_form from "../passcode_form";
-import Panel_header from "../panel-header";
 const jsCookie = require('js-cookie');
 
 const LoginForm = () => {
@@ -33,7 +32,7 @@ const LoginForm = () => {
                 role: post_login?.role,
                 uid: post_login?.user?.id,
                 name: post_login?.user?.userFullName
-            };
+            }; 
 
             localStorage.setItem('userData', JSON.stringify(userData));
 
@@ -48,7 +47,6 @@ const LoginForm = () => {
 
     return (
         <Box className={styles.main}>
-            <Panel_header />
             <Box className={styles.container}>
                 {
                     !Login ?
