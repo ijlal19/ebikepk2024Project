@@ -218,7 +218,7 @@ return (
                         </Typography>
 
                         <Typography className={styles.term_policy}>
-                            <Link href="/page/terms-and-conditions/25" className={styles.link}> Terms of Service </Link>  | <Link href="/page/privacy-policy/13" className={styles.link}> Privacy Policy </Link> 
+                            <Link href="/page/terms-and-conditions/25" className={styles.link}> Terms of Service </Link>  | <Link href="/page/privacy-policy/13" className={styles.link}> Privacy Policy </Link> |  <Link href="/page/delete-my-data" className={styles.link}> Delete My Data </Link> 
                         </Typography>
 
                         <Typography className={styles.permission}>
