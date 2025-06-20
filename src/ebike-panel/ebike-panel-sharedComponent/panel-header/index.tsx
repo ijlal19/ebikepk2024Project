@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useRouter } from 'next/navigation';
+import { checkAuthAndRedirect } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+const jsCookie = require("js-cookie");
 
 const Panel_header = () => {
     const [displayText, setDisplayText] = useState('login');
@@ -27,10 +29,13 @@ const Panel_header = () => {
         }
     }, []);
 
-    const handleLogout =()=>{
-        localStorage.removeItem('userData')
-        router.push('/ebike-panel/login')
-    }
+
+    const handleLogout = () => {
+ jsCookie.remove('userData_ebike_panel');
+        checkAuthAndRedirect(router)
+       
+    };
+
 
     return (
         <div className={styles.header}>
@@ -41,11 +46,7 @@ const Panel_header = () => {
                 <div className={styles.ebiker_box}>
                     <p className={styles.ebiker_heading}>{displayName}</p>
                 </div>
-                {displayText === 'Logout' ?
-                    <button className={styles.logout} onClick={handleLogout}>Logout</button>
-                    :
-                    <button className={styles.logout}>Login</button>
-                }
+                <button className={styles.logout} onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );

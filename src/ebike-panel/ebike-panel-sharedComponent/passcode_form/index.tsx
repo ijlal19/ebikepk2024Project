@@ -8,17 +8,23 @@ const Passcode_form = () => {
     const [Passcode, setPasscode] = useState('')
 
     const handlePasscode = async () => {
-        if(Passcode == 'Tarrar$$156chin@'){
-            router.push('/ebike-panel/dashboard')
+        if(Passcode === ''){
+            alert('Fill Passcode Field!')
         }
-    }
+       else  if (Passcode === 'Tarrar$$156chin@') {
+            router.push('/ebike-panel/dashboard');
+        } else {
+            alert('Incorrect passcode. Please try again.');
+        }
+    };
+
 
     return (
         <div className={styles.main}>
             <div className={styles.container}>
                 <p className={styles.heading}>Enter the passcode to login</p>
                 <div className={styles.form_box}>
-                    <input type="password" placeholder="passcode" onChange={(e) =>{ setPasscode(e?.target.value)}} className={styles.input} />
+                    <input type="password" placeholder="passcode" onChange={(e) => { setPasscode(e?.target.value) }} className={styles.input} />
                     <button className={styles.btn} onClick={handlePasscode} >Verify</button>
                 </div>
             </div>

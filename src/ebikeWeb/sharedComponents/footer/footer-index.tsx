@@ -2,10 +2,10 @@
 import { Box, Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 import { Instagram, LinkedIn, Pinterest, Twitter, YouTube } from "@mui/icons-material";
 import { sendEmailLetter } from "@/ebikeWeb/functions/globalFuntions";
-import {  validateEmail } from "@/genericFunctions/geneFunc";
+import { validateEmail } from "@/genericFunctions/geneFunc";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import styles from './footer-index.module.scss';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from 'next/link';
 
 let cities_arr = [
@@ -87,120 +87,132 @@ export default function Footer() {
     const [Mail, setMail] = useState('');
     const isMobile = useMediaQuery('(max-width: 768px)');
     const isMobileUl = useMediaQuery('(max-width: 580px)');
+    const [IsEbikePanel, setIsEbikePanel] = useState(false);
 
-    async function SendMail(e: any) {
-
-        e.preventDefault();
-
-        if(validateEmail(Mail)) {
-            let obj = {email: Mail}
-            let res = await sendEmailLetter(obj)
-            alert('Email Submitted Successfully')
+    useEffect(() => {
+        let URL = window.location.pathname
+        if (URL.includes('/ebike-panel')) {
+            setIsEbikePanel(true)
         }
-
         else {
-            alert('please enter correct email')
+            setIsEbikePanel(false)
         }
+    }, [])
 
+
+async function SendMail(e: any) {
+
+    e.preventDefault();
+
+    if (validateEmail(Mail)) {
+        let obj = { email: Mail }
+        let res = await sendEmailLetter(obj)
+        alert('Email Submitted Successfully')
     }
 
-    function FooterLinks(arr: any) {
-        return (
-            <>
-                <ul className={styles.footer_ul}>
-                    {arr.map((item: any, ind: any) => {
-                        return (
-                            ind == 0 ? 
-                            <li className={styles.link_heading} key={item.title + ind}>{item.title}</li> 
+    else {
+        alert('please enter correct email')
+    }
+
+}
+
+function FooterLinks(arr: any) {
+    return (
+        <>
+            <ul className={styles.footer_ul}>
+                {arr.map((item: any, ind: any) => {
+                    return (
+                        ind == 0 ?
+                            <li className={styles.link_heading} key={item.title + ind}>{item.title}</li>
                             :
                             <Link className={styles.link} href={item.url}>
                                 <li className={styles.link_text} key={item.title + ind}>{item.title}</li>
                             </Link>
-                        )
-                    })}
-                </ul>
-            </>
-        )
-    }
+                    )
+                })}
+            </ul>
+        </>
+    )
+}
 
 return (
-        <Box className={styles.box}>
-            <Container>
-                <Grid container className={styles.main}>
-                    <Grid item xs={isMobile ? 12 : 8} className={styles.links}>
-                        <Grid container >
+    <Box className={styles.box} sx={{ display: IsEbikePanel ? "none" : "flex" }}>
+        <Container>
+            <Grid container className={styles.main}>
+                <Grid item xs={isMobile ? 12 : 8} className={styles.links}>
+                    <Grid container >
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(cities_arr)}
-                            </Grid>
+                        <Grid item xs={isMobileUl ? 6 : 4}>
+                            {FooterLinks(cities_arr)}
+                        </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(year_arr)}
-                            </Grid>
+                        <Grid item xs={isMobileUl ? 6 : 4}>
+                            {FooterLinks(year_arr)}
+                        </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(cc_arr)}
-                            </Grid>
+                        <Grid item xs={isMobileUl ? 6 : 4}>
+                            {FooterLinks(cc_arr)}
+                        </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(catagory_arr)}
-                            </Grid>
+                        <Grid item xs={isMobileUl ? 6 : 4}>
+                            {FooterLinks(catagory_arr)}
+                        </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(brand_arr)}
-                            </Grid>
+                        <Grid item xs={isMobileUl ? 6 : 4}>
+                            {FooterLinks(brand_arr)}
+                        </Grid>
 
-                            <Grid item xs={isMobileUl ? 6 : 4}>
-                                {FooterLinks(headerlink_arr)}
-                            </Grid>
+                        <Grid item xs={isMobileUl ? 6 : 4}>
+                            {FooterLinks(headerlink_arr)}
                         </Grid>
                     </Grid>
+                </Grid>
 
-                    <Grid item xs={isMobile ? 12 : 4} className={styles.mail}>
+                <Grid item xs={isMobile ? 12 : 4} className={styles.mail}>
 
-                        <Typography className={styles.subscribe_heading}>
-                            Subscribe to our Newsletter
-                            <Typography className={styles.getUser_mail}>
+                    <Typography className={styles.subscribe_heading}>
+                        Subscribe to our Newsletter
+                        <Typography className={styles.getUser_mail}>
 
-                                <form action="" className={styles.getUser_mail} onSubmit={SendMail}>
+                            <form action="" className={styles.getUser_mail} onSubmit={SendMail}>
 
-                                    <input type="email" value={Mail} onChange={(e) => setMail(e.target.value)} className={styles.TextField} placeholder="User@gmail.com" required />
-                                    <Button variant="contained" type="submit" sx={{ borderRadius: 0 }}>Send</Button>
+                                <input type="email" value={Mail} onChange={(e) => setMail(e.target.value)} className={styles.TextField} placeholder="User@gmail.com" required />
+                                <Button variant="contained" type="submit" sx={{ borderRadius: 0 }}>Send</Button>
 
-                                </form>
-                            </Typography>
+                            </form>
                         </Typography>
+                    </Typography>
 
-                        <Typography className={styles.follow_heading}>
-                            Follow Us
-                            <Typography className={styles.Social_Links}>
+                    <Typography className={styles.follow_heading}>
+                        Follow Us
+                        <Typography className={styles.Social_Links}>
 
-                                <Link href='https://web.facebook.com/ebike.pk' target="blank" className={styles.Link}>
-                                <FacebookIcon sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px'}} />
-                                </Link>
+                            <Link href='https://web.facebook.com/ebike.pk' target="blank" className={styles.Link}>
+                                <FacebookIcon sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                            </Link>
 
-                                <Link href='https://www.instagram.com/ebikepak/' target="blank" className={styles.Link}>
-                                <Instagram sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
-                                </Link>
+                            <Link href='https://www.instagram.com/ebikepak/' target="blank" className={styles.Link}>
+                                <Instagram sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                            </Link>
 
-                                <Link href='https://www.linkedin.com/in/ebikepk/' target="blank" className={styles.Link}>
-                                <LinkedIn sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
-                                </Link>
+                            <Link href='https://www.linkedin.com/in/ebikepk/' target="blank" className={styles.Link}>
+                                <LinkedIn sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                            </Link>
 
-                                <Link href='https://www.pinterest.com/ebikepk/' target="blank"  className={styles.Link}>
-                                <Pinterest sx={{ margin: '0px', cursor: 'pointer' ,fontSize:'25px'}} />
-                                </Link>
+                            <Link href='https://www.pinterest.com/ebikepk/' target="blank" className={styles.Link}>
+                                <Pinterest sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                            </Link>
 
-                                <Link href='https://twitter.com/ebikepk' target="blank" className={styles.Link}>
-                                <Twitter sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
-                                </Link>
+                            <Link href='https://twitter.com/ebikepk' target="blank" className={styles.Link}>
+                                <Twitter sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                            </Link>
 
-                                <Link href='https://www.youtube.com/@ebikepk' target="blank" className={styles.Link}>
-                                <YouTube sx={{ margin: '0px', cursor: 'pointer',fontSize:'25px' }} />
-                                </Link>
+                            <Link href='https://www.youtube.com/@ebikepk' target="blank" className={styles.Link}>
+                                <YouTube sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                            </Link>
 
-                            </Typography>
                         </Typography>
+                    </Typography>
 
                         <Typography className={styles.download_app}>
                             Download our mobile app
@@ -209,7 +221,7 @@ return (
                             </Box>
                         </Typography>
 
-                    </Grid>
+                </Grid>
 
                     <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
 
@@ -228,7 +240,23 @@ return (
                     </Grid>
 
                 </Grid>
-            </Container>
-        </Box>
-    )
+
+                <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
+
+                    <Typography className={styles.copyright}>
+                        Copyright © 2017 - 2025 ebike.pk - All Rights Reserved.
+                    </Typography>
+
+                    <Typography className={styles.term_policy}>
+                        <Link href="/page/terms-and-conditions/25" className={styles.link}> Terms of Service </Link>  | <Link href="/page/privacy-policy/13" className={styles.link}> Privacy Policy </Link>
+                    </Typography>
+
+                    <Typography className={styles.permission}>
+                        Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.
+                    </Typography>
+
+                </Grid>
+        </Container>
+    </Box>
+)
 }
