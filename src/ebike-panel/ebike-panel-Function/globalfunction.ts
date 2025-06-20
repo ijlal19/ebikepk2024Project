@@ -1,5 +1,4 @@
 import Gconfig from 'globalconfig'
-// import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
 
 function PostLogin(data: any) {
@@ -132,6 +131,28 @@ function DeleteNewBikeById(id: any) {
         });
 }
 
+const checkAuthAndRedirect = (router:any) => {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+
+    if (userCookie) {
+        try {
+            const userData = JSON.parse(userCookie);
+            const token = userData?.accessToken;
+
+            if (token) {
+                router.replace("/ebike-panel/dashboard");
+            } else {
+                router.replace("/ebike-panel/login");
+            }
+        } catch (error) {
+            console.error("Invalid cookie format:", error);
+            router.replace("/ebike-panel/login");
+        }
+    } else {
+        router.replace("/ebike-panel/login");
+    }
+};
+
 export {
     PostLogin,
 
@@ -144,5 +165,6 @@ export {
     getCustomBikeAd,
     getSinglebikesDetail,
     DeleteUsedBikeById,
-    UpdateUsedBikeById
+    UpdateUsedBikeById,
+    checkAuthAndRedirect
 }

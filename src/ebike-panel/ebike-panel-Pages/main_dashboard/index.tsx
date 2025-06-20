@@ -8,10 +8,16 @@ import { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import { Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-bikes-card";
 import Panel_header from "@/ebike-panel/ebike-panel-sharedComponent/panel-header";
+import { useRouter } from "next/navigation";
+import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const Main_DashBoard = () => {
     const [IsLoading, setIsLoading] = useState(false);
+    const router = useRouter()
 
+    useEffect(() => {
+        checkAuthAndRedirect(router)
+    }, []);
     return (
         <div className={styles.main}>
             <Panel_header />
