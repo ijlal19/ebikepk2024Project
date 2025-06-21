@@ -57,13 +57,13 @@ function UpdateNewBikeById(id: any, payload: any) {
         },
         body: JSON.stringify(payload)
     })
-    .then(response => response.json())
-    .then(data => {
-        return data;
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 }
 
 
@@ -131,21 +131,13 @@ function DeleteNewBikeById(id: any) {
         });
 }
 
-const checkAuthAndRedirect = (router:any) => {
+const checkAuthAndRedirect = (router: any) => {
     const userCookie = jsCookie.get("userData_ebike_panel");
 
     if (userCookie) {
-        try {
-            const userData = JSON.parse(userCookie);
-            const token = userData?.accessToken;
-
-            if (token) {
-                router.replace("/ebike-panel/dashboard");
-            } else {
-                router.replace("/ebike-panel/login");
-            }
-        } catch (error) {
-            console.error("Invalid cookie format:", error);
+        const userData = JSON.parse(userCookie);
+        const token = userData?.accessToken;
+        if (!token) {
             router.replace("/ebike-panel/login");
         }
     } else {

@@ -1,13 +1,19 @@
 'use client';
 import Edit_newbike_form from "@/ebike-panel/ebike-panel-sharedComponent/edit-new-bike";
 import EditUsedBikeForm from "@/ebike-panel/ebike-panel-sharedComponent/edit-used-bike";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
+import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { useEffect } from "react";
 
 const DashBoard_form = () => {
     const { slug, slug1 } = useParams()
     const CheckRoute = slug
-    console.log("data", slug, slug1)
+    const router = useRouter()
+
+    useEffect(() => {
+        checkAuthAndRedirect(router)
+    }, []);
 
     const GetComponent = (check: any) => {
         if (check == "edit-new-bike") {
