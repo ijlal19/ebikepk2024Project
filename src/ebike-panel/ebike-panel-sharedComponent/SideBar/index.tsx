@@ -66,7 +66,7 @@ const SideBar = () => {
                 </List>
                 {GetList('usedBikes', 'bike', 'Used Bikes', ["Classified"], ["view-classified-ads"])}
                 {GetList('newBikes', 'bike', 'New Bikes', ["Add New Bike", "All New Bikes"], ["add-new-bike", "all-new-bikes"])}
-                {GetList('blogs', 'blog', 'Blog', ["All Blogs"], [])}
+                {GetList('blogs', 'blog', 'Blog', ["Add New Blog" , 'Blog List'], ['create-blog-post','blog-list'])}
                 {GetList('pages', 'blog', 'Pages', ["All Pages"], [])}
                 {GetList('dealers', 'bike', 'Dealers/Mechanics', ["All Dealers", "All Mechanics"], [])}
                 {GetList('shop', 'shop', 'Shop', ["WorkShop", "Showroom"], [])}

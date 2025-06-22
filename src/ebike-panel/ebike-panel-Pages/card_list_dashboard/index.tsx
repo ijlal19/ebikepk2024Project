@@ -1,9 +1,9 @@
 'use client'
-import { New_bike_card, Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-bikes-card"
+import { Blog_Card, New_bike_card, Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-bikes-card"
 import Panel_header from "@/ebike-panel/ebike-panel-sharedComponent/panel-header"
 import { useParams, useRouter } from "next/navigation"
 import styles from './index.module.scss';
-import AddNewBikeForm from "@/ebike-panel/ebike-panel-sharedComponent/Add-new-bike";
+import {AddNewBikeForm , AddBogForm} from "@/ebike-panel/ebike-panel-sharedComponent/Add-new-bike";
 import { useEffect } from "react";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
@@ -24,6 +24,12 @@ const Dashboard_page = () => {
         else if (route  == "add-new-bike"){
             return <div className={styles.card_section}><AddNewBikeForm /></div>
         }
+        else if (route  == "blog-list"){
+            return <div className={styles.card_section}><Blog_Card /></div>
+        }
+        // else if (route  == "create-blog-post"){
+        //     return <div className={styles.card_section}><AddBogForm /></div>
+        // }
     }
 
     return (

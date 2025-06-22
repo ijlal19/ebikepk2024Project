@@ -145,6 +145,16 @@ const checkAuthAndRedirect = (router: any) => {
     }
 };
 
+function getAllBlog() {
+    return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 export {
     PostLogin,
 
@@ -158,5 +168,7 @@ export {
     getSinglebikesDetail,
     DeleteUsedBikeById,
     UpdateUsedBikeById,
-    checkAuthAndRedirect
+    checkAuthAndRedirect,
+
+    getAllBlog
 }

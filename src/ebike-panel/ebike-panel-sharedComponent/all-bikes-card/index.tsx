@@ -1,17 +1,17 @@
+import { DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
-import styles from './index.module.scss';
-import { Grid, Pagination } from "@mui/material";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
-import { priceWithCommas } from "@/genericFunctions/geneFunc";
-import { useEffect, useState } from "react";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
-import { DeleteNewBikeById, DeleteUsedBikeById, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import { useRouter } from "next/navigation";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { priceWithCommas } from "@/genericFunctions/geneFunc";
 import { Navigation, FreeMode } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Grid, Pagination } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from './index.module.scss';
 import '../../../app/globals.scss';
-import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css';
 
 const Used_bike_card = () => {
     const [AllBikeArr, setAllBikeArr] = useState([]);
@@ -466,9 +466,181 @@ const New_bike_card = () => {
     );
 };
 
+const Blog_Card = () => {
+    const [AllNewBikeForFilter, setAllNewBikeForFilter] = useState([]);
+    const [filteredBikes, setFilteredBikes] = useState([]);
+    const [displayedBikes, setDisplayedBikes] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+
+    const itemsPerPage = 10;
+    const router = useRouter();
+
+    useEffect(() => {
+        fetchAllNewBike(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllNewBikeForFilter.filter((bike: any) =>
+            bike.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredBikes(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllNewBikeForFilter]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedBikes(filteredBikes.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredBikes.length / itemsPerPage));
+    }, [filteredBikes, currentPage]);
+
+    const fetchAllNewBike = async (_page: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getAllBlog();
+            console.log("data", res)
+            if (res && res.length > 0) {
+                setAllNewBikeForFilter(res);
+                setFilteredBikes(res);
+                setCurrentPage(_page);
+            } else {
+                setAllNewBikeForFilter([]);
+                setFilteredBikes([]);
+                setDisplayedBikes([]);
+                setCurrentPage(1);
+                setTotalPage(0);
+            }
+        } catch (error) {
+            console.error("Error fetching new bikes:", error);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const GetName = (from: any, id: any) => {
+        if (from === 'brand') {
+            const brand = getBrandFromId(id, BrandArr);
+            return brand[0]?.brandName || "";
+        } else {
+            const city = getCityFromId(id, CityArr);
+            return city[0]?.city_name || "";
+        }
+    };
+
+    const handleDelete = async (id: any) => {
+        const res = await DeleteNewBikeById(id);
+        console.log("Deleted:", res);
+        fetchAllNewBike(currentPage);
+    };
+
+    const handleEditBlog = (id: any) => {
+        router.push(`/ebike-panel/dashboard/edit-blog/${id}`);
+    };
+
+    return (
+        <div className={styles.main_blog}>
+            <div className={styles.search_input}>
+                <input
+                    type="text"
+                    className={styles.input}
+                    placeholder="Search Blog with Title"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+
+            {!IsLoading ? (
+                <div>
+                    {displayedBikes.map((e: any, i: any) => (
+
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{e?.blogTitle}</h3>
+                                    <span className={styles.ad_id}>Ad ID: {e?.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+                                    <div className={styles.cardimage_box}>
+                                        <img className={styles.image} src={e?.featuredImage ? e?.featuredImage : "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png"} alt="" />
+                                    </div>
+
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10)  : "N/A"}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Author Name:</span>
+                                            <span>{e?.authorname ? e?.authorname : "N/A"}</span>
+                                        </div>
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Category:</span>
+                                            <span>{e?.blog_category?.name ? e?.blog_category?.name : "N/A"}</span>
+                                        </div>
+
+                                        <div className={styles.description}>
+                                            Description:
+                                            <p className={styles.description_text}>
+                                                {e?.meta_description || 'No description available'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBlog(e?.id)}>
+                                        <a href={`/ebike-panel/dashboard/edit-blog/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                            Edit
+                                        </a></button>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className={styles.pagination}>
+                        {filteredBikes?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="large"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
 export {
-    Used_bike_card
-    , New_bike_card
+    Used_bike_card,
+    New_bike_card,
+    Blog_Card
 }
 
 // const New_bike_card = () => {
