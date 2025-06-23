@@ -251,7 +251,8 @@ export default function UsedBike() {
             <Loader isLoading={isLoading} />
           </div>
         </div>}
-    {/* <BrowseUsedBike /> */}
+
+        <BrowseUsedBike />
   </>
   );
 
