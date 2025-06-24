@@ -12,7 +12,8 @@ const PrivacyPolicy = () => {
                         </Typography>
                         <Typography className={styles.privacy_policy_paragraph}>
                             We care about your privacy and are committed to protecting your personal data. This privacy statement will inform you how we handle your personal data, your privacy rights and how the law protects you.
-                        </Typography>
+                        </Typography >
+                        <Typography className={styles.privacy_policy_paragraph}>  Our app uses Facebook Login for authentication purposes only. We do not collect, store, or share any personal data such as name, email, or profile information. All authentication is handled securely via Facebook and no data is saved on our servers.</Typography>
                         <Typography className={styles.privacy_policy_paragraph}>Your continued use of this site and mobile application following the posting of any amendment, modification or change shall constitute your acceptance thereof. Please read this privacy statement carefully before using our Services.
                         </Typography>
                         <Typography className={styles.privacy_policy_paragraph}>This User Privacy Policy is effective from May 24, 2022</Typography>

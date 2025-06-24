@@ -214,12 +214,30 @@ return (
                         </Typography>
                     </Typography>
 
-                    <Typography className={styles.download_app}>
-                        Download our mobile app
-                        <Box className={styles.download_image}>
-                            <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
-                        </Box>
-                    </Typography>
+                        <Typography className={styles.download_app}>
+                            Download our mobile app
+                            <Box className={styles.download_image}>
+                                <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
+                            </Box>
+                        </Typography>
+
+                </Grid>
+
+                    <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
+
+                        <Typography className={styles.copyright}>
+                            Copyright © 2017 - 2025 ebike.pk - All Rights Reserved.
+                        </Typography>
+
+                        <Typography className={styles.term_policy}>
+                            <Link href="/page/terms-and-conditions/25" className={styles.link}> Terms of Service </Link>  | <Link href="/page/privacy-policy/13" className={styles.link}> Privacy Policy </Link> |  <Link href="/page/delete-my-data" className={styles.link}> Delete My Data </Link> 
+                        </Typography>
+
+                        <Typography className={styles.permission}>
+                            Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.
+                        </Typography>
+
+                    </Grid>
 
                 </Grid>
 
@@ -238,8 +256,6 @@ return (
                     </Typography>
 
                 </Grid>
-
-            </Grid>
         </Container>
     </Box>
 )

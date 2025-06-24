@@ -587,7 +587,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     </div>
                 </div>
             </Box>
-            {/* <BrowseUsedBike /> */}
+            
+            <BrowseUsedBike />
         </>
     )
 }
