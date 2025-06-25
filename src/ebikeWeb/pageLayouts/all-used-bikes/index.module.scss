@@ -17,28 +17,34 @@
   }
 
   .usedBike_headingBpx {
+    text-align: center;
     width: 100%;
     box-sizing: border-box;
-    max-width: 1200px;
-    padding: 0px 0px 0px 10px !important;
+    // max-width: 1200px;
+    padding: 10px 0px 10px 10px !important;
     margin: auto;
+    background-color: #1976d2;
+    // margin-top: 20px;
 
     @media (max-width:768px) {
-      padding: 10px 0px 0px 0px !important;
-      max-width: 90%;
+      // padding: 10px 0px 0px 0px !important;
+      max-width: 100%;
     }
 
     .headinh_sale {
       font-size: 24px;
       box-sizing: border-box;
-      color: $primary_two;
+      color: white;
       margin: 0px 0px -2px;
       font-weight: normal;
+      @media (max-width:767px) {
+        font-size: 18px;
+      }
     }
 
     .path_text {
       font-size: 12px;
-      color: #7b8397;
+      color: white;
       margin: 0px 15px 0px 0px;
     }
   }
@@ -167,8 +173,8 @@
 }
 
 .similarBikeDiv {
-  background-color: whitesmoke;
-  max-width: 1000px;
+  background-color: white;
+  
   margin: 0px auto !important;
   padding: 0px !important;
   
@@ -177,13 +183,22 @@
     padding: 0px !important;
   }
 
+  .similarBikeDiv_inner {
+    margin:20px auto;
+    max-width: 1060px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+  }
+
   .similar_heading {
     text-align: center;
     margin-bottom: 10px !important;
     margin-top: 10px !important;
     color: #1976d2;
     font-size: 22px;
-    font-weight: normal !important;
+    // font-weight: normal !important;\
+    font-weight: 600;
 
     @media (max-width:767px) {
       margin-top: 5px !important;

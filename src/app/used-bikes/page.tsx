@@ -19,7 +19,7 @@ export default async function AllUsedBikes() {
 
   let obj = {
     adslimit: 12,
-    page: 1
+    // page: 1
   }
   let allUsedBike = await getCustomBikeAd(obj);
 
