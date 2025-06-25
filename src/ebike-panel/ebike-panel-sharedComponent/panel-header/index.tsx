@@ -10,10 +10,15 @@ const Panel_header = () => {
     const [displayName, setDisplayName] = useState('ebiker');
     const router = useRouter()
     useEffect(() => {
-        const storedData = localStorage.getItem('userData');
-        if (storedData) {
+        const storedData = localStorage.getItem('userData'); 
+        const userCookie = jsCookie.get("userData_ebike_panel");
+        const userData = JSON.parse(userCookie);
+        const UserId  = userData?.uid;
+        console.log(UserId)
+
+        if (userCookie) {
             try {
-                const userData = JSON.parse(storedData);
+                // const userData = JSON.parse(storedData);
                 if (userData?.login === true) {
                     setDisplayText('Logout');
                 }

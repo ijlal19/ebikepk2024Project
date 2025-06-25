@@ -13,6 +13,21 @@ function PostLogin(data: any) {
         })
 }
 
+const checkAuthAndRedirect = (router: any) => {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+
+    if (userCookie) {
+        const userData = JSON.parse(userCookie);
+        const token = userData?.accessToken;
+        if (!token) {
+            router.replace("/ebike-panel/login");
+        }
+    } else {
+        router.replace("/ebike-panel/login");
+    }
+};
+
+//                                 NEW BIKE FUNCTIONS
 function addNewBike(data: any) {
     return fetch(Gconfig.ebikeApi + `new-bikes/add-new-bike`, {
         method: 'POST',
@@ -35,20 +50,6 @@ function getAllNewBike() {
         })
 }
 
-function DeleteUsedBikeById(id: any) {
-    return fetch(Gconfig.ebikeApi + `classified/delete-classified/${id}`, {
-        method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
-    })
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
 function UpdateNewBikeById(id: any, payload: any) {
     return fetch(Gconfig.ebikeApi + `new-bikes/update-new-bike/${id}`, {
         method: 'PUT',
@@ -66,16 +67,6 @@ function UpdateNewBikeById(id: any, payload: any) {
         });
 }
 
-
-function getSinglebikesDetail(id: any) {
-    return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-adds/${id}`, {
-        method: 'GET',
-        // headers: { 'Authorization': 'Bearer eyJBdXRob3IiOiJGYXNoaW9uUGFzcyIsImFsZyI6IkhTMjU2In0.e30.oUQGjCS2S_jycg4PZnFK4uQ81DsNFX-N1m81Dfahi6o','X-Request-For':customer_ip, 'guid': request_guid }
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
-
 function getnewBikedetailsData(id: any) {
     return fetch(Gconfig.ebikeApi + `new-bikes/get-new-bikes-by-id-with-random-bikes/${id}`)
         .then(response => response.json())
@@ -87,6 +78,21 @@ function getnewBikedetailsData(id: any) {
         })
 }
 
+function DeleteNewBikeById(id: any) {
+    return fetch(Gconfig.ebikeApi + `new-bikes/delete/${id}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+//                                 USED BIKE FUNCTIONS
 function getCustomBikeAd(obj: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-custom-ads`, {
         method: 'POST',
@@ -98,6 +104,29 @@ function getCustomBikeAd(obj: any) {
         .catch((err) => {
             return err
         })
+}
+
+function DeleteUsedBikeById(id: any) {
+    return fetch(Gconfig.ebikeApi + `classified/delete-classified/${id}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function getSinglebikesDetail(id: any) {
+    return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-adds/${id}`, {
+        method: 'GET',
+        // headers: { 'Authorization': 'Bearer eyJBdXRob3IiOiJGYXNoaW9uUGFzcyIsImFsZyI6IkhTMjU2In0.e30.oUQGjCS2S_jycg4PZnFK4uQ81DsNFX-N1m81Dfahi6o','X-Request-For':customer_ip, 'guid': request_guid }
+    }).then(response => response.json()).then(data => {
+        return data
+    })
 }
 
 function UpdateUsedBikeById(id: any, payload: any) {
@@ -117,8 +146,19 @@ function UpdateUsedBikeById(id: any, payload: any) {
         });
 }
 
-function DeleteNewBikeById(id: any) {
-    return fetch(Gconfig.ebikeApi + `new-bikes/delete/${id}`, {
+//                                 Blog FUNCTIONS
+function getAllBlog() {
+    return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function DeleteBlogById(id: any) {
+    return fetch(Gconfig.ebikeApi + `blog/delete-blog/${id}`, {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }
     })
@@ -131,27 +171,40 @@ function DeleteNewBikeById(id: any) {
         });
 }
 
-const checkAuthAndRedirect = (router: any) => {
-    const userCookie = jsCookie.get("userData_ebike_panel");
+function getSingleblogDetail(id: any) {
+    return fetch(Gconfig.ebikeApi + `blog/get-blog-by-id/${id}`, {
+        method: 'GET',
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
 
-    if (userCookie) {
-        const userData = JSON.parse(userCookie);
-        const token = userData?.accessToken;
-        if (!token) {
-            router.replace("/ebike-panel/login");
-        }
-    } else {
-        router.replace("/ebike-panel/login");
-    }
-};
-
-function getAllBlog() {
-    return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
-        .then(response => response.json()).then(data => {
-            return data
+function UpdateBlogById(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `blog/update-blog/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
         })
         .catch((err) => {
-            console.log(err)
+            console.log(err);
+        });
+}
+
+function addNewBlog(data: any) {
+    return fetch(Gconfig.ebikeApi + `blog/add-new-blog`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
         })
 }
 
@@ -170,5 +223,9 @@ export {
     UpdateUsedBikeById,
     checkAuthAndRedirect,
 
-    getAllBlog
+    getAllBlog,
+    DeleteBlogById,
+    getSingleblogDetail,
+    UpdateBlogById,
+    addNewBlog
 }
