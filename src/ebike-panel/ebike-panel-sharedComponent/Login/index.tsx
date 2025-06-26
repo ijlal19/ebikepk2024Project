@@ -1,11 +1,14 @@
 'use client'
 import { checkAuthAndRedirect, PostLogin } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Passcode_form from "../passcode_form";
 import styles from './index.module.scss';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-const jsCookie = require('js-cookie');
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+// const jsCookie = require('js-cookie');
+
+let userData = {}
 
 const LoginForm = () => {
     const [Email, setEmail] = useState('');
@@ -38,7 +41,7 @@ const LoginForm = () => {
         if (post_login?.login) {
             setLogin(true);
 
-            const userData = {
+             userData = {
                 login: post_login?.login,
                 accessToken: post_login?.accessToken,
                 expiresIn: post_login?.expiresIn,
@@ -47,7 +50,7 @@ const LoginForm = () => {
                 name: post_login?.user?.userFullName
             };
 
-            jsCookie.set('userData_ebike_panel', JSON.stringify(userData), { expires: 1 });
+            // jsCookie.set('userData_ebike_panel', JSON.stringify(userData), { expires: 1 });
 
         } else {
             alert('Login details are not correct');
@@ -57,21 +60,21 @@ const LoginForm = () => {
 
 
     return (
-        <Box className={styles.main}>
-            <Box className={styles.container}>
+        <div className={styles.main}>
+            <div className={styles.container}>
                 {
                     !Login ?
                         <form className={styles.form} onSubmit={handleLogin} >
-                            <Typography className={styles.heading}>Login</Typography>
+                            <h2 className={styles.heading}><AccountCircleIcon sx={{fontSize:'30px'}}/>Login</h2>
                             <input type="text" placeholder="Email" className={styles.input} onChange={(e) => setEmail(e.target.value)} />
                             <input type="password" placeholder="Password" className={styles.input} onChange={(e) => setPassword(e.target.value)} />
-                            <button className={styles.login_btn} type="submit" >Login</button>
+                            <Button className={styles.login_btn} type="submit" >Login</Button>
                         </form> :
-                        <Passcode_form />
+                        <Passcode_form props={userData} />
                 }
-            </Box>
+            </div>
 
-        </Box>
+        </div>
     )
 }
 
