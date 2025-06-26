@@ -20,14 +20,10 @@ const Main_DashBoard = () => {
     }, []);
     return (
         <div className={styles.main}>
-            <Panel_header />
             {
                 !IsLoading ?
-                    <div>
-                        <div className={styles.card_section} >
                             <Used_bike_card />
-                        </div>
-                    </div> :
+                            :
                     <div className={styles.load_main}>
                         <div className={styles.load_div}>
                             <Loader isLoading={IsLoading} />

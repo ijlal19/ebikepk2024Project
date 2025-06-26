@@ -1,4 +1,4 @@
-import { DeleteBlogById, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { ChangeApprove, ChangeFeatured, DeleteBlogById, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Panel_header from "../panel-header";
 import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
@@ -53,6 +54,75 @@ const Used_bike_card = () => {
         window.scrollTo(0, 0);
     };
 
+    const GetName = (from: any, id: any) => {
+        if (from == 'brand') {
+            let brand = getBrandFromId(id, BrandArr);
+            return brand[0]?.brandName || 'N/A';
+        } else {
+            let city = getCityFromId(id, CityArr);
+            return city[0]?.city_name || 'N/A';
+        }
+    };
+
+    const GetPhone = (phone: any) => {
+        if (!phone) return 'N/A';
+        if (phone?.charAt(0) != '0') {
+            const phoneNo = '0' + phone;
+            return `${phoneNo.slice(0, 4)}-${phoneNo.slice(4)}`;
+        }
+        return phone;
+    };
+
+       const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleEdit = (id: any) => {
+        router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}`);
+    };
+
+     const handleDelete = async (id: any) => {
+        //   const res = await DeleteUsedBikeById(id)
+        // if(res){
+        // fetchAllUsedBike(currentPage)
+        // }
+        // else{
+        // alert("Something is Wrong!")
+        // }
+    };
+
+    const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
+
+        const obj = {
+            id: id,
+            item: { isFeatured: currentStatus ? false : true }
+        }
+        console.log(obj)
+        // const res = await ChangeFeatured(id, obj)
+        // if (res && res?.adData && res?.info) {
+        //     fetchAllUsedBike(currentPage)
+        // }
+        // else {
+        //     alert('Something is Wrong!')
+        // }
+    };
+    
+    const handleApproveToggle = async (id: any, currentStatus: boolean) => {
+
+        const obj = {
+            id: id,
+            item: { isApproved: currentStatus ? false : true }
+        }
+        console.log(obj)
+        // const res = await ChangeApprove(id, obj)
+        // if (res && res?.adData && res?.info) {
+        //     fetchAllUsedBike(currentPage)
+        // }
+        // else {
+        //     alert('Something is Wrong!')
+        // }
+    };
+
     const fetchAllUsedBike = async (_page: any) => {
         setIsLoading(true);
         try {
@@ -91,57 +161,11 @@ const Used_bike_card = () => {
         }
     };
 
-
-    const GetName = (from: any, id: any) => {
-        if (from == 'brand') {
-            let brand = getBrandFromId(id, BrandArr);
-            return brand[0]?.brandName || 'N/A';
-        } else {
-            let city = getCityFromId(id, CityArr);
-            return city[0]?.city_name || 'N/A';
-        }
-    };
-
-    const GetPhone = (phone: any) => {
-        if (!phone) return 'N/A';
-        if (phone?.charAt(0) != '0') {
-            const phoneNo = '0' + phone;
-            return `${phoneNo.slice(0, 4)}-${phoneNo.slice(4)}`;
-        }
-        return phone;
-    };
-
-    const handleDelete = async (id: any) => {
-        //   const res = await DeleteUsedBikeById(id)
-        //         console.log("data", res)
-    };
-
-    const handleEdit = (id: any) => {
-        router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}`);
-    };
-
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(e.target.value);
-    };
-
-    const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
-        // try {
-        //     await toggleFeatureStatus(id, !currentStatus);
-        //     fetchAllUsedBike(currentPage);
-        // } catch (error) {
-        //     console.error("Error toggling feature status:", error);
-        // }
-    };
-
     return (
         <div className={styles.main_used_bike}>
-
-            <div className={styles.search_input}>
-                <input type="text" className={styles.input} value={searchTerm} onChange={handleSearch} placeholder="SearchAd By Seller ID" />
-            </div>
-
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Ad By Seller ID" />
             {!IsLoading ? (
-                <div>
+                <div className={styles.card_conatiner}>
                     {displayedBikes.length > 0 ? (
                         <>
                             {displayedBikes.map((e: any, i: any) => (
@@ -225,20 +249,21 @@ const Used_bike_card = () => {
                                             <button
                                                 className={`${styles.action_btn} ${styles.edit_btn}`}
                                                 onClick={() => handleEdit(e?.id)}>
-                                                <a href={`/ebike-panel/dashboard/edit-classified-ads/${e?.id}`}style={{ textDecoration: 'none', color: "white" }}>
-                                                Edit
+                                                <a href={`/ebike-panel/dashboard/edit-classified-ads/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                                    Edit
                                                 </a>
                                             </button>
                                             <button
                                                 className={`${styles.action_btn} ${styles.feature_btn}`}
                                                 onClick={() => handleFeatureToggle(e?.id, e?.isFeatured)}
-                                            >
-                                                {e?.isFeatured ? 'Unfeature' : 'Feature'}
+                                                >
+                                                {e?.isFeatured ? 'UnFeature' : 'Feature'}
                                             </button>
                                             <button
                                                 className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                                onClick={() => handleApproveToggle(e?.id, e?.isApproved)}
                                             >
-                                                Disapprove
+                                                {e?.isApproved ? "Disapprove":"Approve"}
                                             </button>
                                             <button
                                                 className={`${styles.action_btn} ${styles.delete_btn}`}
@@ -348,25 +373,26 @@ const New_bike_card = () => {
 
     const handleDelete = async (id: any) => {
         // const res = await DeleteNewBikeById(id);
+        // if(res && res.deleted){
+        //     fetchAllNewBike(currentPage);
+        // }
+        // else{
+        //     alert('Something is Wrong!')
+        // }
         // console.log("Deleted:", res);
-        // fetchAllNewBike(currentPage);
     };
 
     const handleEdit = (id: any) => {
         router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`);
     };
 
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <div className={styles.main_new_bike}>
-            <div className={styles.search_input}>
-                <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="Search New Bike with Title"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search New Bike with Title" />
 
             {!IsLoading ? (
                 <div>
@@ -530,29 +556,29 @@ const Blog_Card = () => {
     };
 
     const handleDelete = async (id: any) => {
-        // const res = await DeleteBlogById(id);
-        // console.log("Deleted:", res);
-        // fetchAllBlog(currentPage);
+        const res = await DeleteBlogById(id);
+        if(res && res.info == 'Blog has been deleted'){
+            fetchAllBlog(currentPage);
+        }
+        else{
+            alert('SomeThing is Wrong!')
+        }
     };
 
     const handleEditBlog = (id: any) => {
         router.push(`/ebike-panel/dashboard/edit-blog/${id}`);
     };
 
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <div className={styles.main_blog}>
-            <div className={styles.search_input}>
-                <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="Search Blog with Title"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </div>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Blog with Title" />
 
             {!IsLoading ? (
-                <div>
+                <div className={styles.card_container}>
                     {displayedBlog.map((e: any, i: any) => (
 
                         <div className={styles.main_box_card} key={i}>
@@ -570,7 +596,7 @@ const Blog_Card = () => {
                                     <div className={styles.card_detail}>
                                         <div className={styles.detail_row}>
                                             <span className={styles.detail_label}>Date:</span>
-                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10)  : "N/A"}</span>
+                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
                                         </div>
 
 

@@ -18,10 +18,12 @@ const Dashboard_page = () => {
 
     const SetComponent = (route: any) => {
         if (route == "view-classified-ads") {
-            return <div className={styles.card_section}><Used_bike_card /></div>
+            // return <div className={styles.card_section}> <Used_bike_card /> </div>
+            return <Used_bike_card />
         }
         else if (route == 'all-new-bikes') {
-            return <div className={styles.card_section}><New_bike_card /></div>
+            // return <div className={styles.card_section}><New_bike_card /></div>
+            return <New_bike_card />
         }
         else if (route == "add-new-bike") {
             return <div className={styles.card_section}><AddNewBikeForm /></div>
@@ -36,7 +38,7 @@ const Dashboard_page = () => {
 
     return (
         <div className={styles.main}>
-            <Panel_header />
+            {/* <Panel_header /> */}
             {SetComponent(slug)}
         </div>
     )

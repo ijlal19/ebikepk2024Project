@@ -7,7 +7,9 @@
     padding: 0px !important;
     position: relative;
     font-family: sans-serif;
-    background-color: black;
+    border: none;
+    background-color: #e6f5d0;
+    // background-color: #dcf3bb;
     margin: 0px !important;
     box-sizing: border-box;
 
@@ -22,9 +24,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: #566b30;
+        background-color: whitesmoke;
         box-sizing: border-box;
-        padding: 5px 0px !important;
+        padding: 9px 0px !important;
 
         .admin_box {
             margin: 0px;

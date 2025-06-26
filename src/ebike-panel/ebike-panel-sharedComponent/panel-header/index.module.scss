@@ -1,13 +1,16 @@
 .header {
-    width: 100%;
+    width: 100%  !important;
     display: flex;
     font-family: sans-serif;
     flex-direction: row;
     margin: 0px 0px 20px !important;
-    padding: 15px 10px !important;
+    position: relative;
+    padding: 14px 10px !important;
     box-sizing: border-box;
     justify-content: center;
-    background-color: rgba(245, 245, 245, 0.655);
+    background-color: whitesmoke;
+    // box-shadow: 7px 5px 10px rgba(142, 142, 142, 0.659);
+    box-shadow: 0px 4px 6px -5px rgba(142, 142, 142, 0.659);
     
     .wraper {
         display: flex;
@@ -16,37 +19,43 @@
         padding: 0px 15px;
         box-sizing: border-box;
 
-        .back_icon {
-            cursor: pointer;
-            box-sizing: border-box;
+        .input_box {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 0px !important;
-            padding: 6px 6px !important;
-            background-color: #17a2b8;
-            border: 1px solid #17a2b8;
+            width: 100%;
             box-sizing: border-box;
-            border-radius: 5px;
-            font-weight: bold !important;
-
-            .icon {
-                color: white;
-                border-radius: 5px;
-                font-weight: bold !important;
+            max-width: 400px;
+            height: 40px;
+            .input {
+                border: 1px solid #75757593;
+                box-sizing: border-box;
+                background-color: transparent;
+                border-radius: 3px;
+                width: 100%;
+                padding: 0px 0px 0px 10px;
+                height: 100%;
+                font-size: 18px;
+                outline: none;
             }
         }
-        
+        .btn_box{
+            display: flex;
+            flex-direction: row;
+            column-gap: 15px;
         .ebiker_box {
-            border: 1px solid #17a2b8;
+            border: 1px solid yellowgreen;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0px;
+            column-gap: 3px;
+            color: yellowgreen;
             padding: 6px 12px !important;
-            background-color: #17a2b8;
+            background-color: #dcf3bb;
             border-radius: 5px;
-            color: white;
+            font-weight: bold;
+            // color: white;
 
 
             .ebiker_heading {
@@ -57,20 +66,17 @@
         }
 
         .logout {
-            background-color: #007bff;
+            border: none !important;
+            outline: none;
+            background-color: #197;
             color: white;
-            font-size: 12px;
-            border: 1px solid #007bff;
             border-radius: 5px;
-            font-weight: 400;
+            font-weight: bold;
             padding: 6px 12px !important;
             cursor: pointer;
-            text-transform: capitalize;
-
             &:hover{
                 opacity: 0.9;
-                // background-color: red;
             }
-        }
+        }}
     }
 }

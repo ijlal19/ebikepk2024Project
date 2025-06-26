@@ -146,6 +146,40 @@ function UpdateUsedBikeById(id: any, payload: any) {
         });
 }
 
+function ChangeFeatured(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `classified/feature-used-bike/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function ChangeApprove(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `classified/approve-used-bike/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 //                                 Blog FUNCTIONS
 function getAllBlog() {
     return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
@@ -222,6 +256,8 @@ export {
     DeleteUsedBikeById,
     UpdateUsedBikeById,
     checkAuthAndRedirect,
+    ChangeFeatured,
+    ChangeApprove,
 
     getAllBlog,
     DeleteBlogById,
@@ -229,3 +265,10 @@ export {
     UpdateBlogById,
     addNewBlog
 }
+
+
+// feature
+// https://ebikepk-server-nodejs.herokuapp.com/api/classified/feature-used-bike/9163
+
+// approve
+// https://ebikepk-server-nodejs.herokuapp.com/api/classified/approve-used-bike/9163
