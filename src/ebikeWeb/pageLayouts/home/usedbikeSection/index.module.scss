@@ -45,10 +45,11 @@
         margin-bottom: 10px;
         font-size: 25px;
         color: #1976d2;
-        font-weight: normal !important;
+        // font-weight: normal !important;
+        font-weight: 600;
 
         @media (max-width:767px) {
-            margin-top: 20px;
+            margin-top: 0px;
             display: block;
             margin-bottom: 0px;
             font-size: 22px;

@@ -56,13 +56,9 @@ let GetScroll = 0
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
-    const handleCardSize = useMediaQuery('(max-width:1200px)');
-    const handleImage = useMediaQuery('(max-width:600px)');
     const [FavouriteData, setFavouriteData] = useState([]);
-    const IsMobile2 = useMediaQuery('(max-width:910px)');
     const [SearchApply, setSearchApply] = useState(false);
     const [featuredData, setFeaturedData] = useState([]);
-    const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
     const [allBikesArr, setAllBikesArr] = useState([]);
@@ -70,12 +66,17 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null);
     const [SearchValue, setSearchValue] = useState('');
-    const [Array, setArray] = useState([]);
-    const [pageNo, setPageNo] = useState(-12);
+
+    const is9Inch = useMediaQuery('(max-width:910px)');
+    const is10Inch = useMediaQuery('(max-width:991px)');
+    const is12InchScreen = useMediaQuery('(max-width:1200px)');
+    const isMobileView = useMediaQuery('(max-width:600px)');
 
     const router = useRouter()
 
     useEffect(() => {
+       
+        // check is user login or not
         let _isLoginUser = isLoginUser()
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
@@ -85,6 +86,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             setIsLogin("not_login")
         }
 
+        // set featured data
         if(_allFeaturedBike?.data){
             setFeaturedData(_allFeaturedBike?.data)
         }
@@ -92,7 +94,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             fetchFeaturedBike()
         }
 
-
+        // if previous list view pagination page is available in local storage 
+        // then go to previously open page else page 1
         const pageNoRaw = localStorage.getItem('PageNo');
         if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
             const PageNo = Number(pageNoRaw);
@@ -100,6 +103,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         } else {
             fetchBikeInfo(1, false);
         }
+
     }, [])
 
     const fetchFavouriteAds = async (uid) => {
@@ -124,13 +128,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
 
         setIsLoading(false)
-
-        setTimeout(() => {
-            window.scrollTo({
-                top: GetScroll || 0,
-                behavior: 'smooth'
-            });
-        }, 500);
     }
 
     const handlePaginationChange = async (event, page) => {
@@ -146,28 +143,24 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     async function fetchBikeInfo(_pageNo, fromPagination) {
         setIsLoading(true)
         let res = null;
-        // const pageNoRaw = localStorage.getItem('PageNo');
-
-        // if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
-        //     const PageNo = Number(pageNoRaw);
-        //     res = null;
-        // } else {
-        //     res = _allUsedBike;
-        // }
 
         let obj = {
             adslimit: 12,
             page: _pageNo
         }
 
-        // if(_allUsedBike && _pageNo == 1) {
-        //     res = _allUsedBike
+        console.log('_allUsedBike', _allUsedBike)
+
+        if(_allUsedBike && _pageNo == 1 && !fromPagination) {
+            res = _allUsedBike
             
-        // }
-        // else 
-        if (res == null || fromPagination) {
-            res = await getCustomBikeAd(obj);
         }
+        else {
+            if (res == null || fromPagination) {
+                res = await getCustomBikeAd(obj);
+            }
+        }
+
 
         localStorage.removeItem('PageNo')
         if (res?.data?.length > 0) {
@@ -254,30 +247,30 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 {ind % 4 == 0 ?
                     <div className={styles.banner_1}>
                         <a href="/">
-                            <img className={styles.baner_image} src={isMobile ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} />
+                            <img className={styles.baner_image} src={is10Inch ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} />
                         </a>
                     </div> : ""}
-                {!handleImage ?
+                {!isMobileView ?
                     <Link href={GetHref()} sx={{ textDecoration: 'none' }} onClick={() => { goToDetailPage(val) }}>
-                        {/* <Link href={GetHref()} sx={{ textDecoration: 'none', display: handleImage ? 'none' : 'flex', flexDirection: 'column' }} onClick={() => { goToDetailPage(val) }}> */}
+                        {/* <Link href={GetHref()} sx={{ textDecoration: 'none', display: isMobileView ? 'none' : 'flex', flexDirection: 'column' }} onClick={() => { goToDetailPage(val) }}> */}
 
                         <Grid container key={ind} className={styles.long_card}>
-                            <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
+                            <Grid item xs={is10Inch ? 12 : 3.5} className={styles.bike_image_box}>
                                 <Box
 
                                     className={styles.long_card_img}
 
                                     sx={{
                                         backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
-                                        backgroundSize: handleImage ? '100% 100%' : 'cover',
+                                        backgroundSize: isMobileView ? '100% 100%' : 'cover',
                                         boxSizing: 'border-box',
                                         backgroundPosition: 'center',
                                         backgroundRepeat: 'no-repeat',
-                                        height: handleImage ? '150px' : "95%",
-                                        width: handleImage ? '100%' : "100%"
+                                        height: isMobileView ? '150px' : "95%",
+                                        width: isMobileView ? '100%' : "100%"
                                     }}>
                                     {
-                                        handleImage ?
+                                        isMobileView ?
                                             <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
                                                 <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                                                 {/* <FavoriteIcon className={styles.icon} sx={{ color: 'red' : 'green' }} /> */}
@@ -287,7 +280,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
                             </Grid>
 
-                            <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
+                            <Grid item xs={is10Inch ? 12 : 8} className={styles.card_info}>
 
                                 <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
 
@@ -308,7 +301,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             <Grid item className={styles.price_section_desktop}>
                                 <span> PKR {priceWithCommas(val?.price)}</span>
                                 {
-                                    !handleImage ?
+                                    !isMobileView ?
                                         <Box className={styles.fav_box}>
                                             <Box className={styles.icon_box} onClick={(e) => {
                                                 e.preventDefault();     // stop <Link> href navigation
@@ -352,7 +345,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
         return (
             <>
-                {!handleImage ?
+                {!isMobileView ?
                     <Link href={GetHref()} key={ind} sx={{ textDecoration: 'none' }} className={styles.grid_card} onClick={() => { goToDetailPage(val) }}>
                         <Grid container >
 
@@ -449,29 +442,37 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     return (
         <>
             {
-                IsMobile2 ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
+                is9Inch ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
             }
             <Box className={styles.main}>
                 <>
 
                     <Box className={styles.usedBike_headingBpx}>
-                        <Typography className={styles.headinh_sale}>Bike For Sale In Pakistan</Typography>
-                        <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography>
+                        <Typography className={styles.headinh_sale}>Find Used Bikes & Motorcycles in Pakistan</Typography>
+                        {/* <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography> */}
+                        <Typography className={styles.path_text}> Used Honda, Suzuki, Yamaha & More </Typography>
                     </Box>
 
+                    <br className="d-none d-md-block"/>
+                    <br className="d-none d-md-block"/>
+
                     <UsedBikesSection from='featuredBike' featuredData={featuredData} />
+                   
                     {
                         AllFavouriteBike.length > 0 ?
                             <div className={styles.similarBikeDiv}>
-                                <h6 className={styles.similar_heading}> Favourite Bikes </h6>
-                                <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+                                <div className={styles.similarBikeDiv_inner}>
+                                    <h6 className={styles.similar_heading}> Favourite Bikes </h6>
+                                    <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+                                </div>
                             </div> : ''
                     }
+
                     <Grid container className={styles.grid_container}>
 
-                        <Grid item xs={IsMobile2 ? 12 : handleCardSize ? 2.5 : 2.5} className={styles.filter_grid} >
+                        <Grid item xs={is9Inch ? 12 : is12InchScreen ? 2.5 : 2.5} className={styles.filter_grid} >
                             {
-                                IsMobile2 ?
+                                is9Inch ?
                                     showfilter ?
                                         <Box className={styles.filter_box_main}>
                                             <Filters
@@ -497,7 +498,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             }
                         </Grid>
 
-                        <Grid item xs={IsMobile2 ? 12 : handleCardSize ? 8.5 : 7.5} className={styles.cards_grid} >
+                        <Grid item xs={is9Inch ? 12 : is12InchScreen ? 8.5 : 7.5} className={styles.cards_grid} >
 
                             <Box className={styles.all_bike_main}>
                                 <div className={styles.main_box}>
@@ -505,7 +506,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                         <div className={styles.text_container}>
                                             <span className={styles.bike_text}> Used Bikes </span>
                                         </div>
-                                        <div className={styles.search_box} style={{ display: !handleImage ? "flex" : "none" }} >
+                                        <div className={styles.search_box} style={{ display: !isMobileView ? "flex" : "none" }} >
                                             <div className={styles.search_box_inner}>
                                                 <input type="text" value={SearchValue} className={styles.search_input} placeholder={`Search`} onChange={(e) => setSearchValue(e?.target.value)} />
                                                 <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
@@ -515,7 +516,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                             <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
                                             <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
                                         </div>
-                                        <div className={styles.search_box} style={{ display: handleImage ? "flex" : "none" }}>
+                                        <div className={styles.search_box} style={{ display: isMobileView ? "flex" : "none" }}>
                                             <div className={styles.search_box_inner}>
                                                 <input type="text" value={SearchValue} className={styles.search_input} placeholder={`Search`} onChange={(e) => setSearchValue(e?.target.value)} />
                                                 <button className={styles.search_btn} onClick={() => handleSearch(1)}><SearchIcon /></button>
@@ -553,7 +554,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             </Box>
                         </Grid>
 
-                        <Grid item xs={IsMobile2 ? 12 : 2} className={styles.add_area}>
+                        <Grid item xs={is9Inch ? 12 : 2} className={styles.add_area}>
                             <Box className={styles.add_box}>
                                 {
                                     AdsArray?.map((e, i) => {
