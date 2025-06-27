@@ -217,7 +217,9 @@
 
     .card_conatiner {
         width: 100%;
+        box-sizing: border-box;
         max-width: 800px;
+        padding: 0px 10px !important;
         margin: auto;
 
         .main_box_card {
@@ -386,7 +388,6 @@
             background-color: #e74c3c;
             color: white;
         }
-    }
 
     .pagination {
         display: flex;
@@ -396,10 +397,13 @@
 
     .no_results {
         text-align: center;
-        padding: 40px;
+        padding: 0px;
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #fff;
         border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         color: #7f8c8d;
         font-size: 16px;
     }
@@ -410,6 +414,7 @@
         align-items: center;
         height: 200px;
     }
+}
 }
 
 .main_blog {

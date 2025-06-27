@@ -11,9 +11,10 @@ const Dashboard_page = () => {
 
     const { slug } = useParams()
     const router = useRouter()
+        const pathname = window.location.pathname
 
     useEffect(() => {
-        checkAuthAndRedirect(router)
+        checkAuthAndRedirect(router , pathname)
     }, [])
 
     const SetComponent = (route: any) => {
@@ -26,13 +27,13 @@ const Dashboard_page = () => {
             return <New_bike_card />
         }
         else if (route == "add-new-bike") {
-            return <div className={styles.card_section}><AddNewBikeForm /></div>
+            return <AddNewBikeForm />
         }
         else if (route == "blog-list") {
-            return <div className={styles.card_section}><Blog_Card /></div>
+            return <Blog_Card />
         }
         else if (route == "create-blog-post") {
-            return <div className={styles.card_section}><AddBlogForm /></div>
+            return <AddBlogForm />
         }
     }
 

@@ -15,9 +15,9 @@ const LoginForm = () => {
     const [LoginPassword, setPassword] = useState('')
     const [Login, setLogin] = useState(false)
     const router = useRouter()
-
+    const pathname = window.location.pathname
     useEffect(() => {
-      checkAuthAndRedirect(router)
+      checkAuthAndRedirect(router , pathname)
     }, []);
 
     const handleLogin = async (e: any) => {

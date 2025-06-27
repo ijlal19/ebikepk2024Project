@@ -14,9 +14,9 @@ import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalf
 const Main_DashBoard = () => {
     const [IsLoading, setIsLoading] = useState(false);
     const router = useRouter()
-
+    const pathname = window.location.pathname
     useEffect(() => {
-        checkAuthAndRedirect(router)
+        checkAuthAndRedirect(router , pathname)
     }, []);
     return (
         <div className={styles.main}>

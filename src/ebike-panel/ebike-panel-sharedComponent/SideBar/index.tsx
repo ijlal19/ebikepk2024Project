@@ -44,22 +44,23 @@ const SideBar = () => {
         const isParentActive = urls.some(url => url === activeItem);
 
         return (
-            <List sx={{ width: '100%', padding: '0px', margin: '0px', backgroundColor: '#e6f5d0', color: 'black' }}>
+            <List sx={{ width: '100%', padding: '0px', margin: '0px', color: 'black' }}>
                 <ListItemButton
                     onClick={() => handleClick(key)}
                     sx={{
                         margin: '0px',
-                        backgroundColor: isParentActive ? '#9ACD32' : 'transparent',
-                        color: isParentActive ? 'white' : 'yellowgreen',
+                        backgroundColor: isParentActive ? '#77b7e2' : '#3498db',
+                        color: isParentActive ? 'white' : 'white',
                         '&:hover': {
-                            backgroundColor: isParentActive ? '#9ACD32' : '#dcf3bb'
+                            // backgroundColor: isParentActive ? '#9ACD32' : '#dcf3bb'
+                            backgroundColor: isParentActive ? '#77b7e2' : '#118adb'
                             // '&:hover': {
                                 // backgroundColor: '#dcf3bb'  // <-- Your custom hover color
                             // }
                         }
                     }}
                 >
-                    <ListItemIcon sx={{ minWidth: '40px', color: isParentActive ? '#e6f5d0' : 'yellowgreen' }}>
+                    <ListItemIcon sx={{ minWidth: '40px', color: isParentActive ? 'white' : 'white' }}>
                         {icon === 'bike' ? <PedalBikeIcon /> : icon === 'shop' ? <PersonIcon /> : <ArticleIcon />}
                     </ListItemIcon>
                     <ListItemText primary={heading} />
@@ -80,16 +81,16 @@ const SideBar = () => {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        backgroundColor: activeItem === urls[index] ? '#9ACD32' : 'transparent',
-                                        color: activeItem === urls[index] ? 'white' : 'yellowgreen',
+                                        backgroundColor: activeItem === urls[index] ? '#77b7e2' : 'transparent',
+                                        color: activeItem === urls[index] ? 'white' : 'white',
                                         '&:hover': {
-                                            backgroundColor: activeItem === urls[index] ? 'yellowgreen' : '#dcf3bb'
+                                            backgroundColor: activeItem === urls[index] ? '#77b7e2' : '#118adb'
                                             // backgroundColor: 'red'
                                         }
                                     }}
                                 >
-                                    <ListItemIcon sx={{ minWidth: '30px', color: activeItem === urls[index] ? 'white' : 'yellowgreen'}}>
-                                        {optionIcon == 'true' ? <LibraryAddCheckIcon /> : ""}
+                                    <ListItemIcon sx={{ minWidth: '30px', color: activeItem === urls[index] ? 'white' : 'white'}}>
+                                        {optionIcon == 'true' ? icon === 'bike' ? <PedalBikeIcon/> : <ArticleIcon /> : ""}
                                     </ListItemIcon>
                                     <ListItemText primary={e} />
                                 </ListItemButton>
@@ -102,7 +103,7 @@ const SideBar = () => {
     };
 
     return (
-        <div className={styles.main_sidebar}>
+        <div className={styles.main_sidebar} style={{backgroundColor:'#3498db'}} >
             <div className={styles.image_box}>
                 {/* <div className={styles.admin_box}>eBike Admin</div> */}
                 <img
@@ -118,19 +119,19 @@ const SideBar = () => {
                     sx={{ textDecoration: 'none' }}
                 // onClick={() => setActiveItem('/')}
                 >
-                    <List component="div" disablePadding sx={{ backgroundColor: pathname == "/ebike-panel/dashboard" ? 'yellowgreen' : "#dcf3bb", color: 'black' }}>
+                    <List component="div" disablePadding sx={{ backgroundColor: pathname == "/ebike-panel/dashboard" ? '#77b7e2' : "#3498db", color: 'black' }}>
                         <ListItemButton
                             // onClick={() => setActiveItem('')}
                             sx={{
                                 margin: "0px",
-                                backgroundColor: pathname == "/ebike-panel/dashboard" ? 'yellowgreen' : "#e6f5d0",
-                                color: pathname == "/ebike-panel/dashboard" ? 'white' : "yellowgreen",
+                                backgroundColor: pathname == "/ebike-panel/dashboard" ? '#77b7e2' : "#3498db",
+                                color: pathname == "/ebike-panel/dashboard" ? 'white' : "white",
                                 '&:hover': {
-                                    backgroundColor: pathname == "/ebike-panel/dashboard" ? 'yellowgreen' : "#dcf3bb"
+                                    backgroundColor: pathname == "/ebike-panel/dashboard" ? '#77b7e2' : "#118adb"
                                 }
                             }}
                         >
-                            <ListItemIcon sx={{ minWidth: '40px', color: pathname == "/ebike-panel/dashboard" ? 'white' : "yellowgreen" }}>
+                            <ListItemIcon sx={{ minWidth: '40px', color: pathname == "/ebike-panel/dashboard" ? 'white' : "white" }}>
                                 <HomeIcon />
                             </ListItemIcon>
                             <ListItemText primary="Dashboard" />

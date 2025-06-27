@@ -10,9 +10,10 @@ const DashBoard_form = () => {
     const { slug, slug1 } = useParams()
     const CheckRoute = slug
     const router = useRouter()
+    const pathname = window.location.pathname
 
     useEffect(() => {
-        checkAuthAndRedirect(router)
+        checkAuthAndRedirect(router , pathname)
     }, []);
 
     const GetComponent = (check: any) => {
@@ -28,7 +29,7 @@ const DashBoard_form = () => {
     }
     return (
         <div className={styles.main}>
-            <Panel_header />
+            {/* <Panel_header /> */}
             {GetComponent(CheckRoute)}
         </div>
     )
