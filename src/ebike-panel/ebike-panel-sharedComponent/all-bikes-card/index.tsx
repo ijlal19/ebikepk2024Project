@@ -2,7 +2,7 @@ import { ChangeApprove, ChangeFeatured, DeleteBlogById, DeleteNewBikeById, Delet
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
-import { priceWithCommas } from "@/genericFunctions/geneFunc";
+import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { Navigation, FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Pagination } from "@mui/material";
@@ -13,6 +13,7 @@ import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import 'swiper/css';
+import { FaLaptopHouse } from "react-icons/fa";
 
 const Used_bike_card = () => {
 
@@ -73,7 +74,7 @@ const Used_bike_card = () => {
         return phone;
     };
 
-       const handleSearch = (e: any) => {
+    const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
     };
 
@@ -81,46 +82,51 @@ const Used_bike_card = () => {
         router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}`);
     };
 
-     const handleDelete = async (id: any) => {
-        //   const res = await DeleteUsedBikeById(id)
-        // if(res){
-        // fetchAllUsedBike(currentPage)
-        // }
-        // else{
-        // alert("Something is Wrong!")
-        // }
+    const handleDelete = async (id: any) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this Ad?");
+        if (!confirmDelete) return;
+
+        const res = await DeleteUsedBikeById(id);
+        if (res) {
+            fetchAllUsedBike(currentPage);
+        } else {
+            alert("Something went wrong!");
+        }
     };
 
-    const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
 
+    const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
+        const confirmDelete = window.confirm("Are you sure to change Featured?");
+        if (!confirmDelete) return;
         const obj = {
             id: id,
             item: { isFeatured: currentStatus ? false : true }
         }
         console.log(obj)
-        // const res = await ChangeFeatured(id, obj)
-        // if (res && res?.adData && res?.info) {
-        //     fetchAllUsedBike(currentPage)
-        // }
-        // else {
-        //     alert('Something is Wrong!')
-        // }
+        const res = await ChangeFeatured(id, obj)
+        if (res && res?.adData && res?.info) {
+            fetchAllUsedBike(currentPage)
+        }
+        else {
+            alert('Something is Wrong!')
+        }
     };
-    
-    const handleApproveToggle = async (id: any, currentStatus: boolean) => {
 
+    const handleApproveToggle = async (id: any, currentStatus: boolean) => {
+        const confirmDelete = window.confirm("Are you sure you want to Change Ad Approve?");
+        if (!confirmDelete) return;
         const obj = {
             id: id,
             item: { isApproved: currentStatus ? false : true }
         }
         console.log(obj)
-        // const res = await ChangeApprove(id, obj)
-        // if (res && res?.adData && res?.info) {
-        //     fetchAllUsedBike(currentPage)
-        // }
-        // else {
-        //     alert('Something is Wrong!')
-        // }
+        const res = await ChangeApprove(id, obj)
+        if (res && res?.adData && res?.info) {
+            fetchAllUsedBike(currentPage)
+        }
+        else {
+            alert('Something is Wrong!')
+        }
     };
 
     const fetchAllUsedBike = async (_page: any) => {
@@ -128,14 +134,16 @@ const Used_bike_card = () => {
         try {
             const obj = {
                 page: _page,
-                adslimit: 10
+                adslimit: 10,
+                // isApproved: true
             };
             const res = await getCustomBikeAd(obj);
 
             if (res && res?.data?.length > 0) {
                 const obj1 = {
                     page: 1,
-                    adslimit: res?.total
+                    adslimit: res?.total,
+                    // isApproved:true
                 };
                 const res1 = await getCustomBikeAd(obj1);
 
@@ -172,7 +180,7 @@ const Used_bike_card = () => {
                                 <div className={styles.main_box_card} key={i}>
                                     <div className={styles.card_container_box}>
                                         <div className={styles.card_header}>
-                                            <h3 className={styles.heading}>{e?.title || 'No Title'}</h3>
+                                            <h3 className={styles.heading}>{add3Dots(e?.title , 50) || 'No Title'}</h3>
                                             <span className={`${styles.featured_badge} ${e?.isFeatured ? styles.featured : ''}`}>
                                                 IsFeatured: {e?.isFeatured ? 'True' : 'False'}
                                             </span>
@@ -256,14 +264,14 @@ const Used_bike_card = () => {
                                             <button
                                                 className={`${styles.action_btn} ${styles.feature_btn}`}
                                                 onClick={() => handleFeatureToggle(e?.id, e?.isFeatured)}
-                                                >
+                                            >
                                                 {e?.isFeatured ? 'UnFeature' : 'Feature'}
                                             </button>
                                             <button
                                                 className={`${styles.action_btn} ${styles.disapprove_btn}`}
                                                 onClick={() => handleApproveToggle(e?.id, e?.isApproved)}
                                             >
-                                                {e?.isApproved ? "Disapprove":"Approve"}
+                                                {e?.isApproved ? "Disapprove" : "Approve"}
                                             </button>
                                             <button
                                                 className={`${styles.action_btn} ${styles.delete_btn}`}
@@ -372,14 +380,14 @@ const New_bike_card = () => {
     };
 
     const handleDelete = async (id: any) => {
-        // const res = await DeleteNewBikeById(id);
-        // if(res && res.deleted){
-        //     fetchAllNewBike(currentPage);
-        // }
-        // else{
-        //     alert('Something is Wrong!')
-        // }
-        // console.log("Deleted:", res);
+        const res = await DeleteNewBikeById(id);
+        if(res && res.deleted){
+            fetchAllNewBike(currentPage);
+        }
+        else{
+            alert('Something is Wrong!')
+        }
+        console.log("Deleted:", res);
     };
 
     const handleEdit = (id: any) => {
@@ -557,10 +565,10 @@ const Blog_Card = () => {
 
     const handleDelete = async (id: any) => {
         const res = await DeleteBlogById(id);
-        if(res && res.info == 'Blog has been deleted'){
+        if (res && res.info == 'Blog has been deleted') {
             fetchAllBlog(currentPage);
         }
-        else{
+        else {
             alert('SomeThing is Wrong!')
         }
     };

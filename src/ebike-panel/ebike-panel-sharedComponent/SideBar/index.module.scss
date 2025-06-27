@@ -3,19 +3,23 @@
 .main_sidebar {
     width: 100%;
     max-width: 260px;
-    height: auto;
+    height: auto !important;
     padding: 0px !important;
     position: relative;
     font-family: sans-serif;
     border: none;
-    background-color: #e6f5d0;
-    // background-color: #dcf3bb;
+    // background-color: #000000 !important;
     margin: 0px !important;
     box-sizing: border-box;
+    // color: #e6f5d0;
+    // color: #38a9f4;
+    // color: #118adb;
+    // color: #77b7e2;
 
     .list {
-        position: sticky;
+        position: sticky ;
         top: 0px;
+    height: 100vh;
     }
 
     .image_box {
@@ -24,9 +28,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: whitesmoke;
+        background-color: #3498db;
         box-sizing: border-box;
-        padding: 9px 0px !important;
+        padding: 8px 0px !important;
 
         .admin_box {
             margin: 0px;
@@ -37,7 +41,12 @@
         }
 
         .image {
-            width: 130px;
+            width: 120px;
         }
     }
 }
+// .list{
+//     position: sticky !important;
+//     top: 0px;
+//     height: 100vh;
+// }

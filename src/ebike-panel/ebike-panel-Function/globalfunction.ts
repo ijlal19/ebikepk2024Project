@@ -13,13 +13,28 @@ function PostLogin(data: any) {
         })
 }
 
-const checkAuthAndRedirect = (router: any) => {
+function uplaodImageFunc(data: any) {
+    return fetch(`https://api.cloudinary.com/v1_1/dulfy2uxn/image/upload`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+}
+
+const checkAuthAndRedirect = (router: any , pathname :any) => {
     const userCookie = jsCookie.get("userData_ebike_panel");
 
     if (userCookie) {
         const userData = JSON.parse(userCookie);
         const token = userData?.accessToken;
-        if (!token) {
+        if (token) {
+            if(pathname == '/ebike-panel' || pathname == '/ebike-panel/login'){
+                router.replace("/ebike-panel/dashboard");
+            }
+        }
+        else{
             router.replace("/ebike-panel/login");
         }
     } else {
@@ -95,6 +110,7 @@ function DeleteNewBikeById(id: any) {
 //                                 USED BIKE FUNCTIONS
 function getCustomBikeAd(obj: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-custom-ads`, {
+    // return fetch(`http://localhost:4001/api/classified/get-custom-ads`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(obj)
@@ -244,6 +260,8 @@ function addNewBlog(data: any) {
 
 export {
     PostLogin,
+    uplaodImageFunc,
+    checkAuthAndRedirect,
 
     addNewBike,
     getAllNewBike,
@@ -255,7 +273,6 @@ export {
     getSinglebikesDetail,
     DeleteUsedBikeById,
     UpdateUsedBikeById,
-    checkAuthAndRedirect,
     ChangeFeatured,
     ChangeApprove,
 

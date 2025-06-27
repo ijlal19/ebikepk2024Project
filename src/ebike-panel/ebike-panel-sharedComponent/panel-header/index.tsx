@@ -10,6 +10,7 @@ const Panel_header = ({ value, onChange, placeholder }: any) => {
     const [displayText, setDisplayText] = useState('login');
     const [displayName, setDisplayName] = useState('ebiker');
     const router = useRouter()
+        const pathname = window.location.pathname
     useEffect(() => {
         const storedData = localStorage.getItem('userData');
         const userCookie = jsCookie.get("userData_ebike_panel");
@@ -38,7 +39,7 @@ const Panel_header = ({ value, onChange, placeholder }: any) => {
 
     const handleLogout = () => {
         jsCookie.remove('userData_ebike_panel');
-        checkAuthAndRedirect(router)
+        checkAuthAndRedirect(router , pathname)
 
     };
 

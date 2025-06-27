@@ -4,6 +4,7 @@ import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
 import styles from './index.module.scss';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 const jsCookie = require('js-cookie');
 
 
@@ -22,7 +23,9 @@ let BlogCategory = [
     },
 ]
 
+
 const AddNewBikeForm = () => {
+let router = useRouter()
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBrandId, setSelectedBrandId] = useState('');
@@ -107,9 +110,15 @@ const AddNewBikeForm = () => {
                 brandId: selectedBrandId,
                 uid: UserId || null
             };
-            console.table(finalBikeData)
-            // const res = await addNewBike(finalBikeData)
-            // console.log(res)
+            console.log(finalBikeData)
+            const res = await addNewBike(finalBikeData)
+            if( res && res.success ){
+                router.push('/ebike-panel/dashboard/all-new-bikes')
+            }
+            else{
+                alert('Something is Wrong!')
+            }
+            console.log(res)
         }
     };
 
@@ -222,6 +231,9 @@ const AddBlogForm = () => {
         meta_title: '',
     });
 
+let router = useRouter()
+
+
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setBlogData((prev: any) => ({ ...prev, [name]: value }));
@@ -262,7 +274,13 @@ const AddBlogForm = () => {
                 uid: UserId || null
             };
             console.log(finalBikeData)
-            // const res = await addNewBlog(finalBikeData)
+            const res = await addNewBlog(finalBikeData)
+            if(res && res.success && res.info == "add blog success"){
+                router.push('/ebike-panel/dashboard/blog-list')
+            }
+            else{
+                alert('Some thing is Wrong!')
+            }
             // console.log(res)
         }
     };
