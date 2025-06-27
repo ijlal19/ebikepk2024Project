@@ -1,8 +1,7 @@
 "use client"
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import { Collapse, Link, List, ListItemIcon } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-// import EditSquareIcon from '@mui/icons-material/EditSquare';
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import ListItemButton from '@mui/material/ListItemButton';
 import PedalBikeIcon from '@mui/icons-material/PedalBike';
 import { useParams, usePathname } from 'next/navigation';
@@ -16,14 +15,14 @@ import styles from './index.module.scss';
 const SideBar = () => {
     const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({});
     const [activeItem, setActiveItem] = useState<string>('');
-    const pathname = usePathname();
-    const params = useParams()
-    console.log("data", params, pathname)
-    // alert({params})
+    const [DashboardRoute, setDashboardRoute] = useState<string>('');
     useEffect(() => {
+       const pathname = window.location.pathname
+       setDashboardRoute(pathname)
         const current = pathname.split('/').pop() || '';
+        console.log("data" , current , pathname)
         setActiveItem(current);
-    }, [pathname]);
+    }, []);
 
     const handleClick = (section: string) => {
         setOpenSections((prev) => ({
@@ -119,19 +118,19 @@ const SideBar = () => {
                     sx={{ textDecoration: 'none' }}
                 // onClick={() => setActiveItem('/')}
                 >
-                    <List component="div" disablePadding sx={{ backgroundColor: pathname == "/ebike-panel/dashboard" ? '#77b7e2' : "#3498db", color: 'black' }}>
+                    <List component="div" disablePadding sx={{ backgroundColor: DashboardRoute == "/ebike-panel/dashboard" ? '#77b7e2' : "#3498db", color: 'black' }}>
                         <ListItemButton
                             // onClick={() => setActiveItem('')}
                             sx={{
                                 margin: "0px",
-                                backgroundColor: pathname == "/ebike-panel/dashboard" ? '#77b7e2' : "#3498db",
-                                color: pathname == "/ebike-panel/dashboard" ? 'white' : "white",
+                                backgroundColor: DashboardRoute == "/ebike-panel/dashboard" ? '#77b7e2' : "#3498db",
+                                color: DashboardRoute == "/ebike-panel/dashboard" ? 'white' : "white",
                                 '&:hover': {
-                                    backgroundColor: pathname == "/ebike-panel/dashboard" ? '#77b7e2' : "#118adb"
+                                    backgroundColor: DashboardRoute == "/ebike-panel/dashboard" ? '#77b7e2' : "#118adb"
                                 }
                             }}
                         >
-                            <ListItemIcon sx={{ minWidth: '40px', color: pathname == "/ebike-panel/dashboard" ? 'white' : "white" }}>
+                            <ListItemIcon sx={{ minWidth: '40px', color: DashboardRoute == "/ebike-panel/dashboard" ? 'white' : "white" }}>
                                 <HomeIcon />
                             </ListItemIcon>
                             <ListItemText primary="Dashboard" />

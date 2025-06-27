@@ -10,9 +10,9 @@ const DashBoard_form = () => {
     const { slug, slug1 } = useParams()
     const CheckRoute = slug
     const router = useRouter()
-    const pathname = window.location.pathname
-
+    
     useEffect(() => {
+        const pathname = window.location.pathname
         checkAuthAndRedirect(router , pathname)
     }, []);
 

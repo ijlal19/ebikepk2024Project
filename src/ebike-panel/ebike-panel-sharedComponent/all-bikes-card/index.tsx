@@ -1,3 +1,4 @@
+'use client'
 import { ChangeApprove, ChangeFeatured, DeleteBlogById, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";

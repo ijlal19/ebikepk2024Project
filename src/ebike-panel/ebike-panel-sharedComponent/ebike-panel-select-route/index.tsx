@@ -6,9 +6,9 @@ const jsCookie = require('js-cookie');
 
 const EbikePanel = () => {
     const router = useRouter();
-    const pathname = window.location.pathname
-
+    
     useEffect(() => {
+        const pathname = window.location.pathname
         checkAuthAndRedirect(router , pathname)
     }, []);
 

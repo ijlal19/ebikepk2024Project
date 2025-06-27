@@ -11,9 +11,9 @@ const Dashboard_page = () => {
 
     const { slug } = useParams()
     const router = useRouter()
-        const pathname = window.location.pathname
-
+    
     useEffect(() => {
+        const pathname = window.location.pathname
         checkAuthAndRedirect(router , pathname)
     }, [])
 

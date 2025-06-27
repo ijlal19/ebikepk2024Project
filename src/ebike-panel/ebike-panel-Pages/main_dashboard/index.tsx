@@ -1,34 +1,27 @@
 'use client'
-import { getBrandFromId, getCityFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
-import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
-import { priceWithCommas } from "@/genericFunctions/geneFunc";
-import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
-import { Grid, Pagination } from "@mui/material";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useEffect } from "react";
 import styles from './index.module.scss';
 import { Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-bikes-card";
-import Panel_header from "@/ebike-panel/ebike-panel-sharedComponent/panel-header";
 import { useRouter } from "next/navigation";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const Main_DashBoard = () => {
-    const [IsLoading, setIsLoading] = useState(false);
     const router = useRouter()
-    const pathname = window.location.pathname
     useEffect(() => {
-        checkAuthAndRedirect(router , pathname)
+        checkAuthAndRedirect(router , '/ebike-panel/dashboard' )
     }, []);
     return (
         <div className={styles.main}>
-            {
-                !IsLoading ?
+            {/* {
+                !IsLoading ? */}
                             <Used_bike_card />
-                            :
-                    <div className={styles.load_main}>
+                            {/* : */}
+                    {/* <div className={styles.load_main}>
                         <div className={styles.load_div}>
                             <Loader isLoading={IsLoading} />
                         </div>
-                    </div>}
+                    </div>} */}
         </div>
     )
 }
