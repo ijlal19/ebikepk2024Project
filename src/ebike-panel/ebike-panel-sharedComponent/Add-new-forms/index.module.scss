@@ -6,26 +6,66 @@
     padding: 20px 0px !important;
 }
 
-.main {
-    box-sizing: border-box;
-    width: 100%;
+ .main {
+        box-sizing: border-box;
+        width: 100%;
+        border: 1px solid #9999995c;
+        display: flex;
+        flex-direction: column;
+        height: auto !important;
+        gap: 1rem;
+        max-width: 700px;
+        margin: auto;
+        padding: 10px 2rem;
+        background-color: #fff;
+    }
+
+.formHeader {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 700px;
-    box-shadow: 0px 0px 5px 2px rgba(75, 74, 74, 0.325);
-    margin: auto;
-    padding: 1rem 2rem;
-    background-color: #fff;
-    border-radius: 10px;
+    align-items: baseline;
+    justify-content: left;
+    column-gap: 240px;
+    flex-direction: row;
+    box-sizing: border-box;
+
+    .a {
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+        border: 1px solid #1976d2;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 3px !important;
+        display: flex !important;
+        color: white;
+        background-color: #1976d2;
+        box-sizing: border-box;
+        justify-content: center !important;
+        align-items: center !important;
+        transition: all .5s ease;
+
+        .icon {
+            margin-left: 6px !important;
+            font-size: 18px !important;
+        }
+
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
+    .heading {
+        font-size: 26px;
+        padding: 20px 0px 0px 0px;
+        font-weight: bold;
+        box-sizing: border-box;
+        margin: 0px 0px 10px 0px;
+        text-align: center;
+        color: rgb(39, 39, 39);
+    }
 }
 
-.heading {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
-}
+
 
 .label {
     font-weight: 500;
@@ -44,7 +84,8 @@
     transition: all .5s ease;
     outline: none;
 }
-.textarea{
+
+.textarea {
     max-width: 95%;
     min-width: 95%;
     height: auto;
@@ -116,13 +157,13 @@
     border: 1px solid #48464661;
     position: relative;
     border-radius: 3px;
+    width: 120px;
+    height: 100px;
 }
 
 .imagePreview img {
-    width: 100px;
-    height: 100px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 3px;
 }
 
 .imagePreview button {
@@ -138,6 +179,7 @@
     height: 20px;
     font-size: 14px;
 }
+
 
 .button {
     margin-top: 1rem;
@@ -166,4 +208,17 @@
         text-transform: capitalize;
     }
 
+}
+
+.drop_downBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    column-gap: 25px;
+    align-items: flex-end;
+
+    @media (max-width:768px) {
+        flex-direction: column;
+        justify-content: left;
+    }
 }

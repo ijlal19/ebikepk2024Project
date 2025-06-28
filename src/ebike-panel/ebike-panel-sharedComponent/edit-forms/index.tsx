@@ -1,6 +1,6 @@
 'use client';
 import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { numericOnly } from '@/genericFunctions/geneFunc';
 import { useParams, useRouter } from 'next/navigation';
@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import Loader from '../loader/loader';
 const jsCookie = require('js-cookie');
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 let BlogCategory = [
     {
@@ -26,6 +25,7 @@ let BlogCategory = [
     },
 ]
 
+//////////////////////////////////////////////// EDIT USED BIKE
 const EditUsedBikeForm = () => {
 
     const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -44,10 +44,10 @@ const EditUsedBikeForm = () => {
     const router = useRouter()
 
     useEffect(() => {
-        if (id) fetchUsedBiukeById(id);
+        if (id) fetchUsedBikeById(id);
     }, [id]);
 
-    const fetchUsedBiukeById = async (id: any) => {
+    const fetchUsedBikeById = async (id: any) => {
         setIsLoading(true)
         const getData = await getSinglebikesDetail(id);
         if (getData && getData.add) {
@@ -68,7 +68,6 @@ const EditUsedBikeForm = () => {
             alert("Internet issue!")
         }
     };
-    // console.log('data' , bikeData?.brandId)
 
     const handleChange = (field: any, value: any) => {
         if (field === 'title') {
@@ -130,15 +129,19 @@ const EditUsedBikeForm = () => {
         }
     }
 
+      const goBack = () => {
+        router.push('/ebike-panel/dashboard/view-classified-ads')
+    }
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
 
         if (!newtitle || newtitle.length < 2) {
             alert("Please add title")
             return
         }
-        const invalidChars = /[\/,?#$!+]/;
-        if (invalidChars.test(newtitle)) {
+        else if (invalidChars.test(newtitle)) {
             alert("Please remove special characters.");
             return;
         }
@@ -199,7 +202,7 @@ const EditUsedBikeForm = () => {
                 !isLoading ?
                     < form onSubmit={handleSubmit} className={styles.main}>
                         <div className={styles.formHeader}>
-                            <a href="/ebike-panel/dashboard/view-classified-ads" className={styles.a}><ArrowBackIosIcon  className={styles.icon} /></a>
+                            <p className={styles.a} onClick={goBack}><ArrowBackIosIcon className={styles.icon} /></p>
                             <p className={styles.heading}>Edit Used Bike</p>
                         </div>
 
@@ -255,100 +258,263 @@ const EditUsedBikeForm = () => {
     );
 };
 
+///////////////////////////////////////////////// EDIT NEW BIKE
 const EditNewBikeForm = () => {
-
-    const [selectedImages, setSelectedImages] = useState<string[]>([]);
-    const [BikeData, setBikeData] = useState<any>([]);
+    const [NewField, setNewField] = useState<any>({
+        newbikeUrl: "",
+        newboreAndStroke: "",
+        newbrandId: "",
+        newclutch: "",
+        newcompressionRatio: "",
+        newdescription: "",
+        newdimentiuon: "",
+        newdisplacement: "",
+        newdryWeight: "",
+        newengine: "",
+        newfocus_keyword: "",
+        newframe: "",
+        newgroundClearance: "",
+        newmeta_description: "",
+        newmeta_title: "",
+        newothers: "",
+        newpetrolCapacity: "",
+        newprice: "",
+        newstarting: "",
+        newtitle: "",
+        newtransmission: "",
+        newtyreBack: "",
+        newtyreFront: "",
+        newvideoUrl: ""
+    })
+    const [imageArr, setImageArr] = useState([])
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [AddcityId, setCityID] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
     const { slug, slug1 } = useParams()
+    let id = slug1
     const router = useRouter()
     useEffect(() => {
-        fetchNewBikeByID(slug1)
-    }, [])
+        if (id) fetchNewBikeByID(id);
+    }, [id])
 
     const fetchNewBikeByID = async (id: any) => {
-        const res = await getnewBikedetailsData(id)
-        if (res && res[0]?.bike) {
-            setBikeData(res[0]?.bike)
-            console.log(res[0]?.bike)
-            setSelectedImages(res[0]?.bike?.images)
-        }
-    }
+        setIsLoading(true);
+        const getData = await getnewBikedetailsData(id);
 
-    const handleInputChange = (e: any) => {
-        const { name, value } = e.target;
-        setBikeData((prev: any) => ({ ...prev, [name]: value }));
+        if (getData && getData[0].bike) {
+            const bike = getData[0].bike;
+            setCityID(bike.cityId)
+            const { uid, createdAt, images, newbike_comments, newbike_ratings, updatedAt, cityId, id, ...cleandData } = bike
+            const transformedData: any = {};
+            Object.keys(cleandData).forEach((key) => {
+                transformedData["new" + key] = bike[key] || "";
+            });
+            transformedData.uid = bike.uid || "";
+            console.log("data", transformedData)
+
+
+            setNewField(transformedData);
+            setImageArr(bike?.images);
+        }
+
+        setIsLoading(false);
     };
 
-    const handleImageChange = (e: any) => {
-        const files = e.target.files;
-        if (files) {
-            const newImageURLs = Array.from(files).slice(0, 4 - selectedImages.length).map((file: any) => URL.createObjectURL(file));
-            setSelectedImages((prev: any) => [...prev, ...newImageURLs].slice(0, 4));
-        }
+    const handleChange = (field: any, value: any) => {
+        setNewField((prev: any) => ({
+            ...prev,
+            [field]: value
+        }));
     };
 
     const handleImageDelete = (index: number) => {
-        setSelectedImages(prev => prev.filter((_, i) => i !== index));
+        const updatedImages = imageArr.filter((_, i) => i !== index);
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageArr(updatedImages);
+        setImageFiles(updatedFiles);
     };
+
+    function uploadImage(event: any) {
+        setIsLoading(true)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
+                setIsLoading(false)
+                console.log('imgRes', imgRes)
+            }
+
+        }
+    }
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        const invalidChars = /[\/,?#$!+]/;
+
+        if (!NewField.newtitle || NewField.newtitle.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+        else if (invalidChars.test(NewField.newtitle)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        else if (!NewField.newbikeUrl || NewField.newbikeUrl.length < 2) {
+            alert("Please enter a valid unique URL");
+            return;
+        }
+        else if (!NewField.newprice || isNaN(Number(NewField.newprice))) {
+            alert("Please enter a valid numeric price");
+            return;
+        }
+        else if (!NewField.newengine || NewField.newengine.length < 2) {
+            alert("Please enter engine info");
+            return;
+        }
+        else if (!NewField.newboreAndStroke) {
+            alert("Please enter bore & stroke");
+            return;
+        }
+        else if (!NewField.newclutch) {
+            alert("Please enter clutch info");
+            return;
+        }
+        else if (!NewField.newstarting) {
+            alert("Please enter starting info");
+            return;
+        }
+        else if (!NewField.newdimention) {
+            alert("Please enter dimension");
+            return;
+        }
+        else if (!NewField.newpetrolCapacity) {
+            alert("Please enter petrol capacity");
+            return;
+        }
+        else if (!NewField.newdisplacement) {
+            alert("Please enter displacement");
+            return;
+        }
+        else if (!NewField.newcompressionRatio) {
+            alert("Please enter compression ratio");
+            return;
+        }
+        else if (!NewField.newtransmission) {
+            alert("Please enter transmission");
+            return;
+        }
+        else if (!NewField.newframe) {
+            alert("Please enter frame info");
+            return;
+        }
+        else if (!NewField.newgroundClearance) {
+            alert("Please enter ground clearance");
+            return;
+        }
+        else if (!NewField.newtyreFront) {
+            alert("Please enter front tyre size");
+            return;
+        }
+        else if (!NewField.newtyreBack) {
+            alert("Please enter back tyre size");
+            return;
+        }
+        else if (!NewField.newdryWeight) {
+            alert("Please enter dry weight");
+            return;
+        }
+        else if (!NewField.newdescription || NewField.newdescription.length < 10) {
+            alert("Please enter a proper description (min 10 characters)");
+            return;
+        }
+        else if (!NewField.newbrandId) {
+            alert("Please select brand");
+            return;
+        }
+        else if (!imageArr || imageArr.length === 0) {
+            alert("Please upload at least one image");
+            return;
+        }
 
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
         const UserId = userData?.uid;
         console.log(UserId)
 
-        const formData = {
-            ...BikeData,
-            images: selectedImages,
-            brandId: BikeData.brandId,
-            uid: UserId || null,
-        };
         const obj = {
-            bikeUrl: formData?.bikeUrl,
-            boreAndStroke: formData?.boreAndStroke,
-            brandId: formData?.brandId,
-            cityId: formData?.cityId,
-            clutch: formData?.clutch,
-            compressionRatio: formData?.compressionRatio,
-            description: formData?.description,
-            dimentiuon: formData?.dimention,
-            displacement: formData?.displacement,
-            dryWeight: formData?.dryWeight,
-            engine: formData?.engine,
-            focus_keyword: formData?.focus_keyword,
-            frame: formData?.frame,
-            groundClearance: formData?.groundClearance,
-            images: formData?.images,
-            meta_description: formData?.meta_description,
-            meta_title: formData?.meta_title,
-            others: formData?.others,
-            petrolCapacity: formData?.petrolCapacity,
-            price: formData?.price,
-            starting: formData?.starting,
-            title: formData?.title,
-            transmission: formData?.transmission,
-            tyreBack: formData?.tyreBack,
-            tyreFront: formData?.tyreFront,
-            uid: formData?.uid,
-            videoUrl: formData?.videoUrl
+            ...NewField,
+        };
+        const finalData = {
+            bikeUrl: obj?.newbikeUrl,
+            boreAndStroke: obj?.newboreAndStroke,
+            brandId: obj?.newbrandId,
+            cityId: AddcityId,
+            clutch: obj?.newclutch,
+            compressionRatio: obj?.newcompressionRatio,
+            description: obj?.newdescription,
+            dimentiuon: obj?.newdimention,
+            displacement: obj?.newdisplacement,
+            dryWeight: obj?.newdryWeight,
+            engine: obj?.newengine,
+            focus_keyword: obj?.newfocus_keyword,
+            frame: obj?.newframe,
+            groundClearance: obj?.newgroundClearance,
+            images: imageArr,
+            meta_description: obj?.newmeta_description,
+            meta_title: obj?.newmeta_title,
+            others: obj?.newothers,
+            petrolCapacity: obj?.newpetrolCapacity,
+            price: obj?.newprice,
+            starting: obj?.newstarting,
+            title: obj?.newtitle,
+            transmission: obj?.newtransmission,
+            tyreBack: obj?.newtyreBack,
+            tyreFront: obj?.newtyreFront,
+            uid: UserId,
+            videoUrl: obj?.newvideoUrl
         }
-        console.log(obj)
-        const res = await UpdateNewBikeById(slug1, obj);
-        if(res && res.success && res.info =="Bike updated"){
-            router.push('/ebike-panel.dashboard/all-new-bikes')
+
+        console.log("data", obj, finalData);
+
+        const res = await UpdateNewBikeById(slug1, finalData);
+        if (res && res.success && res.info == "Bike updated") {
+            router.push('/ebike-panel/dashboard/all-new-bikes')
         }
-        else{
+        else {
             alert('Something is Wrong!')
         }
     }
 
     const handleBrandChange = (e: any) => {
         const brandId = e.target.value;
-        setBikeData((prev: any) => ({
+        setNewField((prev: any) => ({
             ...prev,
-            brandId
+            brandId: brandId
         }));
     };
 
@@ -357,112 +523,135 @@ const EditNewBikeForm = () => {
         return GetbrandObject?.brandName
     }
 
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-new-bikes')
+    }
+
     return (
         <div className={styles.New_main_box}>
-            <form onSubmit={handleSubmit} className={styles.main}>
-                <h2 className={styles.heading}>Edit New Bike</h2>
-
-                {/* Title */}
-                <label htmlFor="title" className={styles.label}>Title</label>
-                <input id="title" name="title" value={BikeData?.title} onChange={handleInputChange} className={styles.input} />
-
-                {/* Video URL */}
-                <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
-                <input id="bikeUrl" name="bikeUrl" value={BikeData?.bikeUrl} onChange={handleInputChange} className={styles.input} />
-
-                {/* Description */}
-                <FloaraTextarea
-                    value={BikeData.description}
-                    onChange={(desc: any) => setBikeData((prev: any) => ({ ...prev, description: desc }))}
-                />
-
-                {selectedImages.length < 4 && (
-                    <input type="file" accept="image/*" multiple onChange={handleImageChange} className={styles.fileInput} />
-                )}
-
-                {/* Images */}
-                <label className={styles.label}>Images (max 4)</label>
-                <div className={styles.imagePreview}>
-                    {selectedImages?.map((img, index) => (
-                        <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} />
-                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+            {
+                !isLoading ?
+                    <form onSubmit={handleSubmit} className={styles.main}>
+                        <div className={styles.formHeader}>
+                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                            <p className={styles.heading}>Edit New Bike</p>
                         </div>
-                    ))}
-                </div>
+                        {/* Title */}
+                        <label htmlFor="title" className={styles.label}>Title</label>
+                        <input id="title" name="title" value={NewField?.newtitle} onChange={(e) => handleChange('newtitle', e.target.value)} className={styles.input} />
 
-                <div className={styles.drop_downBox}>
-                    <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                        <option value="" disabled selected hidden>{GetBrandName(BikeData?.brandId)}</option>
-                        {
-                            BrandArr.map((e: any, index: any) => (
-                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                    {e?.brandName}
-                                </option>
-                            ))
-                        }
-                    </select>
+                        {/* Video URL */}
+                        <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
+                        <input id="bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
 
-                    <div>
-                        <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                        <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
+                        {/* Description */}
+                        <FloaraTextarea
+                            value={NewField.newdescription}
+                            onChange={(e: any) => handleChange('newdescription', e.target.value)}
+                        />
+
+                        {imageArr.length < 4 && (
+                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                        )}
+
+                        {/* Images */}
+                        <label className={styles.label}>Images (max 4)</label>
+                        <div className={styles.imagePreview}>
+                            {imageArr?.map((img, index) => (
+                                <div key={index}>
+                                    <img src={img} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                    <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className={styles.drop_downBox}>
+                            <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
+                                <option value="" disabled selected hidden>{GetBrandName(NewField?.newbrandId)}</option>
+                                {
+                                    BrandArr.map((e: any, index: any) => (
+                                        <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                            {e?.brandName}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+
+                            <div>
+                                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
+                                <input id="videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input_bike_url} />
+                            </div>
+                        </div>
+
+                        {/* Other fields */}
+                        <div className={styles.all_inputs}>
+                            {[
+                                { name: "newprice", label: "Price" },
+                                { name: "newengine", label: "Engine" },
+                                { name: "newboreAndStroke", label: "Bore & Stroke" },
+                                { name: "newclutch", label: "Clutch" },
+                                { name: "newstarting", label: "Starting" },
+                                { name: "newdimention", label: "Dimension" },
+                                { name: "newpetrolCapacity", label: "Petrol Capacity" },
+                                { name: "newdisplacement", label: "Displacement" },
+                                { name: "newcompressionRatio", label: "Compression Ratio" },
+                                { name: "newtransmission", label: "Transmission" },
+                                { name: "newframe", label: "Frame" },
+                                { name: "newgroundClearance", label: "Ground Clearance" },
+                                { name: "newtyreBack", label: "Tyre Back" },
+                                { name: "newtyreFront", label: "Tyre Front" },
+                                { name: "newdryWeight", label: "Dry Weight" }
+                            ].map(({ name, label }) => (
+                                <div key={name}>
+                                    <label htmlFor={name} className={styles.label}>{label}</label>
+                                    <input
+                                        id={name}
+                                        name={name}
+                                        value={(NewField as any)[name]}
+                                        onChange={(e) => handleChange(name, e.target.value)}
+                                        className={styles.input_}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Others textarea */}
+                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                        <textarea id="meta_title" name="meta_title" value={NewField.newmeta_title} onChange={(e) => handleChange('newmeta_title', e.target.value)} className={styles.textarea} />
+                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                        <textarea id="meta_description" name="meta_description" value={NewField?.newmeta_description} onChange={(e) => handleChange('newmeta_description', e.target.value)} className={styles.textarea} />
+                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                        <textarea id="focus_keyword" name="focus_keyword" value={NewField?.newfocus_keyword} onChange={(e) => handleChange('newfocus_keyword', e.target.value)} className={styles.textarea} />
+                        <label htmlFor="others" className={styles.label}>Others</label>
+                        <textarea id="others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
+
+                        {/* Submit */}
+                        <button type="submit" className={styles.button}>Save Edit</button>
+                    </form>
+                    :
+                    <div className={styles.load_main}>
+                        <div className={styles.load_div}>
+                            <Loader isLoading={isLoading} />
+                        </div>
                     </div>
-                </div>
-
-                {/* Other fields */}
-                <div className={styles.all_inputs}>
-                    {[
-                        { name: "price", label: "Price" },
-                        { name: "engine", label: "Engine" },
-                        { name: "boreAndStroke", label: "Bore & Stroke" },
-                        { name: "clutch", label: "Clutch" },
-                        { name: "starting", label: "Starting" },
-                        { name: "dimention", label: "Dimension" },
-                        { name: "petrolCapacity", label: "Petrol Capacity" },
-                        { name: "displacement", label: "Displacement" },
-                        { name: "compressionRatio", label: "Compression Ratio" },
-                        { name: "transmission", label: "Transmission" },
-                        { name: "frame", label: "Frame" },
-                        { name: "groundClearance", label: "Ground Clearance" },
-                        { name: "tyreBack", label: "Tyre Back" },
-                        { name: "tyreFront", label: "Tyre Front" },
-                        { name: "dryWeight", label: "Dry Weight" }
-                    ].map(({ name, label }) => (
-                        <div key={name}>
-                            <label htmlFor={name} className={styles.label}>{label}</label>
-                            <input
-                                id={name}
-                                name={name}
-                                value={(BikeData as any)[name]}
-                                onChange={handleInputChange}
-                                className={styles.input_}
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                {/* Others textarea */}
-                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                <textarea id="meta_title" name="meta_title" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                <textarea id="meta_description" name="meta_description" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="others" className={styles.label}>Others</label>
-                <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
-
-                {/* Submit */}
-                <button type="submit" className={styles.button}>Save Edit</button>
-            </form>
+            }
         </div>
     );
 };
 
+///////////////////////////////////////////////// EDIT BLOG 
 const EditBlogForm = () => {
+    const [Blog_Meta_Description, setBlog_Meta_description] = useState('');
+    const [Blog_Featured_Image, setBlog_Featured_Image] = useState('');
+    const [Blog_Focus_keyword, setBlog_Focus_keyword] = useState('');
+    const [Blog_Meta_Title, setBlog_Meta_Title] = useState('');
+    const [Author_Name, setAuthor_Name] = useState('');
+    const [BlogData, setBlogData] = useState<any>([]);
+    const [Blog_Title, setBlog_Title] = useState('');
     const [CategoryId, setCategoryId] = useState('');
-    const [BlogData, setBlogData] = useState<any>([])
-    const { slug, slug1 } = useParams()
-    const router = useRouter()
+    const [Blog_Html, setBlog_Html] = useState('');
+    const { slug, slug1 } = useParams();
+    const router = useRouter();
 
     useEffect(() => {
         fetchBlogByID(slug1)
@@ -473,26 +662,53 @@ const EditBlogForm = () => {
         console.log(res)
         if (res) {
             setCategoryId(res.blogCategoryId)
+            setBlog_Title(res.blogTitle)
+            setAuthor_Name(res.authorname)
+            setBlog_Html(res.bloghtml)
+            setBlog_Meta_description(res.meta_description)
+            setBlog_Meta_Title(res.meta_title)
+            setBlog_Focus_keyword(res.focus_keyword)
+            setBlog_Featured_Image(res.featuredImage)
             setBlogData(res)
         }
     }
 
-    const handleInputChange = (e: any) => {
-        const { name, value } = e.target;
-        setBlogData((prev: any) => ({ ...prev, [name]: value }));
-    };
+    function uploadImage(event: any) {
+        // setIsLoading(true)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
 
-    const handleImageChange = (e: any) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        reader.onload = (event: any) => {
 
-        const imageURL = URL.createObjectURL(file);
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
 
-        setBlogData((prev: any) => ({
-            ...prev,
-            featuredImage: imageURL,
-        }));
-    };
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                // let _imageArr: any = [...imageArr]
+                setBlog_Featured_Image(imgRes.secure_url)
+                // setImageArr(_imageArr)
+                // setIsLoading(false)
+                console.log('imgRes', imgRes)
+            }
+
+        }
+    }
 
     const CategoryChange = (e: any) => {
         setCategoryId(e.target.value);
@@ -500,6 +716,28 @@ const EditBlogForm = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
+        if (invalidChars.test(Blog_Title)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        if (!Blog_Title || Blog_Title.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+
+        else if (!Author_Name && Author_Name.length < 2) {
+            alert("Please enter a Author Name");
+            return;
+        }
+        else if (!Blog_Html) {
+            alert("Please enter a Description");
+            return;
+        }
+        else if (!Blog_Featured_Image) {
+            alert("Please Select minimum 1 image!")
+            return;
+        }
 
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
@@ -511,16 +749,16 @@ const EditBlogForm = () => {
             uid: UserId || null
         };
         const obj = {
-            authorname: finalBlogData?.authorname,
+            authorname: Author_Name,
             BlogCategoryId: Number(CategoryId),
-            blogTitle: finalBlogData?.blogTitle,
+            blogTitle: Blog_Title,
             blogUrl: finalBlogData?.blogUrl,
-            bloghtml: finalBlogData?.bloghtml,
+            bloghtml: Blog_Html,
             blogtext: finalBlogData?.blogtext,
-            featuredImage: finalBlogData?.featuredImage,
-            focus_keyword: finalBlogData?.focus_keyword,
-            meta_description: finalBlogData?.meta_description,
-            meta_title: finalBlogData?.meta_title,
+            featuredImage: Blog_Featured_Image,
+            focus_keyword: Blog_Focus_keyword,
+            meta_description: Blog_Meta_Description,
+            meta_title: Blog_Meta_Title,
             uid: UserId
         }
         console.log(obj)
@@ -528,37 +766,43 @@ const EditBlogForm = () => {
         if (res && res.info == "blog updated" && res.success) {
             router.push('/ebike-panel/dashboard/blog-list')
         }
-        else{
+        else {
             alert('Something is Wrong!')
         }
     };
 
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/blog-list')
+    }
+
     return (
         <div className={styles.main_blog_box}>
             <form onSubmit={handleSubmit} className={styles.main}>
-                <h2 className={styles.heading}>Edit Blog</h2>
-
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Edit Blog</p>
+                </div>
                 <label htmlFor="blogTitle" className={styles.label}>Title</label>
-                <input id="blogTitle" name="blogTitle" value={BlogData.blogTitle} required onChange={handleInputChange} className={styles.input} />
+                <input id="blogTitle" name="blogTitle" value={Blog_Title} onChange={(e) => setBlog_Title(e.target.value)} className={styles.input} />
 
                 <label htmlFor="authorname" className={styles.label}>Author Name</label>
-                <input id="authorname" name="authorname" value={BlogData.authorname} required onChange={handleInputChange} className={styles.input} />
+                <input id="authorname" name="authorname" value={Author_Name} onChange={(e) => setAuthor_Name(e.target.value)} className={styles.input} />
 
                 <label htmlFor="bloghtml" className={styles.label}>Description</label>
                 <FloaraTextarea
-                    value={BlogData.bloghtml}
-                    onChange={(desc: any) => setBlogData((prev: any) => ({ ...prev, bloghtml: desc }))}
+                    value={Blog_Html}
+                    onChange={(e: any) => setBlog_Html(e)}
                 />
 
                 <input
                     type="file"
                     className={styles.fileInput}
                     accept="image/*"
-                    onChange={handleImageChange}
+                    onChange={(e) => uploadImage(e)}
                 />
-                {BlogData.featuredImage && (
+                {Blog_Featured_Image && (
                     <img
-                        src={BlogData.featuredImage}
+                        src={Blog_Featured_Image}
                         alt="Preview"
                         style={{ width: '150px', height: '100px', marginTop: '10px', border: '1px solid grey', borderRadius: '3px' }}
                     />
@@ -581,11 +825,11 @@ const EditBlogForm = () => {
                 </div>
 
                 <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                <textarea id="meta_title" name="meta_title" value={BlogData.meta_title} onChange={handleInputChange} className={styles.textarea} />
+                <textarea id="meta_title" name="meta_title" value={Blog_Meta_Title} onChange={(e) => setBlog_Meta_Title(e.target.value)} className={styles.textarea} />
                 <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                <textarea id="meta_description" name="meta_description" value={BlogData.meta_description} onChange={handleInputChange} className={styles.textarea} />
+                <textarea id="meta_description" name="meta_description" value={Blog_Meta_Description} onChange={(e) => setBlog_Meta_description(e.target.value)} className={styles.textarea} />
                 <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                <textarea id="focus_keyword" name="focus_keyword" value={BlogData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
+                <textarea id="focus_keyword" name="focus_keyword" value={Blog_Focus_keyword} onChange={(e) => setBlog_Focus_keyword(e.target.value)} className={styles.textarea} />
 
                 <button type="submit" className={styles.button}>Save Edit</button>
             </form>

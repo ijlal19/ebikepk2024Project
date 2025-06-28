@@ -1,10 +1,12 @@
 'use client';
-import { addNewBike, addNewBlog } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
+import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
 const jsCookie = require('js-cookie');
 
 
@@ -23,12 +25,14 @@ let BlogCategory = [
     },
 ]
 
-
+////////////////////////////////////////////////////////// ADD NEW BIKE
 const AddNewBikeForm = () => {
-let router = useRouter()
+    let router = useRouter()
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
+    const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBrandId, setSelectedBrandId] = useState('');
+    const [isLoading, setIsLoading] = useState(false)
     const [BikeData, setBikeData] = useState({
         bikeUrl: '',
         boreAndStroke: '',
@@ -43,7 +47,6 @@ let router = useRouter()
         focus_keyword: '',
         frame: '',
         groundClearance: '',
-        images: [] as string[],
         meta_description: '',
         meta_title: '',
         others: '',
@@ -62,32 +65,47 @@ let router = useRouter()
         setBikeData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleImageChange = (e: any) => {
-        if (!e.target.files) return;
-        const filesArray = Array.from(e.target.files).slice(0, 4 - selectedImages.length);
-        const fileUrls = filesArray.map((file: any) => URL.createObjectURL(file));
-
-        setSelectedImages((prev: any) => [...prev, ...fileUrls]);
-        setImageFiles((prev: any) => [...prev, ...filesArray]);
-
-        setBikeData((prev: any) => ({
-            ...prev,
-            images: [...prev.images, ...fileUrls]
-        }));
-    };
-
     const handleImageDelete = (index: number) => {
-        const updatedImages = selectedImages.filter((_, i) => i !== index);
+        const updatedImages = imageArr.filter((_, i) => i !== index);
         const updatedFiles = imageFiles.filter((_, i) => i !== index);
-
-        setSelectedImages(updatedImages);
+        setImageArr(updatedImages);
         setImageFiles(updatedFiles);
-
-        setBikeData(prev => ({
-            ...prev,
-            images: updatedImages
-        }));
     };
+
+    function uploadImage(event: any) {
+        setIsLoading(true)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
+            }
+
+        }
+    }
 
     const handleBrandChange = (e: any) => {
         setSelectedBrandId(e.target.value);
@@ -95,37 +113,127 @@ let router = useRouter()
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
+
+        if (!BikeData.title || BikeData.title.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+        else if (invalidChars.test(BikeData.title)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        else if (!BikeData.bikeUrl || BikeData.bikeUrl.length < 2) {
+            alert("Please enter a valid unique URL");
+            return;
+        }
+        else if (!BikeData.description || BikeData.description.length < 10) {
+            alert("Please enter a proper description (min 10 characters)");
+            return;
+        }
+        else if (!imageArr || imageArr.length === 0) {
+            alert("Please upload at least one image");
+            return;
+        }
+        else if (!selectedBrandId) {
+            alert("Please select brand");
+            return
+        }
+        else if (!BikeData.price || isNaN(Number(BikeData.price))) {
+            alert("Please enter a valid numeric price");
+            return;
+        }
+        else if (!BikeData.engine || BikeData.engine.length < 2) {
+            alert("Please enter engine info");
+            return;
+        }
+        else if (!BikeData.boreAndStroke) {
+            alert("Please enter bore & stroke");
+            return;
+        }
+        else if (!BikeData.clutch) {
+            alert("Please enter clutch info");
+            return;
+        }
+        else if (!BikeData.starting) {
+            alert("Please enter starting info");
+            return;
+        }
+        else if (!BikeData.dimention) {
+            alert("Please enter dimension");
+            return;
+        }
+        else if (!BikeData.petrolCapacity) {
+            alert("Please enter petrol capacity");
+            return;
+        }
+        else if (!BikeData.displacement) {
+            alert("Please enter displacement");
+            return;
+        }
+        else if (!BikeData.compressionRatio) {
+            alert("Please enter compression ratio");
+            return;
+        }
+        else if (!BikeData.transmission) {
+            alert("Please enter transmission");
+            return;
+        }
+        else if (!BikeData.frame) {
+            alert("Please enter frame info");
+            return;
+        }
+        else if (!BikeData.groundClearance) {
+            alert("Please enter ground clearance");
+            return;
+        }
+        else if (!BikeData.tyreBack) {
+            alert("Please enter back tyre size");
+            return;
+        }
+        else if (!BikeData.tyreFront) {
+            alert("Please enter front tyre size");
+            return;
+        }
+        else if (!BikeData.dryWeight) {
+            alert("Please enter dry weight");
+            return;
+        }
 
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
-        const UserId  = userData?.uid;
+        const UserId = userData?.uid;
         console.log(UserId)
 
-        if(!selectedBrandId){
-            alert('Select Brand')
+        const finalBikeData = {
+            ...BikeData,
+            brandId: selectedBrandId,
+            images: imageArr,
+            uid: UserId || null
+        };
+        console.log(finalBikeData)
+        const res = await addNewBike(finalBikeData)
+        if (res && res.success) {
+            router.push('/ebike-panel/dashboard/all-new-bikes')
         }
-        else{
-            const finalBikeData = {
-                ...BikeData,
-                brandId: selectedBrandId,
-                uid: UserId || null
-            };
-            console.log(finalBikeData)
-            const res = await addNewBike(finalBikeData)
-            if( res && res.success ){
-                router.push('/ebike-panel/dashboard/all-new-bikes')
-            }
-            else{
-                alert('Something is Wrong!')
-            }
-            console.log(res)
+        else {
+            alert('Something is Wrong!')
         }
-    };
+        console.log(res)
+    }
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-new-bikes')
+    }
+
 
     return (
         <div className={styles.main_box}>
             <form onSubmit={handleSubmit} className={styles.main}>
-                <h2 className={styles.heading}>Add New Bike</h2>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>ADD New Bike</p>
+                </div>
 
                 <label htmlFor="title" className={styles.label}>Title</label>
                 <input id="title" name="title" value={BikeData.title} onChange={handleInputChange} className={styles.input} />
@@ -133,21 +241,21 @@ let router = useRouter()
                 <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
                 <input id="bikeUrl" name="bikeUrl" value={BikeData.bikeUrl} onChange={handleInputChange} className={styles.input} />
 
-                <label htmlFor="description" className={styles.label}>Description</label>                
+                <label htmlFor="description" className={styles.label}>Description</label>
                 <FloaraTextArea
                     value={BikeData.description}
                     onChange={(desc: any) => setBikeData((prev) => ({ ...prev, description: desc }))}
                 />
 
                 {selectedImages.length < 4 && (
-                    <input type="file" accept="image/*" multiple onChange={handleImageChange} className={styles.fileInput} />
+                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
                 )}
 
                 <label className={styles.label}>Images (max 4)</label>
                 <div className={styles.imagePreview}>
-                    {selectedImages.map((img, index) => (
+                    {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} />
+                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -165,7 +273,7 @@ let router = useRouter()
                         }
                     </select>
 
-                    <div style={{marginTop:'10px'}}>
+                    <div style={{ marginTop: '10px' }}>
                         <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
                         <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
                     </div>
@@ -217,21 +325,22 @@ let router = useRouter()
     );
 };
 
+///////////////////////////////////////////////////////// ADD NEW BLOG
 const AddBlogForm = () => {
     const [selectedBlogId, setSelectedBlogId] = useState();
+    const [Featured_image, setFeatured_Image] = useState('');
     const [BlogData, setBlogData] = useState<any>({
         authorname: '',
         blogTitle: '',
         blogUrl: '',
         bloghtml: '',
         blogtext: '',
-        featuredImage: '',
         focus_keyword: '',
         meta_description: '',
         meta_title: '',
     });
 
-let router = useRouter()
+    let router = useRouter()
 
 
     const handleInputChange = (e: any) => {
@@ -239,18 +348,38 @@ let router = useRouter()
         setBlogData((prev: any) => ({ ...prev, [name]: value }));
     };
 
-    const handleImageChange = (e: any) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+    function uploadImage(event: any) {
 
-        const imageURL = URL.createObjectURL(file);
-        console.log("Image URL:", imageURL);
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
 
-        setBlogData((prev: any) => ({
-            ...prev,
-            featuredImage: imageURL,
-        }));
-    };
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                setFeatured_Image(imgRes.secure_url)
+            }
+
+        }
+    }
 
     const handleBlogChange = (e: any) => {
         setSelectedBlogId(e.target.value);
@@ -259,42 +388,66 @@ let router = useRouter()
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
+        if (!BlogData.blogTitle || BlogData.blogTitle.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+        else if (!BlogData.authorname || BlogData.authorname.length < 2) {
+            alert("Please add a valid author name (min 2 characters)");
+            return;
+        }
+        else if (!BlogData.bloghtml || BlogData.bloghtml.length < 10) {
+            alert("Please enter a valid blog description (min 10 characters)");
+            return;
+        }
+        else if (!Featured_image) {
+            alert("Please select at least one image!");
+            return;
+        }
+        else if (!selectedBlogId) {
+            alert("Please select a blog category");
+            return;
+        }
+
+        // ✅ Getting UID from cookie
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
-        const UserId  = userData?.uid;
-        console.log(UserId)
+        const UserId = userData?.uid;
 
-        if(!selectedBlogId){
-            alert('Select Blog Category')
+        console.log("User ID:", UserId);
+
+        const finalBikeData = {
+            blogCategoryId: Number(selectedBlogId),
+            ...BlogData,
+            uid: UserId || null,
+            featuredImage: Featured_image
         }
-        else{
-            const finalBikeData = {
-                blogCategoryId: Number(selectedBlogId),
-                ...BlogData,
-                uid: UserId || null
-            };
-            console.log(finalBikeData)
-            const res = await addNewBlog(finalBikeData)
-            if(res && res.success && res.info == "add blog success"){
-                router.push('/ebike-panel/dashboard/blog-list')
-            }
-            else{
-                alert('Some thing is Wrong!')
-            }
-            // console.log(res)
+
+        const res = await addNewBlog(finalBikeData);
+        if (res?.success && res.info === "add blog success") {
+            router.push('/ebike-panel/dashboard/blog-list');
+        } else {
+            alert('Something went wrong!');
         }
     };
+
+     const goBack = () => {
+        router.push('/ebike-panel/dashboard/blog-list')
+    }
 
     return (
         <div className={styles.main_box}>
             <form onSubmit={handleSubmit} className={styles.main}>
-                <h2 className={styles.heading}>Add New Blog</h2>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>ADD New Blog</p>
+                </div>
 
                 <label htmlFor="blogTitle" className={styles.label}>Title</label>
-                <input id="blogTitle" name="blogTitle" value={BlogData.blogTitle} required onChange={handleInputChange} className={styles.input} />
+                <input id="blogTitle" name="blogTitle" value={BlogData.blogTitle} onChange={handleInputChange} className={styles.input} />
 
                 <label htmlFor="authorname" className={styles.label}>Author Name</label>
-                <input id="authorname" name="authorname" value={BlogData.authorname} required onChange={handleInputChange} className={styles.input} />
+                <input id="authorname" name="authorname" value={BlogData.authorname} onChange={handleInputChange} className={styles.input} />
 
                 <label htmlFor="bloghtml" className={styles.label}>Description</label>
                 <FloaraTextArea
@@ -306,12 +459,11 @@ let router = useRouter()
                     type="file"
                     className={styles.fileInput}
                     accept="image/*"
-                    onChange={handleImageChange}
-                    required
+                    onChange={(e) => uploadImage(e)}
                 />
-                {BlogData.featuredImage && (
+                {Featured_image && (
                     <img
-                        src={BlogData.featuredImage}
+                        src={Featured_image}
                         alt="Preview"
                         style={{ width: '150px', height: '100px', marginTop: '10px', border: '1px solid grey', borderRadius: '3px' }}
                     />

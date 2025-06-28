@@ -1,5 +1,6 @@
 import LoginForm from "@/ebike-panel/ebike-panel-sharedComponent/Login"
 import Head from "next/head"
+import * as React from 'react';
 
 const Login = ()=>{
     <Head>
