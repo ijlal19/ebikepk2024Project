@@ -1,3 +1,4 @@
+////////////////////////////////////// NEW BIKE CARD SCSS
 .main_new_bike {
     box-sizing: border-box;
     display: flex;
@@ -168,10 +169,13 @@
 
     .no_results {
         text-align: center;
-        padding: 40px;
+        padding: 0px;
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: #fff;
         border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
         color: #7f8c8d;
         font-size: 16px;
     }
@@ -209,6 +213,7 @@
     }
 }
 
+////////////////////////////////////// USED BIKE CARD SCSS
 .main_used_bike {
     box-sizing: border-box;
     width: 100% !important;
@@ -417,6 +422,7 @@
 }
 }
 
+////////////////////////////////////// BLOG CARD SCSS
 .main_blog {
     width: 100%;
     box-sizing: border-box;
