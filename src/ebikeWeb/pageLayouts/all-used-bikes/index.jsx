@@ -151,15 +151,15 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         console.log('_allUsedBike', _allUsedBike)
 
-        if(_allUsedBike && _pageNo == 1 && !fromPagination) {
-            res = _allUsedBike
+        // if(_allUsedBike && _pageNo == 1 && !fromPagination) {
+        //     res = _allUsedBike
             
-        }
-        else {
+        // }
+        // else {
             if (res == null || fromPagination) {
                 res = await getCustomBikeAd(obj);
             }
-        }
+        // }
 
 
         localStorage.removeItem('PageNo')
