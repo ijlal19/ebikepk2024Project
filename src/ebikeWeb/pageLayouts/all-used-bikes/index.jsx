@@ -50,7 +50,6 @@ const AdsArray = [
 ]
 
 let SelectedADD = []
-// let GetScroll = Number(localStorage.getItem("WindowScroll"));
 let GetScroll = 0
 
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {

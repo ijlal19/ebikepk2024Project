@@ -26,8 +26,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
 
-export default function UsedBike() {
+export default async function UsedBike({ params }: Props) {
+    const { id } = params
+    const bikeDetail = await getSinglebikesDetail(id)
     return (  
-      <UsedBikeCompDetail />
+      <UsedBikeCompDetail _bikeDetail={bikeDetail} />
     )
 }

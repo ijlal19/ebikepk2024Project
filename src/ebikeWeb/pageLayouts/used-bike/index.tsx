@@ -16,15 +16,16 @@ import { useRouter } from 'next/navigation';
 import styles from "./index.module.scss";
 import 'swiper/swiper-bundle.css';
 import Data from './data'
+import { AnyCnameRecord } from 'dns';
 
-export default function UsedBike() {
+export default function UsedBike({_bikeDetail}:any) {
 
   const [similarBikeArr, setSimilarBikeArr]: any = useState([]);
   const [similarBrandBikeArr, setSimilarBrandBikeArr]: any = useState([]);
   const [similarCCBikeArr, setSimilarCCBikeArr]: any = useState([]);
   const [bikeDetail, setBikeDetail]: any = useState({});
   const [showPhoneNo, setShowPhoneNo] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchBikeInfo()
@@ -40,9 +41,22 @@ export default function UsedBike() {
       if (numericOnly(adsId)) {
         setIsLoading(true)
 
-        let res = await getSinglebikesDetail(adsId);
+
+        let res = null 
+        if(_bikeDetail){
+          res = _bikeDetail
+        }
+        else {
+          await getSinglebikesDetail(adsId);
+        }
 
         setIsLoading(false)
+
+        setShowPhoneNo(false)
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 800);
+
         if (res) {
           if (res.add) {
             if (res?.add?.mobileNumber && res?.add?.mobileNumber?.charAt(0) != "0") {
@@ -84,10 +98,6 @@ export default function UsedBike() {
             }
 
           }
-          setShowPhoneNo(false)
-          setTimeout(() => {
-            window.scrollTo(0, 0)
-          }, 1000);
         }
       }
       else {
