@@ -27,10 +27,10 @@ export default function LoginPopup({props,values}: any) {
 
     (window as any).fbAsyncInit = function () {
       (window as any).FB.init({
-        appId: '217553265854765', 
+        appId: '1044746900622305', 
         cookie: true,
         xfbml: true,
-        version: 'v3.2' 
+        version: 'v23.0' 
       });
 
       (window as any).FB.AppEvents.logPageView();
