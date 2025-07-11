@@ -53,6 +53,7 @@ let SelectedADD = []
 let GetScroll = 0
 
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
+
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const [FavouriteData, setFavouriteData] = useState([]);
@@ -62,6 +63,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [IsLogin, setIsLogin] = useState('not_login');
     const [allBikesArr, setAllBikesArr] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null);
     const [SearchValue, setSearchValue] = useState('');
@@ -160,7 +162,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             }
         // }
 
-
+        setInitialLoading(false)
         localStorage.removeItem('PageNo')
         if (res?.data?.length > 0) {
             setCurrentPage(res?.currentPage)
@@ -439,6 +441,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     }
 
     return (
+        !initialLoading ?
         <>
             {
                 is9Inch ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
@@ -587,8 +590,14 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     </div>
                 </div>
             </Box>
-            
             <BrowseUsedBike />
-        </>
+        </> : 
+        <Box className={styles.main}>
+            <div className={styles.load_main}>
+                <div className={styles.load_div}>
+                    <Loader isLoading={isLoading} />
+                </div>
+            </div>
+        </Box>
     )
 }

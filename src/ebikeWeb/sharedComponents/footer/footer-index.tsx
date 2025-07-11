@@ -241,7 +241,7 @@ return (
 
                 </Grid>
 
-                <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
+                {/* <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
 
                     <Typography className={styles.copyright}>
                         Copyright © 2017 - 2025 ebike.pk - All Rights Reserved.
@@ -251,7 +251,7 @@ return (
                         Reproduction of material from any Ebike.pk pages without permission is strictly prohibited.
                     </Typography>
 
-                </Grid>
+                </Grid> */}
         </Container>
     </Box>
 )
