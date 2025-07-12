@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import styles from './index.module.scss'
 import { useParams } from 'next/navigation'
-import { getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions'
+import { getBrandFromId, getdealerData, getnewBikeData } from '@/ebikeWeb/functions/globalFuntions'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 import { priceWithCommas } from '@/genericFunctions/geneFunc'
+import { BrandArr } from '@/ebikeWeb/constants/globalData'
 
 export default function NewBikePrice() {
   const [allnewBikeArr, setAllnewBikeArr] = useState([])
@@ -20,20 +21,15 @@ export default function NewBikePrice() {
 
   async function fetchBrandInfo() {
     setIsLoading(true)
-    let DealerDataRes = await getdealerData(bikeId)
-    const brandName = (DealerDataRes?.dealers[0]?.bike_brand?.brandName)
-    setbrandName(DealerDataRes?.dealers[0]?.bike_brand?.brandName)
-    if (!DealerDataRes) {
-      setIsLoading(true)
-    }
-    else {
-      let res = await getnewBikeData({ brand: brandName })
+      const getBrandName = await getBrandFromId(bikeId , BrandArr)
+      const resName = getBrandName[0].brandName
+      setbrandName(getBrandName[0].brandName)
+      let res = await getnewBikeData({ brand: resName })
       setAllnewBikeArr(res)
       setIsLoading(false)
       setTimeout(() => {
         window.scrollTo(0, 0)
       }, 1000);
-    }
   }
   return (
     <>
