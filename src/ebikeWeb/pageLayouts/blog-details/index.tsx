@@ -11,6 +11,7 @@ import { GiConsoleController } from 'react-icons/gi';
 import ShareIcon from '@mui/icons-material/Share';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -324,7 +325,7 @@ const BlogDetails = () => {
                 }
               </Box>
             </Grid>
-
+            <BrowseUsedBike /> 
           </Grid>
           : <></>} </>
         :
