@@ -2,7 +2,7 @@ import { priceWithCommas } from '@/genericFunctions/geneFunc';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import { Button, Link } from '@mui/material';
+import { Box, Button, Link } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
@@ -104,6 +104,10 @@ export default function NewUsedBikesCard(props: any) {
                     image={imgUrl ? imgUrl : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'}
                     className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height : ""}`}
                 />
+                    {
+                        props.from == "myAdsComp" ?
+                            props.data.is_sold ? <Box className={styles.soldout}>Sold Out</Box> : "" : ""
+                    }
 
                 <CardContent className={styles.card_info}>
 
@@ -112,11 +116,11 @@ export default function NewUsedBikesCard(props: any) {
                     </Typography>
                     {props.currentpage === 'featured_bike' ?
                         (isFeatureTagShow ?
-                            <Typography className={styles.card_price} sx={{color:'#1976d2'}}>
+                            <Typography className={styles.card_price} sx={{ color: '#1976d2' }}>
                                 PKR: {bike?.price ? priceWithCommas(bike?.price) : "0"}
                             </Typography>
                             : "")
-                        : <Typography className={styles.card_price} sx={{color:'black'}}>
+                        : <Typography className={styles.card_price} sx={{ color: 'black' }}>
                             PKR: {bike?.price ? priceWithCommas(bike?.price) : "0"}
                         </Typography>}
 

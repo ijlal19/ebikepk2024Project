@@ -1,5 +1,5 @@
 'use client';
-import { Box, Grid, useMediaQuery, Typography, Pagination, Button } from '@mui/material';
+import { Box, Grid, useMediaQuery, Typography, Pagination, Button, Link } from '@mui/material';
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -10,12 +10,45 @@ import { useEffect, useState } from 'react';
 import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
+import { isLoginUser } from '@/genericFunctions/geneFunc';
+import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
+
+const TagArray = [
+  "Honda",
+  "Price",
+  "Bike",
+  "Suzuki",
+  "Kawasaki",
+  "2025",
+  "Petrol",
+  "Tips",
+  "Riding",
+  "Motorcycle",
+  "Electric",
+  "Introduce",
+  "CC",
+  "125",
+  "New",
+  "Used",
+  "Scooter",
+  "BMW",
+  "Fuel",
+  "KTM",
+  "Pakistan",
+  "Launch",
+  "Model",
+  "Yamaha",
+  "Review",
+  "Vehicle"
+]
 
 const Blog = () => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [isFilterApply, setisFilterApply] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [BlogBikeCare, setBlogBikeCare] = useState([]);
+  const [SelectedTags, setSelectedTag] = useState('');
+  const [IsLogin, setIsLogin] = useState('not_login');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +57,16 @@ const Blog = () => {
   const [BlogNews, setBlognews] = useState([]);
   const router = useRouter();
 
+
   useEffect(() => {
+    let _isLoginUser = isLoginUser()
+    if (_isLoginUser?.login) {
+      setIsLogin(_isLoginUser.info)
+    }
+    else {
+      setIsLogin("not_login")
+    }
+
     getAllBlogList()
   }, [])
 
@@ -36,7 +78,7 @@ const Blog = () => {
     setIsLoading(true)
     let res = await getAllBlog()
     setBlogData(res)
-    res.map((e: any) => {
+    res?.map((e: any) => {
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
@@ -76,11 +118,26 @@ const Blog = () => {
       item.blogTitle.toLowerCase().includes(e?.target?.value?.toLowerCase())
     );
     setFilteredResults(results);
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 500);
   };
 
   const SearchTerm = (e: any) => {
     setSearchTerm(e.target.value)
 
+  }
+
+  const handleTag = async (e: any) => {
+    setSelectedTag(e)
+    const obj = {
+      target: { value: e }
+    }
+    handleSearch(obj)
   }
 
   const blogCardMini = (e: any, i: any) => {
@@ -96,6 +153,16 @@ const Blog = () => {
     )
   }
 
+  const gotoSellBike = () => {
+    if (IsLogin && IsLogin == "not_login") {
+      alert('Please Login to Sell Your Bike!')
+      return
+    }
+    else {
+      router.push('http://localhost:3006/used-bikes/sell-used-bike')
+    }
+  }
+
   return (
     <>
       {
@@ -103,7 +170,7 @@ const Blog = () => {
           <Box className={styles.blog_main}>
 
             <Box className={styles.FrontAdd_box}>
-              <Box className={styles.trending}><b style={{ color: 'black', fontFamily: "sans-serif",display: isMobile? "none":"flex" }}>Trending Videos</b></Box>
+              <Box className={styles.trending}><b style={{ color: 'black', fontFamily: "sans-serif", display: isMobile ? "none" : "flex" }}>Trending Videos</b></Box>
             </Box>
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
             <Box className={styles.blog_header}>
@@ -125,7 +192,7 @@ const Blog = () => {
                 {
                   !isFilterApply ?
                     <Grid container>
-                      {currentBlogs.length > 0 && currentBlogs.map((e: any, i: any) => (
+                      {currentBlogs?.length > 0 && currentBlogs?.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} style={{ cursor: "pointer" }}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
@@ -209,9 +276,23 @@ const Blog = () => {
                       })
                     }
                   </Box>
+                  <Button className={styles.btn} onClick={gotoSellBike}>Sell your bike</Button>
+                  <Box className={styles.tags_main} >
+                    <Typography className={styles.shortblogheading}>Popular Tags <span className={styles.underline}></span></Typography>
+                    <Box className={styles.tags_content}>
+                      {
+                        TagArray.map((e: any,i:any) => {
+                          return (
+                            <Button className={SelectedTags !== e ? styles.tags_btn : styles.tags_select_btn} onClick={() => { handleTag(e) }} key={i} >{e}</Button>
+                          )
+                        })
+                      }
+                    </Box>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
+            <BrowseUsedBike />
           </Box >
           :
           <div className={styles.load_main}>
