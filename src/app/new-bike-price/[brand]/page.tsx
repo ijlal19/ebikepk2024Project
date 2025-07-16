@@ -8,21 +8,21 @@ import { BrandArr } from '@/ebikeWeb/constants/globalData';
 type Props = {
     params: { brand: string }
 }
+
 let BrandName = ''
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { brand } = params
     const Id = brand
-    const getBrandName= await getBrandFromId(Id , BrandArr)
+    const getBrandName = getBrandFromId(Id , BrandArr)
     BrandName  = getBrandName[0].brandName
 
     return {
       title: `${BrandName.charAt(0).toUpperCase()+BrandName.slice(1)} Bike Price in Pakistan 2025`,
       description: `${BrandName} Bike Price in Pakistan 2025. Find ${BrandName} Latest Motocycle Prices on ebike.pk`,
         openGraph: {
-        title: `${BrandName.charAt(0).toUpperCase()+BrandName.slice(1)} Bike Price in Pakistan 2025`,
-        description: `${BrandName} Bike Price in Pakistan 2025. Find ${BrandName} Latest Motocycle Prices on ebike.pk`,
-    //     images: [product?.add?.images[0]],
-      },
+          title: `${BrandName.charAt(0).toUpperCase()+BrandName.slice(1)} Bike Price in Pakistan 2025`,
+          description: `${BrandName} Bike Price in Pakistan 2025. Find ${BrandName} Latest Motocycle Prices on ebike.pk`,
+        },
     }
   }
 
