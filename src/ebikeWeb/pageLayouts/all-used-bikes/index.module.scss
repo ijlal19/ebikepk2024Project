@@ -430,6 +430,21 @@
             width: 100%;
             height: 140px;
             position: relative;
+            .grid_image_upper{
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .soldout{
+              color: white;
+              width: 100%;
+              padding: 1px 0px;
+              box-sizing: border-box;
+              text-align: center;
+              background-color: #e83c3e;
+            }
+
 
             img {
               width: 100%;
@@ -605,6 +620,20 @@
               width: 220px;
               padding: 0px 0px;
               box-sizing: border-box;
+            }
+            .long_card_img{
+              display: flex;
+              justify-content: center;
+              align-items: flex-end;
+            }
+
+            .soldout{
+              color: white;
+              width: 100%;
+              padding: 1px 0px;
+              box-sizing: border-box;
+              text-align: center;
+              background-color: #e83c3e;
             }
 
             img {
@@ -945,3 +974,4 @@
     }
   }
 }
+
