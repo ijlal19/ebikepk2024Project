@@ -645,3 +645,38 @@
 
     }
 }
+
+
+.imagePreview {
+    display: flex;
+    margin: 10px 0px 0px 0px;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.imagePreview div {
+    border: 1px solid #48464661;
+    position: relative;
+    border-radius: 3px;
+    width: 120px;
+    height: 100px;
+}
+
+.imagePreview img {
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.imagePreview button {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: yellowgreen;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+}

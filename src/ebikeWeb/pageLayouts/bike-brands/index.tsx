@@ -27,27 +27,28 @@ export default function NewBikeBrand() {
 
   return (
     <Box className={styles.bikes_brand_main}>
-      {!isLoading ? 
-      <>
-      <Box className={styles.bikes_brand_container}>
-        <Typography className={styles.heading}>New Bikes By Make</Typography>
-        {
-          allBrandArr?.map((e: any, i: any) => {
-            return (
-              <Box className={styles.brand_image_box} key={i} >
-                <BikesBrandCard key={i} data={e} />
-              </Box>
-            )
-          })
-        }
-      </Box>
-      </>:
-      <div className={styles.load_main}>
-      <div className={styles.load_div}>
-        <Loader isLoading={isLoading} />
-      </div>
-      </div>
-}
+      {!isLoading ?
+        <>
+          <Box className={styles.bikes_brand_container}>
+            <Typography className={styles.heading}>New Bikes By Make</Typography>
+            {
+              allBrandArr?.map((e: any, i: any) => {
+                if (e?.brandName == "sport" || e?.brandName == "china") return null;
+                return (
+                  <Box className={styles.brand_image_box} key={i} >
+                    <BikesBrandCard key={i} data={e} />
+                  </Box>
+                )
+              })
+            }
+          </Box>
+        </> :
+        <div className={styles.load_main}>
+          <div className={styles.load_div}>
+            <Loader isLoading={isLoading} />
+          </div>
+        </div>
+      }
     </Box>
   );
 }

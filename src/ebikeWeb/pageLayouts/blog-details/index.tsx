@@ -7,10 +7,14 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
+import { Navigation, Autoplay } from "swiper/modules";
 import { GiConsoleController } from 'react-icons/gi';
+import { Swiper, SwiperSlide } from "swiper/react";
 import ShareIcon from '@mui/icons-material/Share';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import "swiper/css/navigation";
+import "swiper/css";
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 
 const BlogDetails = () => {
@@ -52,7 +56,7 @@ const BlogDetails = () => {
       const filteredBlogs = res.filter((blog: any) => blog.id.toString() !== id.toString());
       setBlogData(filteredBlogs);
     }
-}
+  }
 
   async function fetchFeaturedBike() {
     let res = await getAllFeaturedBike();
@@ -156,7 +160,7 @@ const BlogDetails = () => {
     return (
       <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={e?.featuredImage} alt="" className={styles.image} />
+          <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.blogTitle, 25)}</p>
@@ -173,9 +177,34 @@ const BlogDetails = () => {
           <Grid container className={styles.gird_box_main}>
             <Grid item xs={isMobile ? 12 : 8.5} className={styles.blog_details_card}>
 
-              <Box className={styles.image_box}>
+              {/* <Box className={styles.image_box}>
                 <img src={DataBlog.featuredImage} alt="" className={styles.image} />
+              </Box> */}
+
+              <Box className={styles.image_box}>
+                {DataBlog?.featuredImage?.includes(' #$# ') ? (
+                  <Swiper
+                    modules={[Navigation, Autoplay]}
+                    navigation
+                    autoplay={{ delay: 3000 }}
+                    loop={true}
+                    className={styles.image_swiper}
+                  >
+                    {DataBlog.featuredImage.split(' #$# ').map((imgUrl: string, idx: number) => (
+                      <SwiperSlide key={idx}>
+                        <img src={imgUrl.trim()} alt={`blog-image-${idx}`} className={styles.image} />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                ) : (
+                  <img
+                    src={DataBlog?.featuredImage?.split(' #$# ')[0]?.trim()}
+                    alt="blog"
+                    className={styles.image}
+                  />
+                )}
               </Box>
+
 
               <Box className={styles.blog_details_content}>
 
@@ -251,7 +280,7 @@ const BlogDetails = () => {
                     onChange={(e) => setComment(e.target.value)}></textarea>
                 </Box>
                 <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button>
-                <div className={styles.user_comment_box} style={{display:CommentArr && CommentArr.length > 0 ? "" :"none"}}>
+                <div className={styles.user_comment_box} style={{ display: CommentArr && CommentArr.length > 0 ? "" : "none" }}>
                   {CommentArr && CommentArr.length > 0 ? (
                     [...CommentArr].reverse().map((data: any, i: any) => (
                       <div key={i} className={styles.user_comment}>
@@ -274,7 +303,7 @@ const BlogDetails = () => {
                         <p className={styles.user_main_comment}>{data?.comment}</p>
                       </div>
                     ))
-                  ) :""}
+                  ) : ""}
 
                 </div>
               </Box>
@@ -325,7 +354,7 @@ const BlogDetails = () => {
                 }
               </Box>
             </Grid>
-            <BrowseUsedBike /> 
+            <BrowseUsedBike />
           </Grid>
           : <></>} </>
         :

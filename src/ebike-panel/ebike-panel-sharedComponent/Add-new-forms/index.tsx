@@ -327,8 +327,11 @@ const AddNewBikeForm = () => {
 
 ///////////////////////////////////////////////////////// ADD NEW BLOG
 const AddBlogForm = () => {
+    const [selectedImages, setSelectedImages] = useState<string[]>([]);
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBlogId, setSelectedBlogId] = useState();
-    const [Featured_image, setFeatured_Image] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [imageArr, setImageArr] = useState([])
     const [BlogData, setBlogData] = useState<any>({
         authorname: '',
         blogTitle: '',
@@ -342,14 +345,21 @@ const AddBlogForm = () => {
 
     let router = useRouter()
 
-
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setBlogData((prev: any) => ({ ...prev, [name]: value }));
     };
 
-    function uploadImage(event: any) {
+    const handleImageDelete = (index: number) => {
+        const updatedImages = imageArr.filter((_, i) => i !== index);
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageArr(updatedImages);
+        setImageFiles(updatedFiles);
+    };
 
+
+    function uploadImage(event: any) {
+        setIsLoading(true)
         const reader = new FileReader()
         reader.readAsDataURL(event.target.files[0])
 
@@ -375,7 +385,9 @@ const AddBlogForm = () => {
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
-                setFeatured_Image(imgRes.secure_url)
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
             }
 
         }
@@ -400,7 +412,7 @@ const AddBlogForm = () => {
             alert("Please enter a valid blog description (min 10 characters)");
             return;
         }
-        else if (!Featured_image) {
+        else if (!imageArr || imageArr.length === 0) {
             alert("Please select at least one image!");
             return;
         }
@@ -409,18 +421,18 @@ const AddBlogForm = () => {
             return;
         }
 
-        // ✅ Getting UID from cookie
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
         const UserId = userData?.uid;
-
+        
         console.log("User ID:", UserId);
-
+        
+        const imagesString = imageArr.join(' #$# ');
         const finalBikeData = {
             blogCategoryId: Number(selectedBlogId),
             ...BlogData,
             uid: UserId || null,
-            featuredImage: Featured_image
+            featuredImage: imagesString
         }
 
         const res = await addNewBlog(finalBikeData);
@@ -455,20 +467,20 @@ const AddBlogForm = () => {
                     onChange={(desc: any) => setBlogData((prev: any) => ({ ...prev, bloghtml: desc }))}
                 />
 
-                <input
-                    type="file"
-                    className={styles.fileInput}
-                    accept="image/*"
-                    onChange={(e) => uploadImage(e)}
-                />
-                {Featured_image && (
-                    <img
-                        src={Featured_image}
-                        alt="Preview"
-                        style={{ width: '150px', height: '100px', marginTop: '10px', border: '1px solid grey', borderRadius: '3px' }}
-                    />
-                )}
-                {/* {selectedImages} */}
+                {imageArr.length < 4 ?
+                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                :""}
+
+                <label className={styles.label}>Images (max 4)</label>
+                <div className={styles.imagePreview}>
+                    {imageArr.map((img, index) => (
+                        <div key={index}>
+                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                        </div>
+                    ))}
+                </div>
+
                 <div className={styles.drop_downBox}>
                     <select name="" id="" className={styles.selected} onChange={handleBlogChange}>
                         <option value="" disabled selected hidden>Select Category</option>

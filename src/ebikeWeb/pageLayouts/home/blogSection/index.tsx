@@ -62,7 +62,7 @@ function BlogSection(props: any) {
                 BlogData.map((e: any, i: any) => (
                   <Grid container key={i} className={styles.blog_grid1}>
                     <Grid item xs={isMobile ? 12 : 3} className={styles.grid1_child1}>
-                      <img src={e.featuredImage} alt={e.blogTitle.slice(0, 15)} className={styles.blog_images} />
+                      <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt={e.blogTitle.slice(0, 15)} className={styles.blog_images} />
                     </Grid>
 
                     <Grid item xs={isMobile ? 12 : 8} className={styles.grid1_child2}>

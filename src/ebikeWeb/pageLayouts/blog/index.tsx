@@ -141,10 +141,11 @@ const Blog = () => {
   }
 
   const blogCardMini = (e: any, i: any) => {
+      const firstImage = e?.featuredImage?.split(' #$# ')[0]?.trim();
     return (
       <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={e?.featuredImage} alt="" className={styles.image} />
+          <img src={firstImage} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{e?.blogTitle}</p>
@@ -196,7 +197,7 @@ const Blog = () => {
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} style={{ cursor: "pointer" }}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={e.featuredImage} alt="" className={styles.blog_images} />
+                              <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>

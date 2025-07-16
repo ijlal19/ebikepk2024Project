@@ -212,7 +212,7 @@ const Used_bike_card = () => {
                                                                 )
                                                             }) :
                                                             <SwiperSlide key=''>
-                                                                <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.slider_img} />
+                                                                <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.image} />
                                                             </SwiperSlide>
                                                     }
                                                 </Swiper>
@@ -443,7 +443,7 @@ const New_bike_card = () => {
                                                                 )
                                                             }) :
                                                             <SwiperSlide key=''>
-                                                                <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.slider_img} />
+                                                                <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.image} />
                                                             </SwiperSlide>
                                                     }
                                                 </Swiper>
@@ -613,7 +613,30 @@ const Blog_Card = () => {
 
                                 <div className={styles.card_content}>
                                     <div className={styles.cardimage_box}>
-                                        <img className={styles.image} src={e?.featuredImage ? e?.featuredImage : "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png"} alt="" />
+                                        <Swiper
+                                            spaceBetween={50}
+                                            slidesPerView={1}
+                                            onSlideChange={() => console.log('slide change')}
+                                            onSwiper={(swiper) => console.log(swiper)}
+                                            modules={[Navigation, FreeMode]}
+                                            navigation={true}
+                                            initialSlide={0}
+                                            loop={true}
+                                            className={styles.image}
+                                        >
+                                            {
+                                                e?.featuredImage && e.featuredImage.includes(' #$# ') ? (
+                                                    e.featuredImage.split(' #$# ').map((imgUrl: any, ind: any) => (
+                                                        <SwiperSlide key={ind} className={styles.image}>
+                                                            <img src={imgUrl.trim()} alt={e?.title} className={styles.image} />
+                                                        </SwiperSlide>
+                                                    ))
+                                                ) :
+                                                    <SwiperSlide key=''>
+                                                        <img src={e.featuredImage.split(' #$# ')[0].trim()} alt={e?.title} className={styles.image} />
+                                                    </SwiperSlide>
+                                            }
+                                        </Swiper>
                                     </div>
 
                                     <div className={styles.card_detail}>

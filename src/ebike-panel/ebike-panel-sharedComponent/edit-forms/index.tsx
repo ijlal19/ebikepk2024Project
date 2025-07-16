@@ -650,7 +650,10 @@ const EditBlogForm = () => {
     const [Blog_Title, setBlog_Title] = useState('');
     const [CategoryId, setCategoryId] = useState('');
     const [Blog_Html, setBlog_Html] = useState('');
+    const [imageArr, setImageArr] = useState<any>([]);
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
     const { slug, slug1 } = useParams();
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter();
 
     useEffect(() => {
@@ -670,11 +673,27 @@ const EditBlogForm = () => {
             setBlog_Focus_keyword(res.focus_keyword)
             setBlog_Featured_Image(res.featuredImage)
             setBlogData(res)
+            if (res.featuredImage.includes(' #$# ')) {
+                const GetImage = res.featuredImage.split(' #$# ').trim()
+                console.log("Image", GetImage)
+            }
+            else {
+                console.log(`${[res.featuredImage]}`)
+                setImageArr([res.featuredImage])
+            }
         }
     }
+    console.log(imageArr)
+
+    const handleImageDelete = (index: number) => {
+        const updatedImages = imageArr.filter((_: any, i: any) => i !== index);
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageArr(updatedImages);
+        setImageFiles(updatedFiles);
+    };
 
     function uploadImage(event: any) {
-        // setIsLoading(true)
+        setIsLoading(true)
         const reader = new FileReader()
         reader.readAsDataURL(event.target.files[0])
 
@@ -700,10 +719,10 @@ const EditBlogForm = () => {
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
-                // let _imageArr: any = [...imageArr]
-                setBlog_Featured_Image(imgRes.secure_url)
-                // setImageArr(_imageArr)
-                // setIsLoading(false)
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
+                setIsLoading(false)
                 console.log('imgRes', imgRes)
             }
 
@@ -734,8 +753,8 @@ const EditBlogForm = () => {
             alert("Please enter a Description");
             return;
         }
-        else if (!Blog_Featured_Image) {
-            alert("Please Select minimum 1 image!")
+        else if (!imageArr || imageArr.length === 0) {
+            alert("Please upload at least one image");
             return;
         }
 
@@ -755,7 +774,7 @@ const EditBlogForm = () => {
             blogUrl: finalBlogData?.blogUrl,
             bloghtml: Blog_Html,
             blogtext: finalBlogData?.blogtext,
-            featuredImage: Blog_Featured_Image,
+            featuredImage: imageArr.join(' #$# '),
             focus_keyword: Blog_Focus_keyword,
             meta_description: Blog_Meta_Description,
             meta_title: Blog_Meta_Title,
@@ -794,7 +813,7 @@ const EditBlogForm = () => {
                     onChange={(e: any) => setBlog_Html(e)}
                 />
 
-                <input
+                {/* <input
                     type="file"
                     className={styles.fileInput}
                     accept="image/*"
@@ -806,7 +825,23 @@ const EditBlogForm = () => {
                         alt="Preview"
                         style={{ width: '150px', height: '100px', marginTop: '10px', border: '1px solid grey', borderRadius: '3px' }}
                     />
+                )} */}
+
+                {imageArr.length < 4 && (
+                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
                 )}
+
+                {/* Images */}
+                <label className={styles.label}>Images (max 4)</label>
+                <div className={styles.imagePreview}>
+                    {imageArr?.map((img: any, index: any) => (
+                        <div key={index}>
+                            <img src={img} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                        </div>
+                    ))}
+                </div>
+
 
                 {/* {selectedImages} */}
                 <div className={styles.drop_downBox}>
