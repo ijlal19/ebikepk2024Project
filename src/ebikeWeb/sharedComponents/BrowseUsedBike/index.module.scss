@@ -10,7 +10,7 @@
     box-sizing: border-box;
     width: 100%;
     @media (max-width:768px) {
-        padding: 20px 0px 10px 0px !important;
+        padding: 10px 0px 10px 0px !important;
     }
 
     .container {
@@ -46,6 +46,7 @@
             height: auto;
             box-sizing: border-box;
             display: flex;
+            row-gap: 30px;
             justify-content: center;
             margin: auto;
             padding: 0px 0px !important;
@@ -64,7 +65,7 @@
                 display: flex;
                 box-sizing: border-box;
                 padding: 0px !important;
-                justify-content: left !important;
+                // justify-content: left !important;
                 flex-direction: column;
 
                 @media (max-width:1120px) {
@@ -89,10 +90,10 @@
 
                     .li {
                         // border: 1px solid #000;
-                        color: #1976d2;
+                        color: #518ecb;
                         text-decoration: none;
                         transition: all 1s ease;
-                        font-size: 12px;
+                        font-size: 13px;
                         box-sizing: border-box;
                         padding: 4px 0px;
                         cursor: pointer;

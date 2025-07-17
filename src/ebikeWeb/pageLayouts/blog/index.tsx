@@ -10,9 +10,10 @@ import { useEffect, useState } from 'react';
 import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
-import { isLoginUser } from '@/genericFunctions/geneFunc';
+import { add3Dots, isLoginUser } from '@/genericFunctions/geneFunc';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
-
+import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
+import CATEGORYdATA from './Data';
 const TagArray = [
   "Honda",
   "Price",
@@ -143,14 +144,13 @@ const Blog = () => {
   const blogCardMini = (e: any, i: any) => {
       const firstImage = e?.featuredImage?.split(' #$# ')[0]?.trim();
     return (
-      <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
-        <Box className={styles.image_box}>
-          <img src={firstImage} alt="" className={styles.image} />
-        </Box>
-        <Box className={styles.title_box}>
-          <p className={styles.title}>{e?.blogTitle}</p>
-        </Box>
-      </Box>
+      <div className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
+        <div className={styles.image_box}><img src={firstImage} alt="" className={styles.image} />
+        </div>
+        <div className={styles.title_box}>
+          <p className={styles.title}>{add3Dots(e?.blogTitle,45)}</p>
+        </div>
+      </div>
     )
   }
 
@@ -160,7 +160,7 @@ const Blog = () => {
       return
     }
     else {
-      router.push('http://localhost:3006/used-bikes/sell-used-bike')
+      router.push('/used-bikes/sell-used-bike')
     }
   }
 
@@ -169,10 +169,6 @@ const Blog = () => {
       {
         !isLoading ?
           <Box className={styles.blog_main}>
-
-            <Box className={styles.FrontAdd_box}>
-              <Box className={styles.trending}><b style={{ color: 'black', fontFamily: "sans-serif", display: isMobile ? "none" : "flex" }}>Trending Videos</b></Box>
-            </Box>
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
             <Box className={styles.blog_header}>
               <Typography className={styles.blog_heading}>
@@ -189,23 +185,24 @@ const Blog = () => {
             <hr />
 
             <Grid container className={styles.blog_grid}>
-              <Grid item xs={isMobile ? 12 : 8.5} sx={{ paddingRight: '15px' }}>
+
+              <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
                 {
                   !isFilterApply ?
                     <Grid container>
                       {currentBlogs?.length > 0 && currentBlogs?.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
-                          <Grid container onClick={() => handleRoute(e)} style={{ cursor: "pointer" }}>
+                          <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
                               <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.blog_images} />
                             </Grid>
-                            <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2} >
+                            <Grid item xs={isMobile ? 12 : 7} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} >{e.blogTitle}</Typography>
+                                <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle,70)}</Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
-                                <Typography className={styles.blog_card_description}>{e?.meta_description?.slice(0, 119)}...</Typography>
+                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description,316)}</Typography>
                               </Box>
                             </Grid>
                           </Grid>
@@ -242,6 +239,7 @@ const Blog = () => {
                     variant="outlined"
                     shape="rounded"
                     color='primary'
+                    size={isMobile ? "small" : 'medium'}
                   />
                 </Box>
               </Grid>
@@ -269,6 +267,7 @@ const Blog = () => {
                   </Box>
                   <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Bike Care <span className={styles.underline}></span></Typography>
+                    {/* {blogCardMini()} */}
                     {
                       BlogBikeCare.slice(0, 5).map((e: any, i: any) => {
                         return (
@@ -293,6 +292,7 @@ const Blog = () => {
                 </Box>
               </Grid>
             </Grid>
+            <Blog_Category_Comp heading="Tips & Advice" data={CATEGORYdATA} />
             <BrowseUsedBike />
           </Box >
           :

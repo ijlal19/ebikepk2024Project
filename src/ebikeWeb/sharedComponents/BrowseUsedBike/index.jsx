@@ -174,9 +174,9 @@ const BrowseUsedBike = () => {
     return (
         <Box className={styles.browser}>
             <Box className={styles.container}>
-                <Typography className={styles.heading}>Browse More Used Bikes</Typography>
+                {/* <Typography className={styles.heading}>Browse More Used Bikes</Typography> */}
                 <Grid container className={styles.main_container}>
-                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 4} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 HondaArray.map((data, i) => {
@@ -188,7 +188,7 @@ const BrowseUsedBike = () => {
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 4} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 SuzukiArray.map((data, i) => {
@@ -200,7 +200,7 @@ const BrowseUsedBike = () => {
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 4} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 YamahaArray.map((data, i) => {
@@ -212,7 +212,7 @@ const BrowseUsedBike = () => {
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 4} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 UnitedArray.map((data, i) => {
@@ -224,7 +224,7 @@ const BrowseUsedBike = () => {
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 4} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 UniqueArray.map((data, i) => {
@@ -236,7 +236,7 @@ const BrowseUsedBike = () => {
                             }
                         </ul>
                     </Grid>
-                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 2} className={styles.grid_list}>
+                    <Grid item xs={isMobile ? isMobile2 ? 6 : 4 : 4} className={styles.grid_list}>
                         <ul className={styles.ul}>
                             {
                                 SuperPowerArray.map((data, i) => {

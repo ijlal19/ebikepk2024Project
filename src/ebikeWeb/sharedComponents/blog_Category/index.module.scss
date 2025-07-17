@@ -1,0 +1,50 @@
+.main {
+    width: 100%;
+    padding: 0px 10px !important;
+    box-sizing: border-box;
+    .container {
+        width: 100%;
+        max-width: 1100px;
+        box-sizing: border-box;
+        margin: auto;
+        .header {
+            .shortblogheading {
+                font-size: 24px;
+                font-family: none;
+                font-weight: bolder;
+                color: #444444;
+                margin: 0px !important;
+                padding: 0px !important;
+                width: 100%;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                column-gap: 10px;
+
+                .underline {
+                    height: 0px;
+                    border: 2px solid #00000012;
+                    background-color: #00000012;
+                    width: 100%;
+                    // max-width: 200px;
+                }
+            }
+        }
+        .card_section{
+            display: grid;
+            grid-template-columns: repeat(4 ,1fr);
+            gap: 15px;
+            padding: 20px 0px;
+            box-sizing: border-box;
+            
+            @media (max-width:768px) {
+                grid-template-columns: repeat(2 ,1fr);
+            }
+            @media (max-width:768px) {
+                grid-template-columns: repeat(2 ,1fr);
+            }
+        }
+    }
+}

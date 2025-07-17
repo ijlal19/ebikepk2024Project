@@ -57,9 +57,9 @@
 
 .background_box {
     width: 100%;
-    height: 53vh;
+    height: 59vh;
     padding: 0px;
-    background-size: 100% auto;
+    background-size: 100% 100%;
     background-position: center;
     cursor: pointer;
     color: black;
@@ -80,19 +80,18 @@
     }
 }
 
-.background_box:hover {
-    color: red;
-    background-size: 105% auto;
-}
+    .background_box:hover {
+        color: red;
+    }
 
 .cards_grid {
     .card {
-        background-size: 100% auto;
+        background-size: 100% 100%;
         background-position: center;
         background-repeat: no-repeat;
         color: black;
         cursor: pointer;
-        height: 25vh !important;
+        height: 29vh !important;
         transition: all 1s ease;
 
         .icons {
@@ -116,7 +115,6 @@
 
     .card:hover {
         color: red;
-        background-size: 105% auto;
     }
 }
 

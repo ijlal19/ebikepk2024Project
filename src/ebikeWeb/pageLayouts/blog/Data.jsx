@@ -10099,6 +10099,39 @@ const BlogData = [
         ]
     }
 ]
-export default BlogData
+
+const CATEGORYdATA = [
+{
+    id:1,
+    imgeUrl:"/images.jpeg",
+    title:"Crwon 2024 new moel 2nd he cleaning",
+    authorname:"Abdullah",
+    date:"Jul 17 2025"
+},
+{
+    id:2,
+    imgeUrl:"/images.jpeg",
+    title:"Crwon 2024 new moel 2nd he cleaning",
+    authorname:"Abdullah",
+    date:"Jul 17 2025"
+},
+{
+    id:3,
+    imgeUrl:"https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1718104139/blogs/po9vocmtdpalkj2lq88c.jpg",
+    title:"Crwon 2024 new moel 2nd he cleaning kjjjjjnj kj kj kj kjkj kjb m mjbhj kjh gvhg , kjbj h t",
+    authorname:"Abdullah",
+    date:"Jul 17 2025"
+},
+{
+    id:4,
+    imgeUrl:"https://i.pinimg.com/236x/a6/7a/1b/a67a1b88ab67f5321d01af288c11a289.jpg",
+    title:"Crwon 2024 new moel 2nd he cleaning",
+    authorname:"Abdullah",
+    date:"Jul 17 2025"
+},
+
+]
+// export default BlogData
+export default CATEGORYdATA
 
 // http://localhost:4000/api/blog/get-blog-by-id/647
