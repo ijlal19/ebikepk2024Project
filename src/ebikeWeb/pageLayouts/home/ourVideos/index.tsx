@@ -111,7 +111,7 @@ const OurVideos = ({ SetWidth, SetMaxWidth }: any) => {
 
                 </Grid>
             </Grid>
-        </Box>
+        </Box>   
     );
 };
 
