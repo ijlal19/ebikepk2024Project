@@ -220,7 +220,7 @@ const BlogDetails = () => {
                 </Typography>
 
                 <Typography className={styles.socialicons_box}>
-                  <Fab variant="extended"
+                  <Fab variant="extended" disableRipple
                     sx={{
                       height: 32,
                       fontSize: '12px',
@@ -229,7 +229,8 @@ const BlogDetails = () => {
                       color: '#4d4d4d',
                       alignItems: 'center',
                       border: '1px solid #e2e2e2',
-                      background: 'white'
+                      background: 'white',
+                      cursor:'text',
                     }}>
                     <ShareIcon sx={{ mr: 1, fontSize: '15px', fontWeight: 'bolder' }} />
                     Share
@@ -274,9 +275,9 @@ const BlogDetails = () => {
               <div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }}></div>
 
               <Box className={styles.comment_box}>
-                <Typography className={styles.comment_box_Title}>Leave a Reply</Typography>
+                <Typography className={styles.shortblogheading}>Leave a Reply <span className={styles.underline}></span></Typography>
                 <Box className={styles.details_input}>
-                  <textarea name="" id="" className={styles.your_comment_input} placeholder="Enter your comment"
+                  <textarea name="" id="" className={styles.your_comment_input} placeholder="Your Comment"
                     onChange={(e) => setComment(e.target.value)}></textarea>
                 </Box>
                 <Button className={styles.post_comment} onClick={handlePost}>Post Comment</Button>

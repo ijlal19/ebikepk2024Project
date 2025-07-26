@@ -42,7 +42,6 @@ const TagArray = [
   "Review",
   "Vehicle"
 ]
-
 const Blog = () => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [isFilterApply, setisFilterApply] = useState(false);
@@ -56,8 +55,14 @@ const Blog = () => {
   const [BlogSafety, setBlogSafety] = useState([]);
   const [BlogData, setBlogData] = useState([]);
   const [BlogNews, setBlognews] = useState([]);
+  // const messages: string[] = ["Hello", "Welcome"];
+  const [messages, setMessages] = useState<any>([]);
+
+  const [index, setIndex] = useState(0);
+  const [fade, setFade] = useState(false);
   const router = useRouter();
 
+  // let messages :any[]= []
 
   useEffect(() => {
     let _isLoginUser = isLoginUser()
@@ -69,17 +74,35 @@ const Blog = () => {
     }
 
     getAllBlogList()
+    setFade(true);
   }, [])
 
   useEffect(() => {
     setisFilterApply(true)
   }, [filteredResults])
 
+
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    const interval = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % messages.length);
+        setFade(true);
+      }, 300);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [messages]);
+
+
   async function getAllBlogList() {
     setIsLoading(true)
     let res = await getAllBlog()
     setBlogData(res)
     res?.map((e: any) => {
+      // console.log("datar" , res ,e)
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
@@ -87,6 +110,9 @@ const Blog = () => {
       setBlogSafety(safetyBlogs)
       setBlogBikeCare(Bike_Care)
     })
+    const top7Titles = res.slice(0, 7).map((e: any) => e?.blogTitle);
+    setMessages(top7Titles); // ✅ update state
+
     setisFilterApply(false)
     setIsLoading(false)
     setTimeout(() => {
@@ -142,13 +168,13 @@ const Blog = () => {
   }
 
   const blogCardMini = (e: any, i: any) => {
-      const firstImage = e?.featuredImage?.split(' #$# ')[0]?.trim();
+    const firstImage = e?.featuredImage?.split(' #$# ')[0]?.trim();
     return (
       <div className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
         <div className={styles.image_box}><img src={firstImage} alt="" className={styles.image} />
         </div>
         <div className={styles.title_box}>
-          <p className={styles.title}>{add3Dots(e?.blogTitle,45)}</p>
+          <p className={styles.title}>{add3Dots(e?.blogTitle, 45)}</p>
         </div>
       </div>
     )
@@ -164,15 +190,20 @@ const Blog = () => {
     }
   }
 
+
   return (
     <>
       {
         !isLoading ?
           <Box className={styles.blog_main}>
-            <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
             <Box className={styles.blog_header}>
               <Typography className={styles.blog_heading}>
-                Blogs & Articles
+                <p className={styles.static}>Trending </p>
+                {messages.length > 0 && (
+                  <h1 className={`${styles.text} ${fade ? styles.fadeIn : styles.fadeOut}`}>
+                    {add3Dots(messages[index], isMobile ? 33 : 80)}
+                  </h1>
+                )}
               </Typography>
 
               <Box className={styles.FrontAdd_box}>
@@ -181,6 +212,7 @@ const Blog = () => {
                 </Box>
               </Box>
             </Box>
+            <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
 
             <hr />
 
@@ -190,6 +222,8 @@ const Blog = () => {
                 {
                   !isFilterApply ?
                     <Grid container>
+                      <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}>Recent Posts <span className={styles.underline}></span></Typography>
+
                       {currentBlogs?.length > 0 && currentBlogs?.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
@@ -198,11 +232,11 @@ const Blog = () => {
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle,70)}</Typography>
+                                <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle, 70)}</Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
-                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description,316)}</Typography>
+                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 316)}</Typography>
                               </Box>
                             </Grid>
                           </Grid>
@@ -281,7 +315,7 @@ const Blog = () => {
                     <Typography className={styles.shortblogheading}>Popular Tags <span className={styles.underline}></span></Typography>
                     <Box className={styles.tags_content}>
                       {
-                        TagArray.map((e: any,i:any) => {
+                        TagArray.map((e: any, i: any) => {
                           return (
                             <Button className={SelectedTags !== e ? styles.tags_btn : styles.tags_select_btn} onClick={() => { handleTag(e) }} key={i} >{e}</Button>
                           )
