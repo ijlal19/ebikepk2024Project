@@ -135,7 +135,7 @@ const SideBar = () => {
                             </ListItemIcon>
                             <ListItemText primary="Dashboard" />
                         </ListItemButton>
-                    </List>
+                    </List> 
                 </Link>
 
                 {GetList('usedBikes', 'bike', 'Used Bikes', ["Classified"], ["view-classified-ads"], 'false')}
