@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { add3Dots, isLoginUser } from '@/genericFunctions/geneFunc';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
@@ -55,14 +56,13 @@ const Blog = () => {
   const [BlogSafety, setBlogSafety] = useState([]);
   const [BlogData, setBlogData] = useState([]);
   const [BlogNews, setBlognews] = useState([]);
-  // const messages: string[] = ["Hello", "Welcome"];
   const [messages, setMessages] = useState<any>([]);
+  const [TipsandAdvice, setTipsandAdvide] = useState([])
+  const [OpinionsData, setOpinionsData] = useState([])
 
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
   const router = useRouter();
-
-  // let messages :any[]= []
 
   useEffect(() => {
     let _isLoginUser = isLoginUser()
@@ -96,7 +96,6 @@ const Blog = () => {
     return () => clearInterval(interval);
   }, [messages]);
 
-
   async function getAllBlogList() {
     setIsLoading(true)
     let res = await getAllBlog()
@@ -106,11 +105,17 @@ const Blog = () => {
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
+      const TipAndAdvice = [1177, 748, 237 ,22, 648, 715, 372, 240];
+      const filteredAdvice = res.filter((e: any) => TipAndAdvice.includes(e.id));
+      setTipsandAdvide(filteredAdvice);
+      const idsOpinions = [242,84,151,1210,1144,1045,580,160];
+      const filteredOpinions = res.filter((e: any) => idsOpinions.includes(e.id));
+      setOpinionsData(filteredOpinions);
       setBlognews(newsBlogs)
       setBlogSafety(safetyBlogs)
       setBlogBikeCare(Bike_Care)
     })
-    const top7Titles = res.slice(0, 7).map((e: any) => e?.blogTitle);
+    const top7Titles = res.slice(0, 7).map((e: any) => e);
     setMessages(top7Titles); // ✅ update state
 
     setisFilterApply(false)
@@ -156,7 +161,6 @@ const Blog = () => {
 
   const SearchTerm = (e: any) => {
     setSearchTerm(e.target.value)
-
   }
 
   const handleTag = async (e: any) => {
@@ -190,6 +194,13 @@ const Blog = () => {
     }
   }
 
+  const getRoute = (blogInfo: any) => {
+    var title = blogInfo.blogTitle;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+    lowerTitle = '' + lowerTitle.replaceAll("?", "")
+    return (`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+  }
 
   return (
     <>
@@ -198,18 +209,20 @@ const Blog = () => {
           <Box className={styles.blog_main}>
             <Box className={styles.blog_header}>
               <Typography className={styles.blog_heading}>
-                <p className={styles.static}>Trending </p>
+                <p className={styles.static}>Trending <NavigateNextIcon className={styles.icon} /> </p>
                 {messages.length > 0 && (
                   <h1 className={`${styles.text} ${fade ? styles.fadeIn : styles.fadeOut}`}>
-                    {add3Dots(messages[index], isMobile ? 33 : 80)}
+                    <a href={getRoute(messages[index])} style={{ padding: '0px', margin: '0px', textDecoration: 'none', color: '#696969' }} >
+                      {add3Dots(messages[index].blogTitle, isMobile ? 33 : 80)}
+                    </a>
                   </h1>
                 )}
               </Typography>
 
-              <Box className={styles.FrontAdd_box}>
-                <Box className={styles.input_main}>
-                  <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
-                </Box>
+              {/* <Box className={styles.FrontAdd_box}> */}
+              <Box className={styles.input_main}>
+                <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
+                {/* </Box> */}
               </Box>
             </Box>
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
@@ -230,13 +243,13 @@ const Blog = () => {
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
                               <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.blog_images} />
                             </Grid>
-                            <Grid item xs={isMobile ? 12 : 7} className={styles.grid1_child2} >
+                            <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle, 70)}</Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
-                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 316)}</Typography>
+                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
                               </Box>
                             </Grid>
                           </Grid>
@@ -246,17 +259,17 @@ const Blog = () => {
                     <Grid container>
                       {filterBlogs.length > 0 && filterBlogs.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
-                          <Grid container onClick={() => handleRoute(e)} style={{ cursor: "pointer" }}>
+                          <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={e.featuredImage} alt="" className={styles.blog_images} />
+                              <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.blog_images} />
                             </Grid>
-                            <Grid item xs={isMobile ? 12 : 7.5} className={styles.grid1_child2}>
+                            <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} >{e.blogTitle}</Typography>
+                                <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle, 70)}</Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
-                                <Typography className={styles.blog_card_description}>{e?.meta_description?.slice(0, 119)}...</Typography>
+                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
                               </Box>
                             </Grid>
                           </Grid>
@@ -326,7 +339,8 @@ const Blog = () => {
                 </Box>
               </Grid>
             </Grid>
-            <Blog_Category_Comp heading="Tips & Advice" data={CATEGORYdATA} />
+            <Blog_Category_Comp heading="Tips & Advice" data={TipsandAdvice} />
+            <Blog_Category_Comp heading="Opinions" data={OpinionsData} />
             <BrowseUsedBike />
           </Box >
           :

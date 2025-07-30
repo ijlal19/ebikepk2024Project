@@ -16,6 +16,7 @@ import styles from './index.module.scss';
 import "swiper/css/navigation";
 import "swiper/css";
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
+import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -163,7 +164,7 @@ const BlogDetails = () => {
           <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
-          <p className={styles.title}>{add3Dots(e?.blogTitle, 25)}</p>
+          <p className={styles.title}>{add3Dots(e?.blogTitle, 15)}</p>
           <p className={styles.name}>{e?.authorname}</p>
         </Box>
       </Box>
@@ -230,7 +231,7 @@ const BlogDetails = () => {
                       alignItems: 'center',
                       border: '1px solid #e2e2e2',
                       background: 'white',
-                      cursor:'text',
+                      cursor: 'text',
                     }}>
                     <ShareIcon sx={{ mr: 1, fontSize: '15px', fontWeight: 'bolder' }} />
                     Share
@@ -272,7 +273,7 @@ const BlogDetails = () => {
                 </Typography>
               </Box>
 
-              <div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }}></div>
+              <div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }} ></div>
 
               <Box className={styles.comment_box}>
                 <Typography className={styles.shortblogheading}>Leave a Reply <span className={styles.underline}></span></Typography>
@@ -355,6 +356,7 @@ const BlogDetails = () => {
                 }
               </Box>
             </Grid>
+            <Blog_Category_Comp heading="More Blogs" data={BlogData} />
             <BrowseUsedBike />
           </Grid>
           : <></>} </>

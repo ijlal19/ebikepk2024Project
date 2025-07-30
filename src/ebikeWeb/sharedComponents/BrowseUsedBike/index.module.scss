@@ -1,3 +1,17 @@
+
+@font-face {
+  font-family: 'LatoBold';
+  src: url('/fonts/Lato-Bold.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
 .browser {
     width: 100%;
     height: auto;
@@ -95,6 +109,7 @@
                         transition: all 1s ease;
                         font-size: 13px;
                         box-sizing: border-box;
+                        font-family: 'Lato';
                         padding: 4px 0px;
                         cursor: pointer;
 

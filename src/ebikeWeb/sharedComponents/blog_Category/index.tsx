@@ -1,9 +1,19 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import BlogCategoryCard from "./card";
 
 const Blog_Category_Comp = (props:any) => {
+    const [blogData, setBlogData] = useState(props.data);
+
+  useEffect(() => {
+    if (props.heading === "More Blogs") {
+      const shuffled = [...props.data].sort(() => Math.random() - 0.5);
+      setBlogData(shuffled);
+    } else {
+      setBlogData(props.data);
+    }
+  }, [props.data, props.heading]);
     return (
         <div className={styles.main}>
             <div className={styles.container}>
@@ -12,7 +22,7 @@ const Blog_Category_Comp = (props:any) => {
                 </div>
                 <div className={styles.card_section}>
                     {
-                        props.data.map((e:any,i:any)=>{
+                        blogData.slice(0,8).map((e:any,i:any)=>{
                             return(
                                 <div key={i} className={styles.card_div}>
                                     <BlogCategoryCard props={e}/>

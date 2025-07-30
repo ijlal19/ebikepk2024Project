@@ -1,12 +1,30 @@
 @import '../../styles/variable';
-
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+   }
+   @font-face {
+   font-family: 'LatoBold';
+   src: url('/fonts/Lato-Bold.ttf') format('truetype');
+   font-weight: 400;
+   font-style: normal;
+   }
+@font-face {
+  font-family: 'OpenSans';
+  src: url('/fonts/OpenSans-Bold.ttf') format('truetype');
+//   src: url('/fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 .blog_main {
-   padding: 10px 20px 10px 20px !important;
+   padding: 10px 10px 10px 10px !important;
    box-sizing: border-box;
    width: 100%;
    height: auto;
    font-family: sans-serif !important;
-   max-width: 1180px;
+   max-width: 1200px;
    margin: auto;
 
    @media (max-width:768px) {
@@ -27,22 +45,9 @@
          flex-direction: column;
 
    }
-
-   .FrontAdd_box {
-
-      margin: 0px 0px !important;
-      padding: 0px 0px !important;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      @media (max-width:768px) {
-         width: 100%;
-      }
-
       .input_main {
          width: 100%;
-         max-width: 330px;
+         max-width: 250px;
          display: flex;
          margin: 0px;
          flex-direction: row;
@@ -54,11 +59,10 @@
 
          .input {
             width: 100%;
-            max-width: 220px;
             border-radius: 0px;
             outline: none;
-            padding: 7px 7px 7px 10px;
-            font-size: 16px;
+            padding: 9px 7px 9px 10px;
+            font-size: 12px;
             border: 1px solid #65606090;
             background-color: transparent;
 
@@ -68,28 +72,14 @@
                width: 100% !important;
                margin-right: 2px;
             }
-         }
-
-         .button {
-            border: 1px solid #000;
-            width: 80%;
-            background-color: $primary_two;
-            color: white;
-            border: 1px solid $primary_two;
-            max-width: 100px;
-            text-transform: uppercase;
-            border-radius: 0px;
-            cursor: pointer;
-         }
       }
    }
-
-
    .blog_heading {
       display: flex;
       align-items: center;
       gap: 10px;
       font-size: 15px;
+      font-family: 'lato' , sans-serif;
       width: 100%;
       text-align: left;
       @media (max-width:768px) {
@@ -99,16 +89,29 @@
 
       .static {
          margin: 0;
-         font-size: 14px;
-         font-weight: 600;
+         font-size: 12px;
+         font-family: 'latoBold';
+         line-height: 10px;
+         text-transform: uppercase;
+         color: #070707;
+         display: flex;
+         align-items: center;
+         letter-spacing: 1px;
+         // font-weight: 600 !important;
+         .icon{
+            font-size: 14px;
+         }
       }
 
       .text {
          margin: 0;
-         font-size: 14px;
-         font-weight: normal;
+         color: #696969;
+         font-size: 12px;
+         font-family: 'lato' , sans-serif;
+         font-weight: 500;
          transition: all 0.5s ease;
          position: relative;
+         cursor: pointer;
       }
 
       .fadeIn {
@@ -124,11 +127,11 @@
 }
 
 .card_grid_main {
-   padding: 15px;
+   padding: 10px 10px 10px 15px !important;
    box-sizing: border-box;
    display: flex;
    flex-direction: column;
-   justify-content: center;
+   justify-content: flex-start;
 
    @media (max-width:768px) {
       padding: 10px !important;
@@ -151,13 +154,9 @@
       display: flex;
       align-items: center;
       margin: auto;
-      // padding: 0px 0px 22px 0px !important;
-      // margin: 15px 0px 25px 0px;
 
       @media (max-width:768px) {
-         // box-shadow: 0px 0px 10px rgb(228, 227, 227);
          margin: 0px auto 20px auto;
-         // border: 1px solid #000;
          padding: 0px 0px 0px 0px !important;
       }
 
@@ -188,7 +187,7 @@
       .grid1_child2 {
          display: flex;
          align-items: start;
-         padding: 0px 0px 0px 10px !important;
+         padding: 0px 10px 0px 20px !important;
 
          @media (max-width:768px) {
             padding: 10px 0px 0px 0px !important;
@@ -198,9 +197,11 @@
          .blog_card_title {
             transition: all 1s ease;
             box-sizing: border-box;
-            font-family: sans-serif;
-            font-weight: 600;
+            // font-family: none;
+            font-family: 'LatoBold';
             font-size: 20px;
+            line-height: 29px;
+            letter-spacing: 1px;
             padding: 0px 0px 0px 5px;
             margin: 0px 0px 10px 0px;
 
@@ -211,9 +212,9 @@
 
          .blog_card_date {
             font-size: 12px;
+            font-family: 'Lato' , sans-serif;
             color: #9B9B9B;
             padding: 4px 0px 0px 5px;
-            font-family: sans-serif;
 
             @media (max-width:768px) {
                padding: 0px !important;
@@ -222,7 +223,7 @@
 
          .blog_card_description {
             font-size: 14px;
-            font-family: sans-serif;
+            font-family: 'Lato' , sans-serif;
             color: #3c3c3c;
             margin: 10px 0px 0px;
             padding: 0px 0px 0px 5px;
@@ -244,7 +245,7 @@
    }
 
    .blog_grid2 {
-      padding: 10px;
+      padding: 5px;
       box-sizing: border-box;
 
       @media (max-width:768px) {
@@ -285,7 +286,7 @@
 
             .shot_blog_card {
                display: grid;
-               grid-template-columns: 100px 1fr;
+               grid-template-columns: 90px 1fr;
                column-gap: 5px;
                box-sizing: border-box;
                margin: 13px 0px 0px 0px;
@@ -305,9 +306,11 @@
 
                   .title {
                      color: #223c7b;
-                     font-weight: 600;
+                     font-family: 'OpenSans';
+            // font-family: 'LatoBold' , sans-serif;
+                     // font-weight: 600;
                      margin: 0px;
-                     padding: 0px;
+                     padding: 0px 0px 0px 5px;
                      font-size: 14px;
                      box-sizing: border-box;
                   }
@@ -370,7 +373,7 @@
                   color: #444444;
                   font-family: random($limit: 010);
                   font-size: 12px;
-                  font-family: sans-serif;
+                  font-family: 'Lato';
                   padding: 2px 10px;
                   box-sizing: border-box;
                   transition: all .5s ease;
