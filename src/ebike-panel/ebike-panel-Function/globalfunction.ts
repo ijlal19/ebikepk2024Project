@@ -258,6 +258,65 @@ function addNewBlog(data: any) {
         })
 }
 
+/////////////////////////////////////// Dealers Functions
+function getAllDealer() {
+    return fetch(Gconfig.ebikeApi + `dealers/get-dealer`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function ChangeDealerApprove(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `dealers/update-dealer/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function ChangeDealerFeatured(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `dealers/feature-dealer/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function DeleteDealerbyId(id: any) {
+    return fetch(Gconfig.ebikeApi + `dealers/delete-dealer/${id}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -280,7 +339,12 @@ export {
     DeleteBlogById,
     getSingleblogDetail,
     UpdateBlogById,
-    addNewBlog
+    addNewBlog,
+
+    getAllDealer,
+    ChangeDealerApprove,
+    ChangeDealerFeatured,
+    DeleteDealerbyId
 }
 
 
