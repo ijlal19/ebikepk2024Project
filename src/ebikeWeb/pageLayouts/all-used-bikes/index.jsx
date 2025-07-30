@@ -283,7 +283,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                                 <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
 
-                                <Typography className={styles.card_location}> {val?.city?.city_name} eee</Typography>
+                                <Typography className={styles.card_location}> {val?.city?.city_name}</Typography>
 
                                 <Typography className={styles.bike_details}>
                                     {val?.year?.year}
