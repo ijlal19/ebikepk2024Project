@@ -1,5 +1,5 @@
 'use client'
-import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -608,7 +608,7 @@ const Blog_Card = () => {
                             <div className={styles.card_container_box}>
                                 <div className={styles.card_header}>
                                     <h3 className={styles.heading}>{add3Dots(e?.blogTitle, 50) || 'No Title'}</h3>
-                                    <span className={styles.ad_id}>Ad ID: {e?.id}</span>
+                                    <span className={styles.ad_id}>Blog ID: {e?.id}</span>
                                 </div>
 
                                 <div className={styles.card_content}>
@@ -701,7 +701,7 @@ const Blog_Card = () => {
     )
 }
 
-/////////////////////////////////////////////////////// DEALER CARD
+/////////////////////////////////////////////////////// DEALERS CARD
 const Dealer_Card = () => {
     const [AllDealerFilter, setAllDealerFilter] = useState([]);
     const [filteredDealer, setfilteredDealer] = useState([]);
@@ -843,7 +843,7 @@ const Dealer_Card = () => {
                                      <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
                                         IsApproved: {e?.is_approved ? 'True' : 'False'}
                                     </span>
-                                    <span className={styles.ad_id}>Ad ID: {e?.id}</span>
+                                    <span className={styles.ad_id}>Dealer ID: {e?.id}</span>
                                 </div>
 
                                 <div className={styles.card_content}>
@@ -915,7 +915,7 @@ const Dealer_Card = () => {
     )
 }
 
-////////////////////////////////////////////////////// mechanics Card
+////////////////////////////////////////////////////// MECHANICS Card
 const Mechanic_Card = () => {
     const [AllmechanicFilter, setAllmechanicFilter] = useState([]);
     const [filteredmechanic, setfilteredmechanic] = useState([]);
@@ -1056,7 +1056,7 @@ const Mechanic_Card = () => {
                                     <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
                                         IsApproved: {e?.is_approved ? 'True' : 'False'}
                                     </span>
-                                    <span className={styles.ad_id}>Ad ID: {e?.id}</span>
+                                    <span className={styles.ad_id}>Mechanic ID: {e?.id}</span>
                                 </div>
 
                                 <div className={styles.card_content}>
@@ -1127,8 +1127,164 @@ const Mechanic_Card = () => {
         </div>
     )
 }
+////////////////////////////////////////////////////// AllPAGES CARD
+const AllPages_Card = () => {
+    const [AllPages, setAllPages] = useState([]);
+    const [filteredAllPages, setfilteredAllPages] = useState([]);
+    const [displayedAllPages, setdisplayedAllPages] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    // const [FilterApprove, setFilterApprove] = useState(false)
 
-////////////////////////////////////////////////////// Mechanics Card
+    const itemsPerPage = 10;
+
+    // useEffect(() => {
+    //     const filtered = AllAllPagesFilter.filter((m:any) => m.is_approved === FilterApprove);
+    //     setdisplayedAllPages(filtered);
+    //     console.log("display" ,filtered , displayedAllPages.length)
+    // }, [FilterApprove])
+
+    useEffect(() => {
+        fetchAllAllPagess(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllPages.filter((bike: any) =>
+            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredAllPages(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllPages]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedAllPages(filteredAllPages.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredAllPages.length / itemsPerPage));
+    }, [filteredAllPages, currentPage]);
+
+    const fetchAllAllPagess = async (_page: number) => {
+        setIsLoading(true);
+        const res = await getAllPages();
+        console.log("PagesData", res?.pages)
+        if (res && res.pages) {
+            setAllPages(res.pages);
+            setfilteredAllPages(res.pages);
+            setCurrentPage(_page);
+        } else {
+            setAllPages([]);
+            setfilteredAllPages([]);
+            setdisplayedAllPages([]);
+            setCurrentPage(1);
+            setTotalPage(0);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this AllPages?')
+        if (!isConfirm) return;
+        // const res = await DeleteAllPagesbyId(id);
+        // if (res && res.info == 'AllPages has been deleted now') {
+        //     fetchAllAllPagess(currentPage);
+        // }
+        // else {
+        //     alert('SomeThing is Wrong!')
+        // }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    return (
+        <div className={styles.main_AllPagess}>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Page with Title" />
+
+
+            {!IsLoading ? (
+                    <>
+                <div className={styles.card_container}>
+                    {displayedAllPages.map((e: any, i: any) => (
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{add3Dots(e?.title, 50) || 'No Title'}</h3>
+                                    <span className={styles.ad_id}>Page ID: {e.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Page Name:</span>
+                                            <span>{e?.name}</span>
+                                        </div>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt.slice(0, 10)}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Display Position:</span>
+                                            <span>{e?.displayPosition || "N/A"}</span>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                    <button
+                                        className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                        // onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                    >
+                                      Edit
+                                    </button>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                    <div className={styles.pagination}>
+                        {filteredAllPages?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div></>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
+////////////////////////////////////////////////////// ALL PAGES Card
 
 
 export {
@@ -1136,5 +1292,6 @@ export {
     New_bike_card,
     Blog_Card,
     Dealer_Card,
-    Mechanic_Card
+    Mechanic_Card,
+    AllPages_Card
 }

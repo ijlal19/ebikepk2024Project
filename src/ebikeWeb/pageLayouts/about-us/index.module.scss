@@ -1,4 +1,16 @@
 @import '../../styles/variable';
+@font-face {
+   font-family: 'Lato';
+   src: url('/fonts/Lato-Regular.ttf') format('truetype');
+   font-weight: 400;
+   font-style: normal;
+}
+@font-face {
+   font-family: 'LatoBold';
+   src: url('/fonts/Lato-Bold.ttf') format('truetype');
+   font-weight: 400;
+   font-style: normal;
+}
 .about_main {
     width: 100%;
     max-width: 1000px;
@@ -23,7 +35,8 @@
             }
             .abutus_heading {
                 font-size: 25px;
-                font-family: sans-serif;
+                 letter-spacing: 1px;
+                font-family: 'LatoBold';
                 margin: 20px 0px 0px 0px !important;
                 box-sizing: border-box;
                 text-align: center;
@@ -39,15 +52,9 @@
                 text-align: left;
                 padding: 0px 20px !important;
                 box-sizing: border-box;
-                .paragraph {
-                    font-size: 12px;
-                    color: rgb(38, 37, 37);
-                    margin: 0px !important;
-                    padding: 10px 50px 10px 50px !important;
-                    @media (max-width:768px) {
-                        padding: 10px 20px 10px 20px !important;
-                        font-size: 11px;
-                    }
+                .blog_content {
+                    font-family: 'Lato';
+                   color: #3c3c3c;
                 }
 
             }

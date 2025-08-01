@@ -2,6 +2,7 @@ import * as React from 'react';
 import AboutUsComp from "@/ebikeWeb/pageLayouts/about-us/index";
 import { Metadata } from 'next';
 import { getPageById } from '@/ebikeWeb/functions/globalFuntions';
+import Head from 'next/head';
 
 export async function generateMetadata(): Promise<Metadata> {
     const PageId = 14
@@ -17,6 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
 export default function AboutUs() {
+  <Head>
+        <meta name="robots" content="noindex, nofollow" />
+        <title> About Us </title>
+    </Head>
     return (
         <AboutUsComp/> 
     )

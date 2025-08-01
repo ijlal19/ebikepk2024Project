@@ -327,21 +327,6 @@ function getAllMechanics() {
             console.log(err)
         })
 }
-// function getAllMechanics() {
-//     return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic` , {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         return data;
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//     });
-// }
 
 function ChangeMechanicFeatured(id: any, payload: any) {
     return fetch(Gconfig.ebikeApi + `mechanic/feature-mechanic/${id}`, {
@@ -391,6 +376,40 @@ function DeleteMechanicbyId(id: any) {
         });
 }
 
+/////////////////////////////////////// ALL PAGES FUNCTION ///////////////////////////////////////////////////////
+function getAllPages() {
+    return fetch(Gconfig.ebikeApi + 'page/get-all-pages', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch(err => {
+        console.log('Error fetching mechanics:', err);
+    });
+}
+
+function getPageById(id:any) {
+    return fetch(Gconfig.ebikeApi + `page/get-page-by-id/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch(err => {
+        console.log('Error fetching mechanics:', err);
+    });
+}
+
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -423,7 +442,10 @@ export {
     getAllMechanics,
     ChangeMechanicFeatured,
     ChangeMechanicApprove,
-    DeleteMechanicbyId
+    DeleteMechanicbyId,
+
+    getAllPages,
+    getPageById
 }
 
 
