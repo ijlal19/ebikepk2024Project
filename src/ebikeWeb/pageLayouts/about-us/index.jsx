@@ -1,22 +1,44 @@
-import { Box, Container } from '@mui/material'
-import styles from './index.module.scss'
+'use client'
+import { getPageById } from '@/ebikeWeb/functions/globalFuntions';
+import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { Box, Container } from '@mui/material';
+import { useEffect, useState } from 'react';
+import styles from './index.module.scss';
 const AboutUs = () => {
+    const [AboustUs_Description, setAboutus_description] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+        fecthAllPages()
+    }, [])
+    const fecthAllPages = async () => {
+        setIsLoading(true)
+        const res = await getPageById(14)
+        if (res?.page?.html) {
+            res.page.html = res?.page?.html.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '')
+        }
+        setAboutus_description(res?.page)
+        setIsLoading(false)
+        setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 500);
+    }
+
     return (
         <>
-            <Box className={styles.about_main}>
-                    <Box className={styles.aboutus}>
-                        <h1 className={styles.abutus_heading}>About Us</h1>
-                        <Box className={styles.about_text}>
-                            <p className={styles.paragraph}>
-                                <span style={{ color: 'blue',cursor:'pointer'}}>ebike.pk</span> is an exclusive motorbike portal, which aims to focus on bikes. It&lsquo;s a complete online portal not only providing the latest news and updates about bike industry but also providing an opportunity for used motorbike buyer and seller to finalize their deal easily.
-                            </p>
-                            <p className={styles.paragraph}>Similarly, the new bike user can easily get the latest prices of various motorcycle brands. It is worth mentioning here that the verified dealers and mechanic details are also available at this platform. Ebike.pk youtube channel not only educating the motorcyclists about the traffic rules but also giving them motorcycle reviews.</p>
-                            <p className={styles.paragraph}>Ebike.pk tag line &quot;Yahan Sirf Bike Hai&quot; also suggests that it&lsquo;s an exclusive motorcycle portal. As they not only claim Yahan Sirf Bike Hai but they actually mean it. Any individual who is looking for a new motorbike or sell a used motorbike, it&lsquo;s possible on ebike. Similarly, spare parts, accessories even any motorbike related part can get from <span style={{ color: 'blue',cursor:'pointer'}}>ebike.pk</span>.</p>
+            {
+                !isLoading ?
+                    <Box className={styles.about_main}>
+                        <Box className={styles.aboutus}>
+                            <h1 className={styles.abutus_heading}>{AboustUs_Description?.title}</h1>
+                            <Box className={styles.about_text}><div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: AboustUs_Description?.html }} ></div>
+                            </Box>
                         </Box>
                     </Box>
-            </Box>
+                    :
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>}
         </>
     )
 }
-
 export default AboutUs

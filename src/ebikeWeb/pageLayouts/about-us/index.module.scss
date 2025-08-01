@@ -22,19 +22,23 @@
                 box-shadow: 0 .5rem 1rem rgb(0, 0, 0 ,.15) !important;
             }
             .abutus_heading {
-                font-size: 18px;
-                margin: 10px 0px 30px 0px;
+                font-size: 25px;
+                font-family: sans-serif;
+                margin: 20px 0px 0px 0px !important;
+                box-sizing: border-box;
                 text-align: center;
                 color: $primary_two;
                 font-weight: bolder;
                 cursor: default;
                 @media (max-width:768px) {
-                    font-size: 16px;
+                    font-size: 20px;
                 }
             }
 
             .about_text {
                 text-align: left;
+                padding: 0px 20px !important;
+                box-sizing: border-box;
                 .paragraph {
                     font-size: 12px;
                     color: rgb(38, 37, 37);

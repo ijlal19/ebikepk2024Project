@@ -41,6 +41,9 @@ const Dashboard_page = () => {
         else if (route == "all-mechanics") {
             return <Mechanic_Card />
         }
+        else if(route == "all-pages"){
+            return <Mechanic_Card />
+        }
     }
 
     return (

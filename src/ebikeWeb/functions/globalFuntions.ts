@@ -451,6 +451,38 @@ function getFavouriteBikeById(Data: any) {
     })
 }
 
+function getAllPages() {
+    return fetch(Gconfig.ebikeApi + 'page/get-all-pages', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch(err => {
+        console.log('Error fetching mechanics:', err);
+    });
+}
+function getPageById(id:any) {
+    return fetch(Gconfig.ebikeApi + `page/get-page-by-id/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch(err => {
+        console.log('Error fetching mechanics:', err);
+    });
+}
+
+
 
 export {
     getPostcomment,
@@ -488,5 +520,7 @@ export {
     getDealerByFilter,
     getMechanicByBrandId,
     getCustomBikeAd,
-    getFavouriteBikeById
+    getFavouriteBikeById,
+    getAllPages,
+    getPageById
 }
