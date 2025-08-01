@@ -42,7 +42,7 @@ const checkAuthAndRedirect = (router: any , pathname :any) => {
     }
 };
 
-//                                 NEW BIKE FUNCTIONS
+/////////////////////////////////////// NEW BIKE FUNCTIONS ///////////////////////////////////////////////////
 function addNewBike(data: any) {
     return fetch(Gconfig.ebikeApi + `new-bikes/add-new-bike`, {
         method: 'POST',
@@ -107,7 +107,7 @@ function DeleteNewBikeById(id: any) {
         });
 }
 
-//                                 USED BIKE FUNCTIONS
+/////////////////////////////////////// USED BIKE FUNCTIONS //////////////////////////////////////////////
 function getCustomBikeAd(obj: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-custom-ads`, {
     // return fetch(`http://localhost:4001/api/classified/get-custom-ads`, {
@@ -196,7 +196,7 @@ function ChangeApprove(id: any, payload: any) {
         });
 }
 
-//                                 Blog FUNCTIONS
+/////////////////////////////////////// BLOG FUNCTIONS //////////////////////////////////////////////////////
 function getAllBlog() {
     return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
         .then(response => response.json()).then(data => {
@@ -258,7 +258,7 @@ function addNewBlog(data: any) {
         })
 }
 
-/////////////////////////////////////// Dealers Functions
+/////////////////////////////////////// DEALERS FUNCTION ///////////////////////////////////////////////////////
 function getAllDealer() {
     return fetch(Gconfig.ebikeApi + `dealers/get-dealer`)
         .then(response => response.json()).then(data => {
@@ -317,6 +317,80 @@ function DeleteDealerbyId(id: any) {
         });
 }
 
+/////////////////////////////////////// MECHANICS FUNCTION ///////////////////////////////////////////////////////
+function getAllMechanics() {
+    return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+// function getAllMechanics() {
+//     return fetch(Gconfig.ebikeApi + `mechanic/get-mechanic` , {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         return data;
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+// }
+
+function ChangeMechanicFeatured(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `mechanic/feature-mechanic/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function ChangeMechanicApprove(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `mechanic/update-mechanic/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function DeleteMechanicbyId(id: any) {
+    return fetch(Gconfig.ebikeApi + `mechanic/delete-mechanic/${id}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -344,7 +418,12 @@ export {
     getAllDealer,
     ChangeDealerApprove,
     ChangeDealerFeatured,
-    DeleteDealerbyId
+    DeleteDealerbyId,
+
+    getAllMechanics,
+    ChangeMechanicFeatured,
+    ChangeMechanicApprove,
+    DeleteMechanicbyId
 }
 
 

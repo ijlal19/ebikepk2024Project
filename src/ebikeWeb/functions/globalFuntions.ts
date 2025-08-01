@@ -129,7 +129,7 @@ function getAllBlog() {
 
 function createmechanic(data: any) {
     let token = jsCookie.get('accessToken_e')
-    return fetch(Gconfig.ebikeApi + `dealers/crete-dealer`, {
+    return fetch(Gconfig.ebikeApi + `mechanic/crete-mechanic`, {
         method: 'POST',
         headers: { "Content-Type": "application/json", "x-access-token": token },
         body: JSON.stringify(data)
