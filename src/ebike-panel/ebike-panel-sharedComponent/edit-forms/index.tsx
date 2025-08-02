@@ -188,7 +188,7 @@ const EditUsedBikeForm = () => {
 
         console.log("data", obj);
         const res = await UpdateUsedBikeById(id, obj)
-        if (res && res.success) {
+        if (res && res.info == 'Bike has been updated') {
             router.push('/ebike-panel/dashboard/view-classified-ads')
         }
         else {

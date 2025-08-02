@@ -89,7 +89,7 @@ const SideBar = () => {
                                     }}
                                 >
                                     <ListItemIcon sx={{ minWidth: '30px', color: activeItem === urls[index] ? 'white' : 'white'}}>
-                                        {optionIcon == 'true' ? icon === 'bike' ? <PedalBikeIcon/> : <ArticleIcon /> : ""}
+                                        {optionIcon == 'true' ? icon === 'bike' ? <PedalBikeIcon/> : <ArticleIcon /> : <LibraryAddCheckIcon />}
                                     </ListItemIcon>
                                     <ListItemText primary={e} />
                                 </ListItemButton>
@@ -142,7 +142,7 @@ const SideBar = () => {
                 {GetList('newBikes', 'bike', 'New Bikes', ["Add New Bike", "All New Bikes"], ["add-new-bike", "all-new-bikes"], 'true')}
                 {GetList('electricBikes', 'bike', 'Electric Bikes', ["Add Electric Bike", "All ELectric Bikes"], ["add-electric-bike", "all-electric-bikes"], 'true')}
                 {GetList('blogs', 'blog', 'Blog', ["Add New Blog", 'Blog List'], ['create-blog-post', 'blog-list'], 'true')}
-                {GetList('pages', 'blog', 'Pages', ["All Pages"], ["all-pages"], '')}
+                {GetList('pages', 'blog', 'Pages', ["All Pages"], ["all-pages"], 'false')}
                 {GetList('dealers', 'bike', 'Dealers/Mechanics', ["All Dealers", "All Mechanics"], ["all-dealers", "all-mechanics"], '')}
                 {GetList('shop', 'shop', 'Shop', ["WorkShop", "Showroom"], ["workshop", "showroom"], '')}
                 {GetList('general', 'shop', 'General', ["General"], ["general"], '')}

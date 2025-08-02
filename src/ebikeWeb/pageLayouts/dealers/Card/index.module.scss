@@ -105,9 +105,15 @@
     width: 100%;
     height: auto;
     text-decoration: none !important;
-    padding: 10px 0px;
-    border: 1px solid #d2d2d2;
+    padding: 10px 10px;
+    box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.434);
+    border: 1px solid #a9a7a782;
+
+    // border: 1px solid #d2d2d2;
     margin: 20px 0px 20px 0px !important;
+    @media (max-width:768px) {
+        padding: 10px 0px;
+    }
     display: flex;
 
     @media (max-width:768px) {
@@ -128,7 +134,7 @@
 
     .image_box {
         width: 100%;
-        max-width: 200px;
+        max-width: 180px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -147,7 +153,7 @@
 
     .detail_box {
         width: 100%;
-        padding: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 15px;
         box-sizing: border-box;
     }
 

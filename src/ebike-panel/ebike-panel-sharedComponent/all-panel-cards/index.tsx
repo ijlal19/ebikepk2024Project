@@ -1,5 +1,5 @@
 'use client'
-import { ChangeApprove, ChangeFeatured, DeleteBlogById, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllNewBike, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -88,7 +88,7 @@ const Used_bike_card = () => {
         if (!confirmDelete) return;
 
         const res = await DeleteUsedBikeById(id);
-        if (res) {
+        if (res && res.info == 'Ad has been deleted now') {
             fetchAllUsedBike(currentPage);
         } else {
             alert("Something went wrong!");
@@ -104,7 +104,7 @@ const Used_bike_card = () => {
         }
         console.log(obj)
         const res = await ChangeFeatured(id, obj)
-        if (res && res?.adData && res?.info) {
+        if (res && res?.adData && res?.info == 'feature Ad is ') {
             fetchAllUsedBike(currentPage)
         }
         else {
@@ -121,7 +121,7 @@ const Used_bike_card = () => {
         }
         console.log(obj)
         const res = await ChangeApprove(id, obj)
-        if (res && res?.adData && res?.info) {
+        if (res && res?.adData && res?.info == 'Approve Ad is ') {
             fetchAllUsedBike(currentPage)
         }
         else {
@@ -387,7 +387,7 @@ const New_bike_card = () => {
 
         if (!isConfirmed) return;
         const res = await DeleteNewBikeById(id);
-        if (res && res.deleted) {
+        if (res && res.deleted && res.info == "successfully deleted") {
             fetchAllNewBike(currentPage);
         }
         else {
@@ -608,7 +608,7 @@ const Blog_Card = () => {
                             <div className={styles.card_container_box}>
                                 <div className={styles.card_header}>
                                     <h3 className={styles.heading}>{add3Dots(e?.blogTitle, 50) || 'No Title'}</h3>
-                                    <span className={styles.ad_id}>Ad ID: {e?.id}</span>
+                                    <span className={styles.ad_id}>Blog ID: {e?.id}</span>
                                 </div>
 
                                 <div className={styles.card_content}>
@@ -701,8 +701,597 @@ const Blog_Card = () => {
     )
 }
 
+/////////////////////////////////////////////////////// DEALERS CARD
+const Dealer_Card = () => {
+    const [AllDealerFilter, setAllDealerFilter] = useState([]);
+    const [filteredDealer, setfilteredDealer] = useState([]);
+    const [displayedDealer, setdisplayedDealer] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    const [FilterApprove, setFilterApprove] = useState(false)
+
+    const itemsPerPage = 10;
+
+     useEffect(() => {
+        const filtered = AllDealerFilter.filter((m:any) => m.is_approved === FilterApprove);
+        setdisplayedDealer(filtered);
+    }, [FilterApprove])
+
+    useEffect(() => {
+        fetchAllDealers(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllDealerFilter.filter((bike: any) =>
+            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredDealer(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllDealerFilter]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedDealer(filteredDealer.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredDealer.length / itemsPerPage));
+    }, [filteredDealer, currentPage]);
+
+    const fetchAllDealers = async (_page: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getAllDealer();
+            if (res && res.length > 0) {
+                res?.map((e: any, i: any) => {
+                    if (e?.phone?.charAt(0) != '0') {
+                        e.phone = '0' + e.phone
+                    }
+                })
+                setAllDealerFilter(res);
+                setfilteredDealer(res);
+                setCurrentPage(_page);
+            } else {
+                setAllDealerFilter([]);
+                setfilteredDealer([]);
+                setdisplayedDealer([]);
+                setCurrentPage(1);
+                setTotalPage(0);
+            }
+        } catch (error) {
+            console.error("Error fetching new bikes:", error);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Dealer?')
+        if (!isConfirm) return;
+        const res = await DeleteDealerbyId(id);
+        if (res && res.info == 'dealer has been deleted now') {
+            fetchAllDealers(currentPage);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
+    const handleApproveToggle = async (id: any, currentStatus: boolean) => {
+        const confirmDelete = window.confirm("Are you sure you want to Change Dealer Approve?");
+        if (!confirmDelete) return;
+        const obj = {
+            id: id,
+            item: { is_approved: currentStatus ? false : true }
+        }
+        console.log(obj)
+        const res = await ChangeDealerApprove(id, obj)
+        if (res && res?.info == "Approve dealer is") {
+            fetchAllDealers(currentPage)
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    };
+
+    const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
+        const confirmDelete = window.confirm("Are you sure to change Featured?");
+        if (!confirmDelete) return;
+        const obj = {
+            id: id,
+            item: { is_featured: currentStatus ? false : true }
+        }
+        console.log(obj)
+        const res = await ChangeDealerFeatured(id, obj)
+        if (res && res?.info == "Feature Dealer is") {
+            fetchAllDealers(currentPage)
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleState = ()=>{
+        setFilterApprove(!FilterApprove)
+    }
+
+    return (
+        <div className={styles.main_dealers}>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Dealers with Title" />
+
+            {!IsLoading ? (
+                <div className={styles.card_container}>
+                    <button onClick={handleState} className={styles.change_approved_btn}>{FilterApprove ? 'DisApproved' : "Approved"}</button>
+
+                    {displayedDealer.map((e: any, i: any) => (
+
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{add3Dots(e?.shop_name, 50) || 'No Title'}</h3>
+                                     <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
+                                        IsApproved: {e?.is_approved ? 'True' : 'False'}
+                                    </span>
+                                    <span className={styles.ad_id}>Dealer ID: {e?.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+                                    <div className={styles.cardimage_box}>
+                                        <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                    </div>
+
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Address:</span>
+                                            <span>{e?.address || "N/A"}</span>
+                                        </div>
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Phone:</span>
+                                            <span>{e?.phone?.slice(0, 4)}-{e?.phone?.slice(4) || 'N/A'}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                    <button
+                                        className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                        onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                    >
+                                        {e?.is_approved ? "Disapprove" : "Approve"}
+                                    </button>
+                                    <button
+                                        className={`${styles.action_btn} ${styles.feature_btn}`}
+                                        onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
+                                    >
+                                        {e?.is_featured ? 'UnFeature' : 'Feature'}
+                                    </button>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className={styles.pagination}>
+                        {filteredDealer?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="large"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
+////////////////////////////////////////////////////// MECHANICS Card
+const Mechanic_Card = () => {
+    const [AllmechanicFilter, setAllmechanicFilter] = useState([]);
+    const [filteredmechanic, setfilteredmechanic] = useState([]);
+    const [displayedmechanic, setdisplayedmechanic] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    const [FilterApprove, setFilterApprove] = useState(false)
+
+    const itemsPerPage = 10;
+
+    useEffect(() => {
+        const filtered = AllmechanicFilter.filter((m:any) => m.is_approved === FilterApprove);
+        setdisplayedmechanic(filtered);
+        console.log("display" ,filtered , displayedmechanic.length)
+    }, [FilterApprove])
+
+    useEffect(() => {
+        fetchAllmechanics(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllmechanicFilter.filter((bike: any) =>
+            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredmechanic(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllmechanicFilter]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedmechanic(filteredmechanic.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredmechanic.length / itemsPerPage));
+    }, [filteredmechanic, currentPage]);
+
+    const fetchAllmechanics = async (_page: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getAllMechanics();
+            if (res && res.length > 0) {
+                res?.map((e: any, i: any) => {
+                    if (e?.phone?.charAt(0) != '0') {
+                        e.phone = '0' + e.phone
+                    }
+                })
+                setAllmechanicFilter(res);
+                setfilteredmechanic(res);
+                setCurrentPage(_page);
+            } else {
+                setAllmechanicFilter([]);
+                setfilteredmechanic([]);
+                setdisplayedmechanic([]);
+                setCurrentPage(1);
+                setTotalPage(0);
+            }
+        } catch (error) {
+            console.error("Error fetching new bikes:", error);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this mechanic?')
+        if (!isConfirm) return;
+        const res = await DeleteMechanicbyId(id);
+        if (res && res.info == 'mechanic has been deleted now') {
+            fetchAllmechanics(currentPage);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
+    const handleApproveToggle = async (id: any, currentStatus: boolean) => {
+        const confirmDelete = window.confirm("Are you sure you want to Change mechanic Approve?");
+        if (!confirmDelete) return;
+        const obj = {
+            id: id,
+            item: { is_approved: currentStatus ? false : true }
+        }
+        console.log(obj)
+        const res = await ChangeMechanicApprove(id, obj)
+        if (res && res?.info == "Approve mechanic is ") {
+            fetchAllmechanics(currentPage)
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    };
+
+    const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
+        const confirmDelete = window.confirm("Are you sure to change Featured?");
+        if (!confirmDelete) return;
+        const obj = {
+            id: id,
+            item: { is_featured: currentStatus ? false : true }
+        }
+        console.log(obj)
+        const res = await ChangeMechanicFeatured(id, obj)
+        if (res && res?.info == "Feature mechanic is ") {
+            fetchAllmechanics(currentPage)
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+    const handleState = ()=>{
+        setFilterApprove(!FilterApprove)
+    }
+
+    return (
+        <div className={styles.main_mechanics}>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Mechanics with Title" />
+
+            {!IsLoading ? (
+                <div className={styles.card_container}>
+                    <button onClick={handleState} className={styles.change_approved_btn}>{FilterApprove ? 'DisApproved' : "Approved"}</button>
+                    {displayedmechanic.map((e: any, i: any) => (
+
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{add3Dots(e?.shop_name, 50) || 'No Title'}</h3>
+                                    <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
+                                        IsApproved: {e?.is_approved ? 'True' : 'False'}
+                                    </span>
+                                    <span className={styles.ad_id}>Mechanic ID: {e?.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+                                    <div className={styles.cardimage_box}>
+                                        <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                    </div>
+
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Address:</span>
+                                            <span>{e?.address || "N/A"}</span>
+                                        </div>
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Phone:</span>
+                                            <span>{e?.phone?.slice(0, 4)}-{e?.phone?.slice(4) || 'N/A'}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                    <button
+                                        className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                        onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                    >
+                                        {e?.is_approved ? "Disapprove" : "Approve"}
+                                    </button>
+                                    <button
+                                        className={`${styles.action_btn} ${styles.feature_btn}`}
+                                        onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
+                                    >
+                                        {e?.is_featured ? 'UnFeature' : 'Feature'}
+                                    </button>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className={styles.pagination}>
+                        {filteredmechanic?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="large"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+////////////////////////////////////////////////////// AllPAGES CARD
+const AllPages_Card = () => {
+    const [AllPages, setAllPages] = useState([]);
+    const [filteredAllPages, setfilteredAllPages] = useState([]);
+    const [displayedAllPages, setdisplayedAllPages] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    // const [FilterApprove, setFilterApprove] = useState(false)
+
+    const itemsPerPage = 10;
+
+    // useEffect(() => {
+    //     const filtered = AllAllPagesFilter.filter((m:any) => m.is_approved === FilterApprove);
+    //     setdisplayedAllPages(filtered);
+    //     console.log("display" ,filtered , displayedAllPages.length)
+    // }, [FilterApprove])
+
+    useEffect(() => {
+        fetchAllAllPagess(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllPages.filter((bike: any) =>
+            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredAllPages(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllPages]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedAllPages(filteredAllPages.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredAllPages.length / itemsPerPage));
+    }, [filteredAllPages, currentPage]);
+
+    const fetchAllAllPagess = async (_page: number) => {
+        setIsLoading(true);
+        const res = await getAllPages();
+        console.log("PagesData", res?.pages)
+        if (res && res.pages) {
+            setAllPages(res.pages);
+            setfilteredAllPages(res.pages);
+            setCurrentPage(_page);
+        } else {
+            setAllPages([]);
+            setfilteredAllPages([]);
+            setdisplayedAllPages([]);
+            setCurrentPage(1);
+            setTotalPage(0);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this AllPages?')
+        if (!isConfirm) return;
+        // const res = await DeleteAllPagesbyId(id);
+        // if (res && res.info == 'AllPages has been deleted now') {
+        //     fetchAllAllPagess(currentPage);
+        // }
+        // else {
+        //     alert('SomeThing is Wrong!')
+        // }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    return (
+        <div className={styles.main_AllPagess}>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Page with Title" />
+
+
+            {!IsLoading ? (
+                    <>
+                <div className={styles.card_container}>
+                    {displayedAllPages.map((e: any, i: any) => (
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{add3Dots(e?.title, 50) || 'No Title'}</h3>
+                                    <span className={styles.ad_id}>Page ID: {e.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Page Name:</span>
+                                            <span>{e?.name}</span>
+                                        </div>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt.slice(0, 10)}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Display Position:</span>
+                                            <span>{e?.displayPosition || "N/A"}</span>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                    <button
+                                        className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                        // onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                    >
+                                      Edit
+                                    </button>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                    <div className={styles.pagination}>
+                        {filteredAllPages?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div></>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
+////////////////////////////////////////////////////// ALL PAGES Card
+
+
 export {
     Used_bike_card,
     New_bike_card,
-    Blog_Card
+    Blog_Card,
+    Dealer_Card,
+    Mechanic_Card,
+    AllPages_Card
 }

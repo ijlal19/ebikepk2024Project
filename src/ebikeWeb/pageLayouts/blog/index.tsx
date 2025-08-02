@@ -105,10 +105,10 @@ const Blog = () => {
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
-      const TipAndAdvice = [1177, 748, 237 ,22, 648, 715, 372, 240];
+      const TipAndAdvice = [1177, 748, 237, 22, 648, 715, 372, 240];
       const filteredAdvice = res.filter((e: any) => TipAndAdvice.includes(e.id));
       setTipsandAdvide(filteredAdvice);
-      const idsOpinions = [242,84,151,1210,1144,1045,580,160];
+      const idsOpinions = [242, 84, 151, 1210, 1144, 1045, 580, 160];
       const filteredOpinions = res.filter((e: any) => idsOpinions.includes(e.id));
       setOpinionsData(filteredOpinions);
       setBlognews(newsBlogs)
@@ -245,7 +245,7 @@ const Blog = () => {
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle, 70)}</Typography>
+                                <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 70)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
@@ -265,7 +265,7 @@ const Blog = () => {
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} >{add3Dots(e.blogTitle, 70)}</Typography>
+                                <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 70)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>

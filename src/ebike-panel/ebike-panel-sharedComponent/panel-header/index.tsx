@@ -48,12 +48,14 @@ const Panel_header = ({ value, onChange, placeholder }: any) => {
         <div className={styles.header}>
             <div className={styles.wraper}>
                 <div className={styles.input_box}>
+                    {placeholder !== "" && (
                     <input
                         type="text"
                         value={value}
                         onChange={onChange}
                         placeholder={placeholder}
                         className={styles.input} />
+                    )}
                         {/* className={styles.input} */}
                 </div>
                 <div className={styles.btn_box}>
