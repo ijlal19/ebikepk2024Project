@@ -131,19 +131,22 @@ const Used_bike_card = () => {
 
     const fetchAllUsedBike = async (_page: any) => {
         setIsLoading(true);
+       
         try {
+            
             const obj = {
                 page: _page,
                 adslimit: 10,
-                // isApproved: true
+                isApproved: "no"
             };
+
             const res = await getCustomBikeAd(obj);
 
             if (res && res?.data?.length > 0) {
                 const obj1 = {
                     page: 1,
                     adslimit: res?.total,
-                    // isApproved:true
+                    isApproved:"no"
                 };
                 const res1 = await getCustomBikeAd(obj1);
 
