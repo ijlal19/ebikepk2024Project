@@ -157,14 +157,14 @@ const EditUsedBikeForm = () => {
             alert("Please write correct seller Name")
             return
         }
-        else if (!mobile || mobile.length != 11 || !numericOnly(mobile)) {
-            alert("Please write correct mobile number")
-            return
-        }
-        else if (imageArr.length < 0) {
-            alert('Please select min(1) image')
-            return
-        }
+        // else if (!mobile || mobile.length != 11 || !numericOnly(mobile)) {
+        //     alert("Please write correct mobile number")
+        //     return
+        // }
+        // else if (imageArr.length < 0) {
+        //     alert('Please select min(1) image')
+        //     return
+        // }
 
         let _phone = mobile
         while (_phone.charAt(0) === '0') {
@@ -192,7 +192,8 @@ const EditUsedBikeForm = () => {
             router.push('/ebike-panel/dashboard/view-classified-ads')
         }
         else {
-            alert('Something is Wrong!')
+        
+            // alert('Something is Wrong!')
         }
     };
 
