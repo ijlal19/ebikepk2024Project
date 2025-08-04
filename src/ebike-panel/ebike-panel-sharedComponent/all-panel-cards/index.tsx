@@ -1,12 +1,12 @@
 'use client'
-import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 import { Navigation, FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Grid, Pagination } from "@mui/material";
+import { Grid, Link, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Panel_header from "../panel-header";
@@ -131,9 +131,9 @@ const Used_bike_card = () => {
 
     const fetchAllUsedBike = async (_page: any) => {
         setIsLoading(true);
-       
+
         try {
-            
+
             const obj = {
                 page: _page,
                 adslimit: 10,
@@ -146,7 +146,7 @@ const Used_bike_card = () => {
                 const obj1 = {
                     page: 1,
                     adslimit: res?.total,
-                    isApproved:"no"
+                    isApproved: "no"
                 };
                 const res1 = await getCustomBikeAd(obj1);
 
@@ -717,8 +717,8 @@ const Dealer_Card = () => {
 
     const itemsPerPage = 10;
 
-     useEffect(() => {
-        const filtered = AllDealerFilter.filter((m:any) => m.is_approved === FilterApprove);
+    useEffect(() => {
+        const filtered = AllDealerFilter.filter((m: any) => m.is_approved === FilterApprove);
         setdisplayedDealer(filtered);
     }, [FilterApprove])
 
@@ -825,7 +825,7 @@ const Dealer_Card = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleState = ()=>{
+    const handleState = () => {
         setFilterApprove(!FilterApprove)
     }
 
@@ -843,7 +843,7 @@ const Dealer_Card = () => {
                             <div className={styles.card_container_box}>
                                 <div className={styles.card_header}>
                                     <h3 className={styles.heading}>{add3Dots(e?.shop_name, 50) || 'No Title'}</h3>
-                                     <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
+                                    <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
                                         IsApproved: {e?.is_approved ? 'True' : 'False'}
                                     </span>
                                     <span className={styles.ad_id}>Dealer ID: {e?.id}</span>
@@ -932,9 +932,9 @@ const Mechanic_Card = () => {
     const itemsPerPage = 10;
 
     useEffect(() => {
-        const filtered = AllmechanicFilter.filter((m:any) => m.is_approved === FilterApprove);
+        const filtered = AllmechanicFilter.filter((m: any) => m.is_approved === FilterApprove);
         setdisplayedmechanic(filtered);
-        console.log("display" ,filtered , displayedmechanic.length)
+        console.log("display", filtered, displayedmechanic.length)
     }, [FilterApprove])
 
     useEffect(() => {
@@ -1039,7 +1039,7 @@ const Mechanic_Card = () => {
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
     };
-    const handleState = ()=>{
+    const handleState = () => {
         setFilterApprove(!FilterApprove)
     }
 
@@ -1139,18 +1139,10 @@ const AllPages_Card = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
-    // const [FilterApprove, setFilterApprove] = useState(false)
 
     const itemsPerPage = 10;
-
-    // useEffect(() => {
-    //     const filtered = AllAllPagesFilter.filter((m:any) => m.is_approved === FilterApprove);
-    //     setdisplayedAllPages(filtered);
-    //     console.log("display" ,filtered , displayedAllPages.length)
-    // }, [FilterApprove])
-
     useEffect(() => {
-        fetchAllAllPagess(1);
+        fetchAllPages(1);
     }, []);
 
     useEffect(() => {
@@ -1168,7 +1160,7 @@ const AllPages_Card = () => {
         setTotalPage(Math.ceil(filteredAllPages.length / itemsPerPage));
     }, [filteredAllPages, currentPage]);
 
-    const fetchAllAllPagess = async (_page: number) => {
+    const fetchAllPages = async (_page: number) => {
         setIsLoading(true);
         const res = await getAllPages();
         console.log("PagesData", res?.pages)
@@ -1197,13 +1189,13 @@ const AllPages_Card = () => {
     const handleDelete = async (id: any) => {
         const isConfirm = window.confirm('Are you sure to delete this AllPages?')
         if (!isConfirm) return;
-        // const res = await DeleteAllPagesbyId(id);
-        // if (res && res.info == 'AllPages has been deleted now') {
-        //     fetchAllAllPagess(currentPage);
-        // }
-        // else {
-        //     alert('SomeThing is Wrong!')
-        // }
+        const res = await DeletePagebyId(id);
+        if (res && res.info == 'Page has been deleted' && res.success) {
+            fetchAllPages(currentPage);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
     };
 
     const handleSearch = (e: any) => {
@@ -1216,54 +1208,53 @@ const AllPages_Card = () => {
 
 
             {!IsLoading ? (
-                    <>
-                <div className={styles.card_container}>
-                    {displayedAllPages.map((e: any, i: any) => (
-                        <div className={styles.main_box_card} key={i}>
-                            <div className={styles.card_container_box}>
-                                <div className={styles.card_header}>
-                                    <h3 className={styles.heading}>{add3Dots(e?.title, 50) || 'No Title'}</h3>
-                                    <span className={styles.ad_id}>Page ID: {e.id}</span>
-                                </div>
+                <>
+                    <div className={styles.card_container}>
+                        {displayedAllPages.map((e: any, i: any) => (
+                            <div className={styles.main_box_card} key={i}>
+                                <div className={styles.card_container_box}>
+                                    <div className={styles.card_header}>
+                                        <h3 className={styles.heading}>{add3Dots(e?.title, 50) || 'No Title'}</h3>
+                                        <span className={styles.ad_id}>Page ID: {e.id}</span>
+                                    </div>
 
-                                <div className={styles.card_content}>
+                                    <div className={styles.card_content}>
 
-                                    <div className={styles.card_detail}>
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Page Name:</span>
-                                            <span>{e?.name}</span>
+                                        <div className={styles.card_detail}>
+                                            <div className={styles.detail_row}>
+                                                <span className={styles.detail_label}>Page Name:</span>
+                                                <span>{e?.name}</span>
+                                            </div>
+                                            <div className={styles.detail_row}>
+                                                <span className={styles.detail_label}>Date:</span>
+                                                <span>{e?.createdAt.slice(0, 10)}</span>
+                                            </div>
+
+
+                                            <div className={styles.detail_row}>
+                                                <span className={styles.detail_label}>Display Position:</span>
+                                                <span>{e?.displayPosition || "N/A"}</span>
+                                            </div>
+
+
+
                                         </div>
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Date:</span>
-                                            <span>{e?.createdAt.slice(0, 10)}</span>
-                                        </div>
+                                    </div>
 
-
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Display Position:</span>
-                                            <span>{e?.displayPosition || "N/A"}</span>
-                                        </div>
-
-
-
+                                    <div className={styles.card_actions}>
+                                        <button className={`${styles.action_btn} ${styles.disapprove_btn}`}>
+                                            <Link href={`/ebike-panel/dashboard/edit-page/${e?.id}`} sx={{textDecoration:'none', color:'white'}}>
+                                                Edit
+                                            </Link>
+                                        </button>
+                                        <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                            Delete
+                                        </button>
                                     </div>
                                 </div>
-
-                                <div className={styles.card_actions}>
-                                    <button
-                                        className={`${styles.action_btn} ${styles.disapprove_btn}`}
-                                        // onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
-                                    >
-                                      Edit
-                                    </button>
-                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                        Delete
-                                    </button>
-                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
                     <div className={styles.pagination}>
                         {filteredAllPages?.length > 0 && (
                             <div className={styles.used_bike_list_pagination}>
