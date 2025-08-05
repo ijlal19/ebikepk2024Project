@@ -887,6 +887,7 @@ const EditBlogForm = () => {
     );
 }
 
+///////////////////////////////////////////////// EDIT PAGES 
 const EditPageForm = () => {
     const [PageData, setPageData] = useState<any>({});
     const [NewTitle, setNewTitle] = useState('');
@@ -959,7 +960,6 @@ const EditPageForm = () => {
             text: '',
             url: ''
         }
-        console.log("Abdullah",obj)
         const res = await UpdatePageById(slug1, obj)
         if (res && res.message == "updated successfully" && res.success) {
             router.push('/ebike-panel/dashboard/all-pages')
