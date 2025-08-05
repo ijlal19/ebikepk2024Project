@@ -448,6 +448,38 @@ function getPageById(id:any) {
     });
 }
 
+function UpdatePageById(id: any, payload: any) {
+    return fetch(Gconfig.ebikeApi + `page/update-page/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function DeletePagebyId(id: any) {
+    return fetch(Gconfig.ebikeApi + `page/delete-page/${id}`, {
+        method: 'DELETE',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
 
 export {
     PostLogin,
@@ -484,7 +516,9 @@ export {
     DeleteMechanicbyId,
 
     getAllPages,
-    getPageById
+    getPageById,
+    UpdatePageById,
+    DeletePagebyId
 }
 
 
