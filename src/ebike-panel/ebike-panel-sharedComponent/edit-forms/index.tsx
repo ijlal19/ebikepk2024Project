@@ -1,5 +1,5 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { numericOnly } from '@/genericFunctions/geneFunc';
@@ -22,6 +22,20 @@ let BlogCategory = [
     {
         id: 3,
         categoryName: "Safety"
+    },
+]
+let PagePosition = [
+    {
+        id: 1,
+        PositionName: "Menu"
+    },
+    {
+        id: 2,
+        PositionName: "Footer"
+    },
+    {
+        id: 3,
+        PositionName: "Other"
     },
 ]
 
@@ -129,7 +143,7 @@ const EditUsedBikeForm = () => {
         }
     }
 
-      const goBack = () => {
+    const goBack = () => {
         router.push('/ebike-panel/dashboard/view-classified-ads')
     }
 
@@ -157,14 +171,14 @@ const EditUsedBikeForm = () => {
             alert("Please write correct seller Name")
             return
         }
-        else if (!mobile || mobile.length != 11 || !numericOnly(mobile)) {
-            alert("Please write correct mobile number")
-            return
-        }
-        else if (imageArr.length < 0) {
-            alert('Please select min(1) image')
-            return
-        }
+        // else if (!mobile || mobile.length != 11 || !numericOnly(mobile)) {
+        //     alert("Please write correct mobile number")
+        //     return
+        // }
+        // else if (imageArr.length < 0) {
+        //     alert('Please select min(1) image')
+        //     return
+        // }
 
         let _phone = mobile
         while (_phone.charAt(0) === '0') {
@@ -188,8 +202,9 @@ const EditUsedBikeForm = () => {
 
         console.log("data", obj);
         const res = await UpdateUsedBikeById(id, obj)
-        if (res && res.success) {
-            router.push('/ebike-panel/dashboard/view-classified-ads')
+        if (res?.success) {
+            alert('updated success fully')
+            // router.push('/ebike-panel/dashboard/view-classified-ads')
         }
         else {
             alert('Something is Wrong!')
@@ -200,7 +215,7 @@ const EditUsedBikeForm = () => {
         <div className={styles.main_box}>
             {
                 !isLoading ?
-                    < form onSubmit={handleSubmit} className={styles.main}>
+                    <form onSubmit={handleSubmit} className={styles.main}>
                         <div className={styles.formHeader}>
                             <p className={styles.a} onClick={goBack}><ArrowBackIosIcon className={styles.icon} /></p>
                             <p className={styles.heading}>Edit Used Bike</p>
@@ -872,8 +887,146 @@ const EditBlogForm = () => {
     );
 }
 
+const EditPageForm = () => {
+    const [PageData, setPageData] = useState<any>({});
+    const [NewTitle, setNewTitle] = useState('');
+    const [NewName, setNewName] = useState('');
+    const [NewMetaTitle, setNewMetaTitle] = useState('');
+    const [NewDescription, setNewDescritpion] = useState('');
+    const [NewMetaDescription, setNewMetaDescription] = useState('');
+    const [NewFocusKeyword, setNewFocusKeyword] = useState('');
+    const [NewPosition, setNewPosition] = useState('');
+    const { slug, slug1 } = useParams();
+
+
+    useEffect(() => {
+        fetchPageByID(slug1)
+    }, [])
+    const fetchPageByID = async (id: any) => {
+        const res = await getPageById(id)
+        if (res && res.success) {
+            setNewTitle(res?.page?.title)
+            setNewName(res?.page?.name)
+            setNewMetaTitle(res?.page?.meta_title)
+            setNewDescritpion(res?.page?.html)
+            setNewMetaDescription(res?.page?.meta_description)
+            setNewFocusKeyword(res?.page?.focus_keyword)
+            setNewPosition(res?.page?.displayPosition)
+            setPageData(res?.page)
+        }
+    }
+
+    const CategoryChange = (e: any) => {
+        setNewPosition(e.target.value);
+    };
+
+    const router = useRouter()
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
+        if (invalidChars.test(NewTitle)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        if (!NewTitle || NewTitle.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+        else if (!NewName && NewName.length < 2) {
+            alert("Please enter a Author Name");
+            return;
+        }
+        else if (!NewDescription) {
+            alert("Please enter a Description");
+            return;
+        }
+
+        const userCookie = jsCookie.get("userData_ebike_panel");
+        const userData = JSON.parse(userCookie);
+        const UserId = userData?.uid;
+
+        const obj = {
+            title: NewTitle,
+            html: NewDescription,
+            name: NewName,
+            focus_keyword: NewFocusKeyword,
+            meta_description: NewMetaDescription,
+            meta_title: NewMetaTitle,
+            displayPosition: NewPosition,
+            uid: UserId,
+            images: [],
+            text: '',
+            url: ''
+        }
+        console.log("Abdullah",obj)
+        const res = await UpdatePageById(slug1, obj)
+        if (res && res.message == "updated successfully" && res.success) {
+            router.push('/ebike-panel/dashboard/all-pages')
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-pages')
+    }
+
+
+    return (
+        <div className={styles.main_blog_box}>
+            <form onSubmit={handleSubmit} className={styles.main}>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Edit Page</p>
+                </div>
+                <label htmlFor="title" className={styles.label}>Page Title</label>
+                <input id="title" name="title" value={NewTitle} onChange={(e) => setNewTitle(e.target.value)} className={styles.input} />
+
+                <label htmlFor="name" className={styles.label}>Page Name</label>
+                <input id="name" name="name" value={NewName} onChange={(e) => setNewName(e.target.value)} className={styles.input} />
+
+                <label htmlFor="Description" className={styles.label}>Description</label>
+                <FloaraTextarea
+                    value={NewDescription}
+                    onChange={(e: any) => setNewDescritpion(e)}
+                />
+
+                <div className={styles.drop_downBox}>
+                    <select name="" id="" className={styles.selected} onChange={CategoryChange}>
+                        <option value={PageData?.name || ''} disabled selected hidden>
+                            {
+                                PageData?.displayPosition
+                            }
+                            {/* {Pos.find((e: any) => e.id === BlogData.blogCategoryId)?.categoryName || "Select Category"} */}
+                        </option>
+                        {
+                            PagePosition.map((e: any, index) => (
+                                <option key={index} value={e?.PositionName} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.PositionName}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                <textarea id="meta_title" name="meta_title" value={NewMetaTitle} onChange={(e) => setNewMetaTitle(e.target.value)} className={styles.textarea} />
+                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                <textarea id="meta_description" name="meta_description" value={NewMetaDescription} onChange={(e) => setNewMetaDescription(e.target.value)} className={styles.textarea} />
+                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                <textarea id="focus_keyword" name="focus_keyword" value={NewFocusKeyword} onChange={(e) => setNewFocusKeyword(e.target.value)} className={styles.textarea} />
+
+                <button type="submit" className={styles.button}>Save Edit</button>
+            </form>
+        </div>
+    );
+}
+
 export {
     EditUsedBikeForm,
     EditNewBikeForm,
-    EditBlogForm
+    EditBlogForm,
+    EditPageForm
 };

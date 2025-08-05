@@ -1,44 +1,62 @@
 @import '../../styles/variable';
-.trem_and_cond_main{
+@font-face {
+   font-family: 'Lato';
+   src: url('/fonts/Lato-Regular.ttf') format('truetype');
+   font-weight: 400;
+   font-style: normal;
+}
+@font-face {
+   font-family: 'LatoBold';
+   src: url('/fonts/Lato-Bold.ttf') format('truetype');
+   font-weight: 400;
+   font-style: normal;
+}
+.Term_main {
     width: 100%;
-    padding: 20px 10px !important;
-    margin-bottom: 10px;
-    box-sizing: border-box;
+    max-width: 1000px;
+    margin:40px  auto;
+    background: white;
+    height: auto;
+    display: flex;
+    padding: 0px 0px 0px 0px !important;
+    justify-content: center;
+    align-items: start;
+    box-shadow: 0 .5rem 1rem rgba(0 , 0 , 0 , .15) !important;
     @media (max-width:768px) {
-        margin-bottom: 0px;
-        padding: 20px 10px 20px 10px !important;
+        height: auto !important;
+        padding: 0px 0px 20px 0px !important;
+        box-shadow: none !important;
+        margin: 10px auto !important;
     }
-    .container{
-        width: 100%;
-        box-sizing: border-box;
-        max-width: 900px;
-        margin: auto;
-        padding: 20px 30px;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-        @media (max-width:768px) {
-            padding: 20px 10px !important;
-            box-sizing: border-box;
-            margin: auto 0px auto 0px !important;
-        }
-
-            .heading{
-                margin: 0px;
-                font-size: 20px;
-                font-weight: bolder;
+        .Termus {
+            @media (max-width:768px) {
+                margin: 0px 10px 0px 10px !important;
+                box-shadow: 0 .5rem 1rem rgb(0, 0, 0 ,.15) !important;
+            }
+            .abutus_heading {
+                font-size: 25px;
+                letter-spacing: 1px;
+                font-family: 'LatoBold';
+                margin: 20px 0px 0px 0px !important;
+                box-sizing: border-box;
                 text-align: center;
                 color: $primary_two;
-                margin-bottom: 30px;
+                font-weight: bolder;
+                cursor: default;
                 @media (max-width:768px) {
-                    margin-bottom: 10px;
+                    font-size: 20px;
                 }
-        }
-        .paragraph_box{
-            color: #434343;
-            padding: 5px 20px;
-            font-size: 14px;
-            @media (max-width:768px) {
-                padding: 10px 0px !important;
+            }
+
+            .Term_text {
+                text-align: left;
+                padding: 0px 20px !important;
+                box-sizing: border-box;
+                .blog_content {
+                   font-family: 'Lato';
+                   color: #3c3c3c;
+                }
+
             }
         }
     }
-}

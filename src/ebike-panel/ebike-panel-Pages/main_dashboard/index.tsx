@@ -2,7 +2,7 @@
 import React from "react";
 import { useEffect } from "react";
 import styles from './index.module.scss';
-import { Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-bikes-card";
+import { Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-panel-cards";
 import { useRouter } from "next/navigation";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 

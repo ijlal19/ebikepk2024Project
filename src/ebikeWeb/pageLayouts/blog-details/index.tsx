@@ -344,7 +344,12 @@ const BlogDetails = () => {
                 }
               </Box>
 
-              <Box className={styles.shortBlog_main}>
+               <Box className={styles.blog_add}>
+                <Link href='/blog'>
+                <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
+                </Link>
+               </Box>
+              {/* <Box className={styles.shortBlog_main}>
                 <Typography className={styles.heading}>More Blogs</Typography>
                 {
                   BlogData.slice(0, 5).map((e: any, i: any) => {
@@ -354,7 +359,7 @@ const BlogDetails = () => {
                     )
                   })
                 }
-              </Box>
+              </Box> */}
             </Grid>
             <Blog_Category_Comp heading="More Blogs" data={BlogData} />
             <BrowseUsedBike />

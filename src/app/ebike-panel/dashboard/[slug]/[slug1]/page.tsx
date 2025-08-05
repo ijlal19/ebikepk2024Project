@@ -10,7 +10,7 @@ const Dashborad = () => {
     </Head>
     return (
         <div style={{ display: 'flex' }}>
-            <SideBar />
+            {/* <SideBar /> */}
             <DashBoard_form />
         </div>
     )

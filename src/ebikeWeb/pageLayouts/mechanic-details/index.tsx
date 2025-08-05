@@ -87,8 +87,8 @@ const isMobile = useMediaQuery('(max-width:562px)')
         
         <div className={styles.more_dealers}>
           <div className={styles.similar_dealer_heading_box}>
-            <p className={styles.heading}>Similar Dealers</p>
-            <p onClick={()=> router.push('/dealers') } className={styles.view_all_dealers}>View All Dealers</p>
+            <p className={styles.heading}>Similar Mechanics</p>
+            <p onClick={()=> router.push('/mechanics') } className={styles.view_all_dealers}>View All Mechanics</p>
           </div>
           <div className={styles.more_dealers_card}>
             {
