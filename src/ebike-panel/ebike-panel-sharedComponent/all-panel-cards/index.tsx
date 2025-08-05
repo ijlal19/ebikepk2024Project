@@ -645,7 +645,7 @@ const Blog_Card = () => {
                                                     ))
                                                 ) :
                                                     <SwiperSlide key=''>
-                                                        <img src={e.featuredImage.split(' #$# ')[0].trim()} alt={e?.title} className={styles.image} />
+                                                        <img src={e?.featuredImage?.split(' #$# ')[0].trim()} alt={e?.title} className={styles.image} />
                                                     </SwiperSlide>
                                             }
                                         </Swiper>
