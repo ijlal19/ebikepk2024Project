@@ -1,9 +1,5 @@
 import Gconfig from 'globalconfig'
 const jsCookie = require('js-cookie');
-let userCookie = jsCookie.get("userData_ebike_panel");
-let userData = JSON.parse(userCookie);
-let token = userData?.accessToken;
-
 
 function PostLogin(data: any) {
     return fetch(Gconfig.ebikeApi + `user-role/login`, {
@@ -128,9 +124,9 @@ function getCustomBikeAd(obj: any) {
 
 function DeleteUsedBikeById(id: any) {
 
-    // const userCookie = jsCookie.get("userData_ebike_panel");
-    // const userData = JSON.parse(userCookie);
-    // const token = userData?.accessToken;
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
 
     let resStatus = -1
 
@@ -290,11 +286,15 @@ function UpdateBlogById(id: any, payload: any) {
 }
 
 function addNewBlog(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `blog/add-new-blog`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
             "x-access-token": token
+
         },
         body: JSON.stringify(data)
     })
