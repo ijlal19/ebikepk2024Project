@@ -23,18 +23,18 @@ function uplaodImageFunc(data: any) {
     })
 }
 
-const checkAuthAndRedirect = (router: any, pathname: any) => {
+const checkAuthAndRedirect = (router: any , pathname :any) => {
     const userCookie = jsCookie.get("userData_ebike_panel");
 
     if (userCookie) {
         const userData = JSON.parse(userCookie);
         const token = userData?.accessToken;
         if (token) {
-            if (pathname == '/ebike-panel' || pathname == '/ebike-panel/login') {
+            if(pathname == '/ebike-panel' || pathname == '/ebike-panel/login'){
                 router.replace("/ebike-panel/dashboard");
             }
         }
-        else {
+        else{
             router.replace("/ebike-panel/login");
         }
     } else {
@@ -132,18 +132,18 @@ function DeleteUsedBikeById(id: any) {
 
     return fetch(Gconfig.ebikeApi + `classified/delete-classified/${id}`, {
         method: 'DELETE',
-        headers: {
+        headers: { 
             "Content-Type": "application/json",
             "x-access-token": token
         }
     })
         .then(response => {
             resStatus = response.status
-            response.json()
+            response.json() 
         })
         .then(data => {
             if (resStatus == 204) {
-                return { success: true }
+               return { success: true }
             }
             else {
                 return { success: false }
@@ -178,7 +178,7 @@ function UpdateUsedBikeById(id: any, payload: any) {
         })
         .then(data => {
             if (resStatus == 204) {
-                return { success: true }
+               return { success: true }
             }
             else {
                 return { success: false }
@@ -213,16 +213,16 @@ function ChangeFeatured(id: any, payload: any) {
 }
 
 function ChangeApprove(id: any, payload: any) {
-
+    
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
-
+    
     return fetch(Gconfig.ebikeApi + `classified/approve-used-bike/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
-            "x-access-token": token
+             "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -247,15 +247,9 @@ function getAllBlog() {
 }
 
 function DeleteBlogById(id: any) {
-    const userCookie = jsCookie.get("userData_ebike_panel");
-    const userData = JSON.parse(userCookie);
-    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `blog/delete-blog/${id}`, {
         method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json",
-            "x-access-token": token
-        }
+        headers: { "Content-Type": "application/json" }
     })
         .then(response => response.json())
         .then(data => {
@@ -275,16 +269,10 @@ function getSingleblogDetail(id: any) {
 }
 
 function UpdateBlogById(id: any, payload: any) {
-
-    const userCookie = jsCookie.get("userData_ebike_panel");
-    const userData = JSON.parse(userCookie);
-    const token = userData?.accessToken;
-
     return fetch(Gconfig.ebikeApi + `blog/update-blog/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json",
-            "x-access-token": token
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
     })
@@ -298,15 +286,9 @@ function UpdateBlogById(id: any, payload: any) {
 }
 
 function addNewBlog(data: any) {
-    const userCookie = jsCookie.get("userData_ebike_panel");
-    const userData = JSON.parse(userCookie);
-    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `blog/add-new-blog`, {
         method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            "x-access-token": token
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
         .then(response => response.json())
@@ -441,29 +423,29 @@ function getAllPages() {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch(err => {
-            console.log('Error fetching mechanics:', err);
-        });
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch(err => {
+        console.log('Error fetching mechanics:', err);
+    });
 }
 
-function getPageById(id: any) {
+function getPageById(id:any) {
     return fetch(Gconfig.ebikeApi + `page/get-page-by-id/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch(err => {
-            console.log('Error fetching mechanics:', err);
-        });
+    .then(response => response.json())
+    .then(data => {
+        return data;
+    })
+    .catch(err => {
+        console.log('Error fetching mechanics:', err);
+    });
 }
 
 function UpdatePageById(id: any, payload: any) {
@@ -496,6 +478,7 @@ function DeletePagebyId(id: any) {
             console.log(err);
         });
 }
+
 
 
 export {
@@ -534,8 +517,8 @@ export {
 
     getAllPages,
     getPageById,
-    UpdatePageById,
-    DeletePagebyId
+    DeletePagebyId,
+    UpdatePageById
 }
 
 
