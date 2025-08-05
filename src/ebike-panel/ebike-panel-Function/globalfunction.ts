@@ -123,13 +123,31 @@ function getCustomBikeAd(obj: any) {
 }
 
 function DeleteUsedBikeById(id: any) {
+    
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    
+    let resStatus = -1
+
     return fetch(Gconfig.ebikeApi + `classified/delete-classified/${id}`, {
         method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
+        headers: { 
+            "Content-Type": "application/json",
+            "x-access-token": token
+         }
     })
-        .then(response => response.json())
+        .then(response => { 
+            resStatus = response.status
+            response.json() 
+        })
         .then(data => {
-            return data;
+            if (resStatus == 204) {
+               return { success: true }
+            }
+            else {
+                return { success: false }
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -146,6 +164,7 @@ function getSinglebikesDetail(id: any) {
 }
 
 function UpdateUsedBikeById(id: any, payload: any) {
+    let resStatus = -1
     return fetch(Gconfig.ebikeApi + `classified/update-classified/${id}`, {
         method: 'PUT',
         headers: {
@@ -153,9 +172,17 @@ function UpdateUsedBikeById(id: any, payload: any) {
         },
         body: JSON.stringify(payload)
     })
-        .then(response => response.json())
+        .then(response => {
+            resStatus = response.status
+            response.json()
+        })
         .then(data => {
-            return data;
+            if (resStatus == 204) {
+               return { success: true }
+            }
+            else {
+                return { success: false }
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -163,10 +190,16 @@ function UpdateUsedBikeById(id: any, payload: any) {
 }
 
 function ChangeFeatured(id: any, payload: any) {
+
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
     return fetch(Gconfig.ebikeApi + `classified/feature-used-bike/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -180,10 +213,16 @@ function ChangeFeatured(id: any, payload: any) {
 }
 
 function ChangeApprove(id: any, payload: any) {
+    
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    
     return fetch(Gconfig.ebikeApi + `classified/approve-used-bike/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+             "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -409,37 +448,6 @@ function getPageById(id:any) {
     });
 }
 
-function UpdatePageById(id: any, payload: any) {
-    return fetch(Gconfig.ebikeApi + `page/update-page/${id}`, {
-        method: 'PUT',
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-    })
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
-function DeletePagebyId(id: any) {
-    return fetch(Gconfig.ebikeApi + `page/delete-page/${id}`, {
-        method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
-    })
-        .then(response => response.json())
-        .then(data => {
-            return data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
-
 
 export {
     PostLogin,
@@ -476,9 +484,7 @@ export {
     DeleteMechanicbyId,
 
     getAllPages,
-    getPageById,
-    UpdatePageById,
-    DeletePagebyId
+    getPageById
 }
 
 

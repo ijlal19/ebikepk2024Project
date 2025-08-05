@@ -88,7 +88,8 @@ const Used_bike_card = () => {
         if (!confirmDelete) return;
 
         const res = await DeleteUsedBikeById(id);
-        if (res && res.info == 'Ad has been deleted now') {
+        if (res && res?.success) {
+            alert('Updated Successfully')
             fetchAllUsedBike(currentPage);
         } else {
             alert("Something went wrong!");
@@ -102,9 +103,10 @@ const Used_bike_card = () => {
             id: id,
             item: { isFeatured: currentStatus ? false : true }
         }
-        console.log(obj)
+        // console.log(obj)
         const res = await ChangeFeatured(id, obj)
-        if (res && res?.adData && res?.info == 'feature Ad is ') {
+        if (res && res?.info && res?.info?.indexOf("feature Ad") > -1) {
+            alert('Updated Successfully ')
             fetchAllUsedBike(currentPage)
         }
         else {
@@ -121,7 +123,8 @@ const Used_bike_card = () => {
         }
         console.log(obj)
         const res = await ChangeApprove(id, obj)
-        if (res && res?.adData && res?.info == 'Approve Ad is ') {
+        if (res && res?.info?.indexOf('Approve Ad') > -1) {
+            alert('Updated Successfully')
             fetchAllUsedBike(currentPage)
         }
         else {
@@ -134,40 +137,46 @@ const Used_bike_card = () => {
 
         try {
 
-            const obj = {
-                page: _page,
-                adslimit: 10,
-                isApproved: "no"
-            };
+            // const obj = {
+            //     page: _page,
+            //     adslimit: 10,
+            //     isApproved: "no"
+            // };
 
-            const res = await getCustomBikeAd(obj);
+            // const res = await getCustomBikeAd(obj);
 
-            if (res && res?.data?.length > 0) {
+            // if (res && res?.data?.length > 0) {
+                
                 const obj1 = {
                     page: 1,
-                    adslimit: res?.total,
+                    // adslimit: res?.total,
+                    adslimit: 500,
                     isApproved: "no"
                 };
+
                 const res1 = await getCustomBikeAd(obj1);
 
                 if (res1 && res1?.data?.length > 0) {
                     setAllBikeForFilter(res1.data);
-                } else {
+                } 
+                else {
                     setAllBikeForFilter([]);
                 }
                 setCurrentPage(_page);
-                setAllBikeArr(res.data);
+                setAllBikeArr(res1.data);
                 setIsLoading(false);
                 setTimeout(() => {
                     window.scrollTo(0, 0)
                 }, 500);
-            } else {
-                setCurrentPage(1);
-                setAllBikeArr([]);
-                setAllBikeForFilter([]);
-                setFilteredBikes([]);
-                setTotalPage(0);
-            }
+
+                // } else {
+                //     setCurrentPage(1);
+                //     setAllBikeArr([]);
+                //     setAllBikeForFilter([]);
+                //     setFilteredBikes([]);
+                //     setTotalPage(0);
+                // }
+
         } catch (error) {
             console.error("Error fetching bikes:", error);
         }

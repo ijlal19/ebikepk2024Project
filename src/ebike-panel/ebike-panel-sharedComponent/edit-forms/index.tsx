@@ -202,12 +202,12 @@ const EditUsedBikeForm = () => {
 
         console.log("data", obj);
         const res = await UpdateUsedBikeById(id, obj)
-        if (res && res.info == 'Bike has been updated') {
-            router.push('/ebike-panel/dashboard/view-classified-ads')
+        if (res?.success) {
+            alert('updated success fully')
+            // router.push('/ebike-panel/dashboard/view-classified-ads')
         }
         else {
-        
-            // alert('Something is Wrong!')
+            alert('Something is Wrong!')
         }
     };
 
@@ -215,7 +215,7 @@ const EditUsedBikeForm = () => {
         <div className={styles.main_box}>
             {
                 !isLoading ?
-                    < form onSubmit={handleSubmit} className={styles.main}>
+                    <form onSubmit={handleSubmit} className={styles.main}>
                         <div className={styles.formHeader}>
                             <p className={styles.a} onClick={goBack}><ArrowBackIosIcon className={styles.icon} /></p>
                             <p className={styles.heading}>Edit Used Bike</p>
