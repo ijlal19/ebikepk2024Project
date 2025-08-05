@@ -677,7 +677,6 @@ const EditBlogForm = () => {
 
     const fetchBlogByID = async (id: any) => {
         const res = await getSingleblogDetail(id)
-        console.log(res)
         if (res) {
             setCategoryId(res.blogCategoryId)
             setBlog_Title(res.blogTitle)
@@ -689,8 +688,9 @@ const EditBlogForm = () => {
             setBlog_Featured_Image(res.featuredImage)
             setBlogData(res)
             if (res.featuredImage.includes(' #$# ')) {
-                const GetImage = res.featuredImage.split(' #$# ').trim()
-                console.log("Image", GetImage)
+                const GetImage = res.featuredImage.split(' #$# ').map((item:any) => item.trim());
+                console.log("Image_1", GetImage);
+                setImageArr(GetImage)
             }
             else {
                 console.log(`${[res.featuredImage]}`)
