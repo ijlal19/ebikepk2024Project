@@ -788,7 +788,7 @@ const Dealer_Card = () => {
         const isConfirm = window.confirm('Are you sure to delete this Dealer?')
         if (!isConfirm) return;
         const res = await DeleteDealerbyId(id);
-        if (res && res.info == 'dealer has been deleted now') {
+        if (res && res.success) {
             fetchAllDealers(currentPage);
         }
         else {
@@ -805,7 +805,7 @@ const Dealer_Card = () => {
         }
         console.log(obj)
         const res = await ChangeDealerApprove(id, obj)
-        if (res && res?.info == "Approve dealer is") {
+        if (res && res?.info && res?.info?.indexOf("Approve dealer is") > -1) {
             fetchAllDealers(currentPage)
         }
         else {
@@ -822,7 +822,7 @@ const Dealer_Card = () => {
         }
         console.log(obj)
         const res = await ChangeDealerFeatured(id, obj)
-        if (res && res?.info == "Feature Dealer is") {
+        if (res && res?.info && res?.info?.indexOf("Feature Dealer is") > -1) {
             fetchAllDealers(currentPage)
         }
         else {
@@ -943,7 +943,6 @@ const Mechanic_Card = () => {
     useEffect(() => {
         const filtered = AllmechanicFilter.filter((m: any) => m.is_approved === FilterApprove);
         setdisplayedmechanic(filtered);
-        console.log("display", filtered, displayedmechanic.length)
     }, [FilterApprove])
 
     useEffect(() => {
@@ -1003,7 +1002,7 @@ const Mechanic_Card = () => {
         const isConfirm = window.confirm('Are you sure to delete this mechanic?')
         if (!isConfirm) return;
         const res = await DeleteMechanicbyId(id);
-        if (res && res.info == 'mechanic has been deleted now') {
+        if (res && res?.success) {
             fetchAllmechanics(currentPage);
         }
         else {
@@ -1020,7 +1019,7 @@ const Mechanic_Card = () => {
         }
         console.log(obj)
         const res = await ChangeMechanicApprove(id, obj)
-        if (res && res?.info == "Approve mechanic is ") {
+        if (res && res?.info && res?.info?.indexOf("Approve mechanic is ") > -1) {
             fetchAllmechanics(currentPage)
         }
         else {
@@ -1037,7 +1036,7 @@ const Mechanic_Card = () => {
         }
         console.log(obj)
         const res = await ChangeMechanicFeatured(id, obj)
-        if (res && res?.info == "Feature mechanic is ") {
+        if (res && res?.info && res?.info?.indexOf("Feature mechanic is ") > -1) {
             fetchAllmechanics(currentPage)
         }
         else {
@@ -1139,6 +1138,7 @@ const Mechanic_Card = () => {
         </div>
     )
 }
+
 ////////////////////////////////////////////////////// AllPAGES CARD
 const AllPages_Card = () => {
     const [AllPages, setAllPages] = useState([]);
@@ -1196,7 +1196,7 @@ const AllPages_Card = () => {
     };
 
     const handleDelete = async (id: any) => {
-        const isConfirm = window.confirm('Are you sure to delete this AllPages?')
+        const isConfirm = window.confirm('Are you sure to delete this Page?')
         if (!isConfirm) return;
         const res = await DeletePagebyId(id);
         if (res && res.info == 'Page has been deleted' && res.success) {

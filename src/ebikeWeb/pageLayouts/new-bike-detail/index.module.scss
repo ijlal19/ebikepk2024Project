@@ -55,11 +55,15 @@
             .bike_image {
                 width: 100%;
                 height: auto;
+                margin: 5px 0px 0px 0px ;
                 text-align: center;
+                box-sizing: border-box;
 
                 .image {
                     width: auto;
+                    box-sizing: border-box;
                     height: 100%;
+                    width: 100%;
                     max-height: 429px;
 
                     @media (max-width:767px) {

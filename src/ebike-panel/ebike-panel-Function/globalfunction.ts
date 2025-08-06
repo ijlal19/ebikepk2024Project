@@ -44,9 +44,16 @@ const checkAuthAndRedirect = (router: any, pathname: any) => {
 
 /////////////////////////////////////// NEW BIKE FUNCTIONS ///////////////////////////////////////////////////
 function addNewBike(data: any) {
+
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `new-bikes/add-new-bike`, {
         method: 'POST',
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
         body: JSON.stringify(data)
     })
         .then(response => response.json())
@@ -66,10 +73,15 @@ function getAllNewBike() {
 }
 
 function UpdateNewBikeById(id: any, payload: any) {
+
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `new-bikes/update-new-bike/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -94,9 +106,16 @@ function getnewBikedetailsData(id: any) {
 }
 
 function DeleteNewBikeById(id: any) {
+
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `new-bikes/delete/${id}`, {
         method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
     })
         .then(response => response.json())
         .then(data => {
@@ -328,10 +347,15 @@ function getAllDealer() {
 }
 
 function ChangeDealerApprove(id: any, payload: any) {
+
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `dealers/update-dealer/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -345,10 +369,14 @@ function ChangeDealerApprove(id: any, payload: any) {
 }
 
 function ChangeDealerFeatured(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `dealers/feature-dealer/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -362,13 +390,30 @@ function ChangeDealerFeatured(id: any, payload: any) {
 }
 
 function DeleteDealerbyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    let resStatus = -1
+
     return fetch(Gconfig.ebikeApi + `dealers/delete-dealer/${id}`, {
         method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
     })
-        .then(response => response.json())
+        .then(response => {
+            resStatus = response.status
+            response.json()
+        })
         .then(data => {
-            return data;
+            if (resStatus == 204) {
+                return { success: true }
+            }
+            else {
+                return { success: false }
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -387,10 +432,14 @@ function getAllMechanics() {
 }
 
 function ChangeMechanicFeatured(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `mechanic/feature-mechanic/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -404,10 +453,14 @@ function ChangeMechanicFeatured(id: any, payload: any) {
 }
 
 function ChangeMechanicApprove(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `mechanic/update-mechanic/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -421,13 +474,29 @@ function ChangeMechanicApprove(id: any, payload: any) {
 }
 
 function DeleteMechanicbyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    let resStatus = -1
     return fetch(Gconfig.ebikeApi + `mechanic/delete-mechanic/${id}`, {
         method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
     })
-        .then(response => response.json())
+        .then(response => {
+            resStatus = response.status
+            response.json()
+        })
         .then(data => {
-            return data;
+            if (resStatus == 204) {
+                return { success: true }
+            }
+            else {
+                return { success: false }
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -468,10 +537,15 @@ function getPageById(id: any) {
 }
 
 function UpdatePageById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
     return fetch(Gconfig.ebikeApi + `page/update-page/${id}`, {
         method: 'PUT',
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -485,9 +559,15 @@ function UpdatePageById(id: any, payload: any) {
 }
 
 function DeletePagebyId(id: any) {
+     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `page/delete-page/${id}`, {
         method: 'DELETE',
-        headers: { "Content-Type": "application/json" }
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
     })
         .then(response => response.json())
         .then(data => {

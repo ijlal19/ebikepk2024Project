@@ -529,7 +529,7 @@ const EditNewBikeForm = () => {
         const brandId = e.target.value;
         setNewField((prev: any) => ({
             ...prev,
-            brandId: brandId
+            newbrandId: brandId
         }));
     };
 
@@ -562,7 +562,7 @@ const EditNewBikeForm = () => {
                         {/* Description */}
                         <FloaraTextarea
                             value={NewField.newdescription}
-                            onChange={(e: any) => handleChange('newdescription', e.target.value)}
+                            onChange={(e: any) => handleChange('newdescription', e)}
                         />
 
                         {imageArr.length < 4 && (
@@ -688,7 +688,7 @@ const EditBlogForm = () => {
             setBlog_Featured_Image(res.featuredImage)
             setBlogData(res)
             if (res.featuredImage.includes(' #$# ')) {
-                const GetImage = res.featuredImage.split(' #$# ').map((item:any) => item.trim());
+                const GetImage = res.featuredImage.split(' #$# ').map((item: any) => item.trim());
                 console.log("Image_1", GetImage);
                 setImageArr(GetImage)
             }
@@ -898,12 +898,15 @@ const EditPageForm = () => {
     const [NewFocusKeyword, setNewFocusKeyword] = useState('');
     const [NewPosition, setNewPosition] = useState('');
     const { slug, slug1 } = useParams();
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
         fetchPageByID(slug1)
     }, [])
+
     const fetchPageByID = async (id: any) => {
+        setIsLoading(true)
         const res = await getPageById(id)
         if (res && res.success) {
             setNewTitle(res?.page?.title)
@@ -915,6 +918,10 @@ const EditPageForm = () => {
             setNewPosition(res?.page?.displayPosition)
             setPageData(res?.page)
         }
+        else {
+            alert('Waiting reload page!')
+        }
+        setIsLoading(false)
     }
 
     const CategoryChange = (e: any) => {
@@ -935,7 +942,7 @@ const EditPageForm = () => {
             return;
         }
         else if (!NewName && NewName.length < 2) {
-            alert("Please enter a Author Name");
+            alert("Please enter a Page Name");
             return;
         }
         else if (!NewDescription) {
@@ -976,50 +983,56 @@ const EditPageForm = () => {
 
     return (
         <div className={styles.main_blog_box}>
-            <form onSubmit={handleSubmit} className={styles.main}>
-                <div className={styles.formHeader}>
-                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                    <p className={styles.heading}>Edit Page</p>
-                </div>
-                <label htmlFor="title" className={styles.label}>Page Title</label>
-                <input id="title" name="title" value={NewTitle} onChange={(e) => setNewTitle(e.target.value)} className={styles.input} />
+            {
+                !isLoading ?
+                    <form onSubmit={handleSubmit} className={styles.main}>
+                        <div className={styles.formHeader}>
+                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                            <p className={styles.heading}>Edit Page</p>
+                        </div>
+                        <label htmlFor="title" className={styles.label}>Page Title</label>
+                        <input id="title" name="title" value={NewTitle} onChange={(e) => setNewTitle(e.target.value)} className={styles.input} />
 
-                <label htmlFor="name" className={styles.label}>Page Name</label>
-                <input id="name" name="name" value={NewName} onChange={(e) => setNewName(e.target.value)} className={styles.input} />
+                        <label htmlFor="name" className={styles.label}>Page Name</label>
+                        <input id="name" name="name" value={NewName} onChange={(e) => setNewName(e.target.value)} className={styles.input} />
 
-                <label htmlFor="Description" className={styles.label}>Description</label>
-                <FloaraTextarea
-                    value={NewDescription}
-                    onChange={(e: any) => setNewDescritpion(e)}
-                />
+                        <label htmlFor="Description" className={styles.label}>Description</label>
+                        <FloaraTextarea
+                            value={NewDescription}
+                            onChange={(e: any) => setNewDescritpion(e)}
+                        />
 
-                <div className={styles.drop_downBox}>
-                    <select name="" id="" className={styles.selected} onChange={CategoryChange}>
-                        <option value={PageData?.name || ''} disabled selected hidden>
-                            {
-                                PageData?.displayPosition
-                            }
-                            {/* {Pos.find((e: any) => e.id === BlogData.blogCategoryId)?.categoryName || "Select Category"} */}
-                        </option>
-                        {
-                            PagePosition.map((e: any, index) => (
-                                <option key={index} value={e?.PositionName} className={styles.options} style={{ fontSize: '16px' }}>
-                                    {e?.PositionName}
+                        <div className={styles.drop_downBox}>
+                            <select name="" id="" className={styles.selected} onChange={CategoryChange}>
+                                <option value={PageData?.name || ''} disabled selected hidden>
+                                    {
+                                        PageData?.displayPosition
+                                    }
+                                    {/* {Pos.find((e: any) => e.id === BlogData.blogCategoryId)?.categoryName || "Select Category"} */}
                                 </option>
-                            ))
-                        }
-                    </select>
-                </div>
+                                {
+                                    PagePosition.map((e: any, index) => (
+                                        <option key={index} value={e?.PositionName} className={styles.options} style={{ fontSize: '16px' }}>
+                                            {e?.PositionName}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
 
-                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                <textarea id="meta_title" name="meta_title" value={NewMetaTitle} onChange={(e) => setNewMetaTitle(e.target.value)} className={styles.textarea} />
-                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                <textarea id="meta_description" name="meta_description" value={NewMetaDescription} onChange={(e) => setNewMetaDescription(e.target.value)} className={styles.textarea} />
-                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                <textarea id="focus_keyword" name="focus_keyword" value={NewFocusKeyword} onChange={(e) => setNewFocusKeyword(e.target.value)} className={styles.textarea} />
+                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                        <textarea id="meta_title" name="meta_title" value={NewMetaTitle} onChange={(e) => setNewMetaTitle(e.target.value)} className={styles.textarea} />
+                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                        <textarea id="meta_description" name="meta_description" value={NewMetaDescription} onChange={(e) => setNewMetaDescription(e.target.value)} className={styles.textarea} />
+                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                        <textarea id="focus_keyword" name="focus_keyword" value={NewFocusKeyword} onChange={(e) => setNewFocusKeyword(e.target.value)} className={styles.textarea} />
 
-                <button type="submit" className={styles.button}>Save Edit</button>
-            </form>
+                        <button type="submit" className={styles.button}>Save Edit</button>
+                    </form> :
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
+            }
         </div>
     );
 }
