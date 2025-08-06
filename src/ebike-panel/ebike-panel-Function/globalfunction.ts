@@ -578,7 +578,23 @@ function DeletePagebyId(id: any) {
         });
 }
 
-
+function addNewPage(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `page/add-new-page`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
 
 export {
     PostLogin,
@@ -617,7 +633,8 @@ export {
     getAllPages,
     getPageById,
     DeletePagebyId,
-    UpdatePageById
+    UpdatePageById,
+    addNewPage
 }
 
 

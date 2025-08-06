@@ -1,5 +1,5 @@
 'use client';
-import { addNewBike, addNewBlog, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, addNewPage, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
@@ -24,6 +24,25 @@ let BlogCategory = [
         categoryName: "Safety"
     },
 ]
+let PageCategory = [
+    {
+        id: 1,
+        PositionName: "main_menu",
+        PositionNameShow: "Menu",
+    },
+    {
+        id: 2,
+        PositionName: "footer",
+        PositionNameShow: "Footer"
+    },
+    {
+        id: 3,
+        PositionName: "other",
+        PositionNameShow: "Other"
+    },
+]
+
+
 
 ////////////////////////////////////////////////////////// ADD NEW BIKE
 const AddNewBikeForm = () => {
@@ -232,7 +251,7 @@ const AddNewBikeForm = () => {
             <form onSubmit={handleSubmit} className={styles.main}>
                 <div className={styles.formHeader}>
                     <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                    <p className={styles.heading}>ADD New Bike</p>
+                    <p className={styles.heading}>Add New Bike</p>
                 </div>
 
                 <label htmlFor="title" className={styles.label}>Title</label>
@@ -756,7 +775,7 @@ const AddBlogForm = () => {
             <form onSubmit={handleSubmit} className={styles.main}>
                 <div className={styles.formHeader}>
                     <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                    <p className={styles.heading}>ADD New Blog</p>
+                    <p className={styles.heading}>Add New Blog</p>
                 </div>
 
                 <label htmlFor="blogTitle" className={styles.label}>Title</label>
@@ -811,8 +830,126 @@ const AddBlogForm = () => {
     );
 }
 
+///////////////////////////////////////////////////////// ADD NEW PAGE
+const AddPageForm = () => {
+    const [selectedPage, setSelectedPage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [PageData, setPageData] = useState<any>({
+        title: '',
+        url: '',
+        html: '',
+        text: '',
+        name: "",
+        focus_keyword: '',
+        meta_description: '',
+        meta_title: '',
+    });
+
+    let router = useRouter()
+
+    const handleInputChange = (e: any) => {
+        const { name, value } = e.target;
+        setPageData((prev: any) => ({ ...prev, [name]: value }));
+    };
+
+    const handlePageChange = (e: any) => {
+        setSelectedPage(e.target.value);
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!PageData.title || PageData.title.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+        else if (!PageData.name || PageData.name.length < 2) {
+            alert("Please add a valid author name (min 2 characters)");
+            return;
+        }
+        else if (!PageData.html || PageData.html.length < 10) {
+            alert("Please enter a valid Page description (min 10 characters)");
+            return;
+        }
+        else if (!selectedPage) {
+            alert("Please select a Page Position");
+            return;
+        }
+
+        const userCookie = jsCookie.get("userData_ebike_panel");
+        const userData = JSON.parse(userCookie);
+        const UserId = userData?.uid;
+
+        console.log("User ID:", UserId);
+
+        const finalBikeData = {
+            displayPosition: selectedPage,
+            ...PageData,
+            uid: UserId || null,
+            images: []
+        }
+        const res = await addNewPage(finalBikeData);
+        if (res && res?.success) {
+            router.push('/ebike-panel/dashboard/all-pages');
+        } else {
+            alert('Something went wrong!');
+        }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-pages')
+    }
+
+    return (
+        <div className={styles.main_box}>
+            <form onSubmit={handleSubmit} className={styles.main}>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Add New Page</p>
+                </div>
+
+                <label htmlFor="title" className={styles.label}>Title</label>
+                <input id="title" name="title" value={PageData.title} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="name" className={styles.label}>Page Name</label>
+                <input id="name" name="name" value={PageData.name} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="html" className={styles.label}>Description</label>
+                <FloaraTextArea
+                    value={PageData.html}
+                    onChange={(desc: any) => setPageData((prev: any) => ({ ...prev, html: desc }))}
+                />
+
+                <div className={styles.drop_downBox}>
+                    <select name="" id="" className={styles.selected} onChange={handlePageChange}>
+                        <option value="" disabled selected hidden>Choose Page Position to Display</option>
+                        {
+                            PageCategory.map((e: any, index) => (
+                                <option key={index} value={e?.PositionName} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.PositionNameShow}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                <textarea id="meta_title" name="meta_title" value={PageData.meta_title} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                <textarea id="meta_description" name="meta_description" value={PageData.meta_description} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                <textarea id="focus_keyword" name="focus_keyword" value={PageData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
+
+                <button type="submit" className={styles.button}>Add Page</button>
+            </form>
+        </div>
+    );
+}
+
+
 export {
     AddNewBikeForm,
     AddBlogForm,
-    AddNewElectricBikeForm
+    AddNewElectricBikeForm,
+    AddPageForm
 };

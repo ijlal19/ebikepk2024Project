@@ -1,6 +1,6 @@
 'use client'
 import { AllPages_Card, Blog_Card, Dealer_Card, Mechanic_Card, New_bike_card, Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-panel-cards"
-import { AddNewBikeForm, AddBlogForm, AddNewElectricBikeForm } from "@/ebike-panel/ebike-panel-sharedComponent/Add-new-forms";
+import { AddNewBikeForm, AddBlogForm, AddNewElectricBikeForm, AddPageForm } from "@/ebike-panel/ebike-panel-sharedComponent/Add-new-forms";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
@@ -43,6 +43,9 @@ const Dashboard_page = () => {
         }
         else if(route == "all-pages"){
             return <AllPages_Card />
+        }
+        else if(route == "add-new-page"){
+            return <AddPageForm />
         }
     }
 

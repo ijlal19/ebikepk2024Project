@@ -27,15 +27,18 @@ let BlogCategory = [
 let PagePosition = [
     {
         id: 1,
-        PositionName: "Menu"
+        PositionName: "main_menu",
+        PositionNameShow: "Menu",
     },
     {
         id: 2,
-        PositionName: "Footer"
+        PositionName: "footer",
+        PositionNameShow: "Footer"
     },
     {
         id: 3,
-        PositionName: "Other"
+        PositionName: "other",
+        PositionNameShow: "Other"
     },
 ]
 
@@ -949,6 +952,11 @@ const EditPageForm = () => {
             alert("Please enter a Description");
             return;
         }
+        else if (!NewPosition){
+            alert("Please Select a Position");
+            return
+        }
+
 
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
@@ -1013,7 +1021,7 @@ const EditPageForm = () => {
                                 {
                                     PagePosition.map((e: any, index) => (
                                         <option key={index} value={e?.PositionName} className={styles.options} style={{ fontSize: '16px' }}>
-                                            {e?.PositionName}
+                                            {e?.PositionNameShow}
                                         </option>
                                     ))
                                 }

@@ -142,10 +142,10 @@ const SideBar = () => {
                 {GetList('newBikes', 'bike', 'New Bikes', ["Add New Bike", "All New Bikes"], ["add-new-bike", "all-new-bikes"], 'true')}
                 {GetList('electricBikes', 'bike', 'Electric Bikes', ["Add Electric Bike", "All ELectric Bikes"], ["add-electric-bike", "all-electric-bikes"], 'true')}
                 {GetList('blogs', 'blog', 'Blog', ["Add New Blog", 'Blog List'], ['create-blog-post', 'blog-list'], 'true')}
-                {GetList('pages', 'blog', 'Pages', ["All Pages"], ["all-pages"], 'false')}
+                {GetList('pages', 'blog', 'Pages', ["Add New Page","All Pages"], ["add-new-page" , "all-pages"], 'false')}
                 {GetList('dealers', 'bike', 'Dealers/Mechanics', ["All Dealers", "All Mechanics"], ["all-dealers", "all-mechanics"], '')}
                 {GetList('shop', 'shop', 'Shop', ["WorkShop", "Showroom"], ["workshop", "showroom"], '')}
-                {GetList('general', 'shop', 'General', ["General"], ["general"], '')}
+                {GetList('general', 'shop', 'General', ["Bike Brands"], ["all-bike-brands"], '')}
                 {GetList('forum', 'bike', 'Bikers Forum', ["Forums"], ["forums"], '')}
                 {GetList('users', 'shop', 'Users', ["Admin", "Manager"], ["admin-users", "manager-users"], '')}
                 {GetList('qrDealers', 'shop', 'QR Dealers', ["Admin", "Manager"], ["qr-admin", "qr-manager"], '')}
