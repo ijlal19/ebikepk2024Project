@@ -145,7 +145,7 @@ const SideBar = () => {
                 {GetList('pages', 'blog', 'Pages', ["Add New Page","All Pages"], ["add-new-page" , "all-pages"], 'false')}
                 {GetList('dealers', 'bike', 'Dealers/Mechanics', ["All Dealers", "All Mechanics"], ["all-dealers", "all-mechanics"], '')}
                 {GetList('shop', 'shop', 'Shop', ["WorkShop", "Showroom"], ["workshop", "showroom"], '')}
-                {GetList('general', 'shop', 'General', ["Bike Brands"], ["all-bike-brands"], '')}
+                {GetList('general', 'shop', 'General', ["Bike Brands", "City/Area"], ["all-bike-brands" , "all-cities"], '')}
                 {GetList('forum', 'bike', 'Bikers Forum', ["Forums"], ["forums"], '')}
                 {GetList('users', 'shop', 'Users', ["Admin", "Manager"], ["admin-users", "manager-users"], '')}
                 {GetList('qrDealers', 'shop', 'QR Dealers', ["Admin", "Manager"], ["qr-admin", "qr-manager"], '')}

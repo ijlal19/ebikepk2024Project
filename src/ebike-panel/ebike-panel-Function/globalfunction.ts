@@ -596,7 +596,7 @@ function addNewPage(data: any) {
         })
 }
 
-/////////////////////////////////////// ALL GENERAL PAGE FUNCTION ///////////////////////////////////////////////////////
+/////////////////////////////////////// ALL GENERAL BRAND FUNCTION ///////////////////////////////////////////////////////
 function getbrandData() {
     return fetch(Gconfig.ebikeApi + 'brand/get-brand')
         .then(response => response.json()).then(data => {
@@ -657,6 +657,57 @@ function DeleteBrandbyId(id: any) {
         });
 }
 
+/////////////////////////////////////// ALL GENERAL CITY FUNCTION ///////////////////////////////////////////////////////
+function getCityData() {
+    return fetch(Gconfig.ebikeApi + 'city/get-city')
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function DeleteCitybyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `city/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function addNewCity(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `city/create-city`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -700,7 +751,11 @@ export {
     getbrandData,
     getBrandFromId,
     UpdateBrandById,
-    DeleteBrandbyId
+    DeleteBrandbyId,
+
+    getCityData,
+    DeleteCitybyId,
+    addNewCity
 }
 
 

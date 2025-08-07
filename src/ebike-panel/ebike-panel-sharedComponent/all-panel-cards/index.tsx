@@ -1,5 +1,5 @@
 'use client'
-import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCityData, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -16,7 +16,7 @@ import 'swiper/css/navigation';
 import 'swiper/css';
 
 /////////////////////////////////////////////////////// USED BIKE CARD
-const Used_bike_card = () => {
+const Used_bike_card: any = () => {
 
     const [displayedBikes, setDisplayedBikes] = useState([]);
     const [AllBikeForFilter, setAllBikeForFilter] = useState([]);
@@ -146,13 +146,13 @@ const Used_bike_card = () => {
             // const res = await getCustomBikeAd(obj);
 
             // if (res && res?.data?.length > 0) {
-                
-                const obj1 = {
-                    page: 1,
-                    // adslimit: res?.total,
-                    adslimit: 500,
-                    isApproved: "no"
-                };
+
+            const obj1 = {
+                page: 1,
+                // adslimit: res?.total,
+                adslimit: 500,
+                isApproved: "no"
+            };
 
             const res1 = await getCustomBikeAd(obj1);
 
@@ -1360,7 +1360,7 @@ const AllBrands_Card = () => {
         setSearchTerm(e.target.value);
     };
 
-     const handleEditBrand = (id: any) => {
+    const handleEditBrand = (id: any) => {
         router.push(`/ebike-panel/dashboard/edit-brand/${id}`);
     };
 
@@ -1410,7 +1410,7 @@ const AllBrands_Card = () => {
                                 </div>
 
                                 <div className={styles.card_actions}>
-                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
+                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
                                         <a href={`/ebike-panel/dashboard/edit-brand/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
                                             Edit
                                         </a></button>
@@ -1445,6 +1445,166 @@ const AllBrands_Card = () => {
     )
 }
 
+////////////////////////////////////////////////////// ALL City CARD
+const AllCities_Card = () => {
+    const [AllCity, setAllCity] = useState([]);
+    const [filteredAllCity, setfilteredAllCity] = useState([]);
+    const [displayedAllCity, setdisplayedAllCity] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [NewcityName, setNewcityName] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+
+    const itemsPerPage = 18;
+    const router = useRouter()
+    useEffect(() => {
+        fetchAllCity(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllCity.filter((bike: any) =>
+            bike?.city_name?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredAllCity(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllCity]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedAllCity(filteredAllCity.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredAllCity.length / itemsPerPage));
+    }, [filteredAllCity, currentPage]);
+
+    const fetchAllCity = async (_page: number) => {
+        setIsLoading(true);
+        const res = await getCityData();
+        console.log("Brands", res)
+        if (res && res.length > 0) {
+            setAllCity(res);
+            setfilteredAllCity(res);
+            setCurrentPage(_page);
+        } else {
+            setAllCity([]);
+            setfilteredAllCity([]);
+            setdisplayedAllCity([]);
+            setCurrentPage(1);
+            setTotalPage(0);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this City?')
+        if (!isConfirm) return;
+        const res = await DeleteCitybyId(id);
+        if (res && res.info == 'Deleted' && res.success) {
+            fetchAllCity(currentPage);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+    const addCity =async (e: any) => {
+        e.preventDefault()
+        if (NewcityName == "") {
+            alert("Please Enter City Name!")
+            return
+        }
+        const obj = {
+            city_name: NewcityName
+        }
+        console.log("CityName", obj)
+        const res = await addNewCity(obj);
+        if (res && res?.success) {
+            fetchAllCity(currentPage)
+        } else {
+            alert('Something went wrong!');
+        }
+    }
+
+    return (
+        <div className={styles.main_cities}>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search City with Name" />
+            {!IsLoading ? (<>
+                <div className={styles.add_city_box}>
+                    <form className={styles.add_inner_box} onSubmit={(e) => { addCity(e) }} >
+                        <input type="text" className={styles.input} placeholder="Enter City Name" onChange={(e) => setNewcityName(e.target.value)} />
+                        <button className={styles.add_btn} type="submit" >Add</button>
+                    </form>
+                </div>
+                <div className={styles.card_container}>
+
+                    {displayedAllCity.map((e: any, i: any) => (
+
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{add3Dots(e?.city_name, 50) || 'No Title'}</h3>
+                                    <span className={styles.ad_id}>City ID: {e?.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>City Name:</span>
+                                            <span>{e?.city_name || "N/A"}</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className={styles.pagination}>
+                    {filteredAllCity?.length > 0 && (
+                        <div className={styles.used_bike_list_pagination}>
+                            <Pagination
+                                count={totalPage}
+                                onChange={handlePaginationChange}
+                                page={currentPage}
+                                size="large"
+                            />
+                        </div>
+                    )}
+                </div></>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
 export {
     Used_bike_card,
     New_bike_card,
@@ -1452,5 +1612,6 @@ export {
     Dealer_Card,
     Mechanic_Card,
     AllPages_Card,
-    AllBrands_Card
+    AllBrands_Card,
+    AllCities_Card
 }
