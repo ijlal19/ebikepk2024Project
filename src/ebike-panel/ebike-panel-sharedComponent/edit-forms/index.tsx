@@ -1,5 +1,5 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { numericOnly } from '@/genericFunctions/geneFunc';
@@ -990,7 +990,7 @@ const EditPageForm = () => {
 
 
     return (
-        <div className={styles.main_blog_box}>
+        <div className={styles.main_page_box}>
             {
                 !isLoading ?
                     <form onSubmit={handleSubmit} className={styles.main}>
@@ -1045,9 +1045,139 @@ const EditPageForm = () => {
     );
 }
 
+///////////////////////////////////////////////// EDIT PAGES 
+const EditBrandForm = () => {
+    const [BrandData, setBrandData] = useState<any>([]);
+    const [NewBrandName, setNewBrandName] = useState('');
+    const [NewVideoUrl, setNewVideoUrl] = useState('');
+    const [NewMetaTitle, setNewMetaTitle] = useState('');
+    const [NewDescription, setNewDescription] = useState('');
+    const [NewMetaDescription, setNewMetaDescription] = useState('');
+    const [NewFocusKeyword, setNewFocusKeyword] = useState('');
+    const [NewLogoUrl, setNewLogoUrl] = useState('');
+    const { slug, slug1 } = useParams();
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    useEffect(() => {
+        fetchPageByID(slug1)
+    }, [])
+
+    const fetchPageByID = async (id: any) => {
+        setIsLoading(true)
+        const res = await getBrandFromId(id , BrandArr)
+        console.log("DataCheck" , res)
+        if (res && res.length > 0) {
+            setNewBrandName(res[0].brandName)
+            setNewLogoUrl(res[0].logoUrl)
+            setNewMetaTitle(res[0].meta_title)
+            setNewVideoUrl(res[0].vediourl)
+            setNewMetaDescription(res[0].meta_description)
+            setNewDescription(res[0].description)
+            setNewFocusKeyword(res[0].focus_keyword)
+            setBrandData(res?.page)
+        }
+        else {
+            alert('Waiting reload page!')
+        }
+        setIsLoading(false)
+    }
+
+    const router = useRouter()
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
+        if (invalidChars.test(NewBrandName)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        if (!NewBrandName || NewBrandName.length < 2) {
+            alert("Please add a valid Brand Name (min 3 characters)");
+            return;
+        }
+        else if (!NewLogoUrl && NewLogoUrl.length < 2) {
+            alert("Please enter a Logo Url");
+            return;
+        }
+        else if (!NewDescription) {
+            alert("Please enter a Description");
+            return;
+        }
+
+        const userCookie = jsCookie.get("userData_ebike_panel");
+        const userData = JSON.parse(userCookie);
+        const UserId = userData?.uid;
+
+        const obj = {
+            brandName: NewBrandName,
+            logoUrl: NewLogoUrl,
+            focus_keyword: NewFocusKeyword,
+            meta_description: NewMetaDescription,
+            meta_title: NewMetaTitle,
+            vediourl : NewVideoUrl,
+            description : NewDescription,
+        }
+        const res = await UpdateBrandById(slug1, obj)
+        if (res && res.info == "brand is updated successfully") {
+            router.push('/ebike-panel/dashboard/all-bike-brands')
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-bike-brands')
+    }
+
+
+    return (
+        <div className={styles.main_brand_box}>
+            {
+                !isLoading ?
+                    <form onSubmit={handleSubmit} className={styles.main}>
+                        <div className={styles.formHeader}>
+                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                            <p className={styles.heading}>Edit Brand</p>
+                        </div>
+
+                        <label htmlFor="brandname" className={styles.label}>Brand Name</label>
+                        <input id="brandname" name="brandname" value={NewBrandName} onChange={(e) => setNewBrandName(e.target.value)} className={styles.input} />
+
+                        <label htmlFor="Description" className={styles.label}>Description</label>
+                        <FloaraTextarea
+                            value={NewDescription}
+                            onChange={(e: any) => setNewDescription(e)}
+                        />
+
+                        <label htmlFor="title" className={styles.label}>Logo Url</label>
+                        <input id="title" name="title" value={NewLogoUrl} onChange={(e) => setNewVideoUrl(e.target.value)} className={styles.input} />
+
+                        <label htmlFor="title" className={styles.label}>Video Url</label>
+                        <input id="title" name="title" value={NewVideoUrl} onChange={(e) => setNewVideoUrl(e.target.value)} className={styles.input} />
+
+                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                        <textarea id="meta_title" name="meta_title" value={NewMetaTitle} onChange={(e) => setNewMetaTitle(e.target.value)} className={styles.textarea} />
+                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                        <textarea id="meta_description" name="meta_description" value={NewMetaDescription} onChange={(e) => setNewMetaDescription(e.target.value)} className={styles.textarea} />
+                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                        <textarea id="focus_keyword" name="focus_keyword" value={NewFocusKeyword} onChange={(e) => setNewFocusKeyword(e.target.value)} className={styles.textarea} />
+
+                        <button type="submit" className={styles.button}>Save Edit</button>
+                    </form> :
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
+            }
+        </div>
+    );
+}
+
 export {
     EditUsedBikeForm,
     EditNewBikeForm,
     EditBlogForm,
-    EditPageForm
+    EditPageForm,
+    EditBrandForm
 };

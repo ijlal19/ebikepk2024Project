@@ -596,6 +596,67 @@ function addNewPage(data: any) {
         })
 }
 
+/////////////////////////////////////// ALL GENERAL PAGE FUNCTION ///////////////////////////////////////////////////////
+function getbrandData() {
+    return fetch(Gconfig.ebikeApi + 'brand/get-brand')
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function getBrandFromId(id: any, dataArr: any) {
+    if (dataArr && dataArr.length > 0 && id) {
+        let brand = dataArr.filter((val: any) => { return (val.id == id) })
+        return brand;
+    }
+    else return []
+}
+
+function UpdateBrandById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `brand/update-brand/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function DeleteBrandbyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `brand/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -634,7 +695,12 @@ export {
     getPageById,
     DeletePagebyId,
     UpdatePageById,
-    addNewPage
+    addNewPage,
+
+    getbrandData,
+    getBrandFromId,
+    UpdateBrandById,
+    DeleteBrandbyId
 }
 
 

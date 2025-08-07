@@ -1,5 +1,5 @@
 'use client'
-import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCustomBikeAd } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -154,28 +154,28 @@ const Used_bike_card = () => {
                     isApproved: "no"
                 };
 
-                const res1 = await getCustomBikeAd(obj1);
+            const res1 = await getCustomBikeAd(obj1);
 
-                if (res1 && res1?.data?.length > 0) {
-                    setAllBikeForFilter(res1.data);
-                } 
-                else {
-                    setAllBikeForFilter([]);
-                }
-                setCurrentPage(_page);
-                setAllBikeArr(res1.data);
-                setIsLoading(false);
-                setTimeout(() => {
-                    window.scrollTo(0, 0)
-                }, 500);
+            if (res1 && res1?.data?.length > 0) {
+                setAllBikeForFilter(res1.data);
+            }
+            else {
+                setAllBikeForFilter([]);
+            }
+            setCurrentPage(_page);
+            setAllBikeArr(res1.data);
+            setIsLoading(false);
+            setTimeout(() => {
+                window.scrollTo(0, 0)
+            }, 500);
 
-                // } else {
-                //     setCurrentPage(1);
-                //     setAllBikeArr([]);
-                //     setAllBikeForFilter([]);
-                //     setFilteredBikes([]);
-                //     setTotalPage(0);
-                // }
+            // } else {
+            //     setCurrentPage(1);
+            //     setAllBikeArr([]);
+            //     setAllBikeForFilter([]);
+            //     setFilteredBikes([]);
+            //     setTotalPage(0);
+            // }
 
         } catch (error) {
             console.error("Error fetching bikes:", error);
@@ -1139,7 +1139,7 @@ const Mechanic_Card = () => {
     )
 }
 
-////////////////////////////////////////////////////// AllPAGES CARD
+////////////////////////////////////////////////////// All PAGES CARD
 const AllPages_Card = () => {
     const [AllPages, setAllPages] = useState([]);
     const [filteredAllPages, setfilteredAllPages] = useState([]);
@@ -1252,7 +1252,7 @@ const AllPages_Card = () => {
 
                                     <div className={styles.card_actions}>
                                         <button className={`${styles.action_btn} ${styles.disapprove_btn}`}>
-                                            <Link href={`/ebike-panel/dashboard/edit-page/${e?.id}`} sx={{textDecoration:'none', color:'white'}}>
+                                            <Link href={`/ebike-panel/dashboard/edit-page/${e?.id}`} sx={{ textDecoration: 'none', color: 'white' }}>
                                                 Edit
                                             </Link>
                                         </button>
@@ -1287,8 +1287,163 @@ const AllPages_Card = () => {
     )
 }
 
-////////////////////////////////////////////////////// ALL PAGES Card
+////////////////////////////////////////////////////// ALL Brand CARD
+const AllBrands_Card = () => {
+    const [AllBrands, setAllBrands] = useState([]);
+    const [filteredAllBrands, setfilteredAllBrands] = useState([]);
+    const [displayedAllBrands, setdisplayedAllBrands] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
 
+    const itemsPerPage = 10;
+    const router = useRouter()
+    useEffect(() => {
+        fetchAllBrands(1);
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllBrands.filter((bike: any) =>
+            bike?.brandName?.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredAllBrands(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllBrands]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedAllBrands(filteredAllBrands.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredAllBrands.length / itemsPerPage));
+    }, [filteredAllBrands, currentPage]);
+
+    const fetchAllBrands = async (_page: number) => {
+        setIsLoading(true);
+        const res = await getbrandData();
+        console.log("Brands", res)
+        if (res && res.length > 0) {
+            setAllBrands(res);
+            setfilteredAllBrands(res);
+            setCurrentPage(_page);
+        } else {
+            setAllBrands([]);
+            setfilteredAllBrands([]);
+            setdisplayedAllBrands([]);
+            setCurrentPage(1);
+            setTotalPage(0);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Brand?')
+        if (!isConfirm) return;
+        const res = await DeleteBrandbyId(id);
+        if (res && res.info == 'Deleted!' && res.success) {
+            fetchAllBrands(currentPage);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+     const handleEditBrand = (id: any) => {
+        router.push(`/ebike-panel/dashboard/edit-brand/${id}`);
+    };
+
+    return (
+        <div className={styles.main_brands}>
+            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Brand with Name" />
+            {!IsLoading ? (
+                <div className={styles.card_container}>
+                    {displayedAllBrands.map((e: any, i: any) => (
+
+                        <div className={styles.main_box_card} key={i}>
+                            <div className={styles.card_container_box}>
+                                <div className={styles.card_header}>
+                                    <h3 className={styles.heading}>{add3Dots(e?.brandName, 50) || 'No Title'}</h3>
+                                    <span className={styles.ad_id}>Brand ID: {e?.id}</span>
+                                </div>
+
+                                <div className={styles.card_content}>
+                                    <div className={styles.cardimage_box}
+                                        style={{
+                                            background: `url(${e?.logoUrl})`,
+                                            backgroundPosition: "center",
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: '100px auto'
+                                        }}>
+                                    </div>
+
+                                    <div className={styles.card_detail}>
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Date:</span>
+                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                                        </div>
+
+
+                                        <div className={styles.detail_row}>
+                                            <span className={styles.detail_label}>Brand Name:</span>
+                                            <span>{e?.brandName ? e?.brandName : "N/A"}</span>
+                                        </div>
+
+                                        <div className={styles.description}>
+                                            Description:
+                                            <p className={styles.description_text}>
+                                                {e?.description || 'No description available'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={styles.card_actions}>
+                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
+                                        <a href={`/ebike-panel/dashboard/edit-brand/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                            Edit
+                                        </a></button>
+                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    <div className={styles.pagination}>
+                        {filteredAllBrands?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="large"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
 
 export {
     Used_bike_card,
@@ -1296,5 +1451,6 @@ export {
     Blog_Card,
     Dealer_Card,
     Mechanic_Card,
-    AllPages_Card
+    AllPages_Card,
+    AllBrands_Card
 }
