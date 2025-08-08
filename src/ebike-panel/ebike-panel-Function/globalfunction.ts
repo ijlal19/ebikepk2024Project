@@ -42,6 +42,14 @@ const checkAuthAndRedirect = (router: any, pathname: any) => {
     }
 };
 
+const GetUserDetail = ()=>{
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    if(userCookie){
+        const userData = JSON.parse(userCookie);
+        return userData
+    }
+}
+
 /////////////////////////////////////// NEW BIKE FUNCTIONS ///////////////////////////////////////////////////
 function addNewBike(data: any) {
 
@@ -712,6 +720,7 @@ export {
     PostLogin,
     uplaodImageFunc,
     checkAuthAndRedirect,
+    GetUserDetail,
 
     addNewBike,
     getAllNewBike,

@@ -6,6 +6,7 @@ import styles from './index.module.scss';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { New_header } from "../panel-header";
 // const jsCookie = require('js-cookie');
 
 let userData = {}
@@ -60,6 +61,8 @@ const LoginForm = () => {
 
 
     return (
+        <div>
+            {/* <New_header placeholder="Search Ad By Seller ID" /> */}
         <div className={styles.main}>
             <div className={styles.container}>
                 {
@@ -73,7 +76,7 @@ const LoginForm = () => {
                         <Passcode_form props={userData} />
                 }
             </div>
-
+        </div>
         </div>
     )
 }

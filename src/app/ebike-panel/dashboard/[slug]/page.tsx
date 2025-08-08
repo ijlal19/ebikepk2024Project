@@ -8,8 +8,8 @@ const Dashboard_slug = () => {
         <title> Ebike Panel Dashboard </title>
     </Head>
     return (
-        <div style={{ display: 'flex' }}>
-            <SideBar />
+        <div>
+            {/* <SideBar /> */}
             <Dashboard_page />
         </div>
     )

@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Grid, Link, Pagination } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Panel_header from "../panel-header";
+import {New_header} from "../panel-header";
 import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
@@ -184,7 +184,7 @@ const Used_bike_card: any = () => {
 
     return (
         <div className={styles.main_used_bike}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Ad By Seller ID" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Ad By Seller ID" />
             {!IsLoading ? (
                 <div className={styles.card_conatiner}>
                     {displayedBikes.length > 0 ? (
@@ -418,7 +418,7 @@ const New_bike_card = () => {
 
     return (
         <div className={styles.main_new_bike}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search New Bike with Title" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search New Bike with Title" />
 
             {!IsLoading ? (
                 <div>
@@ -610,7 +610,7 @@ const Blog_Card = () => {
 
     return (
         <div className={styles.main_blog}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Blog with Title" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Blog with Title" />
 
             {!IsLoading ? (
                 <div className={styles.card_container}>
@@ -840,7 +840,7 @@ const Dealer_Card = () => {
 
     return (
         <div className={styles.main_dealers}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Dealers with Title" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Dealers with Title" />
 
             {!IsLoading ? (
                 <div className={styles.card_container}>
@@ -1053,7 +1053,7 @@ const Mechanic_Card = () => {
 
     return (
         <div className={styles.main_mechanics}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Mechanics with Title" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Mechanics with Title" />
 
             {!IsLoading ? (
                 <div className={styles.card_container}>
@@ -1213,7 +1213,7 @@ const AllPages_Card = () => {
 
     return (
         <div className={styles.main_AllPagess}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Page with Title" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Page with Title" />
 
 
             {!IsLoading ? (
@@ -1366,7 +1366,7 @@ const AllBrands_Card = () => {
 
     return (
         <div className={styles.main_brands}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search Brand with Name" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Brand with Name" />
             {!IsLoading ? (
                 <div className={styles.card_container}>
                     {displayedAllBrands.map((e: any, i: any) => (
@@ -1538,7 +1538,7 @@ const AllCities_Card = () => {
 
     return (
         <div className={styles.main_cities}>
-            <Panel_header value={searchTerm} onChange={handleSearch} placeholder="Search City with Name" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search City with Name" />
             {!IsLoading ? (<>
                 <div className={styles.add_city_box}>
                     <form className={styles.add_inner_box} onSubmit={(e) => { addCity(e) }} >

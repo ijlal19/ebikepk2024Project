@@ -1,7 +1,6 @@
 'use client';
 import {EditUsedBikeForm , EditNewBikeForm, EditBlogForm, EditPageForm, EditBrandForm} from "@/ebike-panel/ebike-panel-sharedComponent/edit-forms";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import Panel_header from "@/ebike-panel/ebike-panel-sharedComponent/panel-header";
 import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import { useEffect } from "react";
@@ -35,7 +34,6 @@ const DashBoard_form = () => {
     }
     return (
         <div className={styles.main}>
-            {/* <Panel_header /> */}
             {GetComponent(CheckRoute)}
         </div>
     )

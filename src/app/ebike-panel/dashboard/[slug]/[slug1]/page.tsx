@@ -9,7 +9,7 @@ const Dashborad = () => {
         <title> Ebike Panel Edit </title>
     </Head>
     return (
-        <div style={{ display: 'flex' }}>
+        <div >
             {/* <SideBar /> */}
             <DashBoard_form />
         </div>

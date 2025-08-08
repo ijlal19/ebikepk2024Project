@@ -656,6 +656,7 @@
         .change_approved_btn {
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
             background-color: #1976d2;
             color: white;
             font-family: sans-serif;
@@ -898,6 +899,7 @@
 
         .change_approved_btn {
             border-radius: 5px;
+            margin-top: 10px;
             cursor: pointer;
             background-color: #1976d2;
             color: white;
@@ -1575,7 +1577,7 @@
         display: flex;
         width: 100%;
         max-width: 950px;
-        margin: auto;
+        margin: 10px auto 0px auto;
         padding: 0px 5px !important;
         box-sizing: border-box;
 

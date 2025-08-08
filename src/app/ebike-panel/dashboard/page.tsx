@@ -1,5 +1,5 @@
 import Main_DashBoard from "@/ebike-panel/ebike-panel-Pages/main_dashboard";
-import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar";
+// import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar";
 import * as React from 'react';
 import Head from "next/head";
 
@@ -9,8 +9,8 @@ const MainDashBoard   = ()  =>{
         <title> Ebike Panel Dashboard </title>
     </Head>
     return (
-        <div  style={{display:"flex"}}>
-            <SideBar />
+        <div  >
+            {/* <SideBar /> */}
             <Main_DashBoard />
         </div>
     )
