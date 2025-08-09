@@ -130,6 +130,10 @@ const NavOptionArray = [
                 OptionName: "Forum Category",
                 OptionRoute: ""
             },
+            {
+                OptionName: "All User",
+                OptionRoute: "user/all-user"
+            },
             // {
             //     OptionName : "",
             //     OptionRoute : ""

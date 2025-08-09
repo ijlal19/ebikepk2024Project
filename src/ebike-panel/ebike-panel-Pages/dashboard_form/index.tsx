@@ -4,6 +4,7 @@ import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalf
 import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import { useEffect } from "react";
+import All_User from "@/ebike-panel/ebike-panel-sharedComponent/All-table/all_user";
 
 const DashBoard_form = () => {
     const { slug, slug1 } = useParams()
@@ -30,6 +31,9 @@ const DashBoard_form = () => {
         }
         else if (check == 'edit-brand') {
             return <EditBrandForm />
+        }
+        else if (check == 'user') {
+            return <All_User />
         }
     }
     return (

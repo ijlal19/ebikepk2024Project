@@ -714,7 +714,66 @@ function addNewCity(data: any) {
         })
 }
 
+/////////////////////////////////////// ALL USER FUNCTION ///////////////////////////////////////////////////////
+function getNewLettetrData() {
+    return fetch(Gconfig.ebikeApi + 'news-letter/get-emails')
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
 
+function getSignupData() {
+    return fetch(Gconfig.ebikeApi + 'user/get-all-users')
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function DeleteUserbyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `user/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function DeleteNewsLetterUserbyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `news-letter/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
 export {
     PostLogin,
@@ -764,7 +823,12 @@ export {
 
     getCityData,
     DeleteCitybyId,
-    addNewCity
+    addNewCity,
+
+    getNewLettetrData,
+    getSignupData,
+    DeleteUserbyId,
+    DeleteNewsLetterUserbyId
 }
 
 

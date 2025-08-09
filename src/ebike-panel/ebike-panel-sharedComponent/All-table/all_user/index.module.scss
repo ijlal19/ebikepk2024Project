@@ -1,0 +1,149 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+    padding: 20px 10px;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    height: auto;
+    min-height: 90vh;
+    max-height: auto;
+
+    .container {
+        width: 100%;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(165, 165, 165, 0.331);
+        max-width: 1100px;
+        margin: auto;
+
+        .header {
+            border-bottom: 1px solid rgb(162, 159, 159);
+            box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            padding: 5px 10px;
+            justify-content: left;
+            column-gap: 10px;
+
+            .btn {
+
+                color: #181818;
+                font-size: 14px;
+                font-family: 'LatoBold';
+                box-sizing: border-box;
+                padding: 10px 10px;
+                border: 1px solid transparent;
+                cursor: pointer;
+                border-radius: 0px;
+                background: transparent;
+                transition: all .5s ease;
+
+                &:hover {
+                    background-color: #72a6db8e;
+                    border: 1px solid #1976d2de;
+                    // color: white;
+                }
+            }
+
+            .selected {
+                border: 1px solid transparent;
+                color: white;
+                background-color: #1976d2;
+
+                &:hover {
+                    border: 1px solid transparent !important;
+                    color: white !important;
+                    background-color: #1976d2 !important;
+                }
+            }
+        }
+
+        .table_section {
+            padding: 20px 10px;
+
+            .pagination {
+                padding-bottom: 20px;
+            }
+
+            .table_main {
+                padding: 0px 10px;
+                box-sizing: border-box;
+                .table {
+                    border-collapse: collapse;
+                    width: 100%;
+                    box-sizing: border-box;
+
+                    .thead {
+
+                        .th {
+                            text-align: left;
+                            padding: 15px 5px;
+                            box-sizing: border-box;
+                            font-family: 'Lato';
+                            font-size: 16px;
+                                border-bottom: 1px solid rgba(162, 159, 159, 0.528);
+                            border-top: 1px solid rgb(162, 159, 159);
+                        }
+                        .th:first-child{
+                            padding: 15px 0px ;
+                            text-align: center
+                        }
+                    }
+
+                    .tbody {
+                        .tr {
+                            
+                            .td {
+                                border-bottom: 1px solid rgba(162, 159, 159, 0.528);
+                                border-top: 1px solid rgb(162, 159, 159);
+                                font-family: 'Lato';
+                                padding: 13px 5px;
+                                box-sizing: border-box;
+                            }
+                            .td:first-child{
+                                padding: 10px 0px;
+                                text-align: center;
+                            }
+
+                            td:last-child {
+                                padding: 10px 5px;
+                                border-top: none;
+                                border-left: none;
+                                // display: flex;
+                                // justify-content: center;
+                                .del_btn {
+                                    background-color: #ff6437;
+                                    color: white;
+                                    border: 1px solid #ff6437;
+                                    padding: 4px 9px;
+                                    font-size: 14px;
+                                    cursor: pointer;
+                                    font-family: 'Lato';
+                                    border-radius: 3px;
+                                    transition: all .5s ease;
+                                    margin: auto;
+
+                                    &:hover {
+                                        box-shadow: 0px 0px 5px rgba(109, 109, 109, 0.445);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
