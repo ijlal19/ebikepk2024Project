@@ -812,33 +812,27 @@ const Blog_Card = () => {
 
 /////////////////////////////////////////////////////// DEALERS CARD
 const Dealer_Card = () => {
+    const [totalApprovePage, setTotalApprovePage] = useState<any>(null);
+    const [currentpageapprove, setCurrentpageapprove] = useState(1);
+    const [AllApprovedDealer, setAllApprovedDealer] = useState([]);
+    const [displayedApprove, setdisplayedApprove] = useState([]);
+    const [HandleOpenTabs, setHandleOpenTabs] = useState(false);
+    const [Approvefiltered, setApprovefiltered] = useState([]);
     const [AllDealerFilter, setAllDealerFilter] = useState([]);
-    const [filteredDealer, setfilteredDealer] = useState([]);
     const [displayedDealer, setdisplayedDealer] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const [FilterApprove, setFilterApprove] = useState(false);
+    const [filteredDealer, setfilteredDealer] = useState([]);
     const [totalPage, setTotalPage] = useState<any>(null);
-    const [totalNewsPage, setTotalNewsPage] = useState<any>(null);
-
+    const [currentPage, setCurrentPage] = useState(1);
     const [IsLoading, setIsLoading] = useState(false);
-    const [HandleOpenTabs, setHandleOpenTabs] = useState(false)
-    const [FilterApprove, setFilterApprove] = useState(false)
-    const [AllNewsEmailForFilter, setAllNewsEmailForFilter] = useState<any>([]);
-    const [filteredNewsEmail, setFilteredNewsEmail] = useState<any>([]);
-    const [displayedNewsEmail, setDisplayedNewsEmail] = useState<any>([]);
-    const [currentPageNews, setCurrentNewsPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const itemsPerPage = 10;
 
     useEffect(() => {
-        const filtered = AllDealerFilter.filter((m: any) => m.is_approved === FilterApprove);
-        setdisplayedDealer(filtered);
-    }, [FilterApprove])
-
-    useEffect(() => {
         fetchAllDealers(1);
     }, []);
-
+///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllDealerFilter.filter((bike: any) =>
             bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -854,6 +848,22 @@ const Dealer_Card = () => {
         setTotalPage(Math.ceil(filteredDealer.length / itemsPerPage));
     }, [filteredDealer, currentPage]);
 
+///////////////////////////////////////////// For Disapproved
+    useEffect(() => {
+        const startIndex = (currentpageapprove - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedApprove(Approvefiltered.slice(startIndex, endIndex));
+        setTotalApprovePage(Math.ceil(Approvefiltered.length / itemsPerPage));
+    }, [Approvefiltered, currentpageapprove]);
+
+    useEffect(() => {
+        const filtered = AllApprovedDealer.filter((bike: any) =>
+            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setApprovefiltered(filtered);
+        setCurrentpageapprove(1);
+    }, [searchTerm, AllApprovedDealer]);
+
     const fetchAllDealers = async (_page: number) => {
         setIsLoading(true);
         try {
@@ -864,15 +874,29 @@ const Dealer_Card = () => {
                         e.phone = '0' + e.phone
                     }
                 })
-                setAllDealerFilter(res);
-                setfilteredDealer(res);
+                const approvedDealers = res.filter((e: any) => e?.is_approved === true);
+                const disapprovedDealers = res.filter((e: any) => e?.is_approved === false);
+
+                setAllDealerFilter(approvedDealers);
+                setfilteredDealer(approvedDealers);
+
+                setAllApprovedDealer(disapprovedDealers);
+                setApprovefiltered(disapprovedDealers);
+
                 setCurrentPage(_page);
+                setCurrentpageapprove(_page)
             } else {
                 setAllDealerFilter([]);
                 setfilteredDealer([]);
                 setdisplayedDealer([]);
                 setCurrentPage(1);
                 setTotalPage(0);
+
+                setAllApprovedDealer([]);
+                setApprovefiltered([]);
+                setdisplayedApprove([])
+                setCurrentpageapprove(1);
+                setTotalApprovePage(0)
             }
         } catch (error) {
             console.error("Error fetching new bikes:", error);
@@ -884,13 +908,15 @@ const Dealer_Card = () => {
     };
 
     const handlePaginationChange = (event: any, page: any) => {
-        setCurrentPage(page);
-        window.scrollTo(0, 0);
-    };
-
-    const handlePaginationChangeNews = (event: any, page: any) => {
-        setCurrentNewsPage(page);
-        window.scrollTo(0, 0);
+        if (!HandleOpenTabs) {
+            setCurrentPage(page);
+            window.scrollTo(0, 0);
+            return
+        }
+        else {
+            setCurrentpageapprove(page);
+            window.scrollTo(0, 0);
+        }
     };
 
     const handleDelete = async (id: any) => {
@@ -943,16 +969,12 @@ const Dealer_Card = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleState = () => {
-        setFilterApprove(!FilterApprove)
-    }
-
     const handleTabs = (value: any) => {
-        if (value == 'newsletter') {
-            setHandleOpenTabs(true)
-        }
-        else if (value == "userEmail") {
+        if (value == 'showapprove') {
             setHandleOpenTabs(false)
+        }
+        else if (value == "showdisapprove") {
+            setHandleOpenTabs(true)
         }
     }
 
@@ -961,122 +983,45 @@ const Dealer_Card = () => {
             <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Dealers with Title" />
 
             {!IsLoading ? (
-                // <div className={styles.card_container}>
-                //     <button onClick={handleState} className={styles.change_approved_btn}>{FilterApprove ? 'DisApproved' : "Approved"}</button>
-
-                //     {displayedDealer.map((e: any, i: any) => (
-
-                //         <div className={styles.main_box_card} key={i}>
-                //             <div className={styles.card_container_box}>
-                //                 <div className={styles.card_header}>
-                //                     <h3 className={styles.heading}>{add3Dots(e?.shop_name, 50) || 'No Title'}</h3>
-                //                     <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
-                //                         IsApproved: {e?.is_approved ? 'True' : 'False'}
-                //                     </span>
-                //                     <span className={styles.ad_id}>Dealer ID: {e?.id}</span>
-                //                 </div>
-
-                //                 <div className={styles.card_content}>
-                //                     <div className={styles.cardimage_box}>
-                //                         <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
-                //                     </div>
-
-                //                     <div className={styles.card_detail}>
-                //                         <div className={styles.detail_row}>
-                //                             <span className={styles.detail_label}>Date:</span>
-                //                             <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
-                //                         </div>
-
-
-                //                         <div className={styles.detail_row}>
-                //                             <span className={styles.detail_label}>Address:</span>
-                //                             <span>{e?.address || "N/A"}</span>
-                //                         </div>
-
-                //                         <div className={styles.detail_row}>
-                //                             <span className={styles.detail_label}>Phone:</span>
-                //                             <span>{e?.phone?.slice(0, 4)}-{e?.phone?.slice(4) || 'N/A'}</span>
-                //                         </div>
-
-                //                     </div>
-                //                 </div>
-
-                //                 <div className={styles.card_actions}>
-                //                     <button
-                //                         className={`${styles.action_btn} ${styles.disapprove_btn}`}
-                //                         onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
-                //                     >
-                //                         {e?.is_approved ? "Disapprove" : "Approve"}
-                //                     </button>
-                // <button
-                //     className={`${styles.action_btn} ${styles.feature_btn}`}
-                //     onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
-                // >
-                //     {e?.is_featured ? 'UnFeature' : 'Feature'}
-                // </button>
-                // <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                //     Delete
-                // </button>
-                //                 </div>
-                //             </div>
-                //         </div>
-                //     ))}
-                //     <div className={styles.pagination}>
-                //         {filteredDealer?.length > 0 && (
-                //             <div className={styles.used_bike_list_pagination}>
-                //                 <Pagination
-                //                     count={totalPage}
-                //                     onChange={handlePaginationChange}
-                //                     page={currentPage}
-                //                     size="large"
-                //                 />
-                //             </div>
-                //         )}
-                //     </div>
-                // </div>
                 <div className={styles.main}>
                     <div className={styles.container}>
                         <div className={styles.header}>
-                            <button className={`${styles.btn} ${!HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('userEmail')} >SignUp User Email</button>
-                            <button className={`${styles.btn} ${HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('newsletter')} >News Letter Email</button>
+                            <div className={styles.btnGroup}>
+                                <button className={`${styles.btn} ${!HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('showapprove')} >APPROVE</button>
+                                <button className={`${styles.btn} ${HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('showdisapprove')} >DISAPPROVE</button>
+                            </div>
+                            <form className={styles.input_box}>
+                                <input
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                    placeholder='Search Dealer Shop Name'
+                                    className={styles.input} />
+                                <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                            </form>
                         </div>
                         <div className={styles.table_section}>
-                            {
-                                !HandleOpenTabs ?
-                                    <div className={styles.pagination}>
-                                        {displayedDealer?.length > 0 && (
-                                            <Pagination
-                                                count={totalPage}
-                                                onChange={handlePaginationChange}
-                                                page={currentPage}
-                                                size="small"
-                                                sx={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
-                                            />
-                                        )}
-                                    </div>
-                                    :
-                                    <div className={styles.pagination}>
-                                        {displayedNewsEmail?.length > 0 && (
-                                            <Pagination
-                                                count={totalNewsPage}
-                                                onChange={handlePaginationChangeNews}
-                                                page={currentPageNews}
-                                                size="medium"
-                                                sx={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
-                                            />
-                                        )}
-                                    </div>
-                            }
+                            <div className={styles.pagination}>
+                                {displayedDealer?.length > 0 && (
+                                    <Pagination
+                                        count={!HandleOpenTabs ? totalPage : totalApprovePage}
+                                        onChange={handlePaginationChange}
+                                        page={!HandleOpenTabs ? currentPage : currentpageapprove}
+                                        size="medium"
+                                        sx={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+                                    />
+                                )}
+                            </div>
                             <div className={styles.table_main}>
                                 {
                                     !HandleOpenTabs ?
                                         <table className={styles.table}>
                                             <thead className={styles.thead}>
-                                                <th className={styles.th} >ID</th>
+                                                {/* <th className={styles.th} >ID</th> */}
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
                                                 <th className={styles.th} >Address</th>
-                                                <th className={styles.th} >Status</th>
+                                                <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
                                                 <th className={styles.th} >Delete</th>
                                             </thead>
@@ -1085,7 +1030,7 @@ const Dealer_Card = () => {
                                                     displayedDealer.length > 0 ? displayedDealer.map((e: any, i: any) => {
                                                         return (
                                                             <tr className={styles.tr} key={i}>
-                                                                <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td>
+                                                                {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
                                                                     <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
                                                                 </td>
@@ -1130,36 +1075,74 @@ const Dealer_Card = () => {
                                         :
                                         <table className={styles.table}>
                                             <thead className={styles.thead}>
-                                                <th className={styles.th} >#</th>
-                                                <th className={styles.th} >NewsLetter Email</th>
+                                                {/* <th className={styles.th} >ID</th> */}
+                                                <th className={styles.th} >Brand Logo</th>
+                                                <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Address</th>
+                                                <th className={styles.th} >Approve</th>
+                                                <th className={styles.th} >Featured</th>
                                                 <th className={styles.th} >Delete</th>
                                             </thead>
                                             <tbody className={styles.tbody}>
                                                 {
-                                                    displayedNewsEmail.length > 0 ? displayedNewsEmail.map((e: any, i: any) => {
+                                                    displayedApprove.length > 0 ? displayedApprove.map((e: any, i: any) => {
                                                         return (
                                                             <tr className={styles.tr} key={i}>
-                                                                {/* <tr> */}
-                                                                <td className={styles.td} >{i}</td>
-                                                                <td className={styles.td} >{e?.email || 'N/A'}</td>
+                                                                {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <button className={styles.del_btn}
-                                                                        onClick={() => handleDelete(e?.id)}>
+                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                </td>
+                                                                <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
+                                                                {/* <td className={styles.td} >{e?.is_approved? "True" : "False"}/{e?.is_featured?"True":"False"}</td> */}
+                                                                <td className={styles.td} ><button
+                                                                    className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                                                    onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                                                >
+                                                                    {e?.is_approved ? "Disapprove" : "Approve"}
+                                                                </button>
+                                                                </td>
+                                                                <td className={styles.td} >
+                                                                    <button
+                                                                        className={`${styles.action_btn} ${styles.feature_btn}`}
+                                                                        onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
+                                                                    >
+                                                                        {e?.is_featured ? 'UnFeature' : 'Feature'}
+                                                                    </button>
+                                                                </td>
+                                                                <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
                                                                         Delete
                                                                     </button>
                                                                 </td>
+                                                                {/* <td className={styles.td} >
+                                                                                        <button className={styles.del_btn}
+                                                                                            onClick={() => handleDelete(e?.id, 'User')}>
+                                                                                            Delete
+                                                                                        </button>
+                                                                                    </td> */}
                                                             </tr>
                                                         )
                                                     }) :
                                                         <tr className={styles.tr}>
-                                                            <td colSpan={7} className={styles.td}>Email not found</td>
+                                                            <td colSpan={7} className={styles.td}>User not found</td>
                                                         </tr>
                                                 }
 
                                             </tbody>
                                         </table>
                                 }
-
+                            </div>
+                            <div className={styles.paginationbtm}>
+                                {displayedDealer?.length > 0 && (
+                                    <Pagination
+                                        count={!HandleOpenTabs ? totalPage : totalApprovePage}
+                                        onChange={handlePaginationChange}
+                                        page={!HandleOpenTabs ? currentPage : currentpageapprove}
+                                        size="medium"
+                                        sx={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
@@ -1177,26 +1160,27 @@ const Dealer_Card = () => {
 
 ////////////////////////////////////////////////////// MECHANICS Card
 const Mechanic_Card = () => {
+    const [totalApprovePage, setTotalApprovePage] = useState<any>(null);
+    const [currentpageapprove, setCurrentpageapprove] = useState(1);
+    const [AllApprovedmechanic, setAllApprovedmechanic] = useState([]);
+    const [displayedApprove, setdisplayedApprove] = useState([]);
+    const [HandleOpenTabs, setHandleOpenTabs] = useState(false);
+    const [Approvefiltered, setApprovefiltered] = useState([]);
     const [AllmechanicFilter, setAllmechanicFilter] = useState([]);
-    const [filteredmechanic, setfilteredmechanic] = useState([]);
     const [displayedmechanic, setdisplayedmechanic] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const [FilterApprove, setFilterApprove] = useState(false);
+    const [filteredmechanic, setfilteredmechanic] = useState([]);
     const [totalPage, setTotalPage] = useState<any>(null);
+    const [currentPage, setCurrentPage] = useState(1);
     const [IsLoading, setIsLoading] = useState(false);
-    const [FilterApprove, setFilterApprove] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("");
 
     const itemsPerPage = 10;
 
     useEffect(() => {
-        const filtered = AllmechanicFilter.filter((m: any) => m.is_approved === FilterApprove);
-        setdisplayedmechanic(filtered);
-    }, [FilterApprove])
-
-    useEffect(() => {
         fetchAllmechanics(1);
     }, []);
-
+///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllmechanicFilter.filter((bike: any) =>
             bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -1212,6 +1196,22 @@ const Mechanic_Card = () => {
         setTotalPage(Math.ceil(filteredmechanic.length / itemsPerPage));
     }, [filteredmechanic, currentPage]);
 
+///////////////////////////////////////////// For Disapproved
+    useEffect(() => {
+        const startIndex = (currentpageapprove - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedApprove(Approvefiltered.slice(startIndex, endIndex));
+        setTotalApprovePage(Math.ceil(Approvefiltered.length / itemsPerPage));
+    }, [Approvefiltered, currentpageapprove]);
+
+    useEffect(() => {
+        const filtered = AllApprovedmechanic.filter((bike: any) =>
+            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setApprovefiltered(filtered);
+        setCurrentpageapprove(1);
+    }, [searchTerm, AllApprovedmechanic]);
+
     const fetchAllmechanics = async (_page: number) => {
         setIsLoading(true);
         try {
@@ -1222,15 +1222,29 @@ const Mechanic_Card = () => {
                         e.phone = '0' + e.phone
                     }
                 })
-                setAllmechanicFilter(res);
-                setfilteredmechanic(res);
+                const approvedmechanics = res.filter((e: any) => e?.is_approved === true);
+                const disapprovedmechanics = res.filter((e: any) => e?.is_approved === false);
+
+                setAllmechanicFilter(approvedmechanics);
+                setfilteredmechanic(approvedmechanics);
+
+                setAllApprovedmechanic(disapprovedmechanics);
+                setApprovefiltered(disapprovedmechanics);
+
                 setCurrentPage(_page);
+                setCurrentpageapprove(_page)
             } else {
                 setAllmechanicFilter([]);
                 setfilteredmechanic([]);
                 setdisplayedmechanic([]);
                 setCurrentPage(1);
                 setTotalPage(0);
+
+                setAllApprovedmechanic([]);
+                setApprovefiltered([]);
+                setdisplayedApprove([])
+                setCurrentpageapprove(1);
+                setTotalApprovePage(0)
             }
         } catch (error) {
             console.error("Error fetching new bikes:", error);
@@ -1242,15 +1256,22 @@ const Mechanic_Card = () => {
     };
 
     const handlePaginationChange = (event: any, page: any) => {
-        setCurrentPage(page);
-        window.scrollTo(0, 0);
+        if (!HandleOpenTabs) {
+            setCurrentPage(page);
+            window.scrollTo(0, 0);
+            return
+        }
+        else {
+            setCurrentpageapprove(page);
+            window.scrollTo(0, 0);
+        }
     };
 
     const handleDelete = async (id: any) => {
-        const isConfirm = window.confirm('Are you sure to delete this mechanic?')
+        const isConfirm = window.confirm('Are you sure to delete this Mechanic?')
         if (!isConfirm) return;
         const res = await DeleteMechanicbyId(id);
-        if (res && res?.success) {
+        if (res && res.success) {
             fetchAllmechanics(currentPage);
         }
         else {
@@ -1259,7 +1280,7 @@ const Mechanic_Card = () => {
     };
 
     const handleApproveToggle = async (id: any, currentStatus: boolean) => {
-        const confirmDelete = window.confirm("Are you sure you want to Change mechanic Approve?");
+        const confirmDelete = window.confirm("Are you sure you want to Change Mechanic Approve?");
         if (!confirmDelete) return;
         const obj = {
             id: id,
@@ -1295,85 +1316,183 @@ const Mechanic_Card = () => {
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
     };
-    const handleState = () => {
-        setFilterApprove(!FilterApprove)
+
+    const handleTabs = (value: any) => {
+        if (value == 'showapprove') {
+            setHandleOpenTabs(false)
+        }
+        else if (value == "showdisapprove") {
+            setHandleOpenTabs(true)
+        }
     }
 
     return (
         <div className={styles.main_mechanics}>
-            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Mechanics with Title" />
+            <New_header  />
 
             {!IsLoading ? (
-                <div className={styles.card_container}>
-                    <button onClick={handleState} className={styles.change_approved_btn}>{FilterApprove ? 'DisApproved' : "Approved"}</button>
-                    {displayedmechanic.map((e: any, i: any) => (
+                <div className={styles.main}>
+                    <div className={styles.container}>
+                        <div className={styles.header}>
+                            <div className={styles.btnGroup}>
+                                <button className={`${styles.btn} ${!HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('showapprove')} >APPROVE</button>
+                                <button className={`${styles.btn} ${HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('showdisapprove')} >DISAPPROVE</button>
+                            </div>
+                            <form className={styles.input_box}>
+                                <input
+                                    type="text"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                    placeholder='Search Mechanic Shop Name'
+                                    className={styles.input} />
+                                <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                            </form>
+                        </div>
+                        <div className={styles.table_section}>
+                            <div className={styles.pagination}>
+                                {displayedmechanic?.length > 0 && (
+                                    <Pagination
+                                        count={!HandleOpenTabs ? totalPage : totalApprovePage}
+                                        onChange={handlePaginationChange}
+                                        page={!HandleOpenTabs ? currentPage : currentpageapprove}
+                                        size="medium"
+                                        sx={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+                                    />
+                                )}
+                            </div>
+                            <div className={styles.table_main}>
+                                {
+                                    !HandleOpenTabs ?
+                                        <table className={styles.table}>
+                                            <thead className={styles.thead}>
+                                                {/* <th className={styles.th} >ID</th> */}
+                                                <th className={styles.th} >Brand Logo</th>
+                                                <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Address</th>
+                                                <th className={styles.th} >Approve</th>
+                                                <th className={styles.th} >Featured</th>
+                                                <th className={styles.th} >Delete</th>
+                                            </thead>
+                                            <tbody className={styles.tbody}>
+                                                {
+                                                    displayedmechanic.length > 0 ? displayedmechanic.map((e: any, i: any) => {
+                                                        return (
+                                                            <tr className={styles.tr} key={i}>
+                                                                {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
+                                                                <td className={styles.td} >
+                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                </td>
+                                                                <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
+                                                                <td className={styles.td} ><button
+                                                                    className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                                                    onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                                                >
+                                                                    {e?.is_approved ? "Disapprove" : "Approve"}
+                                                                </button>
+                                                                </td>
+                                                                <td className={styles.td} >
+                                                                    <button
+                                                                        className={`${styles.action_btn} ${styles.feature_btn}`}
+                                                                        onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
+                                                                    >
+                                                                        {e?.is_featured ? 'UnFeature' : 'Feature'}
+                                                                    </button>
+                                                                </td>
+                                                                <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                                        Delete
+                                                                    </button>
+                                                                </td>
+                                                                {/* <td className={styles.td} >
+                                                                                        <button className={styles.del_btn}
+                                                                                            onClick={() => handleDelete(e?.id, 'User')}>
+                                                                                            Delete
+                                                                                        </button>
+                                                                                    </td> */}
+                                                            </tr>
+                                                        )
+                                                    }) :
+                                                        <tr className={styles.tr}>
+                                                            <td colSpan={7} className={styles.td}>User not found</td>
+                                                        </tr>
+                                                }
 
-                        <div className={styles.main_box_card} key={i}>
-                            <div className={styles.card_container_box}>
-                                <div className={styles.card_header}>
-                                    <h3 className={styles.heading}>{add3Dots(e?.shop_name, 50) || 'No Title'}</h3>
-                                    <span className={`${styles.featured_badge} ${e?.is_approved ? styles.featured : ''}`}>
-                                        IsApproved: {e?.is_approved ? 'True' : 'False'}
-                                    </span>
-                                    <span className={styles.ad_id}>Mechanic ID: {e?.id}</span>
-                                </div>
+                                            </tbody>
+                                        </table>
+                                        :
+                                        <table className={styles.table}>
+                                            <thead className={styles.thead}>
+                                                {/* <th className={styles.th} >ID</th> */}
+                                                <th className={styles.th} >Brand Logo</th>
+                                                <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Address</th>
+                                                <th className={styles.th} >Approve</th>
+                                                <th className={styles.th} >Featured</th>
+                                                <th className={styles.th} >Delete</th>
+                                            </thead>
+                                            <tbody className={styles.tbody}>
+                                                {
+                                                    displayedApprove.length > 0 ? displayedApprove.map((e: any, i: any) => {
+                                                        return (
+                                                            <tr className={styles.tr} key={i}>
+                                                                {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
+                                                                <td className={styles.td} >
+                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                </td>
+                                                                <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
+                                                                {/* <td className={styles.td} >{e?.is_approved? "True" : "False"}/{e?.is_featured?"True":"False"}</td> */}
+                                                                <td className={styles.td} ><button
+                                                                    className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                                                    onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
+                                                                >
+                                                                    {e?.is_approved ? "Disapprove" : "Approve"}
+                                                                </button>
+                                                                </td>
+                                                                <td className={styles.td} >
+                                                                    <button
+                                                                        className={`${styles.action_btn} ${styles.feature_btn}`}
+                                                                        onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
+                                                                    >
+                                                                        {e?.is_featured ? 'UnFeature' : 'Feature'}
+                                                                    </button>
+                                                                </td>
+                                                                <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                                        Delete
+                                                                    </button>
+                                                                </td>
+                                                                {/* <td className={styles.td} >
+                                                                                        <button className={styles.del_btn}
+                                                                                            onClick={() => handleDelete(e?.id, 'User')}>
+                                                                                            Delete
+                                                                                        </button>
+                                                                                    </td> */}
+                                                            </tr>
+                                                        )
+                                                    }) :
+                                                        <tr className={styles.tr}>
+                                                            <td colSpan={7} className={styles.td}>User not found</td>
+                                                        </tr>
+                                                }
 
-                                <div className={styles.card_content}>
-                                    <div className={styles.cardimage_box}>
-                                        <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
-                                    </div>
-
-                                    <div className={styles.card_detail}>
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Date:</span>
-                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
-                                        </div>
-
-
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Address:</span>
-                                            <span>{e?.address || "N/A"}</span>
-                                        </div>
-
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Phone:</span>
-                                            <span>{e?.phone?.slice(0, 4)}-{e?.phone?.slice(4) || 'N/A'}</span>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div className={styles.card_actions}>
-                                    <button
-                                        className={`${styles.action_btn} ${styles.disapprove_btn}`}
-                                        onClick={() => handleApproveToggle(e?.id, e?.is_approved)}
-                                    >
-                                        {e?.is_approved ? "Disapprove" : "Approve"}
-                                    </button>
-                                    <button
-                                        className={`${styles.action_btn} ${styles.feature_btn}`}
-                                        onClick={() => handleFeatureToggle(e?.id, e?.is_featured)}
-                                    >
-                                        {e?.is_featured ? 'UnFeature' : 'Feature'}
-                                    </button>
-                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                        Delete
-                                    </button>
-                                </div>
+                                            </tbody>
+                                        </table>
+                                }
+                            </div>
+                            <div className={styles.paginationbtm}>
+                                {displayedmechanic?.length > 0 && (
+                                    <Pagination
+                                        count={!HandleOpenTabs ? totalPage : totalApprovePage}
+                                        onChange={handlePaginationChange}
+                                        page={!HandleOpenTabs ? currentPage : currentpageapprove}
+                                        size="medium"
+                                        sx={{ margin: 'auto', display: 'flex', justifyContent: 'center' }}
+                                    />
+                                )}
                             </div>
                         </div>
-                    ))}
-                    <div className={styles.pagination}>
-                        {filteredmechanic?.length > 0 && (
-                            <div className={styles.used_bike_list_pagination}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="large"
-                                />
-                            </div>
-                        )}
                     </div>
                 </div>
             ) : (
@@ -1387,7 +1506,6 @@ const Mechanic_Card = () => {
     )
 }
 
-////////////////////////////////////////////////////// All PAGES CARD
 const AllPages_Card = () => {
     const [AllPages, setAllPages] = useState([]);
     const [filteredAllPages, setfilteredAllPages] = useState([]);
