@@ -122,14 +122,14 @@ const NavOptionArray = [
                 OptionName: "Cities",
                 OptionRoute: "all-cities"
             },
-            {
-                OptionName: "Topic/Comment List",
-                OptionRoute: ""
-            },
-            {
-                OptionName: "Forum Category",
-                OptionRoute: ""
-            },
+            // {
+            //     OptionName: "Topic/Comment List",
+            //     OptionRoute: ""
+            // },
+            // {
+            //     OptionName: "Forum Category",
+            //     OptionRoute: ""
+            // },
             {
                 OptionName: "All User",
                 OptionRoute: "user/all-user"
@@ -139,32 +139,32 @@ const NavOptionArray = [
             //     OptionRoute : ""
             // },
         ]
-    },
-    {
-        heading: "Shop",
-        option: [
-            {
-                OptionName: "Product List",
-                OptionRoute: ""
-            },
-            {
-                OptionName: "Shop Category",
-                OptionRoute: ""
-            },
-            {
-                OptionName: "Shop rand List",
-                OptionRoute: ""
-            },
-            {
-                OptionName: "Order List",
-                OptionRoute: ""
-            },
-            {
-                OptionName: "Add Coupon Code",
-                OptionRoute: ""
-            },
-        ]
-    },
+    }
+    // {
+    //     heading: "Shop",
+    //     option: [
+    //         {
+    //             OptionName: "Product List",
+    //             OptionRoute: ""
+    //         },
+    //         {
+    //             OptionName: "Shop Category",
+    //             OptionRoute: ""
+    //         },
+    //         {
+    //             OptionName: "Shop rand List",
+    //             OptionRoute: ""
+    //         },
+    //         {
+    //             OptionName: "Order List",
+    //             OptionRoute: ""
+    //         },
+    //         {
+    //             OptionName: "Add Coupon Code",
+    //             OptionRoute: ""
+    //         },
+    //     ]
+    // },
     // {
     //     heading : "",
     //     option : [
@@ -195,21 +195,21 @@ const New_header = ({ value, onChange, placeholder }: any) => {
     return (
         <div className={styles.main} >
             <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_thumb,dpr_auto,f_auto,h_40,w_auto,q_auto/v1541058800/ebike-graphics/logos/logo_ebike.pk.png" alt="" className={styles.logo} />
-            <form className={styles.input_box}>
+            {/* <form className={styles.input_box}>
                 <input
                     type="text"
                     value={value}
                     onChange={onChange}
                     placeholder={placeholder}
                     className={styles.input} />
-                {/* <input type="Search any thing" className={styles.input} placeholder='Search any thong...' /> */}
                 <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
-            </form>
+            </form> */}
+                {/* <input type="Search any thing" className={styles.input} placeholder='Search any thong...' /> */}
             <div className={styles.nav_option_main}>
                 <DropwDownMenu props={NavOptionArray[0]} />
                 <DropwDownMenu props={NavOptionArray[1]} />
                 <DropwDownMenu props={NavOptionArray[2]} />
-                <DropwDownMenu props={NavOptionArray[3]} />
+                {/* <DropwDownMenu props={NavOptionArray[3]} /> */}
             </div>
             <div className={styles.action_btn}>
                 <button className={styles.user_btn}>
