@@ -1016,7 +1016,7 @@
                 .table_main {
                     padding: 0px 10px;
                     box-sizing: border-box;
-                    margin:0px 0px 10px 0px;
+                    margin: 0px 0px 10px 0px;
 
                     .table {
                         border-collapse: collapse;
@@ -1478,7 +1478,7 @@
                 .table_main {
                     padding: 0px 10px;
                     box-sizing: border-box;
-                    margin:0px 0px 10px 0px;
+                    margin: 0px 0px 10px 0px;
 
                     .table {
                         border-collapse: collapse;
@@ -1827,26 +1827,100 @@
     flex-direction: column;
     font-family: sans-serif;
 
+    .header {
+        border-bottom: 1px solid rgb(162, 159, 159);
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        padding: 10px 10px;
+        justify-content: space-between;
+        column-gap: 10px;
+        align-items: center;
+
+        .btnGroup {
+            display: flex;
+            column-gap: 10px;
+
+            .btn {
+                border: 1px solid transparent;
+                color: white;
+                background-color: #1976d2;
+                font-size: 14px;
+                font-family: 'LatoBold';
+                box-sizing: border-box;
+                padding: 10px 10px;
+                cursor: pointer;
+                border-radius: 0px;
+                transition: all .5s ease;
+
+                &:hover {
+                    border: 1px solid transparent !important;
+                    color: white !important;
+                    background-color: #1976d2 !important;
+                }
+            }
+        }
+
+        .input_box {
+            display: flex;
+            flex-direction: row;
+            border-radius: 5px;
+            border: 1px solid #75737384;
+            height: 35px;
+
+            .input {
+                width: 200px;
+                min-width: 100px;
+                max-width: 180px;
+                border-radius: 5px;
+                padding: 0px 10px !important;
+                outline: none;
+                border: none;
+            }
+
+            .btn {
+                background: whitesmoke;
+                cursor: pointer;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all .5s ease;
+
+                .icon {
+                    border-radius: 5px;
+                    font-size: 25px;
+                }
+
+                &:hover {
+                    background-color: rgba(187, 185, 185, 0.505);
+                }
+            }
+        }
+    }
+
     .card_container {
         width: 100%;
-        max-width: 900px;
-        padding: 0px 5px !important;
+        // max-width: 900px;
+        padding: 0px 10px !important;
         box-sizing: border-box;
         display: grid;
         column-gap: 20px;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         // border: 1px solid #000;
         margin: auto;
 
         .main_box_card {
             background-color: #fff;
             border: 1px solid #88888863;
-            border-radius: 8px;
             width: 100%;
             margin: 10px 0px !important;
+            transition: all 1s ease;
 
             &:hover {
-                box-shadow: 0 5px 15px rgba(48, 47, 47, 0.094);
+                box-shadow: 0 5px 15px rgba(77, 76, 76, 0.094);
             }
         }
 
@@ -1859,7 +1933,7 @@
         .card_header {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
+            padding: 10px 10px;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             background-color: whitesmoke;
@@ -1867,7 +1941,7 @@
 
             .heading {
                 margin: 0;
-                font-size: 18px;
+                font-size: 16px;
                 font-weight: 600;
                 color: #2c3e50;
                 flex-grow: 1;
@@ -1897,7 +1971,7 @@
 
         .card_content {
             display: flex;
-            padding: 20px;
+            padding: 10px;
             gap: 20px;
         }
 
@@ -1946,15 +2020,16 @@
 
         .card_actions {
             display: flex;
-            justify-content: right;
-            padding: 15px 20px;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px 10px;
             border-top: 1px solid #eee;
-            gap: 10px;
+            gap: 5px;
         }
 
         .action_btn {
             padding: 8px 15px;
-            border-radius: 4px;
+            // border-radius: 4px;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;

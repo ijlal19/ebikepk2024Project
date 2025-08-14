@@ -832,7 +832,7 @@ const Dealer_Card = () => {
     useEffect(() => {
         fetchAllDealers(1);
     }, []);
-///////////////////////////////////////////// For Approved
+    ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllDealerFilter.filter((bike: any) =>
             bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -848,7 +848,7 @@ const Dealer_Card = () => {
         setTotalPage(Math.ceil(filteredDealer.length / itemsPerPage));
     }, [filteredDealer, currentPage]);
 
-///////////////////////////////////////////// For Disapproved
+    ///////////////////////////////////////////// For Disapproved
     useEffect(() => {
         const startIndex = (currentpageapprove - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
@@ -1180,7 +1180,7 @@ const Mechanic_Card = () => {
     useEffect(() => {
         fetchAllmechanics(1);
     }, []);
-///////////////////////////////////////////// For Approved
+    ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllmechanicFilter.filter((bike: any) =>
             bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -1196,7 +1196,7 @@ const Mechanic_Card = () => {
         setTotalPage(Math.ceil(filteredmechanic.length / itemsPerPage));
     }, [filteredmechanic, currentPage]);
 
-///////////////////////////////////////////// For Disapproved
+    ///////////////////////////////////////////// For Disapproved
     useEffect(() => {
         const startIndex = (currentpageapprove - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
@@ -1328,7 +1328,7 @@ const Mechanic_Card = () => {
 
     return (
         <div className={styles.main_mechanics}>
-            <New_header  />
+            <New_header />
 
             {!IsLoading ? (
                 <div className={styles.main}>
@@ -1506,6 +1506,7 @@ const Mechanic_Card = () => {
     )
 }
 
+////////////////////////////////////////////////////// ALL PAGE CARD
 const AllPages_Card = () => {
     const [AllPages, setAllPages] = useState([]);
     const [filteredAllPages, setfilteredAllPages] = useState([]);
@@ -1514,6 +1515,8 @@ const AllPages_Card = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
+    const [HandleOpenTabs, setHandleOpenTabs] = useState(false);
+
 
     const itemsPerPage = 10;
     useEffect(() => {
@@ -1584,6 +1587,22 @@ const AllPages_Card = () => {
 
             {!IsLoading ? (
                 <>
+                    <div className={styles.header}>
+                        <div className={styles.btnGroup}>
+                            <Link href="/ebike-panel/dashboard/add-new-page" >
+                            <button className={`${styles.btn}`}>ADD NEW PAGE</button>
+                            </Link>
+                        </div>
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder='Search Page with Name'
+                                className={styles.input} />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                    </div>
                     <div className={styles.card_container}>
                         {displayedAllPages.map((e: any, i: any) => (
                             <div className={styles.main_box_card} key={i}>
