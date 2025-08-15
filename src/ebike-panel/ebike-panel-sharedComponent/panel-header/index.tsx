@@ -140,31 +140,31 @@ const NavOptionArray = [
             // },
         ]
     }
-    // {
-    //     heading: "Shop",
-    //     option: [
-    //         {
-    //             OptionName: "Product List",
-    //             OptionRoute: ""
-    //         },
-    //         {
-    //             OptionName: "Shop Category",
-    //             OptionRoute: ""
-    //         },
-    //         {
-    //             OptionName: "Shop rand List",
-    //             OptionRoute: ""
-    //         },
-    //         {
-    //             OptionName: "Order List",
-    //             OptionRoute: ""
-    //         },
-    //         {
-    //             OptionName: "Add Coupon Code",
-    //             OptionRoute: ""
-    //         },
-    //     ]
-    // },
+    ,{
+        heading: "Shop",
+        option: [
+            {
+                OptionName: "Product List",
+                OptionRoute: "product-list"
+            },
+            // {
+            //     OptionName: "Shop Category",
+            //     OptionRoute: ""
+            // },
+            // {
+            //     OptionName: "Shop rand List",
+            //     OptionRoute: ""
+            // },
+            // {
+            //     OptionName: "Order List",
+            //     OptionRoute: ""
+            // },
+            // {
+            //     OptionName: "Add Coupon Code",
+            //     OptionRoute: ""
+            // },
+        ]
+    }
     // {
     //     heading : "",
     //     option : [
@@ -209,7 +209,7 @@ const New_header = ({ value, onChange, placeholder }: any) => {
                 <DropwDownMenu props={NavOptionArray[0]} />
                 <DropwDownMenu props={NavOptionArray[1]} />
                 <DropwDownMenu props={NavOptionArray[2]} />
-                {/* <DropwDownMenu props={NavOptionArray[3]} /> */}
+                <DropwDownMenu props={NavOptionArray[3]} />
             </div>
             <div className={styles.action_btn}>
                 <button className={styles.user_btn}>

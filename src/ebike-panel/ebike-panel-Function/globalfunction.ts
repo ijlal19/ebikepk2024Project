@@ -42,9 +42,9 @@ const checkAuthAndRedirect = (router: any, pathname: any) => {
     }
 };
 
-const GetUserDetail = ()=>{
+const GetUserDetail = () => {
     const userCookie = jsCookie.get("userData_ebike_panel");
-    if(userCookie){
+    if (userCookie) {
         const userData = JSON.parse(userCookie);
         return userData
     }
@@ -567,7 +567,7 @@ function UpdatePageById(id: any, payload: any) {
 }
 
 function DeletePagebyId(id: any) {
-     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `page/delete-page/${id}`, {
@@ -775,6 +775,38 @@ function DeleteNewsLetterUserbyId(id: any) {
         });
 }
 
+/////////////////////////////////////// ALL SHOP FUNCTION ///////////////////////////////////////////////////////
+function getShopMainCategory() {
+    return fetch(Gconfig.ebikeApi + `shop/get-main-catagory-data`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function getShopCategory(data: any) {
+    return fetch(Gconfig.ebikeApi + `shop/product/get-product-by-catagory/`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+}
+
+
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -828,7 +860,10 @@ export {
     getNewLettetrData,
     getSignupData,
     DeleteUserbyId,
-    DeleteNewsLetterUserbyId
+    DeleteNewsLetterUserbyId,
+
+    getShopMainCategory,
+    getShopCategory
 }
 
 

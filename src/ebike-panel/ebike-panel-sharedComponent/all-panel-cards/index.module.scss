@@ -894,7 +894,6 @@
     }
 }
 
-
 ///////////////////////////////////// DEALERS CARD SCSS
 .main_dealers {
     width: 100%;
@@ -2493,6 +2492,330 @@
         display: flex;
         justify-content: center;
         padding: 30px 0;
+    }
+
+    .no_results {
+        text-align: center;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        color: #7f8c8d;
+        font-size: 16px;
+    }
+
+    .loader_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+    }
+
+    .search_input {
+        width: 100%;
+        margin: 0px 0px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, .125);
+        box-sizing: border-box;
+        padding: 4px !important;
+        border-radius: 4px;
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+
+        .input {
+            width: 100%;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            outline: none;
+            color: #495057;
+            font-size: 1.25rem;
+            border-radius: .3rem;
+            line-height: 1.5;
+            padding: 8px 16px !important;
+        }
+    }
+}
+
+////////////////////////////////////// PRODUCT LIST CARD SCSS
+.main_Shop {
+    width: 100%;
+    height: 100% !important;
+    min-height: 100% !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    background-color: whitesmoke;
+
+    .categoryname_section {
+        display: flex;
+        justify-content: center;
+        column-gap: 10px;
+        padding: 10px 10px;
+        box-sizing: border-box;
+
+        .category_btn {
+
+            color: #181818;
+            font-size: 14px;
+            font-family: 'LatoBold';
+            box-sizing: border-box;
+            padding: 10px 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            border-radius: 0px;
+            background: transparent;
+            transition: all .5s ease;
+
+            &:hover {
+                background-color: #72a6db8e;
+                border: 1px solid #1976d2de;
+                // color: white;
+            }
+        }
+
+        .selected {
+            border: 1px solid transparent;
+            color: white;
+            background-color: #1976d2;
+
+            &:hover {
+                border: 1px solid transparent !important;
+                color: white !important;
+                background-color: #1976d2 !important;
+            }
+
+        }
+    }
+
+    .card_container {
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        padding: 10px 20px !important;
+        // background-color: white;
+        display: grid;
+        column-gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+
+        @media (max-width:1200px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .main_box_card {
+            background-color: #fff;
+            border: 1px solid #88888863;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 280px;
+            margin: 10px 0px !important;
+
+            &:hover {
+                box-shadow: 0 5px 15px rgba(48, 47, 47, 0.094);
+            }
+        }
+
+        .card_container_box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card_header {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background-color: whitesmoke;
+            border-bottom: 1px solid #eee;
+
+            .heading {
+                margin: 0;
+                font-size: 15px;
+                font-weight: 600;
+                color: #2c3e50;
+                flex-grow: 1;
+            }
+
+        }
+
+        .card_content {
+            display: flex;
+            flex-direction: column;
+            padding: 0px;
+            gap: 10px;
+        }
+
+        .cardimage_box {
+            // flex: 0 0 200px;
+            height: 290px;
+            // border-radius: 6px;
+            box-sizing: border-box;
+            overflow: hidden;
+            background-color: #f5f5f5;
+
+            .image {
+                width: 100% !important;
+                height: 100%;
+                // object-fit: cover;
+                // transition: transform 0.3s;
+            }
+        }
+
+        .card_detail {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail_row {
+            display: flex;
+            font-size: 14px;
+            line-height: 1.5;
+
+            .detail_label {
+                font-weight: 600;
+                color: #34495e;
+                padding: 0px;
+                margin: 0px 10px 0px 10px;
+                min-width: 80px;
+                // margin-right: 10px;
+            }
+
+            .price {
+                color: #e74c3c;
+                font-weight: 600;
+            }
+        }
+
+        .description {
+            margin-top: 10px;
+            padding: 10px !important;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 13px;
+            margin: 0px 4px !important;
+            box-sizing: border-box;
+            line-height: 1.5;
+            height: 100px;
+            overflow: hidden;
+            font-weight: bold;
+            color: black;
+
+            .description_text {
+                color: #555;
+                font-weight: normal;
+                padding: 0px;
+                margin: 0px;
+            }
+        }
+
+        .card_actions {
+            flex-direction: column;
+            display: flex;
+            margin-top: auto;
+            justify-content: right;
+            padding: 15px 10px;
+            // border-top: 1px solid #eee;
+            gap: 10px;
+        }
+
+        .action_btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        .edit_btn {
+            background-color: #3498db;
+            color: white;
+            width: 100%;
+            font-weight: 500;
+        }
+
+        .delete_btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+
+    }
+
+    .page_header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 20px;
+        box-sizing: border-box;
+
+        .input_box {
+            display: flex;
+            flex-direction: row;
+            border-radius: 5px;
+            border: 1px solid #75737384;
+
+            .input {
+                width: 200px;
+                min-width: 100px;
+                max-width: 180px;
+                border-radius: 5px;
+                padding: 8px 10px !important;
+                outline: none;
+                border: none;
+            }
+
+            .btn {
+                cursor: pointer;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all .5s ease;
+
+                .icon {
+                    border-radius: 5px;
+                    font-size: 25px;
+                }
+
+                &:hover {
+                    background-color: rgba(187, 185, 185, 0.505);
+                }
+            }
+        }
+
+        .add_new_btn {
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #1976d2;
+            border: 1px solid #1976d2;
+            cursor: pointer;
+            font-family: 'LatoBold';
+            text-transform: uppercase;
+            transition: all .5s ease;
+
+            &:hover {
+                box-shadow: 0px 0px 10px rgba(156, 155, 155, 0.797);
+            }
+        }
+    }
+
+    .pagination_btm {
+        display: flex;
+        padding: 10px 0px 20px 0px;
+        justify-content: center;
     }
 
     .no_results {
