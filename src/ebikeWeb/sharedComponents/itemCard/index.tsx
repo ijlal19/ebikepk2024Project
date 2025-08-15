@@ -1,5 +1,5 @@
 'use client'
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Box, Button, Grid, Link } from '@mui/material';
@@ -152,7 +152,7 @@ export default function NewUsedBikesCard(props: any) {
                                     height="230"
                                     image={
                                         imgUrl
-                                            ? imgUrl
+                                            ? cloudinaryLoader(imgUrl, 400, "auto")
                                             : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'
                                     }
                                     className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height : ""}`}

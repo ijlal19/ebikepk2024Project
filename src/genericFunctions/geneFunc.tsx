@@ -23,16 +23,19 @@ const optimizeImage = (url: any, h: any, w: any) => {
   let cloudinary_name;
   let oldUrl;
 
-  if (url?.includes('ic-solutions')) {
+  if (url?.includes('ic-solutions') > -1) {
     cloudinary_name = 'ic-solutions';
-  } else {
+  } else if(url?.includes('dulfy2uxn')) {
+    cloudinary_name = "dulfy2uxn"
+  }
+  else {
     cloudinary_name = 'dtroqldun';
   }
 
   if (url) {
     oldUrl = url
   } else {
-    oldUrl = `https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png`;
+    oldUrl = `https://res.cloudinary.com/${cloudinary_name}/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png`;
   }
 
   let url1 = oldUrl.split(`https://res.cloudinary.com/${cloudinary_name}/image/upload/`);
@@ -197,6 +200,27 @@ function GetFavouriteObject(userId: any, PageFrom: string, SelectedAds: any, adI
 
 }
 
+function cloudinaryLoader(src:any, width:any, quality:any) {
+    if (!src.startsWith("http")) {
+      throw new Error("Cloudinary loader requires a full Cloudinary URL to extract cloud name.");
+    }
+
+    // Extract the cloud name from the URL
+    const match = src.match(/res\.cloudinary\.com\/([^/]+)/);
+    const cloudName = match ? match[1] : null;
+
+    if (!cloudName) {
+      throw new Error("Invalid Cloudinary URL: Cloud name not found.");
+    }
+
+    // Inject optimization params into the URL
+    return src.replace(
+      "/upload/",
+      `/upload/f_auto,q_${quality || "auto"},w_${width},fl_strip_profile/`
+    );
+}
+
+
 export {
   add3Dots,
   optimizeImage,
@@ -215,5 +239,6 @@ export {
   capitalizeFirstWord,
   postSearch,
   getFavouriteAds,
-  GetFavouriteObject
+  GetFavouriteObject,
+  cloudinaryLoader
 }

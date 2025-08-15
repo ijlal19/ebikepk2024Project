@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { numericOnly, priceWithCommas } from "@/genericFunctions/geneFunc";
+import { numericOnly, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -184,7 +184,7 @@ export default function UsedBike({_bikeDetail}:any) {
                       bikeDetail.images.map((imgUrl: any, ind: any) => {
                         return (
                           <SwiperSlide key={imgUrl}>
-                            <img src={imgUrl} alt={bikeDetail?.title} className={styles.slider_img} />
+                            <img src={cloudinaryLoader(imgUrl, 800, "auto")} alt={bikeDetail?.title} className={styles.slider_img} />
                           </SwiperSlide>
                         )
                       }) :
