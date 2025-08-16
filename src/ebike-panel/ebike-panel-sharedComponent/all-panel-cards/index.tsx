@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -1590,7 +1590,7 @@ const AllPages_Card = () => {
                     <div className={styles.header}>
                         <div className={styles.btnGroup}>
                             <Link href="/ebike-panel/dashboard/add-new-page" >
-                            <button className={`${styles.btn}`}>ADD NEW PAGE</button>
+                                <button className={`${styles.btn}`}>ADD NEW PAGE</button>
                             </Link>
                         </div>
                         <form className={styles.input_box}>
@@ -2005,7 +2005,7 @@ const ProductList_Card = () => {
     const router = useRouter();
 
     useEffect(() => {
-        fetchAllShop(1);
+        fetchAllProduct(1);
         fetchCategoryDataById(1, 1)
     }, []);
 
@@ -2047,7 +2047,7 @@ const ProductList_Card = () => {
         setTotalPage(Math.ceil(filteredShop.length / itemsPerPage));
     }, [filteredShop, currentPage]);
 
-    const fetchAllShop = async (_page: number) => {
+    const fetchAllProduct = async (_page: number) => {
         setIsLoading(true);
         try {
             const res = await getShopCategory({ id: 1 });
@@ -2079,17 +2079,17 @@ const ProductList_Card = () => {
         window.scrollTo(0, 0);
     };
 
-    // const handleDelete = async (id: any) => {
-    //     const isConfirm = window.confirm('Are you sure to delete this Shop?')
-    //     if (!isConfirm) return;
-    //     const res = await DeleteShopById(id);
-    //     if (res && res.info == 'Shop has been deleted') {
-    //         fetchAllShop(currentPage);
-    //     }
-    //     else {
-    //         alert('SomeThing is Wrong!')
-    //     }
-    // };
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Product?')
+        if (!isConfirm) return;
+        const res = await DeleteProductbyId(id);
+        if (res && res.info == 'Deleted' , res?.success) {
+            fetchAllProduct(1);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
@@ -2135,7 +2135,7 @@ const ProductList_Card = () => {
                             </div>
                         )}
                         <button className={styles.add_new_btn}>
-                            <Link href="/ebike-panel/dashboard/create-Shop-post" sx={{
+                            <Link href="/ebike-panel/dashboard/add-products" sx={{
                                 color: "white", textDecoration: 'none'
                             }} >Add New Product</Link></button>
                     </div>
@@ -2181,7 +2181,7 @@ const ProductList_Card = () => {
 
                                             <div className={styles.detail_row}>
                                                 <span className={styles.detail_label}>Category:</span>
-                                                <span>{e?.shop_main_catagory?.name ||  "N/A"}</span>
+                                                <span>{e?.shop_main_catagory?.name || "N/A"}</span>
                                             </div>
                                             <div className={styles.detail_row}>
                                                 <span className={styles.detail_label}>Price:</span>
@@ -2211,7 +2211,7 @@ const ProductList_Card = () => {
                                             </button>
                                         </a>
                                         <button className={`${styles.action_btn} ${styles.delete_btn}`}
-                                        // onClick={() => handleDelete(e?.id)}
+                                        onClick={() => handleDelete(e?.id)}
                                         >
                                             Delete
                                         </button>

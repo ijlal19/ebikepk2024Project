@@ -805,7 +805,67 @@ function getShopCategory(data: any) {
         })
 }
 
+function GetSubCategByMainCateg(id:any) {
+    return fetch(Gconfig.ebikeApi + `shop/get-sub-catagory-data-by-main-catagory/${id}`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
 
+function GetProductCompany() {
+    return fetch(Gconfig.ebikeApi + `shop/get-product-company-data`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function addNewProduct(data: any) {
+    return fetch(Gconfig.ebikeApi + `shop/product/add-product`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function DeleteProductbyId(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `shop/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
 export {
     PostLogin,
@@ -863,7 +923,11 @@ export {
     DeleteNewsLetterUserbyId,
 
     getShopMainCategory,
-    getShopCategory
+    getShopCategory,
+    GetSubCategByMainCateg,
+    GetProductCompany,
+    addNewProduct,
+    DeleteProductbyId
 }
 
 
