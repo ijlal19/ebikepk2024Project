@@ -1,6 +1,6 @@
 'use client'
 import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, optimizeImage, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
@@ -256,7 +256,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     className={styles.long_card_img}
 
                                     sx={{
-                                        backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                        backgroundImage: `url(${ cloudinaryLoader(val?.images?.[0], 300, "auto")  || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                         backgroundSize: isMobileView ? '100% 100%' : 'cover',
                                         boxSizing: 'border-box',
                                         backgroundPosition: 'center',
@@ -342,6 +342,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
             return `/used-bikes/${urlTitle}/${val.id}`
         }
+
+        // console.log('val?.images?.[0]', val?.images?.[0], cloudinaryLoader(val?.images?.[0], 350, 350) )
+
         return (
             <>
                 {!isMobileView ?
@@ -352,7 +355,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <Box
                                 className={styles.grid_image_upper}
                                     sx={{
-                                        backgroundImage: `url(${val?.images?.[0] || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                        backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                         backgroundSize: 'cover',
                                         backgroundPosition: 'center',
                                         backgroundRepeat: 'no-repeat',
