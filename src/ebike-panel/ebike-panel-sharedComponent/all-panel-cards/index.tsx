@@ -1,7 +1,7 @@
 'use client'
 import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
-import { add3Dots, priceWithCommas } from "@/genericFunctions/geneFunc";
+import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 import { Grid, Link, Pagination } from "@mui/material";
@@ -249,7 +249,7 @@ const Used_bike_card: any = () => {
                                                                 e.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={imgUrl} alt={e?.title} className={styles.image} />
+                                                                        <img src={cloudinaryLoader(imgUrl, 300, 'auto')} alt={e?.title} className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
@@ -514,7 +514,7 @@ const New_bike_card = () => {
                                                                 e.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={imgUrl} alt={e?.title} className={styles.image} />
+                                                                            <img src={cloudinaryLoader(imgUrl, 500, 'auto')} alt={e?.title} className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
