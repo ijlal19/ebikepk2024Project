@@ -1,62 +1,122 @@
 
-.bikes_brand_main {
-    width: 100%;
-    padding: 40px 0px 40px 0px !important;
-    color: black !important;
+// .bikes_brand_main {
+//     width: 100%;
+//     padding: 40px 0px 40px 0px !important;
+//     color: black !important;
 
-    .bikes_brand_container{
-        width: 100%;
-        max-width: 1100px;
-        box-sizing: border-box;
-        margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        padding: 0px 10px 0px 10px !important;
-        justify-content: left;
-        column-gap: 20px;
-@media (max-width:768px) {
-    justify-content: space-around;
-    column-gap: 10px;
-}
-        .heading{
-            width: 100%;
-            font-size: 22px;
-            color: #434343;
-            margin: 0px 0px 20px;
-            font-weight: bolder;
-            text-align: center;
-        }
-    }
-}
-.load_main{
-    width: 100%;
-    height: 70vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .load_div{
-        border: 1px solid #000;
-        height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+//     .bikes_brand_container{
+//         width: 100%;
+//         max-width: 1100px;
+//         box-sizing: border-box;
+//         margin: auto;
+//         display: flex;
+//         flex-wrap: wrap;
+//         padding: 0px 10px 0px 10px !important;
+//         justify-content: left;
+//         column-gap: 20px;
+// @media (max-width:768px) {
+//     justify-content: space-around;
+//     column-gap: 10px;
+// }
+//         .heading{
+//             width: 100%;
+//             font-size: 22px;
+//             color: #434343;
+//             margin: 0px 0px 20px;
+//             font-weight: bolder;
+//             text-align: center;
+//         }
+//     }
+// }
+// .load_main{
+//     width: 100%;
+//     height: 70vh;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     .load_div{
+//         border: 1px solid #000;
+//         height: auto;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
 
-    }
-}
-@media (max-width:768px) {
-    .load_main{
-        width: 100%;
-        height: 50vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .load_div{
-            border: 1px solid #000;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+//     }
+// }
+// @media (max-width:768px) {
+//     .load_main{
+//         width: 100%;
+//         height: 50vh;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         .load_div{
+//             border: 1px solid #000;
+//             height: auto;
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
     
+//         }
+//     }
+// }
+
+.bike_sec_main{
+    width: 100%;
+    height: auto;
+    padding: 5px 0px 5px 0px;
+    // max-width: 1060px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    
+    .heading {
+        padding: 0px !important;
+        font-weight: 700;
+        color: black;
+        padding: 10px 0px;
+        margin-bottom: 0px;
+        font-size: 21px;
+        @media (max-width:768px) {
+            font-size: 19px;
+            display: flex;
+            justify-content: space-between;
         }
+
+        .view_new_bik_btn {
+            @media (min-width:768px) {
+                display: none;
+            }
+            text-decoration: none;
+            font-size: 11px;
+            margin: auto;
+            padding: 10px 0px;
+            font-weight: 500;
+            margin: 0px 5px;
+            border-radius: 0px;
+            color: rgb(25, 118, 210);
+        }
+
+    }
+
+    .tab {
+        padding: 0px !important;
+    }
+}
+
+.tab_panel{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 10px;
+    width: 100%;
+    margin: auto;
+    padding: 10px 0px !important;
+    box-sizing: border-box;
+    @media (max-width:768px) {
+        justify-content: center;
+        
     }
 }

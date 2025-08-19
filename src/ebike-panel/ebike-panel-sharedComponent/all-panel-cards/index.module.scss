@@ -2116,18 +2116,83 @@
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
+    .page_header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 20px;
+        box-sizing: border-box;
+
+        .input_box {
+            display: flex;
+            flex-direction: row;
+            border-radius: 5px;
+            border: 1px solid #75737384;
+
+            .input {
+                width: 200px;
+                min-width: 100px;
+                max-width: 180px;
+                border-radius: 5px;
+                padding: 8px 10px !important;
+                outline: none;
+                border: none;
+            }
+
+            .btn {
+                cursor: pointer;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all .5s ease;
+
+                .icon {
+                    border-radius: 5px;
+                    font-size: 25px;
+                }
+
+                &:hover {
+                    background-color: rgba(187, 185, 185, 0.505);
+                }
+            }
+        }
+
+        .add_new_btn {
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #1976d2;
+            border: 1px solid #1976d2;
+            cursor: pointer;
+            font-family: 'LatoBold';
+            text-transform: uppercase;
+            transition: all .5s ease;
+
+            &:hover {
+                box-shadow: 0px 0px 10px rgba(156, 155, 155, 0.797);
+            }
+        }
+    }
 
     .card_container {
         width: 100%;
-        max-width: 800px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         margin: auto;
+        justify-content: center !important;
+        box-sizing: border-box;
 
         .main_box_card {
             background-color: #fff;
             border: 1px solid #88888863;
             border-radius: 8px;
             width: 100%;
-            margin: 20px 0px !important;
+            box-sizing: border-box;
+            max-width: 280px;
+            margin: 20px auto !important;
 
             &:hover {
                 box-shadow: 0 5px 15px rgba(48, 47, 47, 0.094);
@@ -2142,7 +2207,7 @@
         .card_header {
             display: flex;
             align-items: center;
-            padding: 15px 20px;
+            padding: 10px 10px;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             background-color: whitesmoke;
@@ -2150,7 +2215,7 @@
 
             .heading {
                 margin: 0;
-                font-size: 18px;
+                font-size: 16px;
                 font-weight: 600;
                 text-transform: uppercase;
                 color: #2c3e50;
@@ -2181,13 +2246,13 @@
 
         .card_content {
             display: flex;
-            padding: 20px;
+            flex-direction: column;
+            padding: 10px;
             gap: 20px;
         }
 
         .cardimage_box {
-            flex: 0 0 250px;
-            height: 180px;
+            height: 140px;
             border-radius: 6px;
             box-sizing: border-box;
             overflow: hidden;
@@ -2231,11 +2296,15 @@
 
         .description {
             margin-top: 10px;
-            padding: 10px;
+            padding: 10px !important;
             background-color: #f8f9fa;
             border-radius: 4px;
             font-size: 13px;
+            margin: 0px 4px !important;
+            box-sizing: border-box;
             line-height: 1.5;
+            height: 130px;
+            overflow: hidden;
             font-weight: bold;
             color: black;
 
@@ -2250,9 +2319,16 @@
         .card_actions {
             display: flex;
             justify-content: right;
-            padding: 15px 20px;
+            padding: 10px 10px;
+            flex-direction: column;
             border-top: 1px solid #eee;
             gap: 10px;
+        }
+        .link{
+            width: 100% !important;
+            text-decoration: none;
+            color: white;
+
         }
 
         .action_btn {
@@ -2272,6 +2348,7 @@
         .edit_btn {
             background-color: #3498db;
             color: white;
+            width: 100%;
             font-weight: 500;
         }
 
@@ -2280,11 +2357,12 @@
             color: white;
         }
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            padding: 30px 0;
-        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 30px 0;
     }
 
     .no_results {

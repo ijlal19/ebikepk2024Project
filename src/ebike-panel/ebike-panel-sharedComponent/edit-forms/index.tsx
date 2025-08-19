@@ -1067,7 +1067,7 @@ const EditBrandForm = () => {
         setIsLoading(true)
         const res = await getBrandFromId(id , BrandArr)
         console.log("DataCheck" , res)
-        if (res && res.length > 0) {
+        if (res && res) {
             setNewBrandName(res[0].brandName)
             setNewLogoUrl(res[0].logoUrl)
             setNewMetaTitle(res[0].meta_title)

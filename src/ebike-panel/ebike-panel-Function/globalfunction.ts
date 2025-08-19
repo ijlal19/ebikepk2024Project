@@ -665,6 +665,25 @@ function DeleteBrandbyId(id: any) {
         });
 }
 
+function addNewBrand(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `bike-brand/create-brand`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+
 /////////////////////////////////////// ALL GENERAL CITY FUNCTION ///////////////////////////////////////////////////////
 function getCityData() {
     return fetch(Gconfig.ebikeApi + 'city/get-city')
@@ -912,6 +931,7 @@ export {
     getBrandFromId,
     UpdateBrandById,
     DeleteBrandbyId,
+    addNewBrand,
 
     getCityData,
     DeleteCitybyId,

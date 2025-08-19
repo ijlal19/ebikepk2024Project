@@ -1,5 +1,5 @@
 'use client';
-import { addNewBike, addNewBlog, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
@@ -1308,11 +1308,97 @@ const AddProductForm = () => {
     );
 }
 
+///////////////////////////////////////////////////////// ADD NEW BRAND
+const AddBrandForm = () => {
+    const [BrandData, setBrandData] = useState<any>({
+        brandName: '',
+        description: '',
+        videourl: '',
+        logoUrl: '',
+        focus_keyword: '',
+        meta_description: '',
+        meta_title: '',
+    });
+
+    let router = useRouter()
+
+    const handleInputChange = (e: any) => {
+        const { name, value } = e.target;
+        setBrandData((prev: any) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!BrandData.brandName || BrandData.brandName.length < 2) {
+            alert("Please add a valid Name (min 2 characters)");
+            return;
+        }
+        else if (!BrandData.description || BrandData.description.length < 10) {
+            alert("Please enter a valid Brand description (min 10 characters)");
+            return;
+        }
+        else if (!BrandData.logoUrl ) {
+            alert("Please enter a valid Logo URL");
+            return;
+        }
+
+        const finalBikeData = {
+            ...BrandData,
+        }
+
+        const res = await addNewBrand(finalBikeData);
+        if (res && res?.success && res.info === "Added Successfully!") {
+            router.push('/ebike-panel/dashboard/all-bike-brands');
+        } else {
+            alert('Something went wrong!');
+        }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-bike-brands')
+    }
+
+    return (
+        <div className={styles.main_box}>
+            <form onSubmit={handleSubmit} className={styles.main}>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Add New Brand</p>
+                </div>
+
+                <label htmlFor="brandName" className={styles.label}>Name:</label>
+                <input id="brandName" name="brandName" value={BrandData.brandName} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="description" className={styles.label}>Description:</label>
+                <textarea id="description" name="description" value={BrandData.description} onChange={handleInputChange} className={styles.textarea} />
+
+                <label htmlFor="videourl" className={styles.label}>Video URL:</label>
+                <input id="videourl" name="videourl" value={BrandData.videourl} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="logoUrl" className={styles.label}>Logo URL:</label>
+                <input id="logoUrl" name="logoUrl" value={BrandData.logoUrl} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                <textarea id="meta_title" name="meta_title" value={BrandData.meta_title} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                <textarea id="meta_description" name="meta_description" value={BrandData.meta_description} onChange={handleInputChange} className={styles.textarea} />
+                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                <textarea id="focus_keyword" name="focus_keyword" value={BrandData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
+
+                <button type="submit" className={styles.button}>Add Brand</button>
+            </form>
+        </div>
+    );
+}
+
+
 
 export {
     AddNewBikeForm,
     AddBlogForm,
     AddNewElectricBikeForm,
     AddPageForm,
-    AddProductForm
+    AddProductForm,
+    AddBrandForm
 };
