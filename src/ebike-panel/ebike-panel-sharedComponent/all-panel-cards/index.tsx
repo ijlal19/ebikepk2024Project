@@ -15,6 +15,7 @@ import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import 'swiper/css';
+import BasicModal from "./popup";
 
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
@@ -1682,7 +1683,7 @@ const AllBrands_Card = () => {
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 8;
     const router = useRouter()
     useEffect(() => {
         fetchAllBrands(1);
@@ -1749,63 +1750,100 @@ const AllBrands_Card = () => {
         router.push(`/ebike-panel/dashboard/edit-brand/${id}`);
     };
 
+    const [open, setOpen] = useState(false);
+    const [selectedBrand, setSelectedBrand] = useState<any>([]);
+    const handleEditBrandDATA = (id: any) => {
+        // array se object filter karna
+        const brand = displayedAllBrands.find((b: any) => b.id == id);
+        // console.log("brand" , brand)
+        setSelectedBrand(brand);
+        setOpen(true);
+    };
+
     return (
         <div className={styles.main_brands}>
             <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Brand with Name" />
             {!IsLoading ? (
-                <div className={styles.card_container}>
-                    {displayedAllBrands.map((e: any, i: any) => (
+                <div>
+                    <div className={styles.page_header}>
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder='Search Brand with Name'
+                                className={styles.input} />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                        {displayedAllBrands?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                        <button className={styles.add_new_btn}>
+                            <Link href="/ebike-panel/dashboard/add-new-brand" sx={{
+                                color: "white", textDecoration: 'none'
+                            }} >Add New Brand</Link></button>
+                    </div>
+                    <div className={styles.card_container}>
+                        {displayedAllBrands.map((e: any, i: any) => (
 
-                        <div className={styles.main_box_card} key={i}>
-                            <div className={styles.card_container_box}>
-                                <div className={styles.card_header}>
-                                    <h3 className={styles.heading}>{add3Dots(e?.brandName, 50) || 'No Title'}</h3>
-                                    <span className={styles.ad_id}>Brand ID: {e?.id}</span>
-                                </div>
-
-                                <div className={styles.card_content}>
-                                    <div className={styles.cardimage_box}
-                                        style={{
-                                            background: `url(${e?.logoUrl})`,
-                                            backgroundPosition: "center",
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundSize: '100px auto'
-                                        }}>
+                            <div className={styles.main_box_card} key={i}>
+                                <div className={styles.card_container_box}>
+                                    <div className={styles.card_header}>
+                                        <h3 className={styles.heading}>{add3Dots(e?.brandName, 50) || 'No Title'}</h3>
+                                        <span className={styles.ad_id}>Brand ID: {e?.id}</span>
                                     </div>
 
-                                    <div className={styles.card_detail}>
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Date:</span>
-                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                                    <div className={styles.card_content}>
+                                        <div className={styles.cardimage_box}
+                                            style={{
+                                                background: `url(${e?.logoUrl})`,
+                                                backgroundPosition: "center",
+                                                backgroundRepeat: 'no-repeat',
+                                                backgroundSize: '100px auto'
+                                            }}>
                                         </div>
 
+                                        <div className={styles.card_detail}>
+                                            <div className={styles.detail_row}>
+                                                <span className={styles.detail_label}>Date:</span>
+                                                <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                                            </div>
 
-                                        <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Brand Name:</span>
-                                            <span>{e?.brandName ? e?.brandName : "N/A"}</span>
-                                        </div>
 
-                                        <div className={styles.description}>
-                                            Description:
-                                            <p className={styles.description_text}>
-                                                {e?.description || 'No description available'}
-                                            </p>
+                                            <div className={styles.detail_row}>
+                                                <span className={styles.detail_label}>Brand Name:</span>
+                                                <span>{e?.brandName ? e?.brandName : "N/A"}</span>
+                                            </div>
+
+                                            <div className={styles.description}>
+                                                Description:
+                                                <p className={styles.description_text}>
+                                                    {add3Dots(e?.description, 165) || 'No description available'}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className={styles.card_actions}>
-                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
-                                        <a href={`/ebike-panel/dashboard/edit-brand/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                    <div className={styles.card_actions}>
+                                        {/* <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => setOpen(true)} > */}
+                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrandDATA(e.id)} >
                                             Edit
-                                        </a></button>
-                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                        Delete
-                                    </button>
+                                        </button>
+                                        <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                     <div className={styles.pagination}>
                         {filteredAllBrands?.length > 0 && (
                             <div className={styles.used_bike_list_pagination}>
@@ -1813,7 +1851,7 @@ const AllBrands_Card = () => {
                                     count={totalPage}
                                     onChange={handlePaginationChange}
                                     page={currentPage}
-                                    size="large"
+                                    size="medium"
                                 />
                             </div>
                         )}
@@ -1826,6 +1864,7 @@ const AllBrands_Card = () => {
                     </div>
                 </div>
             )}
+            <BasicModal open={open} onClose={() => setOpen(false)} brand={selectedBrand} funct={fetchAllBrands} />
         </div>
     )
 }
@@ -2083,7 +2122,7 @@ const ProductList_Card = () => {
         const isConfirm = window.confirm('Are you sure to delete this Product?')
         if (!isConfirm) return;
         const res = await DeleteProductbyId(id);
-        if (res && res.info == 'Deleted' , res?.success) {
+        if (res && res.info == 'Deleted', res?.success) {
             fetchAllProduct(1);
         }
         else {
@@ -2211,7 +2250,7 @@ const ProductList_Card = () => {
                                             </button>
                                         </a>
                                         <button className={`${styles.action_btn} ${styles.delete_btn}`}
-                                        onClick={() => handleDelete(e?.id)}
+                                            onClick={() => handleDelete(e?.id)}
                                         >
                                             Delete
                                         </button>
