@@ -45,6 +45,17 @@ export default function AllNewBikes() {
       let DealerDataRes = await getdealerData(res[0].brandId)
       setAllDelaerArr(DealerDataRes.dealers)
     }
+    else {
+        setAllnewBikeArr([])
+        setDesc("")
+        setLogo("")
+        setIsLoading(false)
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
+        // let DealerDataRes = await getdealerData(res[0].brandId)
+        setAllDelaerArr([])
+    }
   }
 
 

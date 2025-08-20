@@ -37,6 +37,7 @@ export default function NewBikeBrand() {
 
   const [allBrandArr, setAllBrandArr] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [value, setValue] = React.useState(0);
 
   useEffect(() => {
     fetchBrandInfo()
@@ -56,7 +57,7 @@ export default function NewBikeBrand() {
       window.scrollTo(0, 0)
     }, 1000);
   }
-  const [value, setValue] = React.useState(0);
+  
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log(newValue)
@@ -70,7 +71,7 @@ export default function NewBikeBrand() {
         !isLoading ?
           <Container>
             <Typography className={styles.heading}>
-              Bike Collection
+              New Bikes By Make
             </Typography>
 
             <Box sx={{ width: '100%' }}>
@@ -85,9 +86,10 @@ export default function NewBikeBrand() {
                   {
                     allBrandArr?.map((e: any, i: any) => {
                       if (e?.brandName == "sport" || e?.brandName == "china") return null;
-                      if (e?.brandName?.includes("-ebb")) {
-                        return null;
-                      }
+                      // if (e?.brandName?.includes("-ebb")) {
+                      //   return null;
+                      // }
+                       if (e?.focus_keyword?.includes("electric-bike")) return null;
                       return (
                         <Box className={styles.brand_image_box} key={i} >
                           <BikesBrandCard key={i} data={e} />
@@ -102,9 +104,10 @@ export default function NewBikeBrand() {
                   {
                     allBrandArr?.map((e: any, i: any) => {
                       if (e?.brandName == "sport" || e?.brandName == "china") return null;
-                      if (!e?.brandName?.includes("-ebb")) {
-                        return null;
-                      }
+                      // if (!e?.brandName?.includes("-ebb")) {
+                      //   return null;
+                      // }
+                      if (!e?.focus_keyword?.includes("electric-bike")) return null;
                       return (
                         <Box className={styles.brand_image_box} key={i} >
                           <BikesBrandCard key={i} data={e} />

@@ -184,7 +184,7 @@ const New_header = ({ value, onChange, placeholder }: any) => {
         const res = GetUserDetail()
         setUserDetail(res)
 
-    })
+    },[])
 
     const handleLogout = () => {
             const pathname = window.location.pathname
