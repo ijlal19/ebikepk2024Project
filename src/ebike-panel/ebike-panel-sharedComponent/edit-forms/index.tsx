@@ -1,5 +1,5 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { numericOnly } from '@/genericFunctions/geneFunc';
@@ -537,7 +537,7 @@ const EditNewBikeForm = () => {
     };
 
     const GetBrandName = (id: any) => {
-        const GetbrandObject = BrandArr.find((item: any) => item.id === id)
+        const GetbrandObject:any = BrandArr.find((item: any) => item.id === id)
         return GetbrandObject?.brandName
     }
 
@@ -619,6 +619,434 @@ const EditNewBikeForm = () => {
                                 { name: "newtyreBack", label: "Tyre Back" },
                                 { name: "newtyreFront", label: "Tyre Front" },
                                 { name: "newdryWeight", label: "Dry Weight" }
+                            ].map(({ name, label }) => (
+                                <div key={name}>
+                                    <label htmlFor={name} className={styles.label}>{label}</label>
+                                    <input
+                                        id={name}
+                                        name={name}
+                                        value={(NewField as any)[name]}
+                                        onChange={(e) => handleChange(name, e.target.value)}
+                                        className={styles.input_}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Others textarea */}
+                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                        <textarea id="meta_title" name="meta_title" value={NewField.newmeta_title} onChange={(e) => handleChange('newmeta_title', e.target.value)} className={styles.textarea} />
+                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                        <textarea id="meta_description" name="meta_description" value={NewField?.newmeta_description} onChange={(e) => handleChange('newmeta_description', e.target.value)} className={styles.textarea} />
+                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                        <textarea id="focus_keyword" name="focus_keyword" value={NewField?.newfocus_keyword} onChange={(e) => handleChange('newfocus_keyword', e.target.value)} className={styles.textarea} />
+                        <label htmlFor="others" className={styles.label}>Others</label>
+                        <textarea id="others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
+
+                        {/* Submit */}
+                        <button type="submit" className={styles.button}>Save Edit</button>
+                    </form>
+                    :
+                    <div className={styles.load_main}>
+                        <div className={styles.load_div}>
+                            <Loader isLoading={isLoading} />
+                        </div>
+                    </div>
+            }
+        </div>
+    );
+};
+
+///////////////////////////////////////////////// EDIT NEW BIKE
+const EditElectricBikeForm = () => {
+    const [NewField, setNewField] = useState<any>({
+        newbikeUrl: "",
+        newboreAndStroke: "",
+        newbrandId: "",
+        newclutch: "",
+        newcompressionRatio: "",
+        newdescription: "",
+        newdimentiuon: "",
+        newdisplacement: "",
+        newdryWeight: "",
+        newengine: "",
+        newfocus_keyword: "",
+        newframe: "",
+        newgroundClearance: "",
+        newmeta_description: "",
+        newmeta_title: "",
+        newothers: "",
+        newpetrolCapacity: "",
+        newprice: "",
+        newstarting: "",
+        newtitle: "",
+        newtransmission: "",
+        newtyreBack: "",
+        newtyreFront: "",
+        newvideoUrl: ""
+    })
+    const [imageArr, setImageArr] = useState([])
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [AddcityId, setCityID] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
+      const [allBrands, setAllBrands] = useState([])
+
+    const { slug, slug1 } = useParams()
+    let id = slug1
+    const router = useRouter()
+
+  
+    
+        useEffect(()=>{
+            fetchBrands()
+        },[])
+    
+         async function fetchBrands() {
+                const res = await getbrandData();
+                console.log("Brands", res)
+                if (res && res.length > 0) {
+                    setAllBrands(res);
+                } else {
+                    setAllBrands([]);
+                }    
+            }
+
+
+    useEffect(() => {
+        if (id) fetchNewBikeByID(id);
+    }, [id])
+
+    const fetchNewBikeByID = async (id: any) => {
+        setIsLoading(true);
+        const getData = await getnewBikedetailsData(id);
+
+        if (getData && getData[0].bike) {
+            const bike = getData[0].bike;
+            setCityID(bike.cityId)
+            const { uid, createdAt, images, newbike_comments, newbike_ratings, updatedAt, cityId, id, ...cleandData } = bike
+            const transformedData: any = {};
+            Object.keys(cleandData).forEach((key) => {
+                transformedData["new" + key] = bike[key] || "";
+            });
+            transformedData.uid = bike.uid || "";
+            console.log("data", transformedData)
+
+
+            setNewField(transformedData);
+            setImageArr(bike?.images);
+        }
+
+        setIsLoading(false);
+    };
+
+    const handleChange = (field: any, value: any) => {
+        setNewField((prev: any) => ({
+            ...prev,
+            [field]: value
+        }));
+    };
+
+    const handleImageDelete = (index: number) => {
+        const updatedImages = imageArr.filter((_, i) => i !== index);
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageArr(updatedImages);
+        setImageFiles(updatedFiles);
+    };
+
+    function uploadImage(event: any) {
+        setIsLoading(true)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
+                setIsLoading(false)
+                console.log('imgRes', imgRes)
+            }
+
+        }
+    }
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+               // { name: "boreAndStroke", label: "Motor" }, // change
+                // { name: "petrolCapacity", label: "Tourque" }, // change
+                // { name: "clutch", label: "Top Speed" }, // change
+                // { name: "transmission", label: "Wheel Size" }, // change
+                // { name: "displacement", label: "Battery Type" }, // change
+                // { name: "compressionRatio", label: "Charging Time" }, // change
+
+        const invalidChars = /[\/,?#$!+]/;
+
+        if (!NewField.newtitle || NewField.newtitle.length < 2) {
+            alert("Please add a valid title (min 2 characters)");
+            return;
+        }
+        else if (invalidChars.test(NewField.newtitle)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        else if (!NewField.newbikeUrl || NewField.newbikeUrl.length < 2) {
+            alert("Please enter a valid unique URL");
+            return;
+        }
+        else if (!NewField.newprice || isNaN(Number(NewField.newprice))) {
+            alert("Please enter a valid numeric price");
+            return;
+        }
+        else if (!NewField.newengine || NewField.newengine.length < 2) {
+            alert("Please enter engine info");
+            return;
+        }
+        else if (!NewField.newboreAndStroke) {
+            alert("Please enter Motor Detail");
+            return;
+        }
+        else if (!NewField.newclutch) {
+            alert("Please enter Top speed");
+            return;
+        }
+        else if (!NewField.newstarting) {
+            alert("Please enter starting info");
+            return;
+        }
+        else if (!NewField.newdimention) {
+            alert("Please enter dimension");
+            return;
+        }
+        else if (!NewField.newpetrolCapacity) {
+            alert("Please enter Torque detail");
+            return;
+        }
+        else if (!NewField.newdisplacement) {
+            alert("Please enter battery type");
+            return;
+        }
+        else if (!NewField.newcompressionRatio) {
+            alert("Please enter charging time");
+            return;
+        }
+        else if (!NewField.newtransmission) {
+            alert("Please enter wheel size");
+            return;
+        }
+        else if (!NewField.newframe) {
+            alert("Please enter frame info");
+            return;
+        }
+        else if (!NewField.newgroundClearance) {
+            alert("Please enter ground clearance");
+            return;
+        }
+        else if (!NewField.newtyreFront) {
+            alert("Please enter front tyre size");
+            return;
+        }
+        else if (!NewField.newtyreBack) {
+            alert("Please enter back tyre size");
+            return;
+        }
+        else if (!NewField.newdryWeight) {
+            alert("Please enter dry weight");
+            return;
+        }
+        else if (!NewField.newdescription || NewField.newdescription.length < 10) {
+            alert("Please enter a proper description (min 10 characters)");
+            return;
+        }
+        else if (!NewField.newbrandId) {
+            alert("Please select brand");
+            return;
+        }
+        else if (!imageArr || imageArr.length === 0) {
+            alert("Please upload at least one image");
+            return;
+        }
+
+        const userCookie = jsCookie.get("userData_ebike_panel");
+        const userData = JSON.parse(userCookie);
+        const UserId = userData?.uid;
+        console.log(UserId)
+
+        const obj = {
+            ...NewField,
+        };
+        const finalData = {
+            bikeUrl: obj?.newbikeUrl,
+            boreAndStroke: obj?.newboreAndStroke,
+            brandId: obj?.newbrandId,
+            cityId: AddcityId,
+            clutch: obj?.newclutch,
+            compressionRatio: obj?.newcompressionRatio,
+            description: obj?.newdescription,
+            dimentiuon: obj?.newdimention,
+            displacement: obj?.newdisplacement,
+            dryWeight: obj?.newdryWeight,
+            engine: obj?.newengine,
+            focus_keyword: obj?.newfocus_keyword,
+            frame: obj?.newframe,
+            groundClearance: obj?.newgroundClearance,
+            images: imageArr,
+            meta_description: obj?.newmeta_description,
+            meta_title: obj?.newmeta_title,
+            others: obj?.newothers,
+            petrolCapacity: obj?.newpetrolCapacity,
+            price: obj?.newprice,
+            starting: obj?.newstarting,
+            title: obj?.newtitle,
+            transmission: obj?.newtransmission,
+            tyreBack: obj?.newtyreBack,
+            tyreFront: obj?.newtyreFront,
+            uid: UserId,
+            videoUrl: obj?.newvideoUrl
+        }
+
+        console.log("data", obj, finalData);
+
+        const res = await UpdateNewBikeById(slug1, finalData);
+        if (res && res.success && res.info == "Bike updated") {
+            alert("updated Successfully")
+            router.push('/ebike-panel/dashboard/all-electric-bikes')
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    }
+
+    const handleBrandChange = (e: any) => {
+        const brandId = e.target.value;
+        setNewField((prev: any) => ({
+            ...prev,
+            newbrandId: brandId
+        }));
+    };
+
+    const GetBrandName = (id: any) => {
+        const GetbrandObject:any = allBrands.find((item: any) => item.id === id)
+        return GetbrandObject?.brandName
+    }
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-electric-bikes')
+    }
+
+    return (
+        <div className={styles.New_main_box}>
+            {
+                !isLoading ?
+                    <form onSubmit={handleSubmit} className={styles.main}>
+                        <div className={styles.formHeader}>
+                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                            <p className={styles.heading}>Edit Electric Bike</p>
+                        </div>
+                        {/* Title */}
+                        <label htmlFor="title" className={styles.label}>Title</label>
+                        <input id="title" name="title" value={NewField?.newtitle} onChange={(e) => handleChange('newtitle', e.target.value)} className={styles.input} />
+
+                        {/* Video URL */}
+                        <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
+                        <input id="bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
+
+                        {/* Description */}
+                        <FloaraTextarea
+                            value={NewField.newdescription}
+                            onChange={(e: any) => handleChange('newdescription', e)}
+                        />
+
+                        {imageArr.length < 4 && (
+                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                        )}
+
+                        {/* Images */}
+                        <label className={styles.label}>Images (max 4)</label>
+                        <div className={styles.imagePreview}>
+                            {imageArr?.map((img, index) => (
+                                <div key={index}>
+                                    <img src={img} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                    <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                                </div>
+                            ))}
+                        </div>
+
+                        {allBrands?.length > 0 ?  <div className={styles.drop_downBox}>
+                            <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
+                                <option value="" disabled selected hidden>{GetBrandName(NewField?.newbrandId)}</option>
+                                {
+                                    allBrands.map((e: any, index: any) => (
+                                        <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                            {e?.brandName}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+
+                            <div>
+                                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
+                                <input id="videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input_bike_url} />
+                            </div>
+                        </div> : "" }
+
+                        {/* Other fields */}
+                        <div className={styles.all_inputs}>
+                            {[
+                                { name: "newprice", label: "Price" },
+                                { name: "newdimention", label: "Dimension" },
+                                { name: "newengine", label: "Engine" },
+                                { name: "newboreAndStroke", label: "Motor" },
+                                { name: "newframe", label: "Frame" },
+                                { name: "newpetrolCapacity", label: "Tourque" },
+                                { name: "newstarting", label: "Starting" },
+                                { name: "newgroundClearance", label: "Ground Clearance" },
+                                { name: "newclutch", label: "Top Speed" },
+                                { name: "newdryWeight", label: "Dry Weight" },
+                                { name: "newtransmission", label: "Transmission" },
+                                { name: "newtyreBack", label: "Tyre Back" },
+                                { name: "newtyreFront", label: "Tyre Front" },
+                                { name: "newdisplacement", label: "Battery Type" },
+                                { name: "newcompressionRatio", label: "Charging Time" },
+                               
+                               
+
+                                // { name: "price", label: "Price" },
+                                // { name: "dimention", label: "Dimension" },
+                                // { name: "engine", label: "Engine" },
+                                // { name: "starting", label: "Starting" },
+                                // { name: "groundClearance", label: "Ground Clearance" },
+                                // { name: "dryWeight", label: "Dry Weight" },
+                                // { name: "frame", label: "Frame" },
+                                // { name: "tyreBack", label: "Tyre Back" },
+                                // { name: "tyreFront", label: "Tyre Front" },
+                                // { name: "boreAndStroke", label: "Motor" }, // change
+                                // { name: "petrolCapacity", label: "Tourque" }, // change
+                                // { name: "clutch", label: "Top Speed" }, // change
+                                // { name: "transmission", label: "Wheel Size" }, // change
+                                // { name: "displacement", label: "Battery Type" }, // change
+                                // { name: "compressionRatio", label: "Charging Time" }, // change
+
                             ].map(({ name, label }) => (
                                 <div key={name}>
                                     <label htmlFor={name} className={styles.label}>{label}</label>
@@ -1179,5 +1607,6 @@ export {
     EditNewBikeForm,
     EditBlogForm,
     EditPageForm,
-    EditBrandForm
+    EditBrandForm,
+    EditElectricBikeForm
 };

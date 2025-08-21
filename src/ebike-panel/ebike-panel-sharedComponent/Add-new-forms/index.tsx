@@ -1,5 +1,5 @@
 'use client';
-import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc, getbrandData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
@@ -356,32 +356,72 @@ const AddNewElectricBikeForm = () => {
     const [selectedBrandId, setSelectedBrandId] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [BikeData, setBikeData] = useState({
-        bikeUrl: '',
-        videoUrl: '',
-        title: '',
-        description: '',
-        meta_title: '',
-        meta_description: '',
-        focus_keyword: '',
-        others: '',
+        // bikeUrl: '',
+        // videoUrl: '',
+        // title: '',
+        // description: '',
+        // meta_title: '',
+        // meta_description: '',
+        // focus_keyword: '',
+        // others: '',
 
-        price: '',//
-        engine: '',//   
-        starting: '',//
-        dimention: '',//
-        dryWeight: '',//
-        groundClearance: '',//
-        frame: '',//
-        batteryType: '',//
-        chargingTime: '',//
-        wheelSize: '',//
-        tyreBack: '',//
-        tyreFront: '',//
-        moter: '',//
-        topSpeed: '',//
-        range: '',//
-        torque: '',//
+        // price: '',//
+        // engine: '',//   
+        // starting: '',//
+        // dimention: '',//
+        // dryWeight: '',//
+        // groundClearance: '',//
+        // frame: '',//
+        // batteryType: '',//
+        // chargingTime: '',//
+        // wheelSize: '',//
+        // tyreBack: '',//
+        // tyreFront: '',//
+        // moter: '',//
+        // topSpeed: '',//
+        // range: '',//
+        // torque: '',//
+
+        bikeUrl: '',
+        boreAndStroke: '',
+        cityId: 1,
+        clutch: '',
+        compressionRatio: '',
+        description: '',
+        dimention: '',
+        displacement: '',
+        dryWeight: '',
+        engine: '',
+        focus_keyword: '',
+        frame: '',
+        groundClearance: '',
+        meta_description: '',
+        meta_title: '',
+        others: '',
+        petrolCapacity: '',
+        price: '',
+        starting: '',
+        title: '',
+        transmission: '',
+        tyreBack: '',
+        tyreFront: '',
+        videoUrl: '',
     });
+    const [allBrands, setAllBrands] = useState([])
+
+    useEffect(()=>{
+        fetchBrands()
+    },[])
+
+     async function fetchBrands() {
+            const res = await getbrandData();
+            console.log("Brands", res)
+            if (res && res.length > 0) {
+                setAllBrands(res);
+            } else {
+                setAllBrands([]);
+            }    
+        }
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -438,6 +478,13 @@ const AddNewElectricBikeForm = () => {
         e.preventDefault();
         const invalidChars = /[\/,?#$!+]/;
 
+        // { name: "boreAndStroke", label: "Motor" }, // change
+        // { name: "petrolCapacity", label: "Tourque" }, // change
+        // { name: "clutch", label: "Top Speed" }, // change
+        // { name: "transmission", label: "Wheel Size" }, // change
+        // { name: "displacement", label: "Battery Type" }, // change
+        // { name: "compressionRatio", label: "Charging Time" }, // change
+
         if (!BikeData.title || BikeData.title.length < 2) {
             alert("Please add a valid title (min 2 characters)");
             return;
@@ -470,6 +517,14 @@ const AddNewElectricBikeForm = () => {
             alert("Please enter engine info");
             return;
         }
+        else if (!BikeData.boreAndStroke) {
+            alert("Please enter Motor Detail");
+            return;
+        }
+        else if (!BikeData.clutch) {
+            alert("Please enter Top Speed info");
+            return;
+        }
         else if (!BikeData.starting) {
             alert("Please enter starting info");
             return;
@@ -478,32 +533,28 @@ const AddNewElectricBikeForm = () => {
             alert("Please enter dimension");
             return;
         }
-        else if (!BikeData.dryWeight) {
-            alert("Please enter dry weight");
+        else if (!BikeData.petrolCapacity) {
+            alert("Please enter Tourque detail");
             return;
         }
-        else if (!BikeData.groundClearance) {
-            alert("Please enter ground clearance");
+        else if (!BikeData.displacement) {
+            alert("Please enter battery type");
+            return;
+        }
+        else if (!BikeData.compressionRatio) {
+            alert("Please enter charging time");
+            return;
+        }
+        else if (!BikeData.transmission) {
+            alert("Please enter wheel size");
             return;
         }
         else if (!BikeData.frame) {
             alert("Please enter frame info");
             return;
         }
-        else if (!BikeData.batteryType) {
-            alert("Please enter battery type");
-            return;
-        }
-        else if (!BikeData.torque) {
-            alert("Please enter Torque");
-            return;
-        }
-        else if (!BikeData.chargingTime) {
-            alert("Please enter charging time");
-            return;
-        }
-        else if (!BikeData.wheelSize) {
-            alert("Please enter wheel size");
+        else if (!BikeData.groundClearance) {
+            alert("Please enter ground clearance");
             return;
         }
         else if (!BikeData.tyreBack) {
@@ -514,19 +565,12 @@ const AddNewElectricBikeForm = () => {
             alert("Please enter front tyre size");
             return;
         }
-        else if (!BikeData.moter) {
-            alert("Please enter moter size");
+        else if (!BikeData.dryWeight) {
+            alert("Please enter dry weight");
             return;
         }
-        else if (!BikeData.topSpeed) {
-            alert("Please enter top speed");
-            return;
-        }
-        else if (!BikeData.range) {
-            alert("Please enter range km");
-            return;
-        }
-
+            
+        
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
         const UserId = userData?.uid;
@@ -538,6 +582,7 @@ const AddNewElectricBikeForm = () => {
         };
         const res = await addNewBike(finalBikeData)
         if (res && res.success) {
+            alert("bike Added SuccessFully")
             router.push('/ebike-panel/dashboard/all-electric-bikes')
         }
         else {
@@ -554,6 +599,7 @@ const AddNewElectricBikeForm = () => {
         <div className={styles.main_box}>
             <form onSubmit={handleSubmit} className={styles.main}>
                 <div className={styles.formHeader}>
+            
                     <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
                     <p className={styles.heading}>Add Electric Bike</p>
                 </div>
@@ -584,11 +630,12 @@ const AddNewElectricBikeForm = () => {
                     ))}
                 </div>
 
+                {allBrands?.length > 0 ? 
                 <div className={styles.drop_downBox}>
                     <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
                         <option value="" disabled selected hidden>Select Brand</option>
                         {
-                            BrandArr.map((e: any, index) => (
+                            allBrands.map((e: any, index) => (
                                 <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
                                     {e?.brandName}
                                 </option>
@@ -600,28 +647,25 @@ const AddNewElectricBikeForm = () => {
                         <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
                         <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
                     </div>
-                </div>
+                </div> : "" }
 
                 <div className={styles.all_inputs}>
                     {[
                         { name: "price", label: "Price" },
-                        { name: "engine", label: "Engine" },
-                        // { name: "boreAndStroke", label: "Bore & Stroke" },
-                        // { name: "clutch", label: "Clutch" },
-                        { name: "starting", label: "Starting" },
                         { name: "dimention", label: "Dimension" },
-                        { name: "dryWeight", label: "Dry Weight" },
-                        { name: "groundClearance", label: "Ground Clearance" },
+                        { name: "engine", label: "Engine" },
+                        { name: "boreAndStroke", label: "Motor" }, // change
                         { name: "frame", label: "Frame" },
-                        { name: "batteryType", label: "Battery Type" },
-                        { name: "torque", label: "Torque" },
-                        { name: "chargingTime", label: "Charging Time" },
-                        { name: "wheelSize", label: "Wheel Size" },
+                        { name: "petrolCapacity", label: "Tourque" }, // change
+                        { name: "starting", label: "Starting" },
+                        { name: "groundClearance", label: "Ground Clearance" },
+                        { name: "clutch", label: "Top Speed" }, // change
+                        { name: "dryWeight", label: "Dry Weight" },
+                        { name: "transmission", label: "Wheel Size" }, // change
                         { name: "tyreBack", label: "Tyre Back" },
                         { name: "tyreFront", label: "Tyre Front" },
-                        { name: "moter", label: "Moter Size" },
-                        { name: "topSpeed", label: "Top Speed" },
-                        { name: "range", label: "Range" },
+                        { name: "displacement", label: "Battery Type" }, // change
+                        { name: "compressionRatio", label: "Charging Time" },
                     ].map(({ name, label }) => (
                         <div key={name}>
                             <label htmlFor={name} className={styles.label}>{label}</label>

@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getbrandData, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -2283,6 +2283,255 @@ const ProductList_Card = () => {
     )
 }
 
+/////////////////////////////////////////////////////// Electric BIKE CARD
+const Electric_Bike_Card = () => {
+    const [AllNewBikeForFilter, setAllNewBikeForFilter] = useState<any>([]);
+    const [filteredBikes, setFilteredBikes] = useState<any>([]);
+    const [displayedBikes, setDisplayedBikes] = useState<any>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    const [allBrands, setAllBrands] = useState([])
+    const itemsPerPage = 12;
+    const router = useRouter();
+
+    useEffect(() => {
+        fetchAllNewBike(1);
+        fetchBrands()
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllNewBikeForFilter.filter((bike: any) =>
+            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredBikes(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllNewBikeForFilter]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedBikes(filteredBikes.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredBikes.length / itemsPerPage));
+    }, [filteredBikes, currentPage]);
+
+    async function fetchBrands() {
+        const res = await getbrandData();
+        console.log("Brands", res)
+        if (res && res.length > 0) {
+            setAllBrands(res);
+        } else {
+            setAllBrands([]);
+        }    
+    }
+
+    const fetchAllNewBike = async (_page: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getAllNewBike();
+            if (res && res.length > 0) {
+                // debugger
+                const filtered = res?.filter((bike: any) =>
+                    bike?.focus_keyword?.toLowerCase().includes('electric-bike')
+        )       ;
+                setAllNewBikeForFilter(filtered);
+                setFilteredBikes(filtered);
+                setCurrentPage(_page);
+            } else {
+                setAllNewBikeForFilter([]);
+                setFilteredBikes([]);
+                setDisplayedBikes([]);
+                setCurrentPage(1);
+                setTotalPage(0);
+            }
+
+        } catch (error) {
+            console.error("Error fetching new bikes:", error);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const GetName = (from: any, id: any) => {
+        if (from === 'brand') {
+            const brand = getBrandFromId(id, allBrands);
+            return brand[0]?.brandName || "";
+        } else {
+            const city = getCityFromId(id, CityArr);
+            return city[0]?.city_name || "";
+        }
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirmed = window.confirm("Are you sure you want to delete this bike?");
+
+        if (!isConfirmed) return;
+        const res = await DeleteNewBikeById(id);
+        if (res && res.deleted && res.info == "successfully deleted") {
+            fetchAllNewBike(currentPage);
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+        console.log("Deleted:", res);
+    };
+
+    const handleEdit = (id: any) => {
+        router.push(`/ebike-panel/dashboard/edit-electric-bike/${id}`);
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    return (
+        <div className={styles.main_new_bike}>
+            
+            <New_header />
+
+            {!IsLoading ? (
+                <div className={styles.big_container}>
+                    <div className={styles.page_header}>
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder='Search New Bike with Title'
+                                className={styles.input} />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                        {filteredBikes?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                        <button className={styles.add_new_btn}>
+                            <Link href="/ebike-panel/dashboard/add-electric-bike" sx={{
+                                color: "white", textDecoration: 'none'
+                            }} >Add Electric Bike</Link></button>
+                    </div>
+                    <div className={styles.card_container}>
+                        {displayedBikes.length > 0 ? (
+                            <>
+                                {displayedBikes.map((e: any, i: any) => (
+                                    <div className={styles.main_box_card} key={i}>
+                                        <div className={styles.card_container_box}>
+                                            <div className={styles.card_header}>
+                                                <h3 className={styles.heading}>{add3Dots(e?.title, 45) || 'No Title'}</h3>
+                                                <span className={styles.ad_id}>Ad ID: {e?.id}</span>
+                                            </div>
+
+                                            <div className={styles.card_content}>
+                                                <div className={styles.cardimage_box}>
+                                                    <Swiper
+                                                        spaceBetween={50}
+                                                        slidesPerView={1}
+                                                        onSlideChange={() => console.log('slide change')}
+                                                        onSwiper={(swiper) => console.log(swiper)}
+                                                        modules={[Navigation, FreeMode]}
+                                                        navigation={true}
+                                                        initialSlide={0}
+                                                        loop={true}
+                                                        className={styles.image}
+                                                    >
+                                                        {
+                                                            e?.images && e?.images.length > 0 ?
+                                                                e.images.map((imgUrl: any, ind: any) => {
+                                                                    return (
+                                                                        <SwiperSlide key={imgUrl} className={styles.image} >
+                                                                            <img src={cloudinaryLoader(imgUrl, 500, 'auto')} alt={e?.title} className={styles.image} />
+                                                                        </SwiperSlide>
+                                                                    )
+                                                                }) :
+                                                                <SwiperSlide key=''>
+                                                                    <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.image} />
+                                                                </SwiperSlide>
+                                                        }
+                                                    </Swiper>
+                                                </div>
+
+                                                <div className={styles.card_detail}>
+                                                    <div className={styles.detail_row}>
+                                                        <span className={styles.detail_label}>ID:</span>
+                                                        <span>{e?.id}</span>
+                                                    </div>
+
+                                                    <div className={styles.detail_row}>
+                                                        <span className={styles.detail_label}>Brand:</span>
+                                                        <span>{GetName("brand", e?.brandId)}</span>
+                                                    </div>
+
+                                                    <div className={styles.detail_row}>
+                                                        <span className={styles.detail_label}>Price:</span>
+                                                        <span className={styles.price}>
+                                                            {e?.price ? priceWithCommas(e.price) : '0'}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className={styles.description} >
+                                                        <p style={{ margin: "0px 10px", padding: "0px", color: "black", fontSize: "14px" }} className={styles.description_text} dangerouslySetInnerHTML={{ __html: add3Dots(e?.description, 75) }}></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.card_actions}>
+                                                <Link href={`/ebike-panel/dashboard/edit-electric-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
+                                                        Edit
+                                                    </button>
+                                                </Link>
+                                                <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        ) : (
+                            <div className={styles.no_results}>
+                                <p>No bikes found matching your search criteria.</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className={styles.pagination}>
+                        {filteredBikes?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
 export {
     Used_bike_card,
     New_bike_card,
@@ -2292,5 +2541,6 @@ export {
     AllPages_Card,
     AllBrands_Card,
     AllCities_Card,
-    ProductList_Card
+    ProductList_Card,
+    Electric_Bike_Card
 }

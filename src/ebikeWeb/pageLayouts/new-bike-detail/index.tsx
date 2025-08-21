@@ -45,7 +45,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   const [similarCCUsedBike, setSimilarCCUsedBike] = useState([]);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [allMechanicArr, setAllMechanicArr]: any = useState([]);
-
+  const [isElectricBike, setIsElectricBike]: any = useState(false);
   const router = useRouter()
   const params = useParams()
 
@@ -78,6 +78,12 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
 
       if (responsedetails[0]?.bike?.description) {
         responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
+      }
+
+      if(responsedetails[0]?.bike?.focus_keyword?.toLowerCase().includes('electric-bike')){
+        setIsElectricBike(true)
+      }else {
+        setIsElectricBike(false)
       }
 
       if (responsedetails[0]?.bike?.images) {
@@ -308,7 +314,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.frame ? e.bike.frame : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Displacement</td>
+                                      <td className={styles.column}>{isElectricBike ? "Battery Type" : "Displacement"} </td>
                                       <td className={styles.column}>{e?.bike?.displacement ? e.bike?.displacement?.split(',')[0] : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
@@ -320,7 +326,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.tyreFront ? e.bike.tyreFront : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Clutch</td>
+                                      <td className={styles.column}>{ isElectricBike ? "Top Speed" : "Clutch" }</td>
                                       <td className={styles.column}>{e?.bike?.clutch ? e.bike.clutch : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
@@ -331,6 +337,10 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>Starting</td>
                                       <td className={styles.column}>{e?.bike?.starting ? e.bike.starting : '-'}</td>
                                     </tr>
+                                    {isElectricBike ? <tr className={styles.tr} >
+                                      <td className={styles.column}>Motor</td>
+                                      <td className={styles.column}>{e?.bike?.boreAndStroke ? e.bike.boreAndStroke : '-'}</td>
+                                    </tr> : "" }
                                   </table>
                                 </Grid>
 
@@ -346,7 +356,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.engine ? e.bike.engine.slice(0, 15) : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Petrol Capacity</td>
+                                      <td className={styles.column}>{isElectricBike ? "Tourque" : "Petrol Capacity"} </td>
                                       <td className={styles.column}>{e?.bike?.petrolCapacity ? e.bike.petrolCapacity : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
@@ -354,7 +364,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.tyreBack ? e.bike.tyreBack : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Comp-Ration</td>
+                                      <td className={styles.column}>{isElectricBike ? "Charging Time" : "Comp-Ration" } </td>
                                       <td className={styles.column}>{e?.bike?.compressionRatio ? e.bike.compressionRatio : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
@@ -362,7 +372,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.groundClearance ? e.bike.groundClearance : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Transmittion</td>
+                                    <td className={styles.column}> { isElectricBike ? "Wheel Size" : "Transmittion" } </td>
                                       <td className={styles.column}>{e?.bike?.transmission ? e.bike.transmission : '-'}</td>
                                     </tr>
                                   </table>
