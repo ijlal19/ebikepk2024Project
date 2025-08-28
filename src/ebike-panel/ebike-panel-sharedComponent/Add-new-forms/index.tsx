@@ -1,10 +1,11 @@
 'use client';
-import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc, getbrandData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc, getbrandData, addNewCategory, addNewSubCategory, UpdateCategImagesById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from 'react';
 
 const jsCookie = require('js-cookie');
@@ -409,19 +410,19 @@ const AddNewElectricBikeForm = () => {
     });
     const [allBrands, setAllBrands] = useState([])
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchBrands()
-    },[])
+    }, [])
 
-     async function fetchBrands() {
-            const res = await getbrandData();
-            console.log("Brands", res)
-            if (res && res.length > 0) {
-                setAllBrands(res);
-            } else {
-                setAllBrands([]);
-            }    
+    async function fetchBrands() {
+        const res = await getbrandData();
+        console.log("Brands", res)
+        if (res && res.length > 0) {
+            setAllBrands(res);
+        } else {
+            setAllBrands([]);
         }
+    }
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -569,8 +570,8 @@ const AddNewElectricBikeForm = () => {
             alert("Please enter dry weight");
             return;
         }
-            
-        
+
+
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
         const UserId = userData?.uid;
@@ -599,7 +600,7 @@ const AddNewElectricBikeForm = () => {
         <div className={styles.main_box}>
             <form onSubmit={handleSubmit} className={styles.main}>
                 <div className={styles.formHeader}>
-            
+
                     <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
                     <p className={styles.heading}>Add Electric Bike</p>
                 </div>
@@ -630,24 +631,24 @@ const AddNewElectricBikeForm = () => {
                     ))}
                 </div>
 
-                {allBrands?.length > 0 ? 
-                <div className={styles.drop_downBox}>
-                    <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                        <option value="" disabled selected hidden>Select Brand</option>
-                        {
-                            allBrands.map((e: any, index) => (
-                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                    {e?.brandName}
-                                </option>
-                            ))
-                        }
-                    </select>
+                {allBrands?.length > 0 ?
+                    <div className={styles.drop_downBox}>
+                        <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
+                            <option value="" disabled selected hidden>Select Brand</option>
+                            {
+                                allBrands.map((e: any, index) => (
+                                    <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                        {e?.brandName}
+                                    </option>
+                                ))
+                            }
+                        </select>
 
-                    <div style={{ marginTop: '10px' }}>
-                        <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                        <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
-                    </div>
-                </div> : "" }
+                        <div style={{ marginTop: '10px' }}>
+                            <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
+                            <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
+                        </div>
+                    </div> : ""}
 
                 <div className={styles.all_inputs}>
                     {[
@@ -839,7 +840,7 @@ const AddBlogForm = () => {
 
                 {imageArr.length < 4 ?
                     <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                    :""}
+                    : ""}
 
                 <label className={styles.label}>Images (max 4)</label>
                 <div className={styles.imagePreview}>
@@ -1005,6 +1006,7 @@ const AddProductForm = () => {
     const [AllCategoryName, setAllCategoryName] = useState([]);
     const [SubCategoryName, setSubCategoryName] = useState([]);
     const [ProductCompany, setProductCompany] = useState([]);
+    const [variants, setVariants] = useState<any>([{ size: "", quantity: "" }]);
     const [AllFieldIDs, setAllFieldIds] = useState<any>({
         sell: false,
         main_category_id: "",
@@ -1025,6 +1027,7 @@ const AddProductForm = () => {
     useEffect(() => {
         fetchAllCategName()
     }, [])
+
     const fetchAllCategName = async () => {
         const rescategory = await getShopMainCategory();
         setAllCategoryName(rescategory)
@@ -1106,10 +1109,10 @@ const AddProductForm = () => {
     const handleproductChange = (e: any, from: any) => {
         const { name, value } = e.target;
         if (from == 'sell') {
-            if(value == "true"){
+            if (value == "true") {
                 setAllFieldIds((prev: any) => ({ ...prev, sell: true }));
             }
-            else{
+            else {
                 setAllFieldIds((prev: any) => ({ ...prev, sell: false }));
             }
         }
@@ -1147,9 +1150,10 @@ const AddProductForm = () => {
             alert("Please enter a Product Sell Price");
             return;
         }
-        else if (!AllFieldIDs?.sell) {
-            alert("Please select a Product Status");
+        else if (Number(productData.sellprice) > Number(productData.productprice)) {
+            alert("Sell Price cannot be greater than Product Price");
             return;
+
         }
         else if (!AllFieldIDs?.main_category_id) {
             alert("Please select a Product Category");
@@ -1188,17 +1192,10 @@ const AddProductForm = () => {
             video_url: finalBikeData?.videoUrl,
 
         }
-        // stock: [{
-        //     quantity: finalBikeData?.quantity,
-        //     product_size: finalBikeData?.product_size
-        // }]
-        console.log("from", obj)
+        console.log("from", variants)
         const res = await addNewProduct({
             product: obj,
-            stock: [{
-                quantity: finalBikeData?.quantity || "0",
-                product_size: finalBikeData?.product_size
-            }]
+            stock: variants
         });
         if (res && res?.success) {
             router.push('/ebike-panel/dashboard/product-list');
@@ -1210,6 +1207,25 @@ const AddProductForm = () => {
     const goBack = () => {
         router.push('/ebike-panel/dashboard/product-list')
     }
+
+    const handleAddVariant = () => {
+        if (variants.length >= 5) {
+            alert("Maximum 5 stock boxes allowed!");
+            return;
+        }
+        setVariants([...variants, { size: "", quantity: "" }]);
+    };
+
+    const handleRemoveVariant = (index: any) => {
+        const updated = variants.filter((_: any, i: any) => i !== index);
+        setVariants(updated);
+    };
+
+    const handleChange = (index: any, field: any, value: any) => {
+        const updated = [...variants];
+        updated[index][field] = value;
+        setVariants(updated);
+    };
 
     return (
         <div className={styles.main_box}>
@@ -1239,16 +1255,21 @@ const AddProductForm = () => {
                 {/* ///////////////////////////////////////////////////////////// SELL DROP DOWN */}
                 <label className={styles.label}>Sell</label>
                 <div className={styles.drop_downBox}>
-                    <select name="sell" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'sell')}>
-                        <option value="" disabled selected hidden>Sell</option>
+                    <select
+                        name="sell"
+                        className={styles.selected}
+                        onChange={(e) => handleproductChange(e, 'sell')}
+                        defaultValue="false"
+                    >
                         <option value="true" className={styles.options} style={{ fontSize: '16px' }}>
                             True
                         </option>
-                        <option value="false" className={styles.options} style={{ fontSize: '16px' }} >
+                        <option value="false" className={styles.options} style={{ fontSize: '16px' }}>
                             False
                         </option>
                     </select>
                 </div>
+
 
 
                 {/* ///////////////////////////////////////////////////////////// MAIN CATEGORY DROP DOWN */}
@@ -1257,7 +1278,7 @@ const AddProductForm = () => {
                     <select name="main_category_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'main')}>
                         <option value="" disabled selected hidden>Select Category</option>
                         {
-                            AllCategoryName.map((e: any, index) => (
+                            AllCategoryName?.map((e: any, index) => (
                                 <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
                                     {e?.name}
                                 </option>
@@ -1265,7 +1286,6 @@ const AddProductForm = () => {
                         }
                     </select>
                 </div>
-
 
                 {/* ///////////////////////////////////////////////////////////// SUB CATEGORY DROP DOWN */}
                 <label className={styles.label}>{SubCategoryName.length > 0 ? "Sub Category" : ""}</label>
@@ -1314,7 +1334,6 @@ const AddProductForm = () => {
                     ))}
                 </div>
 
-
                 {/* ///////////////////////////////////////////////////////////// PRODUCT PHOTOS */}
                 <label className={styles.label}>Upload Photos (max 5)</label>
                 {imageArrProduct.length < 5 ?
@@ -1330,22 +1349,52 @@ const AddProductForm = () => {
                     ))}
                 </div>
 
-                <label htmlFor="qunatity" className={styles.label}>Quantity</label>
-                <input id="quantity" name="quantity" value={productData.quantity} onChange={handleInputChange} className={styles.input} />
+                {/* ///////////////////////////////////////// QUANTITY AND SIZE BOX  */}
+                {variants.map((item: any, index: any) => (
+                    <div key={index} className={styles.stock_box}>
+                        <div className={styles.quantity_box}>
+                            <label className={styles.label}>Quantity</label>
+                            <input
+                                type="number"
+                                value={item.quantity}
+                                onChange={(e) => handleChange(index, "quantity", e.target.value)}
+                                className={styles.input}
+                            />
+                        </div>
 
-                <label className={styles.label}>Product Size</label>
-                <div className={styles.drop_downBox}>
-                    <select name="product_size" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'size')}>
-                        <option value="" disabled selected hidden>Select Size</option>
-                        {
-                            product_size.map((e: any, index) => (
-                                <option key={index} value={e} className={styles.options} style={{ fontSize: '16px' }}>
-                                    {e}
+                        <div className={styles.size}>
+                            <label className={styles.label}>Product Size</label>
+                            <select
+                                value={item.size}
+                                onChange={(e) => handleChange(index, "size", e.target.value)}
+                                className={styles.selected}
+                            >
+                                <option value="" disabled hidden>
+                                    Select Size
                                 </option>
-                            ))
-                        }
-                    </select>
-                </div>
+                                {product_size.map((size, i) => (
+                                    <option key={i} value={size}>
+                                        {size}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* ❌ icon sirf tab show hoga jab 1 se zyada boxes ho */}
+                        {variants.length > 1 && (
+                            <button className={styles.cross_btn}>
+                                <CloseIcon
+                                    className={styles.removeIcon}
+                                    onClick={() => handleRemoveVariant(index)}
+                                />
+                            </button>
+                        )}
+                    </div>
+                ))}
+
+                <button type="button" onClick={handleAddVariant} className={styles.button_1}>
+                    Add More Size & Quantity
+                </button>
                 <button type="submit" className={styles.button}>Add Product</button>
             </form>
         </div>
@@ -1382,7 +1431,7 @@ const AddBrandForm = () => {
             alert("Please enter a valid Brand description (min 10 characters)");
             return;
         }
-        else if (!BrandData.logoUrl ) {
+        else if (!BrandData.logoUrl) {
             alert("Please enter a valid Logo URL");
             return;
         }
@@ -1436,6 +1485,264 @@ const AddBrandForm = () => {
     );
 }
 
+//////////////////////////////////////////////////////// ADD NEW CATEGORY & SUB CATEGORY
+const AddCategoryForm = () => {
+    const [AllCategoryName, setAllCategoryName] = useState<any>([]);
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [imageArr, setImageArr] = useState([])
+    const [MainCategroyName, setMainCategroyName] = useState('');
+    const [SubCategroyName, setSubCategroyName] = useState('');
+    const [selectedId, setSelectedId] = useState('');
+    const [BrandData, setBrandData] = useState<any>({
+        brandName: '',
+        description: '',
+        videourl: '',
+        logoUrl: '',
+        focus_keyword: '',
+        meta_description: '',
+        meta_title: '',
+    });
+
+    let router = useRouter()
+    useEffect(() => {
+        fetchCategory()
+    }, [])
+    const fetchCategory = async () => {
+        const res = await getShopMainCategory();
+        setAllCategoryName(res)
+    }
+
+    const handleImageDelete = (index: number) => {
+        const updatedImages = imageArr.filter((_, i) => i !== index);
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageArr(updatedImages);
+        setImageFiles(updatedFiles);
+    };
+
+    function uploadImage(event: any) {
+        // setIsLoading(true)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                setImageArr(_imageArr)
+            }
+
+        }
+    }
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!BrandData.brandName || BrandData.brandName.length < 2) {
+            alert("Please add a valid Name (min 2 characters)");
+            return;
+        }
+        else if (!BrandData.description || BrandData.description.length < 10) {
+            alert("Please enter a valid Brand description (min 10 characters)");
+            return;
+        }
+        else if (!BrandData.logoUrl) {
+            alert("Please enter a valid Logo URL");
+            return;
+        }
+
+        const finalBikeData = {
+            ...BrandData,
+        }
+
+        const res = await addNewBrand(finalBikeData);
+        if (res && res?.success && res.info === "Added Successfully!") {
+            router.push('/ebike-panel/dashboard/all-bike-brands');
+        } else {
+            alert('Something went wrong!');
+        }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-bike-brands')
+    }
+
+    const handleAddCateg = async () => {
+        if (MainCategroyName) {
+            const res = await addNewCategory({ name: MainCategroyName });
+            if (res && res?.success && res?.info === "Add Catagory Successfully") {
+                fetchCategory()
+                setMainCategroyName('')
+            }
+            else {
+                alert("Something went wrong!")
+            }
+            return
+        }
+        else {
+            alert("Please add a valid Category Name (min 2 charactersjnjn)");
+        }
+    }
+
+    const handleSelectChange = (e: any) => {
+        setSelectedId(e.target.value);
+    };
+
+    const handleAddVSubCateg = async () => {
+        if (!SubCategroyName || SubCategroyName.length < 2) {
+            alert("Please add a valid Sub Category Name (min 2 characters)");
+            return;
+        }
+        else if (!selectedId) {
+            alert("Please select a Main Category");
+            return;
+        }
+        const res = await addNewSubCategory({ name: SubCategroyName, main_category_id: selectedId });
+        if (res && res?.success && res?.info === "Add Sub Catagory Successfully") {
+            fetchCategory()
+            setSubCategroyName('')
+            setSelectedId('')
+        }
+        else {
+            alert("Something went wrong!")
+        }
+    }
+
+    const handleUpdateCategImage = async () => {
+        if (!imageArr || imageArr.length === 0) {
+            alert("Please select at least one image!");
+            return;
+        }
+        const res = await UpdateCategImagesById( selectedId ? selectedId : AllCategoryName[0]?.id ,{images : imageArr});
+        if (res && res?.success && res?.info === "Updated successfully") {
+            fetchCategory()
+            setImageArr([])
+            setSelectedId('')
+            alert("Category Images Updated Successfully")
+        }
+        else {
+            alert("Something went wrong!")
+        }
+    }
+
+    return (
+        <div className={styles.main_box}>
+            <div className={styles.main}>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Add New Category</p>
+                </div>
+
+                <div className={styles.add_main_categroy_box}>
+                    <input type='text' value={MainCategroyName} onChange={(e) => setMainCategroyName(e?.target.value)} className={styles.input} placeholder='Add Main Category' />
+                    <button className={styles.add_btn} onClick={handleAddCateg} >Add Main Categroy</button>
+                </div>
+
+                <hr style={{ border: "1px solid #ccc", margin: "20px 0" }} />
+
+                <div className={styles.stock_box_1}>
+                    <div className={styles.quantity_box}>
+                        <label className={styles.label}>Add Product Sub Category</label>
+                        <input
+                            type="text"
+                            value={SubCategroyName}
+                            onChange={(e) => setSubCategroyName(e?.target.value)}
+                            className={styles.input}
+                        />
+                    </div>
+
+                    <div className={styles.size}>
+                        <label className={styles.label}>Select Main Category</label>
+                        <select
+                            // value={AllCategoryName[0]?.id}
+                            onChange={handleSelectChange}
+                            className={styles.selected}
+                        // defaultValue={AllCategoryName[0]?.name}
+                        >
+                            {
+                                AllCategoryName?.map((e: any, index: any) => (
+                                    <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                        {e?.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                </div>
+                <button type="button"
+                    onClick={handleAddVSubCateg}
+                    className={styles.button_1}>
+                    Add Sub Category
+                </button>
+
+
+                <hr style={{ border: "1px solid #ccc", margin: "20px 0" }} />
+
+
+                <div className={styles.size}>
+                    <select
+                        // value={AllCategoryName[0]?.id}
+                        onChange={handleSelectChange}
+                        className={styles.selected}
+                    // defaultValue={AllCategoryName[0]?.name}
+                    >
+                        {
+                            AllCategoryName?.map((e: any, index: any) => (
+                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                <label className={styles.label}>Upload Photos (max 5)</label>
+                {imageArr.length < 5 ?
+                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                    : ""}
+
+                <div className={styles.imagePreview}>
+                    {imageArr.map((img, index) => (
+                        <div key={index}>
+                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                        </div>
+                    ))}
+                </div>
+                <button type="button"
+                    onClick={handleUpdateCategImage}
+                    className={styles.button_1}>
+                    Add Images
+                </button>
+
+            </div>
+        </div>
+    );
+}
+
+
+// const AddCategoryForm = ()=>{
+//     return()
+// }
 
 
 export {
@@ -1444,5 +1751,6 @@ export {
     AddNewElectricBikeForm,
     AddPageForm,
     AddProductForm,
-    AddBrandForm
+    AddBrandForm,
+    AddCategoryForm
 };
