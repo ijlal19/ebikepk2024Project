@@ -95,7 +95,7 @@ export default function BasicModal({ open, onClose, brand , funct }: any) {
                 <textarea id="description" name="descrption" value={NewDescription} onChange={(e) => setNewDescription(e.target.value)} className={styles.textarea} />
 
 
-                <label htmlFor="logourl" className={styles.label}>Logo Url</label>
+                <label htmlFor="logourl" className={styles.label}>Logo Url</label> 
                 <input id="logourl" name="logourl" value={NewLogoUrl} onChange={(e) => setNewLogoUrl(e.target.value)} className={styles.input} />
 
                 <label htmlFor="videourl" className={styles.label}>Video Url</label>
