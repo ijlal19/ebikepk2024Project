@@ -1,5 +1,5 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { numericOnly } from '@/genericFunctions/geneFunc';
@@ -9,6 +9,9 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import Loader from '../loader/loader';
 const jsCookie = require('js-cookie');
+import CloseIcon from "@mui/icons-material/Close";
+import { getProductCompany } from '@/ebikeShop/Shopfunctions/globalFuntions';
+
 
 let BlogCategory = [
     {
@@ -40,6 +43,28 @@ let PagePosition = [
         PositionName: "other",
         PositionNameShow: "Other"
     },
+]
+let product_size = [
+    {
+        id: 1,
+        SizeName: 'XLL'
+    },
+    {
+        id: 2,
+        SizeName: 'XL'
+    },
+    {
+        id: 3,
+        SizeName: 'Large'
+    },
+    {
+        id: 4,
+        SizeName: 'Medium'
+    },
+    {
+        id: 5,
+        SizeName: 'Small'
+    }
 ]
 
 //////////////////////////////////////////////// EDIT USED BIKE
@@ -537,7 +562,7 @@ const EditNewBikeForm = () => {
     };
 
     const GetBrandName = (id: any) => {
-        const GetbrandObject:any = BrandArr.find((item: any) => item.id === id)
+        const GetbrandObject: any = BrandArr.find((item: any) => item.id === id)
         return GetbrandObject?.brandName
     }
 
@@ -689,27 +714,27 @@ const EditElectricBikeForm = () => {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [AddcityId, setCityID] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-      const [allBrands, setAllBrands] = useState([])
+    const [allBrands, setAllBrands] = useState([])
 
     const { slug, slug1 } = useParams()
     let id = slug1
     const router = useRouter()
 
-  
-    
-        useEffect(()=>{
-            fetchBrands()
-        },[])
-    
-         async function fetchBrands() {
-                const res = await getbrandData();
-                console.log("Brands", res)
-                if (res && res.length > 0) {
-                    setAllBrands(res);
-                } else {
-                    setAllBrands([]);
-                }    
-            }
+
+
+    useEffect(() => {
+        fetchBrands()
+    }, [])
+
+    async function fetchBrands() {
+        const res = await getbrandData();
+        console.log("Brands", res)
+        if (res && res.length > 0) {
+            setAllBrands(res);
+        } else {
+            setAllBrands([]);
+        }
+    }
 
 
     useEffect(() => {
@@ -793,12 +818,12 @@ const EditElectricBikeForm = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-               // { name: "boreAndStroke", label: "Motor" }, // change
-                // { name: "petrolCapacity", label: "Tourque" }, // change
-                // { name: "clutch", label: "Top Speed" }, // change
-                // { name: "transmission", label: "Wheel Size" }, // change
-                // { name: "displacement", label: "Battery Type" }, // change
-                // { name: "compressionRatio", label: "Charging Time" }, // change
+        // { name: "boreAndStroke", label: "Motor" }, // change
+        // { name: "petrolCapacity", label: "Tourque" }, // change
+        // { name: "clutch", label: "Top Speed" }, // change
+        // { name: "transmission", label: "Wheel Size" }, // change
+        // { name: "displacement", label: "Battery Type" }, // change
+        // { name: "compressionRatio", label: "Charging Time" }, // change
 
         const invalidChars = /[\/,?#$!+]/;
 
@@ -946,7 +971,7 @@ const EditElectricBikeForm = () => {
     };
 
     const GetBrandName = (id: any) => {
-        const GetbrandObject:any = allBrands.find((item: any) => item.id === id)
+        const GetbrandObject: any = allBrands.find((item: any) => item.id === id)
         return GetbrandObject?.brandName
     }
 
@@ -992,7 +1017,7 @@ const EditElectricBikeForm = () => {
                             ))}
                         </div>
 
-                        {allBrands?.length > 0 ?  <div className={styles.drop_downBox}>
+                        {allBrands?.length > 0 ? <div className={styles.drop_downBox}>
                             <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
                                 <option value="" disabled selected hidden>{GetBrandName(NewField?.newbrandId)}</option>
                                 {
@@ -1008,7 +1033,7 @@ const EditElectricBikeForm = () => {
                                 <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
                                 <input id="videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input_bike_url} />
                             </div>
-                        </div> : "" }
+                        </div> : ""}
 
                         {/* Other fields */}
                         <div className={styles.all_inputs}>
@@ -1028,8 +1053,8 @@ const EditElectricBikeForm = () => {
                                 { name: "newtyreFront", label: "Tyre Front" },
                                 { name: "newdisplacement", label: "Battery Type" },
                                 { name: "newcompressionRatio", label: "Charging Time" },
-                               
-                               
+
+
 
                                 // { name: "price", label: "Price" },
                                 // { name: "dimention", label: "Dimension" },
@@ -1380,7 +1405,7 @@ const EditPageForm = () => {
             alert("Please enter a Description");
             return;
         }
-        else if (!NewPosition){
+        else if (!NewPosition) {
             alert("Please Select a Position");
             return
         }
@@ -1493,8 +1518,8 @@ const EditBrandForm = () => {
 
     const fetchPageByID = async (id: any) => {
         setIsLoading(true)
-        const res = await getBrandFromId(id , BrandArr)
-        console.log("DataCheck" , res)
+        const res = await getBrandFromId(id, BrandArr)
+        console.log("DataCheck", res)
         if (res && res) {
             setNewBrandName(res[0].brandName)
             setNewLogoUrl(res[0].logoUrl)
@@ -1543,8 +1568,8 @@ const EditBrandForm = () => {
             focus_keyword: NewFocusKeyword,
             meta_description: NewMetaDescription,
             meta_title: NewMetaTitle,
-            vediourl : NewVideoUrl,
-            description : NewDescription,
+            vediourl: NewVideoUrl,
+            description: NewDescription,
         }
         const res = await UpdateBrandById(slug1, obj)
         if (res && res.info == "brand is updated successfully") {
@@ -1602,11 +1627,457 @@ const EditBrandForm = () => {
     );
 }
 
+
+///////////////////////////////////////////////////////// EDIT NEW product
+const EditProductForm = () => {
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [imageArr, setImageArr] = useState([])
+    const [imageFilesProduct, setImageFilesProduct] = useState<File[]>([]);
+    const [imageArrProduct, setImageArrProduct] = useState([])
+    const [isLoading, setIsLoading] = useState(false);
+    const [AllCategoryName, setAllCategoryName] = useState([]);
+    const [SubCategoryName, setSubCategoryName] = useState([]);
+    const [ProductCompany, setProductCompany] = useState([]);
+    const [variants, setVariants] = useState<any>([]);
+    const params = useParams() 
+    const ProductIdParams = params?.slug1   
+
+    const [AllFieldIDs, setAllFieldIds] = useState<any>({
+        sell: false,
+        main_category_id: "",
+        sub_category_id: "",
+        company_id: "",
+        product_size: ""
+    })
+
+    const [productData, setproductData] = useState<any>({
+        productprice: '',
+        product_name: '',
+        product_description: '',
+        sellprice: '',
+        videoUrl: '',
+        quantity: ""
+    });
+
+    let router = useRouter()
+    useEffect(() => {
+        fetchAllCategName()
+        fetchProductById()
+    }, [])
+
+    const fetchProductById = async () => {
+        setIsLoading(true)
+        const res = await getProduct({ id: ProductIdParams })
+        console.log("datares", res?.data)
+        if (res && res?.data && res?.data.length > 0) {
+            setproductData({
+                productprice: res?.data[0]?.product_price,
+                product_name: res?.data[0]?.product_name,
+                product_description: res?.data[0]?.product_description,
+                sellprice: res?.data[0]?.sell_price,
+                videoUrl: res?.data[0]?.videoUrl,
+                quantity: res?.data[0]?.quantity
+            })
+            setAllFieldIds({
+                sell: res?.data[0]?.sell,
+                main_category_id: res?.data[0]?.main_catagory_id,
+                sub_category_id: res?.data[0]?.sub_catagory_id,
+                company_id: res?.data[0]?.company_id,
+                product_size: res?.data?.product_size
+            })
+            setImageArr(res?.data[0]?.images)
+            setImageArrProduct(res?.data[0]?.size_guide)
+            fetchSubCategName(res?.data[0]?.sub_catagory_id)
+
+            setVariants(res?.data[0]?.stocks)
+        }
+        setIsLoading(false)
+    }
+
+    const fetchAllCategName = async () => {
+        const rescategory = await getShopMainCategory();
+        setAllCategoryName(rescategory)
+        const rescompnay = await getProductCompany();
+        setProductCompany(rescompnay)
+    }
+
+    const fetchSubCategName = async (id: any) => {
+        const rescategory = await GetSubCategByMainCateg(id);
+        setSubCategoryName(rescategory)
+    }
+
+    const handleInputChange = (e: any) => {
+        const { name, value } = e.target;
+        setproductData((prev: any) => ({ ...prev, [name]: value }));
+    };
+
+    const handleImageDelete = (index: number, from: any) => {
+        if (from == 'sizeguide') {
+            const updatedImages = imageArr.filter((_, i) => i !== index);
+            const updatedFiles = imageFiles.filter((_, i) => i !== index);
+            setImageArr(updatedImages);
+            setImageFiles(updatedFiles);
+        }
+        else if (from == 'product') {
+            const updatedImages = imageArrProduct.filter((_, i) => i !== index);
+            const updatedFiles = imageFilesProduct.filter((_, i) => i !== index);
+            setImageArrProduct(updatedImages);
+            setImageFilesProduct(updatedFiles);
+        }
+        else {
+            alert("not found variety")
+        }
+    };
+
+    function uploadImage(event: any, from: any) {
+        setIsLoading(true)
+        const reader = new FileReader()
+        reader.readAsDataURL(event.target.files[0])
+
+        reader.onload = (event: any) => {
+
+            const imgElement: any = document.createElement("img");
+            imgElement.src = reader.result;
+
+            imgElement.onload = async (e: any) => {
+
+                const canvas = document.createElement("canvas");
+                const max_width = 600;
+
+                const scaleSize = max_width / e.target.width;
+                canvas.width = max_width;
+                canvas.height = e.target.height * scaleSize;
+
+                const ctx: any = canvas.getContext("2d")
+                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
+
+                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+
+                let imgRes: any = await uplaodImageFunc(obj)
+
+                let _imageArr: any = [...imageArr]
+                _imageArr.push(imgRes.secure_url)
+                let _imageArrProduct: any = [...imageArrProduct]
+                _imageArrProduct.push(imgRes.secure_url)
+
+                if (from == "sizeguide") {
+                    setImageArr(_imageArr)
+                }
+                else if (from == "product") {
+                    setImageArrProduct(_imageArrProduct)
+                }
+            }
+
+        }
+    }
+
+    const handleproductChange = (e: any, from: any) => {
+        const { name, value } = e.target;
+        if (from == 'sell') {
+            if (value == "true") {
+                setAllFieldIds((prev: any) => ({ ...prev, sell: true }));
+            }
+            else {
+                setAllFieldIds((prev: any) => ({ ...prev, sell: false }));
+            }
+        }
+        else if (from == "main") {
+            setAllFieldIds((prev: any) => ({ ...prev, main_category_id: value }));
+            // fetchSubCategName(e?.target?.value)
+        }
+        else if (from == "company") {
+            setAllFieldIds((prev: any) => ({ ...prev, company_id: value }));
+        }
+        else if (from == "size") {
+            setAllFieldIds((prev: any) => ({ ...prev, product_size: value }));
+        }
+        else {
+            setAllFieldIds((prev: any) => ({ ...prev, sub_category_id: value }));
+        }
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!productData.product_name || productData.product_name.length < 2) {
+            alert("Please add a valid Name (min 2 characters)");
+            return;
+        }
+        else if (!productData.productprice) {
+            alert("Please add a Product Price");
+            return;
+        }
+        else if (!productData.product_description || productData.product_description.length < 10) {
+            alert("Please enter a valid product description (min 10 characters)");
+            return;
+        }
+        else if (!productData.sellprice) {
+            alert("Please enter a Product Sell Price");
+            return;
+        }
+        else if (Number(productData.sellprice) > Number(productData.productprice)) {
+            alert("Sell Price cannot be greater than Product Price");
+            return;
+
+        }
+        else if (!AllFieldIDs?.main_category_id) {
+            alert("Please select a Product Category");
+            return;
+        }
+        else if (!AllFieldIDs?.company_id) {
+            alert("Please select a Product Company");
+            return;
+        }
+        else if (!imageArr || imageArr.length === 0) {
+            alert("Please select at least one image!");
+            return;
+        }
+        else if (!imageArrProduct || imageArrProduct.length === 0) {
+            alert("Please select at least one image!");
+            return;
+        }
+        // else if (variants) {
+        //     // if(variants.length > 0){
+        //     variants.map((e: any) => {
+        //         if (!e.product_size || !e.quantity) {
+        //             alert("Please enter size and quantity for all variants");
+        //         }
+        //         return;
+        //     }
+        //     )
+        //     // }
+        // }
+
+        const finalBikeData = {
+            ...productData,
+            ...AllFieldIDs,
+            images: imageArr,
+            size_guide: imageArrProduct
+        }
+        const obj = {
+            company_id: finalBikeData?.company_id,
+            images: imageArr,
+            main_catagory_id: finalBikeData?.main_category_id,
+            on_sell: finalBikeData?.sell,
+            product_description: finalBikeData?.product_description,
+            product_name: finalBikeData?.product_name,
+            product_price: finalBikeData?.productprice,
+            sell_price: finalBikeData?.sellprice,
+            size_guide: imageArrProduct,
+            sub_catagory_id: finalBikeData?.sub_category_id,
+            video_url: finalBikeData?.videoUrl,
+        }
+
+        const res = await UpdateProductDetailById(ProductIdParams, obj);
+        if (res && res.success && res.info == "Updated successfully") {
+            alert("Product Updated Successfully!")
+            router.push('/ebike-panel/dashboard/product-list');
+        } else {
+            alert('Something went wrong!');
+        }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/product-list')
+    }
+
+    const handleAddVariant = () => {
+        if (variants.length >= 5) {
+            alert("Maximum 5 stock boxes allowed!");
+            return;
+        }
+        setVariants([...variants, { product_size: "", quantity: "" }]);
+    };
+
+    const handleRemoveVariant = (index: any) => {
+        const updated = variants.filter((_: any, i: any) => i !== index);
+        setVariants(updated);
+    };
+
+    const handleChange = (index: any, field: any, value: any) => {
+        const updated = [...variants];
+        updated[index][field] = value;
+        setVariants(updated);
+    };
+
+    return (
+        <div className={styles.product_main_box}>
+            <form onSubmit={handleSubmit} className={styles.main}>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Edit Product</p>
+                </div>
+
+                <label htmlFor="product_name" className={styles.label}>Product Name</label>
+                <input id="product_name" name="product_name" value={productData?.product_name} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="productprice" className={styles.label}>Product Price</label>
+                <input id="productprice" name="productprice" value={productData.productprice} onChange={handleInputChange} className={styles.input} />
+
+
+                <label htmlFor="product_description" className={styles.label}>Product Description</label>
+                <input id="product_description" name="product_description" value={productData.product_description} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="sellprice" className={styles.label}>Sell Price</label>
+                <input id="sellprice" name="sellprice" value={productData.sellprice} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
+                <input id="videoUrl" name="videoUrl" value={productData.videoUrl} onChange={handleInputChange} className={styles.input} />
+
+
+                {/* ///////////////////////////////////////////////////////////// SELL DROP DOWN */}
+                <label className={styles.label}>Sell</label>
+                <div className={styles.drop_downBox}>
+                    <select
+                        name="sell"
+                        className={styles.selected}
+                        onChange={(e) => handleproductChange(e, 'sell')}
+                        value={AllFieldIDs?.sell ? "true" : "false"}
+                    >
+                        <option value="true" className={styles.options} style={{ fontSize: '16px' }}>
+                            True
+                        </option>
+                        <option value="false" className={styles.options} style={{ fontSize: '16px' }}>
+                            False
+                        </option>
+                    </select>
+                </div>
+
+                {/* ///////////////////////////////////////////////////////////// MAIN CATEGORY DROP DOWN */}
+                <label className={styles.label}>Main Category</label>
+                <div className={styles.drop_downBox}>
+                    <select name="main_category_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'main')}>
+                        {
+                            AllCategoryName?.map((e: any, index) => (
+                                <option key={index} value={e?.id} selected={AllFieldIDs?.main_category_id == e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                {/* ///////////////////////////////////////////////////////////// SUB CATEGORY DROP DOWN */}
+                <label className={styles.label}>Sub Category</label>
+                {/* {
+                    SubCategoryName.length > 0 ? */}
+                <div className={styles.drop_downBox}>
+                    <select name="sub_category_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'sub')}>
+                        {
+                            SubCategoryName.map((e: any, index) => (
+                                <option key={index} value={e?.id} selected={AllFieldIDs?.sub_category_id == e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+                {/* : ""
+                } */}
+
+                <label className={styles.label}>Product Company</label>
+                <div className={styles.drop_downBox}>
+                    <select name="company_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
+                        <option value="" disabled selected hidden>Select Company</option>
+                        {
+                            ProductCompany.map((e: any, index) => (
+                                <option key={index} value={e?.id} selected={AllFieldIDs?.company_id == e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+
+                {/* ///////////////////////////////////////////////////////////// SIZE GUIDE */}
+                <label className={styles.label}>Upload Size Guide Photos (max 5)</label>
+                {imageArr.length < 5 ?
+                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e, 'sizeguide')} className={styles.fileInput} />
+                    : ""}
+
+                <div className={styles.imagePreview}>
+                    {imageArr.map((img, index) => (
+                        <div key={index}>
+                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <button type="button" onClick={() => handleImageDelete(index, 'sizeguide')}>×</button>
+                        </div>
+                    ))}
+                </div>
+
+                {/* ///////////////////////////////////////////////////////////// PRODUCT PHOTOS */}
+                <label className={styles.label}>Upload Photos (max 5)</label>
+                {imageArrProduct.length < 5 ?
+                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e, "product")} className={styles.fileInput} />
+                    : ""}
+
+                <div className={styles.imagePreview}>
+                    {imageArrProduct.map((img, index) => (
+                        <div key={index}>
+                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <button type="button" onClick={() => handleImageDelete(index, 'product')}>×</button>
+                        </div>
+                    ))}
+                </div>
+
+                {/* ///////////////////////////////////////// QUANTITY AND SIZE BOX  */}
+                {/* {variants.map((item: any, index: any) => (
+                    <div key={index} className={styles.stock_box}>
+                        <div className={styles.quantity_box}>
+                            <label className={styles.label}>Quantity</label>
+                            <input
+                                type="number"
+                                value={item.quantity}
+                                onChange={(e) => handleChange(index, "quantity", e.target.value)}
+                                className={styles.input}
+                            />
+                        </div>
+
+                        <div className={styles.size}>
+                            <label className={styles.label}>Product Size</label>
+                            <select
+                                value={item.product_size || ''} // Ensure a default value is set
+                                //  onChange={(e) => setItem({ ...item, size: Number(e.target.value) })}
+                                onChange={(e) => handleChange(index, "product_size", e.target.value)}
+                                className={styles.selected}
+                            >
+                                {
+                                    item?.product_size ?
+                                        "" : <option value="" disabled selected hidden>Select Size</option>
+                                }
+                                {product_size.map((e: any, i: any) => (
+                                    <option key={i} value={e?.id} selected={item?.product_size ? e?.id == item?.product_size : false} className={styles.options} style={{ fontSize: '16px' }}>
+                                        {e?.SizeName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        {variants.length > 1 && (
+                            <button className={styles.cross_btn}>
+                                <CloseIcon
+                                    className={styles.removeIcon}
+                                    onClick={() => handleRemoveVariant(index)}
+                                />
+                            </button>
+                        )}
+                    </div>
+                ))}
+
+                <button type="button" onClick={handleAddVariant} className={styles.button_1}>
+                    Add More Size & Quantity
+                </button> */}
+                <button type="submit" className={styles.button}>Add Product</button>
+            </form>
+        </div>
+    );
+}
+
 export {
     EditUsedBikeForm,
     EditNewBikeForm,
     EditBlogForm,
     EditPageForm,
     EditBrandForm,
-    EditElectricBikeForm
+    EditElectricBikeForm,
+    EditProductForm
 };

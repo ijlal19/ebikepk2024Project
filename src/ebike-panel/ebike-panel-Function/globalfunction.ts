@@ -945,6 +945,59 @@ function UpdateCategImagesById(id: any, payload: any) {
         });
 }
 
+
+function getProduct(data: any) {
+    return fetch(Gconfig.ebikeApi + `shop/product/get-product-by-id`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+}
+
+function UpdateProductDetailById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `shop/product/update/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+///////////////////////////////////////COMPANY BRAND FUNCTION ///////////////////////////////////////////////////////
+function GetCompanyBrand() {
+    return fetch(Gconfig.ebikeApi + `shop/get-product-company-data`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -1010,7 +1063,11 @@ export {
 
     addNewCategory,
     addNewSubCategory,
-    UpdateCategImagesById
+    UpdateCategImagesById,
+    getProduct,
+    UpdateProductDetailById,
+    
+    GetCompanyBrand
 }
 
 

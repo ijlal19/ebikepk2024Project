@@ -44,7 +44,26 @@ let PageCategory = [
 ]
 
 let product_size = [
-    'XLL', "XL", "Large", "Medium", "Small"
+    {
+        id: 1,
+        SizeName: 'XLL'
+    },
+    {
+        id: 2,
+        SizeName: 'XL'
+    },
+    {
+        id: 3,
+        SizeName: 'Large'
+    },
+    {
+        id: 4,
+        SizeName: 'Medium'
+    },
+    {
+        id: 5,
+        SizeName: 'Small'
+    }
 ]
 
 
@@ -1006,13 +1025,12 @@ const AddProductForm = () => {
     const [AllCategoryName, setAllCategoryName] = useState([]);
     const [SubCategoryName, setSubCategoryName] = useState([]);
     const [ProductCompany, setProductCompany] = useState([]);
-    const [variants, setVariants] = useState<any>([{ size: "", quantity: "" }]);
+    const [variants, setVariants] = useState<any>([{ product_size: "", quantity: "" }]);
     const [AllFieldIDs, setAllFieldIds] = useState<any>({
         sell: false,
         main_category_id: "",
         sub_category_id: "",
         company_id: "",
-        product_size: ""
     })
     const [productData, setproductData] = useState<any>({
         productprice: '',
@@ -1123,9 +1141,9 @@ const AddProductForm = () => {
         else if (from == "company") {
             setAllFieldIds((prev: any) => ({ ...prev, company_id: value }));
         }
-        else if (from == "size") {
-            setAllFieldIds((prev: any) => ({ ...prev, product_size: value }));
-        }
+        // else if (from == "size") {
+        //     setAllFieldIds((prev: any) => ({ ...prev, product_size: value }));
+        // }
         else {
             setAllFieldIds((prev: any) => ({ ...prev, sub_category_id: value }));
         }
@@ -1153,7 +1171,6 @@ const AddProductForm = () => {
         else if (Number(productData.sellprice) > Number(productData.productprice)) {
             alert("Sell Price cannot be greater than Product Price");
             return;
-
         }
         else if (!AllFieldIDs?.main_category_id) {
             alert("Please select a Product Category");
@@ -1190,9 +1207,11 @@ const AddProductForm = () => {
             size_guide: imageArrProduct,
             sub_catagory_id: finalBikeData?.sub_category_id,
             video_url: finalBikeData?.videoUrl,
-
         }
-        console.log("from", variants)
+        const FB = {
+            product: obj,
+            stock: variants
+        }
         const res = await addNewProduct({
             product: obj,
             stock: variants
@@ -1213,7 +1232,7 @@ const AddProductForm = () => {
             alert("Maximum 5 stock boxes allowed!");
             return;
         }
-        setVariants([...variants, { size: "", quantity: "" }]);
+        setVariants([...variants, { product_size: "", quantity: "" }]);
     };
 
     const handleRemoveVariant = (index: any) => {
@@ -1224,6 +1243,7 @@ const AddProductForm = () => {
     const handleChange = (index: any, field: any, value: any) => {
         const updated = [...variants];
         updated[index][field] = value;
+        console.log("from", updated, index, field, value)
         setVariants(updated);
     };
 
@@ -1295,7 +1315,7 @@ const AddProductForm = () => {
                             <select name="sub_category_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'sub')}>
                                 <option value="" disabled selected hidden>Select Category</option>
                                 {
-                                    SubCategoryName.map((e: any, index) => (
+                                    SubCategoryName?.map((e: any, index) => (
                                         <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
                                             {e?.name}
                                         </option>
@@ -1310,7 +1330,7 @@ const AddProductForm = () => {
                     <select name="company_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
                         <option value="" disabled selected hidden>Select Company</option>
                         {
-                            ProductCompany.map((e: any, index) => (
+                            ProductCompany?.map((e: any, index) => (
                                 <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
                                     {e?.name}
                                 </option>
@@ -1366,15 +1386,15 @@ const AddProductForm = () => {
                             <label className={styles.label}>Product Size</label>
                             <select
                                 value={item.size}
-                                onChange={(e) => handleChange(index, "size", e.target.value)}
+                                onChange={(e) => handleChange(index, "product_size", e.target.value)}
                                 className={styles.selected}
                             >
                                 <option value="" disabled hidden>
                                     Select Size
                                 </option>
-                                {product_size.map((size, i) => (
-                                    <option key={i} value={size}>
-                                        {size}
+                                {product_size.map((e, i) => (
+                                    <option key={i} value={e.id}>
+                                        {e?.SizeName}
                                     </option>
                                 ))}
                             </select>
@@ -1632,7 +1652,7 @@ const AddCategoryForm = () => {
             alert("Please select at least one image!");
             return;
         }
-        const res = await UpdateCategImagesById( selectedId ? selectedId : AllCategoryName[0]?.id ,{images : imageArr});
+        const res = await UpdateCategImagesById(selectedId ? selectedId : AllCategoryName[0]?.id, { images: imageArr });
         if (res && res?.success && res?.info === "Updated successfully") {
             fetchCategory()
             setImageArr([])

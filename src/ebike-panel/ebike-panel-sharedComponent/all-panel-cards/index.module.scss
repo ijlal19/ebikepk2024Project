@@ -2116,6 +2116,7 @@
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
+
     .page_header {
         display: flex;
         justify-content: space-between;
@@ -2324,7 +2325,8 @@
             border-top: 1px solid #eee;
             gap: 10px;
         }
-        .link{
+
+        .link {
             width: 100% !important;
             text-decoration: none;
             color: white;
@@ -2935,6 +2937,209 @@
             border-radius: .3rem;
             line-height: 1.5;
             padding: 8px 16px !important;
+        }
+    }
+}
+
+////////////////////////////////////// SHOP RAND LIST CARD SCSS
+.main_brand_list {
+    width: 100%;
+    padding: 0px 0px !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .brand_container {
+        // display: flex;
+        // flex-direction: column;
+
+        .page_header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 20px;
+            box-sizing: border-box;
+
+            .input_box {
+                display: flex;
+                flex-direction: row;
+                border-radius: 5px;
+                border: 1px solid #75737384;
+
+                .input {
+                    width: 200px;
+                    min-width: 100px;
+                    max-width: 180px;
+                    border-radius: 5px;
+                    padding: 8px 10px !important;
+                    outline: none;
+                    border: none;
+                }
+
+                .btn {
+                    cursor: pointer;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: all .5s ease;
+
+                    .icon {
+                        border-radius: 5px;
+                        font-size: 25px;
+                    }
+
+                    &:hover {
+                        background-color: rgba(187, 185, 185, 0.505);
+                    }
+                }
+            }
+
+            .add_new_btn {
+                color: white;
+                border-radius: 5px;
+                padding: 5px 10px;
+                font-size: 14px;
+                background-color: #1976d2;
+                border: 1px solid #1976d2;
+                cursor: pointer;
+                font-family: 'LatoBold';
+                text-transform: uppercase;
+                transition: all .5s ease;
+
+                &:hover {
+                    box-shadow: 0px 0px 10px rgba(156, 155, 155, 0.797);
+                }
+            }
+        }
+
+        .all_card_main {
+            width: 100%;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            column-gap: 20px;
+            row-gap: 20px;
+            justify-content: center !important;
+            margin: auto;
+
+            @media (max-width:1200px) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .brand_box {
+                width: 200px;
+                height: auto;
+                border: 1px solid #88888863;
+                border-radius: 8px;
+                margin: 0px;
+                box-sizing: border-box;
+                display: flex;
+                // justify-content: center;
+                // align-items: center;
+                flex-direction: column;
+                background-color: white;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    box-shadow: 0 5px 15px rgba(48, 47, 47, 0.094);
+                    transform: translateY(-5px);
+                }
+
+                .header {
+                    width: 100%;
+                    padding: 5px 10px;
+                    box-sizing: border-box;
+                    border-bottom: 1px solid #eee;
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #2c3e50;
+                    background-color: whitesmoke;
+                    text-transform: uppercase;
+                    border-top-left-radius: 8px;
+                    border-top-right-radius: 8px;
+                    margin-bottom: 0px;
+                    height: 40px;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    align-items: center !important;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    // padding: 0px 5px;
+                    // font-family: 'LatoBold';
+                    // width: 100%;
+                    .brand_name {
+                        padding: 0px;
+                        margin: 0px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                        text-transform: uppercase;
+                        font-family: sans-serif;
+                    }
+
+                }
+
+                .brand_image {
+                    width: 100px;
+                    margin: 10px auto 10px auto;
+                    height: 70px;
+                    // margin: auto;
+                }
+
+                .actions {
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 10px;
+                    padding: 10px !important;
+                    box-sizing: border-box;
+                    background-color: whitesmoke;
+
+                    // .action_btn{
+                    .action_btn {
+                        padding: 8px 15px;
+                        border-radius: 4px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        color: white;
+
+                        background-color: #1976d2;
+                        border: none;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
+                    .action_btn1 {
+                        padding: 8px 15px;
+                        border-radius: 4px;
+                        font-size: 15px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        color: white;
+                        background-color: #e74c3c;
+                        border: none;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
+
+                    // }
+                }
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 'use client';
-import {EditUsedBikeForm , EditNewBikeForm, EditBlogForm, EditPageForm, EditBrandForm, EditElectricBikeForm} from "@/ebike-panel/ebike-panel-sharedComponent/edit-forms";
+import {EditUsedBikeForm , EditNewBikeForm, EditBlogForm, EditPageForm, EditBrandForm, EditElectricBikeForm, EditProductForm} from "@/ebike-panel/ebike-panel-sharedComponent/edit-forms";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
@@ -37,6 +37,9 @@ const DashBoard_form = () => {
         }
         else if (check == 'edit-electric-bike') {
             return <EditElectricBikeForm />
+        }
+        else if (check == 'edit-product') {
+            return <EditProductForm />
         }
         
     }
