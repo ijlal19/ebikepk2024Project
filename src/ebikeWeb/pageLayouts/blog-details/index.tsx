@@ -214,7 +214,9 @@ const BlogDetails = () => {
                 </Typography>
 
                 <Typography className={styles.profile_box}>
-                  <Avatar alt="Remy Sharp" sx={{ width: 26, height: 26, marginRight: 1 }} src={DataBlog.featuredImage} />
+                  <Avatar alt="Remy Sharp" sx={{ width: 26, height: 26, marginRight: 1 }} src={DataBlog?.featuredImage?.includes(" #$# ")
+                    ? DataBlog.featuredImage.split(" #$# ")[0].trim()
+                    : DataBlog?.featuredImage} />
                   <span>
                     <span style={{ color: 'grey' }}>By</span> <span style={{ marginRight: 8 }}>{DataBlog.authorname}</span> <span style={{ color: 'grey', marginRight: 8 }}>- On</span> {DataBlog.createdAt.slice(0, 10)}
                   </span>
@@ -344,11 +346,11 @@ const BlogDetails = () => {
                 }
               </Box>
 
-               <Box className={styles.blog_add}>
+              <Box className={styles.blog_add}>
                 <Link href='/blog'>
-                <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
+                  <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
                 </Link>
-               </Box>
+              </Box>
               {/* <Box className={styles.shortBlog_main}>
                 <Typography className={styles.heading}>More Blogs</Typography>
                 {
