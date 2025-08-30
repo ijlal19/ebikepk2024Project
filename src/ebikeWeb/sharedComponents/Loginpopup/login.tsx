@@ -2,7 +2,7 @@
 import { Avatar, Container, Divider, Grid, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, OutlinedInput, TextField, Typography } from '@mui/material'
 import { validateEmail, userLogin } from "@/genericFunctions/geneFunc";
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import Button from '@mui/material/Button';
 import styles from './index.module.scss';
@@ -13,6 +13,16 @@ import Link from 'next/link';
 const jsCookie = require('js-cookie');
 import GoogleLoginButton from '../googleLoginComp';
 
+import {
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  ConfirmationResult,
+  onAuthStateChanged,
+  User,
+  signOut,
+} from "firebase/auth";
+import { auth } from "@/lib/firebase";
+
 export default function LoginPopup({props,values}: any) {
   
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +32,13 @@ export default function LoginPopup({props,values}: any) {
   const [isLoading, setIsLoading] = useState(false)
   
  
+  const [phone, setPhone] = useState("+923001234567"); // E.164 format
+  const [otp, setOtp] = useState("");
+  const [step, setStep] = useState<"enter-phone" | "enter-otp" | "done">("enter-phone");
+  const confirmationRef = useRef<ConfirmationResult | null>(null);
+  const recaptchaRef = useRef<HTMLDivElement | null>(null);
+  const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
+
 
   useEffect(() => {
 
@@ -48,9 +65,65 @@ export default function LoginPopup({props,values}: any) {
     })(document, "script", "facebook-jssdk");
   }, []);
 
+    useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (recaptchaVerifierRef.current) return; // already initialized
 
+    recaptchaVerifierRef.current = new RecaptchaVerifier(
+      auth,
+      recaptchaRef.current!,
+      {
+        size: "invisible",
+      }
+    );
+  }, []);
+
+
+    const sendCodePhone = async () => {
+    try {
+      // setLoading(true);
+      setIsLoading(true)
+      if (!recaptchaVerifierRef.current) throw new Error("reCAPTCHA missing");
+      const confirmation = await signInWithPhoneNumber(
+        auth,
+        phone.trim(),
+        recaptchaVerifierRef.current
+      );
+      confirmationRef.current = confirmation;
+      setStep("enter-otp");
+    } catch (err: any) {
+      alert(err?.message ?? "Failed to send code");
+    } finally {
+      // setLoading(false);
+      setIsLoading(false)
+    }
+  };
+
+  const verifyCodePhone = async () => {
+    try {
+      // setLoading(true);
+      setIsLoading(true)
+      if (!confirmationRef.current) throw new Error("No confirmation");
+      const result = await confirmationRef.current.confirm(otp.trim());
+      // result.user logged in
+      console.log(result, result)
+      setStep("done");
+    } catch (err: any) {
+      alert(err?.message ?? "Invalid code");
+    } finally {
+      setIsLoading(false)
+      // setLoading(false);
+    }
+  };
+
+  // const logoutPhone = async () => {
+  //   await signOut(auth);
+  //   setStep("enter-phone");
+  //   setOtp("");
+  // };
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -124,6 +197,7 @@ export default function LoginPopup({props,values}: any) {
         aria-describedby="modal-modal-description"
 
       >
+      <>
         <Box className={styles.login_main}>
           <Container className={styles.login_container}>
             <div className={styles.login_form}>
@@ -131,6 +205,53 @@ export default function LoginPopup({props,values}: any) {
                   <img className={styles.ebike_logo} src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' />
                   <h2 className={styles.login_heading}>Sign in</h2>
               </Grid>
+
+          
+              {jsCookie.get("phone_login") == "yes" ? <div>
+              <div className="space-y-3">
+                <label className="block text-sm">Phone:</label>
+                <input
+                  className="w-full rounded border p-2"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="+923001234567"
+                />
+                <button
+                  onClick={sendCodePhone}
+                  disabled={false}
+                  className="w-full rounded bg-black p-2 text-white disabled:opacity-50"
+                >
+                  {false ? "Sending..." : "Send Code"}
+                </button>
+              {/* Invisible or visible reCAPTCHA container */}
+              {/* <div ref={recaptchaRef} id="recaptcha-container" /> */}
+            </div>
+
+            <div className="space-y-3">
+              <label className="block text-sm">Enter OTP:</label>
+              <input
+                className="w-full rounded border p-2"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                placeholder="123456"
+              />
+              <button
+                onClick={verifyCodePhone}
+                disabled={false}
+                className="w-full rounded bg-black p-2 text-white disabled:opacity-50"
+              >
+                {false ? "Verifying..." : "Verify & Login"}
+              </button>
+              <button
+                onClick={() => setStep("enter-phone")}
+                className="w-full rounded border p-2"
+              >
+                Change Number
+              </button>
+            </div>
+
+
+            </div> : "" }
 
               <TextField
                 placeholder='Email*'
@@ -201,10 +322,14 @@ export default function LoginPopup({props,values}: any) {
             </div>
           </Container>
         </Box>
+
+
+
+      </>
       </Modal>
 
       <span onClick={()=>props.showmodal('showloginpopup')} id="general_login_btn" style={{ visibility:"hidden" }}> login </span>
-
+      <div id="recaptcha-container" ref={recaptchaRef} />
     </div>
   );
 }
