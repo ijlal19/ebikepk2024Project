@@ -886,6 +886,65 @@ function DeleteProductbyId(id: any) {
         });
 }
 
+/////////////////////////////////////// ADD CATEGORY FUNCTION ///////////////////////////////////////////////////////
+function addNewCategory(data: any) {
+     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `shop/add-main-catagory`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function addNewSubCategory(data: any) {
+     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `shop/add-sub-catagory`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function UpdateCategImagesById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `shop/main-category/update/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -947,7 +1006,11 @@ export {
     GetSubCategByMainCateg,
     GetProductCompany,
     addNewProduct,
-    DeleteProductbyId
+    DeleteProductbyId,
+
+    addNewCategory,
+    addNewSubCategory,
+    UpdateCategImagesById
 }
 
 
