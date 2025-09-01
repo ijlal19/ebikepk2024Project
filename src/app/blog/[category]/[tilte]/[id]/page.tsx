@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const blog = await getSingleBlogData(id)
 
     return {
-      title: blog.blogTitle + ' | ebike.pk',
+      title: blog?.blogTitle + ' | ebike.pk',
       description: blog.meta_description,
       openGraph: {
         title:  blog.blogTitle + ' | ebike.pk',
