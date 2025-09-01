@@ -293,7 +293,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                 <Box className={styles.price_box}>
                                   <Box className={styles.price}>
                                     Rs: {priceWithCommas(e?.bike?.price)}
-                                  </Box>
+                                  </Box> 
                                 </Box>
                                 : ""
                             }
