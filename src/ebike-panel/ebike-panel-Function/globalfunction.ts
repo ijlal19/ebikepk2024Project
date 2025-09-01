@@ -824,7 +824,7 @@ function getShopCategory(data: any) {
         })
 }
 
-function GetSubCategByMainCateg(id:any) {
+function GetSubCategByMainCateg(id: any) {
     return fetch(Gconfig.ebikeApi + `shop/get-sub-catagory-data-by-main-catagory/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
@@ -888,7 +888,7 @@ function DeleteProductbyId(id: any) {
 
 /////////////////////////////////////// ADD CATEGORY FUNCTION ///////////////////////////////////////////////////////
 function addNewCategory(data: any) {
-     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `shop/add-main-catagory`, {
@@ -906,7 +906,7 @@ function addNewCategory(data: any) {
 }
 
 function addNewSubCategory(data: any) {
-     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `shop/add-sub-catagory`, {
@@ -1041,7 +1041,7 @@ function DeleteBrandCompany(id: any) {
 }
 
 function addNewBrandCompany(data: any) {
-     const userCookie = jsCookie.get("userData_ebike_panel");
+    const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `shop/add-product-company`, {
@@ -1057,6 +1057,53 @@ function addNewBrandCompany(data: any) {
             return data
         })
 }
+
+//////////////////////////////////////// PENDING ORDER LIST FUNCTION ///////////////////////////////////////////////////////
+function GetAllOrders() {
+    return fetch(Gconfig.ebikeApi + `shop/oder-details/get-oders-detail`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function CancelOrderPending(orderId :any , id: any, payload: any) {
+
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    let resStatus = -1
+    return fetch(Gconfig.ebikeApi + `shop/oder-details/update/${orderId}/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => {
+            resStatus = response.status
+            response.json()
+        })
+        .then(data => {
+            if (resStatus == 204) {
+                return { success: true }
+            }
+            else {
+                return { success: false }
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 
 export {
     PostLogin,
@@ -1126,11 +1173,14 @@ export {
     UpdateCategImagesById,
     getProduct,
     UpdateProductDetailById,
-    
+
     GetCompanyBrand,
     UpdateBrandCompany,
     DeleteBrandCompany,
-    addNewBrandCompany
+    addNewBrandCompany,
+
+    GetAllOrders,
+    CancelOrderPending
 }
 
 
@@ -1139,3 +1189,7 @@ export {
 
 // approve
 // https://ebikepk-server-nodejs.herokuapp.com/api/classified/approve-used-bike/9163
+
+// shop/oder-details/update/622/41  order_status
+// :
+// "cancel"

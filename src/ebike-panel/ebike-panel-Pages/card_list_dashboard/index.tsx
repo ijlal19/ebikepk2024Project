@@ -5,6 +5,7 @@ import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalf
 import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import { useEffect } from "react";
+import OrderListPage from "@/ebike-panel/ebike-panel-sharedComponent/Order-list-page";
 
 const Dashboard_page = () => {
 
@@ -70,6 +71,9 @@ const Dashboard_page = () => {
         }
         else if(route == "shop-brand-list"){
             return <ShopBrand />
+        }
+        else if(route == "order-list"){
+            return <OrderListPage />
         }
     }
 
