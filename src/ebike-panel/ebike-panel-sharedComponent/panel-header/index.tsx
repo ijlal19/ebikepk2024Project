@@ -150,11 +150,11 @@ const NavOptionArray = [
             {
                 OptionName: "Add Shop Category",
                 OptionRoute: "add-shop-category"
+            },
+            {
+                OptionName: "Shop Brand List",
+                OptionRoute: "shop-brand-list"
             }
-            // {
-            //     OptionName: "Shop rand List",
-            //     OptionRoute: ""
-            // },
             // {
             //     OptionName: "Order List",
             //     OptionRoute: ""

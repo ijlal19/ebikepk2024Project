@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -250,7 +250,7 @@ const Used_bike_card: any = () => {
                                                                 e.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                        <img src={cloudinaryLoader(imgUrl, 300, 'auto')} alt={e?.title} className={styles.image} />
+                                                                            <img src={cloudinaryLoader(imgUrl, 300, 'auto')} alt={e?.title} className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
@@ -2242,7 +2242,7 @@ const ProductList_Card = () => {
                                     </div>
 
                                     <div className={styles.card_actions}>
-                                        <a href={`/ebike-panel/dashboard/edit-Shop/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                        <a href={`/ebike-panel/dashboard/edit-product/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
                                             <button className={`${styles.action_btn} ${styles.edit_btn}`}
                                             // onClick={() => handleEditShop(e?.id)}
                                             >
@@ -2323,7 +2323,7 @@ const Electric_Bike_Card = () => {
             setAllBrands(res);
         } else {
             setAllBrands([]);
-        }    
+        }
     }
 
     const fetchAllNewBike = async (_page: number) => {
@@ -2334,7 +2334,7 @@ const Electric_Bike_Card = () => {
                 // debugger
                 const filtered = res?.filter((bike: any) =>
                     bike?.focus_keyword?.toLowerCase().includes('electric-bike')
-        )       ;
+                );
                 setAllNewBikeForFilter(filtered);
                 setFilteredBikes(filtered);
                 setCurrentPage(_page);
@@ -2394,7 +2394,7 @@ const Electric_Bike_Card = () => {
 
     return (
         <div className={styles.main_new_bike}>
-            
+
             <New_header />
 
             {!IsLoading ? (
@@ -2532,6 +2532,86 @@ const Electric_Bike_Card = () => {
     );
 };
 
+/////////////////////////////////////////////////////// SHOP BRAND CARD
+const ShopBrand = () => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [allBrands, setAllBrands] = useState([])
+
+    useEffect(() => {
+        fetchBrands()
+    }, [])
+    const fetchBrands = async () => {
+        setIsLoading(true)
+        const res = await GetCompanyBrand();
+        console.log("Brands", res)
+        if (res && res.length > 0) {
+            setAllBrands(res);
+        } else {
+            setAllBrands([]);
+        }
+        setIsLoading(false)
+    }
+    return (
+        <div className={styles.main_brand_list}>
+            <New_header />
+            {
+                !isLoading ? (
+                    <div className={styles.brand_container}>
+                        <div className={styles.page_header}>
+                            <form className={styles.input_box}>
+                                <input
+                                    type="text"
+                                    // value={searchTerm}
+                                    // onChange={handleSearch}
+                                    placeholder='Search Brand with Name'
+                                    className={styles.input} />
+                                <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                            </form>
+                            {/* {filteredBlog?.length > 0 && (
+                                <div className={styles.used_bike_list_pagination}>
+                                    <Pagination
+                                        count={totalPage}
+                                        onChange={handlePaginationChange}
+                                        page={currentPage}
+                                        size="medium"
+                                    />
+                                </div>
+                            )} */}
+                            <button className={styles.add_new_btn}>
+                                <Link href="/ebike-panel/dashboard/create-blog-post" sx={{
+                                    color: "white", textDecoration: 'none'
+                                }} >Add New Company Brand</Link></button>
+                        </div>
+                        <div className={styles.all_card_main}>
+                        {
+                            allBrands?.map((e: any, i: any) => {
+                                return (
+                                    <div className={styles.brand_box} key={i}>
+                                        <div className={styles.header}>
+                                            <p className={styles.brand_name}>{e?.name || "N/A"}</p>
+                                            {/* <span className={styles.brand_id}>Brand ID: {e?.id || "N/A"}</span> */}
+                                        </div>
+                                        <img src={e?.logoUrl} alt={e?.name} className={styles.brand_image} />
+                                        <div className={styles.actions}>
+                                            <button className={styles.action_btn}>Edit</button>
+                                            <button className={styles.action_btn1}>Delete</button>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        </div>
+                    </div>
+                ) : (
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
+                )
+            }
+        </div>
+    )
+}
+
 export {
     Used_bike_card,
     New_bike_card,
@@ -2542,5 +2622,6 @@ export {
     AllBrands_Card,
     AllCities_Card,
     ProductList_Card,
-    Electric_Bike_Card
+    Electric_Bike_Card,
+    ShopBrand
 }

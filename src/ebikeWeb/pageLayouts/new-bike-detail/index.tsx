@@ -303,7 +303,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
 
                           {/* BIKE INFORMATION BOX */}
                           <Box className={styles.bike_information_grid1}>
-                            <Typography style={{ margin: "10px 0px", padding: "0px", color: "black", fontSize: "14px" }} className={styles.desc} dangerouslySetInnerHTML={{ __html: e?.bike?.description }}></Typography>
+                            <Typography style={{ margin: "10px 0px", padding: "0px", color: "black", fontSize: "15px" }} className={styles.desc} dangerouslySetInnerHTML={{ __html: e?.bike?.description }}></Typography>
 
                             <Box className={styles.information_table}>
                               <Grid container>
