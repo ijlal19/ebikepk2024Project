@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -15,7 +15,7 @@ import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import 'swiper/css';
-import BasicModal from "./popup";
+import { AddShopBrandPopup, BasicModal, ShopBrandPopup } from "./popup";
 
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
@@ -2536,21 +2536,83 @@ const Electric_Bike_Card = () => {
 const ShopBrand = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [allBrands, setAllBrands] = useState([])
+    const [displayedAllPages, setdisplayedAllPages] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [filteredAllCompanies, setfilteredAllCompanies] = useState([]);
+    const itemsPerPage = 15;
 
     useEffect(() => {
-        fetchBrands()
+        const filtered = allBrands.filter((bike: any) =>
+            bike?.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setfilteredAllCompanies(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, allBrands]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setdisplayedAllPages(filteredAllCompanies.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredAllCompanies.length / itemsPerPage));
+    }, [filteredAllCompanies, currentPage]);
+
+    useEffect(() => {
+        fetchBrands(1)
     }, [])
-    const fetchBrands = async () => {
+
+    const fetchBrands = async (_page: any) => {
         setIsLoading(true)
         const res = await GetCompanyBrand();
         console.log("Brands", res)
         if (res && res.length > 0) {
             setAllBrands(res);
+            setfilteredAllCompanies(res);
+            setCurrentPage(_page);
         } else {
             setAllBrands([]);
+            setfilteredAllCompanies([]);
+            setdisplayedAllPages([]);
+            setCurrentPage(1);
+            setTotalPage(0);
         }
         setIsLoading(false)
     }
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const [open, setOpen] = useState(false);
+    const [Addopen, setAddOpen] = useState(false);
+    const [selectedBrand, setSelectedBrand] = useState<any>([]);
+
+    const handleEditBrandDATA = (id: any) => {
+        const brand = displayedAllPages.find((b: any) => b.id == id);
+        setSelectedBrand(brand);
+        setOpen(true);
+    };
+    const handleAddBrand = () => {
+        setAddOpen(true);
+    }
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Brand?')
+        if (!isConfirm) return;
+        const res = await DeleteBrandCompany(id);
+        if (res && res.info == 'Deleted!' && res?.success) {
+            fetchBrands(1);
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
     return (
         <div className={styles.main_brand_list}>
             <New_header />
@@ -2561,13 +2623,13 @@ const ShopBrand = () => {
                             <form className={styles.input_box}>
                                 <input
                                     type="text"
-                                    // value={searchTerm}
-                                    // onChange={handleSearch}
+                                    value={searchTerm}
+                                    onChange={handleSearch}
                                     placeholder='Search Brand with Name'
                                     className={styles.input} />
                                 <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                             </form>
-                            {/* {filteredBlog?.length > 0 && (
+                            {allBrands?.length > 0 && (
                                 <div className={styles.used_bike_list_pagination}>
                                     <Pagination
                                         count={totalPage}
@@ -2576,30 +2638,38 @@ const ShopBrand = () => {
                                         size="medium"
                                     />
                                 </div>
-                            )} */}
-                            <button className={styles.add_new_btn}>
-                                <Link href="/ebike-panel/dashboard/create-blog-post" sx={{
-                                    color: "white", textDecoration: 'none'
-                                }} >Add New Company Brand</Link></button>
+                            )}
+                            <button className={styles.add_new_btn} onClick={handleAddBrand} >Add New Company Brand</button>
                         </div>
-                        <div className={styles.all_card_main}>
-                        {
-                            allBrands?.map((e: any, i: any) => {
-                                return (
-                                    <div className={styles.brand_box} key={i}>
-                                        <div className={styles.header}>
-                                            <p className={styles.brand_name}>{e?.name || "N/A"}</p>
-                                            {/* <span className={styles.brand_id}>Brand ID: {e?.id || "N/A"}</span> */}
+                        <div className={styles.all_card_main} style={{ display: displayedAllPages.length > 0 ? 'grid' : 'block' }}>
+                            {
+                                displayedAllPages.length > 0 ? (
+                                    <>
+                                        {
+                                            displayedAllPages?.map((e: any, i: any) => {
+                                                return (
+                                                    <div className={styles.brand_box} key={i}>
+                                                        <div className={styles.header}>
+                                                            <p className={styles.brand_name}>{e?.name || "N/A"}</p>
+                                                            {/* <span className={styles.brand_id}>Brand ID: {e?.id || "N/A"}</span> */}
+                                                        </div>
+                                                        <img src={e?.logoUrl} alt={e?.name} className={styles.brand_image} />
+                                                        <div className={styles.actions}>
+                                                            <button className={styles.action_btn} onClick={() => handleEditBrandDATA(e.id)} >Edit</button>
+                                                            <button className={styles.action_btn1} onClick={() => handleDelete(e?.id)} >Delete</button>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </>
+                                ) :
+                                    (
+                                        <div className={styles.no_results}>
+                                            <p>No Brand Company found matching your search criteria.</p>
                                         </div>
-                                        <img src={e?.logoUrl} alt={e?.name} className={styles.brand_image} />
-                                        <div className={styles.actions}>
-                                            <button className={styles.action_btn}>Edit</button>
-                                            <button className={styles.action_btn1}>Delete</button>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
+                                    )
+                            }
                         </div>
                     </div>
                 ) : (
@@ -2608,6 +2678,8 @@ const ShopBrand = () => {
                     </div>
                 )
             }
+            <ShopBrandPopup open={open} onClose={() => setOpen(false)} brand={selectedBrand} funct={fetchBrands} />
+            <AddShopBrandPopup open={Addopen} onClose={() => setAddOpen(false)} funct={fetchBrands} />
         </div>
     )
 }

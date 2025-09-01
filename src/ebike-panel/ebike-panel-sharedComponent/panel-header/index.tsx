@@ -154,11 +154,11 @@ const NavOptionArray = [
             {
                 OptionName: "Shop Brand List",
                 OptionRoute: "shop-brand-list"
+            },
+            {
+                OptionName: "Order List",
+                OptionRoute: "order-list"
             }
-            // {
-            //     OptionName: "Order List",
-            //     OptionRoute: ""
-            // },
             // {
             //     OptionName: "Add Coupon Code",
             //     OptionRoute: ""

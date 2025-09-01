@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { UpdateBrandById } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -13,22 +13,22 @@ const style = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
+    // bgcolor: "background.paper",
+    // boxShadow: 24,
+    // p: 4,
 };
 
-export default function BasicModal({ open, onClose, brand , funct }: any) {
+const BasicModal = ({ open, onClose, brand, funct }: any) => {
 
     const [NewBrandName, setNewBrandName] = useState('');
     const [NewVideoUrl, setNewVideoUrl] = useState('');
     const [NewMetaTitle, setNewMetaTitle] = useState('');
     const [NewDescription, setNewDescription] = useState('');
     const [NewMetaDescription, setNewMetaDescription] = useState('');
-    const [NewFocusKeyword, setNewFocusKeyword] = useState( '');
+    const [NewFocusKeyword, setNewFocusKeyword] = useState('');
     const [NewLogoUrl, setNewLogoUrl] = useState('');
 
-      React.useEffect(() => {
+    React.useEffect(() => {
         if (brand) {
             setNewBrandName(brand?.brandName || "");
             setNewVideoUrl(brand?.vediourl || "");
@@ -71,9 +71,9 @@ export default function BasicModal({ open, onClose, brand , funct }: any) {
         }
         const res = await UpdateBrandById(brand?.id, obj)
         if (res) {
-             alert("✅ Brand updated successfully!");
+            alert("Brand updated successfully!");
             onClose();          // modal close
-            funct(1); 
+            funct(1);
         }
         else {
             alert('Something is Wrong!')
@@ -113,3 +113,131 @@ export default function BasicModal({ open, onClose, brand , funct }: any) {
         </Modal>
     );
 }
+
+const ShopBrandPopup = ({ open, onClose, brand, funct }: any) => {
+    const [Name, setName] = useState('');
+    const [LogoUrl, setLogoUrl] = useState('');
+    React.useEffect(() => {
+        if (brand) {
+            setName(brand?.name || "")
+            setLogoUrl(brand?.logoUrl || "")
+        }
+    }, [brand])
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
+        if (invalidChars.test(Name)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        if (!Name || Name.length < 2) {
+            alert("Please add a valid Brand Name (min 3 characters)");
+            return;
+        }
+        else if (!LogoUrl) {
+            alert("Please enter a Logo Url");
+            return;
+        }
+        const obj = {
+            name: Name,
+            logoUrl: LogoUrl,
+        }
+        const res = await UpdateBrandCompany(brand?.id, obj)
+        if (res && res?.info == "brand is updated successfully") {
+            alert("Brand updated successfully!");
+            onClose();
+            funct(1);
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            // className={styles.modal}
+            // style={style}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={style}>
+            <form onSubmit={handleSubmit} className={styles.main_shop} >
+                <label htmlFor="name" className={styles.label} >Brand Name:</label>
+                <input type="text" id="name" value={Name} className={styles.input} onChange={(e: any) => setName(e?.target.value)} />
+
+                <label htmlFor="logo" className={styles.label} >Logo URL:</label>
+                <input type="text" id="logo" value={LogoUrl} className={styles.input} onChange={(e: any) => setLogoUrl(e?.target.value)} />
+
+                <button type="submit" className={styles.btn} >Save Edit</button>
+            </form>
+            </Box>
+        </Modal>
+    )
+}
+
+const AddShopBrandPopup = ({ open, onClose, funct }: any) => {
+    const [Name, setName] = useState('');
+    const [LogoUrl, setLogoUrl] = useState('');
+    // React.useEffect(() => {
+    //     if (brand) {
+    //         setName(brand?.name || "")
+    //         setLogoUrl(brand?.logoUrl || "")
+    //     }
+    // }, [brand])
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        const invalidChars = /[\/,?#$!+]/;
+        if (invalidChars.test(Name)) {
+            alert("Please remove special characters.");
+            return;
+        }
+        if (!Name || Name.length < 2) {
+            alert("Please add a valid Brand Name (min 3 characters)");
+            return;
+        }
+        else if (!LogoUrl) {
+            alert("Please enter a Logo Url");
+            return;
+        }
+        const obj = {
+            name: Name,
+            logoUrl: LogoUrl,
+        }
+        const res = await addNewBrandCompany(obj)
+        if (res && res?.info == "Add Company Successfully") {
+            alert("Brand updated successfully!");
+            onClose();
+            funct(1);
+        }
+        else {
+            alert('Something is Wrong!')
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={style}>
+            <form onSubmit={handleSubmit} className={styles.main_shop} >
+                <label htmlFor="name" className={styles.label} >Brand Name:</label>
+                <input type="text" id="name" placeholder="Brand Name" className={styles.input} onChange={(e: any) => setName(e?.target.value)} />
+
+                <label htmlFor="logo" className={styles.label} >Logo URL:</label>
+                <input type="text" id="logo" placeholder="Logo URL" className={styles.input} onChange={(e: any) => setLogoUrl(e?.target.value)} />
+
+                <button type="submit" className={styles.btn} >Add Brand</button>
+            </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, ShopBrandPopup , AddShopBrandPopup }

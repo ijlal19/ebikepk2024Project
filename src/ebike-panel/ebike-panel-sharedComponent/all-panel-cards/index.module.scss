@@ -2956,6 +2956,7 @@
         // flex-direction: column;
 
         .page_header {
+            width: 100% !important;
             display: flex;
             justify-content: space-between;
             padding: 20px 20px;
@@ -3020,7 +3021,6 @@
             width: 100%;
             padding: 10px 20px;
             box-sizing: border-box;
-            display: grid;
             grid-template-columns: repeat(5, 1fr);
             column-gap: 20px;
             row-gap: 20px;
@@ -3029,6 +3029,17 @@
 
             @media (max-width:1200px) {
                 grid-template-columns: repeat(3, 1fr);
+            }
+
+            .no_results {
+                text-align: center;
+                width: 100%;
+                min-width: 1000px !important;
+                padding: 40px;
+                background-color: #fff;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+                color: #7f8c8d;
+                font-size: 16px;
             }
 
             .brand_box {
