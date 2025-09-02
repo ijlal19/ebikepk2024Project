@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import { useEffect } from "react";
 import OrderListPage from "@/ebike-panel/ebike-panel-sharedComponent/Order-list-page";
+import CouponCode from "@/ebike-panel/ebike-panel-sharedComponent/Coupon-list";
 
 const Dashboard_page = () => {
 
@@ -74,6 +75,9 @@ const Dashboard_page = () => {
         }
         else if(route == "order-list"){
             return <OrderListPage />
+        }
+        else if(route == "coupon-list"){
+            return <CouponCode />
         }
     }
 

@@ -1,12 +1,12 @@
 'use client';
-import { CancelOrderPending, GetAllOrders, ProcessOrderPending } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import { add3Dots } from "@/genericFunctions/geneFunc";
 import React, { useEffect, useState } from "react";
-import { Pagination } from "@mui/material";
 import styles from './index.module.scss';
 import Loader from "../../loader/loader";
+import { Pagination } from "@mui/material";
+import { add3Dots } from "@/genericFunctions/geneFunc";
+import { CancelOrderPending, CompleteOrder, GetAllOrders, ReturnOrder } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
-const PendingOrders = () => {
+const CompleteOrderList = () => {
     const [AllOrders, setAllOrders] = useState([]);
     const [filteredAllOrders, setfilteredAllOrders] = useState([]);
     const [displayedAllOrders, setdisplayedAllOrders] = useState([]);
@@ -31,12 +31,10 @@ const PendingOrders = () => {
         setIsLoading(true)
         const res = await GetAllOrders()
         if (res && res?.oders.length > 0) {
-            const pendingOrders = res.oders.filter((order: any) => order.order_status === "pending");
+            const CompleteOrders = res.oders.filter((order: any) => order.order_status === "done");
 
-            setAllOrders(pendingOrders);
-            setfilteredAllOrders(pendingOrders);
-            // setAllOrders(res?.oders)
-            // setfilteredAllOrders(res?.oders)
+            setAllOrders(CompleteOrders);
+            setfilteredAllOrders(CompleteOrders);
             setCurrentPage(pageNo)
         }
         else {
@@ -47,7 +45,6 @@ const PendingOrders = () => {
             setTotalPage(0)
         }
         setIsLoading(false)
-        // window.scrollTo(0, 0);
     }
 
     const handlePaginationChange = (event: any, page: any) => {
@@ -55,44 +52,20 @@ const PendingOrders = () => {
         window.scrollTo(0, 0);
     };
 
-    const handleCancel = async (orderId: any, id: any) => {
-        const confirmCancel = window.confirm(
-            "Are you sure you want to cancel this order?"
-        );
-        if (!confirmCancel) return;
+    const handleReturn = async (orderId: any, id: any) => {
 
         const payload = {
-            order_status: "cancel",
+            order_status: "return",
         };
 
-        const res :any = await CancelOrderPending(orderId, id, payload);
+        const res: any = await ReturnOrder(orderId, id, payload);
 
-        if (res && res?.success  && res?.info == "Updated successfully") {
+        if (res && res?.success && res?.info == "Updated successfully") {
             fetchAllOrders(1);
         } else {
             alert("Something went wrong, please try again!");
         }
     };
-    
-    const handleProcess = async (orderId: any, id: any) => {
-        const confirmCancel = window.confirm(
-            "Are you sure you want to Process this order?"
-        );
-        if (!confirmCancel) return;
-
-        const payload = {
-            order_status: "process",
-        };
-
-        const res :any = await ProcessOrderPending(orderId, id, payload);
-
-        if (res && res?.success && res?.info == "Updated successfully" ) {
-            fetchAllOrders(1);
-        } else {
-            alert("Something went wrong, please try again!");
-        }
-    };
-
 
     return (
         <div className={styles.main}>
@@ -105,7 +78,7 @@ const PendingOrders = () => {
                                     <div className={styles.card_container}>
                                         {
                                             displayedAllOrders?.map((e: any, i: any) => {
-                                                if (e?.order_status !== "pending") return null;
+                                                if (e?.order_status !== "done") return null;
                                                 return (
                                                     <div className={styles.card_main} key={i} >
                                                         <div className={styles.header}>
@@ -125,9 +98,10 @@ const PendingOrders = () => {
                                                             <p className={styles.text}><span style={{ fontWeight: "bold" }}>Date:</span> {e?.order_form?.createdAt.slice(0, 10) || "N/A"} </p>
                                                         </div>
                                                         <div className={styles.action}>
-                                                            <button className={styles.btn} style={{ background: "#3498db" }} onClick={() => handleProcess(e?.id, e?.productId)} >Process Order</button>
-                                                            <button className={styles.btn} style={{ background: "#e74c3c" }} onClick={() => handleCancel(e?.id, e?.productId)}  >Cancel Order</button>
-                                                            {/* <button className={styles.btn} style={{ background: "#3498db" }} >Print</button> */}
+                                                            {/* <button className={styles.btn} style={{ background: "#3498db" }} onClick={() => handleComplete(e?.id, e?.productId)} >Complete Order</button>
+                                                            <button className={styles.btn} style={{ background: "#e74c3c" }} onClick={() => handleCancel(e?.id, e?.productId)}  >Cancel Order</button> */}
+                                                            <button className={styles.btn} style={{ background: "#3498db" }} onClick={() => handleReturn(e?.id, e?.productId)} >Return Order</button>
+                                                            {/* <button className={styles.btn} style={{ background: "#e74c3c" }} onClick={() => handleCancel(e?.id, e?.productId)} >Cancel Order</button> */}
                                                         </div>
                                                     </div>
                                                 )
@@ -136,7 +110,7 @@ const PendingOrders = () => {
                                     </div>
                                 )
                                     : (
-                                        <p style={{ textAlign: "center", fontSize: "20px", gridColumn: "1/-1" }}>No Pending Orders</p>
+                                        <p style={{ textAlign: "center", fontSize: "20px", gridColumn: "1/-1" }}>No Complete Orders</p>
                                     )
                             }
                         </div>
@@ -160,4 +134,5 @@ const PendingOrders = () => {
         </div>
     )
 }
-export default PendingOrders;
+
+export default CompleteOrderList

@@ -5,6 +5,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Diversity1Sharp } from "@mui/icons-material";
 import PendingOrders from "./pending-orders";
+import CancelOrderelist from "./cancel_order";
+import ProcessOrderList from "./Process_order";
+import CompleteOrderList from "./Complete-order";
+import ReturnOrderelist from "./Return-order";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -58,6 +62,22 @@ const OrderListPage = () => {
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <div className={styles.tab_panel}>
+                        <ProcessOrderList />
+                    </div>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={2}>
+                    <div className={styles.tab_panel}>
+                        <CompleteOrderList />
+                    </div>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={3}>
+                    <div className={styles.tab_panel}>
+                        <CancelOrderelist />
+                    </div>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={4}>
+                    <div className={styles.tab_panel}>
+                        <ReturnOrderelist />
                     </div>
                 </CustomTabPanel>
             </div>

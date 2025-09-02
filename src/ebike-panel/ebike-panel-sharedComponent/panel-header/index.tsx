@@ -158,11 +158,11 @@ const NavOptionArray = [
             {
                 OptionName: "Order List",
                 OptionRoute: "order-list"
+            },
+            {
+                OptionName: "Add Coupon Code",
+                OptionRoute: "coupon-list"
             }
-            // {
-            //     OptionName: "Add Coupon Code",
-            //     OptionRoute: ""
-            // },
         ]
     }
     // {

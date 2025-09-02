@@ -1073,38 +1073,93 @@ function GetAllOrders() {
         })
 }
 
-function CancelOrderPending(orderId :any , id: any, payload: any) {
-
+function CancelOrderPending(orderId: any, id: any, payload: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
-    let resStatus = -1
+
     return fetch(Gconfig.ebikeApi + `shop/oder-details/update/${orderId}/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            "x-access-token": token
+            "x-access-token": token,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
     })
-        .then(response => {
-            resStatus = response.status
-            response.json()
-        })
+        .then(response => response.json())
         .then(data => {
-            if (resStatus == 204) {
-                return { success: true }
-            }
-            else {
-                return { success: false }
-            }
+            return data;
         })
         .catch((err) => {
             console.log(err);
         });
 }
 
+function ProcessOrderPending(orderId: any, id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
 
+    return fetch(Gconfig.ebikeApi + `shop/oder-details/update/${orderId}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token,
+        },
+        body: JSON.stringify(payload),
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function CompleteOrder(orderId: any, id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `shop/oder-details/update/${orderId}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token,
+        },
+        body: JSON.stringify(payload),
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function ReturnOrder(orderId: any, id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `shop/oder-details/update/${orderId}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token,
+        },
+        body: JSON.stringify(payload),
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 export {
     PostLogin,
     uplaodImageFunc,
@@ -1180,7 +1235,10 @@ export {
     addNewBrandCompany,
 
     GetAllOrders,
-    CancelOrderPending
+    CancelOrderPending,
+    ProcessOrderPending,
+    CompleteOrder,
+    ReturnOrder
 }
 
 
@@ -1193,3 +1251,5 @@ export {
 // shop/oder-details/update/622/41  order_status
 // :
 // "cancel"
+
+// shop/oder-details/update/616/377 return

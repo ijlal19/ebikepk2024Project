@@ -92,7 +92,7 @@ const BasicModal = ({ open, onClose, brand, funct }: any) => {
                 <input id="brandname" name="brandname" value={NewBrandName} onChange={(e) => setNewBrandName(e.target.value)} className={styles.input} />
                 <label htmlFor="description" className={styles.label}>Description</label>
                 {/* <input id="description" name="descrption" value={NewDescription} onChange={(e) => setNewDescription(e.target.value)} className={styles.input} /> */}
-                <textarea id="description" name="descrption" value={NewDescription} onChange={(e) => setNewDescription(e.target.value)} className={styles.textarea} />
+                <textarea id="description" name="descrption" value={NewDescription} onChange={(e) => setNewDescription(e.target.value)} className={styles.textarea1} />
 
 
                 <label htmlFor="logourl" className={styles.label}>Logo Url</label> 
