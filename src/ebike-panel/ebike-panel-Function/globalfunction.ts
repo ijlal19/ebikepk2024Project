@@ -945,7 +945,6 @@ function UpdateCategImagesById(id: any, payload: any) {
         });
 }
 
-
 function getProduct(data: any) {
     return fetch(Gconfig.ebikeApi + `shop/product/get-product-by-id`, {
         method: 'POST',
@@ -1160,6 +1159,61 @@ function ReturnOrder(orderId: any, id: any, payload: any) {
             console.log(err);
         });
 }
+
+/////////////////////////////////////////////////// COUPON CODE FUNCTION ////////////////////////////////////////
+function GetAllCouponCode() {
+    return fetch(Gconfig.ebikeApi + `coupon-code/get-coupon-code`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function AddNewCouponCode(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `coupon-code/create-coupon-code`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function DeleteCouponCode(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `coupon-code/delete/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -1238,18 +1292,9 @@ export {
     CancelOrderPending,
     ProcessOrderPending,
     CompleteOrder,
-    ReturnOrder
+    ReturnOrder,
+
+    AddNewCouponCode,
+    GetAllCouponCode,
+    DeleteCouponCode
 }
-
-
-// feature
-// https://ebikepk-server-nodejs.herokuapp.com/api/classified/feature-used-bike/9163
-
-// approve
-// https://ebikepk-server-nodejs.herokuapp.com/api/classified/approve-used-bike/9163
-
-// shop/oder-details/update/622/41  order_status
-// :
-// "cancel"
-
-// shop/oder-details/update/616/377 return

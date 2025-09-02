@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -51,7 +51,7 @@ const BasicModal = ({ open, onClose, brand, funct }: any) => {
             alert("Please add a valid Brand Name (min 3 characters)");
             return;
         }
-        else if (!NewLogoUrl ) {
+        else if (!NewLogoUrl) {
             alert("Please enter a Logo Url");
             return;
         }
@@ -95,7 +95,7 @@ const BasicModal = ({ open, onClose, brand, funct }: any) => {
                 <textarea id="description" name="descrption" value={NewDescription} onChange={(e) => setNewDescription(e.target.value)} className={styles.textarea1} />
 
 
-                <label htmlFor="logourl" className={styles.label}>Logo Url</label> 
+                <label htmlFor="logourl" className={styles.label}>Logo Url</label>
                 <input id="logourl" name="logourl" value={NewLogoUrl} onChange={(e) => setNewLogoUrl(e.target.value)} className={styles.input} />
 
                 <label htmlFor="videourl" className={styles.label}>Video Url</label>
@@ -164,15 +164,15 @@ const ShopBrandPopup = ({ open, onClose, brand, funct }: any) => {
             aria-describedby="modal-description"
         >
             <Box sx={style}>
-            <form onSubmit={handleSubmit} className={styles.main_shop} >
-                <label htmlFor="name" className={styles.label} >Brand Name:</label>
-                <input type="text" id="name" value={Name} className={styles.input} onChange={(e: any) => setName(e?.target.value)} />
+                <form onSubmit={handleSubmit} className={styles.main_shop} >
+                    <label htmlFor="name" className={styles.label} >Brand Name:</label>
+                    <input type="text" id="name" value={Name} className={styles.input} onChange={(e: any) => setName(e?.target.value)} />
 
-                <label htmlFor="logo" className={styles.label} >Logo URL:</label>
-                <input type="text" id="logo" value={LogoUrl} className={styles.input} onChange={(e: any) => setLogoUrl(e?.target.value)} />
+                    <label htmlFor="logo" className={styles.label} >Logo URL:</label>
+                    <input type="text" id="logo" value={LogoUrl} className={styles.input} onChange={(e: any) => setLogoUrl(e?.target.value)} />
 
-                <button type="submit" className={styles.btn} >Save Edit</button>
-            </form>
+                    <button type="submit" className={styles.btn} >Save Edit</button>
+                </form>
             </Box>
         </Modal>
     )
@@ -226,18 +226,61 @@ const AddShopBrandPopup = ({ open, onClose, funct }: any) => {
             aria-describedby="modal-description"
         >
             <Box sx={style}>
-            <form onSubmit={handleSubmit} className={styles.main_shop} >
-                <label htmlFor="name" className={styles.label} >Brand Name:</label>
-                <input type="text" id="name" placeholder="Brand Name" className={styles.input} onChange={(e: any) => setName(e?.target.value)} />
+                <form onSubmit={handleSubmit} className={styles.main_shop} >
+                    <label htmlFor="name" className={styles.label} >Brand Name:</label>
+                    <input type="text" id="name" placeholder="Brand Name" className={styles.input} onChange={(e: any) => setName(e?.target.value)} />
 
-                <label htmlFor="logo" className={styles.label} >Logo URL:</label>
-                <input type="text" id="logo" placeholder="Logo URL" className={styles.input} onChange={(e: any) => setLogoUrl(e?.target.value)} />
+                    <label htmlFor="logo" className={styles.label} >Logo URL:</label>
+                    <input type="text" id="logo" placeholder="Logo URL" className={styles.input} onChange={(e: any) => setLogoUrl(e?.target.value)} />
 
-                <button type="submit" className={styles.btn} >Add Brand</button>
-            </form>
+                    <button type="submit" className={styles.btn} >Add Brand</button>
+                </form>
             </Box>
         </Modal>
     )
 }
 
-export { BasicModal, ShopBrandPopup , AddShopBrandPopup }
+const AddCOuponCode = ({ open, onClose ,funct }: any) => {
+    const [offerName, setOfferName] = useState('')
+    const [Code, setCode] = useState('')
+    const [Percentage, setPercentage] = useState('')
+    const [ValidAmount, setValidAmount] = useState('')
+
+    const handleAddCode = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            code: Code,
+            name: offerName,
+            percentage: Percentage,
+            valid_for_amount_above: ValidAmount
+        }
+        const res = await AddNewCouponCode(obj)
+        if(res && res?.success){
+            funct()
+            onClose();
+        }
+        else{
+            alert("Something went wrong")
+        }
+    }
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={style}>
+                <form onSubmit={handleAddCode} className={styles.form}  >
+                    <input type="text" className={styles.input} placeholder="Offer Name" onChange={(e: any) => setOfferName(e?.target.value)} value={offerName} required />
+                    <input type="text" className={styles.input} placeholder="Coupon Code i.e asd254" required value={Code} onChange={(e: any) => setCode(e?.target.value)} />
+                    <input type="number" className={styles.input} placeholder="Percentage without % sign i.e 25" required value={Percentage} onChange={(e: any) => setPercentage(e?.target.value)} />
+                    <input type="number" className={styles.input} placeholder="Code will be valid below this amount i.e 4000" required value={ValidAmount} onChange={(e: any) => setValidAmount(e?.target.value)} />
+                    <button type="submit" className={styles.btn} >ADD CODE</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode }
