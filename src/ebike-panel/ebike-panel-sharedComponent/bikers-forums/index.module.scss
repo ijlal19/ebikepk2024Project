@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+
+    .container {
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        padding: 15px 10px;
+        box-sizing: border-box;
+
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px !important;
+            box-sizing: border-box;
+
+            .heading {
+                padding: 0px;
+                margin: 0px;
+                // font-weight: 600;
+                font-size: 20px;
+                font-family: 'LatoBold';
+            }
+
+            .btn {
+                padding: 0.6rem 1.5rem;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 1rem;
+                cursor: pointer;
+                align-self: flex-start;
+            }
+        }
+
+        .card_box {
+            width: 100%;
+            padding: 10px !important;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+
+            .card_main {
+                width: 100%;
+                border-radius: 8px;
+                transition: all 0.5s ease;
+                padding: 10px !important;
+                box-sizing: border-box;
+                border: 1px solid #b6b6b6c3;
+                display: flex;
+                flex-direction: column;
+                row-gap: 15px;
+
+                &:hover{
+                    cursor: pointer;
+                    box-shadow: 0px 0px 10px rgba(196, 195, 195, 0.794);
+                }
+
+                .heading {
+                    padding: 10px 5px;
+                    margin: 0px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    font-size: 16px;
+                    letter-spacing: 1px;
+                    font-family: 'LatoBold';
+                    color: #181818;
+                    background-color: whitesmoke;
+                }
+
+                .delbtn {
+                    padding: 7px 0px;
+                    // padding: 0.6rem 1.5rem;
+                    background-color: #e74c3c;
+                    color: white;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    width: 100%;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    align-self: flex-start;
+
+                    &:hover{
+                        opacity: 0.9;
+                    }
+                }
+
+            }
+        }
+
+    }
+}

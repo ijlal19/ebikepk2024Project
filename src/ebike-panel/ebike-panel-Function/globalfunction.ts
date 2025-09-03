@@ -1213,6 +1213,58 @@ function DeleteCouponCode(id: any) {
         });
 }
 
+////////////////////////////////////////////// FORUMS FUNCTION //////////////////////////////////////////////
+function GetAllForumCategory() {
+    return fetch(Gconfig.ebikeApi + `forum/get-forum-catagories`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function AddNewForumCategory(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `forum/add-forum-catagory`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function DeleteForumCategory(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `forum/delete-category/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
 export {
     PostLogin,
@@ -1296,5 +1348,9 @@ export {
 
     AddNewCouponCode,
     GetAllCouponCode,
-    DeleteCouponCode
+    DeleteCouponCode,
+
+    GetAllForumCategory,
+    AddNewForumCategory,
+    DeleteForumCategory
 }

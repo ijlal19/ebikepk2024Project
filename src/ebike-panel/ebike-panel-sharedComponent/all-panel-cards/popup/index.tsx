@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -283,4 +283,42 @@ const AddCOuponCode = ({ open, onClose ,funct }: any) => {
     )
 }
 
-export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode }
+const AddForumCategory = ({ open, onClose ,funct }: any) => {
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+
+    const handleAddCode = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: name,
+            description: description,
+            images: [],
+        }
+        const res = await AddNewForumCategory(obj)
+        if(res && res?.success && res?.info == "Added Successfully"){
+            funct()
+            onClose();
+        }
+        else{
+            alert("Something went wrong")
+        }
+    }
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={style}>
+                <form onSubmit={handleAddCode} className={styles.form}  >
+                    <input type="text" className={styles.input} placeholder="Category Name" onChange={(e: any) => setName(e?.target.value)} value={name} required />
+                    <input type="text" className={styles.input} placeholder="Description" required value={description} onChange={(e: any) => setDescription(e?.target.value)} />
+                    <button type="submit" className={styles.btn} >Add Category</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode , AddForumCategory }

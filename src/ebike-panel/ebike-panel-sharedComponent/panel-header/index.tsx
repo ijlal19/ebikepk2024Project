@@ -165,6 +165,19 @@ const NavOptionArray = [
             }
         ]
     }
+    ,{
+        heading: "Bikers Forums",
+        option: [
+            {
+                OptionName: "Main Category",
+                OptionRoute: "forum-main-category"
+            },
+            {
+                OptionName: "Topic/Comment",
+                OptionRoute: "bikers-topic-list"
+            }
+        ]
+    }
     // {
     //     heading : "",
     //     option : [
@@ -210,6 +223,7 @@ const New_header = ({ value, onChange, placeholder }: any) => {
                 <DropwDownMenu props={NavOptionArray[1]} />
                 <DropwDownMenu props={NavOptionArray[2]} />
                 <DropwDownMenu props={NavOptionArray[3]} />
+                <DropwDownMenu props={NavOptionArray[4]} />
             </div>
             <div className={styles.action_btn}>
                 <button className={styles.user_btn}>
