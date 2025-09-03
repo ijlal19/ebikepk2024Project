@@ -17,6 +17,9 @@ import 'swiper/css/navigation';
 import 'swiper/css';
 import { AddShopBrandPopup, BasicModal, ShopBrandPopup } from "./popup";
 
+let savedPageStr = localStorage.getItem("PageUsedBike");
+let savedPage = savedPageStr ? parseInt(savedPageStr, 10) : null;
+
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
 
@@ -33,7 +36,7 @@ const Used_bike_card: any = () => {
     const router = useRouter();
 
     useEffect(() => {
-        fetchAllUsedBike(1);
+        fetchAllUsedBike(savedPage || 1);
     }, []);
 
     useEffect(() => {
@@ -41,7 +44,7 @@ const Used_bike_card: any = () => {
             bike.id.toString().includes(searchTerm)
         );
         setFilteredBikes(filtered);
-        setCurrentPage(1);
+        setCurrentPage(savedPage || 1);
     }, [searchTerm, AllBikeForFilter]);
 
     useEffect(() => {
@@ -54,6 +57,7 @@ const Used_bike_card: any = () => {
     }, [filteredBikes, currentPage]);
 
     const handlePaginationChange = async (event: any, page: any) => {
+        localStorage.setItem("PageUsedBike" , page)
         setCurrentPage(page);
         window.scrollTo(0, 0);
     };
@@ -109,7 +113,7 @@ const Used_bike_card: any = () => {
         const res = await ChangeFeatured(id, obj)
         if (res && res?.info && res?.info?.indexOf("feature Ad") > -1) {
             alert('Updated Successfully ')
-            fetchAllUsedBike(currentPage)
+            fetchAllUsedBike(savedPage ||  1)
         }
         else {
             alert('Something is Wrong!')
@@ -127,7 +131,7 @@ const Used_bike_card: any = () => {
         const res = await ChangeApprove(id, obj)
         if (res && res?.info?.indexOf('Approve Ad') > -1) {
             alert('Updated Successfully')
-            fetchAllUsedBike(currentPage)
+            fetchAllUsedBike(savedPage || 1)
         }
         else {
             alert('Something is Wrong!')
@@ -157,15 +161,24 @@ const Used_bike_card: any = () => {
             };
 
             const res1 = await getCustomBikeAd(obj1);
-
+            console.log("test", res1)
             if (res1 && res1?.data?.length > 0) {
                 setAllBikeForFilter(res1.data);
+                setCurrentPage(res1?.currentPage)
+                setAllBikeArr(res1?.data)
+                setTotalPage(res1?.pages)
             }
             else {
+                setCurrentPage(1)
+                setAllBikeArr([])
+                setTotalPage(0)
                 setAllBikeForFilter([]);
             }
-            setCurrentPage(_page);
-            setAllBikeArr(res1.data);
+            //             else {
+            // }
+
+            // setCurrentPage(_page);
+            // setAllBikeArr(res1.data);
             setIsLoading(false);
             setTimeout(() => {
                 window.scrollTo(0, 0)
@@ -179,185 +192,186 @@ const Used_bike_card: any = () => {
             //     setTotalPage(0);
             // }
 
-        } catch (error) {
+         }
+         catch (error) {
             console.error("Error fetching bikes:", error);
         }
-    };
+};
 
-    return (
-        <div className={styles.main_used_bike}>
-            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Ad By Seller ID" />
-            {!IsLoading ? (
-                <div className={styles.big_container}>
-                    <div className={styles.page_header}>
-                        <button className={styles.add_new_btn}>
-                            <Link href="/ebike-panel/dashboard/create-blog-post" sx={{
-                                color: "white", textDecoration: 'none'
-                            }} ></Link></button>
-                        {filteredBikes?.length > 0 && (
-                            <div className={styles.used_bike_list_pagination}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="medium"
-                                />
-                            </div>
-                        )}
-                        <form className={styles.input_box}>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={handleSearch}
-                                placeholder='Search Ad with Ad ID'
-                                className={styles.input} />
-                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
-                        </form>
-                    </div>
-                    <div className={styles.card_conatiner}>
-                        {displayedBikes.length > 0 ? (
-                            <>
-                                {displayedBikes.map((e: any, i: any) => (
-                                    <div className={styles.main_box_card} key={i}>
-                                        <div className={styles.card_container_box}>
-                                            <div className={styles.card_header}>
-                                                {/* <h3 className={styles.heading}>{add3Dots(e?.title, 50) || 'No Title'}</h3> */}
-                                                <span className={`${styles.featured_badge} ${e?.isFeatured ? styles.featured : ''}`}>
-                                                    IsFeatured: {e?.isFeatured ? 'True' : 'False'}
-                                                </span>
-                                                <span className={`${styles.featured_badge} ${e?.isApproved ? styles.featured : ''}`}>
-                                                    IsApproved: {e?.isApproved ? 'True' : 'False'}
-                                                </span>
-                                                {/* <span className={styles.ad_id}>Ad ID: {e?.id || 'N/A'}</span> */}
+return (
+    <div className={styles.main_used_bike}>
+        <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Ad By Seller ID" />
+        {!IsLoading ? (
+            <div className={styles.big_container}>
+                <div className={styles.page_header}>
+                    <button className={styles.add_new_btn}>
+                        <Link href="/ebike-panel/dashboard/create-blog-post" sx={{
+                            color: "white", textDecoration: 'none'
+                        }} ></Link></button>
+                    {filteredBikes?.length > 0 && (
+                        <div className={styles.used_bike_list_pagination}>
+                            <Pagination
+                                count={totalPage}
+                                onChange={handlePaginationChange}
+                                page={currentPage}
+                                size="medium"
+                            />
+                        </div>
+                    )}
+                    <form className={styles.input_box}>
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            placeholder='Search Ad with Ad ID'
+                            className={styles.input} />
+                        <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                    </form>
+                </div>
+                <div className={styles.card_conatiner}>
+                    {displayedBikes.length > 0 ? (
+                        <>
+                            {displayedBikes.map((e: any, i: any) => (
+                                <div className={styles.main_box_card} key={i}>
+                                    <div className={styles.card_container_box}>
+                                        <div className={styles.card_header}>
+                                            {/* <h3 className={styles.heading}>{add3Dots(e?.title, 50) || 'No Title'}</h3> */}
+                                            <span className={`${styles.featured_badge} ${e?.isFeatured ? styles.featured : ''}`}>
+                                                IsFeatured: {e?.isFeatured ? 'True' : 'False'}
+                                            </span>
+                                            <span className={`${styles.featured_badge} ${e?.isApproved ? styles.featured : ''}`}>
+                                                IsApproved: {e?.isApproved ? 'True' : 'False'}
+                                            </span>
+                                            {/* <span className={styles.ad_id}>Ad ID: {e?.id || 'N/A'}</span> */}
+                                        </div>
+
+                                        <div className={styles.card_content}>
+                                            <div className={styles.cardimage_box}>
+
+                                                <Swiper
+                                                    spaceBetween={50}
+                                                    slidesPerView={1}
+                                                    onSlideChange={() => console.log('slide change')}
+                                                    onSwiper={(swiper) => console.log(swiper)}
+                                                    modules={[Navigation, FreeMode]}
+                                                    navigation={true}
+                                                    initialSlide={0}
+                                                    loop={true}
+                                                    className={styles.image}
+                                                >
+                                                    {
+                                                        e?.images && e?.images.length > 0 ?
+                                                            e.images.map((imgUrl: any, ind: any) => {
+                                                                return (
+                                                                    <SwiperSlide key={imgUrl} className={styles.image} >
+                                                                        <img src={cloudinaryLoader(imgUrl, 300, 'auto')} alt={e?.title} className={styles.image} />
+                                                                    </SwiperSlide>
+                                                                )
+                                                            }) :
+                                                            <SwiperSlide key=''>
+                                                                <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.image} />
+                                                            </SwiperSlide>
+                                                    }
+                                                </Swiper>
                                             </div>
 
-                                            <div className={styles.card_content}>
-                                                <div className={styles.cardimage_box}>
-
-                                                    <Swiper
-                                                        spaceBetween={50}
-                                                        slidesPerView={1}
-                                                        onSlideChange={() => console.log('slide change')}
-                                                        onSwiper={(swiper) => console.log(swiper)}
-                                                        modules={[Navigation, FreeMode]}
-                                                        navigation={true}
-                                                        initialSlide={0}
-                                                        loop={true}
-                                                        className={styles.image}
-                                                    >
-                                                        {
-                                                            e?.images && e?.images.length > 0 ?
-                                                                e.images.map((imgUrl: any, ind: any) => {
-                                                                    return (
-                                                                        <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={cloudinaryLoader(imgUrl, 300, 'auto')} alt={e?.title} className={styles.image} />
-                                                                        </SwiperSlide>
-                                                                    )
-                                                                }) :
-                                                                <SwiperSlide key=''>
-                                                                    <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.image} />
-                                                                </SwiperSlide>
-                                                        }
-                                                    </Swiper>
+                                            <div className={styles.card_detail}>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>Title:</span>
+                                                    <span>{add3Dots(e?.title, 22) || "N/A"}</span>
                                                 </div>
-
-                                                <div className={styles.card_detail}>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Title:</span>
-                                                        <span>{add3Dots(e?.title, 22) || "N/A"}</span>
-                                                    </div>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Ad ID:</span>
-                                                        <span>{e?.id}</span>
-                                                    </div>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Brand:</span>
-                                                        <span>{GetName("brand", e?.brandId)}</span>
-                                                    </div>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>City:</span>
-                                                        <span>{GetName("city", e?.cityId)}</span>
-                                                    </div>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Price:</span>
-                                                        <span className={styles.price}>
-                                                            {e?.price ? priceWithCommas(e.price) : '0'}
-                                                        </span>
-                                                    </div>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Seller:</span>
-                                                        <span>{e?.sellerName || 'N/A'}</span>
-                                                    </div>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Phone:</span>
-                                                        <span>{GetPhone(e?.mobileNumber)}</span>
-                                                    </div>
-                                                    <div className={styles.description}>
-                                                        Description:
-                                                        <p className={styles.description_text}>
-                                                            {add3Dots(e?.description, 90) || 'No description available'}
-                                                        </p>
-                                                    </div>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>Ad ID:</span>
+                                                    <span>{e?.id}</span>
                                                 </div>
-                                            </div>
-
-                                            <div className={styles.card_actions}>
-                                                <Link href={`/ebike-panel/dashboard/edit-classified-ads/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
-                                                    <button
-                                                        className={`${styles.action_btn} ${styles.edit_btn}`}
-                                                        onClick={() => handleEdit(e?.id)}>
-                                                        Edit
-                                                    </button>
-                                                </Link>
-                                                <button
-                                                    className={`${styles.action_btn} ${styles.feature_btn}`}
-                                                    onClick={() => handleFeatureToggle(e?.id, e?.isFeatured)}
-                                                >
-                                                    {e?.isFeatured ? 'UnFeature' : 'Feature'}
-                                                </button>
-                                                <button
-                                                    className={`${styles.action_btn} ${styles.disapprove_btn}`}
-                                                    onClick={() => handleApproveToggle(e?.id, e?.isApproved)}
-                                                >
-                                                    {e?.isApproved ? "Disapprove" : "Approve"}
-                                                </button>
-                                                <button
-                                                    className={`${styles.action_btn} ${styles.delete_btn}`}
-                                                    onClick={() => handleDelete(e?.id)}
-                                                >
-                                                    Delete
-                                                </button>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>Brand:</span>
+                                                    <span>{GetName("brand", e?.brandId)}</span>
+                                                </div>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>City:</span>
+                                                    <span>{GetName("city", e?.cityId)}</span>
+                                                </div>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>Price:</span>
+                                                    <span className={styles.price}>
+                                                        {e?.price ? priceWithCommas(e.price) : '0'}
+                                                    </span>
+                                                </div>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>Seller:</span>
+                                                    <span>{e?.sellerName || 'N/A'}</span>
+                                                </div>
+                                                <div className={styles.detail_row}>
+                                                    <span className={styles.detail_label}>Phone:</span>
+                                                    <span>{GetPhone(e?.mobileNumber)}</span>
+                                                </div>
+                                                <div className={styles.description}>
+                                                    Description:
+                                                    <p className={styles.description_text}>
+                                                        {add3Dots(e?.description, 90) || 'No description available'}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
+
+                                        <div className={styles.card_actions}>
+                                            <Link href={`/ebike-panel/dashboard/edit-classified-ads/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                                <button
+                                                    className={`${styles.action_btn} ${styles.edit_btn}`}
+                                                    onClick={() => handleEdit(e?.id)}>
+                                                    Edit
+                                                </button>
+                                            </Link>
+                                            <button
+                                                className={`${styles.action_btn} ${styles.feature_btn}`}
+                                                onClick={() => handleFeatureToggle(e?.id, e?.isFeatured)}
+                                            >
+                                                {e?.isFeatured ? 'UnFeature' : 'Feature'}
+                                            </button>
+                                            <button
+                                                className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                                onClick={() => handleApproveToggle(e?.id, e?.isApproved)}
+                                            >
+                                                {e?.isApproved ? "Disapprove" : "Approve"}
+                                            </button>
+                                            <button
+                                                className={`${styles.action_btn} ${styles.delete_btn}`}
+                                                onClick={() => handleDelete(e?.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
                                     </div>
-                                ))}
-                            </>
-                        ) : (
-                            <div className={styles.no_results}>
-                                <p>No bikes found matching your search criteria.</p>
-                            </div>
-                        )}
-                    </div>
-                    <div className={styles.pagination_btm}>
-                        {filteredBikes.length > itemsPerPage && (
-                            <div className={styles.pagintion_btm}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="medium"
-                                />
-                            </div>
-                        )}
-                    </div>
+                                </div>
+                            ))}
+                        </>
+                    ) : (
+                        <div className={styles.no_results}>
+                            <p>No bikes found matching your search criteria.</p>
+                        </div>
+                    )}
                 </div>
-            ) : (
-                <div className={styles.loader_container}>
-                    <Loader isLoading={IsLoading} />
+                <div className={styles.pagination_btm}>
+                    {filteredBikes.length > itemsPerPage && (
+                        <div className={styles.pagintion_btm}>
+                            <Pagination
+                                count={totalPage}
+                                onChange={handlePaginationChange}
+                                page={currentPage}
+                                size="medium"
+                            />
+                        </div>
+                    )}
                 </div>
-            )}
-        </div>
-    );
+            </div>
+        ) : (
+            <div className={styles.loader_container}>
+                <Loader isLoading={IsLoading} />
+            </div>
+        )}
+    </div>
+);
 };
 
 /////////////////////////////////////////////////////// NEW BIKE CARD

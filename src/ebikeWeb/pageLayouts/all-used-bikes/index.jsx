@@ -288,7 +288,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <Typography className={styles.bike_details}>
                                     {val?.year?.year}
                                     <span className={styles.verticl_line}> | </span>
-                                    <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                                    <span style={{textTransform:"capitalize"}}> {brand && brand?.length > 0 && brand[0].brandName} </span>
                                     <span className={styles.verticl_line}> | </span>
                                     <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
                                 </Typography>
@@ -387,7 +387,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <Typography className={styles.grid_bike_details}>
                                     {val?.year?.year}
                                     <span className={styles.grid_verticl_line}> | </span>
-                                    <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                                    <span style={{textTransform:"capitalize"}}> {brand && brand?.length > 0 && brand[0].brandName} </span>
                                     <span className={styles.grid_verticl_line}> | </span>
                                     <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
                                 </Typography>

@@ -546,6 +546,7 @@ const EditNewBikeForm = () => {
 
         const res = await UpdateNewBikeById(slug1, finalData);
         if (res && res.success && res.info == "Bike updated") {
+            alert("Bike Updated Successfully")
             router.push('/ebike-panel/dashboard/all-new-bikes')
         }
         else {
