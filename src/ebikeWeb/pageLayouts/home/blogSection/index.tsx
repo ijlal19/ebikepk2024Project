@@ -1,11 +1,12 @@
 'use client'
 import { Box, Container, Grid, Link, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import BlogData from './Data'
 import { useRouter } from 'next/navigation'
+import { getAllBlog } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -31,7 +32,30 @@ function CustomTabPanel(props: TabPanelProps) {
 
 function BlogSection(props: any) {
   const [value, setValue] = React.useState(0);
+  const [AllBlogs, setAllBlogs] = useState<any>([])
   const router = useRouter();
+
+  useEffect(() => {
+    fetchAllBlog()
+  }, [])
+
+  const fetchAllBlog = async () => {
+    const res = await getAllBlog()
+    if (res && res?.length > 0) {
+      const first20 = res.slice(0, 20);
+
+      const shuffleArray = <T,>(array: T[]): T[] => {
+        return array
+          .map((value) => ({ value, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map(({ value }) => value);
+      };
+      setAllBlogs(shuffleArray(first20));
+    }
+    else {
+      setAllBlogs(BlogData)
+    }
+  }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -58,8 +82,8 @@ function BlogSection(props: any) {
             </Box>
 
             <CustomTabPanel value={value} index={0}>
-              {BlogData?.length > 0 &&
-                BlogData.map((e: any, i: any) => (
+              {AllBlogs?.length > 0 &&
+                AllBlogs.slice(0,2).map((e: any, i: any) => (
                   <Grid container key={i} className={styles.blog_grid1}>
                     <Grid item xs={isMobile ? 12 : 3} className={styles.grid1_child1}>
                       <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt={e.blogTitle.slice(0, 15)} className={styles.blog_images} />
