@@ -17,12 +17,11 @@ import 'swiper/css/navigation';
 import 'swiper/css';
 import { AddShopBrandPopup, BasicModal, ShopBrandPopup } from "./popup";
 
-let savedPageStr = localStorage.getItem("PageUsedBike");
-let savedPage = savedPageStr ? parseInt(savedPageStr, 10) : null;
+let savedPage: any;
 
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
-
+     
     const [displayedBikes, setDisplayedBikes] = useState([]);
     const [AllBikeForFilter, setAllBikeForFilter] = useState([]);
     const [filteredBikes, setFilteredBikes] = useState([]);
@@ -32,10 +31,13 @@ const Used_bike_card: any = () => {
     const [AllBikeArr, setAllBikeArr] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const itemsPerPage = 12;
-
+    
     const router = useRouter();
-
+    
     useEffect(() => {
+        let savedPageStr = localStorage.getItem("PageUsedBike");
+        let savedPagefinal = savedPageStr ? parseInt(savedPageStr, 10) : null;
+        savedPage = savedPagefinal
         fetchAllUsedBike(savedPage || 1);
     }, []);
 
