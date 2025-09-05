@@ -2720,7 +2720,7 @@ const ForuAllMainCateg = () => {
         else {
             alert("Failed to fetch Data try again!")
             setAllCateg([])
-        }
+        } 
     }
 
     const handleSearch = (e: any) => {
