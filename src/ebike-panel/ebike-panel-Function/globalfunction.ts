@@ -6,7 +6,7 @@ function PostLogin(data: any) {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
-    }) 
+    })
         .then(response => response.json())
         .then(data => {
             return data
@@ -1246,6 +1246,24 @@ function AddNewForumCategory(data: any) {
         })
 }
 
+function AddNewForumMainCategory(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `new-forum/crete-new-forum-main-categ`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
 function DeleteForumCategory(id: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
@@ -1264,6 +1282,20 @@ function DeleteForumCategory(id: any) {
         .catch((err) => {
             console.log(err);
         });
+}
+
+function GetAllMainForumCategory() {
+    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-main-categ`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 export {
@@ -1352,5 +1384,28 @@ export {
 
     GetAllForumCategory,
     AddNewForumCategory,
-    DeleteForumCategory
+    DeleteForumCategory,
+    GetAllMainForumCategory,
+    AddNewForumMainCategory
 }
+
+
+// new-forum/crete-new-forum-main-categ
+//   name: {
+//             type: type.STRING,
+//             allowNull: false,
+//             unique:true
+//         },
+//         description: {
+//             type: type.STRING
+//         },
+//         image: {
+//             type: type.STRING
+//         },
+//         user_name: {
+//             type: type.STRING
+//         },
+//         isShow: {
+//             type: type.BOOLEAN,
+//             defaultValue: true
+//         }

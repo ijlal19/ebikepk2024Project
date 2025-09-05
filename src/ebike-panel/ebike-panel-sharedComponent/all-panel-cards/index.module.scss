@@ -3132,6 +3132,7 @@
                             opacity: 0.9;
                         }
                     }
+
                     .action_btn1 {
                         padding: 8px 15px;
                         border-radius: 4px;
@@ -3149,6 +3150,200 @@
                     }
 
                     // }
+                }
+            }
+        }
+    }
+}
+
+.main_forums_Categ {
+    width: 100%;
+    padding: 0px 0px !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .card_section {
+        width: 100%;
+        max-width: 1000px;
+
+        .page_header {
+            width: 100% !important;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 20px;
+            box-sizing: border-box;
+
+            .forums_main_heading {
+                margin: 0px ;
+                padding: 0px;
+                font-size: 20px;
+                font-family: "Lato";
+            }
+
+            .input_box {
+                display: flex;
+                flex-direction: row;
+                border-radius: 5px;
+                border: 1px solid #75737384;
+
+                .input {
+                    width: 200px;
+                    min-width: 100px;
+                    max-width: 180px;
+                    border-radius: 5px;
+                    padding: 8px 10px !important;
+                    outline: none;
+                    border: none;
+                }
+
+                .btn {
+                    cursor: pointer;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: all .5s ease;
+
+                    .icon {
+                        border-radius: 5px;
+                        font-size: 25px;
+                    }
+
+                    &:hover {
+                        background-color: rgba(187, 185, 185, 0.505);
+                    }
+                }
+            }
+
+            .add_new_btn {
+                color: white;
+                border-radius: 5px;
+                padding: 7px 10px;
+                font-size: 14px;
+                background-color: #1976d2;
+                border: 1px solid #1976d2;
+                cursor: pointer;
+                font-family: 'LatoBold';
+                text-transform: capitalize;
+                transition: all .5s ease;
+
+                &:hover {
+                    box-shadow: 0px 0px 10px rgba(156, 155, 155, 0.797);
+                }
+            }
+        }
+
+        .card_main_box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            column-gap: 10px;
+            justify-content: center;
+            row-gap: 15px;
+            // padding: px 15px !important;
+            box-sizing: border-box;
+
+            .card_main {
+                width: 270px;
+                border-radius: 8px;
+                padding: 0px !important;
+                border: 1px solid #828181a3;
+                display: flex;
+                margin: auto;
+                flex-direction: column;
+                transition: all 0.5s ease;
+
+                &:hover {
+                    box-shadow: 0px 0px 10px #aaaaaa85;
+                }
+
+                // align-items: flex-start;
+                // justify-content: flex-start;
+                .header {
+                    box-sizing: border-box;
+                    padding: 0px !important;
+                    width: 100%;
+
+                    .title {
+                        width: 100%;
+                        border-top-left-radius: 8px;
+                        border-top-right-radius: 8px;
+                        box-sizing: border-box;
+                        padding: 10px 5px !important;
+                        font-size: 14px;
+                        margin: 0px !important;
+                        color: white;
+                        text-align: center;
+                        background: #3498db;
+                    }
+                }
+
+                .body {
+                    padding: 10px !important;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 5px;
+
+                    .text {
+                        padding: 0px !important;
+                        margin: 0px 0px 2px 0px !important;
+                        font-size: 13px;
+                        color: #181818;
+                    }
+                }
+
+                .user_info {
+                    padding: 0px 0px 10px 0px !important;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 7px;
+
+                    .heading {
+                        background: #f3f3f3;
+                        padding: 5px !important;
+                        margin: 0px 0px 5px 0px !important;
+                        color: #181818;
+                        text-align: center;
+                        font-size: 14px;
+                        font-weight: bold;
+                    }
+
+                    .text {
+                        padding: 0px 10px !important;
+                        margin: 0px 0px 2px 0px !important;
+                        font-size: 13px;
+                        color: #181818;
+                        ;
+                    }
+                }
+
+                .action {
+                    padding: 15px 10px 10px 10px !important;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 7px;
+
+                    .btn {
+                        width: 100%;
+                        padding: 7px 0px !important;
+                        // background: #3498db;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 14px;
+
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
                 }
             }
         }

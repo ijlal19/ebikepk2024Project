@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -240,7 +240,7 @@ const AddShopBrandPopup = ({ open, onClose, funct }: any) => {
     )
 }
 
-const AddCOuponCode = ({ open, onClose ,funct }: any) => {
+const AddCOuponCode = ({ open, onClose, funct }: any) => {
     const [offerName, setOfferName] = useState('')
     const [Code, setCode] = useState('')
     const [Percentage, setPercentage] = useState('')
@@ -255,11 +255,11 @@ const AddCOuponCode = ({ open, onClose ,funct }: any) => {
             valid_for_amount_above: ValidAmount
         }
         const res = await AddNewCouponCode(obj)
-        if(res && res?.success){
+        if (res && res?.success) {
             funct()
             onClose();
         }
-        else{
+        else {
             alert("Something went wrong")
         }
     }
@@ -283,7 +283,7 @@ const AddCOuponCode = ({ open, onClose ,funct }: any) => {
     )
 }
 
-const AddForumCategory = ({ open, onClose ,funct }: any) => {
+const AddForumCategory = ({ open, onClose, funct }: any) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
@@ -295,11 +295,11 @@ const AddForumCategory = ({ open, onClose ,funct }: any) => {
             images: [],
         }
         const res = await AddNewForumCategory(obj)
-        if(res && res?.success && res?.info == "Added Successfully"){
+        if (res && res?.success && res?.info == "Added Successfully") {
             funct()
             onClose();
         }
-        else{
+        else {
             alert("Something went wrong")
         }
     }
@@ -321,4 +321,39 @@ const AddForumCategory = ({ open, onClose ,funct }: any) => {
     )
 }
 
-export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode , AddForumCategory }
+const AddForumMainCategory = ({ open, onClose, funct }: any) => {
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+
+    const handleAddCode = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: name,
+            description: description,
+            image: [],
+            user_name : "ebiker",
+            isShow : true
+        }
+        const res = await AddNewForumMainCategory(obj)
+        console.log("res" , res)
+    }
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={style}>
+                <form onSubmit={handleAddCode} className={styles.form}  >
+                    <input type="text" className={styles.input} placeholder="Category Name" onChange={(e: any) => setName(e?.target.value)} value={name} required />
+                    {/* <input type="text" className={styles.input} placeholder="Description" required value={description} onChange={(e: any) => setDescription(e?.target.value)} /> */}
+                    <textarea id="Description" name="Description" value={description}  placeholder="Description" onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <button type="submit" className={styles.btn} >Add Category</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory }

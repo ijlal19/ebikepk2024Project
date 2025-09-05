@@ -8,70 +8,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DropwDownMenu from './dropdown';
 import SearchIcon from '@mui/icons-material/Search';
 
-
-// const Panel_header = ({ value, onChange, placeholder }: any) => {
-//     const [displayText, setDisplayText] = useState('login');
-//     const [displayName, setDisplayName] = useState('ebiker');
-//     const router = useRouter()
-//     useEffect(() => {
-//         const storedData = localStorage.getItem('userData');
-//         const userCookie = jsCookie.get("userData_ebike_panel");
-//         // console.log(UserId)
-
-//         if (userCookie) {
-//             const userData = JSON.parse(userCookie);
-//             const UserId = userData?.uid;
-//             try {
-//                 // const userData = JSON.parse(storedData);
-//                 if (userData?.login === true) {
-//                     setDisplayText('Logout');
-//                 }
-//                 if (userData?.name) {
-//                     setDisplayName(userData.name);
-//                 }
-//                 // else {
-//                 //     setDisplayText('ebiker');
-//                 // }
-//             } catch (err) {
-//                 console.error("Invalid JSON in localStorage: userData");
-//             }
-//         }
-//     }, []);
-
-
-//     const handleLogout = () => {
-//         const pathname = window.location.pathname
-//         jsCookie.remove('userData_ebike_panel');
-//         checkAuthAndRedirect(router, pathname)
-
-//     };
-
-
-//     return (
-//         <div className={styles.header}>
-//             <div className={styles.wraper}>
-//                 <div className={styles.input_box}>
-//                     {placeholder !== "" && (
-//                         <input
-//                             type="text"
-//                             value={value}
-//                             onChange={onChange}
-//                             placeholder={placeholder}
-//                             className={styles.input} />
-//                     )}
-//                     {/* className={styles.input} */}
-//                 </div>
-//                 <div className={styles.btn_box}>
-//                     <div className={styles.ebiker_box}>
-//                         <AccountCircleIcon />  <p className={styles.ebiker_heading}>{displayName}</p>
-//                     </div>
-//                     <button className={styles.logout} onClick={handleLogout}>Logout</button>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
 const NavOptionArray = [
     {
         heading: "Bikes",
@@ -122,22 +58,10 @@ const NavOptionArray = [
                 OptionName: "Cities",
                 OptionRoute: "all-cities"
             },
-            // {
-            //     OptionName: "Topic/Comment List",
-            //     OptionRoute: ""
-            // },
-            // {
-            //     OptionName: "Forum Category",
-            //     OptionRoute: ""
-            // },
             {
                 OptionName: "All User",
                 OptionRoute: "user/all-user"
-            },
-            // {
-            //     OptionName : "",
-            //     OptionRoute : ""
-            // },
+            }
         ]
     }
     ,{
@@ -175,6 +99,10 @@ const NavOptionArray = [
             {
                 OptionName: "Topic/Comment",
                 OptionRoute: "bikers-topic-list"
+            },
+            {
+                OptionName: "All Forums Main Category",
+                OptionRoute: "all-main-category"
             }
         ]
     }
