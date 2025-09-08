@@ -256,6 +256,7 @@ const AddNewBikeForm = () => {
         console.log(finalBikeData)
         const res = await addNewBike(finalBikeData)
         if (res && res.success) {
+            alert("Add Successfully")
             router.push('/ebike-panel/dashboard/all-new-bikes')
         }
         else {
@@ -827,6 +828,7 @@ const AddBlogForm = () => {
 
         const res = await addNewBlog(finalBikeData);
         if (res?.success && res.info === "add blog success") {
+            alert("Blog Add Successfully")
             router.push('/ebike-panel/dashboard/blog-list');
         } else {
             alert('Something went wrong!');
@@ -957,6 +959,7 @@ const AddPageForm = () => {
         }
         const res = await addNewPage(finalBikeData);
         if (res && res?.success) {
+            alert("Page Add Successfully")
             router.push('/ebike-panel/dashboard/all-pages');
         } else {
             alert('Something went wrong!');
@@ -1217,6 +1220,7 @@ const AddProductForm = () => {
             stock: variants
         });
         if (res && res?.success) {
+            alert("Product Add Successfully")
             router.push('/ebike-panel/dashboard/product-list');
         } else {
             alert('Something went wrong!');
@@ -1462,6 +1466,7 @@ const AddBrandForm = () => {
 
         const res = await addNewBrand(finalBikeData);
         if (res && res?.success && res.info === "Added Successfully!") {
+            alert("Brand Add Successfully")
             router.push('/ebike-panel/dashboard/all-bike-brands');
         } else {
             alert('Something went wrong!');
@@ -1596,6 +1601,7 @@ const AddCategoryForm = () => {
 
         const res = await addNewBrand(finalBikeData);
         if (res && res?.success && res.info === "Added Successfully!") {
+            alert("Add Successfully")
             router.push('/ebike-panel/dashboard/all-bike-brands');
         } else {
             alert('Something went wrong!');

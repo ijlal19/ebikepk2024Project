@@ -228,11 +228,10 @@ const EditUsedBikeForm = () => {
             uid: bikeData.uid
         }
 
-        console.log("data", obj);
         const res = await UpdateUsedBikeById(id, obj)
         if (res?.success) {
-            alert('updated success fully')
-            // router.push('/ebike-panel/dashboard/view-classified-ads')
+            alert('Updated Successfully')
+            router.push('/ebike-panel/dashboard/view-classified-ads')
         }
         else {
             alert('Something is Wrong!')
@@ -542,8 +541,6 @@ const EditNewBikeForm = () => {
             videoUrl: obj?.newvideoUrl
         }
 
-        console.log("data", obj, finalData);
-
         const res = await UpdateNewBikeById(slug1, finalData);
         if (res && res.success && res.info == "Bike updated") {
             alert("Bike Updated Successfully")
@@ -721,8 +718,6 @@ const EditElectricBikeForm = () => {
     let id = slug1
     const router = useRouter()
 
-
-
     useEffect(() => {
         fetchBrands()
     }, [])
@@ -736,8 +731,6 @@ const EditElectricBikeForm = () => {
             setAllBrands([]);
         }
     }
-
-
     useEffect(() => {
         if (id) fetchNewBikeByID(id);
     }, [id])
@@ -955,7 +948,7 @@ const EditElectricBikeForm = () => {
 
         const res = await UpdateNewBikeById(slug1, finalData);
         if (res && res.success && res.info == "Bike updated") {
-            alert("updated Successfully")
+            alert("Updated Successfully")
             router.push('/ebike-panel/dashboard/all-electric-bikes')
         }
         else {
@@ -1146,16 +1139,13 @@ const EditBlogForm = () => {
             setBlogData(res)
             if (res.featuredImage.includes(' #$# ')) {
                 const GetImage = res.featuredImage.split(' #$# ').map((item: any) => item.trim());
-                console.log("Image_1", GetImage);
                 setImageArr(GetImage)
             }
             else {
-                console.log(`${[res.featuredImage]}`)
                 setImageArr([res.featuredImage])
             }
         }
     }
-    console.log(imageArr)
 
     const handleImageDelete = (index: number) => {
         const updatedImages = imageArr.filter((_: any, i: any) => i !== index);
@@ -1255,6 +1245,7 @@ const EditBlogForm = () => {
         console.log(obj)
         const res = await UpdateBlogById(slug1, obj)
         if (res && res.info == "blog updated" && res.success) {
+            alert('Updated Successfully')
             router.push('/ebike-panel/dashboard/blog-list')
         }
         else {
@@ -1431,6 +1422,7 @@ const EditPageForm = () => {
         }
         const res = await UpdatePageById(slug1, obj)
         if (res && res.message == "updated successfully" && res.success) {
+            alert('Updated Successfully')
             router.push('/ebike-panel/dashboard/all-pages')
         }
         else {
@@ -1574,6 +1566,7 @@ const EditBrandForm = () => {
         }
         const res = await UpdateBrandById(slug1, obj)
         if (res && res.info == "brand is updated successfully") {
+            alert('Updated Successfully')
             router.push('/ebike-panel/dashboard/all-bike-brands')
         }
         else {
@@ -1669,7 +1662,6 @@ const EditProductForm = () => {
     const fetchProductById = async () => {
         setIsLoading(true)
         const res = await getProduct({ id: ProductIdParams })
-        console.log("datares", res?.data)
         if (res && res?.data && res?.data.length > 0) {
             setproductData({
                 productprice: res?.data[0]?.product_price,

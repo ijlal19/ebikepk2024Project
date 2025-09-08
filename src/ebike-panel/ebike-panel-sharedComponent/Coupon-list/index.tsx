@@ -36,6 +36,7 @@ const CouponCode = () => {
 
         const res = await DeleteCouponCode(id)
         if (res && res.success && res.info == "Deleted") {
+            alert("Delete Successfully")
             fetchAllCode()
         }
         else {

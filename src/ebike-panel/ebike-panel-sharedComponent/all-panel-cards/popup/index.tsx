@@ -77,6 +77,7 @@ const BasicModal = ({ open, onClose, brand, funct }: any) => {
         }
         else {
             alert('Something is Wrong!')
+            onClose()
         }
     };
 
@@ -151,6 +152,7 @@ const ShopBrandPopup = ({ open, onClose, brand, funct }: any) => {
         }
         else {
             alert('Something is Wrong!')
+            onClose()
         }
     }
 
@@ -209,12 +211,13 @@ const AddShopBrandPopup = ({ open, onClose, funct }: any) => {
         }
         const res = await addNewBrandCompany(obj)
         if (res && res?.info == "Add Company Successfully") {
-            alert("Brand updated successfully!");
+            alert("Brand Add successfully!");
             onClose();
             funct(1);
         }
         else {
             alert('Something is Wrong!')
+            onClose()
         }
     }
 
@@ -256,11 +259,13 @@ const AddCOuponCode = ({ open, onClose, funct }: any) => {
         }
         const res = await AddNewCouponCode(obj)
         if (res && res?.success) {
-            funct()
+            alert("Coupon Code Successfully Add")
             onClose();
+            funct()
         }
         else {
             alert("Something went wrong")
+            onClose()
         }
     }
     return (
@@ -296,11 +301,13 @@ const AddForumCategory = ({ open, onClose, funct }: any) => {
         }
         const res = await AddNewForumCategory(obj)
         if (res && res?.success && res?.info == "Added Successfully") {
-            funct()
+            alert("Category Successfully Add")
             onClose();
+            funct()
         }
         else {
             alert("Something went wrong")
+            onClose()
         }
     }
     return (
@@ -330,12 +337,22 @@ const AddForumMainCategory = ({ open, onClose, funct }: any) => {
         const obj = {
             name: name,
             description: description,
-            image: [],
+            image: "",
             user_name : "ebiker",
             isShow : true
         }
         const res = await AddNewForumMainCategory(obj)
-        console.log("res" , res)
+        if(res && res?.success){
+            alert("Category Successfully Add")
+            setDescription('')
+            setName("")
+            onClose()
+            funct()
+        }
+        else{
+            alert("something is wrong try again")
+            onClose()
+        }
     }
     return (
         <Modal

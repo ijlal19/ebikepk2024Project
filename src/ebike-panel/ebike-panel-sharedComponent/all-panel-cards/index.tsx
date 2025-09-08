@@ -97,7 +97,7 @@ const Used_bike_card: any = () => {
 
         const res = await DeleteUsedBikeById(id);
         if (res && res?.success) {
-            alert('Updated Successfully')
+            alert('Delete Successfully')
             fetchAllUsedBike(currentPage);
         } else {
             alert("Something went wrong!");
@@ -454,6 +454,7 @@ const New_bike_card = () => {
         if (!isConfirmed) return;
         const res = await DeleteNewBikeById(id);
         if (res && res.deleted && res.info == "successfully deleted") {
+            alert('Delete Successfully')
             fetchAllNewBike(currentPage);
         }
         else {
@@ -678,6 +679,7 @@ const Blog_Card = () => {
         if (!isConfirm) return;
         const res = await DeleteBlogById(id);
         if (res && res.info == 'Blog has been deleted') {
+            alert('Delete Successfully')
             fetchAllBlog(currentPage);
         }
         else {
@@ -941,6 +943,7 @@ const Dealer_Card = () => {
         if (!isConfirm) return;
         const res = await DeleteDealerbyId(id);
         if (res && res.success) {
+            alert('Delete Successfully')
             fetchAllDealers(currentPage);
         }
         else {
@@ -958,6 +961,7 @@ const Dealer_Card = () => {
         console.log(obj)
         const res = await ChangeDealerApprove(id, obj)
         if (res && res?.info && res?.info?.indexOf("Approve dealer is") > -1) {
+            alert('Updated Successfully')
             fetchAllDealers(currentPage)
         }
         else {
@@ -975,6 +979,7 @@ const Dealer_Card = () => {
         console.log(obj)
         const res = await ChangeDealerFeatured(id, obj)
         if (res && res?.info && res?.info?.indexOf("Feature Dealer is") > -1) {
+            alert('Updated Successfully')
             fetchAllDealers(currentPage)
         }
         else {
@@ -1289,6 +1294,7 @@ const Mechanic_Card = () => {
         if (!isConfirm) return;
         const res = await DeleteMechanicbyId(id);
         if (res && res.success) {
+            alert('Delete Successfully')
             fetchAllmechanics(currentPage);
         }
         else {
@@ -1306,6 +1312,7 @@ const Mechanic_Card = () => {
         console.log(obj)
         const res = await ChangeMechanicApprove(id, obj)
         if (res && res?.info && res?.info?.indexOf("Approve mechanic is ") > -1) {
+            alert('Updated Successfully')
             fetchAllmechanics(currentPage)
         }
         else {
@@ -1323,6 +1330,7 @@ const Mechanic_Card = () => {
         console.log(obj)
         const res = await ChangeMechanicFeatured(id, obj)
         if (res && res?.info && res?.info?.indexOf("Feature mechanic is ") > -1) {
+            alert('Updated Successfully')
             fetchAllmechanics(currentPage)
         }
         else {
@@ -1586,6 +1594,7 @@ const AllPages_Card = () => {
         if (!isConfirm) return;
         const res = await DeletePagebyId(id);
         if (res && res.info == 'Page has been deleted' && res.success) {
+            alert('Deleted Successfully')
             fetchAllPages(currentPage);
         }
         else {
@@ -1751,6 +1760,7 @@ const AllBrands_Card = () => {
         if (!isConfirm) return;
         const res = await DeleteBrandbyId(id);
         if (res && res.info == 'Deleted!' && res.success) {
+            alert('Delete Successfully')
             fetchAllBrands(currentPage);
         }
         else {
@@ -1948,6 +1958,7 @@ const AllCities_Card = () => {
         if (!isConfirm) return;
         const res = await DeleteCitybyId(id);
         if (res && res.info == 'Deleted' && res.success) {
+            alert('Delete Successfully')
             fetchAllCity(currentPage);
         }
         else {
@@ -2139,6 +2150,7 @@ const ProductList_Card = () => {
         if (!isConfirm) return;
         const res = await DeleteProductbyId(id);
         if (res && res.info == 'Deleted', res?.success) {
+            alert('Deleted Successfully')
             fetchAllProduct(1);
         }
         else {
@@ -2392,6 +2404,7 @@ const Electric_Bike_Card = () => {
         if (!isConfirmed) return;
         const res = await DeleteNewBikeById(id);
         if (res && res.deleted && res.info == "successfully deleted") {
+            alert('Delete Successfully')
             fetchAllNewBike(currentPage);
         }
         else {
@@ -2623,6 +2636,7 @@ const ShopBrand = () => {
         if (!isConfirm) return;
         const res = await DeleteBrandCompany(id);
         if (res && res.info == 'Deleted!' && res?.success) {
+            alert('Delete Successfully')
             fetchBrands(1);
         }
         else {
@@ -2712,6 +2726,7 @@ const ForuAllMainCateg = () => {
         fetchAllCateg()
     }, [])
     const fetchAllCateg = async () => {
+        setIsLoading(true)
         const res = await GetAllMainForumCategory()
         console.log("res", res?.data)
         if (res && res?.data.length > 0) {
@@ -2721,6 +2736,7 @@ const ForuAllMainCateg = () => {
             alert("Failed to fetch Data try again!")
             setAllCateg([])
         } 
+        setIsLoading(false)
     }
 
     const handleSearch = (e: any) => {
@@ -2738,15 +2754,6 @@ const ForuAllMainCateg = () => {
                 !isLoading ?
                     <div className={styles.card_section}>
                         <div className={styles.page_header}>
-                            {/* <form className={styles.input_box}>
-                                <input
-                                    type="text"
-                                    value={searchTerm}
-                                    onChange={handleSearch}
-                                    placeholder='Search Brand with Name'
-                                    className={styles.input} />
-                                <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
-                            </form> */}
                             <p className={styles.forums_main_heading}>Forum Main Category</p>
                             <button className={styles.add_new_btn} onClick={handleAddBrand} >Add New Category</button>
                         </div>

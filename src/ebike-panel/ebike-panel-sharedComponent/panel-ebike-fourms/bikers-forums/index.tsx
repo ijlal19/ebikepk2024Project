@@ -1,10 +1,10 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
-import { New_header } from "../panel-header";
+import { New_header } from "../../panel-header";
 import { DeleteForumCategory, GetAllForumCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import { AddForumCategory } from "../all-panel-cards/popup";
-import Loader from "../loader/loader";
+import { AddForumCategory } from "../../all-panel-cards/popup";
+import Loader from "../../loader/loader";
 
 const BikeForums = () => {
     const [isLoading, setIsloading] = useState(false)
@@ -37,6 +37,7 @@ const BikeForums = () => {
 
         const res = await DeleteForumCategory(id)
         if (res && res.info == "Deleted") {
+            alert("Deleted Successfully")
             fetchAllCategory()
         }
         else {
