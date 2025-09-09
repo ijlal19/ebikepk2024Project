@@ -132,7 +132,6 @@ const New_header = ({ value, onChange, placeholder }: any) => {
     useEffect(() => {
         const res = GetUserDetail()
         setUserDetail(res)
-
     },[])
 
     const handleLogout = () => {
