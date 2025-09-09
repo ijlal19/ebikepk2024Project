@@ -74,7 +74,7 @@ export default function NewBikeBrand() {
               New Bikes By Make
             </Typography>
 
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%' , boxSizing:'border-box'}}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary"  >
                   <Tab label="MotorCycles" className={styles.tab} sx={{ marginRight: 2 }} />
