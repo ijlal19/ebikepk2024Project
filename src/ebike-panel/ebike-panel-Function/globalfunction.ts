@@ -1228,6 +1228,34 @@ function GetAllForumCategory() {
         })
 }
 
+function GetAllMainForumCategory() {
+    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-main-categ`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function GetAllThreads() {
+    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-thread`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 function AddNewForumCategory(data: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
@@ -1300,20 +1328,6 @@ function DeleteForumCategory(id: any) {
         .catch((err) => {
             console.log(err);
         });
-}
-
-function GetAllMainForumCategory() {
-    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-main-categ`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-    })
-        .then(response => response.json())
-        .then(data => {
-            return data
-        })
-        .catch((err) => {
-            console.log(err)
-        })
 }
 
 export {
@@ -1400,6 +1414,7 @@ export {
     GetAllCouponCode,
     DeleteCouponCode,
 
+    GetAllThreads,
     GetAllForumCategory,
     AddNewForumCategory,
     DeleteForumCategory,
@@ -1407,24 +1422,3 @@ export {
     AddNewForumMainCategory,
     AddNewForumSubCategory
 }
-
-
-// new-forum/crete-new-forum-main-categ
-//   name: {
-//             type: type.STRING,
-//             allowNull: false,
-//             unique:true
-//         },
-//         description: {
-//             type: type.STRING
-//         },
-//         image: {
-//             type: type.STRING
-//         },
-//         user_name: {
-//             type: type.STRING
-//         },
-//         isShow: {
-//             type: type.BOOLEAN,
-//             defaultValue: true
-//         }

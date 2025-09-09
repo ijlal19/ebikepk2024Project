@@ -1,5 +1,5 @@
 'use client'
-import { AllBrands_Card, AllCities_Card, AllPages_Card, Blog_Card, Dealer_Card, Mechanic_Card, New_bike_card, ProductList_Card, Used_bike_card, Electric_Bike_Card, ShopBrand, ForuAllMainCateg } from "@/ebike-panel/ebike-panel-sharedComponent/all-panel-cards"
+import { AllBrands_Card, AllCities_Card, AllPages_Card, Blog_Card, Dealer_Card, Mechanic_Card, New_bike_card, ProductList_Card, Used_bike_card, Electric_Bike_Card, ShopBrand, ForuAllMainCateg, ThreadList_Card } from "@/ebike-panel/ebike-panel-sharedComponent/all-panel-cards"
 import { AddNewBikeForm, AddBlogForm, AddNewElectricBikeForm, AddPageForm, AddProductForm, AddBrandForm, AddCategoryForm } from "@/ebike-panel/ebike-panel-sharedComponent/Add-new-forms";
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { useParams, useRouter } from "next/navigation";
@@ -89,6 +89,9 @@ const Dashboard_page = () => {
         }
         else if(route == "all-sub-category"){
             return <ForumSubCateg />
+        }
+        else if(route == "all-threads"){
+            return <ThreadList_Card />
         }
     }
 

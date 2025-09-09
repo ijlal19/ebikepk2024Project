@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -2056,6 +2056,7 @@ const AllCities_Card = () => {
     )
 }
 
+////////////////////////////////////////////////////// ALL Product CARD
 const ProductList_Card = () => {
     const [AllShopFilter, setAllShopFilter] = useState([]);
     const [filteredShop, setFilteredShop] = useState([]);
@@ -2735,7 +2736,7 @@ const ForuAllMainCateg = () => {
         else {
             alert("Failed to fetch Data try again!")
             setAllCateg([])
-        } 
+        }
         setIsLoading(false)
     }
 
@@ -2784,6 +2785,141 @@ const ForuAllMainCateg = () => {
     )
 }
 
+////////////////////////////////////////////////////// ALL Product CARD
+const ThreadList_Card = () => {
+    const [AllthreadFilter, setAllthreadFilter] = useState([]);
+    const [filteredthread, setFilteredthread] = useState([]);
+    const [displayedthread, setDisplayedthread] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+
+    const itemsPerPage = 12;
+    const router = useRouter();
+
+    useEffect(() => {
+        fetchAllThread()
+    }, []);
+    useEffect(() => {
+        const filtered = AllthreadFilter.filter((bike: any) =>
+            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredthread(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllthreadFilter]);
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedthread(filteredthread.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredthread.length / itemsPerPage));
+    }, [filteredthread, currentPage]);
+
+    const fetchAllThread = async () => {
+        setIsLoading(true);
+        const res = await GetAllThreads()
+        if (res && res?.success && res?.data?.length > 0) {
+            setAllthreadFilter(res?.data);
+            setFilteredthread(res?.data);
+            // setCurrentPage(_page);
+        } else {
+            setAllthreadFilter([]);
+            setFilteredthread([]);
+            setDisplayedthread([]);
+            setCurrentPage(1);
+            setTotalPage(0);
+        }
+        console.log("datares", res)
+        setIsLoading(false);
+    }
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Product?')
+        if (!isConfirm) return;
+        const res = await DeleteProductbyId(id);
+        if (res && res.info == 'Deleted', res?.success) {
+            alert('Deleted Successfully')
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    return (
+        <div className={styles.main_thread}>
+            <New_header />
+            {!IsLoading ? (
+                <div className={styles.big_container}>
+                    <div className={styles.page_header}>
+                        <p className={styles.forums_main_heading}>Forum Thread List</p>
+                        {filteredthread?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder='Search Thread with Title'
+                                className={styles.input} />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                    </div>
+                    <div className={styles.card_container}>
+                        {displayedthread.map((e: any, i: any) => (
+                            <div className={styles.card_main} key={i} >
+                                <div className={styles.header}>
+                                    <p className={styles.title}>{add3Dots(e?.title, 30)}</p>
+                                </div>
+                                <div className={styles.body}>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>ID:</span> {e?.id} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Name:</span> {e?.user_name || "N/A"} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Sub Category Id:</span> {e?.sub_categ_id || "N/A"} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {add3Dots(e?.description,90) || 'N/A'} </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.pagination_btm}>
+                        {filteredthread?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
 export {
     Used_bike_card,
     New_bike_card,
@@ -2796,5 +2932,6 @@ export {
     ProductList_Card,
     Electric_Bike_Card,
     ShopBrand,
-    ForuAllMainCateg
+    ForuAllMainCateg,
+    ThreadList_Card
 }

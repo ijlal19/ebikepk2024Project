@@ -107,6 +107,10 @@ const NavOptionArray = [
             {
                 OptionName: "Forums Sub Category",
                 OptionRoute: "all-sub-category"
+            },
+            {
+                OptionName: "All Threads",
+                OptionRoute: "all-threads"
             }
         ]
     }
