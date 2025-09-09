@@ -65,7 +65,7 @@ const SellUsedBike = () => {
     };
 
     const handelsubmit = async () => {
-
+  
         if (!customer || customer == "not_login" || customer?.id == undefined) {
             Router.push('/')
         }
