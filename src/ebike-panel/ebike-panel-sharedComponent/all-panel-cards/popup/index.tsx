@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, GetUserDetail, UpdateBrandById, UpdateBrandCompany } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -331,6 +331,16 @@ const AddForumCategory = ({ open, onClose, funct }: any) => {
 const AddForumMainCategory = ({ open, onClose, funct }: any) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
+    const [username, setUserName] = useState('')
+    const [uid, setUid] = useState('')
+    React.useEffect(() => {
+        fetchData()
+    }, [])
+    const fetchData = async () => {
+        const res = await GetUserDetail()
+        setUserName(res?.name)
+        setUid(res?.uid)
+    }
 
     const handleAddCode = async (e: any) => {
         e.preventDefault()
@@ -338,18 +348,18 @@ const AddForumMainCategory = ({ open, onClose, funct }: any) => {
             name: name,
             description: description,
             image: "",
-            user_name : "ebiker",
-            isShow : true
+            user_name: username,
+            isShow: true
         }
         const res = await AddNewForumMainCategory(obj)
-        if(res && res?.success){
+        if (res && res?.success) {
             alert("Category Successfully Add")
             setDescription('')
             setName("")
             onClose()
             funct()
         }
-        else{
+        else {
             alert("something is wrong try again")
             onClose()
         }
@@ -365,7 +375,7 @@ const AddForumMainCategory = ({ open, onClose, funct }: any) => {
                 <form onSubmit={handleAddCode} className={styles.form}  >
                     <input type="text" className={styles.input} placeholder="Category Name" onChange={(e: any) => setName(e?.target.value)} value={name} required />
                     {/* <input type="text" className={styles.input} placeholder="Description" required value={description} onChange={(e: any) => setDescription(e?.target.value)} /> */}
-                    <textarea id="Description" name="Description" value={description}  placeholder="Description" onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <textarea id="Description" name="Description" value={description} placeholder="Description" onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
                     <button type="submit" className={styles.btn} >Add Category</button>
                 </form>
             </Box>
@@ -373,4 +383,84 @@ const AddForumMainCategory = ({ open, onClose, funct }: any) => {
     )
 }
 
-export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory }
+const AddForumSubCategory = ({ open, onClose, funct, data }: any) => {
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [username, setUserName] = useState('')
+    const [uid, setUid] = useState('')
+    const [AllFieldIDs, setAllFieldIds] = useState<any>(data[0]?.id)
+    React.useEffect(() => {
+        fetchData()
+    }, [])
+    const fetchData = async () => {
+        const res = await GetUserDetail()
+        setUserName(res?.name)
+        setUid(res?.uid)
+    }
+
+    const handleAddCode = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: name,
+            description: description,
+            image: "",
+            user_name: username,
+            uid: uid,
+            isShow: true,
+            main_categ_id: AllFieldIDs || data[0]?.id
+        }
+        const res = await AddNewForumSubCategory(obj)
+        if (res && res?.success && res?.msg == "Created Successfully" ) {
+            alert("Category Successfully Add")
+            setDescription('')
+            setName("")
+            onClose()
+            funct()
+        }
+        else {
+            alert("something is wrong try again")
+            onClose()
+        }
+    }
+
+    const handleproductChange = (e: any, from: any) => {
+        const { name, value } = e.target;
+        if (from == "company") {
+            setAllFieldIds(value);
+        }
+    };
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={style}>
+                <form onSubmit={handleAddCode} className={styles.form}  >
+                    <input type="text" className={styles.input} placeholder="Category Name" onChange={(e: any) => setName(e?.target.value)} value={name} required />
+                    {/* <input type="text" className={styles.input} placeholder="Description" required value={description} onChange={(e: any) => setDescription(e?.target.value)} /> */}
+                    <textarea id="Description" name="Description" value={description} placeholder="Description" required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <label className={styles.label}>Select Main Category</label>
+                    <div className={styles.drop_downBox}>
+                        <select name="company_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
+                            <option value={data[0]?.id} disabled selected hidden>{data[0]?.name}</option>
+                            {
+                                data.map((e: any, index: any) => (
+                                    <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                        {e?.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+
+                    <button type="submit" className={styles.btn} >Add Category</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory }

@@ -1264,6 +1264,24 @@ function AddNewForumMainCategory(data: any) {
         })
 }
 
+function AddNewForumSubCategory(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `new-forum/crete-new-forum-sub-categ`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
 function DeleteForumCategory(id: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
@@ -1386,7 +1404,8 @@ export {
     AddNewForumCategory,
     DeleteForumCategory,
     GetAllMainForumCategory,
-    AddNewForumMainCategory
+    AddNewForumMainCategory,
+    AddNewForumSubCategory
 }
 
 

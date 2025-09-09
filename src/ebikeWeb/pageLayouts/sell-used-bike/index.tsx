@@ -4,9 +4,10 @@ import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalData'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
-import {isLoginUser} from "@/genericFunctions/geneFunc";
+import { isLoginUser } from "@/genericFunctions/geneFunc";
 import { numericOnly, publishAd } from "@/genericFunctions/geneFunc"
-import {  uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
+import { uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
+import Loader from "@/ebikeWeb/sharedComponents/loader/loader"
 
 const SellUsedBike = () => {
 
@@ -26,6 +27,7 @@ const SellUsedBike = () => {
     const [msg, setMsg] = useState('')
     const [customer, setCustomer] = useState<any>('not_login')
     const [imageArr, setImageArr] = useState([])
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
 
     useEffect(() => {
         let _isLoginUser = isLoginUser()
@@ -137,11 +139,7 @@ const SellUsedBike = () => {
 
         setIsLoading(true)
         let res = await publishAd(obj)
-        setIsLoading(false)
-        setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000);
-
+        
         if (res.success) {
             alert('Ad submitted Successfully! Please wait for approval')
             Router.push('/used-bikes')
@@ -149,10 +147,22 @@ const SellUsedBike = () => {
         else {
             alert('Some thing went wrong')
         }
+        setIsLoading(false)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000);
     }
 
-    function uploadImage(event: any) {
+    const handleImageDelete = (index: number) => {
+        setIsLoading(false)
+        const updatedImages = imageArr.filter((_, i) => i !== index);
+        const updatedFiles = imageFiles.filter((_, i) => i !== index);
+        setImageArr(updatedImages);
+        setImageFiles(updatedFiles);
+    };
 
+    function uploadImage(event: any) {
+        setIsLoading(true)
         const reader = new FileReader()
         reader.readAsDataURL(event.target.files[0])
 
@@ -180,11 +190,9 @@ const SellUsedBike = () => {
 
                 let _imageArr: any = [...imageArr]
                 _imageArr.push(imgRes.secure_url)
+                setIsLoading(false)
                 setImageArr(_imageArr)
-
-                console.log('imgRes', imgRes)
             }
-
         }
     }
 
@@ -210,20 +218,21 @@ const SellUsedBike = () => {
                     <Typography className={styles.desc_parent}>
                         <TextareaAutosize id="desc" className={styles.description_area} placeholder="Add a Description" required onChange={(e) => handleChange('description', e.target.value)} />
                     </Typography>
-
-                    <Typography>
+                    {/* <Typography>
                         <label htmlFor="desc" className={styles.description_label}>Description*</label>
-                    </Typography>
-                    <Typography>
-                        <input type="file" accept="image/*" id="imageInput" name="image" onChange={(e) => uploadImage(e)} />
-                    </Typography>
+                    </Typography> */}
+                    {imageArr.length < 4 ?
+                        <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput}/>
+                        : ""}
 
-                    <div style={{ display: "flex", margin: "20px auto" }} >
-                        {
-                            imageArr.length > 0 && imageArr.map((val, ind) => {
-                                return <img src={val} key={ind} style={{ border: "solid 1px grey", display: "inline-block", margin: "10px", width: "100px", height: "70px" }} />
-                            })
-                        }
+                    <label className={styles.label}>Images (max 4)</label>
+                    <div className={styles.imagePreview}>
+                        {imageArr.map((img, index) => (
+                            <div key={index}>
+                                <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                                <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                            </div>
+                        ))}
                     </div>
 
                     <div className={styles.dropdown_div}>
@@ -346,6 +355,9 @@ const SellUsedBike = () => {
                     <Typography className={styles.permission}><input checked={isAggreed} onChange={(e) => { setIsAggreed(e.target.checked) }} type="checkbox" /><span className={styles.permission_text}>By checking you agree to our terms & condition</span></Typography>
                     <button disabled={isLoading} className={styles.post_button} onClick={handelsubmit} >Post Now</button>
                 </div>
+            </div>
+            <div className={styles.load_div}>
+                <Loader isLoading={isLoading} />
             </div>
         </div>
     )

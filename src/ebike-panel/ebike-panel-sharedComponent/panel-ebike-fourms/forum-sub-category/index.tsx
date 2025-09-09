@@ -5,12 +5,14 @@ import { New_header } from "../../panel-header";
 import { GetAllForumCategory, GetAllMainForumCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { add3Dots } from "@/genericFunctions/geneFunc";
 import Loader from "../../loader/loader";
+import { AddForumSubCategory } from "../../all-panel-cards/popup";
 
 const ForumSubCateg = () => {
     const [AllCategory, setAllCategory] = useState<any>([])
     const [AllSubCategory, setAllSubCategory] = useState<any>([])
     const [isLoading, setIsLoading] = useState(false)
     const [CategoryNameId, setCategoryNameId] = useState(1)
+    const [open, setOpen] = useState(false);
 
     const [AllFieldIDs, setAllFieldIds] = useState<any>(0)
 
@@ -48,6 +50,9 @@ const ForumSubCateg = () => {
             console.log("datares" , Number(value) )
         }
     };
+     const handleAddCategory = () => {
+        setOpen(true);
+    }
 
     return (
         <div className={styles.main_forums_Categ}>
@@ -69,8 +74,8 @@ const ForumSubCateg = () => {
                                 </select>
                             </div>
                             {/* <p className={styles.forums_main_heading}>Forum Main Category</p> */}
-                            <button className={styles.add_new_btn} >Add New Category</button>
-                            {/* <button className={styles.add_new_btn} onClick={handleAddBrand} >Add New Category</button> */}
+                            {/* <button className={styles.add_new_btn} >Add New Category</button> */}
+                            <button className={styles.add_new_btn} onClick={handleAddCategory} >Add New Category</button>
                         </div>
                         {
                             AllSubCategory && AllSubCategory.length > 0 ?
@@ -101,7 +106,7 @@ const ForumSubCateg = () => {
                         <Loader isLoading={isLoading} />
                     </div>
             }
-            {/* <AddForumMainCategory open={open} onClose={() => setOpen(false)} funct={fetchAllCateg} /> */}
+            <AddForumSubCategory open={open} onClose={() => setOpen(false)} funct={fetchAllCateg} data={AllCategory} />
         </div>
     )
 }
