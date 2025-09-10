@@ -27,7 +27,7 @@
    }
 
    .tab {
-       padding: 0px !important;
+       padding: 10px 0px 0px 0px !important;
    }
 
     .blog_grid1 {
@@ -112,4 +112,14 @@
 
 .link_tag:hover{
    color: $primary_two;
+}
+
+.panel1{
+   display: grid;
+   justify-content: space-between;
+   padding: 15px 0px;
+   grid-template-columns: repeat(3 , 1fr);
+   @media (max-width:768px) {
+      grid-template-columns: repeat(2 , 1fr);
+   }
 }

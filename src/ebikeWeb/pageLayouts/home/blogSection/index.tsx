@@ -7,6 +7,7 @@ import Tab from '@mui/material/Tab';
 import BlogData from './Data'
 import { useRouter } from 'next/navigation'
 import { getAllBlog } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import NewCard from '@/ebikeWeb/sharedComponents/new_item_card';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,6 +34,7 @@ function CustomTabPanel(props: TabPanelProps) {
 function BlogSection(props: any) {
   const [value, setValue] = React.useState(0);
   const [AllBlogs, setAllBlogs] = useState<any>([])
+  const isMobile = useMediaQuery('(max-width: 768px)')
   const router = useRouter();
 
   useEffect(() => {
@@ -66,7 +68,7 @@ function BlogSection(props: any) {
     return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${title}/${blogInfo.id}`;
   };
 
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  // const isMobile = useMediaQuery('(max-width: 768px)');
 
   return (
     <Box className={styles.main_blog}>
@@ -82,28 +84,15 @@ function BlogSection(props: any) {
             </Box>
 
             <CustomTabPanel value={value} index={0}>
+              <div  className={styles.panel1}>
               {AllBlogs?.length > 0 &&
-                AllBlogs.slice(0,2).map((e: any, i: any) => (
-                  <Grid container key={i} className={styles.blog_grid1}>
-                    <Grid item xs={isMobile ? 12 : 3} className={styles.grid1_child1}>
-                      <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt={e.blogTitle.slice(0, 15)} className={styles.blog_images} />
-                    </Grid>
-
-                    <Grid item xs={isMobile ? 12 : 8} className={styles.grid1_child2}>
-                      <Box>
-                        <Typography className={styles.blog_card_title}>
-                          <Link href={getBlogUrl(e)} className={styles.link_tag}>{e.blogTitle}</Link>
-                        </Typography>
-                        <Typography className={styles.blog_card_date}>
-                          <span style={{ marginRight: 8 }}>{e.authorname}</span> |{' '}
-                          <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> |{' '}
-                          <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
-                        </Typography>
-                        <Typography className={styles.blog_card_description}>{e.meta_description}</Typography>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                ))}
+              (isMobile ? AllBlogs.slice(0, 2):AllBlogs.slice(0, 3)).map((e: any, i: any) => {
+                  return (
+                    <NewCard props={e} key={i}/>
+                  )
+                }
+                )}
+                </div>
             </CustomTabPanel>
           </Box>
         </Container>
@@ -113,3 +102,24 @@ function BlogSection(props: any) {
 }
 
 export default BlogSection;
+
+
+   // <Grid container key={i} className={styles.blog_grid1}>
+                  //   <Grid item xs={isMobile ? 12 : 3} className={styles.grid1_child1}>
+                  //     <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt={e.blogTitle.slice(0, 15)} className={styles.blog_images} />
+                  //   </Grid>
+                  
+                  //   <Grid item xs={isMobile ? 12 : 8} className={styles.grid1_child2}>
+                  //     <Box>
+                  //       <Typography className={styles.blog_card_title}>
+                  //         <Link href={getBlogUrl(e)} className={styles.link_tag}>{e.blogTitle}</Link>
+                  //       </Typography>
+                  //       <Typography className={styles.blog_card_date}>
+                  //         <span style={{ marginRight: 8 }}>{e.authorname}</span> |{' '}
+                  //         <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> |{' '}
+                  //         <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
+                  //       </Typography>
+                  //       <Typography className={styles.blog_card_description}>{e.meta_description}</Typography>
+                  //     </Box>
+                  //   </Grid>
+                  // </Grid>

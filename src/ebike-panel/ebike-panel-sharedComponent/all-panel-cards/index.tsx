@@ -18,7 +18,7 @@ import 'swiper/css';
 import { AddForumMainCategory, AddShopBrandPopup, BasicModal, ShopBrandPopup } from "./popup";
 
 let savedPage: any;
-
+let saveNewBike : any;
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
 
@@ -163,7 +163,7 @@ const Used_bike_card: any = () => {
             };
 
             const res1 = await getCustomBikeAd(obj1);
-            console.log("test", res1)
+            console.log("res", res1)
             if (res1 && res1?.data?.length > 0) {
                 setAllBikeForFilter(res1.data);
                 setCurrentPage(res1?.currentPage)
@@ -382,7 +382,7 @@ const New_bike_card = () => {
     const [filteredBikes, setFilteredBikes] = useState<any>([]);
     const [displayedBikes, setDisplayedBikes] = useState<any>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(18);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
 
@@ -390,7 +390,10 @@ const New_bike_card = () => {
     const router = useRouter();
 
     useEffect(() => {
-        fetchAllNewBike(1);
+        const savedPage = Number(localStorage.getItem("PageNewBike"));
+        saveNewBike = savedPage
+        fetchAllNewBike(saveNewBike ||  1);
+        setCurrentPage(saveNewBike || 1);
     }, []);
 
     useEffect(() => {
@@ -398,7 +401,7 @@ const New_bike_card = () => {
             bike.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredBikes(filtered);
-        setCurrentPage(1);
+        setCurrentPage(saveNewBike || 1);
     }, [searchTerm, AllNewBikeForFilter]);
 
     useEffect(() => {
@@ -406,6 +409,7 @@ const New_bike_card = () => {
         const endIndex = startIndex + itemsPerPage;
         setDisplayedBikes(filteredBikes.slice(startIndex, endIndex));
         setTotalPage(Math.ceil(filteredBikes.length / itemsPerPage));
+        console.log('res' , Math.ceil(filteredBikes.length / itemsPerPage))
     }, [filteredBikes, currentPage]);
 
     const fetchAllNewBike = async (_page: number) => {
@@ -415,13 +419,10 @@ const New_bike_card = () => {
             if (res && res.length > 0) {
                 setAllNewBikeForFilter(res);
                 setFilteredBikes(res);
-                setCurrentPage(_page);
             } else {
                 setAllNewBikeForFilter([]);
                 setFilteredBikes([]);
                 setDisplayedBikes([]);
-                setCurrentPage(1);
-                setTotalPage(0);
             }
 
         } catch (error) {
@@ -434,6 +435,7 @@ const New_bike_card = () => {
     };
 
     const handlePaginationChange = (event: any, page: any) => {
+        localStorage.setItem("PageNewBike" , String(page))
         setCurrentPage(page);
         window.scrollTo(0, 0);
     };
@@ -455,7 +457,7 @@ const New_bike_card = () => {
         const res = await DeleteNewBikeById(id);
         if (res && res.deleted && res.info == "successfully deleted") {
             alert('Delete Successfully')
-            fetchAllNewBike(currentPage);
+            fetchAllNewBike(saveNewBike || 1);
         }
         else {
             alert('Something is Wrong!')
@@ -464,6 +466,7 @@ const New_bike_card = () => {
     };
 
     const handleEdit = (id: any) => {
+        localStorage.setItem("PageNewBike" , String(currentPage))
         router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`);
     };
 
@@ -473,7 +476,6 @@ const New_bike_card = () => {
 
     return (
         <div className={styles.main_new_bike}>
-            {/* <New_header value={searchTerm} onChange={handleSearch} placeholder="Search New Bike with Title" /> */}
             <New_header />
 
             {!IsLoading ? (

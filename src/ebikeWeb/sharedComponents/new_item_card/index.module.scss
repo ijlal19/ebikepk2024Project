@@ -1,0 +1,128 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+    max-width: 329px;
+    padding: 0px 6px !important;
+    box-sizing: border-box;
+
+    .container {
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #b7b7b7d4;
+
+        @media (max-width:768px) {
+            border-radius: 5px;
+        }
+
+        .image_box {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            overflow: hidden;
+            height: 180px;
+            // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+            // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-size: 100% 100%;
+
+            .image {
+                width: 100%;
+                height: 100%;
+                // object-fit: contain;
+            }
+
+            @media (max-width:768px) {
+                height: 130px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-sizing: border-box;
+
+            .title {
+                font-size: 16px;
+                color: #333333;
+                margin: 16px 0px 0px;
+                padding: 0px 12px;
+                box-sizing: border-box;
+                font-family: 'LatoBold';
+
+                @media (max-width:768px) {
+                    font-size: 14px;
+                    margin: 5px 0px 0px;
+                }
+            }
+
+            .author {
+                font-size: 13px;
+                margin: 8px 0px 0px;
+                padding: 0px 12px;
+                color: #6f6f6f;
+                box-sizing: border-box;
+                font-family: 'Lato';
+
+                .name {
+                    margin-left: 2px;
+                    font-family: 'LatoBold';
+                    color: #333333;
+                }
+
+                @media (max-width:768px) {
+                    font-size: 11px;
+                }
+            }
+
+            .description {
+                font-size: 13px;
+                color: #484848;
+                margin: 12px 0px 0px;
+                padding: 0px 12px;
+                box-sizing: border-box;
+                font-family: 'Lato';
+
+                @media (max-width:768px) {
+                    font-size: 12px;
+                    margin: 8px 0px 0px;
+                }
+            }
+
+            .link {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: right;
+                padding: 0px 12px 20px;
+                margin: 7px 0px 0px;
+                font-size: 12px;
+
+                @media (max-width:768px) {
+                    text-align: center;
+                    padding: 0px 10px 10px;
+                }
+            }
+        }
+    }
+}
