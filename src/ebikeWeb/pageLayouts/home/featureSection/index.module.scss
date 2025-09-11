@@ -1,5 +1,19 @@
-.featuer_main{
-   
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.featuer_main {
+
     width: 100%;
     text-align: left;
     max-width: 1060px;
@@ -9,17 +23,21 @@
     margin-top: 10px;
 
     .featuer_title {
-        font-weight: bolder;
+        padding: 0px !important;
+        font-size: 20px;
         color: black;
-        text-align: center;
-        padding-bottom: 20px;
-        font-size: 25px;
+        font-family: 'LatoBold';
+        letter-spacing: 1px;
+        margin: 0px 0px 10px !important;
+        padding: 10px 0px;
+
         @media (max-width:768px) {
-            font-size: 20px;
-            padding-bottom: 10px;
-            text-align: left;
+            font-size: 19px;
+            display: flex;
+            justify-content: space-between;
         }
-        .titleShow{
+
+        .titleShow {
             @media (max-width:768px) {
                 display: none;
             }
@@ -36,18 +54,20 @@
         flex-direction: row;
         margin: auto;
         overflow: hidden;
+
         @media (max-width:767px) {
             flex-direction: column;
         }
 
         .Grid_boxes {
-           display: inline-block;
-           justify-content: center;
-           align-items: center;
+            display: inline-block;
+            justify-content: center;
+            align-items: center;
         }
     }
-    @media screen and (max-width:600px){
-        .sec2_heading{
+
+    @media screen and (max-width:600px) {
+        .sec2_heading {
             font-size: 18px;
         }
     }
