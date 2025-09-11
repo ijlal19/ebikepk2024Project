@@ -65,7 +65,10 @@ export default function LoginPopup({props,values}: any) {
     })(document, "script", "facebook-jssdk");
   }, []);
 
-    useEffect(() => {
+
+
+  // recaptcha for phone verification
+  useEffect(() => {
     if (typeof window === "undefined") return;
     if (recaptchaVerifierRef.current) return; // already initialized
 
@@ -79,7 +82,7 @@ export default function LoginPopup({props,values}: any) {
   }, []);
 
 
-    const sendCodePhone = async () => {
+  const sendCodePhone = async () => {
     try {
       // setLoading(true);
       setIsLoading(true)
@@ -106,7 +109,27 @@ export default function LoginPopup({props,values}: any) {
       if (!confirmationRef.current) throw new Error("No confirmation");
       const result = await confirmationRef.current.confirm(otp.trim());
       // result.user logged in
-      console.log(result, result)
+      console.log("result 111", result?.user)
+ 
+      let obj = {
+        social_uid: "" ,
+        signupType: 'social',
+        isVerified : true,
+        userFullName: ""
+      }
+
+      // let res = await userSignup(obj)
+      // console.log('res 111', res)
+
+      // if(res.token && res.user) {
+      //   let userObj = JSON.stringify(res.user)
+      //   jsCookie.set('userInfo_e', userObj, {expires: 1})
+      //   jsCookie.set('accessToken_e', res.token , {expires: 1})
+      //   props.showmodal()
+      //   props.updateAfterLogin()
+      // }
+      
+
       setStep("done");
     } catch (err: any) {
       alert(err?.message ?? "Invalid code");
@@ -115,12 +138,6 @@ export default function LoginPopup({props,values}: any) {
       // setLoading(false);
     }
   };
-
-  // const logoutPhone = async () => {
-  //   await signOut(auth);
-  //   setStep("enter-phone");
-  //   setOtp("");
-  // };
  
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -162,20 +179,6 @@ export default function LoginPopup({props,values}: any) {
   const handlesignup =()=> {
     props.showmodal('showloginpopup')
   }
-
-  const handleFacebookLogin = () => {
-    console.log('aasadad');
-    (window as any).FB.login(
-      (response:any) => {
-        if (response.authResponse) {
-          console.log('User logged in successfully:', response);
-        } else {
-          console.log('User cancelled login or did not fully authorize.');
-        }
-      },
-      { scope: 'public_profile' }
-    );
-  };
 
   return (
     <div>
@@ -223,8 +226,7 @@ export default function LoginPopup({props,values}: any) {
                 >
                   {false ? "Sending..." : "Send Code"}
                 </button>
-              {/* Invisible or visible reCAPTCHA container */}
-              {/* <div ref={recaptchaRef} id="recaptcha-container" /> */}
+
             </div>
 
             <div className="space-y-3">
@@ -290,22 +292,7 @@ export default function LoginPopup({props,values}: any) {
 
               {/* <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button> */}
               <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
-
-              {/* <div style={{ margin:"10px auto", textAlign:"center" }}>
-                  <FacebookLogin
-                    appId="217553265854765"
-                    autoLoad={false}
-                    fields="name,email"
-                    scope="public_profile,user_friends,user_actions.books"
-                    callback={responseFacebook}
-                  />
-              </div> */}
-
-              {/* <button onClick={handleLogin} > Login with Facebook </button> */}
-              
               <Divider/>
-
-              <button id="login_with_FB" onClick={handleFacebookLogin}>Login with Facebook</button>
 
               <div className={styles.google_box}>
                   <GoogleLoginButton  
