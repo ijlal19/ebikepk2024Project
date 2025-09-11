@@ -75,11 +75,11 @@
             cursor: pointer;
             transition: all 0.9s ease;
             @media (max-width:768px) {
-                padding: 4px 7px;
+                padding: 4px 4px;
                 display: flex;
                 align-items: center;
                 margin:5px  auto 0px auto;
-                font-size: 12px !important;
+                font-size: 11px !important;
             }
         }
 
