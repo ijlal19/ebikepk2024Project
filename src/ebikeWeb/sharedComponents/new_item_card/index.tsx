@@ -11,7 +11,7 @@ const NewCard = ({ props }: any) => {
     };
     return (
         <div className={styles.main}>
-            <div className={styles.container}>
+             <div className={styles.container}>
             <div className={styles.image_box} 
             // style={{
             //     background: `url(${props?.featuredImage?.split(' #$# ')[0]?.trim()})`,
