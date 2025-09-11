@@ -395,13 +395,14 @@ body {
     margin: 0px 2px !important;
 }
 
-.swiper-button-next {
+.swiper-button-next   ,  .swiper-button-next{
     margin-right: -7px !important;
     width: 30px !important;
     height: 30px !important;
     border-radius: 50% !important;
+    font-weight: bolder;
     color: rgb(0, 0, 0) !important;
-    background-color: rgba(0, 0, 0, 0.18);
+    background-color: rgb(250, 250, 250);
     border:none !important;
 }
 
@@ -412,5 +413,6 @@ body {
     border:none !important;
     border-radius: 50% !important;
     color: rgb(0, 0, 0) !important;
-    background-color: rgba(0, 0, 0, 0.18);
+    font-weight: bolder;
+    background-color: rgb(250, 250, 250);
 }
