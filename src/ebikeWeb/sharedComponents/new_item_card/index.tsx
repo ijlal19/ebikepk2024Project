@@ -20,12 +20,12 @@ const NewCard = ({ props }: any) => {
             //     backgroundSize: '100% auto'
             // }} 
             >
-                <img src={props?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.image} />
+                <img src={props?.featuredImage?.split(' #$# ')[0]?.trim()} alt={props?.blogTitle} className={styles.image} />
             </div>
             <div className={styles.content}>
                 <p className={styles.title}>{add3Dots(props?.blogTitle , isMobile? 25 : 60)}</p>
                 <p className={styles.author}>By <span className={styles.name}>{props?.authorname}</span></p>
-                <p className={styles.description}>{add3Dots(props?.meta_description, isMobile?80 : 120)}</p>
+                <p className={styles.description}>{add3Dots(props?.meta_description, isMobile?40 : 80)}</p>
                 <Link href={getBlogUrl(props)} className={styles.link}>
                     {/* <button className={styles.btn}> */}
                     View Detail
@@ -36,4 +36,33 @@ const NewCard = ({ props }: any) => {
         </div>
     )
 }
-export default NewCard
+
+const NewVideoCard = ({ props }: any) => {
+    const isMobile = useMediaQuery('(max-width:768px)')
+    return (
+        <div className={styles.main}>
+            <div className={styles.container}>
+            <div className={styles.image_box} 
+            // style={{
+            //     background: `url(${props?.featuredImage?.split(' #$# ')[0]?.trim()})`,
+            //     backgroundPosition: 'center',
+            //     backgroundRepeat: 'no-repeat',
+            //     backgroundSize: '100% auto'
+            // }} 
+            >
+                <img src={props?.thumbnail_url} alt={props?.title} className={styles.image} />
+            </div>
+            <div className={styles.content}>
+                <p className={styles.title}>{add3Dots(props?.title , isMobile? 25 : 60)}</p>
+                <p className={styles.author}>By <span className={styles.name}>Ebike Team</span></p>
+                {/* <p className={styles.description}>{add3Dots(props?.meta_description, isMobile?40 : 80)}</p> */}
+                <Link href={props?.video_url} target="_blank" className={styles.link1}>
+                    Watch Video
+                </Link>
+            </div>
+            </div>
+        </div>
+    )
+}
+
+export { NewCard  ,NewVideoCard}

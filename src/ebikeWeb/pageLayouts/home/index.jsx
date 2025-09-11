@@ -6,7 +6,6 @@ import BrandSection from './brandSection/index'
 import Explore from './exploresection/index'
 import UsedBikesSection from './usedbikeSection/index'
 import BlogSection from './blogSection/index'
-import Ourvideos from './ourVideos/index'
 import MobileBanner from './mobileBanner/index'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
@@ -83,7 +82,6 @@ function Index() {
      <BrandSection/>
      <Explore/>
      <BlogSection blogData={homeData.homeBlogs} />
-     <Ourvideos/>
     </>
   )
 }
