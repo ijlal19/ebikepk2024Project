@@ -812,14 +812,92 @@ const EditElectricBikeForm = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-        // { name: "boreAndStroke", label: "Motor" }, // change
-        // { name: "petrolCapacity", label: "Tourque" }, // change
-        // { name: "clutch", label: "Top Speed" }, // change
-        // { name: "transmission", label: "Wheel Size" }, // change
-        // { name: "displacement", label: "Battery Type" }, // change
-        // { name: "compressionRatio", label: "Charging Time" }, // change
-
         const invalidChars = /[\/,?#$!+]/;
+
+        // if (!NewField.newtitle || NewField.newtitle.length < 2) {
+        //     alert("Please add a valid title (min 2 characters)");
+        //     return;
+        // }
+        // else if (invalidChars.test(NewField.newtitle)) {
+        //     alert("Please remove special characters.");
+        //     return;
+        // }
+        // else if (!NewField.newbikeUrl || NewField.newbikeUrl.length < 2) {
+        //     alert("Please enter a valid unique URL");
+        //     return;
+        // }
+        // else if (!NewField.newprice || isNaN(Number(NewField.newprice))) {
+        //     alert("Please enter a valid numeric price");
+        //     return;
+        // }
+        // else if (!NewField.newengine || NewField.newengine.length < 2) {
+        //     alert("Please enter engine info");
+        //     return;
+        // }
+        // else if (!NewField.newboreAndStroke) {
+        //     alert("Please enter Motor Detail");
+        //     return;
+        // }
+        // else if (!NewField.newclutch) {
+        //     alert("Please enter Top speed");
+        //     return;
+        // }
+        // else if (!NewField.newstarting) {
+        //     alert("Please enter starting info");
+        //     return;
+        // }
+        // else if (!NewField.newdimention) {
+        //     alert("Please enter dimension");
+        //     return;
+        // }
+        // else if (!NewField.newpetrolCapacity) {
+        //     alert("Please enter Torque detail");
+        //     return;
+        // }
+        // else if (!NewField.newdisplacement) {
+        //     alert("Please enter battery type");
+        //     return;
+        // }
+        // else if (!NewField.newcompressionRatio) {
+        //     alert("Please enter charging time");
+        //     return;
+        // }
+        // else if (!NewField.newtransmission) {
+        //     alert("Please enter wheel size");
+        //     return;
+        // }
+        // else if (!NewField.newframe) {
+        //     alert("Please enter frame info");
+        //     return;
+        // }
+        // else if (!NewField.newgroundClearance) {
+        //     alert("Please enter ground clearance");
+        //     return;
+        // }
+        // else if (!NewField.newtyreFront) {
+        //     alert("Please enter front tyre size");
+        //     return;
+        // }
+        // else if (!NewField.newtyreBack) {
+        //     alert("Please enter back tyre size");
+        //     return;
+        // }
+        // else if (!NewField.newdryWeight) {
+        //     alert("Please enter dry weight");
+        //     return;
+        // }
+        // else if (!NewField.newdescription || NewField.newdescription.length < 10) {
+        //     alert("Please enter a proper description (min 10 characters)");
+        //     return;
+        // }
+        // else if (!NewField.newbrandId) {
+        //     alert("Please select brand");
+        //     return;
+        // }
+        // else if (!imageArr || imageArr.length === 0) {
+        //     alert("Please upload at least one image");
+        //     return;
+        // }
 
         if (!NewField.newtitle || NewField.newtitle.length < 2) {
             alert("Please add a valid title (min 2 characters)");
@@ -833,20 +911,24 @@ const EditElectricBikeForm = () => {
             alert("Please enter a valid unique URL");
             return;
         }
+        else if (!imageArr || imageArr.length === 0) {
+            alert("Please upload at least one image");
+            return;
+        }
         else if (!NewField.newprice || isNaN(Number(NewField.newprice))) {
             alert("Please enter a valid numeric price");
             return;
         }
-        else if (!NewField.newengine || NewField.newengine.length < 2) {
-            alert("Please enter engine info");
+        else if (!NewField.newengine) {
+            alert("Please enter Seat Length");
             return;
         }
         else if (!NewField.newboreAndStroke) {
-            alert("Please enter Motor Detail");
+            alert("Please enter Battery Detail");
             return;
         }
         else if (!NewField.newclutch) {
-            alert("Please enter Top speed");
+            alert("Please enter Wheel Detail");
             return;
         }
         else if (!NewField.newstarting) {
@@ -854,11 +936,11 @@ const EditElectricBikeForm = () => {
             return;
         }
         else if (!NewField.newdimention) {
-            alert("Please enter dimension");
+            alert("Please enter Type");
             return;
         }
         else if (!NewField.newpetrolCapacity) {
-            alert("Please enter Torque detail");
+            alert("Please enter Range Per Charge");
             return;
         }
         else if (!NewField.newdisplacement) {
@@ -866,43 +948,31 @@ const EditElectricBikeForm = () => {
             return;
         }
         else if (!NewField.newcompressionRatio) {
-            alert("Please enter charging time");
+            alert("Please enter Frame Detail");
             return;
         }
         else if (!NewField.newtransmission) {
-            alert("Please enter wheel size");
+            alert("Please enter Shock Absorption");
             return;
         }
         else if (!NewField.newframe) {
-            alert("Please enter frame info");
+            alert("Please enter Head Light detail");
             return;
         }
         else if (!NewField.newgroundClearance) {
-            alert("Please enter ground clearance");
-            return;
-        }
-        else if (!NewField.newtyreFront) {
-            alert("Please enter front tyre size");
+            alert("Please enter Motor Detail");
             return;
         }
         else if (!NewField.newtyreBack) {
-            alert("Please enter back tyre size");
+            alert("Please enter Brake Detail");
+            return;
+        }
+        else if (!NewField.newtyreFront) {
+            alert("Please enter Charge Time");
             return;
         }
         else if (!NewField.newdryWeight) {
-            alert("Please enter dry weight");
-            return;
-        }
-        else if (!NewField.newdescription || NewField.newdescription.length < 10) {
-            alert("Please enter a proper description (min 10 characters)");
-            return;
-        }
-        else if (!NewField.newbrandId) {
-            alert("Please select brand");
-            return;
-        }
-        else if (!imageArr || imageArr.length === 0) {
-            alert("Please upload at least one image");
+            alert("Please enter Tyre Size");
             return;
         }
 
@@ -1032,39 +1102,37 @@ const EditElectricBikeForm = () => {
                         {/* Other fields */}
                         <div className={styles.all_inputs}>
                             {[
+                                // { name: "newprice", label: "Price" },
+                                // { name: "newdimention", label: "Dimension" },
+                                // { name: "newengine", label: "Engine" },
+                                // { name: "newboreAndStroke", label: "Motor" },
+                                // { name: "newframe", label: "Frame" },
+                                // { name: "newpetrolCapacity", label: "Tourque" },
+                                // { name: "newstarting", label: "Starting" },
+                                // { name: "newgroundClearance", label: "Ground Clearance" },
+                                // { name: "newclutch", label: "Top Speed" },
+                                // { name: "newdryWeight", label: "Dry Weight" },
+                                // { name: "newtransmission", label: "Transmission" },
+                                // { name: "newtyreBack", label: "Tyre Back" },
+                                // { name: "newtyreFront", label: "Tyre Front" },
+                                // { name: "newdisplacement", label: "Battery Type" },
+                                // { name: "newcompressionRatio", label: "Charging Time" },
+           
                                 { name: "newprice", label: "Price" },
-                                { name: "newdimention", label: "Dimension" },
-                                { name: "newengine", label: "Engine" },
-                                { name: "newboreAndStroke", label: "Motor" },
-                                { name: "newframe", label: "Frame" },
-                                { name: "newpetrolCapacity", label: "Tourque" },
-                                { name: "newstarting", label: "Starting" },
-                                { name: "newgroundClearance", label: "Ground Clearance" },
-                                { name: "newclutch", label: "Top Speed" },
-                                { name: "newdryWeight", label: "Dry Weight" },
-                                { name: "newtransmission", label: "Transmission" },
-                                { name: "newtyreBack", label: "Tyre Back" },
-                                { name: "newtyreFront", label: "Tyre Front" },
-                                { name: "newdisplacement", label: "Battery Type" },
-                                { name: "newcompressionRatio", label: "Charging Time" },
-
-
-
-                                // { name: "price", label: "Price" },
-                                // { name: "dimention", label: "Dimension" },
-                                // { name: "engine", label: "Engine" },
-                                // { name: "starting", label: "Starting" },
-                                // { name: "groundClearance", label: "Ground Clearance" },
-                                // { name: "dryWeight", label: "Dry Weight" },
-                                // { name: "frame", label: "Frame" },
-                                // { name: "tyreBack", label: "Tyre Back" },
-                                // { name: "tyreFront", label: "Tyre Front" },
-                                // { name: "boreAndStroke", label: "Motor" }, // change
-                                // { name: "petrolCapacity", label: "Tourque" }, // change
-                                // { name: "clutch", label: "Top Speed" }, // change
-                                // { name: "transmission", label: "Wheel Size" }, // change
-                                // { name: "displacement", label: "Battery Type" }, // change
-                                // { name: "compressionRatio", label: "Charging Time" }, // change
+                                { name: "newdimention", label: "Type" },
+                                { name: "newengine", label: "Seat Length" },
+                                { name: "newboreAndStroke", label: "Battery" }, // change
+                                { name: "newframe", label: "Head Light" },
+                                { name: "newpetrolCapacity", label: "Range Per Charge" }, // change
+                                { name: "newstarting", label: "Speed" },
+                                { name: "newgroundClearance", label: "Motor" },
+                                { name: "newclutch", label: "Wheel" }, // change
+                                { name: "newdryWeight", label: "Tyre Size" },
+                                { name: "newtransmission", label: "Shock Absorption" }, // change
+                                { name: "newtyreBack", label: "Brake (Front/Rear)" },
+                                { name: "newtyreFront", label: "Charge Time" },
+                                { name: "newdisplacement", label: "Battery Type" }, // change
+                                { name: "newcompressionRatio", label: "Frame" },
 
                             ].map(({ name, label }) => (
                                 <div key={name}>
