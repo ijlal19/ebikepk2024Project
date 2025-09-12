@@ -18,7 +18,7 @@ const Section2 = () => {
               txt3:'Sell Your Bike at the Best Price',
               button:'Post Bike Add',
               url:"/used-bikes/sell-used-bike/",
-              isLoginreq:false
+              isLoginreq:true
     },
     {
               heading:'Register Dealer',

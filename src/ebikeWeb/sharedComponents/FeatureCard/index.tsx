@@ -14,7 +14,6 @@ const FeatureCard = (props: any) => {
       Router.push(url)
     }
     else {
-      // alert("Please Login to Continue")
       if (document.getElementById('general_login_btn')) {
         document.getElementById('general_login_btn')?.click()
       }
@@ -43,12 +42,12 @@ const FeatureCard = (props: any) => {
             {data.txt3}
           </Typography>
           {
-            !data.isLoginReq ?
-              <Link className={styles.anchor} href='/#'>
-                <Button className={styles._btn} onClick={() => goToRoute(data.url)} >{data.button}</Button>
-              </Link>
+            data.isLoginreq ?
+                <Button className={styles.anchor} onClick={() => goToRoute(data.url)} >{data.button}</Button>
               :
-              <Button className={styles._btn} onClick={() => goToRoute(data.url)} >{data.button}</Button>
+              <Link className={styles.anchor} href={data?.url}>
+                {data.button}
+              </Link>
           }
         </Box>
       </Paper> : <></>

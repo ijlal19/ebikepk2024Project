@@ -42,56 +42,56 @@ const BlogData =
             "comments": [],
             "blog_comments": []
         },
-        // {
-        //     "id": 814,
-        //     "blogTitle": "Harley Davidson Street Glide Ultra 2025  First Look",
-        //     "bloghtml": "\u003Cp\u003EAre you ready to take your long-distance rides to the next level? Look no further than the 2025 Harley-Davidson Street Glide Ultra. This powerhouse of a bike is designed to provide unparalleled comfort, performance, and style.\u003C/p\u003E\u003Cp\u003EA Refreshed Design\u003C/p\u003E\u003Cp\u003EThe Street Glide Ultra boasts a refreshed look, complete with fairing lowers that feature storage compartments and a taller windshield. These design elements not only enhance the bike&#39;s aesthetic appeal but also provide improved functionality. The fairing lowers, for instance, offer a convenient storage space for small items, while the taller windshield provides better wind protection.\u003C/p\u003E\u003Cp\u003EA Powerful Engine\u003C/p\u003E\u003Cp\u003EThe Milwaukee-Eight 117 engine delivers 105 horsepower and 130 lb-ft of torque, making it perfect for long hauls. This powerful engine provides a smooth and responsive ride, allowing you to tackle even the most challenging terrain with confidence.\u003C/p\u003E\u003Cp\u003EAdvanced Technology\u003C/p\u003E\u003Cp\u003EEnjoy a 12.3-inch TFT touchscreen display, Bluetooth connectivity, and a premium audio system. This advanced technology allows you to stay connected and entertained on the go, making your touring experience even more enjoyable.\u003C/p\u003E\u003Cp\u003EFour Ride Modes\u003C/p\u003E\u003Cp\u003EChoose from Road, Sport, Rain, and Custom ride modes to tailor your experience. These ride modes allow you to adjust the bike&#39;s performance to suit your riding style and the terrain.\u003C/p\u003E\u003Cp\u003EPrice\u003C/p\u003E\u003Cp\u003EStarting at $30,749, the 2025 Harley-Davidson Street Glide Ultra is an investment worth considering. With its unbeatable combination of style, performance, and comfort, this bike is sure to elevate your touring experience.\u003C/p\u003E\u003Cp data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\"\u003EPowered by \u003Ca href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\"\u003EFroala Editor\u003C/a\u003E\u003C/p\u003E",
-        //     "authorname": "Afzal Ali           ",
-        //     "blogCategoryId": 1,
-        //     "uid": "f6882342-689b-41a7-b142-446512ff158f",
-        //     "featuredImage": "http://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1740998464/blogs/raj6wmvoozdbn5oqrnwa.jpg",
-        //     "isPosted": false,
-        //     "blogUrl": "",
-        //     "blogtext": "",
-        //     "meta_title": "Harley-Davidson Street Glide Ultra 2025 – First Look",
-        //     "meta_description": "Look no further than the 2025 Harley-Davidson Street Glide Ultra. This powerhouse of a bike is designed to provide unparalleled comfort, performance, and style.",
-        //     "focus_keyword": "Harley Davidson Street Glide Ultra",
-        //     "createdAt": "2025-03-03T10:40:34.997Z",
-        //     "updatedAt": "2025-03-03T10:42:43.679Z",
-        //     "blog_category": {
-        //         "id": 1,
-        //         "name": "News",
-        //         "parentCategoryId": 0,
-        //         "createdAt": "2019-01-10T14:41:45.859Z",
-        //         "updatedAt": "2019-01-10T14:41:45.859Z"
-        //     },
-        //     "user": {
-        //         "id": "f6882342-689b-41a7-b142-446512ff158f",
-        //         "userFullName": "Maqbool",
-        //         "userType": "user",
-        //         "signupType": "email",
-        //         "email": "maqboolbhai396@gmail.com",
-        //         "password": "ccdbfbd934a2b10d38bcfc80c37be3b04ff7a3733aecd8e90ad59f50e0fde6ef",
-        //         "isVerified": true,
-        //         "status": "inactive",
-        //         "last_login": "2019-02-01T04:57:27.254Z",
-        //         "social_uid": null,
-        //         "createdAt": "2019-02-01T12:36:43.182Z",
-        //         "updatedAt": "2020-06-06T07:02:19.889Z"
-        //     },
-        //     "comments": [],
-        //     "blog_comments": [
-        //         {
-        //             "id": 355,
-        //             "blog_id": 814,
-        //             "comment": "good relte",
-        //             "user_name": "Abdullha",
-        //             "uid": "12e5ec6a-d2fc-4f11-a4e9-c9d8c6e12215",
-        //             "createdAt": "2025-03-20T22:26:02.286Z",
-        //             "updatedAt": "2025-03-20T22:26:02.286Z"
-        //         }
-        //     ]
-        // },
+        {
+            "id": 814,
+            "blogTitle": "Harley Davidson Street Glide Ultra 2025  First Look",
+            "bloghtml": "\u003Cp\u003EAre you ready to take your long-distance rides to the next level? Look no further than the 2025 Harley-Davidson Street Glide Ultra. This powerhouse of a bike is designed to provide unparalleled comfort, performance, and style.\u003C/p\u003E\u003Cp\u003EA Refreshed Design\u003C/p\u003E\u003Cp\u003EThe Street Glide Ultra boasts a refreshed look, complete with fairing lowers that feature storage compartments and a taller windshield. These design elements not only enhance the bike&#39;s aesthetic appeal but also provide improved functionality. The fairing lowers, for instance, offer a convenient storage space for small items, while the taller windshield provides better wind protection.\u003C/p\u003E\u003Cp\u003EA Powerful Engine\u003C/p\u003E\u003Cp\u003EThe Milwaukee-Eight 117 engine delivers 105 horsepower and 130 lb-ft of torque, making it perfect for long hauls. This powerful engine provides a smooth and responsive ride, allowing you to tackle even the most challenging terrain with confidence.\u003C/p\u003E\u003Cp\u003EAdvanced Technology\u003C/p\u003E\u003Cp\u003EEnjoy a 12.3-inch TFT touchscreen display, Bluetooth connectivity, and a premium audio system. This advanced technology allows you to stay connected and entertained on the go, making your touring experience even more enjoyable.\u003C/p\u003E\u003Cp\u003EFour Ride Modes\u003C/p\u003E\u003Cp\u003EChoose from Road, Sport, Rain, and Custom ride modes to tailor your experience. These ride modes allow you to adjust the bike&#39;s performance to suit your riding style and the terrain.\u003C/p\u003E\u003Cp\u003EPrice\u003C/p\u003E\u003Cp\u003EStarting at $30,749, the 2025 Harley-Davidson Street Glide Ultra is an investment worth considering. With its unbeatable combination of style, performance, and comfort, this bike is sure to elevate your touring experience.\u003C/p\u003E\u003Cp data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\"\u003EPowered by \u003Ca href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\"\u003EFroala Editor\u003C/a\u003E\u003C/p\u003E",
+            "authorname": "Afzal Ali           ",
+            "blogCategoryId": 1,
+            "uid": "f6882342-689b-41a7-b142-446512ff158f",
+            "featuredImage": "http://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1740998464/blogs/raj6wmvoozdbn5oqrnwa.jpg",
+            "isPosted": false,
+            "blogUrl": "",
+            "blogtext": "",
+            "meta_title": "Harley-Davidson Street Glide Ultra 2025 – First Look",
+            "meta_description": "Look no further than the 2025 Harley-Davidson Street Glide Ultra. This powerhouse of a bike is designed to provide unparalleled comfort, performance, and style.",
+            "focus_keyword": "Harley Davidson Street Glide Ultra",
+            "createdAt": "2025-03-03T10:40:34.997Z",
+            "updatedAt": "2025-03-03T10:42:43.679Z",
+            "blog_category": {
+                "id": 1,
+                "name": "News",
+                "parentCategoryId": 0,
+                "createdAt": "2019-01-10T14:41:45.859Z",
+                "updatedAt": "2019-01-10T14:41:45.859Z"
+            },
+            "user": {
+                "id": "f6882342-689b-41a7-b142-446512ff158f",
+                "userFullName": "Maqbool",
+                "userType": "user",
+                "signupType": "email",
+                "email": "maqboolbhai396@gmail.com",
+                "password": "ccdbfbd934a2b10d38bcfc80c37be3b04ff7a3733aecd8e90ad59f50e0fde6ef",
+                "isVerified": true,
+                "status": "inactive",
+                "last_login": "2019-02-01T04:57:27.254Z",
+                "social_uid": null,
+                "createdAt": "2019-02-01T12:36:43.182Z",
+                "updatedAt": "2020-06-06T07:02:19.889Z"
+            },
+            "comments": [],
+            "blog_comments": [
+                {
+                    "id": 355,
+                    "blog_id": 814,
+                    "comment": "good relte",
+                    "user_name": "Abdullha",
+                    "uid": "12e5ec6a-d2fc-4f11-a4e9-c9d8c6e12215",
+                    "createdAt": "2025-03-20T22:26:02.286Z",
+                    "updatedAt": "2025-03-20T22:26:02.286Z"
+                }
+            ]
+        },
         {
             "id": 781,
             "blogTitle": "Honda Gold Wing Celebrates 50 Years of Comfortable Cruising",
@@ -145,7 +145,33 @@ const BlogData =
 
     ]
 
-
+const VideoData =[
+    {
+        title:'Zongshen 250cc Bike User Review',
+        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646645/zongshen2_ryuefe.jpg',
+        video_url:'https://www.youtube.com/watch?v=A2c6v-1q8CE&t=3s',
+    },
+    {
+        title:'Honda CG 125 2024 Model',
+        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646805/cg125_ablpev.jpg',
+        video_url:'https://www.youtube.com/watch?v=IKo6aiM9jcA',
+    },
+    {
+        title:'Metro E8S Pro Review',
+        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646763/e8spro_eonu7v.jpg',
+        video_url:'https://www.youtube.com/watch?v=yW5oKvl-UAs',
+    },
+    {
+        title:'Yamaha Bike in Pakistan',
+        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646697/yamaha_od8sy3.jpg',
+        video_url:'https://www.youtube.com/watch?v=V35Mn1QnBmU&t=12s',
+    },
+    {
+        title:'Metro T9 Bike Review',
+        thumbnail_url:'https://res.cloudinary.com/dzfd4phly/image/upload/v1728646735/metrot9_qtbjje.jpg',
+        video_url:'https://www.youtube.com/watch?v=PzRLlaKO_yo',
+    },
+]
 
 
 
@@ -10211,4 +10237,4 @@ const BlogData =
 //     }
 // ]
 
-export default BlogData
+export { BlogData  ,VideoData}

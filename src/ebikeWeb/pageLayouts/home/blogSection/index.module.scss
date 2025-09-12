@@ -1,8 +1,22 @@
 @import '../../../styles/variable';
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 .main_blog{
    background-color: #f2f3f3;
    width: 100%;
-   margin: 10px 0px 10px 0px!important;
+   margin: 10px 0px 0px 0px!important;
    display: flex;
    padding: 40px 0px 0px 0px !important;
    justify-content: center;
@@ -19,15 +33,19 @@
    .heading {
        padding: 0px !important;
        font-size: 20px;
-       font-weight: 700;
        color: black;
-       margin: 0px 0px 20px;
+       font-family: 'LatoBold';
+       letter-spacing: 1px;
+       margin: 0px 0px 0px !important;
        padding: 10px 0px;
-       margin-bottom: -18px;
+      //  margin-bottom: -18px;
    }
 
    .tab {
-       padding: 0px !important;
+       padding: 0px 0px 0px 0px !important;
+       font-family: 'LatoBold';
+       font-size: 13px;
+       margin-top: 5px;
    }
 
     .blog_grid1 {
@@ -112,4 +130,22 @@
 
 .link_tag:hover{
    color: $primary_two;
+}
+
+.panel1{
+   display: grid;
+   justify-content: space-between;
+   padding: 15px 0px;
+   grid-template-columns: repeat(3 , 1fr);
+   @media (max-width:768px) {
+      grid-template-columns: repeat(2 , 1fr);
+   }
+}
+.loading{
+
+   font-family: 'LatoBold';
+   font-size: 18px;
+   text-align: center;
+   width: 100%;
+   letter-spacing: 1px;
 }

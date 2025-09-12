@@ -8,6 +8,11 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Link from 'next/link'
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
+import { NewBikeCard } from '@/ebikeWeb/sharedComponents/new_item_card';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -31,8 +36,8 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function NewBikesSection(props:any) {
-  const [value, setValue] =React.useState(0);
+function NewBikesSection(props: any) {
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log(newValue)
@@ -44,25 +49,78 @@ function NewBikesSection(props:any) {
       <Container>
         <Typography className={styles.heading}>
           Bike Collection
-          <Link className={styles.view_new_bik_btn}  href={'/new-bikes'}> 
+          {/* <Link className={styles.view_new_bik_btn} href={'/new-bikes'}>
             <span> View New Bikes </span>
-          </Link> 
+          </Link> */}
         </Typography>
-        
+
         <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary"  >
-              <Tab label="Featured" className={styles.tab} sx={{marginRight:2}}/>
+              <Tab label="Featured" className={styles.tab} sx={{ marginRight: 2 }} />
               <Tab label="Trending" className={styles.tab} />
             </Tabs>
           </Box>
 
-          {props?.featuredData ? <CustomTabPanel value={value} index={0}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.featuredData} from='newBikeComp' currentpage="trending_bike" onBtnClick={()=>{}}  />
-          </CustomTabPanel> : "" }
-          {props?.trendingData ? <CustomTabPanel value={value} index={1}>
-            <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike' onBtnClick={()=>{}} />
-          </CustomTabPanel> : "" }
+          {props?.featuredData ?
+            <CustomTabPanel value={value} index={0} >
+              <div className={styles.tab_panel}>
+                <Swiper
+                  modules={[Navigation]}
+                  navigation
+                  spaceBetween={0}
+                  loop={true}
+                  slidesPerView={3}        // default (desktop)
+                  slidesPerGroup={1}       // ek time me 1 slide move kare
+                  breakpoints={{
+                    0: {
+                      slidesPerView: 2,    // mobile (0px se upar)
+                      slidesPerGroup: 1,
+                    },
+                    768: {
+                      slidesPerView: 3,    // tablet/desktop (768px se upar)
+                      slidesPerGroup: 1,
+                    },
+                  }}
+                >
+                  {props?.featuredData?.map((item: any, i: number) => (
+                    <SwiperSlide key={i}>
+                      <NewBikeCard props={item} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </CustomTabPanel>
+            : ""}
+          {props?.trendingData ?
+            <CustomTabPanel value={value} index={1}>
+              <div className={styles.tab_panel}>
+                <Swiper
+                  modules={[Navigation]}
+                  navigation
+                  spaceBetween={0}
+                  loop={true}
+                  slidesPerView={3}        // default (desktop)
+                  slidesPerGroup={1}       // ek time me 1 slide move kare
+                  breakpoints={{
+                    0: {
+                      slidesPerView: 2,    // mobile (0px se upar)
+                      slidesPerGroup: 1,
+                    },
+                    768: {
+                      slidesPerView: 3,    // tablet/desktop (768px se upar)
+                      slidesPerGroup: 1,
+                    },
+                  }}
+                >
+                  {props?.trendingData?.map((item: any, i: number) => (
+                    <SwiperSlide key={i}>
+                      <NewBikeCard props={item} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </CustomTabPanel> : ""}
         </Box>
 
       </Container>
@@ -71,4 +129,4 @@ function NewBikesSection(props:any) {
   )
 }
 export default NewBikesSection;
-
+            // <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike' onBtnClick={() => { }} />
