@@ -57,11 +57,11 @@ const Section2 = () => {
           {
             isMobile ? 
             <SwiperCarousels 
-              from='' 
-              sliderName='featurSectionHomeSlider' 
-              sliderData={feautureArray} 
-              currentpage="" 
-              onBtnClick={()=>{}} 
+            from='' 
+            sliderName='featurSectionHomeSlider' 
+            sliderData={feautureArray} 
+            currentpage="" 
+            onBtnClick={()=>{}} 
             /> 
             :
             (feautureArray.map((data:any ,i:any) => {
