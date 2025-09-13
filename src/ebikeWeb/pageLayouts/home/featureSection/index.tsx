@@ -27,7 +27,7 @@ const Section2 = () => {
               txt3:'Enhance your business revenue',
               button:'Register Dealer',
               url:"/dealers/register",
-              isLoginreq:false
+              isLoginreq:true
     },
     {
               heading:'Register Mechanic',
@@ -36,7 +36,7 @@ const Section2 = () => {
               txt3:'Enhance your business revenue',
               button:'Register Mechanic',
               url:"/mechanics/register",
-              isLoginreq:false
+              isLoginreq:true
     }
   ]
 

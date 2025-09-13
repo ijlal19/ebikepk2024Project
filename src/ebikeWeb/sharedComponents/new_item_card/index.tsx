@@ -69,7 +69,7 @@ const UsedBikeCard = ({ props }: any) => {
     return (
         <div className={styles.main}>
             <div className={styles.container}>
-                <div className={styles.image_boxnewbike}>
+                <div className={styles.image_boxusedbike}>
                     <img
                         src={GetImageSrc(props?.images)}
                         alt={props?.title || "default bike"}

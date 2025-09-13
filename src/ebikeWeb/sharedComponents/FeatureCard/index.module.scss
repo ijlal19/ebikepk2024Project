@@ -59,11 +59,12 @@
         .anchor {
             background-color: white;
             border: 1px solid $primary_two;
-            font-size: 11px;
-            width: 120px;
+            font-size: 12px;
+            // width: 120px;
             text-align: center;
-            padding: 5px 5px;
+            padding: 5px 20px;
             box-sizing: border-box;
+            margin: auto;
             display: flex;
             justify-content: center;
             margin-top: 10px;
@@ -75,7 +76,7 @@
             cursor: pointer;
             transition: all 0.9s ease;
             @media (max-width:768px) {
-                padding: 4px 4px;
+                padding: 4px 6px;
                 display: flex;
                 align-items: center;
                 margin:5px  auto 0px auto;
@@ -88,11 +89,4 @@
             background: $primary_two;
         }
     }
-}
-
-
-.anchor{
-    text-decoration: none;
-    display: flex;
-    margin: auto;
 }

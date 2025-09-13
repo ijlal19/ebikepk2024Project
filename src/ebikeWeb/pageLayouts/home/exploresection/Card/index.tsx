@@ -29,8 +29,8 @@ const Card = (props:any) => {
     <Box className={styles.explore_card_main} >
       <Grid container  className={styles.explore_card_container} onClick={()=>{goToRoute(data?.url)}}>
         <Grid item xs={4}  className={styles.explore_card_grid1}>
-          {/* <img src={data?.img_url} alt="Card Image"  className={styles.explore_card_image}/> */}
-          <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="Card Image"  className={styles.explore_card_image}/>
+          <img src={data?.img_url || "https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" } alt="Card Image"  className={styles.explore_card_image}/>
+          {/* <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="Card Image"  className={styles.explore_card_image}/> */}
         </Grid>
         <Grid item xs={8} className={styles.explore_card_grid2}>
           <Typography className={styles.explore_card_title}>

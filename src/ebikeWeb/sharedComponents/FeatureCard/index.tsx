@@ -5,22 +5,27 @@ import { isLoginUser } from "@/genericFunctions/geneFunc";
 import { useRouter } from 'next/navigation';
 
 const FeatureCard = (props: any) => {
+  let data = props.data
 
   const Router = useRouter()
 
-  function goToRoute(url: any) {
+  function goToRoute(data: any) {
     let _isLoginUser = isLoginUser()
-    if (_isLoginUser?.login) {
-      Router.push(url)
-    }
-    else {
-      if (document.getElementById('general_login_btn')) {
-        document.getElementById('general_login_btn')?.click()
+    if(data?.isLoginreq){
+      if (_isLoginUser?.login) {
+        Router.push(data?.url)
       }
+      else {
+        if (document.getElementById('general_login_btn')) {
+          document.getElementById('general_login_btn')?.click()
+        }
+      }
+    }
+    else{
+      Router.push(data?.url)
     }
   }
 
-  let data = props.data
 
   return (
     data ?
@@ -43,11 +48,11 @@ const FeatureCard = (props: any) => {
           </Typography>
           {
             data.isLoginreq ?
-                <Button className={styles.anchor} onClick={() => goToRoute(data.url)} >{data.button}</Button>
+              <Button className={styles.anchor} onClick={() => goToRoute(data)} >{data.button}</Button>
               :
-              <Link className={styles.anchor} href={data?.url}>
+              <Button className={styles.anchor} onClick={() => goToRoute(data)}  >
                 {data.button}
-              </Link>
+              </Button>
           }
         </Box>
       </Paper> : <></>
