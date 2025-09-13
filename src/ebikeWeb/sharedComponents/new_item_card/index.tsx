@@ -17,7 +17,7 @@ const NewCard = ({ props }: any) => {
                     <img src={props?.featuredImage?.split(' #$# ')[0]?.trim()} alt={props?.blogTitle} className={styles.image} />
                 </div>
                 <div className={styles.content}>
-                    <p className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 25 : 60)}</p>
+                    <p className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 20 : 60)}</p>
                     <p className={styles.author}>By <span className={styles.name}>{props?.authorname}</span></p>
                     <p className={styles.description}>{add3Dots(props?.meta_description, isMobile ? 40 : 80)}</p>
                     <Link href={getBlogUrl(props)} className={styles.link}>
