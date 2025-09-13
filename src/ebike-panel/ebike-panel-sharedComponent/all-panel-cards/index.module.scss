@@ -1054,6 +1054,10 @@
                                 .td:first-child {
                                     padding: 10px 0px;
                                     text-align: center;
+
+                                    .image{
+                                        width: 100px;
+                                    }
                                 }
 
                                 td:last-child {
@@ -1516,6 +1520,9 @@
                                 .td:first-child {
                                     padding: 10px 0px;
                                     text-align: center;
+                                    .image{
+                                        width: 100px;
+                                    }
                                 }
 
                                 td:last-child {

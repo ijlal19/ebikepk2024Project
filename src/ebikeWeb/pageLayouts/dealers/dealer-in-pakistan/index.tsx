@@ -197,6 +197,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
                     variant="outlined"
                     shape="rounded"
                     color='primary'
+                    size={isMobile ? "small" : "medium"}
                 />
             </Box>
         </>
