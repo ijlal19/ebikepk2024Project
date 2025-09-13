@@ -310,7 +310,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                 <Grid item xs={isMobile ? 12 : 6}>
                                   <table className={styles.table}>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Frame</td>
+                                      <td className={styles.column}>{isElectricBike ? "Head Light" : "Frame"}</td>
                                       <td className={styles.column}>{e?.bike?.frame ? e.bike.frame : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
@@ -318,27 +318,27 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.displacement ? e.bike?.displacement?.split(',')[0] : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Dimention</td>
+                                      <td className={styles.column}>{isElectricBike ? "Type" : "Dimention"} </td>
                                       <td className={styles.column}>{e?.bike?.dimention ? e.bike.dimention : "-"}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Tyre Front</td>
+                                      <td className={styles.column}>{isElectricBike ? "Charge Time" : "Tyre Front"} </td>
                                       <td className={styles.column}>{e?.bike?.tyreFront ? e.bike.tyreFront : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>{ isElectricBike ? "Top Speed" : "Clutch" }</td>
+                                      <td className={styles.column}>{isElectricBike ? "Wheel" : "Clutch"}</td>
                                       <td className={styles.column}>{e?.bike?.clutch ? e.bike.clutch : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Dry Weight</td>
+                                      <td className={styles.column}>{isElectricBike ? "Tyre Size" : "Dry Weight"} </td>
                                       <td className={styles.column}>{e?.bike?.dryWeight ? e.bike.dryWeight : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>Starting</td>
+                                      <td className={styles.column}>{isElectricBike ? "Speed" : "Starting"} </td>
                                       <td className={styles.column}>{e?.bike?.starting ? e.bike.starting : '-'}</td>
                                     </tr>
                                     {isElectricBike ? <tr className={styles.tr} >
-                                      <td className={styles.column}>Motor</td>
+                                      <td className={styles.column}>{isElectricBike ? "Battery" : "Motor"} </td>
                                       <td className={styles.column}>{e?.bike?.boreAndStroke ? e.bike.boreAndStroke : '-'}</td>
                                     </tr> : "" }
                                   </table>
@@ -348,31 +348,31 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
 
                                   <table className={styles.table}>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Starting</td>
+                                      <td className={styles.column}>{isElectricBike ? "Speed" : "Starting"}</td>
                                       <td className={styles.column}>{e?.bike?.starting ? e.bike.starting : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Engine</td>
+                                      <td className={styles.column}>{isElectricBike ? "Seat Length" : "Engine"}</td>
                                       <td className={styles.column}>{e?.bike?.engine ? e.bike.engine.slice(0, 15) : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Tourque" : "Petrol Capacity"} </td>
+                                      <td className={styles.column}>{isElectricBike ? "Range Per Charge" : "Petrol Capacity"} </td>
                                       <td className={styles.column}>{e?.bike?.petrolCapacity ? e.bike.petrolCapacity : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Tyre Back</td>
+                                      <td className={styles.column}>{isElectricBike ? "Brake (Front/Rear)" : "Tyre Back"} </td>
                                       <td className={styles.column}>{e?.bike?.tyreBack ? e.bike.tyreBack : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Charging Time" : "Comp-Ration" } </td>
+                                      <td className={styles.column}>{isElectricBike ? "Frame" : "Comp-Ration" } </td>
                                       <td className={styles.column}>{e?.bike?.compressionRatio ? e.bike.compressionRatio : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>Ground Clearence</td>
+                                      <td className={styles.column}>{isElectricBike ? "Motor" : "Ground Clearence" }</td>
                                       <td className={styles.column}>{e?.bike?.groundClearance ? e.bike.groundClearance : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                    <td className={styles.column}> { isElectricBike ? "Wheel Size" : "Transmittion" } </td>
+                                    <td className={styles.column}> { isElectricBike ? "Shock Absorption" : "Transmittion" } </td>
                                       <td className={styles.column}>{e?.bike?.transmission ? e.bike.transmission : '-'}</td>
                                     </tr>
                                   </table>
