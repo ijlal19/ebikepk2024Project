@@ -2,7 +2,7 @@
 // http://localhost:4000/api/dealers/get-featured-dealer
 
 
-export const AllDealerData = [
+ const AllDealerData = [
     {
         "id": 1305,
         "shop_name": "test shop",
@@ -14575,7 +14575,7 @@ export const AllDealerData = [
     }
 ]
 
-export const FeaturedDealerData = [
+ const FeaturedDealerData = [
     {
         "id": 697,
         "shop_name": "Noman Motors",
@@ -15611,3 +15611,4 @@ export const FeaturedDealerData = [
         }
     }
 ]
+export {AllDealerData  , FeaturedDealerData}
