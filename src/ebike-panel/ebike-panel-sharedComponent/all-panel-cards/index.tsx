@@ -1041,7 +1041,6 @@ const Dealer_Card = () => {
                                     !HandleOpenTabs ?
                                         <table className={styles.table}>
                                             <thead className={styles.thead}>
-                                                {/* <th className={styles.th} >ID</th> */}
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
                                                 <th className={styles.th} >Address</th>
