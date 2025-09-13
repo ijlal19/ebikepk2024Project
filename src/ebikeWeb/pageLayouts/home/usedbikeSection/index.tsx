@@ -66,7 +66,6 @@ function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
     let res = await getCustomBikeAd(obj);
     if (res?.data?.length > 0) {
       setFeaturedBikes(res.data)
-      console.log("datares" , res?.data)
     }
     else {
       setFeaturedBikes([])
