@@ -683,7 +683,6 @@ function addNewBrand(data: any) {
         })
 }
 
-
 /////////////////////////////////////// ALL GENERAL CITY FUNCTION ///////////////////////////////////////////////////////
 function getCityData() {
     return fetch(Gconfig.ebikeApi + 'city/get-city')
@@ -1330,6 +1329,91 @@ function DeleteForumCategory(id: any) {
         });
 }
 
+function DeleteThread(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `new-forum/delete-forum-thread/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function DeleteThreadComment(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `forum/delete-thread-comments/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function UpdateThreadById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    // return fetch(Gconfig.ebikeApi + `new-forum/update-forum-thread/${id}`, {
+    return fetch(`http://localhost:4001/api/new-forum/update-forum-thread/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function UpdateThreadCommentById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `forum/upadte-thread-comments/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -1420,5 +1504,9 @@ export {
     DeleteForumCategory,
     GetAllMainForumCategory,
     AddNewForumMainCategory,
-    AddNewForumSubCategory
+    AddNewForumSubCategory,
+    DeleteThread,
+    DeleteThreadComment,
+    UpdateThreadById,
+    UpdateThreadCommentById
 }

@@ -15,7 +15,7 @@ import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import 'swiper/css';
-import { AddForumMainCategory, AddShopBrandPopup, BasicModal, ShopBrandPopup } from "./popup";
+import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, ShopBrandPopup } from "./popup";
 
 let savedPage: any;
 let saveNewBike : any;
@@ -1041,7 +1041,6 @@ const Dealer_Card = () => {
                                     !HandleOpenTabs ?
                                         <table className={styles.table}>
                                             <thead className={styles.thead}>
-                                                {/* <th className={styles.th} >ID</th> */}
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
                                                 <th className={styles.th} >Address</th>
@@ -2792,10 +2791,12 @@ const ThreadList_Card = () => {
     const [AllthreadFilter, setAllthreadFilter] = useState([]);
     const [filteredthread, setFilteredthread] = useState([]);
     const [displayedthread, setDisplayedthread] = useState([]);
+    const [PropsData, setDataProps] = useState();
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const itemsPerPage = 12;
     const router = useRouter();
@@ -2856,6 +2857,11 @@ const ThreadList_Card = () => {
         setSearchTerm(e.target.value);
     };
 
+     const handleOpenPOpup = (data:any) => {
+        setDataProps(data)
+        setOpen(true);
+    }
+
     return (
         <div className={styles.main_thread}>
             <New_header />
@@ -2895,6 +2901,10 @@ const ThreadList_Card = () => {
                                     <p className={styles.text}><span style={{ fontWeight: "bold" }}>Sub Category Id:</span> {e?.sub_categ_id || "N/A"} </p>
                                     <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {add3Dots(e?.description,90) || 'N/A'} </p>
                                 </div>
+                                <div className={styles.action_btn}>
+                                    <button className={styles.edit_btn} onClick={() =>handleOpenPOpup(e)} >Edit</button>
+                                    <button className={styles.del_btn} onClick={() => handleDelete(e?.id)} >Delete</button>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -2918,6 +2928,7 @@ const ThreadList_Card = () => {
                     </div>
                 </div>
             )}
+            <EditForumThread open={open} onClose={() => setOpen(false)} funct={fetchAllThread} Data={PropsData}/>
         </div>
     )
 }
