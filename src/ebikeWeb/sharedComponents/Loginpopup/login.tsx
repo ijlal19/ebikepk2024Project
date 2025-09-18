@@ -30,6 +30,7 @@ export default function LoginPopup({props,values}: any) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [phoneLoading, setPhoneLoading] = useState(false)
   
  
   const [phone, setPhone] = useState("+923001234567"); // E.164 format
@@ -65,8 +66,6 @@ export default function LoginPopup({props,values}: any) {
     })(document, "script", "facebook-jssdk");
   }, []);
 
-
-
   // recaptcha for phone verification
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -81,11 +80,9 @@ export default function LoginPopup({props,values}: any) {
     );
   }, []);
 
-
   const sendCodePhone = async () => {
     try {
-      // setLoading(true);
-      setIsLoading(true)
+      setPhoneLoading(true)
       if (!recaptchaVerifierRef.current) throw new Error("reCAPTCHA missing");
       const confirmation = await signInWithPhoneNumber(
         auth,
@@ -97,20 +94,19 @@ export default function LoginPopup({props,values}: any) {
     } catch (err: any) {
       alert(err?.message ?? "Failed to send code");
     } finally {
-      // setLoading(false);
-      setIsLoading(false)
+     setPhoneLoading(false)
     }
   };
 
   const verifyCodePhone = async () => {
     try {
-      // setLoading(true);
-      setIsLoading(true)
+      setPhoneLoading(true)
+      
       if (!confirmationRef.current) throw new Error("No confirmation");
+      
       const result = await confirmationRef.current.confirm(otp.trim());
-      // result.user logged in
-      console.log("result 111", result?.user)
- 
+      console.log('result 111', result)
+
       let obj = {
         social_uid: "" ,
         signupType: 'social',
@@ -128,10 +124,9 @@ export default function LoginPopup({props,values}: any) {
       //   props.showmodal()
       //   props.updateAfterLogin()
       // }
-      
-
       setStep("done");
-    } catch (err: any) {
+    }
+     catch (err: any) {
       alert(err?.message ?? "Invalid code");
     } finally {
       setIsLoading(false)
@@ -161,6 +156,7 @@ export default function LoginPopup({props,values}: any) {
     }
 
     setIsLoading(true)
+
     let res = await userLogin(obj)
     setIsLoading(false)
 
