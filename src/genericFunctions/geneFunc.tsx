@@ -201,8 +201,9 @@ function GetFavouriteObject(userId: any, PageFrom: string, SelectedAds: any, adI
 }
 
 function cloudinaryLoader(src:any, width:any, quality:any) {
-    if (!src.startsWith("http")) {
-      throw new Error("Cloudinary loader requires a full Cloudinary URL to extract cloud name.");
+  console.log('src', src)
+    if (!src?.startsWith("http")) {
+      return src 
     }
 
     // Extract the cloud name from the URL
@@ -210,7 +211,7 @@ function cloudinaryLoader(src:any, width:any, quality:any) {
     const cloudName = match ? match[1] : null;
 
     if (!cloudName) {
-      throw new Error("Invalid Cloudinary URL: Cloud name not found.");
+      return src
     }
 
     // Inject optimization params into the URL

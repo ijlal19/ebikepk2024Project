@@ -8,6 +8,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import { useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 const DealerDetails = () => {
   const [dealersDetails, setDealerDetails]: any = useState([])
@@ -71,7 +72,7 @@ const DealerDetails = () => {
                   <div className={styles.first_detail_card_box}>
                     <div className={styles.main_crad}>
                       <div className={styles.image_box}>
-                        <img src={dealersDetails?.bike_brand?.logoUrl} alt="" className={styles.image} />
+                        <img src={cloudinaryLoader(dealersDetails?.bike_brand?.logoUrl, 100, "auto") } alt="" className={styles.image} />
                       </div>
                       <div className={styles.main_card_details}>
                         <p className={styles.shop_name}>{dealersDetails?.shop_name}</p>
@@ -98,7 +99,7 @@ const DealerDetails = () => {
                                 return (
                                   <div className={styles.more_dealer_card_main} key={i}>
                                     <div className={styles.more_dealer_image}>
-                                      <img src={e.bike_brand.logoUrl} alt="" className={styles.image} />
+                                      <img src={cloudinaryLoader(e.bike_brand.logoUrl, 100, "auto")} alt="" className={styles.image} />
                                     </div>
                                     <div className={styles.detail_box_card}>
                                       <p className={styles.shop_name}>{e.shop_name}</p>
@@ -114,7 +115,7 @@ const DealerDetails = () => {
                             return (
                               <div className={styles.more_dealer_card_main} key={i}>
                                 <div className={styles.more_dealer_image}>
-                                  <img src={e.bike_brand.logoUrl} alt="" className={styles.image} />
+                                  <img src={cloudinaryLoader(e.bike_brand.logoUrl, 100, "auto")} alt="" className={styles.image} />
                                 </div>
                                 <div className={styles.detail_box_card}>
                                   <p className={styles.shop_name}>{e.shop_name}</p>

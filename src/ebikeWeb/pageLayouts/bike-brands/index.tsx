@@ -65,7 +65,6 @@ export default function NewBikeBrand() {
   };
 
   return (
-
     <Box className={styles.bike_sec_main}>
       {
         !isLoading ?
