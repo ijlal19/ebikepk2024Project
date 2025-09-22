@@ -71,11 +71,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
         <div className={styles.first_detail_card_box}>
           <div className={styles.main_crad}>
             <div className={styles.image_box}>
-<<<<<<< HEAD
               <img src={cloudinaryLoader(MechanicsDetails?.bike_brand?.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
-=======
-              <img src={cloudinaryLoader(MechanicsDetails?.bike_brand?.logoUrl, 100, "auto")} alt="" className={styles.image} />
->>>>>>> 3015704bcd90c5d5a1d5f6dc6fca14de315cf7f1
             </div>
             <div className={styles.main_card_details}>
               <p className={styles.shop_name}>{MechanicsDetails?.shop_name}</p>
@@ -103,11 +99,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
               return(
                 <div className={styles.more_dealer_card_main} key={i}>
                   <div className={styles.more_dealer_image}>
-<<<<<<< HEAD
                     <img src={cloudinaryLoader(e.bike_brand.logoUrl , 400 , 'auto')} alt=""  className={styles.image}/>
-=======
-                    <img src={cloudinaryLoader(e.bike_brand.logoUrl, 100, "auto")} alt=""  className={styles.image}/>
->>>>>>> 3015704bcd90c5d5a1d5f6dc6fca14de315cf7f1
                   </div>
                   <div className={styles.detail_box_card}>
                     <p className={styles.shop_name}>{e.shop_name}</p>
@@ -123,11 +115,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
                 return(
                   <div className={styles.more_dealer_card_main} key={i}>
                     <div className={styles.more_dealer_image}>
-<<<<<<< HEAD
                       <img src={cloudinaryLoader(e.bike_brand.logoUrl , 400 , 'auto')} alt=""  className={styles.image}/>
-=======
-                      <img src={cloudinaryLoader(e.bike_brand.logoUrl, 100, "auto")} alt=""  className={styles.image}/>
->>>>>>> 3015704bcd90c5d5a1d5f6dc6fca14de315cf7f1
                     </div>
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>
