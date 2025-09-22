@@ -65,7 +65,6 @@ export default function NewBikeBrand() {
   };
 
   return (
-
     <Box className={styles.bike_sec_main}>
       {
         !isLoading ?
@@ -85,7 +84,7 @@ export default function NewBikeBrand() {
                 <div className={styles.tab_panel}>
                   {
                     allBrandArr?.map((e: any, i: any) => {
-                      if (e?.brandName == "sport" || e?.brandName == "china") return null;
+                      if (e?.brandName?.trim()?.toLowerCase() == "sport" || e?.brandName?.trim()?.toLowerCase() == "china" || e?.brandName?.trim()?.toLowerCase() == "sports" || e?.brandName?.trim()?.toLowerCase() == "eagle") return null;
                       // if (e?.brandName?.includes("-ebb")) {
                       //   return null;
                       // }
@@ -103,10 +102,7 @@ export default function NewBikeBrand() {
                 <div className={styles.tab_panel}>
                   {
                     allBrandArr?.map((e: any, i: any) => {
-                      if (e?.brandName == "sport" || e?.brandName == "china") return null;
-                      // if (!e?.brandName?.includes("-ebb")) {
-                      //   return null;
-                      // }
+                      if (e?.brandName?.trim()?.toLowerCase() == "sport" || e?.brandName?.trim()?.toLowerCase() == "china" || e?.brandName?.trim()?.toLowerCase() == "sports" || e?.brandName?.trim()?.toLowerCase() == "eagle") return null;
                       if (!e?.focus_keyword?.includes("electric-bike")) return null;
                       return (
                         <Box className={styles.brand_image_box} key={i} >

@@ -64,7 +64,7 @@ const UsedBikeCard = ({ props }: any) => {
     const GetHref = (val: any) => {
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        return `/used-bikes/${urlTitle}/${val.id}`
+        return `/used-bikes/${urlTitle}/${val.id}` 
     }
     return (
         <div className={styles.main}>
