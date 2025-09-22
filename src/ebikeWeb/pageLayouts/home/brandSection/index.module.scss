@@ -46,20 +46,22 @@
         flex-wrap: wrap;
         justify-content: center;
         height: auto;
-
+        gap: 10px;
         .brand_image_box {
 
             // border: 1px solid #dad4d4;
             height: auto;
             // border: 1px solid #dad4d4;
             display: flex;
+            border-radius: 10px;
+            // border: 1px solid #000 !important;
             align-items: center;
             justify-content: center;
             // border: 1px solid #dad4d4;
             width: 18% !important;
 
             @media (min-width:768px) {
-                border: 1px solid #dad4d4;
+                border: 1px solid #dad4d4 !important;
                 padding-bottom: 20px;
                 padding-top: 20px;
             }
@@ -70,11 +72,12 @@
                 display: none;
             }
             width: 91%;
-            border: 1px solid #dad4d4;
+            // border: 1px solid #dad4d4;
             border-top: none;
             padding: 0px 0px;
             background-color: transparent;
-            font-weight: 500;
+            // font-weight: 600;
+            letter-spacing: 1px;
             margin: 0px 5px;
             font-size: 13px;
             border-radius: 0px;
@@ -83,7 +86,8 @@
         }
 
         @media (max-width:768px) {
-            padding: 0px;
+            gap: 10px !important;
+            padding: 0px 10px;
             justify-content: space-between;
             
             .brand_image_box{
@@ -91,17 +95,17 @@
                 height: auto;
                 // padding-bottom: 20px;
                 display: flex;
-                margin: 5px 5px;
+                margin: auto;
                 align-items: center;
-                // border: 1px solid rgb(230, 228, 228);
+                border: 1px solid rgb(230, 228, 228);
                 justify-content: center;
                 width: 28% !important;
 
-                @media (min-width:768px) {
-                    border: 1px solid #dad4d4;
-                    padding-bottom: 20px;
-                    padding-top: 20px;
-                }
+                // @media (min-width:768px) {
+                //     border: 1px solid #dad4d4;
+                //     padding-bottom: 20px;
+                //     padding-top: 20px;
+                // }
             }
             .brand_image_box:nth-child(7),
             .brand_image_box:nth-child(8),

@@ -1,12 +1,28 @@
 @import '../../../../styles/variable';
-.explore_card_main{
+
+.explore_card_main {
     width: 95%;
     min-width: 200px;
+    border-radius: 10px;
     padding: 0px 0px;
     border: 1px solid rgba(161, 156, 156, 0.518);
+    transition: all 0.3s ease;
+    &:hover{
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.447);
+    }
+    
     @media (max-width:768px) {
+        box-shadow: none;
+        border-radius: 0px;
         border-bottom: 1px solid rgba(161, 156, 156, 0.518) !important;
-        border: none;
+        border: none ;
+        margin: auto;
+        &:hover{
+            cursor: pointer;
+            // box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.447);
+            box-shadow: none;
+        }
     }
 
     .explore_card_container {
@@ -24,13 +40,14 @@
                 width: 100%;
                 max-width: 90px;
                 border-radius: 10px;
-                box-shadow: 0px 0px 10px rgba(176, 175, 175, 0.554);
+                border: 1px solid rgba(161, 156, 156, 0.518);
+                // box-shadow: 0px 0px 10px rgba(176, 175, 175, 0.554);
             }
         }
 
         .explore_card_grid2 {
             width: 100%;
-            padding: 15px 5px ;
+            padding: 15px 5px;
 
             .explore_card_title {
                 font-size: 13px;
