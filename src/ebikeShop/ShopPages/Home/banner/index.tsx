@@ -3,6 +3,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import styles from './index.module.scss';
 import 'swiper/swiper-bundle.css';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 const Banner = () => {
 
@@ -36,7 +37,7 @@ const Banner = () => {
                 {sliderData.length > 0 &&
                     sliderData.map((item, index) => (
                         <SwiperSlide key={index}>
-                            <img className={styles.brand_img} src={item} alt="banner.image" />
+                            <img className={styles.brand_img} src={cloudinaryLoader(item , 400 , 'auto')} alt="banner.image" />
                         </SwiperSlide>
                     ))}
             </Swiper>

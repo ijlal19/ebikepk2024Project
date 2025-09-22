@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateThreadById } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateThreadById, UpdateThreadCommentById } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -483,8 +483,8 @@ const EditForumThread = ({ open, onClose, funct, Data }: any) => {
         }
 
         const res = await UpdateThreadById(Data?.id, obj)
-        if (res && res?.success && res?.msg == "Created Successfully") {
-            alert("Thread Successfully Add")
+        if (res && res?.success && res?.info == "updated successfully") {
+            alert("Thread Successfully Edit")
             setDescription('')
             setName("")
             onClose()
@@ -501,17 +501,60 @@ const EditForumThread = ({ open, onClose, funct, Data }: any) => {
             open={open}
             onClose={onClose}
             aria-labelledby="modal-title"
-            aria-describedby="modal-description"
-        >
+            aria-describedby="modal-description">
             <Box sx={style}>
                 <form onSubmit={hndleUpdateThread} className={styles.form}  >
                     <input type="text" className={styles.input} onChange={(e: any) => setName(e?.target.value)} value={name} required />
                     <textarea id="Description" name="Description" value={description} required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
-                    <button type="submit" className={styles.btn} >Add Category</button>
+                    <button type="submit" className={styles.btn} >Edit Thread</button>
                 </form>
             </Box>
         </Modal>
     )
 }
 
-export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread }
+const EditForumThreadComment = ({ open, onClose, funct, Data }: any) => {
+    const [description, setDescription] = useState('')
+
+    React.useEffect(() => {
+        if (Data) {
+            setDescription(Data?.description || "")
+        }
+    }, [Data])
+
+    const hndleUpdateThread = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            description: description,
+        }
+
+        const res = await UpdateThreadCommentById(Data?.id, obj)
+        if (res && res?.success && res?.info == "Updated Successfully") {
+            alert("Comment Successfully Edit")
+            setDescription('')
+            onClose()
+            funct()
+        }
+        else {
+            alert("something is wrong try again")
+            onClose()
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={hndleUpdateThread} className={styles.form}  >
+                    <textarea id="Description" name="Description" value={description} required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <button type="submit" className={styles.btn} >Save Edit</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread , EditForumThreadComment }

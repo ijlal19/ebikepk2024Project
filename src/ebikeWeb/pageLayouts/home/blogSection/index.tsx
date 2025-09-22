@@ -55,7 +55,8 @@ function BlogSection(props: any) {
           .sort((a, b) => a.sort - b.sort)
           .map(({ value }) => value);
       };
-      setAllBlogs(shuffleArray(first20));
+      // setAllBlogs(shuffleArray(first20));
+      setAllBlogs(res);
     }
     else {
       setAllBlogs(BlogData)

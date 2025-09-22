@@ -4,6 +4,7 @@ import { Navigation , FreeMode} from 'swiper/modules';
 import styles from './index.module.scss';
 import { Box, Container } from '@mui/material'
 import 'swiper/swiper-bundle.css';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 interface IProps {
     from?: any;
     sliderData?: any;
@@ -43,7 +44,7 @@ const SwiperCarousels: React.FC<IProps> = ({from, sliderData}) => {
                 sliderData?.map((item: any, index: any) => {
                 return (
                     <SwiperSlide key={index}>
-                        <img className={styles.brand_img} src={item.img_url} />
+                        <img className={styles.brand_img} src={cloudinaryLoader(item.img_url , 400 , 'auto')} />
                     </SwiperSlide>
                 );
             })}

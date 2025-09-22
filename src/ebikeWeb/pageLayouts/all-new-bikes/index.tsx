@@ -9,6 +9,7 @@ import ImgCard from '@/ebikeWeb/sharedComponents/itemCard';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 export default function AllNewBikes() {
 
@@ -71,7 +72,7 @@ export default function AllNewBikes() {
             <Box className={styles.description_box}>
               <Box className={styles.card_main}>
                 <img
-                  src={logo}
+                  src={cloudinaryLoader(logo , 400 , 'auto')}
                   alt={brandname}
                   className={styles.card_image}
                 />
@@ -126,7 +127,7 @@ export default function AllNewBikes() {
                           allDealerArr?.map((e: any, i: any) => {
                             return (
                               <Box className={styles.card_main} key={i}>
-                                <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
+                                <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400 , 'auto')} alt='' className={styles.card_image} />
                                 <Box className={styles.card_text}>
                                   <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                   <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>

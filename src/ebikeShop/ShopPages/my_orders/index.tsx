@@ -1,5 +1,5 @@
 'use client'
-import { add3Dots, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
+import { add3Dots, cloudinaryLoader, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { Box, useMediaQuery, Button, Typography } from "@mui/material";
 import { getMyOrder } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
@@ -71,7 +71,7 @@ const My_Order = () => {
                             <Box className={styles.product_detail}>
                                 <Typography className={styles.heading}>PRODUCT DETAIL</Typography>
 <Box className={styles.card_main}>
-    <Box className={styles.image_box}><img src={optimizeImage(e?.product?.images[0], 'h_150', 'w_150')} alt={e?.product?.product_name.slice(0,10)} className={styles.image} /></Box>
+    <Box className={styles.image_box}><img src={cloudinaryLoader(e?.product?.images[0], 400 , 'auto')} alt={e?.product?.product_name.slice(0,10)} className={styles.image} /></Box>
     <Box className={styles.card_detail}>
         <Typography className={styles.product_detail_text}><span className={styles.span}>NAME : </span>{add3Dots(e?.product?.product_name ,IsMobile? 20 : 100)}</Typography>
         <Typography className={styles.product_detail_text}><span className={styles.span}>PRICE : </span>{priceWithCommas(e?.discount_price? e?.discount_price: e?.product?.product_price )}</Typography>
@@ -177,7 +177,7 @@ export default My_Order
 //                                                 </tr>
 //                                                 <tr className={styles.trow} key={i}>
 //                                                     <td className={styles.td_image_box}>
-//                                                         <img src={optimizeImage(e?.product?.images[0], 'h_150', 'w_150')} alt="" className={styles.image} />
+//                                                         <img src={cloudinaryLoader(e?.product?.images[0], 400 , 'auto')} alt="" className={styles.image} />
 //                                                     </td>
 //                                                     <td className={styles.td_name}>
 //                                                         {e?.id}

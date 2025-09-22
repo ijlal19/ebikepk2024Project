@@ -2,7 +2,7 @@
 import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
-import { numericOnly } from '@/genericFunctions/geneFunc';
+import { cloudinaryLoader, numericOnly } from '@/genericFunctions/geneFunc';
 import { useParams, useRouter } from 'next/navigation';
 import FloaraTextarea from '../floaraEditiorTextarea';
 import React, { useEffect, useState } from 'react';
@@ -259,7 +259,7 @@ const EditUsedBikeForm = () => {
                         <div className={styles.imagePreview}>
                             {imageArr.map((img, index) => (
                                 <div key={index} className={styles.imageWrapper}>
-                                    <img src={img} alt={`Preview ${index}`} />
+                                    <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} />
                                     <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                                 </div>
                             ))}
@@ -600,7 +600,7 @@ const EditNewBikeForm = () => {
                         <div className={styles.imagePreview}>
                             {imageArr?.map((img, index) => (
                                 <div key={index}>
-                                    <img src={img} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                    <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
                                     <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                                 </div>
                             ))}
@@ -1075,7 +1075,7 @@ const EditElectricBikeForm = () => {
                         <div className={styles.imagePreview}>
                             {imageArr?.map((img, index) => (
                                 <div key={index}>
-                                    <img src={img} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                    <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
                                     <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                                 </div>
                             ))}
@@ -1367,7 +1367,7 @@ const EditBlogForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr?.map((img: any, index: any) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -2075,7 +2075,7 @@ const EditProductForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArrProduct.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index, 'product')}>×</button>
                         </div>
                     ))}

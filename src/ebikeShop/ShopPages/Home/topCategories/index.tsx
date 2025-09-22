@@ -7,6 +7,7 @@ import { Box, Grid, Link, useMediaQuery } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Swiper, SwiperSlide } from "swiper/react";
 import styles from './index.module.scss';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 
 const TopCategories = () => {
@@ -113,7 +114,7 @@ const TopCategories = () => {
                                 <Grid item xs={12} className={styles.grid}>
                                     <Box className={styles.grid_card}>
                                         <Link href={item?.url}>
-                                        <img src={item?.img_url} alt="" className={styles.image} />
+                                        <img src={cloudinaryLoader(item?.img_url , 400 , 'auto')} alt="" className={styles.image} />
                                         </Link>
                                     </Box>
                                 </Grid>

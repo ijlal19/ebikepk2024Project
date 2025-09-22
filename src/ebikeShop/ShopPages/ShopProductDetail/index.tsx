@@ -1,5 +1,5 @@
 "use client"
-import { priceWithCommas, add3Dots, optimizeImage, isLoginUser } from '@/genericFunctions/geneFunc';
+import { priceWithCommas, add3Dots, optimizeImage, isLoginUser, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { getProduct, getShopCategory, PostAddCart } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import MainCatgeoryCard from '@/ebikeShop/ShopSharedComponent/MainCategoryCard';
 import { Box, Button, Grid, Link, Rating, Typography } from "@mui/material";
@@ -213,14 +213,14 @@ const ProductDetail = () => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image_box}>
                                                                             <img src={
-                                                                                optimizeImage(imgUrl, 'h_350', 'w_350')
+                                                                                cloudinaryLoader(imgUrl, 400 , 'auto')
                                                                             } alt="" className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
                                                                 <SwiperSlide key=''>
                                                                     <img src={
-                                                                        optimizeImage('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png', 'h_250', 'w_350')
+                                                                        cloudinaryLoader('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png', 400 , 'auto')
                                                                     } alt='' className={styles.slider_img} />
                                                                 </SwiperSlide>
                                                         }
@@ -265,7 +265,7 @@ const ProductDetail = () => {
                                                 <Box className={styles.related_card_main} key={i} onClick={() => goToRoute(e)}>
                                                     <Box className={styles.image_box}>
                                                         <img src={
-                                                            optimizeImage(e?.images[0], 'h_330', 'w_350')
+                                                            cloudinaryLoader(e?.images[0], 400 , 'auto')
                                                         } alt="" className={styles.image} />
                                                     </Box>
                                                     <Box className={styles.card_content}>

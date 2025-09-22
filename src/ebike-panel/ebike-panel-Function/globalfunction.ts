@@ -1242,7 +1242,23 @@ function GetAllMainForumCategory() {
 }
 
 function GetAllThreads() {
-    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-thread`, {
+    // return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-thread`, {
+    return fetch(`http://localhost:4001/api/new-forum/get-new-forum-thread`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function GetAllThreadsComments() {
+    // return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-thread`, {
+    return fetch(`http://localhost:4001/api/forum/get-all-comments`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -1333,7 +1349,8 @@ function DeleteThread(id: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
-    return fetch(Gconfig.ebikeApi + `new-forum/delete-forum-thread/${id}`, {
+    // return fetch(Gconfig.ebikeApi + `new-forum/delete-forum-thread/${id}`, {
+    return fetch(`http://localhost:4001/api/new-forum/delete-forum-thread/${id}`, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -1353,7 +1370,7 @@ function DeleteThreadComment(id: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
-    return fetch(Gconfig.ebikeApi + `forum/delete-thread-comments/${id}`, {
+    return fetch(`http://localhost:4001/api/forum/delete-thread-comments/${id}`, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -1397,11 +1414,12 @@ function UpdateThreadCommentById(id: any, payload: any) {
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
 
-    return fetch(Gconfig.ebikeApi + `forum/upadte-thread-comments/${id}`, {
+    // return fetch(Gconfig.ebikeApi + `forum/upadte-thread-comments/${id}`, {
+    return fetch(`http://localhost:4001/api/forum/update-thread-comments/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
-            "x-access-token": token
+            // "x-access-token": token
         },
         body: JSON.stringify(payload)
     })
@@ -1508,5 +1526,6 @@ export {
     DeleteThread,
     DeleteThreadComment,
     UpdateThreadById,
-    UpdateThreadCommentById
+    UpdateThreadCommentById,
+    GetAllThreadsComments
 }

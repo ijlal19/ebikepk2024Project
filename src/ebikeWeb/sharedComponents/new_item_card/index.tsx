@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from '@mui/material';
-import { add3Dots, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, optimizeImage, priceWithCommas } from '@/genericFunctions/geneFunc';
 
 const NewCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
@@ -14,7 +14,7 @@ const NewCard = ({ props }: any) => {
             <div className={styles.container}>
                 <div className={styles.image_box}
                 >
-                    <img src={props?.featuredImage?.split(' #$# ')[0]?.trim()} alt={props?.blogTitle} className={styles.image} />
+                    <img src={cloudinaryLoader(props?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt={props?.blogTitle} className={styles.image} />
                 </div>
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 25 : 60)}</p>
@@ -31,12 +31,12 @@ const NewCard = ({ props }: any) => {
 
 const NewBikeCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
-   
+
     return (
         <div className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.image_boxnewbike}>
-                    <img src={props?.img_url} alt={props?.title} className={styles.image} />
+                    <img src={cloudinaryLoader(props?.img_url , 400 ,'auto')} alt={props?.title} className={styles.image} />
                 </div>
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</p>
@@ -53,25 +53,24 @@ const NewBikeCard = ({ props }: any) => {
 
 const UsedBikeCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
-    const GetImageSrc = (image:any) => {
-        if(image && image.length > 0){
+    const GetImageSrc = (image: any) => {
+        if (image && image.length > 0) {
             return image[0]
         }
-        else{
+        else {
             return "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png"
         }
     }
-    const GetHref = (val:any) => {
-            let title = val.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            return `/used-bikes/${urlTitle}/${val.id}`
-        }
+    const GetHref = (val: any) => {
+        let title = val.title
+        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+        return `/used-bikes/${urlTitle}/${val.id}`
+    }
     return (
         <div className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.image_boxusedbike}>
-                    <img
-                        src={GetImageSrc(props?.images)}
+                    <img src={cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')}
                         alt={props?.title || "default bike"}
                         className={styles.image}
                     />
@@ -96,7 +95,7 @@ const NewVideoCard = ({ props }: any) => {
             <div className={styles.container}>
                 <div className={styles.image_box}
                 >
-                    <img src={props?.thumbnail_url} alt={props?.title} className={styles.image} />
+                    <img src={cloudinaryLoader(props?.thumbnail_url , 400 ,'auto' )} alt={props?.title} className={styles.image} />
                 </div>
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 25 : 60)}</p>

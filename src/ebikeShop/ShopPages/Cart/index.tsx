@@ -1,5 +1,5 @@
 'use client'
-import { add3Dots, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
+import { add3Dots, cloudinaryLoader, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { DeleteuserCart, getMyOrder, GetUserCart, PostOrder } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import { Box, Grid, useMediaQuery, Typography, Button } from "@mui/material";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
@@ -183,7 +183,7 @@ const MyCart = () => {
                                         {groupedCart.map((e: any, i: number) => (
                                             <tr className={styles.trow} key={i}>
                                                 <td className={styles.td_image_box}>
-                                                    <img src={optimizeImage(e?.product?.images[0], 'h_150', 'w_150')} alt="" className={styles.image} />
+                                                    <img src={cloudinaryLoader(e?.product?.images[0], 400 , 'auto')} alt="" className={styles.image} />
                                                 </td>
                                                 <td className={styles.td_name}>
                                                     {IsMobile ? add3Dots(e?.product?.product_name, 15) : add3Dots(e?.product?.product_name, 50)}

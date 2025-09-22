@@ -1,4 +1,4 @@
-import { add3Dots, optimizeImage } from '../../../genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, optimizeImage } from '../../../genericFunctions/geneFunc';
 import { Box, Link, Rating, useMediaQuery } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import styles from './index.module.scss';
@@ -28,7 +28,7 @@ const MainCatgeoryCard = ({ props, rating, i }: any) => {
         <Link href={href} sx={{ textDecoration: "none" }} onClick={() => handleClick()} >
             <div className={styles.main}>
                 <div className={styles.image_box}>
-                    <img src={optimizeImage(props?.images[0], 'h_250', 'w_350')} alt="" className={styles.image} />
+                    <img src={cloudinaryLoader(props?.images[0], 400 , 'auto')} alt="" className={styles.image} />
                 </div>
                 <div className={styles.price_box}>
                     {

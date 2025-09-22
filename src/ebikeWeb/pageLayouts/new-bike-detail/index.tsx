@@ -5,7 +5,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { getdealerData, getnewBikeData, getnewBikedetailsData, getBikesBySpecificFilter, getMechanicByBrandId } from '@/ebikeWeb/functions/globalFuntions';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
-import { priceWithCommas } from '@/genericFunctions/geneFunc';
+import { cloudinaryLoader, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { isLoginUser } from "@/genericFunctions/geneFunc";
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
@@ -262,7 +262,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             >
                               {e?.bike?.images.map((img: any, index: any) => (
                                 <SwiperSlide key={index}>
-                                  <img src={img} alt={`thumb-${index}`} className="cursor-pointer object-cover" />
+                                  <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`thumb-${index}`} className="cursor-pointer object-cover" />
                                 </SwiperSlide>
                               ))}
                             </Swiper>
@@ -278,7 +278,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                               {e?.bike?.images && e?.bike?.images?.length > 0 && e?.bike?.images.map((item: any, index: any) => (
                                 <SwiperSlide key={index}>
                                   <Box className={styles.bike_image}>
-                                    <img src={item} alt={e?.bike?.title} className={styles.image} />
+                                    <img src={cloudinaryLoader(item , 400 , 'auto')} alt={e?.bike?.title} className={styles.image} />
                                   </Box>
                                 </SwiperSlide>
                               ))}
@@ -421,7 +421,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       allDealerArr?.map((e: any, i: any) => {
                                         return (
                                           <Box className={styles.card_main} key={i}>
-                                            <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
+                                            <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt='' className={styles.card_image} />
                                             <Box className={styles.card_text}>
                                               <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                               <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
@@ -456,7 +456,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       allMechanicArr?.map((e: any, i: any) => {
                                         return (
                                           <Box className={styles.card_main} key={i}>
-                                            <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
+                                            <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt='' className={styles.card_image} />
                                             <Box className={styles.card_text}>
                                               <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                               <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>

@@ -8,6 +8,7 @@ import { useMediaQuery } from '@mui/material';
 import { useParams, useRouter } from 'next/navigation';
 import { getSimilarMechanics, getSingleMechanicsDetails } from '@/ebikeWeb/functions/globalFuntions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 const MechanicsDetails = () => {
   
@@ -70,7 +71,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
         <div className={styles.first_detail_card_box}>
           <div className={styles.main_crad}>
             <div className={styles.image_box}>
-              <img src={MechanicsDetails?.bike_brand?.logoUrl} alt="" className={styles.image} />
+              <img src={cloudinaryLoader(MechanicsDetails?.bike_brand?.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
             </div>
             <div className={styles.main_card_details}>
               <p className={styles.shop_name}>{MechanicsDetails?.shop_name}</p>
@@ -98,7 +99,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
               return(
                 <div className={styles.more_dealer_card_main} key={i}>
                   <div className={styles.more_dealer_image}>
-                    <img src={e.bike_brand.logoUrl} alt=""  className={styles.image}/>
+                    <img src={cloudinaryLoader(e.bike_brand.logoUrl , 400 , 'auto')} alt=""  className={styles.image}/>
                   </div>
                   <div className={styles.detail_box_card}>
                     <p className={styles.shop_name}>{e.shop_name}</p>
@@ -114,7 +115,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
                 return(
                   <div className={styles.more_dealer_card_main} key={i}>
                     <div className={styles.more_dealer_image}>
-                      <img src={e.bike_brand.logoUrl} alt=""  className={styles.image}/>
+                      <img src={cloudinaryLoader(e.bike_brand.logoUrl , 400 , 'auto')} alt=""  className={styles.image}/>
                     </div>
                     <div className={styles.detail_box_card}>
                       <p className={styles.shop_name}>{e.shop_name}</p>

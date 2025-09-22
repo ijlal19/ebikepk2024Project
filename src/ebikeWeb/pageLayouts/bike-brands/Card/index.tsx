@@ -3,6 +3,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { Box, Link } from '@mui/material';
 import styles from './index.module.scss';
 import React from 'react';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 const BikesBrandCard = ({ data }: any) => {
   const router = useRouter()
@@ -19,7 +20,7 @@ const BikesBrandCard = ({ data }: any) => {
       <Link  href={hrefLink}
         rel="noopener noreferrer" 
         className={styles.card_image}>
-          <img src={data.logoUrl} alt={data.brandName} className={styles.image} />
+          <img src={cloudinaryLoader(data.logoUrl , 400 , 'auto')} alt={data.brandName} className={styles.image} />
       </Link>
     </Box>
   );

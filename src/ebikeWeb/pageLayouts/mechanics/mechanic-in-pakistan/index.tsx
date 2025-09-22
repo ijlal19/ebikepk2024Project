@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import styles from './index.module.scss';
 import Box from '@mui/material/Box';
 import * as React from 'react';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 const AdsArray = [
     {
@@ -173,7 +174,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
                                     return (
                                         <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
                                             <img
-                                                src={e?.url}
+                                                src={cloudinaryLoader(e?.url , 400 , 'auto')}
                                                 alt={e?.alt}
                                                 className={styles.add_image} />
                                         </Link>

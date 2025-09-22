@@ -1,24 +1,25 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads, DeleteThread, DeleteThreadComment, GetAllThreadsComments } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
-import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
+import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 import { Grid, Link, Pagination } from "@mui/material";
 import { Navigation, FreeMode } from 'swiper/modules';
 import SearchIcon from '@mui/icons-material/Search';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { New_header } from "../panel-header"; 
+import { New_header } from "../panel-header";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import 'swiper/css';
-import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, ShopBrandPopup } from "./popup";
+import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, EditForumThreadComment, ShopBrandPopup } from "./popup";
 
 let savedPage: any;
-let saveNewBike : any;
+let saveNewBike: any;
+
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
 
@@ -266,7 +267,8 @@ const Used_bike_card: any = () => {
                                                                 e.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={cloudinaryLoader(imgUrl, 300, 'auto')} alt={e?.title} className={styles.image} />
+                                                                            {/* <img src={optimizeImage(imgUrl, 'h_250', 'w_250')} alt={e?.title} className={styles.image} /> */}
+                                                                            <img src={cloudinaryLoader(imgUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
@@ -392,7 +394,7 @@ const New_bike_card = () => {
     useEffect(() => {
         const savedPage = Number(localStorage.getItem("PageNewBike"));
         saveNewBike = savedPage
-        fetchAllNewBike(saveNewBike ||  1);
+        fetchAllNewBike(saveNewBike || 1);
         setCurrentPage(saveNewBike || 1);
     }, []);
 
@@ -409,7 +411,7 @@ const New_bike_card = () => {
         const endIndex = startIndex + itemsPerPage;
         setDisplayedBikes(filteredBikes.slice(startIndex, endIndex));
         setTotalPage(Math.ceil(filteredBikes.length / itemsPerPage));
-        console.log('res' , Math.ceil(filteredBikes.length / itemsPerPage))
+        console.log('res', Math.ceil(filteredBikes.length / itemsPerPage))
     }, [filteredBikes, currentPage]);
 
     const fetchAllNewBike = async (_page: number) => {
@@ -435,7 +437,7 @@ const New_bike_card = () => {
     };
 
     const handlePaginationChange = (event: any, page: any) => {
-        localStorage.setItem("PageNewBike" , String(page))
+        localStorage.setItem("PageNewBike", String(page))
         setCurrentPage(page);
         window.scrollTo(0, 0);
     };
@@ -466,7 +468,7 @@ const New_bike_card = () => {
     };
 
     const handleEdit = (id: any) => {
-        localStorage.setItem("PageNewBike" , String(currentPage))
+        localStorage.setItem("PageNewBike", String(currentPage))
         router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`);
     };
 
@@ -534,7 +536,7 @@ const New_bike_card = () => {
                                                                 e.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={cloudinaryLoader(imgUrl, 500, 'auto')} alt={e?.title} className={styles.image} />
+                                                                            <img src={cloudinaryLoader(imgUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
@@ -756,12 +758,12 @@ const Blog_Card = () => {
                                                     e?.featuredImage && e.featuredImage.includes(' #$# ') ? (
                                                         e.featuredImage.split(' #$# ').map((imgUrl: any, ind: any) => (
                                                             <SwiperSlide key={ind} className={styles.image}>
-                                                                <img src={imgUrl.trim()} alt={e?.title} className={styles.image} />
+                                                                <img src={cloudinaryLoader(imgUrl.trim() , 400 , 'auto')} alt={e?.title} className={styles.image} />
                                                             </SwiperSlide>
                                                         ))
                                                     ) :
                                                         <SwiperSlide key=''>
-                                                            <img src={e?.featuredImage?.split(' #$# ')[0].trim()} alt={e?.title} className={styles.image} />
+                                                            <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0].trim() , 400 , 'auto')} alt={e?.title} className={styles.image} />
                                                         </SwiperSlide>
                                                 }
                                             </Swiper>
@@ -1055,7 +1057,7 @@ const Dealer_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -1113,7 +1115,7 @@ const Dealer_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto' )} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -1406,7 +1408,7 @@ const Mechanic_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt={e?.shop_name} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -1464,7 +1466,7 @@ const Mechanic_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={e?.bike_brand?.logoUrl} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -2235,7 +2237,7 @@ const ProductList_Card = () => {
                                                         e.images.map((imgUrl: any, ind: any) => {
                                                             return (
                                                                 <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                    <img src={imgUrl} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(imgUrl , 400 , 'auto')} alt={e?.title} className={styles.image} />
                                                                 </SwiperSlide>
                                                             )
                                                         }) :
@@ -2484,7 +2486,7 @@ const Electric_Bike_Card = () => {
                                                                 e.images.map((imgUrl: any, ind: any) => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={cloudinaryLoader(imgUrl, 500, 'auto')} alt={e?.title} className={styles.image} />
+                                                                            <img src={cloudinaryLoader(imgUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
@@ -2686,7 +2688,7 @@ const ShopBrand = () => {
                                                             <p className={styles.brand_name}>{e?.name || "N/A"}</p>
                                                             {/* <span className={styles.brand_id}>Brand ID: {e?.id || "N/A"}</span> */}
                                                         </div>
-                                                        <img src={e?.logoUrl} alt={e?.name} className={styles.brand_image} />
+                                                        <img src={cloudinaryLoader(e?.logoUrl , 400 , 'auto')} alt={e?.name} className={styles.brand_image} />
                                                         <div className={styles.actions}>
                                                             <button className={styles.action_btn} onClick={() => handleEditBrandDATA(e.id)} >Edit</button>
                                                             <button className={styles.action_btn1} onClick={() => handleDelete(e?.id)} >Delete</button>
@@ -2786,7 +2788,7 @@ const ForuAllMainCateg = () => {
     )
 }
 
-////////////////////////////////////////////////////// ALL Product CARD
+////////////////////////////////////////////////////// ALL THREAD CARD
 const ThreadList_Card = () => {
     const [AllthreadFilter, setAllthreadFilter] = useState([]);
     const [filteredthread, setFilteredthread] = useState([]);
@@ -2842,11 +2844,12 @@ const ThreadList_Card = () => {
     };
 
     const handleDelete = async (id: any) => {
-        const isConfirm = window.confirm('Are you sure to delete this Product?')
+        const isConfirm = window.confirm('Are you sure to delete this Thread?')
         if (!isConfirm) return;
-        const res = await DeleteProductbyId(id);
-        if (res && res.info == 'Deleted', res?.success) {
+        const res = await DeleteThread(id);
+        if (res && res.info == 'Deleted successfully', res?.success) {
             alert('Deleted Successfully')
+            fetchAllThread()
         }
         else {
             alert('SomeThing is Wrong!')
@@ -2857,7 +2860,7 @@ const ThreadList_Card = () => {
         setSearchTerm(e.target.value);
     };
 
-     const handleOpenPOpup = (data:any) => {
+    const handleOpenPOpup = (data: any) => {
         setDataProps(data)
         setOpen(true);
     }
@@ -2899,10 +2902,10 @@ const ThreadList_Card = () => {
                                     <p className={styles.text}><span style={{ fontWeight: "bold" }}>ID:</span> {e?.id} </p>
                                     <p className={styles.text}><span style={{ fontWeight: "bold" }}>Name:</span> {e?.user_name || "N/A"} </p>
                                     <p className={styles.text}><span style={{ fontWeight: "bold" }}>Sub Category Id:</span> {e?.sub_categ_id || "N/A"} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {add3Dots(e?.description,90) || 'N/A'} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {add3Dots(e?.description, 90) || 'N/A'} </p>
                                 </div>
                                 <div className={styles.action_btn}>
-                                    <button className={styles.edit_btn} onClick={() =>handleOpenPOpup(e)} >Edit</button>
+                                    <button className={styles.edit_btn} onClick={() => handleOpenPOpup(e)} >Edit</button>
                                     <button className={styles.del_btn} onClick={() => handleDelete(e?.id)} >Delete</button>
                                 </div>
                             </div>
@@ -2928,7 +2931,155 @@ const ThreadList_Card = () => {
                     </div>
                 </div>
             )}
-            <EditForumThread open={open} onClose={() => setOpen(false)} funct={fetchAllThread} Data={PropsData}/>
+            <EditForumThread open={open} onClose={() => setOpen(false)} funct={fetchAllThread} Data={PropsData} />
+        </div>
+    )
+}
+
+////////////////////////////////////////////////////// ALL THREAD COMMENT CARD
+const ThreadComments_Card = () => {
+    const [AllthreadFilter, setAllthreadFilter] = useState([]);
+    const [filteredthread, setFilteredthread] = useState([]);
+    const [displayedthread, setDisplayedthread] = useState([]);
+    const [PropsData, setDataProps] = useState();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const itemsPerPage = 12;
+    const router = useRouter();
+
+    useEffect(() => {
+        fetchAllComment()
+    }, []);
+    useEffect(() => {
+        const filtered = AllthreadFilter.filter((bike: any) =>
+            bike.thread_id.toString().includes(searchTerm)
+        );
+        setFilteredthread(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllthreadFilter]);
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedthread(filteredthread.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredthread.length / itemsPerPage));
+    }, [filteredthread, currentPage]);
+
+    const fetchAllComment = async () => {
+        setIsLoading(true);
+        const res = await GetAllThreadsComments()
+        console.log("resData", res?.data)
+        if (res && res?.success && res?.data?.length > 0) {
+            setAllthreadFilter(res?.data);
+            setFilteredthread(res?.data);
+        } else {
+            setAllthreadFilter([]);
+            setFilteredthread([]);
+            setDisplayedthread([]);
+            setCurrentPage(1);
+            setTotalPage(0);
+        }
+        console.log("datares", res)
+        setIsLoading(false);
+    }
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Comment?')
+        if (!isConfirm) return;
+        const res = await DeleteThreadComment(id);
+        if (res && res.info == 'Deleted successfully', res?.success) {
+            alert('Deleted Successfully')
+            fetchAllComment()
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleOpenPOpup = (data: any) => {
+        setDataProps(data)
+        setOpen(true);
+    }
+
+    return (
+        <div className={styles.main_thread}>
+            <New_header />
+            {!IsLoading ? (
+                <div className={styles.big_container}>
+                    <div className={styles.page_header}>
+                        <p className={styles.forums_main_heading}>Thread Comment List</p>
+                        {filteredthread?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder='Search Comment Thread ID'
+                                className={styles.input} />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                    </div>
+                    <div className={styles.card_container}>
+                        {displayedthread.map((e: any, i: any) => (
+                            <div className={styles.card_main} key={i} >
+                                {/* <div className={styles.header}>
+                                            <p className={styles.title}>{add3Dots(e?.title, 30)}</p>
+                                        </div> */}
+                                <div className={styles.body}>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Name:</span> {e?.user_name || "N/A"} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Thread ID:</span> {e?.thread_id || "N/A"} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Comment ID:</span> {e?.id} </p>
+                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Comment:</span> {add3Dots(e?.description, 90) || 'N/A'} </p>
+                                </div>
+                                <div className={styles.action_btn}>
+                                    <button className={styles.edit_btn} onClick={() => handleOpenPOpup(e)} >Edit</button>
+                                    <button className={styles.del_btn} onClick={() => handleDelete(e?.id)} >Delete</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.pagination_btm}>
+                        {filteredthread?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+            <EditForumThreadComment open={open} onClose={() => setOpen(false)} funct={fetchAllComment} Data={PropsData} />
         </div>
     )
 }
@@ -2946,5 +3097,6 @@ export {
     Electric_Bike_Card,
     ShopBrand,
     ForuAllMainCateg,
-    ThreadList_Card
+    ThreadList_Card,
+    ThreadComments_Card
 }

@@ -11,7 +11,7 @@ import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { add3Dots, isLoginUser } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, isLoginUser } from '@/genericFunctions/geneFunc';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import CATEGORYdATA from './Data';
@@ -175,7 +175,7 @@ const Blog = () => {
     const firstImage = e?.featuredImage?.split(' #$# ')[0]?.trim();
     return (
       <div className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
-        <div className={styles.image_box}><img src={firstImage} alt="" className={styles.image} />
+        <div className={styles.image_box}><img src={cloudinaryLoader(firstImage , 400 , 'auto')} alt="" className={styles.image} />
         </div>
         <div className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.blogTitle, 45)}</p>
@@ -241,7 +241,7 @@ const Blog = () => {
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.blog_images} />
+                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto' )} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
@@ -261,7 +261,7 @@ const Blog = () => {
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.blog_images} />
+                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto')} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>

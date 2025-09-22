@@ -896,7 +896,7 @@ const AllUsedBikeByFilter = () => {
                                                     return (
                                                         <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
                                                             <img
-                                                                src={e?.url}
+                                                                src={(cloudinaryLoader(e?.url , 400 , 'auto'))}
                                                                 alt={e?.alt}
                                                                 className={styles.add_image} />
                                                         </Link>

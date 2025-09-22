@@ -2,7 +2,7 @@
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
 import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button, Link } from '@mui/material';
-import { add3Dots, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
@@ -146,7 +146,7 @@ const BlogDetails = () => {
         onClick={() => handletrendingRoute(e)}
         style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={e?.images[0]} alt="" className={styles.image} />
+          <img src={cloudinaryLoader(e?.images[0] , 400 , 'auto')} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.title, 25)}
@@ -161,7 +161,7 @@ const BlogDetails = () => {
     return (
       <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={e?.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.image} />
+          <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto')} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.blogTitle, 15)}</p>
@@ -193,13 +193,13 @@ const BlogDetails = () => {
                   >
                     {DataBlog.featuredImage.split(' #$# ').map((imgUrl: string, idx: number) => (
                       <SwiperSlide key={idx}>
-                        <img src={imgUrl.trim()} alt={`blog-image-${idx}`} className={styles.image} />
+                        <img src={cloudinaryLoader(imgUrl.trim() , 400 , 'auto')} alt={`blog-image-${idx}`} className={styles.image} />
                       </SwiperSlide>
                     ))}
                   </Swiper>
                 ) : (
                   <img
-                    src={DataBlog?.featuredImage?.split(' #$# ')[0]?.trim()}
+                    src={cloudinaryLoader(DataBlog?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto')}
                     alt="blog"
                     className={styles.image}
                   />
@@ -322,7 +322,7 @@ const BlogDetails = () => {
                         allDealerArr?.map((e: any, i: any) => {
                           return (
                             <Box className={styles.card_main} key={i}>
-                              <img src={e?.bike_brand?.logoUrl} alt='' className={styles.card_image} />
+                              <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'autp')} alt='' className={styles.card_image} />
                               <Box className={styles.card_text}>
                                 <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                 <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>

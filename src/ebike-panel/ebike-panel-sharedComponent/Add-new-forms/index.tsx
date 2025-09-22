@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from 'react';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 const jsCookie = require('js-cookie');
 
@@ -298,7 +299,7 @@ const AddNewBikeForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -628,7 +629,7 @@ const AddNewElectricBikeForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -850,7 +851,7 @@ const AddBlogForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -1335,7 +1336,7 @@ const AddProductForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index, 'sizeguide')}>×</button>
                         </div>
                     ))}
@@ -1350,7 +1351,7 @@ const AddProductForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArrProduct.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index, 'product')}>×</button>
                         </div>
                     ))}
@@ -1732,7 +1733,7 @@ const AddCategoryForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}

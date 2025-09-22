@@ -4,7 +4,7 @@ import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalData'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
-import { isLoginUser } from "@/genericFunctions/geneFunc";
+import { cloudinaryLoader, isLoginUser } from "@/genericFunctions/geneFunc";
 import { numericOnly, publishAd } from "@/genericFunctions/geneFunc"
 import { uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader"
@@ -229,7 +229,7 @@ const SellUsedBike = () => {
                     <div className={styles.imagePreview}>
                         {imageArr.map((img, index) => (
                             <div key={index}>
-                                <img src={img} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                                <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                                 <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                             </div>
                         ))}

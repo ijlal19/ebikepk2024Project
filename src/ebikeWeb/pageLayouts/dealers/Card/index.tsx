@@ -4,6 +4,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { Link, useMediaQuery } from '@mui/material';
 import styles from './index.module.scss';
 import { useState } from 'react';
+import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 
 export const FeatureDealerCard = ({ props }: any) => {
 
@@ -23,7 +24,7 @@ export const FeatureDealerCard = ({ props }: any) => {
         <Link href={goToDetailPage(props)}  className={styles.feature_card_main}>
         {/* <div className={styles.feature_card_main} onClick={isMobile ? ()=>goToDetailPage(props):undefined}> */}
             <p className={styles.shop_name}>{props?.shop_name}</p>
-            <img className={styles.logo} src={props?.bike_brand?.logoUrl} alt="" />
+            <img className={styles.logo} src={cloudinaryLoader(props?.bike_brand?.logoUrl , 400 , 'auto')} alt="" />
             <p className={styles.city}>Dealer in {props?.city?.city_name}</p>
             <p className={styles.address}>{props.address.slice(0, 12)} ...</p>
             <p className={styles.date}>Listen on {props?.updatedAt.slice(0, 10)}</p>
@@ -56,7 +57,7 @@ export const DealerinPakCard = ({ props }: any) => {
             <Link href={goToDetailPage(props)} className={styles.dealer_card_main}>
                 <p className={styles.shop_name} style={{display:isMobile ? 'flex': 'none'}}>{props.shop_name}</p>
             <div className={styles.image_box}>
-                <img src={props.bike_brand.logoUrl} alt="" className={styles.image} />
+                <img src={cloudinaryLoader(props.bike_brand.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
             </div>
             <div className={styles.detail_box}>
                 <p className={styles.shop_name}  style={{display:isMobile ? 'none': 'flex'}}>{props.shop_name}</p>
@@ -71,7 +72,7 @@ export const DealerinPakCard = ({ props }: any) => {
             :
             <Link href={goToDetailPage(props)} className={styles.dealer_card_main}>
                 <div className={styles.image_box}>
-                    <img src={props.bike_brand.logoUrl} alt="" className={styles.image} />
+                    <img src={cloudinaryLoader(props.bike_brand.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
                 </div>
                 <div className={styles.detail_box}>
                     <p className={styles.shop_name}>{props.shop_name}</p>

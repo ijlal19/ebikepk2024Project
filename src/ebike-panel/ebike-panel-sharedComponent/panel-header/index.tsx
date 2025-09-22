@@ -111,6 +111,10 @@ const NavOptionArray = [
             {
                 OptionName: "All Threads",
                 OptionRoute: "all-threads"
+            },
+            {
+                OptionName: "All Threads Comment",
+                OptionRoute: "all-threads-comments"
             }
         ]
     }

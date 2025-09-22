@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './index.module.scss';
-import { add3Dots } from "@/genericFunctions/geneFunc";
+import { add3Dots, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { Link, useMediaQuery } from "@mui/material";
 
 const BlogCategoryCard = ({ props }: any) => {
@@ -15,7 +15,7 @@ const BlogCategoryCard = ({ props }: any) => {
     return (
         <div className={styles.card_main}>
             <div className={styles.image_box}>
-                <img src={props.featuredImage?.split(' #$# ')[0]?.trim()} alt="" className={styles.image} />
+                <img src={cloudinaryLoader(props.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto')} alt="" className={styles.image} />
             </div>
             <div className={styles.cardDetail}>
                 <Link href={getRoute(props)} sx={{textDecoration:'none' , color:'#000000'}}>
