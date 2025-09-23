@@ -39,31 +39,27 @@ function a11yProps(index: number) {
 
 
 function BrandSection() {
-  const [value, setValue] =React.useState(0);
+  const [value, setValue] = React.useState(0);
   const Router = useRouter()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  function goToBrands() {
-    Router.push('/new-bikes')
-  }
-
   return (
     <Box className={styles.brand_main}>
       <Container >
         <Typography className={styles.heading}>
           Bike Brands
-          <Link className={styles.view_new_bik_btn}  href={'/new-bikes'}> 
+          <Link className={styles.view_new_bik_btn} href={'/new-bikes'}>
             <span> View Bike Brands </span>
-          </Link> 
+          </Link>
         </Typography>
 
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} textColor="primary"
-                indicatorColor="primary" aria-label="basic tabs example">
+              indicatorColor="primary" aria-label="basic tabs example">
               <Tab label="Brands" {...a11yProps(0)} />
             </Tabs>
           </Box>
@@ -71,21 +67,21 @@ function BrandSection() {
           <CustomTabPanel value={value} index={0}>
             <Box className={styles.brand_container}>
               {
-                Data.slice(0, 10).map((e:any,i:any)=>{
-                  return(
+                Data.slice(0, 10).map((e: any, i: any) => {
+                  return (
                     <Box className={styles.brand_image_box} key={i}>
-                      <BrandCard key={i} data={e}/>
+                      <BrandCard key={i} data={e} />
                     </Box>
                   )
                 })
               }
 
-<Button onClick={()=>goToBrands()} className={styles.viewallbikes_button} disableRipple><Link className={styles.anchor} href="/new-bikes">View More Brands</Link></Button>
+              <Button className={styles.viewallbikes_button} disableRipple><Link className={styles.anchor} href="/new-bikes">View More Brands</Link></Button>
             </Box>
           </CustomTabPanel>
-          </Box>
-        </Container>
-      </Box>
+        </Box>
+      </Container>
+    </Box>
   )
 }
 export default BrandSection;
