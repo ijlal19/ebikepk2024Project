@@ -278,7 +278,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                               {e?.bike?.images && e?.bike?.images?.length > 0 && e?.bike?.images.map((item: any, index: any) => (
                                 <SwiperSlide key={index}>
                                   <Box className={styles.bike_image}>
-                                    <img src={cloudinaryLoader(item , 400 , 'auto')} alt={e?.bike?.title} className={styles.image} />
+                                    <img src={cloudinaryLoader(item , 1000 , 'auto')} alt={e?.bike?.title} className={styles.image} />
                                   </Box>
                                 </SwiperSlide>
                               ))}
