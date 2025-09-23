@@ -43,7 +43,7 @@ export default function NewBikeBrand() {
     fetchBrandInfo()
   }, [])
 
-  async function fetchBrandInfo() {
+  const fetchBrandInfo = async () => {
     setIsLoading(true)
     let res = await getbrandData()
     if (res && res.length > 0) {
@@ -51,13 +51,13 @@ export default function NewBikeBrand() {
       setIsLoading(false)
     }
     else {
-      alert("Wiait! Something went wrong while fetching the data. Please try again reload page.");
+      alert("Wait! Something went wrong while fetching the data. Please try again reload page.");
     }
     setTimeout(() => {
       window.scrollTo(0, 0)
     }, 1000);
   }
-  
+
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log(newValue)
@@ -73,7 +73,7 @@ export default function NewBikeBrand() {
               New Bikes By Make
             </Typography>
 
-            <Box sx={{ width: '100%' , boxSizing:'border-box'}}>
+            <Box sx={{ width: '100%', boxSizing: 'border-box' }}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary"  >
                   <Tab label="MotorCycles" className={styles.tab} sx={{ marginRight: 2 }} />
@@ -88,7 +88,7 @@ export default function NewBikeBrand() {
                       // if (e?.brandName?.includes("-ebb")) {
                       //   return null;
                       // }
-                       if (e?.focus_keyword?.includes("electric-bike")) return null;
+                      if (e?.focus_keyword?.includes("electric-bike")) return null;
                       return (
                         <Box className={styles.brand_image_box} key={i} >
                           <BikesBrandCard key={i} data={e} />
