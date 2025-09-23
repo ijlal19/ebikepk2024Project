@@ -273,7 +273,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                               loop={true}
                               slidesPerView={1}
                               thumbs={{ swiper: thumbsSwiper }}
-                              simulateTouch={true}
+                              simulateTouch={true} 
                             >
                               {e?.bike?.images && e?.bike?.images?.length > 0 && e?.bike?.images.map((item: any, index: any) => (
                                 <SwiperSlide key={index}>
