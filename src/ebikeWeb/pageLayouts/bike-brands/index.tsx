@@ -40,7 +40,7 @@ export default function NewBikeBrand() {
   const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    fetchBrandInfo()
+    fetchBrandInfo() 
   }, [])
 
   const fetchBrandInfo = async () => {
