@@ -1,23 +1,35 @@
-.card_main{
-    width: 100px;
-    height: 50px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: 'center';
-    .card_image{
+.card_main {
         width: 100%;
+
+    .image_box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .card_image {
+            box-sizing: border-box;
+            width: 80px;
+            margin: auto;
+        }
     }
-    .card_title{
+
+
+    .card_title {
         font-size: 12px;
+        margin: 0px;
+        padding: 0px;
+        display: none;
+        text-align: center;
+        font-family: sans-serif;
+        text-transform: capitalize;
     }
+
     @media (max-width:768px) {
-        width:70px;
+        width: 70px;
         margin: 0px 10px;
     }
-    .card_title{
+
+    .card_title {
         font-size: 12px;
     }
 }

@@ -221,6 +221,15 @@ function cloudinaryLoader(src:any, width:any, quality:any) {
     );
 }
 
+const BlogShuffle = (AllBlogs: any[]) => {
+  return AllBlogs
+    .slice(0, 30) // pehle 50
+    .map((item) => ({ item, sortKey: Math.random() })) // har ek item ko random key do
+    .sort((a, b) => a.sortKey - b.sortKey) // random key k basis pe shuffle
+    .map(({ item }) => item); // original item wapas nikal lo
+};
+
+
 
 export {
   add3Dots,
@@ -241,5 +250,6 @@ export {
   postSearch,
   getFavouriteAds,
   GetFavouriteObject,
-  cloudinaryLoader
+  cloudinaryLoader,
+  BlogShuffle
 }

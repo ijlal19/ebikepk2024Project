@@ -47,21 +47,20 @@
         justify-content: center;
         height: auto;
         gap: 10px;
+
         .brand_image_box {
 
-            // border: 1px solid #dad4d4;
             height: auto;
-            // border: 1px solid #dad4d4;
-            display: flex;
             border-radius: 10px;
-            // border: 1px solid #000 !important;
+            display: flex;
             align-items: center;
-            justify-content: center;
-            // border: 1px solid #dad4d4;
-            width: 18% !important;
+            justify-content: center ;
+            width: 14% !important;
+            height: auto;  
+            padding: 10px 0px  !important;
+            border: 1px solid #dad4d4 !important;
 
             @media (min-width:768px) {
-                border: 1px solid #dad4d4 !important;
                 padding-bottom: 20px;
                 padding-top: 20px;
             }
@@ -110,7 +109,9 @@
             .brand_image_box:nth-child(7),
             .brand_image_box:nth-child(8),
             .brand_image_box:nth-child(9),
-            .brand_image_box:nth-child(10){
+            .brand_image_box:nth-child(10),
+            .brand_image_box:nth-child(11),
+            .brand_image_box:nth-child(12){
                 display: none;
             }
             
