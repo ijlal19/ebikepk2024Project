@@ -11,7 +11,7 @@ import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { add3Dots, BlogShuffle, cloudinaryLoader, isLoginUser } from '@/genericFunctions/geneFunc';
+import { add3Dots, BlogShuffle, cloudinaryLoader, isLoginUser, timeAgo } from '@/genericFunctions/geneFunc';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import CATEGORYdATA from './Data';
@@ -251,7 +251,7 @@ const Blog = () => {
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 70)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
-                                  <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
+                                  <span style={{ marginRight: 8 }}>{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}>{timeAgo(e.createdAt)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
                                 <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
                               </Box>

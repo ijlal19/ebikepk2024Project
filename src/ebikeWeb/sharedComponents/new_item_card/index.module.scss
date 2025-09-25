@@ -18,13 +18,26 @@
     padding: 0px 6px !important;
     box-sizing: border-box;
     margin: auto;
+    text-decoration: none;
 
+    &:focus,
+    &:active {
+        background: none !important;
+        outline: none !important;
+    }
+    
     .container {
+        text-decoration: none;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
         border: 1px solid #b7b7b7d4;
 
+        &:focus,
+        &:active {
+            background: none !important;
+            outline: none !important;
+        }
         @media (max-width:768px) {
             border-radius: 5px;
         }
@@ -76,6 +89,7 @@
                 border: none;
                 width: 100%;
                 height: 200px;
+
                 // display: block;
                 // object-fit: cover;
                 // object-position: center;
@@ -87,7 +101,7 @@
                     height: 100%;
                     // object-fit: cover;
                     // }
-    
+
                 }
             }
 
@@ -162,6 +176,29 @@
                 }
             }
 
+            .authorblog {
+                font-size: 13px;
+                margin: 8px 0px 0px;
+                padding: 0px 12px;
+                color: #6f6f6f;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+                font-family: 'Lato';
+
+                .name {
+                    margin-left: 2px;
+                    font-family: 'LatoBold';
+                    color: #333333;
+                }
+
+                @media (max-width:768px) {
+                    flex-direction: column;
+                    row-gap: 2px;
+                    font-size: 11px;
+                }
+            }
+
             .price {
                 font-size: 12px;
                 margin: 8px 0px 0px;
@@ -215,6 +252,26 @@
                 font-size: 12px;
 
                 @media (max-width:768px) {
+                    text-align: center;
+                }
+            }
+
+            .linkblog {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: right;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // margin: 5px 0px 0px 0px;
+                padding: 5px 0px 5px 0px;
+                font-size: 11px;
+
+                @media (max-width:768px) {
+                    // margin: 3px 0px 0px 0px;
+                    padding: 0px !important;
                     text-align: center;
                 }
             }

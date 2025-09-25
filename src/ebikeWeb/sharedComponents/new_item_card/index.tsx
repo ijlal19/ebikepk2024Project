@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from '@mui/material';
-import { add3Dots, cloudinaryLoader, optimizeImage, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, optimizeImage, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
 
 const NewCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
@@ -29,6 +29,29 @@ const NewCard = ({ props }: any) => {
     )
 }
 
+const NewMoreBlogCard = ({ props }: any) => {
+    const isMobile = useMediaQuery('(max-width:768px)')
+    const getBlogUrl = (blogInfo: any) => {
+        let title = blogInfo.blogTitle.replace(/\s+/g, '-').toLowerCase();
+        return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${title}/${blogInfo.id}`;
+    };
+
+    return (
+        <Link href={getBlogUrl(props)} className={styles.main}>
+            <div className={styles.container}>
+                <div className={styles.image_box}
+                >
+                    <img src={cloudinaryLoader(props?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt={props?.blogTitle} className={styles.image} />
+                </div>
+                <div className={styles.content}>
+                    <p className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 13 : 40)}</p>
+                    <p className={styles.authorblog}><span>By <span className={styles.name}>{props?.authorname}</span></span> <span>{timeAgo(props?.createdAt)}</span></p>
+                </div>
+            </div>
+        </Link>
+    )
+}
+
 const NewBikeCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
 
@@ -36,7 +59,7 @@ const NewBikeCard = ({ props }: any) => {
         <div className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.image_boxnewbike}>
-                    <img src={cloudinaryLoader(props?.img_url , 400 ,'auto')} alt={props?.title} className={styles.image} />
+                    <img src={cloudinaryLoader(props?.img_url, 400, 'auto')} alt={props?.title} className={styles.image} />
                 </div>
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</p>
@@ -64,7 +87,7 @@ const UsedBikeCard = ({ props }: any) => {
     const GetHref = (val: any) => {
         let title = val.title
         let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        return `/used-bikes/${urlTitle}/${val.id}` 
+        return `/used-bikes/${urlTitle}/${val.id}`
     }
     return (
         <div className={styles.main}>
@@ -95,7 +118,7 @@ const NewVideoCard = ({ props }: any) => {
             <div className={styles.container}>
                 <div className={styles.image_box}
                 >
-                    <img src={cloudinaryLoader(props?.thumbnail_url , 400 ,'auto' )} alt={props?.title} className={styles.image} />
+                    <img src={cloudinaryLoader(props?.thumbnail_url, 400, 'auto')} alt={props?.title} className={styles.image} />
                 </div>
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 25 : 60)}</p>
@@ -109,4 +132,4 @@ const NewVideoCard = ({ props }: any) => {
     )
 }
 
-export { NewCard, NewBikeCard, NewVideoCard, UsedBikeCard }
+export { NewCard, NewBikeCard, NewVideoCard, UsedBikeCard, NewMoreBlogCard }

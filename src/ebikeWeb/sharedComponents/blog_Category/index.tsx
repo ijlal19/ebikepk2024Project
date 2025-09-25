@@ -2,9 +2,12 @@
 import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import BlogCategoryCard from "./card";
+import { NewMoreBlogCard } from "../new_item_card";
+import { useMediaQuery } from "@mui/material";
 
 const Blog_Category_Comp = (props:any) => {
     const [blogData, setBlogData] = useState(props.data);
+    const isMoble = useMediaQuery('(max-width:768px)')
 
   useEffect(() => {
     if (props.heading === "More Blogs") {
@@ -22,10 +25,11 @@ const Blog_Category_Comp = (props:any) => {
                 </div>
                 <div className={styles.card_section}>
                     {
-                        blogData.slice(0,8).map((e:any,i:any)=>{
+                        blogData.slice(0,isMoble ? 4 : 8).map((e:any,i:any)=>{
                             return(
                                 <div key={i} className={styles.card_div}>
-                                    <BlogCategoryCard props={e}/>
+                                    {/* <BlogCategoryCard props={e}/> */}
+                                    <NewMoreBlogCard props={e}/>
                                 </div>
                             )
                         })

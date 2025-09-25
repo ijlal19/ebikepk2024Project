@@ -230,6 +230,30 @@ const BlogShuffle = (AllBlogs: any[]) => {
 };
 
 
+  function timeAgo(createdAt: any) {
+    const now = Date.now();
+    const created = typeof createdAt === "number" ? createdAt : Date.parse(createdAt);
+    if (isNaN(created)) return "";
+
+    const diffSec = Math.floor((now - created) / 1000);
+
+    if (diffSec < 60) return `${diffSec} sec ago`;
+
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin} min ago`;
+
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours < 24) return `${diffHours} hrs ago`;
+
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays < 30) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+
+    const diffMonths = Math.floor(diffDays / 30);
+    if (diffMonths < 12) return `${diffMonths} month${diffMonths > 1 ? "s" : ""} ago`;
+
+    const diffYears = Math.floor(diffMonths / 12);
+    return `${diffYears} year${diffYears > 1 ? "s" : ""} ago`;
+  }
 
 export {
   add3Dots,
@@ -251,5 +275,6 @@ export {
   getFavouriteAds,
   GetFavouriteObject,
   cloudinaryLoader,
-  BlogShuffle
+  BlogShuffle,
+  timeAgo
 }
