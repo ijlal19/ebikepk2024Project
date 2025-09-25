@@ -40,7 +40,14 @@ export default function NewBikeBrand() {
   const [value, setValue] = React.useState(0);
 
   useEffect(() => {
-    fetchBrandInfo() 
+    const CheckPath =  window?.location?.href?.includes("tab=2")
+    if(CheckPath){
+      setValue(1)
+    }
+    else{
+      setValue(0)
+    }
+    fetchBrandInfo()
   }, [])
 
   const fetchBrandInfo = async () => {

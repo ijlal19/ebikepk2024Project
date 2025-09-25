@@ -8,7 +8,7 @@ const Blog_Category_Comp = (props:any) => {
 
   useEffect(() => {
     if (props.heading === "More Blogs") {
-      const shuffled = [...props.data].sort(() => Math.random() - 0.5);
+      const shuffled = [...props.data].slice(0,50).sort(() => Math.random() - 0.5);
       setBlogData(shuffled);
     } else {
       setBlogData(props.data);

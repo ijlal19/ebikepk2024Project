@@ -32,7 +32,7 @@ const MobileBanner = () => {
                     <p className={styles.p2} >  Sell your Bike at best price </p>
                     <p className={styles.p3} > <span onClick={()=>{goToRoute('/used-bikes/sell-used-bike') }} > sell your bike </span> </p>
                 </div>
-                <img className={styles.right_img} src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1607925812/Youtube%20Ad%20banners/Sold_1_cukrsk.jpg" />
+                <img className={styles.right_img} src="https://res.cloudinary.com/dzfd4phly/image/upload/v1757678416/WhatsApp_Image_2025-09-12_at_15.58.57_gabtpm.jpg" />
             </div>
 
              <div className={styles.mobile_baner}>

@@ -13,10 +13,12 @@ const BrandCard = ({data}) => {
   }
 
   return (
-          <Box className={styles.card_main} onClick={()=>goToBrand(data)} >
-            <img src={cloudinaryLoader(data.img_url , 400 ,'auto')} alt={data.title} className={styles.card_image}/>
-            <Typography className={styles.card_title}>{data.title}</Typography>
-          </Box>
+          <div className={styles.card_main} onClick={()=>goToBrand(data)} >
+            <div className={styles.image_box}>
+            <img src={cloudinaryLoader(data.logoUrl , 1000 ,'auto')} alt={data.title} className={styles.card_image}/>
+            </div>
+            <p className={styles.card_title}>{data.brandName}</p>
+          </div>
   )
 }
 

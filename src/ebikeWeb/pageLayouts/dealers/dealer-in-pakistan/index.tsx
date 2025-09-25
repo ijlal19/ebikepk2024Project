@@ -43,7 +43,7 @@ const AdsArray = [
 
 
 export const DealerInPakistan = ({ dealers }: any) => {
-
+    console.log("Datacheck", dealers);
     const [filteredResults, setFilteredResults] = useState(dealers);
     const [isFilterApply, setisFilterApply] = useState(false);
     const [Filterobject, setFilterobject] = useState<any>()
@@ -156,6 +156,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
                                 !isFilterApply ?
                                     (
                                         currentData?.map((e: any, i: any) => {
+                                            if(e?.is_approved == false) return null
                                             return (
                                                 <DealerinPakCard props={e} key={i} />
                                             )
@@ -163,6 +164,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
                                     )
                                     : <>
                                         {filterData?.map((e: any, i: any) => {
+                                            if(e?.is_approved == false) return null
                                             return (
                                                 <DealerinPakCard props={e} key={i} />
                                             )

@@ -63,13 +63,10 @@
             height: 180px;
             // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
             // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            background-size: 100% 100%;
             border: none;
 
             @media (max-width:768px) {
-                height: 100px;
+                height: 100px !important;
                 border-top-left-radius: 5px;
                 border-top-right-radius: 5px;
 
@@ -79,12 +76,21 @@
                 border: none;
                 width: 100%;
                 height: 200px;
-                display: block;
-                object-fit: cover;
+                // display: block;
+                // object-fit: cover;
                 // object-position: center;
                 /* important — crops to fill container */
                 // object-fit: contain;
+                @media (max-width:768px) {
+                    // .image {
+                    width: 100%;
+                    height: 100%;
+                    // object-fit: cover;
+                    // }
+    
+                }
             }
+
         }
 
         .image_box {

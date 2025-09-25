@@ -11,7 +11,7 @@ import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { add3Dots, cloudinaryLoader, isLoginUser } from '@/genericFunctions/geneFunc';
+import { add3Dots, BlogShuffle, cloudinaryLoader, isLoginUser } from '@/genericFunctions/geneFunc';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import CATEGORYdATA from './Data';
@@ -57,8 +57,8 @@ const Blog = () => {
   const [BlogData, setBlogData] = useState([]);
   const [BlogNews, setBlognews] = useState([]);
   const [messages, setMessages] = useState<any>([]);
-  const [TipsandAdvice, setTipsandAdvide] = useState([])
-  const [OpinionsData, setOpinionsData] = useState([])
+  const [TipsandAdvice, setTipsandAdvide] = useState<any>([])
+  const [OpinionsData, setOpinionsData] = useState<any>([])
 
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
@@ -100,23 +100,27 @@ const Blog = () => {
     setIsLoading(true)
     let res = await getAllBlog()
     setBlogData(res)
+    const resAdvice = BlogShuffle(res)
+    setTipsandAdvide(resAdvice);
+    const resOpinion = BlogShuffle(res)
+    setOpinionsData(resOpinion);
     res?.map((e: any) => {
       // console.log("datar" , res ,e)
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
-      const TipAndAdvice = [1177, 748, 237, 22, 648, 715, 372, 240];
-      const filteredAdvice = res.filter((e: any) => TipAndAdvice.includes(e.id));
-      setTipsandAdvide(filteredAdvice);
-      const idsOpinions = [242, 84, 151, 1210, 1144, 1045, 580, 160];
-      const filteredOpinions = res.filter((e: any) => idsOpinions.includes(e.id));
-      setOpinionsData(filteredOpinions);
+      // const TipAndAdvice = [1177, 748, 237, 22, 648, 715, 372, 240];
+      // const filteredAdvice = res.filter((e: any) => TipAndAdvice.includes(e.id));
+      // setTipsandAdvide(filteredAdvice);
+      // const idsOpinions = [242, 84, 151, 1210, 1144, 1045, 580, 160];
+      // const filteredOpinions = res.filter((e: any) => idsOpinions.includes(e.id));
+      // setOpinionsData(filteredOpinions);
       setBlognews(newsBlogs)
       setBlogSafety(safetyBlogs)
       setBlogBikeCare(Bike_Care)
     })
     const top7Titles = res.slice(0, 7).map((e: any) => e);
-    setMessages(top7Titles); // ✅ update state
+    setMessages(top7Titles);
 
     setisFilterApply(false)
     setIsLoading(false)
@@ -175,7 +179,7 @@ const Blog = () => {
     const firstImage = e?.featuredImage?.split(' #$# ')[0]?.trim();
     return (
       <div className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
-        <div className={styles.image_box}><img src={cloudinaryLoader(firstImage , 400 , 'auto')} alt="" className={styles.image} />
+        <div className={styles.image_box}><img src={cloudinaryLoader(firstImage, 400, 'auto')} alt="" className={styles.image} />
         </div>
         <div className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.blogTitle, 45)}</p>
@@ -241,7 +245,7 @@ const Blog = () => {
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto' )} alt="" className={styles.blog_images} />
+                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
@@ -261,7 +265,7 @@ const Blog = () => {
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
                           <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
                             <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto')} alt="" className={styles.blog_images} />
+                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.blog_images} />
                             </Grid>
                             <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>

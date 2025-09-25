@@ -17,6 +17,7 @@ import youTubeData from './ourVideos/Data'
 import usedBikeData from './usedbikeSection/Data'
 import trendingData from './newbikesSection/TrendingData'
 import featuredData from './newbikesSection/Data'
+import GoGreen from './go-green'
 
 function Index() {
 
@@ -79,6 +80,7 @@ function Index() {
      <NewBikesSection featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />
      <FeatureSection />
      <UsedBikesSection usedBikeData={homeData.homeUsedBike} />
+     <GoGreen />
      <BrandSection/>
      <Explore/>
      <BlogSection blogData={homeData.homeBlogs} />

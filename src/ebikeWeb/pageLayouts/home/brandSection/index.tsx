@@ -7,6 +7,7 @@ import BrandCard from './Card/index'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useRouter } from 'next/navigation'
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -29,7 +30,6 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
@@ -37,14 +37,36 @@ function a11yProps(index: number) {
   };
 }
 
-
 function BrandSection() {
   const [value, setValue] = React.useState(0);
+  const [allBrandArr, setAllBrandArr] = React.useState<any>([])
+  const [isLoading, setIsLoading] = React.useState(false)
   const Router = useRouter()
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  React.useEffect(() => {
+    fecthAllBRands()
+  })
+  const fecthAllBRands = async () => {
+    setIsLoading(true)
+    let res = await getbrandData()
+    if (res && res.length > 0) {
+      const blockedBrands = ["china", "ghani", "aprilia", "ktm", "metro", "sport", "ravi", "derbi", "harley_davidson", "eagle"];
+      const filtered = res.filter(
+        (e: any) => !blockedBrands.includes(e?.brandName?.trim()?.toLowerCase())
+      );
+      setAllBrandArr(filtered);
+      setIsLoading(false);
+    }
+
+    else {
+      setIsLoading(false);
+      setAllBrandArr(Data)
+      // alert("Wait! Something went wrong while fetching the data. Please try again reload page.");
+    }
+  }
 
   return (
     <Box className={styles.brand_main}>
@@ -67,13 +89,22 @@ function BrandSection() {
           <CustomTabPanel value={value} index={0}>
             <Box className={styles.brand_container}>
               {
-                Data.slice(0, 10).map((e: any, i: any) => {
-                  return (
-                    <Box className={styles.brand_image_box} key={i}>
-                      <BrandCard key={i} data={e} />
-                    </Box>
-                  )
-                })
+                allBrandArr && allBrandArr.length > 0 ?
+                  (allBrandArr.slice(0, 12).map((e: any, i: any) => {
+                    return (
+                      <Box className={styles.brand_image_box} key={i}>
+                        <BrandCard key={i} data={e} />
+                      </Box>
+                    )
+                  }))
+                  :
+                  (Data.slice(0, 12).map((e: any, i: any) => {
+                    return (
+                      <Box className={styles.brand_image_box} key={i}>
+                        <BrandCard key={i} data={e} />
+                      </Box>
+                    )
+                  }))
               }
 
               <Button className={styles.viewallbikes_button} disableRipple><Link className={styles.anchor} href="/new-bikes">View More Brands</Link></Button>
