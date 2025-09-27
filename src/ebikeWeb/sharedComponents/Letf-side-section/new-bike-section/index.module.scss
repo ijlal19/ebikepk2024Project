@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.new_bike_main{
+    padding: 5px 0px !important;
+
+    .heading{
+        font-family: 'LatoBold';
+        font-size: 22px;
+        margin: 0px;
+        box-sizing: border-box;
+        padding: 5px 0px ;
+    }
+}

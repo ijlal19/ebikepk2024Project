@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.brandsmain {
+    padding: 5px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 10px;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #eee;
+        align-items: center;
+        border-radius: 10px;
+    }
+
+    .cards_main {
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .card {
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 12px 8px;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+
+
+        .card_img {
+            max-width: 80px;
+            max-height: 40px;
+            margin: 0 auto 8px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            font-family: 'LatoBold';
+            text-transform: capitalize;
+        }
+    }
+
+    .card:nth-child(1) {
+        border-top-left-radius: 10px;
+    }
+
+    .card:nth-child(3) {
+        border-top-right-radius: 10px;
+    }
+
+    // .card:nth-child(4) {
+    //     border-bottom-left-radius: 10px;
+    // }
+
+    // .card:nth-child(6) {
+    //     border-bottom-right-radius: 10px;
+    // }
+
+    .btn {
+        font-size: 14px;
+        text-decoration: none;
+        letter-spacing: 1px;
+        font-family: 'LatoBold', sans-serif;
+        padding: 10px 0px !important;
+        text-decoration: none;
+        width: 100%;
+        text-align: center;
+        transition: color 0.3s ease;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

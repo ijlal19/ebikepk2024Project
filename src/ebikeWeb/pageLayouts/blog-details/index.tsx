@@ -17,6 +17,8 @@ import "swiper/css/navigation";
 import "swiper/css";
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
+import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
+import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike-section';
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -146,7 +148,7 @@ const BlogDetails = () => {
         onClick={() => handletrendingRoute(e)}
         style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={cloudinaryLoader(e?.images[0] , 400 , 'auto')} alt="" className={styles.image} />
+          <img src={cloudinaryLoader(e?.images[0], 400, 'auto')} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.title, 25)}
@@ -161,7 +163,7 @@ const BlogDetails = () => {
     return (
       <Box className={styles.shot_blog_card} key={i} onClick={() => handleRoute(e)} style={{ cursor: "pointer" }} >
         <Box className={styles.image_box}>
-          <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim() , 400 , 'auto')} alt="" className={styles.image} />
+          <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.image} />
         </Box>
         <Box className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.blogTitle, 15)}</p>
@@ -193,13 +195,13 @@ const BlogDetails = () => {
                   >
                     {DataBlog.featuredImage.split(' #$# ').map((imgUrl: string, idx: number) => (
                       <SwiperSlide key={idx}>
-                        <img src={cloudinaryLoader(imgUrl.trim() , 1000 , 'auto')} alt={`blog-image-${idx}`} className={styles.image} />
+                        <img src={cloudinaryLoader(imgUrl.trim(), 1000, 'auto')} alt={`blog-image-${idx}`} className={styles.image} />
                       </SwiperSlide>
                     ))}
                   </Swiper>
                 ) : (
                   <img
-                    src={cloudinaryLoader(DataBlog?.featuredImage?.split(' #$# ')[0]?.trim() , 1500 , 'auto')}
+                    src={cloudinaryLoader(DataBlog?.featuredImage?.split(' #$# ')[0]?.trim(), 1500, 'auto')}
                     alt="blog"
                     className={styles.image}
                   />
@@ -313,7 +315,9 @@ const BlogDetails = () => {
               </Box>
             </Grid>
 
-            <Grid item xs={isMobile ? 12 : 3} className={styles.moreBlog}>
+            <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
+              <Side_brands />
+              <NewBike_left />
               {
                 allDealerArr.length > 0 ?
                   <> <Typography className={styles.heading}>Dealers</Typography>
@@ -322,7 +326,7 @@ const BlogDetails = () => {
                         allDealerArr?.map((e: any, i: any) => {
                           return (
                             <Box className={styles.card_main} key={i}>
-                              <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'autp')} alt='' className={styles.card_image} />
+                              <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt='' className={styles.card_image} />
                               <Box className={styles.card_text}>
                                 <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                 <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
@@ -351,17 +355,6 @@ const BlogDetails = () => {
                   <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
                 </Link>
               </Box>
-              {/* <Box className={styles.shortBlog_main}>
-                <Typography className={styles.heading}>More Blogs</Typography>
-                {
-                  BlogData.slice(0, 5).map((e: any, i: any) => {
-                    console.log("data", e)
-                    return (
-                      blogCardMini(e, i)
-                    )
-                  })
-                }
-              </Box> */}
             </Grid>
             <Blog_Category_Comp heading="More Blogs" data={BlogData} />
             <BrowseUsedBike />
@@ -380,3 +373,15 @@ const BlogDetails = () => {
 
 export default BlogDetails;
 
+
+{/* <Box className={styles.shortBlog_main}>
+                <Typography className={styles.heading}>More Blogs</Typography>
+                {
+                  BlogData.slice(0, 5).map((e: any, i: any) => {
+                    console.log("data", e)
+                    return (
+                      blogCardMini(e, i)
+                    )
+                  })
+                }
+              </Box> */}
