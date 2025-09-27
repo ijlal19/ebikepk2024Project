@@ -322,7 +322,7 @@ const BlogDetails = () => {
                 allDealerArr.length > 0 ?
                   <> <Typography className={styles.heading}>Dealers</Typography>
                     <Box className={styles.Dealers_card}>
-                      {
+                      { 
                         allDealerArr?.map((e: any, i: any) => {
                           return (
                             <Box className={styles.card_main} key={i}>
