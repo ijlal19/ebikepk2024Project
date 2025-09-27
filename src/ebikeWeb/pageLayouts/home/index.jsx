@@ -66,7 +66,7 @@ function Index() {
         "homeBlogs": blogData
       }
       setHomeData(obj)
-    });
+    }); 
   }
 
   return (
