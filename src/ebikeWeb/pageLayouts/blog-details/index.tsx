@@ -323,11 +323,11 @@ const BlogDetails = () => {
             <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
               <Side_brands />
               <NewBike_left />
+              <Usedbike_left />
               <DealerLeft />
               <MechaniLeft />
               {/* <Blog_left /> */}
-              {/* <Usedbike_left />
-              <Featrued_Usedbike_left /> */}
+              <Featrued_Usedbike_left />
               {/* {
                 allDealerArr.length > 0 ?
                   <> <Typography className={styles.heading}>Dealers</Typography>
