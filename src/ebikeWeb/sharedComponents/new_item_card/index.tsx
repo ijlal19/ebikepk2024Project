@@ -132,4 +132,50 @@ const NewVideoCard = ({ props }: any) => {
     )
 }
 
-export { NewCard, NewBikeCard, NewVideoCard, UsedBikeCard, NewMoreBlogCard }
+const Dealers_Cards = ({ props }: any) => {
+function goToDetailPage(bike: any) {
+        var shop_name = bike.shop_name;
+        shop_name = shop_name.replace(/\s+/g, '-');
+        var lowerTitle = shop_name.toLowerCase();
+        return `/dealers/${lowerTitle}/${bike.id}`
+    }
+    return (
+        <div className={styles.main_dealer}>
+            <div className={styles.container}>
+                <img src={cloudinaryLoader(props.bike_brand.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
+                <div className={styles.content}>
+                    <p className={styles.name}>{props.shop_name}</p>
+                    <p className={styles.location}>Dealer in {props.city.city_name}</p>
+                    <Link href={goToDetailPage(props)} target="_blank" className={styles.linkbtn}>
+                        View Detail
+                    </Link>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const Mechainc_Cards = ({ props }: any) => {
+   function goToDetailPage(bike: any) {
+        var shop_name = bike.shop_name;
+        shop_name = shop_name.replace(/\s+/g, '-');
+        var lowerTitle = shop_name.toLowerCase();
+        return `/mechanics/${lowerTitle}/${bike.id}`
+    }
+    return (
+        <div className={styles.main_dealer}>
+            <div className={styles.container}>
+                <img src={cloudinaryLoader(props.bike_brand.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
+                <div className={styles.content}>
+                    <p className={styles.name}>{props.shop_name}</p>
+                    <p className={styles.location}>Mechanic in {props.city.city_name}</p>
+                    <Link href={goToDetailPage(props)} target="_blank" className={styles.linkbtn}>
+                        View Detail
+                    </Link>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export { NewCard, NewBikeCard, NewVideoCard, UsedBikeCard, NewMoreBlogCard, Dealers_Cards , Mechainc_Cards }
