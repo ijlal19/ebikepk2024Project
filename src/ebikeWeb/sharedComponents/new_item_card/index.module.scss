@@ -21,11 +21,11 @@
     text-decoration: none;
 
     &:focus,
-    &:active{
+    &:active {
         background: none !important;
         outline: none !important;
     }
-    
+
     .container {
         text-decoration: none;
         border-radius: 15px;
@@ -38,6 +38,7 @@
             background: none !important;
             outline: none !important;
         }
+
         @media (max-width:768px) {
             border-radius: 5px;
         }
@@ -292,6 +293,78 @@
                 @media (max-width:768px) {
                     text-align: center;
                 }
+            }
+
+            .linkbtn {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: center;
+                margin: 7px 0px 0px;
+                font-size: 12px;
+                padding: 5px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @media (max-width:768px) {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+.main_dealer {
+
+    width: 100%;
+    background-color: rgb(255, 253, 253);
+    padding: 10px 5px !important;
+    box-sizing: border-box;
+    border-radius: 15px;
+    border: 1px solid #b7b7b7d4;
+
+
+
+    .container {
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+
+        .image {
+            width: 100px;
+            margin: auto;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            .name {
+                width: 100%;
+                text-align: center;
+                font-family: 'LatoBold';
+                font-size: 18px;
+                margin: 10px 0px 0px 0px;
+                color: #333333;
+                padding: 0px 12px;
+                box-sizing: border-box;
+            }
+
+            .location {
+                width: 100%;
+                text-align: center;
+                font-family: 'Lato';
+                font-size: 14px;
+                letter-spacing: 1px;
+                margin: 10px 0px 0px 0px;
+                color: #333333;
+                padding: 0px 12px;
+                box-sizing: border-box;
             }
 
             .linkbtn {

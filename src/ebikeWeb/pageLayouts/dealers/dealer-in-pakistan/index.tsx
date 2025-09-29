@@ -156,7 +156,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
                                 !isFilterApply ?
                                     (
                                         currentData?.map((e: any, i: any) => {
-                                            if(e?.is_approved == false) return null
+                                            // if(e?.is_approved) return null
                                             return (
                                                 <DealerinPakCard props={e} key={i} />
                                             )
@@ -164,7 +164,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
                                     )
                                     : <>
                                         {filterData?.map((e: any, i: any) => {
-                                            if(e?.is_approved == false) return null
+                                            // if(e?.is_approved) return null
                                             return (
                                                 <DealerinPakCard props={e} key={i} />
                                             )

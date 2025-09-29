@@ -19,6 +19,11 @@ import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
 import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike-section';
+import Featrued_Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/featuredBikecard';
+import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/UsedBikecard';
+import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
+import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
+import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -318,7 +323,12 @@ const BlogDetails = () => {
             <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
               <Side_brands />
               <NewBike_left />
-              {
+              <DealerLeft />
+              <MechaniLeft />
+              {/* <Blog_left /> */}
+              {/* <Usedbike_left />
+              <Featrued_Usedbike_left /> */}
+              {/* {
                 allDealerArr.length > 0 ?
                   <> <Typography className={styles.heading}>Dealers</Typography>
                     <Box className={styles.Dealers_card}>
@@ -337,9 +347,9 @@ const BlogDetails = () => {
                       }
                       <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/dealers" className={styles.Link_tag}>View More Dealers <KeyboardArrowRightIcon /></Link></Button>
                     </Box> </> : ''
-              }
+              } */}
 
-              <Box className={styles.shortBlog_main}>
+              {/* <Box className={styles.shortBlog_main}>
                 <Typography className={styles.heading}>Featured Used Bikes</Typography>
                 {
                   featuredData.slice(0, 5).map((e: any, i: any) => {
@@ -348,13 +358,13 @@ const BlogDetails = () => {
                     )
                   })
                 }
-              </Box>
+              </Box> */}
 
-              <Box className={styles.blog_add}>
+              {/* <Box className={styles.blog_add}>
                 <Link href='/blog'>
                   <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
                 </Link>
-              </Box>
+              </Box> */}
             </Grid>
             <Blog_Category_Comp heading="More Blogs" data={BlogData} />
             <BrowseUsedBike />
