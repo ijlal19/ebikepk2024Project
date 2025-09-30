@@ -322,9 +322,14 @@ const BlogDetails = () => {
 
             <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
               <Side_brands />
+              {/* <MechaniLeft /> */}
+              <Box className={styles.blog_add}>
+                <Link href='/blog'>
+                  <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
+                </Link>
+              </Box>
               <NewBike_left />
               <DealerLeft />
-              <MechaniLeft />
               {/* <Blog_left /> */}
               {/* <Usedbike_left />
               <Featrued_Usedbike_left /> */}
@@ -360,11 +365,7 @@ const BlogDetails = () => {
                 }
               </Box> */}
 
-              {/* <Box className={styles.blog_add}>
-                <Link href='/blog'>
-                  <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
-                </Link>
-              </Box> */}
+
             </Grid>
             <Blog_Category_Comp heading="More Blogs" data={BlogData} />
             <BrowseUsedBike />

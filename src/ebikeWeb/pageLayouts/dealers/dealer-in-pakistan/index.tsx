@@ -11,6 +11,10 @@ import Box from '@mui/material/Box';
 import * as React from 'react';
 import '../../../../app/globals.scss'
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
+import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/UsedBikecard';
+import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike-section';
+import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
 
 const AdsArray = [
     {
@@ -175,8 +179,12 @@ export const DealerInPakistan = ({ dealers }: any) => {
                         </div>
                     </div>
                     <div className={styles.add_area}>
-                        <div className={styles.add_box}>
-                            {
+                        <MechaniLeft />
+                        <Usedbike_left />
+                        <NewBike_left />
+                        <Blog_left />
+                        {/* <div className={styles.add_box}> */}
+                        {/* {
                                 AdsArray?.map((e, i) => {
                                     return (
                                         <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
@@ -187,8 +195,8 @@ export const DealerInPakistan = ({ dealers }: any) => {
                                         </Link>
                                     )
                                 })
-                            }
-                        </div>
+                            } */}
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
