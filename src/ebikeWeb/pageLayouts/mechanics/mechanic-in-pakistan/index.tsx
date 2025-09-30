@@ -180,7 +180,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
                             {
                                 AdsArray?.map((e: any, i: any) => {
                                     return (
-                                        <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                         <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
                                             <img
                                                 src={cloudinaryLoader(e?.url , 400 , 'auto')}
                                                 alt={e?.alt}
