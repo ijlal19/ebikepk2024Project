@@ -332,7 +332,7 @@ const BlogDetails = () => {
               <Usedbike_left />
               <DealerLeft />
               {/* <Blog_left /> */}
-              <Featrued_Usedbike_left />
+              {/* <Featrued_Usedbike_left /> */}
               {/* {
                 allDealerArr.length > 0 ?
                   <> <Typography className={styles.heading}>Dealers</Typography>
