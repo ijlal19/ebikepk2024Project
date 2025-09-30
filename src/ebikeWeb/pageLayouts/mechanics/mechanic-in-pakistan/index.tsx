@@ -10,6 +10,10 @@ import styles from './index.module.scss';
 import Box from '@mui/material/Box';
 import * as React from 'react';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/UsedBikecard';
+import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike-section';
+import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
+import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 
 const AdsArray = [
     {
@@ -168,7 +172,11 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
                         </div>
                     </div>
                     <div className={styles.add_area}>
-                        <div className={styles.add_box}>
+                        <DealerLeft />
+                        <Usedbike_left />
+                        <NewBike_left />
+                        <Blog_left />
+                        {/* <div className={styles.add_box}>
                             {
                                 AdsArray?.map((e: any, i: any) => {
                                     return (
@@ -181,7 +189,7 @@ export const MechanicsInPakistan = ({ mechanics }: any) => {
                                     )
                                 })
                             }
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

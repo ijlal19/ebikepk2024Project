@@ -15,6 +15,9 @@ import { add3Dots, BlogShuffle, cloudinaryLoader, isLoginUser, timeAgo } from '@
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import CATEGORYdATA from './Data';
+import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
+import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
+import Featrued_Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/featuredBikecard';
 const TagArray = [
   "Honda",
   "Price",
@@ -306,6 +309,7 @@ const Blog = () => {
                       })
                     }
                   </Box>
+                  <Side_brands />
                   <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Safety <span className={styles.underline}></span></Typography>
                     {
@@ -316,6 +320,7 @@ const Blog = () => {
                       })
                     }
                   </Box>
+                  <MechaniLeft />
                   <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Bike Care <span className={styles.underline}></span></Typography>
                     {/* {blogCardMini()} */}
@@ -327,6 +332,7 @@ const Blog = () => {
                       })
                     }
                   </Box>
+                  <Featrued_Usedbike_left />
                   <Button className={styles.btn} onClick={gotoSellBike}>Sell your bike</Button>
                   <Box className={styles.tags_main} >
                     <Typography className={styles.shortblogheading}>Popular Tags <span className={styles.underline}></span></Typography>
@@ -343,8 +349,8 @@ const Blog = () => {
                 </Box>
               </Grid>
             </Grid>
-            <Blog_Category_Comp heading="Tips & Advice" data={TipsandAdvice} />
-            <Blog_Category_Comp heading="Opinions" data={OpinionsData} />
+            <Blog_Category_Comp heading="More Blogs" data={TipsandAdvice} />
+            {/* <Blog_Category_Comp heading="Opinions" data={OpinionsData} /> */}
             <BrowseUsedBike />
           </Box >
           :
