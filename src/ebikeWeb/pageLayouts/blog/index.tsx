@@ -22,21 +22,15 @@ const TagArray = [
   "Honda",
   "Price",
   "Bike",
+  "Tips",
+  "CC",
   "Suzuki",
-  "Kawasaki",
+  "125",
   "2025",
   "Petrol",
-  "Tips",
-  "Riding",
-  "Motorcycle",
-  "Electric",
-  "Introduce",
-  "CC",
-  "125",
   "New",
   "Used",
-  "Scooter",
-  "BMW",
+  "Riding",
   "Fuel",
   "KTM",
   "Pakistan",
@@ -44,7 +38,13 @@ const TagArray = [
   "Model",
   "Yamaha",
   "Review",
-  "Vehicle"
+  "Vehicle",
+  "Kawasaki",
+  "Motorcycle",
+  "Electric",
+  "Introduce",
+  "Scooter",
+  "BMW",
 ]
 const Blog = () => {
   const [filteredResults, setFilteredResults] = useState([]);
@@ -299,7 +299,7 @@ const Blog = () => {
               </Grid>
               <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3.5}>
                 <Box className={styles.add_area_content}>
-                  <Box className={styles.shortBlog_main}>
+                  {/* <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>News <span className={styles.underline}></span></Typography>
                     {
                       BlogNews.slice(0, 5).map((e: any, i: any) => {
@@ -308,9 +308,9 @@ const Blog = () => {
                         )
                       })
                     }
-                  </Box>
+                  </Box> */}
                   <Side_brands />
-                  <Box className={styles.shortBlog_main}>
+                  {/* <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Safety <span className={styles.underline}></span></Typography>
                     {
                       BlogSafety.slice(0, 5).map((e: any, i: any) => {
@@ -319,11 +319,11 @@ const Blog = () => {
                         )
                       })
                     }
-                  </Box>
+                  </Box> */}
                   <MechaniLeft />
-                  <Box className={styles.shortBlog_main}>
+                  {/* <Box className={styles.shortBlog_main}>
                     <Typography className={styles.shortblogheading}>Bike Care <span className={styles.underline}></span></Typography>
-                    {/* {blogCardMini()} */}
+                     {blogCardMini()} 
                     {
                       BlogBikeCare.slice(0, 5).map((e: any, i: any) => {
                         return (
@@ -331,9 +331,9 @@ const Blog = () => {
                         )
                       })
                     }
-                  </Box>
+                  </Box> */}
                   <Featrued_Usedbike_left />
-                  <Button className={styles.btn} onClick={gotoSellBike}>Sell your bike</Button>
+                  <button className={styles.btn} onClick={gotoSellBike}>Sell your bike</button>
                   <Box className={styles.tags_main} >
                     <Typography className={styles.shortblogheading}>Popular Tags <span className={styles.underline}></span></Typography>
                     <Box className={styles.tags_content}>

@@ -18,6 +18,7 @@
     justify-content: center;
     padding: 0px 10px 40px 10px;
     box-sizing: border-box !important;
+
     @media (max-width:768px) {
         padding: 0px 10px 20px 10px;
     }
@@ -32,18 +33,27 @@
         box-sizing: border-box;
         background-color: #2981d82f;
         padding: 20px 0px !important;
+        border-radius: 10px;
+
 
         @media (max-width:768px) {
             box-sizing: border-box;
             grid-template-columns: 1fr;
             padding: 10px 0px !important;
             row-gap: 10px;
+            border-radius: 0px;
         }
 
         .box1 {
             display: flex;
             padding: 0px 0px 0px 20px;
             box-sizing: border-box;
+            justify-content: left;
+            @media (max-width:768px) {
+                justify-content: center;
+                padding: 0px 0px 0px 0px;
+                
+            }
 
             .image {
                 width: 50px;
@@ -52,7 +62,9 @@
             .text_box {
                 padding: 0px 0px 0px 10px !important;
                 display: flex;
-                flex-direction: column;
+                align-items: center;
+
+                // flex-direction: column;
                 row-gap: 5px;
                 box-sizing: border-box;
 
@@ -84,8 +96,14 @@
 
         .box2 {
             display: flex;
-            justify-content: space-around;
+            justify-content: right;
+            padding: 0px 10px 0px 0px;
             align-items: center;
+            @media (max-width:768px) {
+                justify-content: center;
+                padding: 0px 0px 0px 0px;
+                
+            }
 
             .btn {
                 padding: 7px 60px;
@@ -96,7 +114,7 @@
                 color: #1976d2;
                 background-color: white;
                 cursor: pointer;
-                border-radius: 10px;
+                border-radius: 5px;
                 transition: all .5s ease;
                 text-decoration: none;
 
@@ -107,6 +125,10 @@
                 @media (max-width:768px) {
                     padding: 7px 25px !important;
                     font-size: 12px;
+                    width: 80%;
+                    text-align: center;
+                    border-radius: 5px;
+                    margin: auto;
                 }
             }
 

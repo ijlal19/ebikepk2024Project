@@ -1,4 +1,5 @@
 @import '../../../styles//variable';
+
 .brand_main {
     width: 100%;
     height: auto;
@@ -7,7 +8,7 @@
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    
+
     .heading {
         padding: 0px !important;
         font-size: 21px;
@@ -15,6 +16,7 @@
         color: black;
         padding: 10px 0px;
         margin-bottom: 0px;
+
         @media (max-width:768px) {
             font-size: 19px;
             display: flex;
@@ -25,6 +27,7 @@
             @media (min-width:768px) {
                 display: none;
             }
+
             text-decoration: none;
             font-size: 11px;
             margin: auto;
@@ -54,11 +57,17 @@
             border-radius: 10px;
             display: flex;
             align-items: center;
-            justify-content: center ;
+            justify-content: center;
             width: 14% !important;
-            height: auto;  
-            padding: 10px 0px  !important;
+            height: auto;
+            padding: 10px 0px !important;
             border: 1px solid #dad4d4 !important;
+            transition: all .5s ease;
+                cursor: pointer;
+
+                &:hover {
+                    box-shadow: 0px 0px 10px rgb(220, 218, 218);
+                }
 
             @media (min-width:768px) {
                 padding-bottom: 20px;
@@ -70,6 +79,7 @@
             @media (max-width:767px) {
                 display: none;
             }
+
             width: 91%;
             // border: 1px solid #dad4d4;
             border-top: none;
@@ -88,8 +98,8 @@
             gap: 10px !important;
             padding: 0px 10px;
             justify-content: space-between;
-            
-            .brand_image_box{
+
+            .brand_image_box {
                 // padding-bottom: 20px;
                 height: auto;
                 // padding-bottom: 20px;
@@ -99,6 +109,12 @@
                 border: 1px solid rgb(230, 228, 228);
                 justify-content: center;
                 width: 28% !important;
+                transition: all .5s ease;
+                cursor: pointer;
+
+                &:hover {
+                    box-shadow: 0px 0px 10px rgb(220, 218, 218);
+                }
 
                 // @media (min-width:768px) {
                 //     border: 1px solid #dad4d4;
@@ -106,15 +122,16 @@
                 //     padding-top: 20px;
                 // }
             }
+
             .brand_image_box:nth-child(7),
             .brand_image_box:nth-child(8),
             .brand_image_box:nth-child(9),
             .brand_image_box:nth-child(10),
             .brand_image_box:nth-child(11),
-            .brand_image_box:nth-child(12){
+            .brand_image_box:nth-child(12) {
                 display: none;
             }
-            
+
             // .viewallbikes_button{
             //     @media (max-width:767px) {
             //         display: none;
@@ -129,12 +146,12 @@
             //     border-radius: 0px;
             // }
         }
-        
+
     }
 }
 
 
-.anchor{
+.anchor {
     text-decoration: none;
     color: $primary_two;
     padding: 10px 0px;

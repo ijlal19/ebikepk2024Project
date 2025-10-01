@@ -21,10 +21,8 @@ const Featrued_Usedbike_left = () => {
         let res = null;
 
         let obj = {
-            adslimit: 12,
-            page: 1,
             isFeatured: true,
-            random: true
+            adslimit: 10
         }
 
         if (res == null) {

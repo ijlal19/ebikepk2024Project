@@ -92,17 +92,17 @@ function BrandSection() {
                 allBrandArr && allBrandArr.length > 0 ?
                   (allBrandArr.slice(0, 12).map((e: any, i: any) => {
                     return (
-                      <Box className={styles.brand_image_box} key={i}>
+                      <Link href={`/new-bikes/${e?.brandName}`} className={styles.brand_image_box} key={i}>
                         <BrandCard key={i} data={e} />
-                      </Box>
+                      </Link>
                     )
                   }))
                   :
                   (Data.slice(0, 12).map((e: any, i: any) => {
                     return (
-                      <Box className={styles.brand_image_box} key={i}>
+                      <Link href={`/new-bikes/${e?.brandName}`} className={styles.brand_image_box} key={i}>
                         <BrandCard key={i} data={e} />
-                      </Box>
+                      </Link>
                     )
                   }))
               }

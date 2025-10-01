@@ -1,10 +1,12 @@
 @import '../../styles/variable';
+
 @font-face {
    font-family: 'Lato';
    src: url('/fonts/Lato-Regular.ttf') format('truetype');
    font-weight: 400;
    font-style: normal;
 }
+
 @font-face {
    font-family: 'LatoBold';
    src: url('/fonts/Lato-Bold.ttf') format('truetype');
@@ -270,6 +272,8 @@
 
       .add_area_content {
          box-sizing: border-box;
+         display: flex;
+         flex-direction: column;
 
          .shortBlog_main {
             padding: 0px 0px !important;
@@ -282,7 +286,7 @@
                font-family: 'LatoBold', sans-serif;
                color: #444444;
                margin: 0px !important;
-               padding: 10px 0px 0px 0px  !important;
+               padding: 10px 0px 0px 0px !important;
                width: 100%;
                display: flex;
                box-sizing: border-box;
@@ -336,25 +340,33 @@
 
          .btn {
             width: 100%;
+            max-width: 280px;
             background-color: #1976d2;
             color: white;
-            text-transform: uppercase;
-            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 7px 0px;
+            text-transform: capitalize;
+            font-family: 'LatoBold';
             text-decoration: none;
-            margin: 10px 0px 5px 0px;
+            margin: 10px auto 10px auto !important;
             box-sizing: border-box;
+            border: 1px solid #1976d2;
+            border-radius: 5px;
          }
 
          .tags_main {
+            width: 100%;
+            max-width: 300px;
+            margin: auto;
             padding: 20px 0px !important;
             box-sizing: border-box;
 
             .shortblogheading {
                font-size: 24px;
-               font-family: sans-serif;
-               font-weight: bolder;
-               color: #444444;
-               margin: 0px !important;
+               font-family: 'LatoBold', sans-serif;
+               color: black;
+               margin: 0px 0px 10px 0px  !important;
                padding: 0px !important;
                display: flex;
                justify-content: left;
@@ -365,37 +377,44 @@
                column-gap: 10px;
                width: 100%;
 
-               .underline {
-                  height: 0px;
-                  border: 2px solid #00000012;
-                  background-color: #00000012;
-                  width: 100%;
-               }
+               // .underline {
+               //    height: 0px;
+               //    border: 2px solid #00000012;
+               //    background-color: #00000012;
+               //    width: 100%;
+               // }
             }
 
             .tags_content {
+               width: 100%;
+               height: auto;
                display: flex;
+               border: 1px solid #d1d0d0;
+               box-shadow: 0px 0px 10px whitesmoke;
+               border-radius: 10px;
                flex-wrap: wrap;
+               // background-color: whitesmoke;
                justify-content: left;
-               padding: 20px 0px !important;
+               padding: 10px 10px !important;
                box-sizing: border-box;
-               gap: 10px;
+               row-gap: 8px;
+               column-gap: 5px;
 
                .tags_btn {
                   background-color: white;
                   border: 1px solid #dedede;
-                  border-radius: 0px;
+                  border-radius: 5px;
                   text-transform: capitalize;
                   color: #444444;
                   font-family: random($limit: 010);
                   font-size: 12px;
                   font-family: 'Lato';
-                  padding: 2px 10px;
+                  padding: 4px 10px;
                   box-sizing: border-box;
                   transition: all .5s ease;
 
                   &:hover {
-                     background-color: #1976d2;
+                     background-color: #1976d26d;
                      color: white;
                      border: 1px solid #1976d2;
                   }

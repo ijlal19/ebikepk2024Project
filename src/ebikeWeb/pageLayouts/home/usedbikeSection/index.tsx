@@ -59,8 +59,7 @@ function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
 
     let obj = {
       isFeatured: true,
-      random: true,
-      adslimit: 20
+      adslimit: 10
     }
 
     let res = await getCustomBikeAd(obj);
@@ -76,7 +75,6 @@ function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  console.log("datares" , featuredData )
 
   return (
     <Box className={styles.usedbike_main}>
