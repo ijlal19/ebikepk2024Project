@@ -7,7 +7,7 @@ import { NewVideoCard } from "@/ebikeWeb/sharedComponents/new_item_card";
 
 const Bike_Videos = () => {
     return (
-        <div className={styles.main}>
+        <div className={styles.main}> 
             <div className={styles.container}>
                 <div className={styles.header}>
                     <p className={styles.heading}>Bike Videos</p>
