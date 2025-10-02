@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .container {
+        width: 100%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 10px !important;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+
+        @media (max-width:768px) {
+            padding: 0px !important;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+
+            @media (max-width:768px) {
+                flex-direction: column;
+                row-gap: 10px;
+                align-items: left;
+                justify-content: left;
+            }
+
+            .heading {
+                margin: 0px !important;
+                padding: 0px !important;
+                font-size: 26px;
+                letter-spacing: 1px;
+                font-family: 'LatoBold', sans-serif;
+                color: #333333;
+            }
+
+            .input_box {
+                display: flex;
+                flex-direction: row;
+                border-radius: 5px;
+                border: 1px solid #75737384;
+
+                .input {
+                    width: 200px;
+                    min-width: 100px;
+                    max-width: 180px;
+                    border-radius: 5px;
+                    padding: 0px 10px;
+                    outline: none;
+                    border: none;
+                }
+
+                .btn {
+                    cursor: pointer;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transition: all .5s ease;
+
+                    .icon {
+                        border-radius: 5px;
+                        font-size: 25px;
+                    }
+
+                    &:hover {
+                        background-color: rgba(187, 185, 185, 0.505);
+                    }
+                }
+            }
+        }
+
+        .card_section {
+            width: 100%;
+            margin: auto;
+            display: grid;
+            row-gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+            padding:20px 0px 10px 0px ;
+
+            @media (max-width:768px) {
+                grid-template-columns: repeat(2, 1fr);
+                row-gap: 10px;
+                padding:20px 0px 10px 0px ;
+            }
+        }
+    }
+}
