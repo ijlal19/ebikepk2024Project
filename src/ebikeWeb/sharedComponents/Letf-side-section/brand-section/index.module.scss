@@ -13,13 +13,14 @@
 }
 
 .brandsmain {
-    padding: 5px;
+    padding: 10px 10px 5px 10px !important;
+    background: whitesmoke;
     box-sizing: border-box;
-    background: #fff;
+    border: 1px solid #b2b1b1ce;
     border-radius: 10px;
     width: 100%;
     margin: auto;
-    max-width: 300px;
+    max-width: 310px;
 
     .container {
         display: flex;
@@ -71,13 +72,13 @@
         border-top-right-radius: 10px;
     }
 
-    // .card:nth-child(4) {
-    //     border-bottom-left-radius: 10px;
-    // }
+    .card:nth-child(4) {
+        border-bottom-left-radius: 10px;
+    }
 
-    // .card:nth-child(6) {
-    //     border-bottom-right-radius: 10px;
-    // }
+    .card:nth-child(6) {
+        border-bottom-right-radius: 10px;
+    }
 
     .btn {
         font-size: 14px;

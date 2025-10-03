@@ -13,15 +13,22 @@
 }
 
 .new_bike_main{
-    padding: 5px 0px !important;
+    border: 1px solid #b2b1b1ce;
+    border-radius:10px;
+    background: rgba(245, 245, 245, 0.763);
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px !important;
     width: 100%;
-    max-width: 300px;
-    margin: auto;
+    max-width: 310px;
+    margin:0px auto;
+
 
     .heading{
-        font-family: 'LatoBold';
-        font-size: 22px;
-        margin: 0px;
+        color: #333333;
+        font-family: 'Lato';
+        font-size: 24px;
+        margin: 0px 0px 10px 0px;
+        border-bottom: 1px solid rgba(155, 155, 155, 0.547);
         box-sizing: border-box;
         padding: 5px 0px ;
     }
