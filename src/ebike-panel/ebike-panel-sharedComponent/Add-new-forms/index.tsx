@@ -67,6 +67,11 @@ let product_size = [
     }
 ]
 
+let VideoCategoryArr = [
+    { id: 1, name: 'News' },
+    { id: 2, name: 'BikeCare' },
+    { id: 3, name: 'Safety' },
+];
 
 ////////////////////////////////////////////////////////// ADD NEW BIKE
 const AddNewBikeForm = () => {
@@ -299,7 +304,7 @@ const AddNewBikeForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -447,7 +452,7 @@ const AddNewElectricBikeForm = () => {
                 const max_width = 600;
 
                 const scaleSize = max_width / e.target.width;
-                canvas.width = max_width; 
+                canvas.width = max_width;
                 canvas.height = e.target.height * scaleSize;
 
                 const ctx: any = canvas.getContext("2d")
@@ -629,7 +634,7 @@ const AddNewElectricBikeForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -851,7 +856,7 @@ const AddBlogForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -1336,7 +1341,7 @@ const AddProductForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index, 'sizeguide')}>×</button>
                         </div>
                     ))}
@@ -1351,7 +1356,7 @@ const AddProductForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArrProduct.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index, 'product')}>×</button>
                         </div>
                     ))}
@@ -1733,7 +1738,7 @@ const AddCategoryForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -1749,10 +1754,106 @@ const AddCategoryForm = () => {
     );
 }
 
+///////////////////////////////////////////////////////// ADD NEW VIDEO
+const AddVideoForm = () => {
+    const [selectedCategory, setSelectedCategory] = useState(VideoCategoryArr[0]?.name);
+    const [BrandData, setBrandData] = useState<any>({
+        title: '',
+        thumbnail: '',
+        video_url: '',
+        author: '',
+        views_count: '',
+    });
 
-// const AddCategoryForm = ()=>{
-//     return()
-// }
+    let router = useRouter()
+
+    const handleInputChange = (e: any) => {
+        const { name, value } = e.target;
+        setBrandData((prev: any) => ({ ...prev, [name]: value }));
+    };
+
+    const AddCategory = (e: any) => {
+        setSelectedCategory(e.target.value);
+    }
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!BrandData.title || BrandData.title.length < 2) {
+            alert("Please add a valid Title (min 2 characters)");
+            return;
+        }
+        else if (!BrandData.video_url || !BrandData.thumbnail) {
+            alert("Please enter a valid Logo URL");
+            return;
+        }
+        else if (!selectedCategory) {
+            alert("Please select a Video Category");
+            return;
+        }
+
+        const finalBikeData = {
+            ...BrandData,
+            selectedCategory
+        }
+        console.log("test", finalBikeData)
+
+        // const res = await addNewBrand(finalBikeData);
+        // if (res && res?.success && res.info === "Added Successfully!") {
+        //     alert("Brand Add Successfully")
+        //     router.push('/ebike-panel/dashboard/all-bike-brands');
+        // } else {
+        //     alert('Something went wrong!');
+        // }
+    };
+
+    const goBack = () => {
+        router.push('/ebike-panel/dashboard/all-bike-videos')
+    }
+
+    return (
+        <div className={styles.main_box}>
+            <form onSubmit={handleSubmit} className={styles.main}>
+                <div className={styles.formHeader}>
+                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                    <p className={styles.heading}>Add New Video</p>
+                </div>
+
+                <label htmlFor="title" className={styles.label}>Video Title:</label>
+                <textarea id="title" name="title" value={BrandData.title} onChange={handleInputChange} className={styles.textarea} />
+
+                <label htmlFor="thumbnail" className={styles.label}>Thumbnail Url:</label>
+                <input id="thumbnail" name="thumbnail" value={BrandData.thumbnail} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="video_url" className={styles.label}>Video URL:</label>
+                <input id="video_url" name="video_url" value={BrandData.video_url} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="views_count" className={styles.label}>Views:</label>
+                <input id="views_count" name="views_count" value={BrandData.views_count} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="author" className={styles.label}>Author Name:</label>
+                <input id="author" name="author" value={BrandData.author} onChange={handleInputChange} className={styles.input} />
+
+                <div className={styles.video_categ_box}>
+                    <label className={styles.label}>Select Video Category</label>
+                    <select
+                        onChange={AddCategory}
+                        className={styles.selected}
+                    >
+                        {
+                            VideoCategoryArr?.map((e: any, index: any) => (
+                                <option key={index} value={e?.name} className={styles.options} style={{ fontSize: '16px' }}>
+                                    {e?.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
+                <button type="submit" className={styles.button}>Add Video</button>
+            </form>
+        </div>
+    );
+}
 
 
 export {
@@ -1762,5 +1863,6 @@ export {
     AddPageForm,
     AddProductForm,
     AddBrandForm,
-    AddCategoryForm
+    AddCategoryForm,
+    AddVideoForm
 };

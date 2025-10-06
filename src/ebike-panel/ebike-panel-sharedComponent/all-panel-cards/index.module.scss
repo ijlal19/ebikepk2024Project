@@ -3116,6 +3116,7 @@
                         opacity: 0.9;
                     }
                 }
+
                 .del_btn {
                     width: 100%;
                     padding: 7px 0px !important;
@@ -3459,6 +3460,7 @@
     }
 }
 
+////////////////////////////////////// FORUM CATEGORY LIST CARD SCSS
 .main_forums_Categ {
     width: 100%;
     padding: 0px 0px !important;
@@ -3649,6 +3651,544 @@
                     }
                 }
             }
+        }
+    }
+}
+
+////////////////////////////////////// VIDEOS LIST CARD SCSS
+.main_videos {
+    width: 100%;
+    height: 100% !important;
+    min-height: 100vh !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    background-color: whitesmoke;
+
+    .categoryname_section {
+        display: flex;
+        justify-content: center;
+        column-gap: 10px;
+        padding: 10px 10px;
+        box-sizing: border-box;
+
+        .category_btn {
+
+            color: #181818;
+            font-size: 14px;
+            font-family: 'LatoBold';
+            box-sizing: border-box;
+            padding: 10px 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            border-radius: 0px;
+            background: transparent;
+            transition: all .5s ease;
+
+            &:hover {
+                background-color: #72a6db8e;
+                border: 1px solid #1976d2de;
+                // color: white;
+            }
+        }
+
+        .selected {
+            border: 1px solid transparent;
+            color: white;
+            background-color: #1976d2;
+
+            &:hover {
+                border: 1px solid transparent !important;
+                color: white !important;
+                background-color: #1976d2 !important;
+            }
+
+        }
+    }
+
+    .card_container {
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: center;
+        padding: 10px 20px !important;
+        // background-color: white;
+        display: grid;
+        column-gap: 10px;
+        row-gap: 15px;
+        grid-template-columns: repeat(4, 1fr);
+
+        @media (max-width:1200px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+
+        .mainvideoCard {
+            width: 100%;
+            max-width: 329px;
+            padding: 0px 6px !important;
+            box-sizing: border-box;
+            margin: auto;
+            text-decoration: none;
+
+            &:focus,
+            &:active {
+                background: none !important;
+                outline: none !important;
+            }
+
+            .container {
+                text-decoration: none;
+                border-radius: 15px;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #b7b7b7d4;
+
+                &:focus,
+                &:active {
+                    background: none !important;
+                    outline: none !important;
+                }
+
+                @media (max-width:768px) {
+                    border-radius: 5px;
+                }
+
+                .image_boxnewbike {
+                    border-top-left-radius: 15px;
+                    border-top-right-radius: 15px;
+                    overflow: hidden;
+                    height: 180px;
+                    // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+                    // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+                    background-position: center !important;
+                    background-repeat: no-repeat !important;
+                    background-size: 100% 100%;
+                    border: none;
+
+                    @media (max-width:768px) {
+                        height: 100px;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+
+                    }
+
+                    .image {
+                        border: none;
+                        width: 100%;
+                        height: 100%;
+                        // object-fit: contain;
+                    }
+                }
+
+                .image_boxusedbike {
+                    border-top-left-radius: 15px;
+                    border-top-right-radius: 15px;
+                    overflow: hidden;
+                    height: 180px;
+                    // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+                    // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+                    border: none;
+
+                    @media (max-width:768px) {
+                        height: 100px !important;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+
+                    }
+
+                    .image {
+                        border: none;
+                        width: 100%;
+                        height: 200px;
+
+                        // display: block;
+                        // object-fit: cover;
+                        // object-position: center;
+                        /* important — crops to fill container */
+                        // object-fit: contain;
+                        @media (max-width:768px) {
+                            // .image {
+                            width: 100%;
+                            height: 100%;
+                            // object-fit: cover;
+                            // }
+
+                        }
+                    }
+
+                }
+
+                .image_box {
+                    border-top-left-radius: 15px;
+                    border-top-right-radius: 15px;
+                    overflow: hidden;
+                    height: 180px;
+                    // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+                    // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+                    background-position: center !important;
+                    background-repeat: no-repeat !important;
+                    background-size: 100% 100%;
+
+                    .image {
+                        width: 100%;
+                        height: 100%;
+                        // object-fit: contain;
+                    }
+
+                    @media (max-width:768px) {
+                        height: 110px;
+                        border-top-left-radius: 5px;
+                        border-top-right-radius: 5px;
+
+                    }
+                }
+
+                .content {
+                    padding: 0px 0px 10px 0px;
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #f9f9f9;
+                    border-bottom-left-radius: 15px;
+                    border-bottom-right-radius: 15px;
+                    box-sizing: border-box;
+
+                    .title {
+                        font-size: 16px;
+                        color: #333333;
+                        margin: 16px 0px 0px;
+                        padding: 0px 12px;
+                        line-height: 23px;
+                        box-sizing: border-box;
+                        font-family: 'LatoBold';
+
+                        @media (max-width:768px) {
+                            font-size: 14px;
+                            line-height: 16px;
+                            margin: 5px 0px 0px;
+                        }
+                    }
+
+                    .author {
+                        font-size: 13px;
+                        margin: 8px 0px 0px;
+                        padding: 0px 12px;
+                        color: #6f6f6f;
+                        box-sizing: border-box;
+                        font-family: 'Lato';
+
+                        .name {
+                            margin-left: 2px;
+                            font-family: 'LatoBold';
+                            color: #333333;
+                        }
+
+                        @media (max-width:768px) {
+                            font-size: 11px;
+                        }
+                    }
+
+                    .authorblog {
+                        font-size: 13px;
+                        margin: 8px 0px 0px;
+                        padding: 0px 12px;
+                        color: #6f6f6f;
+                        box-sizing: border-box;
+                        display: flex;
+                        justify-content: space-between;
+                        font-family: 'Lato';
+
+                        .name {
+                            margin-left: 2px;
+                            font-family: 'LatoBold';
+                            color: #333333;
+                        }
+
+                        @media (max-width:768px) {
+                            flex-direction: column;
+                            row-gap: 2px;
+                            font-size: 11px;
+                        }
+                    }
+
+                    .price {
+                        font-size: 12px;
+                        margin: 8px 0px 0px;
+                        padding: 0px 12px;
+                        color: #333333;
+                        box-sizing: border-box;
+                        font-family: 'Lato';
+
+                        .name {
+                            margin-left: 2px;
+                            font-family: 'LatoBold';
+                            color: #333333;
+                            font-weight: bold;
+                        }
+
+                        @media (max-width:768px) {
+                            font-size: 11px;
+                        }
+                    }
+
+                    .description {
+                        font-size: 13px;
+                        color: #484848;
+                        margin: 12px 0px 0px;
+                        padding: 0px 12px;
+                        box-sizing: border-box;
+                        line-height: 20px;
+                        font-family: 'Lato';
+                        height: auto;
+
+                        @media (max-width:768px) {
+                            font-size: 12px;
+                            line-height: 16px;
+                            margin: 8px 0px 0px;
+                            height: 38px;
+                            overflow: hidden;
+                        }
+                    }
+
+                    .link {
+                        color: #0979b6;
+                        font-family: 'LatoBold';
+                        letter-spacing: 1px;
+                        text-decoration: none;
+                        text-align: right;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: 7px 0px 0px;
+                        padding: 5px 0px;
+                        font-size: 12px;
+
+                        @media (max-width:768px) {
+                            text-align: center;
+                        }
+                    }
+
+                    .linkblog {
+                        color: #0979b6;
+                        font-family: 'LatoBold';
+                        letter-spacing: 1px;
+                        text-decoration: none;
+                        text-align: right;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        // margin: 5px 0px 0px 0px;
+                        padding: 5px 0px 5px 0px;
+                        font-size: 11px;
+
+                        @media (max-width:768px) {
+                            // margin: 3px 0px 0px 0px;
+                            padding: 0px !important;
+                            text-align: center;
+                        }
+                    }
+
+                    .link1 {
+                        color: #0979b6;
+                        font-family: 'LatoBold';
+                        letter-spacing: 1px;
+                        text-decoration: none;
+                        text-align: center;
+                        margin: 7px 0px 0px;
+                        padding: 5px 0px;
+                        font-size: 12px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        @media (max-width:768px) {
+                            text-align: center;
+                        }
+                    }
+
+                    .linkbtn {
+                        color: #0979b6;
+                        font-family: 'LatoBold';
+                        letter-spacing: 1px;
+                        text-decoration: none;
+                        text-align: center;
+                        margin: 7px 0px 0px;
+                        font-size: 12px;
+                        padding: 5px 0px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        @media (max-width:768px) {
+                            text-align: center;
+                        }
+                    }
+                }
+
+                .action_btn {
+                    padding: 10px 10px 10px 10px !important;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    row-gap: 7px;
+
+                    .edit_btn {
+                        width: 100%;
+                        padding: 7px 0px !important;
+                        background: #3498db;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 14px;
+
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
+
+                    .del_btn {
+                        width: 100%;
+                        padding: 7px 0px !important;
+                        background: #e74c3c;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 14px;
+
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .page_header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 20px;
+        box-sizing: border-box;
+
+        .input_box {
+            display: flex;
+            flex-direction: row;
+            border-radius: 5px;
+            border: 1px solid #75737384;
+
+            .input {
+                width: 200px;
+                min-width: 100px;
+                max-width: 180px;
+                border-radius: 5px;
+                padding: 8px 10px !important;
+                outline: none;
+                border: none;
+            }
+
+            .btn {
+                cursor: pointer;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all .5s ease;
+
+                .icon {
+                    border-radius: 5px;
+                    font-size: 25px;
+                }
+
+                &:hover {
+                    background-color: rgba(187, 185, 185, 0.505);
+                }
+            }
+        }
+
+        .add_new_btn {
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #1976d2;
+            border: 1px solid #1976d2;
+            cursor: pointer;
+            font-family: 'LatoBold';
+            text-transform: capitalize;
+            transition: all .5s ease;
+
+            &:hover {
+                box-shadow: 0px 0px 10px rgba(156, 155, 155, 0.797);
+            }
+        }
+
+        .selected {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            padding: 10px 10px;
+            outline: none;
+            font-weight: bolder;
+            border-radius: 5px;
+
+            .options {
+                background-color: whitesmoke;
+                color: rgb(0, 0, 0);
+                text-transform: capitalize;
+            }
+
+        }
+    }
+
+    .pagination_btm {
+        display: flex;
+        padding: 10px 0px 20px 0px;
+        justify-content: center;
+    }
+
+    .no_results {
+        text-align: center;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        color: #7f8c8d;
+        font-size: 16px;
+    }
+
+    .loader_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+    }
+
+    .search_input {
+        width: 100%;
+        margin: 0px 0px 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgba(0, 0, 0, .125);
+        box-sizing: border-box;
+        padding: 4px !important;
+        border-radius: 4px;
+        box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+
+        .input {
+            width: 100%;
+            font-size: 14px;
+            border: 1px solid #ced4da;
+            outline: none;
+            color: #495057;
+            font-size: 1.25rem;
+            border-radius: .3rem;
+            line-height: 1.5;
+            padding: 8px 16px !important;
         }
     }
 }

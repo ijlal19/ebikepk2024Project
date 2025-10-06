@@ -557,4 +557,49 @@ const EditForumThreadComment = ({ open, onClose, funct, Data }: any) => {
     )
 }
 
-export { BasicModal, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread , EditForumThreadComment }
+const EditVideo = ({ open, onClose, funct, Data }: any) => {
+    console.log("Datacheck" , Data)
+    const [description, setDescription] = useState('')
+
+    React.useEffect(() => {
+        if (Data) {
+            setDescription(Data?.description || "")
+        }
+    }, [Data])
+
+    const hndleUpdateThread = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            description: description,
+        }
+
+        const res = await UpdateThreadCommentById(Data?.id, obj)
+        if (res && res?.success && res?.info == "Updated Successfully") {
+            alert("Comment Successfully Edit")
+            setDescription('')
+            onClose()
+            funct()
+        }
+        else {
+            alert("something is wrong try again")
+            onClose()
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={hndleUpdateThread} className={styles.form}  >
+                    <textarea id="Description" name="Description" value={description} required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <button type="submit" className={styles.btn} >Save Edit</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, EditVideo , ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread , EditForumThreadComment }

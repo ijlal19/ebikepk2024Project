@@ -15,7 +15,9 @@ import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import 'swiper/css';
-import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, EditForumThreadComment, ShopBrandPopup } from "./popup";
+import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
+import Data from "./data";
+import { NewVideoCard } from "@/ebikeWeb/sharedComponents/new_item_card";
 
 let savedPage: any;
 let saveNewBike: any;
@@ -758,12 +760,12 @@ const Blog_Card = () => {
                                                     e?.featuredImage && e.featuredImage.includes(' #$# ') ? (
                                                         e.featuredImage.split(' #$# ').map((imgUrl: any, ind: any) => (
                                                             <SwiperSlide key={ind} className={styles.image}>
-                                                                <img src={cloudinaryLoader(imgUrl.trim() , 400 , 'auto')} alt={e?.title} className={styles.image} />
+                                                                <img src={cloudinaryLoader(imgUrl.trim(), 400, 'auto')} alt={e?.title} className={styles.image} />
                                                             </SwiperSlide>
                                                         ))
                                                     ) :
                                                         <SwiperSlide key=''>
-                                                            <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0].trim() , 400 , 'auto')} alt={e?.title} className={styles.image} />
+                                                            <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0].trim(), 400, 'auto')} alt={e?.title} className={styles.image} />
                                                         </SwiperSlide>
                                                 }
                                             </Swiper>
@@ -1057,7 +1059,7 @@ const Dealer_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -1115,7 +1117,7 @@ const Dealer_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto' )} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -1408,7 +1410,7 @@ const Mechanic_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt={e?.shop_name} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.shop_name} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -1466,7 +1468,7 @@ const Mechanic_Card = () => {
                                                             <tr className={styles.tr} key={i}>
                                                                 {/* <td className={styles.td} style={{fontSize:'14px'}} >{e?.id}</td> */}
                                                                 <td className={styles.td} >
-                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
@@ -2237,7 +2239,7 @@ const ProductList_Card = () => {
                                                         e.images.map((imgUrl: any, ind: any) => {
                                                             return (
                                                                 <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                    <img src={cloudinaryLoader(imgUrl , 400 , 'auto')} alt={e?.title} className={styles.image} />
+                                                                    <img src={cloudinaryLoader(imgUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </SwiperSlide>
                                                             )
                                                         }) :
@@ -2688,7 +2690,7 @@ const ShopBrand = () => {
                                                             <p className={styles.brand_name}>{e?.name || "N/A"}</p>
                                                             {/* <span className={styles.brand_id}>Brand ID: {e?.id || "N/A"}</span> */}
                                                         </div>
-                                                        <img src={cloudinaryLoader(e?.logoUrl , 400 , 'auto')} alt={e?.name} className={styles.brand_image} />
+                                                        <img src={cloudinaryLoader(e?.logoUrl, 400, 'auto')} alt={e?.name} className={styles.brand_image} />
                                                         <div className={styles.actions}>
                                                             <button className={styles.action_btn} onClick={() => handleEditBrandDATA(e.id)} >Edit</button>
                                                             <button className={styles.action_btn1} onClick={() => handleDelete(e?.id)} >Delete</button>
@@ -3084,6 +3086,191 @@ const ThreadComments_Card = () => {
     )
 }
 
+////////////////////////////////////////////////////// ALL BikeVideos COMMENT CARD
+const BikeVideos_Card = () => {
+    const [AllBikeVideosFilter, setAllBikeVideosFilter] = useState<any>([]);
+    const [filteredBikeVideos, setFilteredBikeVideos] = useState<any>([]);
+    const [displayedBikeVideos, setDisplayedBikeVideos] = useState([]);
+    const [PropsData, setDataProps] = useState();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [SelectCateg , setSelectCateg] = useState("");
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const [IsLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const itemsPerPage = 8;
+    const router = useRouter();
+
+    useEffect(() => {
+        fetchAllBlog(1)
+    }, []);
+
+    useEffect(() => {
+        const filtered = AllBikeVideosFilter.filter((bike: any) =>
+            bike.title.toString().toLowerCase().includes(searchTerm)
+        );
+        setFilteredBikeVideos(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, AllBikeVideosFilter]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedBikeVideos(filteredBikeVideos.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredBikeVideos.length / itemsPerPage));
+    }, [filteredBikeVideos, currentPage]);
+
+    const fetchAllBlog = async (_page: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getAllBlog();
+            console.log("data", res)
+            if (res && res.length > 0) {
+                setAllBikeVideosFilter(Data);
+                setFilteredBikeVideos(Data);
+                setCurrentPage(_page);
+            } else {
+                setAllBikeVideosFilter([]);
+                setFilteredBikeVideos([]);
+                setDisplayedBikeVideos([]);
+                setCurrentPage(1);
+                setTotalPage(0);
+            }
+        } catch (error) {
+            console.error("Error fetching new bikes:", error);
+        }
+        setIsLoading(false);
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000)
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        window.scrollTo(0, 0);
+    };
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this Comment?')
+        if (!isConfirm) return;
+        // const res = await DeleteBikeVideosComment(id);
+        // if (res && res.info == 'Deleted successfully', res?.success) {
+        //     alert('Deleted Successfully')
+        //     fetchAllComment()
+        // }
+        // else {
+        //     alert('SomeThing is Wrong!')
+        // }
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleOpenPOpup = (data: any) => {
+        setDataProps(data)
+        setOpen(true);
+    }
+
+    const handleBrandChange = (e: any) => {
+        // console.log("test",e.target.value);
+        // setSelectCateg(e.target.value);
+        if(e.target.value){
+            const filtered = AllBikeVideosFilter.filter((bike: any) =>
+            bike.category.toString().toLowerCase() === e.target.value.toLowerCase()
+        );
+        setFilteredBikeVideos(filtered);
+        setCurrentPage(1);
+        }else{
+            setFilteredBikeVideos(AllBikeVideosFilter);
+            setCurrentPage(1);
+        }
+    };
+
+    const CategoryArr = [
+        { id: 1, name: 'News' },
+        { id: 2, name: 'BikeCare' },
+        { id: 3, name: 'Safety' },
+    ];
+
+    return (
+        <div className={styles.main_videos}>
+            <New_header />
+            {!IsLoading ? (
+                <div className={styles.big_container}>
+                    <div className={styles.page_header}>
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder='Search Video with Title'
+                                className={styles.input} />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                        <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
+                            <option value=""  style={{ fontSize: '16px' }} className={styles.options}> All Category</option>
+                            {
+                                CategoryArr.map((e: any, index) => (
+                                    <option key={index} value={e?.name} className={styles.options} style={{ fontSize: '16px' }}>
+                                        {e?.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                        <button className={styles.add_new_btn}>
+                            <Link href="/ebike-panel/dashboard/add-new-video" sx={{ color: "white", textDecoration: 'none' }}>
+                                Add New Video
+                            </Link>
+                        </button>
+                    </div>
+                    <div className={styles.card_container}>
+                        {displayedBikeVideos.map((e: any, i: any) => {
+                            return (
+                                <div className={styles.mainvideoCard} key={i}>
+                                    <div className={styles.container}>
+                                        <div className={styles.image_box}>
+                                            <img src={cloudinaryLoader(e?.thumbnail, 400, 'auto')} alt={e?.title} className={styles.image} />
+                                        </div>
+                                        <div className={styles.content}>
+                                            <p className={styles.title}>{add3Dots(e?.title, 60)}</p>
+                                            <p className={styles.author}>By <span className={styles.name}>{e?.author}</span> | {e?.category}</p>
+                                        </div>
+                                        <div className={styles.action_btn}>
+                                            <button className={styles.edit_btn} onClick={() => handleOpenPOpup(e)} >Edit</button>
+                                            <button className={styles.del_btn} onClick={() => handleDelete(e?.id)} >Delete</button>
+                                        </div>
+                                    </div>
+                                </div>)
+                        })}
+                    </div>
+                    <div className={styles.pagination_btm}>
+                        {filteredBikeVideos?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={IsLoading} />
+                    </div>
+                </div>
+            )}
+            <EditVideo open={open} onClose={() => setOpen(false)} funct={fetchAllBlog} Data={PropsData} />
+        </div>
+    )
+}
+
+
 export {
     Used_bike_card,
     New_bike_card,
@@ -3098,5 +3285,6 @@ export {
     ShopBrand,
     ForuAllMainCateg,
     ThreadList_Card,
-    ThreadComments_Card
+    ThreadComments_Card,
+    BikeVideos_Card
 }

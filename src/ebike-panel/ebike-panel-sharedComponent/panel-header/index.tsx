@@ -61,6 +61,10 @@ const NavOptionArray = [
             {
                 OptionName: "All User",
                 OptionRoute: "user/all-user"
+            },
+            {
+                OptionName: "Bike Videos",
+                OptionRoute: "all-bike-videos"
             }
         ]
     }
