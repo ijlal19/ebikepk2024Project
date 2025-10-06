@@ -1,5 +1,5 @@
 'use client';
-import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc, getbrandData, addNewCategory, addNewSubCategory, UpdateCategImagesById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, uplaodImageFunc, getbrandData, addNewCategory, addNewSubCategory, UpdateCategImagesById, AddNewVideo } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
@@ -1792,19 +1792,17 @@ const AddVideoForm = () => {
             return;
         }
 
-        const finalBikeData = {
+        const obj = {
             ...BrandData,
-            selectedCategory
+            category: selectedCategory
         }
-        console.log("test", finalBikeData)
-
-        // const res = await addNewBrand(finalBikeData);
-        // if (res && res?.success && res.info === "Added Successfully!") {
-        //     alert("Brand Add Successfully")
-        //     router.push('/ebike-panel/dashboard/all-bike-brands');
-        // } else {
-        //     alert('Something went wrong!');
-        // }
+        const res = await AddNewVideo(obj);
+        if (res && res?.success && res.info === "Added Successfully!") {
+            alert("Video Add Successfully")
+            router.push('/ebike-panel/dashboard/all-bike-videos');
+        } else {
+            alert('Something went wrong!');
+        }
     };
 
     const goBack = () => {

@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads, DeleteThread, DeleteThreadComment, GetAllThreadsComments } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads, DeleteThread, DeleteThreadComment, GetAllThreadsComments, AddNewVideo, GetAllVideos, DeleteBikeVideo } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
@@ -1210,7 +1210,7 @@ const Mechanic_Card = () => {
     ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllmechanicFilter.filter((bike: any) =>
-            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+            bike?.shop_name?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setfilteredmechanic(filtered);
         setCurrentPage(1);
@@ -1233,7 +1233,7 @@ const Mechanic_Card = () => {
 
     useEffect(() => {
         const filtered = AllApprovedmechanic.filter((bike: any) =>
-            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+            bike.shop_name?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setApprovefiltered(filtered);
         setCurrentpageapprove(1);
@@ -3094,7 +3094,7 @@ const BikeVideos_Card = () => {
     const [PropsData, setDataProps] = useState();
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [SelectCateg , setSelectCateg] = useState("");
+    const [SelectCateg, setSelectCateg] = useState("");
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
@@ -3103,7 +3103,7 @@ const BikeVideos_Card = () => {
     const router = useRouter();
 
     useEffect(() => {
-        fetchAllBlog(1)
+        fetchAllVideo(1)
     }, []);
 
     useEffect(() => {
@@ -3121,18 +3121,18 @@ const BikeVideos_Card = () => {
         setTotalPage(Math.ceil(filteredBikeVideos.length / itemsPerPage));
     }, [filteredBikeVideos, currentPage]);
 
-    const fetchAllBlog = async (_page: number) => {
+    const fetchAllVideo = async (_page: number) => {
         setIsLoading(true);
         try {
-            const res = await getAllBlog();
+            const res = await GetAllVideos();
             console.log("data", res)
-            if (res && res.length > 0) {
-                setAllBikeVideosFilter(Data);
-                setFilteredBikeVideos(Data);
+            if (res && res.success && res?.data.length > 0) {
+                setAllBikeVideosFilter(res?.data);
+                setFilteredBikeVideos(res?.data);
                 setCurrentPage(_page);
             } else {
-                setAllBikeVideosFilter([]);
-                setFilteredBikeVideos([]);
+                setAllBikeVideosFilter(Data);
+                setFilteredBikeVideos(Data);
                 setDisplayedBikeVideos([]);
                 setCurrentPage(1);
                 setTotalPage(0);
@@ -3152,16 +3152,16 @@ const BikeVideos_Card = () => {
     };
 
     const handleDelete = async (id: any) => {
-        const isConfirm = window.confirm('Are you sure to delete this Comment?')
+        const isConfirm = window.confirm('Are you sure to delete this Video?')
         if (!isConfirm) return;
-        // const res = await DeleteBikeVideosComment(id);
-        // if (res && res.info == 'Deleted successfully', res?.success) {
-        //     alert('Deleted Successfully')
-        //     fetchAllComment()
-        // }
-        // else {
-        //     alert('SomeThing is Wrong!')
-        // }
+        const res = await DeleteBikeVideo(id);
+        if (res && res.info == 'Video deleted successfully', res?.success) {
+            alert('Deleted Successfully')
+            fetchAllVideo(1)
+        }
+        else {
+            alert('SomeThing is Wrong!')
+        }
     };
 
     const handleSearch = (e: any) => {
@@ -3176,13 +3176,13 @@ const BikeVideos_Card = () => {
     const handleBrandChange = (e: any) => {
         // console.log("test",e.target.value);
         // setSelectCateg(e.target.value);
-        if(e.target.value){
+        if (e.target.value) {
             const filtered = AllBikeVideosFilter.filter((bike: any) =>
-            bike.category.toString().toLowerCase() === e.target.value.toLowerCase()
-        );
-        setFilteredBikeVideos(filtered);
-        setCurrentPage(1);
-        }else{
+                bike.category.toString().toLowerCase() === e.target.value.toLowerCase()
+            );
+            setFilteredBikeVideos(filtered);
+            setCurrentPage(1);
+        } else {
             setFilteredBikeVideos(AllBikeVideosFilter);
             setCurrentPage(1);
         }
@@ -3210,7 +3210,7 @@ const BikeVideos_Card = () => {
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
                         <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                            <option value=""  style={{ fontSize: '16px' }} className={styles.options}> All Category</option>
+                            <option value="" style={{ fontSize: '16px' }} className={styles.options}> All Category</option>
                             {
                                 CategoryArr.map((e: any, index) => (
                                     <option key={index} value={e?.name} className={styles.options} style={{ fontSize: '16px' }}>
@@ -3265,7 +3265,7 @@ const BikeVideos_Card = () => {
                     </div>
                 </div>
             )}
-            <EditVideo open={open} onClose={() => setOpen(false)} funct={fetchAllBlog} Data={PropsData} />
+            <EditVideo open={open} onClose={() => setOpen(false)} funct={fetchAllVideo} Data={PropsData} />
         </div>
     )
 }

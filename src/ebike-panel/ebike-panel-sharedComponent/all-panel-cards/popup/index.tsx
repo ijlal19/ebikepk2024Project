@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateThreadById, UpdateThreadCommentById } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateThreadById, UpdateThreadCommentById, UpdateVideoByID } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -17,6 +17,13 @@ const style = {
     // boxShadow: 24,
     // p: 4,
 };
+
+
+let VideoCategoryArr = [
+    { id: 1, name: 'News' },
+    { id: 2, name: 'BikeCare' },
+    { id: 3, name: 'Safety' },
+];
 
 const BasicModal = ({ open, onClose, brand, funct }: any) => {
 
@@ -558,25 +565,40 @@ const EditForumThreadComment = ({ open, onClose, funct, Data }: any) => {
 }
 
 const EditVideo = ({ open, onClose, funct, Data }: any) => {
-    console.log("Datacheck" , Data)
-    const [description, setDescription] = useState('')
+    console.log("Datacheck", Data)
+    const [ViwsCount, setViewsCount] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
+    const [video_url, setVideoUrl] = useState('');
+    const [category, setCategory] = useState();
+    const [title, setTitle] = useState('');
 
     React.useEffect(() => {
         if (Data) {
-            setDescription(Data?.description || "")
+            setViewsCount(Data?.views_count || 0);
+            setThumbnail(Data?.thumbnail || "");
+            setVideoUrl(Data?.video_url || "");
+            setCategory(Data?.category || "News");
+            setTitle(Data?.title || "");
         }
     }, [Data])
 
-    const hndleUpdateThread = async (e: any) => {
+    const handleUpdateVideo = async (e: any) => {
         e.preventDefault()
         const obj = {
-            description: description,
+            views_count: ViwsCount,
+            thumbnail: thumbnail,
+            video_url: video_url,
+            category: category,
+            title: title
         }
 
-        const res = await UpdateThreadCommentById(Data?.id, obj)
-        if (res && res?.success && res?.info == "Updated Successfully") {
-            alert("Comment Successfully Edit")
-            setDescription('')
+        const res = await UpdateVideoByID(Data?.id, obj)
+        if (res && res?.success && res?.info == "Video updated successfully") {
+            alert("Video Successfully Edit")
+            setTitle('')
+            setVideoUrl('')
+            setThumbnail('')
+            setViewsCount('')
             onClose()
             funct()
         }
@@ -586,6 +608,14 @@ const EditVideo = ({ open, onClose, funct, Data }: any) => {
         }
     }
 
+    const handleproductChange = (e: any, from: any) => {
+        const { name, value } = e.target;
+        if (from == "company") {
+            setCategory(value);
+        }
+    };
+
+
     return (
         <Modal
             open={open}
@@ -593,13 +623,39 @@ const EditVideo = ({ open, onClose, funct, Data }: any) => {
             aria-labelledby="modal-title"
             aria-describedby="modal-description">
             <Box sx={style}>
-                <form onSubmit={hndleUpdateThread} className={styles.form}  >
-                    <textarea id="Description" name="Description" value={description} required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
-                    <button type="submit" className={styles.btn} >Save Edit</button>
+                <form onSubmit={handleUpdateVideo} className={styles.main_}>
+
+                    <label htmlFor="title" className={styles.label}>Video Title:</label>
+                    <textarea id="title" name="title" value={title} onChange={(e) => setTitle(e.target.value)} className={styles.textarea1} />
+                    <label htmlFor="thumbnail" className={styles.label}>Thumbnail URL:</label>
+                    <input id="thumbnail" name="thumbnail" value={thumbnail} onChange={(e) => setThumbnail(e.target.value)} className={styles.input} />
+                    {/* <input id="description" name="descrption" value={NewDescription} onChange={(e) => setNewDescription(e.target.value)} className={styles.input} /> */}
+
+
+                    <label htmlFor="video_url" className={styles.label}>Video URL:</label>
+                    <input id="video_url" name="video_url" value={video_url} onChange={(e) => setVideoUrl(e.target.value)} className={styles.input} />
+
+                    <label htmlFor="ViwsCount" className={styles.label}>Views Count</label>
+                    <input id="ViwsCount" name="ViwsCount" value={ViwsCount} onChange={(e) => setViewsCount(e.target.value)} className={styles.input} />
+
+                    <label className={styles.label}>Select Video Category</label>
+                    <div className={styles.drop_downBox}>
+                        <select name="company_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
+                            <option value={Data?.category} disabled selected hidden>{Data?.category}</option>
+                            {
+                                VideoCategoryArr.map((e: any, index: any) => (
+                                    <option key={index} value={e?.name} className={styles.options} style={{ fontSize: '16px' }}>
+                                        {e?.name}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" className={styles.button}>Save Edit</button>
                 </form>
             </Box>
         </Modal>
     )
 }
 
-export { BasicModal, EditVideo , ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread , EditForumThreadComment }
+export { BasicModal, EditVideo, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread, EditForumThreadComment }

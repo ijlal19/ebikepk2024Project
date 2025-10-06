@@ -1432,6 +1432,85 @@ function UpdateThreadCommentById(id: any, payload: any) {
         });
 }
 
+////////////////////////////////////////////// BIKE VIDEOS FUNCTION //////////////////////////////////////////////
+function AddNewVideo(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(`http://localhost:4000/api/videos/create-videos`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function UpdateVideoByID(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    // return fetch(Gconfig.ebikeApi + `videos/update-by-id/${id}`, {
+    return fetch(`http://localhost:4000/api/videos/update-by-id/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function GetAllVideos() {
+    // return fetch(Gconfig.ebikeApi + `videos/get-all-bike-videos`, {
+    return fetch(`http://localhost:4000/api/videos/get-all-bike-videos`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function DeleteBikeVideo(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(`http://localhost:4000/api/videos/delete-by-id/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+
+
 export {
     PostLogin,
     uplaodImageFunc,
@@ -1527,5 +1606,10 @@ export {
     DeleteThreadComment,
     UpdateThreadById,
     UpdateThreadCommentById,
-    GetAllThreadsComments
+    GetAllThreadsComments,
+
+    AddNewVideo,
+    GetAllVideos,
+    UpdateVideoByID,
+    DeleteBikeVideo
 }
