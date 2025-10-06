@@ -426,7 +426,7 @@ function DeleteDealerbyId(id: any) {
         .catch((err) => {
             console.log(err);
         });
-}
+} 
 
 /////////////////////////////////////// MECHANICS FUNCTION ///////////////////////////////////////////////////////
 function getAllMechanics() {
