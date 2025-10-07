@@ -461,7 +461,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 }
                 <Box className={styles.main}>
                     <>
-
                         <Box className={styles.usedBike_headingBpx}>
                             <Typography className={styles.headinh_sale}>Find Used Bikes & Motorcycles in Pakistan</Typography>
                             {/* <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography> */}
