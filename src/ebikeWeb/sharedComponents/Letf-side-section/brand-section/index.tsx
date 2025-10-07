@@ -39,7 +39,7 @@ const Side_brands = () => {
         }, 1000);
     };
 
-    const hrefLink = (brandName: string) =>{
+    const hrefLink = (brandName: string) => {
         return('/new-bikes/' + brandName) 
     }
 

@@ -394,7 +394,7 @@
                width: 100%;
                height: auto;
                display: flex;
-               border: 1px solid #d1d0d0;
+               // border: 1px solid #d1d0d0;
                box-shadow: 0px 0px 10px whitesmoke;
                border-radius: 10px;
                flex-wrap: wrap;
@@ -407,8 +407,8 @@
 
                .tags_btn {
                   background-color: white;
-                  border: 1px solid #dedede;
-                  border-radius: 5px;
+                  border: 1px solid #dad7d7;
+                  border-radius: 0px;
                   text-transform: capitalize;
                   color: #444444;
                   font-family: random($limit: 010);

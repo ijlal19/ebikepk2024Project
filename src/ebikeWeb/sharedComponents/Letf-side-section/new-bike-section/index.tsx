@@ -12,7 +12,9 @@ const NewBike_left = () => {
 
     return (
         <div className={styles.new_bike_main}>
-            <p className={styles.heading}>New Bikes</p>
+
+            <p className={styles.heading}> New Bikes </p>
+            
             <Swiper
                 modules={[Navigation]}
                 navigation

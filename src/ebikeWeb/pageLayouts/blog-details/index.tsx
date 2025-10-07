@@ -321,49 +321,20 @@ const BlogDetails = () => {
             </Grid>
 
             <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
+             
               <Side_brands />
-              {/* <MechaniLeft /> */}
+             
               <Box className={styles.blog_add}>
                 <Link href='/blog'>
                   <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
                 </Link>
               </Box>
+              
               <NewBike_left />
-              <Usedbike_left />
-              <DealerLeft />
-              {/* <Blog_left /> */}
-              {/* <Featrued_Usedbike_left /> */}
-              {/* {
-                allDealerArr.length > 0 ?
-                  <> <Typography className={styles.heading}>Dealers</Typography>
-                    <Box className={styles.Dealers_card}>
-                      { 
-                        allDealerArr?.map((e: any, i: any) => {
-                          return (
-                            <Box className={styles.card_main} key={i}>
-                              <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt='' className={styles.card_image} />
-                              <Box className={styles.card_text}>
-                                <Typography className={styles.card_title}>{e?.shop_name}</Typography>
-                                <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
-                              </Box>
-                            </Box>
-                          )
-                        })
-                      }
-                      <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/dealers" className={styles.Link_tag}>View More Dealers <KeyboardArrowRightIcon /></Link></Button>
-                    </Box> </> : ''
-              } */}
 
-              {/* <Box className={styles.shortBlog_main}>
-                <Typography className={styles.heading}>Featured Used Bikes</Typography>
-                {
-                  featuredData.slice(0, 5).map((e: any, i: any) => {
-                    return (
-                      trendingCardMini(e, i)
-                    )
-                  })
-                }
-              </Box> */}
+              <Usedbike_left />
+              
+              <DealerLeft />
 
 
             </Grid>

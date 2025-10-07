@@ -14,18 +14,21 @@
 
 .brandsmain {
     padding: 10px 10px 5px 10px !important;
-    background: whitesmoke;
+    // background: whitesmoke;
     box-sizing: border-box;
-    border: 1px solid #b2b1b1ce;
+    // border: 1px solid #b2b1b1ce;
     border-radius: 10px;
     width: 100%;
     margin: auto;
-    max-width: 310px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 250px;
+    box-shadow: 0 0.5rem 1rem rgba(92, 92, 92, 0.15) !important;
 
     .container {
         display: flex;
         flex-direction: column;
-        border: 1px solid #eee;
+        // border: 1px solid #eee;
         align-items: center;
         border-radius: 10px;
     }
@@ -35,32 +38,35 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         width: 100%;
-        max-width: 400px;
+        max-width: 250px;
     }
 
     .card {
         background: #fff;
         border: 1px solid #eee;
-        padding: 12px 8px;
+        // padding: 12px 8px;
         text-decoration: none;
         text-align: center;
         cursor: pointer;
 
 
         .card_img {
-            max-width: 80px;
-            max-height: 40px;
+            max-width: 60px;
+            max-height: auto;
             margin: 0 auto 8px;
             object-fit: contain;
             display: block;
         }
 
         .name {
-            font-size: 14px;
-            font-weight: 500;
-            color: #333;
+            font-size: 12px;
+            font-weight: 600;
+            color: #707070;
             font-family: 'LatoBold';
             text-transform: capitalize;
+            letter-spacing: 0.5px;
+            margin-top: 3px;
+            margin-bottom: 5px;
         }
     }
 

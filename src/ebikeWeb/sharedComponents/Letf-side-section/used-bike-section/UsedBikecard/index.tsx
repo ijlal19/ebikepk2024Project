@@ -33,7 +33,9 @@ const Usedbike_left = () => {
 
     return (
         <div className={styles.new_bike_main}>
-            <p className={styles.heading}>Used Bikes</p>
+           
+            <p className={styles.heading}> Used Bikes </p>
+           
             <Swiper
                 modules={[Navigation]}
                 navigation

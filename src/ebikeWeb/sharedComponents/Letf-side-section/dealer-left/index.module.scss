@@ -13,21 +13,25 @@
 }
 
 .main{
-    border: 1px solid #b2b1b1ce;
+    // border: 1px solid #b2b1b1ce;
     border-radius:10px;
-    background: rgba(245, 245, 245, 0.763);
+    // background: rgba(245, 245, 245, 0.763);
     box-sizing: border-box;
     padding: 5px 10px 10px 10px !important;
     width: 100%;
-    max-width: 310px;
-    margin:0px auto;
+    max-width: 250px;
+    margin:10px auto;
+    box-shadow: 0 0.5rem 1rem rgba(58, 57, 57, 0.15) !important;
 
     .heading{
         color: #333333;
         font-family: 'Lato';
-        font-size: 24px;
+        font-size: 18px;
+        text-align: center;
+        font-weight: bold;
         margin: 0px 0px 10px 0px;
-        border-bottom: 1px solid rgba(155, 155, 155, 0.547);
+        letter-spacing: 1px;
+        // border-bottom: 1px solid rgba(155, 155, 155, 0.547);
         box-sizing: border-box;
         padding: 5px 0px ;
     }

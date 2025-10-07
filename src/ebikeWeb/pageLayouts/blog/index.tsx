@@ -234,6 +234,7 @@ const Blog = () => {
                 {/* </Box> */}
               </Box>
             </Box>
+            
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
 
             <hr />
@@ -244,7 +245,7 @@ const Blog = () => {
                 {
                   !isFilterApply ?
                     <Grid container>
-                      <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}>Recent Posts <span className={styles.underline}></span></Typography>
+                      <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}> Bike News <span className={styles.underline}></span></Typography>
 
                       {currentBlogs?.length > 0 && currentBlogs?.map((e: any, i: any) => (
                         <Grid className={styles.blog_grid1} item xs={12} key={i}>
@@ -301,40 +302,13 @@ const Blog = () => {
               </Grid>
               <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3.5}>
                 <Box className={styles.add_area_content}>
-                  {/* <Box className={styles.shortBlog_main}>
-                    <Typography className={styles.shortblogheading}>News <span className={styles.underline}></span></Typography>
-                    {
-                      BlogNews.slice(0, 5).map((e: any, i: any) => {
-                        return (
-                          blogCardMini(e, i)
-                        )
-                      })
-                    }
-                  </Box> */}
+
                   <Side_brands />
-                  {/* <Box className={styles.shortBlog_main}>
-                    <Typography className={styles.shortblogheading}>Safety <span className={styles.underline}></span></Typography>
-                    {
-                      BlogSafety.slice(0, 5).map((e: any, i: any) => {
-                        return (
-                          blogCardMini(e, i)
-                        )
-                      })
-                    }
-                  </Box> */}
+                 
                   <MechaniLeft />
-                  {/* <Box className={styles.shortBlog_main}>
-                    <Typography className={styles.shortblogheading}>Bike Care <span className={styles.underline}></span></Typography>
-                     {blogCardMini()} 
-                    {
-                      BlogBikeCare.slice(0, 5).map((e: any, i: any) => {
-                        return (
-                          blogCardMini(e, i)
-                        )
-                      })
-                    }
-                  </Box> */}
+
                   <Featrued_Usedbike_left />
+
                   <button className={styles.btn} onClick={gotoSellBike}>Sell your bike</button>
                   <Box className={styles.tags_main} >
                     <Typography className={styles.shortblogheading}>Popular Tags <span className={styles.underline}></span></Typography>
@@ -351,8 +325,9 @@ const Blog = () => {
                 </Box>
               </Grid>
             </Grid>
+
             <Blog_Category_Comp heading="More Blogs" data={TipsandAdvice} />
-            {/* <Blog_Category_Comp heading="Opinions" data={OpinionsData} /> */}
+
             <BrowseUsedBike />
           </Box >
           :

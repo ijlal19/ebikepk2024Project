@@ -99,7 +99,7 @@ const UsedBikeCard = ({ props }: any) => {
                     />
                 </div>
                 <div className={styles.content}>
-                    <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 28)}</p>
+                    <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 20)}</p>
                     <p className={styles.price}><span className={styles.name}>PKR {priceWithCommas(props?.price)}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
                     <Link href={GetHref(props)} className={styles.linkbtn}>
