@@ -2,10 +2,12 @@
 import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, optimizeImage, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -18,6 +20,9 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import "../../../app/globals.scss"
+import DealerLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left";
+import MechaniLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left";
+import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
 
 const AdsArray = [
     {
@@ -26,26 +31,26 @@ const AdsArray = [
         url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif",
         target: "_blank"
     },
-    {
-        href: '/forum',
-        alt: '/forum',
-        url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg"
-    },
-    {
-        href: '/dealers',
-        alt: '/dealer',
-        url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
-    },
-    {
-        href: '/mechanics',
-        alt: '/mechanic',
-        url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
-    },
-    {
-        href: '/blog',
-        alt: '/blog',
-        url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
-    }
+    // {
+    //     href: '/forum',
+    //     alt: '/forum',
+    //     url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg"
+    // },
+    // {
+    //     href: '/dealers',
+    //     alt: '/dealer',
+    //     url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664709/52_mgjfps.jpg"
+    // },
+    // {
+    //     href: '/mechanics',
+    //     alt: '/mechanic',
+    //     url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1745664645/51_perxlq.jpg"
+    // },
+    // {
+    //     href: '/blog',
+    //     alt: '/blog',
+    //     url: "https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg"
+    // }
 ]
 
 let SelectedADD = []
@@ -256,7 +261,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     className={styles.long_card_img}
 
                                     sx={{
-                                        backgroundImage: `url(${ cloudinaryLoader(val?.images?.[0], 300, "auto")  || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                        backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                         backgroundSize: isMobileView ? '100% 100%' : 'cover',
                                         boxSizing: 'border-box',
                                         backgroundPosition: 'center',
@@ -283,12 +288,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                                 <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
 
-                                <Typography className={styles.card_location}> {val?.city?.city_name}</Typography>
+                                <Typography className={styles.card_location}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />{val?.sellerName}</Typography>
 
                                 <Typography className={styles.bike_details}>
                                     {val?.year?.year}
                                     <span className={styles.verticl_line}> | </span>
-                                    <span style={{textTransform:"capitalize"}}> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                                    <span style={{ textTransform: "capitalize" }}> {brand && brand?.length > 0 && brand[0].brandName} </span>
                                     <span className={styles.verticl_line}> | </span>
                                     <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
                                 </Typography>
@@ -353,7 +358,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                             <Grid item className={styles.grid_image_box}>
                                 <Box
-                                className={styles.grid_image_upper}
+                                    className={styles.grid_image_upper}
                                     sx={{
                                         backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                         backgroundSize: 'cover',
@@ -362,7 +367,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                         height: '100%',
                                         width: '100%',
                                     }}>
-                                    
+
                                     <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
                                         <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                                     </Box>
@@ -379,15 +384,16 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <Box className={styles.grid_icon_title}>
                                     <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
                                 </Box>
+                                <Typography className={styles.grid_card_location}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />{val?.sellerName}</Typography>
 
-                                <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
+                                {/* <Typography className={styles.grid_card_location}> {val?.sellerName} </Typography> */}
 
                                 <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
 
                                 <Typography className={styles.grid_bike_details}>
                                     {val?.year?.year}
                                     <span className={styles.grid_verticl_line}> | </span>
-                                    <span style={{textTransform:"capitalize"}}> {brand && brand?.length > 0 && brand[0].brandName} </span>
+                                    <span style={{ textTransform: "capitalize" }}> {brand && brand?.length > 0 && brand[0].brandName} </span>
                                     <span className={styles.grid_verticl_line}> | </span>
                                     <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
                                 </Typography>
@@ -479,7 +485,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                         <Grid container className={styles.grid_container}>
 
-                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 2.5 : 2.5} className={styles.filter_grid} >
+                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 2.2 : 2.2} className={styles.filter_grid} >
                                 {
                                     is9Inch ?
                                         showfilter ?
@@ -507,7 +513,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 }
                             </Grid>
 
-                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 8.5 : 7.5} className={styles.cards_grid} >
+                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 8.2 : 7.2} className={styles.cards_grid} >
 
                                 <Box className={styles.all_bike_main}>
                                     <div className={styles.main_box}>
@@ -563,21 +569,30 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 </Box>
                             </Grid>
 
-                            <Grid item xs={is9Inch ? 12 : 2} className={styles.add_area}>
+                            <Grid item xs={is9Inch ? 12 : 2.5} className={styles.add_area}>
                                 <Box className={styles.add_box}>
                                     {
                                         AdsArray?.map((e, i) => {
                                             return (
                                                 <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
                                                     <img
-                                                        src={cloudinaryLoader(e?.url , 400 , 'auto')}
+                                                        src={cloudinaryLoader(e?.url, 400, 'auto')}
                                                         alt={e?.alt}
                                                         className={styles.add_image} />
                                                 </Link>
                                             )
                                         })
                                     }
+                                    <MechaniLeft />
+                                    <Link href='/forum' target="_blank" rel="noopener noreferrer">
+                                        <img
+                                            src={cloudinaryLoader('https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg', 400, 'auto')}
+                                            alt="/forum"
+                                            className={styles.add_image} />
+                                    </Link>
                                 </Box>
+                                <Blog_left />
+                                <DealerLeft />
                             </Grid>
                         </Grid>
                         {allBikesArr?.length > 0 ?

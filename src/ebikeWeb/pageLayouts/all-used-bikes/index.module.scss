@@ -37,6 +37,7 @@
       color: white;
       margin: 0px 0px -2px;
       font-weight: normal;
+
       @media (max-width:767px) {
         font-size: 18px;
       }
@@ -174,21 +175,21 @@
 
 .similarBikeDiv {
   background-color: white;
-  
+
   margin: 0px auto !important;
   padding: 0px !important;
-  
+
   @media (max-width:767px) {
     // padding: 0px;
     padding: 0px !important;
   }
 
   .similarBikeDiv_inner {
-    margin:20px auto;
+    margin: 20px auto;
     max-width: 1060px;
     padding-top: 20px;
     padding-bottom: 20px;
-    
+
   }
 
   .similar_heading {
@@ -267,7 +268,7 @@
 .grid_container {
   display: flex;
   flex-direction: row !important;
-  justify-content: center;
+  justify-content: left;
 
   .filter_grid {
     position: sticky;
@@ -409,11 +410,15 @@
       .grid_bike_list {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 5px;
         justify-content: center;
 
-        .grid_card {
+        @media (max-width:600px) {
+          justify-content: center;
+          gap: 15px;
+        }
 
+        .grid_card {
           width: 28%;
           height: auto;
           padding: 0px !important;
@@ -430,13 +435,15 @@
             width: 100%;
             height: 140px;
             position: relative;
-            .grid_image_upper{
+
+            .grid_image_upper {
               display: flex;
               flex-direction: column;
               justify-content: space-between;
               align-items: center;
             }
-            .soldout{
+
+            .soldout {
               color: white;
               width: 100%;
               padding: 1px 0px;
@@ -518,6 +525,10 @@
               padding: 0px 0px 0px;
               font-size: 13px;
               color: #434343;
+              box-sizing: border-box;
+              display: flex;
+              align-items: center;
+              justify-content: left
             }
 
             .grid_card_price {
@@ -621,13 +632,14 @@
               padding: 0px 0px;
               box-sizing: border-box;
             }
-            .long_card_img{
+
+            .long_card_img {
               display: flex;
               justify-content: center;
               align-items: flex-end;
             }
 
-            .soldout{
+            .soldout {
               color: white;
               width: 100%;
               padding: 1px 0px;
@@ -722,6 +734,12 @@
             .card_location {
               padding: 7px 0px 0px;
               font-size: 13px;
+              // border: 1px solid #000;
+              // border: 1px solid #000;
+              box-sizing: border-box;
+              display: flex;
+              align-items: center;
+              justify-content: left;
               color: #434343;
             }
 
@@ -792,12 +810,12 @@
                 align-items: center !important;
                 width: 30px;
                 // background-color: red !important;
-                border-radius:50%;
+                border-radius: 50%;
                 height: 25px;
                 overflow: hidden;
 
                 .icon {
-                  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.635));
+                  // filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.635));
                   font-size: 18px;
                 }
               }
@@ -871,10 +889,16 @@
       row-gap: 30px;
       background-color: whitesmoke;
       display: flex;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
 
       .add_image {
         width: 100%;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgb(194, 194, 194);
+        max-width: 230px;
+        margin: auto;
       }
 
       @media (max-width:1200px) {
@@ -968,10 +992,10 @@
     height: 100%;
     margin: auto !important;
     float: center;
-
+      border-radius: 10px;
+        box-shadow: 0px 0px 10px rgb(194, 194, 194);
     @media (max-width:600px) {
       width: 300px;
     }
   }
 }
-

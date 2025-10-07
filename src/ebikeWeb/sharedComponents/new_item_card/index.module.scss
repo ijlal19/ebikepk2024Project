@@ -17,8 +17,9 @@
     max-width: 329px;
     padding: 0px 6px !important;
     box-sizing: border-box;
-    margin: auto;
+    margin: auto !important;
     text-decoration: none;
+    // background-color: white;
 
     &:focus,
     &:active {
@@ -33,6 +34,7 @@
         flex-direction: column;
         // border: 1px solid #b7b7b7d4;
         padding-bottom: 5px;
+        background-color: white;
         margin-bottom: 10px;
         box-shadow: 0 0.3rem 0.3rem rgba(92, 92, 92, 0.15) !important;
 
@@ -140,6 +142,7 @@
             padding: 0px 0px 10px 0px;
             display: flex;
             flex-direction: column;
+            background-color: white;
             // background-color: #f9f9f9;
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
