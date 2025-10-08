@@ -228,11 +228,10 @@ const Blog = () => {
                 )}
               </Typography>
 
-              {/* <Box className={styles.FrontAdd_box}> */}
-              <Box className={styles.input_main}>
+              {/* <Box className={styles.input_main}>
                 <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
-                {/* </Box> */}
-              </Box>
+              </Box> */}
+
             </Box>
             
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
@@ -242,9 +241,17 @@ const Blog = () => {
             <Grid container className={styles.blog_grid}>
 
               <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
+                
+                <Box className={styles.input_main_box}>
+                  <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
+                </Box>
+
                 {
                   !isFilterApply ?
                     <Grid container>
+
+
+
                       <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}> Bike News <span className={styles.underline}></span></Typography>
 
                       {currentBlogs?.length > 0 && currentBlogs?.map((e: any, i: any) => (
