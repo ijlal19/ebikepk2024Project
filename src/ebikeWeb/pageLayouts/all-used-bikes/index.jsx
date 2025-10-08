@@ -507,7 +507,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     <Swiper
                                         modules={[Navigation]}
                                         navigation
-                                        spaceBetween={0}
+                                         spaceBetween={0}
                                         loop={true}
                                         slidesPerView={3}        // default (desktop)
                                         slidesPerGroup={1}       // ek time me 1 slide move kare
