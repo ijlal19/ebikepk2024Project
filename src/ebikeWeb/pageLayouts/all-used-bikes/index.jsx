@@ -19,10 +19,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 import "../../../app/globals.scss"
 import DealerLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left";
 import MechaniLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left";
 import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
+import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
 
 const AdsArray = [
     {
@@ -71,7 +76,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null);
-
     const is12InchScreen = useMediaQuery('(max-width:1200px)');
     const isMobileView = useMediaQuery('(max-width:600px)');
     const is10Inch = useMediaQuery('(max-width:991px)');
@@ -90,12 +94,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             setIsLogin("not_login")
         }
 
-        if (_allFeaturedBike?.data) {
-            setFeaturedData(_allFeaturedBike?.data)
-        }
-        else {
-            fetchFeaturedBike()
-        }
+        // if (_allFeaturedBike?.data.length > 0) {
+        //     setFeaturedData(_allFeaturedBike?.data)
+        // }
+        // else {
+        //     fetchFeaturedBike()
+        // }
+        fetchFeaturedBike()
 
         const pageNoRaw = localStorage.getItem('PageNo');
         if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
@@ -188,16 +193,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         let obj = {
             isFeatured: true,
-            adslimit: 20,
-            // page: 1,
-            // random: true
+            adslimit: 20
         }
 
-        let res = false
-        if (!res) {
-            res = await getCustomBikeAd(obj);
-        }
-
+        let res = await getCustomBikeAd(obj);
         if (res && res?.data?.length > 0) {
             setFeaturedData(res.data)
         }
@@ -470,9 +469,69 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                         <br className="d-none d-md-block" />
                         <br className="d-none d-md-block" />
 
-                        <UsedBikesSection from='featuredBike' featuredData={featuredData} />
-
+                        {/* <UsedBikesSection from='featuredBike' featuredData={featuredData} /> */}
+                        <Typography className={styles.featuredHeading} >Featured Bikes</Typography>
+                        <div className={styles.featured_bike_swiper_main}>
+                            <Swiper
+                                modules={[Navigation]}
+                                navigation
+                                spaceBetween={0}
+                                loop={true}
+                                slidesPerView={3}        // default (desktop)
+                                slidesPerGroup={1}       // ek time me 1 slide move kare
+                                breakpoints={{
+                                    0: {
+                                        slidesPerView: 2,    // mobile (0px se upar)
+                                        slidesPerGroup: 1,
+                                    },
+                                    768: {
+                                        slidesPerView: 3,    // tablet/desktop (768px se upar)
+                                        slidesPerGroup: 1,
+                                    },
+                                }}
+                            >
+                                {featuredData?.map((item, i) => (
+                                    <SwiperSlide key={i}>
+                                        <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds}/>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
                         {
+                            AllFavouriteBike.length > 0 ?
+                                <Typography className={styles.featuredHeading} >Favourite Bikes</Typography> : ""
+                        }
+                        {
+                            AllFavouriteBike.length > 0 ?
+                                <div className={styles.featured_bike_swiper_main}>
+                                    <Swiper
+                                        modules={[Navigation]}
+                                        navigation
+                                        spaceBetween={0}
+                                        loop={true}
+                                        slidesPerView={3}        // default (desktop)
+                                        slidesPerGroup={1}       // ek time me 1 slide move kare
+                                        breakpoints={{
+                                            0: {
+                                                slidesPerView: 2,    // mobile (0px se upar)
+                                                slidesPerGroup: 1,
+                                            },
+                                            768: {
+                                                slidesPerView: 3,    // tablet/desktop (768px se upar)
+                                                slidesPerGroup: 1,
+                                            },
+                                        }}
+                                    >
+                                        {AllFavouriteBike?.map((item, i) => (
+                                            <SwiperSlide key={i}>
+                                                <FavouriteAds props={item} />
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </div> : ""
+                        }
+
+                        {/* {
                             AllFavouriteBike.length > 0 ?
                                 <div className={styles.similarBikeDiv}>
                                     <div className={styles.similarBikeDiv_inner}>
@@ -480,7 +539,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                         <SwiperCarousels sliderName='similarBikeSwiper' sliderData={AllFavouriteBike} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
                                     </div>
                                 </div> : ''
-                        }
+                        } */}
 
                         <Grid container className={styles.grid_container}>
 

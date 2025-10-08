@@ -999,3 +999,30 @@
     }
   }
 }
+
+.featured_bike_swiper_main{
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+ .featuredHeading {
+        text-align: center;
+        font-size: 25px;
+        width: 100%;
+        max-width: 1000px;
+        margin: 10px auto 15px auto;
+        letter-spacing: 1px;
+        font-family: 'Lato';
+        color: #1976d2;
+        border-bottom: 2px solid rgba(142, 142, 142, 0.444);
+
+        @media (max-width:767px) {
+            display: block;
+            padding: 0px !important;
+            margin: 0px auto 10px auto !important;
+            border: none !important;
+            box-sizing: border-box;
+            font-size: 22px;
+        }
+    }

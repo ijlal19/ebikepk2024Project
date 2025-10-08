@@ -9,7 +9,7 @@ import BlogSection from './blogSection/index'
 import MobileBanner from './mobileBanner/index'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import {isLoginUser} from "@/genericFunctions/geneFunc";
+import { isLoginUser } from "@/genericFunctions/geneFunc";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 
 import blogData from './blogSection/Data'
@@ -55,35 +55,35 @@ function Index() {
         setHomeData(data)
         setIsLoading(false)
         console.log('res qq', data)
-    })
-    .catch((err) => {
-      setIsLoading(false)
-      let obj = {
-        "homeFeaturedBike": featuredData,
-        "homeTrendingBike": trendingData,
-        "homeUsedBike": usedBikeData,
-        "homeYoutubeVideos": youTubeData,
-        "homeBlogs": blogData
-      }
-      setHomeData(obj)
-    }); 
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        let obj = {
+          "homeFeaturedBike": featuredData,
+          "homeTrendingBike": trendingData,
+          "homeUsedBike": usedBikeData,
+          "homeYoutubeVideos": youTubeData,
+          "homeBlogs": blogData
+        }
+        setHomeData(obj)
+      });
   }
 
   return (
     isLoading ?
-    <div className={styles.load_div}>
-      <Loader isLoading={isLoading} />
-    </div> :
-    <>
-     <BannerSection />
-     <MobileBanner />
-     <NewBikesSection featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />
-     <FeatureSection />
-     <UsedBikesSection usedBikeData={homeData.homeUsedBike} />
-     <GoGreen />
-     <BrandSection/>
-     <Explore/>
-     <BlogSection blogData={homeData.homeBlogs} />
+      <div className={styles.load_div}>
+        <Loader isLoading={isLoading} />
+      </div> :
+      <>
+        <BannerSection />
+        <MobileBanner />
+        <NewBikesSection featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />
+        <FeatureSection />
+        <UsedBikesSection usedBikeData={homeData.homeUsedBike} />
+        <GoGreen />
+        <BrandSection />
+        <Explore />
+        <BlogSection blogData={homeData.homeBlogs} />
     </>
   )
 }

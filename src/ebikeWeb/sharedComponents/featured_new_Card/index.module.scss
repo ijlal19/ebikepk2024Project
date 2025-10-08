@@ -1,0 +1,457 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+    max-width: 329px;
+    padding: 0px 6px !important;
+    box-sizing: border-box;
+    margin: auto !important;
+    text-decoration: none;
+    // background-color: white;
+
+    &:focus,
+    &:active {
+        background: none !important;
+        outline: none !important;
+    }
+
+    .container {
+        text-decoration: none;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        // border: 1px solid #b7b7b7d4;
+        padding-bottom: 5px;
+        background-color: white;
+        margin-bottom: 10px;
+        box-shadow: 0 0.3rem 0.3rem rgba(92, 92, 92, 0.15) !important;
+
+        &:focus,
+        &:active {
+            background: none !important;
+            outline: none !important;
+        }
+
+        @media (max-width:768px) {
+            border-radius: 5px;
+        }
+
+        .image_boxnewbike {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            overflow: hidden;
+            height: 180px;
+            // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+            // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-size: 100% 100%;
+            border: none;
+
+            @media (max-width:768px) {
+                height: 100px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+
+            }
+
+            .image {
+                border: none;
+                width: 100%;
+                height: 100%;
+                // object-fit: contain;
+            }
+        }
+
+        .image_boxusedbike {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            overflow: hidden;
+            height: 180px;
+            // // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+            // // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+
+            @media (max-width:768px) {
+                height: 100px !important;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+
+            }
+
+            .image {
+                border: none;
+                width: 100%;
+                height: 200px;
+
+                // display: block;
+                // object-fit: cover;
+                // object-position: center;
+                /* important — crops to fill container */
+                // object-fit: contain;
+                @media (max-width:768px) {
+                    // .image {
+                    width: 100%;
+                    height: 100%;
+                    // object-fit: cover;
+                    // }
+
+                }
+            }
+
+            .btns {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                box-sizing: border-box;
+
+                .tag1:nth-child(1) {
+                    background-color: #192233;
+                }
+
+                .tag1:nth-child(2) {
+                    // background-color: #192233;
+                    background-color: #e22627;
+                }
+
+                .tag1 {
+                    padding: 4px 0px;
+                    box-sizing: border-box;
+                    font-size: 12px;
+                    width: 100%;
+                    letter-spacing: 1px;
+                    color: white;
+                    text-align: center;
+                    font-family: 'LatoBold';
+                    margin: 0px !important;
+                    @media (max-width:768px) {
+                        font-size: 10px;
+                    }
+                }
+            }
+
+            .heart_box {
+                text-align: center;
+                padding: 0px 0px 0px 0px !important;
+                box-sizing: border-box;
+                color: grey;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.692);
+                margin-left: auto;
+                border-radius: 2px;
+                width: 30px;
+                margin: 0px 3px 3px auto !important;
+
+                .icon {
+                    cursor: pointer;
+
+                    @media (max-width:768px) {
+                        font-size: 18px;
+                    }
+                }
+                @media (max-width:768px) {
+                    width: 24px;
+                }
+            }
+        }
+
+        .image_box {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            overflow: hidden;
+            height: 180px;
+            // background: url("https://imgd.aeplcdn.com/370x208/n/cw/ec/210031/sxr-125-left-front-three-quarter.jpeg?isig=0&q=80");
+            // background: url("https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,w_auto/v1745394646/blogs/anhycxznyr9wunlfs8fr.jpg");
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-size: 100% 100%;
+
+            .image {
+                width: 100%;
+                height: 100%;
+                // object-fit: contain;
+            }
+
+            @media (max-width:768px) {
+                height: 110px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+
+            }
+        }
+
+        .content {
+            padding: 0px 0px 10px 0px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            // background-color: #f9f9f9;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-sizing: border-box;
+
+            .title {
+                font-size: 16px;
+                color: #333333;
+                margin: 16px 0px 0px;
+                padding: 0px 12px;
+                line-height: 23px;
+                box-sizing: border-box;
+                font-family: 'LatoBold';
+
+                @media (max-width:768px) {
+                    font-size: 14px;
+                    line-height: 16px;
+                    margin: 5px 0px 0px;
+                }
+            }
+
+            .author {
+                font-size: 13px;
+                margin: 8px 0px 0px;
+                padding: 0px 12px;
+                color: #6f6f6f;
+                box-sizing: border-box;
+                font-family: 'Lato';
+
+                .name {
+                    margin-left: 2px;
+                    font-family: 'LatoBold';
+                    color: #333333;
+                }
+
+                @media (max-width:768px) {
+                    font-size: 11px;
+                }
+            }
+
+            .authorblog {
+                font-size: 13px;
+                margin: 8px 0px 0px;
+                padding: 0px 12px;
+                color: #6f6f6f;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+                font-family: 'Lato';
+
+                .name {
+                    margin-left: 2px;
+                    font-family: 'LatoBold';
+                    color: #333333;
+                }
+
+                @media (max-width:768px) {
+                    flex-direction: column;
+                    row-gap: 2px;
+                    font-size: 11px;
+                }
+            }
+
+            .price {
+                font-size: 12px;
+                margin: 8px 0px 0px;
+                padding: 0px 12px;
+                color: #333333;
+                box-sizing: border-box;
+                font-family: 'Lato';
+
+                .name {
+                    margin-left: 2px;
+                    font-family: 'LatoBold';
+                    color: #333333;
+                    font-weight: bold;
+                }
+
+                @media (max-width:768px) {
+                    font-size: 11px;
+                }
+            }
+
+            .description {
+                font-size: 13px;
+                color: #484848;
+                margin: 12px 0px 0px;
+                padding: 0px 12px;
+                box-sizing: border-box;
+                line-height: 20px;
+                font-family: 'Lato';
+                height: auto;
+
+                @media (max-width:768px) {
+                    font-size: 12px;
+                    line-height: 16px;
+                    margin: 8px 0px 0px;
+                    height: 38px;
+                    overflow: hidden;
+                }
+            }
+
+            .link {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: right;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 7px 0px 0px;
+                padding: 5px 0px;
+                font-size: 12px;
+
+                @media (max-width:768px) {
+                    text-align: center;
+                }
+            }
+
+            .linkblog {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: right;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // margin: 5px 0px 0px 0px;
+                padding: 5px 0px 5px 0px;
+                font-size: 11px;
+
+                @media (max-width:768px) {
+                    // margin: 3px 0px 0px 0px;
+                    padding: 0px !important;
+                    text-align: center;
+                }
+            }
+
+            .link1 {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: center;
+                margin: 7px 0px 0px;
+                padding: 5px 0px;
+                font-size: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @media (max-width:768px) {
+                    text-align: center;
+                }
+            }
+
+            .linkbtn {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: center;
+                margin: 7px 0px 0px;
+                font-size: 12px;
+                padding: 5px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @media (max-width:768px) {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
+
+.main_dealer {
+
+    width: 100%;
+    background-color: rgb(255, 253, 253);
+    padding: 10px 5px !important;
+    box-sizing: border-box;
+    border-radius: 8px;
+    // border: 1px solid #d6d6d6d4;
+
+
+
+    .container {
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+
+        .image {
+            width: 100px;
+            margin: auto;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            .name {
+                width: 100%;
+                text-align: center;
+                font-family: 'LatoBold';
+                font-size: 14px;
+                margin: 10px 0px 0px 0px;
+                color: #333333;
+                padding: 0px 12px;
+                box-sizing: border-box;
+            }
+
+            .location {
+                width: 100%;
+                text-align: center;
+                font-family: 'Lato';
+                font-size: 12px;
+                letter-spacing: 1px;
+                margin: 10px 0px 0px 0px;
+                color: #333333;
+                padding: 0px 12px;
+                box-sizing: border-box;
+            }
+
+            .linkbtn {
+                color: #0979b6;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
+                text-decoration: none;
+                text-align: center;
+                margin: 7px 0px 0px;
+                font-size: 12px;
+                padding: 5px 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                @media (max-width:768px) {
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
