@@ -433,9 +433,9 @@ function getCustomBikeAd(obj: any) {
     }).then(response => response.json()).then(data => {
         return data
     })
-    .catch((err) => {
-        return err
-    })
+        .catch((err) => {
+            return err
+        })
 }
 
 function getFavouriteBikeById(Data: any) {
@@ -448,7 +448,7 @@ function getFavouriteBikeById(Data: any) {
     })
         .catch((err) => {
             return err
-    })
+        })
 }
 
 function getAllPages() {
@@ -458,28 +458,59 @@ function getAllPages() {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        return data;
-    })
-    .catch(err => {
-        console.log('Error fetching mechanics:', err);
-    });
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch(err => {
+            console.log('Error fetching mechanics:', err);
+        });
 }
-function getPageById(id:any) {
+function getPageById(id: any) {
     return fetch(Gconfig.ebikeApi + `page/get-page-by-id/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        return data;
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch(err => {
+            console.log('Error fetching mechanics:', err);
+        });
+}
+
+function getViewsByID(id: any) {
+    // return fetch(Gconfig.ebikeApi + `page/get-page-by-id/${id}`, {
+    return fetch(`http://localhost:4000/api/views/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
-    .catch(err => {
-        console.log('Error fetching mechanics:', err);
-    });
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch(err => {
+            console.log('Error fetching mechanics:', err);
+        });
+}
+
+function UpdateView(Data: any) {
+    // return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-favourite-adds`, {
+    return fetch('http://localhost:4000/api/views/update', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Data)
+    }).then(response => response.json()).then(data => {
+        return data
+    })
+        .catch((err) => {
+            return err
+        })
 }
 
 
@@ -522,5 +553,7 @@ export {
     getCustomBikeAd,
     getFavouriteBikeById,
     getAllPages,
-    getPageById
+    getPageById,
+    getViewsByID,
+    UpdateView
 }

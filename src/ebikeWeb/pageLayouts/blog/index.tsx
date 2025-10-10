@@ -5,9 +5,10 @@ import { Box, Grid, useMediaQuery, Typography, Pagination, Button, Link } from '
 import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { getAllBlog, getViewsByID, UpdateView } from '@/ebikeWeb/functions/globalFuntions';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
-import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -64,6 +65,7 @@ const Blog = () => {
   const [messages, setMessages] = useState<any>([]);
   const [TipsandAdvice, setTipsandAdvide] = useState<any>([])
   const [OpinionsData, setOpinionsData] = useState<any>([])
+  // const [AllViews, setAllView] = useState<any>([])
 
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
@@ -104,6 +106,10 @@ const Blog = () => {
   async function getAllBlogList() {
     setIsLoading(true)
     let res = await getAllBlog()
+    // let res1 = await getViewsByID(1)
+    // if (res1 && res1?.success && res1?.data.length > 0) {
+    //   setAllView(res1?.data)
+    // }
     setBlogData(res)
     const resAdvice = BlogShuffle(res)
     setTipsandAdvide(resAdvice);
@@ -208,7 +214,7 @@ const Blog = () => {
     title = title.replace(/\s+/g, '-');
     var lowerTitle = title.toLowerCase();
     lowerTitle = '' + lowerTitle.replaceAll("?", "")
-    return (`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+    return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
   }
 
   return (
@@ -233,7 +239,7 @@ const Blog = () => {
               </Box> */}
 
             </Box>
-            
+
             <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
 
             <hr />
@@ -241,7 +247,7 @@ const Blog = () => {
             <Grid container className={styles.blog_grid}>
 
               <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
-                
+
                 <Box className={styles.input_main_box}>
                   <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
                 </Box>
@@ -264,7 +270,16 @@ const Blog = () => {
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
-                                  <span style={{ marginRight: 8,display:'flex' , alignItems:'center' }}><AccountCircleOutlinedIcon sx={{fontSize:'15px',marginRight:'2px'}} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8,display:'flex' , alignItems:'center' }}><DateRangeIcon  sx={{fontSize:'15px',marginRight:'2px'}} />{timeAgo(e.createdAt)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
+                                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8, display: 'flex', alignItems: 'center' }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{timeAgo(e.createdAt)}</span> |
+                                  <span style={{ color: '#1976d2', marginLeft: 8 }}>
+                                  {e.id}
+                                  </span>
+                                  {/* {
+                                    (() => {
+                                      const matched = AllViews.find((viewd: any) => viewd.AdID === e.id);
+                                      return matched ? <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>{matched.views_count} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} /></span> : <span style={{ display: 'flex', alignItems: 'center', marginLeft: 8 }}>0 <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} /></span>;
+                                    })()
+                                  } */}
                                 </Typography>
                                 <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
                               </Box>
@@ -284,7 +299,7 @@ const Blog = () => {
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
-                                  <span style={{ marginRight: 8,display:'flex' , alignItems:'center'  }}><AccountCircleOutlinedIcon  sx={{fontSize:'15px',marginRight:'2px'}} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}><DateRangeIcon  sx={{fontSize:'15px',marginRight:'2px'}}/>{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
+                                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
                                 </Typography>
                                 <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
                               </Box>
@@ -311,7 +326,7 @@ const Blog = () => {
                 <Box className={styles.add_area_content}>
 
                   <Side_brands />
-                 
+
                   <MechaniLeft />
 
                   <Featrued_Usedbike_left />

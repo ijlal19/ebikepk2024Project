@@ -1,6 +1,6 @@
 'use client';
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
-import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
+import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData, UpdateView } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button, Link } from '@mui/material';
 import { add3Dots, cloudinaryLoader, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -43,6 +43,7 @@ const BlogDetails = () => {
   const id = params?.id
 
   useEffect(() => {
+    // addView(id)
     fetchFeaturedBike()
     fetchDealerinfo()
     getAllBlogList()
@@ -56,6 +57,14 @@ const BlogDetails = () => {
     }
     setHref(window.location.href)
   }, [])
+
+  // const addView = async (id: any) => {
+  //   const obj = {
+  //     from: 1,
+  //     AdID: id
+  //   }
+  //   const res = await UpdateView(obj)
+  // }
 
   async function getAllBlogList() {
     setIsLoading(true);
@@ -321,19 +330,19 @@ const BlogDetails = () => {
             </Grid>
 
             <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
-             
+
               <Side_brands />
-             
+
               <Box className={styles.blog_add}>
                 <Link href='/blog'>
                   <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
                 </Link>
               </Box>
-              
+
               <NewBike_left />
 
               <Usedbike_left />
-              
+
               <DealerLeft />
 
 
