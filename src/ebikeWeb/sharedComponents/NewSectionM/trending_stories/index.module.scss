@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400; 
+    font-style: normal;
+}
+
+.main{
+    width: 100%;
+    max-width: 850px;
+    margin: 10px 10px ;
+    padding: 5px !important;
+    box-sizing: border-box;
+    border: 1px solid #d8d8d8c3;
+    border-radius: 10px;
+
+    .container{
+        display: grid;
+        grid-template-columns: repeat(3 , 1fr);
+        justify-content: space-between;
+        // column-gap: 10px !important;
+        box-sizing: border-box;
+
+        .card_main{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 10px !important;
+            box-sizing: border-box;
+
+            .image{
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .title{
+                font-size: 14px;
+                color: #333333;
+                letter-spacing: 1px;
+                margin: 0px !important;
+                padding: 10px 0px !important;
+                font-family: 'LatoBold';
+                line-height: 16px;
+                cursor: pointer;
+            }
+        }
+    }
+}

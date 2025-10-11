@@ -18,6 +18,8 @@ import usedBikeData from './usedbikeSection/Data'
 import trendingData from './newbikesSection/TrendingData'
 import featuredData from './newbikesSection/Data'
 import GoGreen from './go-green'
+import Treanding_Stories from '@/ebikeWeb/sharedComponents/NewSectionM/trending_stories'
+import { List_Card, MotorCycle_News_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card'
 
 function Index() {
 
@@ -84,8 +86,11 @@ function Index() {
         <BrandSection />
         <Explore />
         <BlogSection blogData={homeData.homeBlogs} />
-    </>
-  )
+        </>
+      )
 }
 
 export default Index
+      // <Treanding_Stories />
+      // <MotorCycle_News_Card />
+      // <List_Card />
