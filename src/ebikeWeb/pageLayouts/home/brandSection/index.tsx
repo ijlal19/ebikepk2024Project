@@ -45,7 +45,7 @@ function BrandSection() {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
+  }; 
   React.useEffect(() => {
     fecthAllBRands()
   },[])
