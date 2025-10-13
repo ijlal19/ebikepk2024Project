@@ -48,7 +48,7 @@ function BrandSection() {
   };
   React.useEffect(() => {
     fecthAllBRands()
-  })
+  },[])
   const fecthAllBRands = async () => {
     setIsLoading(true)
     let res = await getbrandData()
