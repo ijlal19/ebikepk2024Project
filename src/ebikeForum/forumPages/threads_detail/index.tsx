@@ -7,7 +7,7 @@ import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
-import {isLoginUser} from '@/genericFunctions/geneFunc';
+import {isLoginUser, timeAgo} from '@/genericFunctions/geneFunc';
 import { useParams } from "next/navigation";
 import styles from './index.module.scss';
 import data from "../home/data";
@@ -94,7 +94,7 @@ const Forum_details = () => {
                                             <Typography className={styles.post_join}>1 post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {FilterThread?.createdAt.slice(0, 10)}</Typography>
                                         </Box>
                                     </Box>
-                                    <Typography className={styles.days_ago}>{FilterThread?.createdAt.slice(0, 10)}</Typography>
+                                    <Typography className={styles.days_ago}>{timeAgo(FilterThread?.createdAt)}</Typography>
                                 </Box>
                                 <Box className={styles.desc_box}>
                                     <Typography className={styles.shortdesc}>{FilterThread?.description}</Typography>
@@ -116,7 +116,7 @@ const Forum_details = () => {
                                                             <Typography className={styles.post_join}>Joined {e?.createdAt.slice(0, 10)}</Typography>
                                                         </Box>
                                                     </Box>
-                                                    <Typography className={styles.days_ago}>{e?.createdAt.slice(0, 10)}</Typography>
+                                                    <Typography className={styles.days_ago}>{timeAgo(e?.createdAt)}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography className={styles.reply}>{e?.description}</Typography>

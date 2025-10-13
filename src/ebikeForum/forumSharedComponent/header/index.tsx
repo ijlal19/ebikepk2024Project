@@ -47,23 +47,11 @@ const Header = () => {
                         </Box>
                         <Button
                             className={styles.thread_box}
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: "white-smoke",
-                                color: "white",
-                                padding: "8px 12px",
-                                cursor: "pointer",
-                                whiteSpace: "nowrap",
-                                fontSize: "16px",
-                                fontWeight: 'bolder'
-                            }}
                             onClick={handlepopup}
                             disableRipple
                         >
                             <EditNoteIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
-                            <Typography sx={{ fontSize: "14px", color: "inherit", fontWeight: 'bolder' }} onClick={handlepopup}>Create Thread</Typography>
+                            <Typography className={styles.ct_thread} onClick={handlepopup}>Create Thread</Typography>
                         </Button>
                     </Box>
                 </Box>

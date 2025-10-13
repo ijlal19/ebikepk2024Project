@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 .main {
     width: 100%;
     height: auto;
@@ -18,31 +32,38 @@
         display: flex;
         justify-content: space-between;
         box-sizing: border-box;
+
         @media (max-width:768px) {
             padding: 10px 0px 10px 0px !important;
             margin: 5px auto 0px auto;
         }
-        
+
         .details_box {
             box-sizing: border-box;
             width: 100%;
             background: transparent;
             padding: 12px 12px 3px;
+
             @media (max-width:768px) {
                 padding: 0px 0px 3px !important;
             }
-            
+
             .user_detail_box {
                 box-sizing: border-box;
                 width: 100%;
+                // border: 1px solid #000;
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(70, 70, 70, 0.262);
                 background: white;
                 padding: 12px 12px 12px !important;
                 margin: 0px 0px 10px 0px !important;
 
                 .title {
                     color: #191500;
-                    font-weight: bold;
-                    font-size: 18px;
+                    // font-weight: bold;
+                    font-family: 'LatoBold';
+                    font-size: 20px;
+                    letter-spacing: 1px;
                     margin: 0px 0px 9px 0px;
                 }
 
@@ -90,10 +111,10 @@
                         cursor: pointer;
                         align-items: center;
                         color: white;
-                        background-color: grey;
-                        font-family: sans-serif;
+                        background-color: rgba(128, 128, 128, 0.652);
+                        font-family: 'LatoBold';
                         text-transform: capitalize;
-                        font-size: 24px;
+                        font-size: 20px;
                         padding: 0px !important;
                     }
 
@@ -107,6 +128,8 @@
                         .username {
                             color: #191500;
                             font-weight: bold;
+                            font-family: 'Lato';
+                            letter-spacing: 1px;
                             font-size: 14px;
                             padding: 0px 0px 0px 0px !important;
                         }
@@ -117,7 +140,8 @@
                             color: #3c3c3c;
                         }
                     }
-                    .days_ago{
+
+                    .days_ago {
                         width: 100%;
                         font-size: 12px;
                         color: #3c3c3c;
@@ -130,28 +154,34 @@
                     margin: 9px 0px 0px;
 
                     .shortdesc {
-                        font-size: 14px;
+                        font-family: 'Lato';
+                        font-size: 18px;
                         color: #191500;
                         display: flex;
                         flex-wrap: wrap;
                     }
                 }
             }
+
             .image_box {
                 width: 100%;
                 box-sizing: border-box;
                 background: white;
                 height: auto;
                 margin: 9px 0px 0px;
-                padding:12px 5px 12px 12px !important ;
-                .bike_image{
+                padding: 12px 5px 12px 12px !important;
+
+                .bike_image {
                     width: 100%;
                     height: auto;
                 }
             }
+
             .reply_box {
                 box-sizing: border-box;
                 width: 100%;
+                border-radius: 5px;
+                box-shadow: 0px 0px 10px rgba(70, 70, 70, 0.262);
                 height: auto;
                 background: white;
                 margin: 0px 0px 9px;
@@ -178,10 +208,10 @@
                         cursor: pointer;
                         align-items: center;
                         color: white;
-                        background-color: grey;
-                        font-family: sans-serif;
+                        background-color: rgba(128, 128, 128, 0.608);
+                        font-family: 'LatoBold';
                         text-transform: capitalize;
-                        font-size: 24px;
+                        font-size: 20px;
                         padding: 0px !important;
                     }
 
@@ -194,7 +224,9 @@
                         .username {
                             color: #191500;
                             font-weight: bold;
+                            font-family: 'LatoBold';
                             font-size: 14px;
+                            letter-spacing: 1px;
                             padding: 0px 0px 0px 0px !important;
                         }
 
@@ -204,27 +236,34 @@
                             color: #3c3c3c;
                         }
                     }
-                    .days_ago{
+
+                    .days_ago {
                         width: 100%;
                         font-size: 12px;
                         color: #3c3c3c;
                         padding: 5px 0px 0px 0px !important;
                     }
                 }
-                .reply{
+
+                .reply {
                     padding: 0px !important;
-                    font-size: 14px;
+                    font-size: 16px;
                     margin: 0px 0px 9px;
                     color: #191500;
+                    font-family: "Lato";
                 }
 
             }
-            .comment_box{
+
+            .comment_box {
                 box-sizing: border-box;
+                box-shadow: 0px 0px 10px rgba(70, 70, 70, 0.262);
                 width: 100%;
+                border-radius: 5px;
                 background-color: white;
                 padding: 12px 12px 12px 12px !important;
-                .textarea{
+
+                .textarea {
                     width: 100%;
                     box-sizing: border-box;
                     min-width: 100%;
@@ -237,7 +276,8 @@
                     // resize: horizontal;
                 }
             }
-            .postcmnt_btn{
+
+            .postcmnt_btn {
                 padding: 8px 16px !important;
                 color: white;
                 background-color: #085998;
@@ -245,6 +285,7 @@
                 font-weight: bold;
                 margin: 9px 0px 0px;
                 float: right;
+
                 @media (max-width:768px) {
                     margin-right: 10px;
                 }

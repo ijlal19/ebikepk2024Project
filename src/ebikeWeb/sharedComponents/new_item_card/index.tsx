@@ -12,16 +12,16 @@ const NewCard = ({ props }: any) => {
     return (
         <div className={styles.main}>
             <div className={styles.container}>
-                <div className={styles.image_box}
+                <Link href={getBlogUrl(props)} className={styles.image_box}
                 >
                     <img src={cloudinaryLoader(props?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt={props?.blogTitle} className={styles.image} />
-                </div>
+                </Link>
                 <div className={styles.content}>
-                    <p className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 25 : 60)}</p>
+                    <Link href={getBlogUrl(props)} className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 25 : 60)}</Link>
                     <p className={styles.author}>By <span className={styles.name}>{props?.authorname}</span></p>
                     <p className={styles.description}>{add3Dots(props?.meta_description, isMobile ? 40 : 80)}</p>
-                    <Link href={getBlogUrl(props)} className={styles.link}>
-                        View Detail
+                    <Link href='/blog' className={styles.link}>
+                        View All
                     </Link>
                 </div>
             </div>
@@ -59,14 +59,14 @@ const NewBikeCard = ({ props }: any) => {
         <div className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.image_boxnewbike}>
-                    <img src={cloudinaryLoader(props?.img_url, 400, 'auto')} alt={props?.title} className={styles.image} />
+                    <Link href={props?.url} className={styles.image}><img src={cloudinaryLoader(props?.img_url, 400, 'auto')} alt={props?.title} className={styles.image} /></Link>
                 </div>
                 <div className={styles.content}>
-                    <p className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</p>
+                    <Link href={props?.url} className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</Link>
                     <p className={styles.price}><span className={styles.name}>{props?.price}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
-                    <Link href={props?.url} className={styles.linkbtn}>
-                        View Detail
+                    <Link href='/new-bikes' className={styles.linkbtn}>
+                        View All
                     </Link>
                 </div>
             </div>
@@ -92,18 +92,18 @@ const UsedBikeCard = ({ props }: any) => {
     return (
         <div className={styles.main}>
             <div className={styles.container}>
-                <div className={styles.image_boxusedbike}>
+                <Link href={GetHref(props)} className={styles.image_boxusedbike}>
                     <img src={cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')}
                         alt={props?.title || "default bike"}
                         className={styles.image}
                     />
-                </div>
+                </Link>
                 <div className={styles.content}>
-                    <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 20)}</p>
+                    <Link href={GetHref(props)} className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</Link>
                     <p className={styles.price}><span className={styles.name}>PKR {priceWithCommas(props?.price)}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
-                    <Link href={GetHref(props)} className={styles.linkbtn}>
-                        View Detail
+                    <Link href='/used-bikes' className={styles.linkbtn}>
+                        View All
                     </Link>
                 </div>
             </div>
@@ -133,7 +133,7 @@ const NewVideoCard = ({ props }: any) => {
 }
 
 const Dealers_Cards = ({ props }: any) => {
-function goToDetailPage(bike: any) {
+    function goToDetailPage(bike: any) {
         var shop_name = bike.shop_name;
         shop_name = shop_name.replace(/\s+/g, '-');
         var lowerTitle = shop_name.toLowerCase();
@@ -142,12 +142,12 @@ function goToDetailPage(bike: any) {
     return (
         <div className={styles.main_dealer}>
             <div className={styles.container}>
-                <img src={cloudinaryLoader(props.bike_brand.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
+                <Link href={goToDetailPage(props)} className={styles.image}><img src={cloudinaryLoader(props.bike_brand.logoUrl, 400, 'auto')} alt="" className={styles.image} /></Link>
                 <div className={styles.content}>
-                    <p className={styles.name}>{props.shop_name}</p>
+                    <Link href={goToDetailPage(props)} className={styles.name}>{props.shop_name}</Link>
                     <p className={styles.location}>Dealer in {props.city.city_name}</p>
-                    <Link href={goToDetailPage(props)} target="_blank" className={styles.linkbtn}>
-                        View Detail
+                    <Link href='/dealers' target="_blank" className={styles.linkbtn}>
+                        View All
                     </Link>
                 </div>
             </div>
@@ -156,7 +156,7 @@ function goToDetailPage(bike: any) {
 }
 
 const Mechainc_Cards = ({ props }: any) => {
-   function goToDetailPage(bike: any) {
+    function goToDetailPage(bike: any) {
         var shop_name = bike.shop_name;
         shop_name = shop_name.replace(/\s+/g, '-');
         var lowerTitle = shop_name.toLowerCase();
@@ -165,12 +165,12 @@ const Mechainc_Cards = ({ props }: any) => {
     return (
         <div className={styles.main_dealer}>
             <div className={styles.container}>
-                <img src={cloudinaryLoader(props.bike_brand.logoUrl , 400 , 'auto')} alt="" className={styles.image} />
+                <Link href={goToDetailPage(props)} className={styles.image}><img src={cloudinaryLoader(props.bike_brand.logoUrl, 400, 'auto')} alt="" className={styles.image} /></Link>
                 <div className={styles.content}>
-                    <p className={styles.name}>{props.shop_name}</p>
+                    <Link href={goToDetailPage(props)} className={styles.name}>{props.shop_name}</Link>
                     <p className={styles.location}>Mechanic in {props.city.city_name}</p>
-                    <Link href={goToDetailPage(props)} target="_blank" className={styles.linkbtn}>
-                        View Detail
+                    <Link href="/mechanics" target="_blank" className={styles.linkbtn}>
+                        View All
                     </Link>
                 </div>
             </div>
@@ -178,4 +178,4 @@ const Mechainc_Cards = ({ props }: any) => {
     )
 }
 
-export { NewCard, NewBikeCard, NewVideoCard, UsedBikeCard, NewMoreBlogCard, Dealers_Cards , Mechainc_Cards }
+export { NewCard, NewBikeCard, NewVideoCard, UsedBikeCard, NewMoreBlogCard, Dealers_Cards, Mechainc_Cards }

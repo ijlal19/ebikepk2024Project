@@ -6,7 +6,7 @@ import Create_thread_popup from '@/ebikeForum/forumSharedComponent/thread_popup'
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Loader from '@/ebikeForum/forumSharedComponent/loader/loader';
-import {isLoginUser } from '@/genericFunctions/geneFunc';
+import {isLoginUser, timeAgo } from '@/genericFunctions/geneFunc';
 import { useParams, useRouter } from 'next/navigation';
 import CommentIcon from '@mui/icons-material/Comment';
 import CreateIcon from '@mui/icons-material/Create';
@@ -86,9 +86,9 @@ console.log("data" , Threadinfo)
                         {SubCategorybyId?.name}
 
                     </Typography>
-                    <Button disableRipple className={styles.pencil_btn} onClick={handleOpen}>
+                    {/* <Button disableRipple className={styles.pencil_btn} onClick={handleOpen}>
                         <CreateIcon className={styles.pencil_icon} /> Creat thread
-                    </Button>
+                    </Button> */}
                 </Box>
             </Box>
             <Box sx={{ backgroundColor: '#f2f2f4' }}>
@@ -114,10 +114,10 @@ console.log("data" , Threadinfo)
                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                                     <Typography className={styles.view_box}>
                                                                         <span className={styles.view_box_inner}>
-                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.ViewCount[0]?.count}
+                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.ViewCount[0]?.count || 0}
                                                                         </span>
                                                                     </Typography>
-                                                        <Typography className={styles.timeago}>{e?.createdAt.slice(18,19)}h ago</Typography>
+                                                        <Typography className={styles.timeago}>{timeAgo(e?.createdAt)}</Typography>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>

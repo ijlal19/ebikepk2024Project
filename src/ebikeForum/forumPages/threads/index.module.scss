@@ -1,5 +1,19 @@
 @import '../../forumStyle/variable';
 
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 .heading_box {
     padding: 10px 20px !important;
 
@@ -15,9 +29,11 @@
         }
 
         .banner_heading {
-            font-size: 32px;
+            letter-spacing: 1px;
+            font-size: 24px;
             color: #191500;
-            font-weight: normal;
+            font-family: 'Lato';
+            font-weight: 600;
 
             @media (max-width:768px) {
                 font-size: 20px;
@@ -74,6 +90,7 @@
                 padding: 6px 12px;
                 margin: 0px 0px 9px;
                 background-color: #ffffff;
+                box-shadow: 0px 0px 10px rgba(70, 70, 70, 0.262);
                 border-radius: .5rem;
 
                 .logo_grid {
@@ -120,10 +137,11 @@
                             cursor: pointer;
                             font-size: 16px;
                             color: #06477a;
-                            font-weight: bold;
+                            font-family: 'LatoBold';
                         }
-
+                        
                         .card_desc {
+                            font-family: 'Lato';
                             font-size: 12px;
                             color: #3c3c3c;
                         }
@@ -230,8 +248,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
     outline: none;
+
     @media (max-width:768px) {
-        max-width:350px;
+        max-width: 350px;
     }
 
     .popup_main {
@@ -282,7 +301,7 @@
             width: 100%;
             margin: 0px auto;
             box-sizing: border-box;
-            padding: 0px 0px 15px 0px!important;
+            padding: 0px 0px 15px 0px !important;
             border-bottom: 1px solid #c8c4c4;
 
             .label {
@@ -305,7 +324,8 @@
                 margin: 5px 0px 0px 0px !important;
                 // border: none;
             }
-            .tag_input{
+
+            .tag_input {
                 width: 100%;
                 box-sizing: border-box;
                 margin: 5px 0px 0px 0px;
@@ -318,27 +338,28 @@
             }
         }
 
-        .btn_box{
+        .btn_box {
             display: flex;
             justify-content: right;
             column-gap: 10px;
             box-sizing: border-box;
             margin: 10px 0px 0px 0px !important;
 
-            .post_btn{
+            .post_btn {
                 background-color: #085998;
                 color: white;
                 text-transform: none !important;
                 font-size: 12px;
                 padding: 3px 10px 3px 10px !important;
             }
-            .cancel_btn{
+
+            .cancel_btn {
                 background-color: white;
                 border: 1px solid #3c3c3c;
                 color: #191500;
                 text-transform: none !important;
                 font-size: 12px;
-                padding: 3px 10px 3px 10px!important;
+                padding: 3px 10px 3px 10px !important;
             }
         }
     }

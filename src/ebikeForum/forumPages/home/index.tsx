@@ -8,6 +8,7 @@ import CommentIcon from '@mui/icons-material/Comment';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
+import { timeAgo } from "@/genericFunctions/geneFunc";
 
 const Home = () => {
     const [mainCategoryData, setMainCategoryData] = useState<any>([])
@@ -95,7 +96,7 @@ const Home = () => {
                                                                     <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
                                                                         <Typography className={styles.view_box}>
                                                                             <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />{data?.ViewCount[0]?.count}</span></Typography>
-                                                                        <Typography className={styles.timeago}>{data?.createdAt.slice(18, 19)}h ago</Typography>
+                                                                        <Typography className={styles.timeago}>{timeAgo(data?.createdAt)}</Typography>
                                                                     </Grid>
                                                                 </Grid>
                                                             </Grid>

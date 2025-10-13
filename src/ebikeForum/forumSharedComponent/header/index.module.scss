@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 .banner_box {
     width: 100%;
     height: auto;
@@ -23,7 +37,7 @@
 
     .header_main {
         width: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.838);
         position: absolute;
         bottom: 0;
         left: 0;
@@ -62,7 +76,7 @@
                 }
 
                 .logo_box {
-                    width: 225px;
+                    width: 190px;
                     height: 60px;
                     display: flex;
                     align-items: center !important;
@@ -137,4 +151,25 @@
         }
 
     }
+}
+
+.thread_box {
+    background-color: #06477a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // background-color: whitesmoke;
+    color: white;
+    padding: 8px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.ct_thread {
+    font-size: 16px;
+    text-transform: capitalize;
+    font-family: "LatoBold";
+    color: white;
 }
