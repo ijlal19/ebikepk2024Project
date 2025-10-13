@@ -159,7 +159,7 @@ const Mechainc_Cards = ({ props }: any) => {
     function goToDetailPage(bike: any) {
         var shop_name = bike.shop_name;
         shop_name = shop_name.replace(/\s+/g, '-');
-        var lowerTitle = shop_name.toLowerCase();
+         var lowerTitle = shop_name.toLowerCase();
         return `/mechanics/${lowerTitle}/${bike.id}`
     }
     return (
