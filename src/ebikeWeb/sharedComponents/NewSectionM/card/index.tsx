@@ -58,7 +58,7 @@ const List_Card = () => {
             {
                 Data?.map((e:any, i:any) => {
                     return(
-                        <div className={styles.card_main}>
+                        <div className={styles.card_main} key={i}>
                             <img src={e?.img_url} alt="" className={styles.image} />
                             <p className={styles.title}>{e?.title.slice(0,30)}</p>
                         </div>

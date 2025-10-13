@@ -27,7 +27,7 @@ const Treanding_Stories = () => {
                 {
                     Data?.map((e: any, i: any) => {
                         return (
-                            <div className={styles.card_main}>
+                            <div className={styles.card_main} key={i}>
                                 <img src={e?.img_url} alt={e?.title} className={styles.image} />
                                 <p className={styles.title}>{e?.title}</p>
                             </div>
