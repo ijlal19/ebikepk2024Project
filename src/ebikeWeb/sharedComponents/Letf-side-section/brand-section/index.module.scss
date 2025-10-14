@@ -14,7 +14,7 @@
 
 .brandsmain {
     padding: 10px 10px 5px 10px !important;
-    // background: whitesmoke;
+    background: white;
     box-sizing: border-box;
     // border: 1px solid #b2b1b1ce;
     border-radius: 10px;
@@ -67,6 +67,7 @@
             letter-spacing: 0.5px;
             margin-top: 3px;
             margin-bottom: 5px;
+            text-decoration: none;
         }
     }
 
@@ -92,7 +93,7 @@
         letter-spacing: 1px;
         font-family: 'LatoBold', sans-serif;
         padding: 10px 0px !important;
-        text-decoration: none;
+        text-decoration: none !important;
         width: 100%;
         text-align: center;
         transition: color 0.3s ease;

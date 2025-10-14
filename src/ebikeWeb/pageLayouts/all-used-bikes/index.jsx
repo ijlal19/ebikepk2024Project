@@ -28,6 +28,8 @@ import DealerLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/dealer-lef
 import MechaniLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left";
 import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
 import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
+import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
+import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
 
 const AdsArray = [
     {
@@ -255,10 +257,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                         <Grid container key={ind} className={styles.long_card}>
                             <Grid item xs={is10Inch ? 12 : 3.5} className={styles.bike_image_box}>
-                                <Box
-
-                                    className={styles.long_card_img}
-
+                                <Box className={styles.long_card_img}
                                     sx={{
                                         backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                                         backgroundSize: isMobileView ? '100% 100%' : 'cover',
@@ -266,7 +265,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                         backgroundPosition: 'center',
                                         backgroundRepeat: 'no-repeat',
                                         height: isMobileView ? '150px' : "95%",
-                                        width: isMobileView ? '100%' : "100%"
+                                        width: isMobileView ? '100%' : "100%",
+                                        borderRadius:'5px'
                                     }}>
                                     {
                                         val.is_sold ?
@@ -492,7 +492,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             >
                                 {featuredData?.map((item, i) => (
                                     <SwiperSlide key={i}>
-                                        <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds}/>
+                                        <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds} />
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
@@ -507,7 +507,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     <Swiper
                                         modules={[Navigation]}
                                         navigation
-                                         spaceBetween={0}
+                                        spaceBetween={0}
                                         loop={true}
                                         slidesPerView={3}        // default (desktop)
                                         slidesPerGroup={1}       // ek time me 1 slide move kare
@@ -543,7 +543,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                         <Grid container className={styles.grid_container}>
 
-                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 2.2 : 2.2} className={styles.filter_grid} >
+                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 2.1 : 2.3} className={styles.filter_grid} >
                                 {
                                     is9Inch ?
                                         showfilter ?
@@ -571,7 +571,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 }
                             </Grid>
 
-                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 8.2 : 7.2} className={styles.cards_grid} >
+                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 8.2 : 6.7} className={styles.cards_grid} >
 
                                 <Box className={styles.all_bike_main}>
                                     <div className={styles.main_box}>
@@ -627,7 +627,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 </Box>
                             </Grid>
 
-                            <Grid item xs={is9Inch ? 12 : 2.5} className={styles.add_area}>
+                            <Grid item xs={is9Inch ? 12 : 3} className={styles.add_area}>
                                 <Box className={styles.add_box}>
                                     {
                                         AdsArray?.map((e, i) => {
@@ -642,14 +642,18 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                         })
                                     }
                                     <MechaniLeft />
-                                    <Link href='/forum' target="_blank" rel="noopener noreferrer">
+                                    <Side_brands />
+                                    <Link href='/forum' target="_blank" rel="noopener noreferrer" sx={{marginBottom:5}}>
                                         <img
                                             src={cloudinaryLoader('https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg', 400, 'auto')}
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>
                                 </Box>
-                                <Blog_left />
+                                {/* <Blog_left /> */}
+                                <List_Card />
+                                <br />
+                                <br />
                                 <DealerLeft />
                             </Grid>
                         </Grid>

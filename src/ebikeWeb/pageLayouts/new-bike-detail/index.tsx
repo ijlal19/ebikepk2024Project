@@ -24,6 +24,8 @@ import ReviewSection from "@/ebikeWeb/sharedComponents/reviewSection/index"
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { initialDealers, initialMechanics } from "./dummy_data"
+import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
+import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
 
 type NewBikeDetailsCompProps = {
   _responsedetails: any;
@@ -80,9 +82,9 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
         responsedetails[0].bike.description = responsedetails[0].bike.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
       }
 
-      if(responsedetails[0]?.bike?.focus_keyword?.toLowerCase().includes('electric-bike')){
+      if (responsedetails[0]?.bike?.focus_keyword?.toLowerCase().includes('electric-bike')) {
         setIsElectricBike(true)
-      }else {
+      } else {
         setIsElectricBike(false)
       }
 
@@ -124,11 +126,11 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
       fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
       fetchSimilarBrandDealerInfo(responsedetails[0]?.bike?.brandId)
       fetchSimilarBrandMechanicInfo(responsedetails[0]?.bike?.brandId)
-     
+
       // console.log('CCCCCC', CC)
-      if(Number(CC) > 0) {
+      if (Number(CC) > 0) {
         fetchSimilarCCUsedBike(CC)
-      }else {
+      } else {
         setSimilarCCUsedBike([])
       }
 
@@ -262,7 +264,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             >
                               {e?.bike?.images.map((img: any, index: any) => (
                                 <SwiperSlide key={index}>
-                                  <img src={cloudinaryLoader(img , 1000 , 'auto')} alt={`thumb-${index}`} className="cursor-pointer object-cover" />
+                                  <img src={cloudinaryLoader(img, 1000, 'auto')} alt={`thumb-${index}`} className="cursor-pointer object-cover" />
                                 </SwiperSlide>
                               ))}
                             </Swiper>
@@ -273,12 +275,12 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                               loop={true}
                               slidesPerView={1}
                               thumbs={{ swiper: thumbsSwiper }}
-                              simulateTouch={true} 
+                              simulateTouch={true}
                             >
                               {e?.bike?.images && e?.bike?.images?.length > 0 && e?.bike?.images.map((item: any, index: any) => (
                                 <SwiperSlide key={index}>
                                   <Box className={styles.bike_image}>
-                                    <img src={cloudinaryLoader(item , 1500 , 'auto')} alt={e?.bike?.title} className={styles.image} />
+                                    <img src={cloudinaryLoader(item, 1500, 'auto')} alt={e?.bike?.title} className={styles.image} />
                                   </Box>
                                 </SwiperSlide>
                               ))}
@@ -293,7 +295,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                 <Box className={styles.price_box}>
                                   <Box className={styles.price}>
                                     Rs: {priceWithCommas(e?.bike?.price)}
-                                  </Box> 
+                                  </Box>
                                 </Box>
                                 : ""
                             }
@@ -340,7 +342,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                     {isElectricBike ? <tr className={styles.tr} >
                                       <td className={styles.column}>{isElectricBike ? "Battery" : "Motor"} </td>
                                       <td className={styles.column}>{e?.bike?.boreAndStroke ? e.bike.boreAndStroke : '-'}</td>
-                                    </tr> : "" }
+                                    </tr> : ""}
                                   </table>
                                 </Grid>
 
@@ -364,15 +366,15 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.tyreBack ? e.bike.tyreBack : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Frame" : "Comp-Ration" } </td>
+                                      <td className={styles.column}>{isElectricBike ? "Frame" : "Comp-Ration"} </td>
                                       <td className={styles.column}>{e?.bike?.compressionRatio ? e.bike.compressionRatio : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Motor" : "Ground Clearence" }</td>
+                                      <td className={styles.column}>{isElectricBike ? "Motor" : "Ground Clearence"}</td>
                                       <td className={styles.column}>{e?.bike?.groundClearance ? e.bike.groundClearance : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                    <td className={styles.column}> { isElectricBike ? "Shock Absorption" : "Transmittion" } </td>
+                                      <td className={styles.column}> {isElectricBike ? "Shock Absorption" : "Transmittion"} </td>
                                       <td className={styles.column}>{e?.bike?.transmission ? e.bike.transmission : '-'}</td>
                                     </tr>
                                   </table>
@@ -421,7 +423,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       allDealerArr?.map((e: any, i: any) => {
                                         return (
                                           <Box className={styles.card_main} key={i}>
-                                            <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt='' className={styles.card_image} />
+                                            <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt='' className={styles.card_image} />
                                             <Box className={styles.card_text}>
                                               <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                               <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
@@ -430,14 +432,15 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                         )
                                       })
                                     }
-                                    
-                                    <Button className={styles.view_detail_btn} 
-                                      onClick={() => { allDealerArr?.length > 0 ? 
-                                         router.push(`/dealers?brand=${allDealerArr[0]?.brand_id}`) 
-                                         : 
-                                         router.push(`/dealers`) 
-                                    }}> 
-                                      <Link href={allDealerArr.length > 0 ? `/dealers?brand=${allDealerArr[0]?.brand_id}` : '/dealers'} className={styles.Link_tag}> 
+
+                                    <Button className={styles.view_detail_btn}
+                                      onClick={() => {
+                                        allDealerArr?.length > 0 ?
+                                        router.push(`/dealers?brand=${allDealerArr[0]?.brand_id}`)
+                                        :
+                                        router.push(`/dealers`)
+                                      }}>
+                                      <Link href={allDealerArr.length > 0 ? `/dealers?brand=${allDealerArr[0]?.brand_id}` : '/dealers'} className={styles.Link_tag}>
                                         More Dealers <KeyboardArrowRightIcon />
                                       </Link>
                                     </Button>
@@ -456,7 +459,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       allMechanicArr?.map((e: any, i: any) => {
                                         return (
                                           <Box className={styles.card_main} key={i}>
-                                            <img src={cloudinaryLoader(e?.bike_brand?.logoUrl , 400 , 'auto')} alt='' className={styles.card_image} />
+                                            <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt='' className={styles.card_image} />
                                             <Box className={styles.card_text}>
                                               <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                               <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
@@ -465,13 +468,14 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                         )
                                       })
                                     }
-                                    <Button className={styles.view_detail_btn} 
-                                      onClick={() => { allMechanicArr?.length > 0 ? 
-                                         router.push(`/mechanics?brand=${allMechanicArr[0]?.brand_id}`) 
-                                         : 
-                                         router.push(`/mechanics`) 
-                                    }}> 
-                                      <Link href={allMechanicArr.length > 0 ? `/mechanics?brand=${allMechanicArr[0]?.brand_id}` : '/mechanics'} className={styles.Link_tag}> 
+                                    <Button className={styles.view_detail_btn}
+                                      onClick={() => {
+                                        allMechanicArr?.length > 0 ?
+                                        router.push(`/mechanics?brand=${allMechanicArr[0]?.brand_id}`)
+                                        :
+                                        router.push(`/mechanics`)
+                                      }}>
+                                      <Link href={allMechanicArr.length > 0 ? `/mechanics?brand=${allMechanicArr[0]?.brand_id}` : '/mechanics'} className={styles.Link_tag}>
                                         More Mechanics <KeyboardArrowRightIcon />
                                       </Link>
                                     </Button>
@@ -485,7 +489,8 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                               <img style={{ width: "100%" }} src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" />
                             </Link>
                           </Box>
-
+                          <Side_brands />
+                          {/* <List_Card /> */}
                         </Grid>
                       </Grid>
                     </>)
@@ -494,7 +499,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
 
             <div className={styles.review_section_newbikes}>
               <ReviewSection orignal_review={AllnewBikeDetailsArr[0]?.bike?.newbike_comments?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.newbike_comments : []} />
-            </div> 
+            </div>
 
             <div className={styles.feature_section_newbikes}>
               <FeatureSection />
@@ -526,7 +531,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
               {similarCCUsedBike && similarCCUsedBike.length > 0 ?
                 <>
                   <Box className={styles.other_card}>
-                    <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} { AllnewBikeDetailsArr[0]?.bike?.bikeCC} CC Used Bikes </Typography>
+                    <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} {AllnewBikeDetailsArr[0]?.bike?.bikeCC} CC Used Bikes </Typography>
                     <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarCCUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
                   </Box>
                 </>

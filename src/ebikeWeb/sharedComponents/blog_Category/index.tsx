@@ -4,6 +4,7 @@ import styles from './index.module.scss';
 import BlogCategoryCard from "./card";
 import { NewMoreBlogCard } from "../new_item_card";
 import { useMediaQuery } from "@mui/material";
+import { MotorCycle_News_Card } from "../NewSectionM/card";
 
 const Blog_Category_Comp = (props:any) => {
     const [blogData, setBlogData] = useState(props.data);
@@ -29,7 +30,8 @@ const Blog_Category_Comp = (props:any) => {
                             return(
                                 <div key={i} className={styles.card_div}>
                                     {/* <BlogCategoryCard props={e}/> */}
-                                    <NewMoreBlogCard props={e}/>
+                                    {/* <NewMoreBlogCard props={e}/> */}
+                                    <MotorCycle_News_Card props={e}/>
                                 </div>
                             )
                         })

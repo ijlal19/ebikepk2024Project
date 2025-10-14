@@ -21,6 +21,7 @@ import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import CATEGORYdATA from './Data';
+import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 const TagArray = [
   "Honda",
   "Price",
@@ -116,16 +117,9 @@ const Blog = () => {
     const resOpinion = BlogShuffle(res)
     setOpinionsData(resOpinion);
     res?.map((e: any) => {
-      // console.log("datar" , res ,e)
       const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
       const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
       const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
-      // const TipAndAdvice = [1177, 748, 237, 22, 648, 715, 372, 240];
-      // const filteredAdvice = res.filter((e: any) => TipAndAdvice.includes(e.id));
-      // setTipsandAdvide(filteredAdvice);
-      // const idsOpinions = [242, 84, 151, 1210, 1144, 1045, 580, 160];
-      // const filteredOpinions = res.filter((e: any) => idsOpinions.includes(e.id));
-      // setOpinionsData(filteredOpinions);
       setBlognews(newsBlogs)
       setBlogSafety(safetyBlogs)
       setBlogBikeCare(Bike_Care)
@@ -272,7 +266,7 @@ const Blog = () => {
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8, display: 'flex', alignItems: 'center' }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{timeAgo(e.createdAt)}</span> |
                                   <span style={{ color: '#1976d2', marginLeft: 8 }}>
-                                  {e.id}
+                                    {e.id}
                                   </span>
                                   {/* {
                                     (() => {
@@ -330,6 +324,9 @@ const Blog = () => {
                   <MechaniLeft />
 
                   <Featrued_Usedbike_left />
+                  <div className={styles.main_art}>
+                    <List_Card />
+                  </div>
 
                   <button className={styles.btn} onClick={gotoSellBike}>Sell your bike</button>
                   <Box className={styles.tags_main} >
