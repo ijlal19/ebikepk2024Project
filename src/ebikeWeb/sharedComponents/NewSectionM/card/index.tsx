@@ -59,7 +59,7 @@ const MotorCycle_News_Card = ({props}:any) => {
             <Link href={getRoute(props)} className={styles.title}>{add3Dots(props?.blogTitle , 50)}</Link>
             <Link href={getRoute(props)} className={styles.button}>View Detail</Link>
         </div>
-    )
+    ) 
 }
 
 const List_Card = ({ props }: any) => {
