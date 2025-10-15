@@ -53,18 +53,20 @@
         text-align: center;
         padding: 4px 5px !important;
         box-sizing: border-box;
-        color: #ff4763;
+        color: #1976d2;
         font-size: 12px;
         font-family: "LatoBold";
         letter-spacing: 1px;
-        border: 1px solid #ff4763;
+        border: 1px solid #1976d2;
         border-radius: 5px;
         background-color: white;
         cursor: pointer;
         transition: all .5s ease;
 
         &:hover {
-            background-color: whitesmoke;
+            box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.407);
+            // background-color: r);
+            // color: white;
         }
     }
 }

@@ -29,8 +29,8 @@ const ShopMainCategory = ({ props }: any) => {
             {
                 !isLoading ?
                     <>
-                        <Grid container>
-                            <Grid item xs={IsMobile ? 12 : 12}>
+                        {/* <Grid container>
+                            <Grid item xs={IsMobile ? 12 : 12}> */}
                                 <div className={styles.container}>
                                     {
                                         props?.slice(0, 7)?.map((e: any, i: any) => {
@@ -45,7 +45,7 @@ const ShopMainCategory = ({ props }: any) => {
                                                     <div className={styles.product_main}>
                                                         {e?.products?.slice(0, 4).map((eProduct: any, index: any) => {
                                                             return (
-                                                                <div key={index}>
+                                                                <div key={index} className={styles.box_main}>
                                                                     <MainCatgeoryCard props={eProduct} rating={ratingData} i={index} />
                                                                 </div>
                                                             )
@@ -57,9 +57,9 @@ const ShopMainCategory = ({ props }: any) => {
                                         })
                                     }
                                 </div>
-                            </Grid>
+                            {/* </Grid>
 
-                        </Grid>
+                        </Grid> */}
                     </>
                     : <div className={styles.load_main}>
                         <div className={styles.load_div}>

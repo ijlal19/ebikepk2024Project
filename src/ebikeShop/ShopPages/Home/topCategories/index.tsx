@@ -81,7 +81,7 @@ const TopCategories = () => {
             </div>
 
             <p className={styles.heading}>
-                TOP CATEGORIES
+                Top Categories
             </p>
 
             <div className={`${styles.swiper_brand_card_conatainer} swiper_card_brand`}>

@@ -1,16 +1,28 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
 .main {
     width: 100%;
-    max-width: 230px;
+    max-width: 280px !important;
     box-sizing: border-box;
-    height: 320px;
-    max-height: 450px;
     border: 1px solid #c5c1c1;
-    min-height: 100px;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
-    padding: 5px 5px 20px 5px !important;
+    border-radius: 10px;
+    padding: 0px 0px 10px 0px !important;
     transition: all 0.5s ease;
+    overflow: hidden;
 
     @media (max-width:768px) {
         padding: 0px 0px 20px 0px !important;
@@ -22,11 +34,11 @@
 
     .image_box {
         width: 100%;
-        margin: 0px 0px 1px 0px !important;
+        margin: 0px 0px 0px 0px !important;
 
         .image {
             width: 100%;
-            height: 220px;
+            height: 280px;
 
             @media (max-width:768px) {
                 height: 180px;
@@ -47,11 +59,13 @@
 
         .name {
             color: #313131;
-            font-size: 16px !important;
+            font-family: 'LatoBold';
+            letter-spacing: 1px;
+            font-size: 18px !important;
             margin: 0px 0px 4px 0px !important;
 
             @media (max-width:768px) {
-                font-size: 14px;
+                font-size: 14px !important;
             }
         }
 
@@ -61,13 +75,6 @@
             column-gap: 10px;
             height: 12px;
             padding: 2px 0px;
-
-            // .product_price {
-            //     padding: 0px 0px 0px 30px !important;
-            //     @media (max-width:768px) {
-            //         padding: 0px 0px 0px 10px !important;
-            //     }
-            // }
 
             .sell_price,
             .product_price {

@@ -6,12 +6,12 @@ import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartIcon from "@/ebikeShop/ShopSharedComponent/cartIcon";
 import Filters from "@/ebikeShop/ShopSharedComponent/filters";
+import FilterListIcon from '@mui/icons-material/FilterList';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { useParams, useRouter } from "next/navigation";
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
-
 
 const CategoryDetails = () => {
 
@@ -84,11 +84,11 @@ const CategoryDetails = () => {
 
     return (
         <div className={styles.main}>
+            {
+                IsMobile ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters<FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
+            }
             {!isLoading ?
                 <>
-                    {
-                        IsMobile ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters</Button> : ''
-                    }
                     <Grid container>
 
                         <Grid item xs={IsMobile ? 12 : 2} className={styles.filter_grid}>

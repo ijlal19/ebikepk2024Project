@@ -25,8 +25,8 @@ const MainCatgeoryCard = ({ props, rating, i }: any) => {
     ]
 
     return (
-        <Link href={href} sx={{ textDecoration: "none" }} onClick={() => handleClick()} >
-            <div className={styles.main}>
+        <Link href={href} sx={{ textDecoration: "none" }} onClick={() => handleClick()} className={styles.main} >
+            {/* <div className={styles.main}> */}
                 <div className={styles.image_box}>
                     <img src={cloudinaryLoader(props?.images[0], 400 , 'auto')} alt="" className={styles.image} />
                 </div>
@@ -42,8 +42,8 @@ const MainCatgeoryCard = ({ props, rating, i }: any) => {
                             </p>
                     }
                     <span className={styles.all_price}>
-                        <p className={styles.product_price}><del>{props?.product_price === '0' || props?.product_price?.trim() === "" ? <span style={{ color: "red" }}>PKR:0</span> : <span style={{ fontSize: "14px", color: "red" }}>PKR:<span style={{ color: "red", fontWeight: "bolder" }}>{props?.product_price}</span></span>}</del></p>
-                        <p className={styles.sell_price}>{props?.sell_price === '0' || props?.sell_price?.trim() === "" ? <span style={{ color: "green" }}>PKR:0</span> : <span style={{ color: "green", fontSize: "13" }}>PKR:<span style={{ color: "green", fontWeight: "bolder" }}>{props?.sell_price}</span></span>}</p>
+                        <p className={styles.product_price}><del>{props?.product_price === '0' || props?.product_price?.trim() === "" ? <span style={{ color: "red" , fontWeight:'bold' }}>PKR:0</span> : <span style={{ fontSize: "14px", color: "red" }}>PKR:<span style={{ color: "red", fontWeight: "bolder" }}>{props?.product_price}</span></span>}</del></p>
+                        <p className={styles.sell_price}>{props?.sell_price === '0' || props?.sell_price?.trim() === "" ? <span style={{ color: "green" }}>PKR:0</span> : <span style={{ color: "green", fontSize: "13" , fontWeight:'bolder' }}>PKR:<span style={{ color: "green", fontWeight: "bolder" }}>{props?.sell_price}</span></span>}</p>
                     </span>
                     <Box className={styles.rating}>
                         <Rating
@@ -56,8 +56,7 @@ const MainCatgeoryCard = ({ props, rating, i }: any) => {
                         />
                     </Box>
                 </div>
-            </div>
-
+            {/* </div> */}
         </Link>
     )
 }
