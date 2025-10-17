@@ -54,15 +54,21 @@ const NewMoreBlogCard = ({ props }: any) => {
 
 const NewBikeCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
-
+    const GetHref = (data: any) => {
+        let GetId = data?.url?.split('/').pop() || data?.id
+        let GetBrand = data?.url?.split('/')[2] || data?.bike_brand?.brandName
+        let title = data.title
+        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+        return `/new-bikes/${GetBrand}/${urlTitle}/${GetId}`
+    }
     return (
         <div className={styles.main}>
             <div className={styles.container}>
                 <div className={styles.image_boxnewbike}>
-                    <Link href={props?.url} className={styles.image}><img src={cloudinaryLoader(props?.img_url, 400, 'auto')} alt={props?.title} className={styles.image} /></Link>
+                    <Link href={GetHref(props)} className={styles.image}><img src={cloudinaryLoader(props?.img_url || props?.images[0], 400, 'auto')} alt={props?.title} className={styles.image} /></Link>
                 </div>
                 <div className={styles.content}>
-                    <Link href={props?.url} className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</Link>
+                    <Link href={GetHref(props)} className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</Link>
                     <p className={styles.price}><span className={styles.name}>{props?.price}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
                     <Link href='/new-bikes' className={styles.linkbtn}>
@@ -159,7 +165,7 @@ const Mechainc_Cards = ({ props }: any) => {
     function goToDetailPage(bike: any) {
         var shop_name = bike.shop_name;
         shop_name = shop_name.replace(/\s+/g, '-');
-         var lowerTitle = shop_name.toLowerCase();
+        var lowerTitle = shop_name.toLowerCase();
         return `/mechanics/${lowerTitle}/${bike.id}`
     }
     return (

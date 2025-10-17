@@ -6,16 +6,17 @@ import { Container } from '@mui/material';
 import 'swiper/swiper-bundle.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import FeatureCard from '@/ebikeWeb/sharedComponents/FeatureCard';
+import { NewBikeCard, UsedBikeCard } from '../new_item_card';
 
 interface IProps {
     sliderName?: string;
-    sliderData?: any; 
+    sliderData?: any;
     from: string;
-    currentpage:any
+    currentpage: any
     onBtnClick: any
 }
 
-const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, currentpage, onBtnClick}:any) => {
+const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, currentpage, onBtnClick }: any) => {
     return (
         <Container className={`${styles.swiper_card_container} slider_swiper `}>
             <Swiper
@@ -25,11 +26,11 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                 initialSlide={sliderName == 'featurSectionHomeSlider' ? 1 : 0}
                 loop={sliderName == 'featurSectionHomeSlider' ? false : true}
                 slidesPerView={1}
-                centeredSlides={sliderName == 'featurSectionHomeSlider' ? true : false }
+                centeredSlides={sliderName == 'featurSectionHomeSlider' ? true : false}
                 breakpoints={{
                     1: {
                         slidesPerView: sliderName == 'featurSectionHomeSlider' ? 1.3 : 2,
-                        spaceBetween: sliderName == 'featurSectionHomeSlider' ?  15 : 5,
+                        spaceBetween: sliderName == 'featurSectionHomeSlider' ? 15 : 5,
                         freeMode: {
                             enabled: true,
                             sticky: false,
@@ -43,27 +44,32 @@ const SwiperCarousels: React.FC<IProps> = ({ sliderName, sliderData, from, curre
                 simulateTouch={true}
             >
                 {sliderData?.length > 0 &&
-                    sliderData.map((data:any, i:any) => {
-                        return(
+                    sliderData.map((data: any, i: any) => {
+                        return (
                             <SwiperSlide key={i} className={styles.slider_card}>
                                 {sliderName == 'featurSectionHomeSlider' ?
-                                    <FeatureCard 
+                                    <FeatureCard
                                         data={data}
-                                    /> 
-                                    :
-                                    <ItemCard 
-                                        data={data} 
-                                        from={from} 
-                                        currentpage={currentpage} 
-                                        onBtnClick={onBtnClick}
                                     />
+                                    : sliderName === 'bikesSectionSwiper' ? (
+                                        <ItemCard
+                                            data={data}
+                                            from={from}
+                                            currentpage={currentpage}
+                                            onBtnClick={onBtnClick}
+                                        />
+                                    ) : sliderName === "bikeSectionSwiperUsedBikde" ? (
+                                        <UsedBikeCard props={data}/>
+                                    ) : (
+                                        <NewBikeCard props={data}/>
+                                    )
                                 }
                             </SwiperSlide>
                         )
                     })
                 }
             </Swiper>
-         </Container>
+        </Container>
     );
 };
 

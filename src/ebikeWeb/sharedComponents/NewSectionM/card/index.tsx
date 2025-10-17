@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
-import { Avatar, Link } from "@mui/material";
+import { Avatar, Link, useMediaQuery } from "@mui/material";
 import { add3Dots, BlogShuffle, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { getAllBlog } from "@/ebikeWeb/functions/globalFuntions";
 
@@ -44,8 +44,8 @@ let Data = [
     },
 ]
 
-const MotorCycle_News_Card = ({props}:any) => {
-    console.log("hello1" , props)
+const MotorCycle_News_Card = ({ props }: any) => {
+    const isMoble = useMediaQuery('(max-width:768px)');
     const getRoute = (blogInfo: any) => {
         var title = blogInfo?.blogTitle;
         title = title?.replace(/\s+/g, '-');
@@ -56,23 +56,24 @@ const MotorCycle_News_Card = ({props}:any) => {
     return (
         <div className={styles.main}>
             <img src={cloudinaryLoader(props?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.image} />
-            <Link href={getRoute(props)} className={styles.title}>{add3Dots(props?.blogTitle , 50)}</Link>
+            <Link href={getRoute(props)} className={styles.title}>{add3Dots(props?.blogTitle, isMoble ? 25
+                 : 40)}</Link>
             <Link href={getRoute(props)} className={styles.button}>View Detail</Link>
         </div>
-    ) 
+    )
 }
 
 const List_Card = ({ props }: any) => {
-     const [AllBlog, setBlogData] = useState<any>([]);
-        useEffect(() => {
-            fetchAllBlog()
-        }, [])
-    
-        const fetchAllBlog = async () => {
-            let res = await getAllBlog()
-            const resAdvice = BlogShuffle(res)
-            setBlogData(resAdvice)
-        }
+    const [AllBlog, setBlogData] = useState<any>([]);
+    useEffect(() => {
+        fetchAllBlog()
+    }, [])
+
+    const fetchAllBlog = async () => {
+        let res = await getAllBlog()
+        const resAdvice = BlogShuffle(res)
+        setBlogData(resAdvice)
+    }
 
     const getRoute = (blogInfo: any) => {
         var title = blogInfo?.blogTitle;

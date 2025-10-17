@@ -26,7 +26,7 @@ const Blog_Category_Comp = (props:any) => {
                 </div>
                 <div className={styles.card_section}>
                     {
-                        blogData.slice(0,isMoble ? 4 : 8).map((e:any,i:any)=>{
+                        blogData.slice(0,isMoble ? 4 : 6).map((e:any,i:any)=>{
                             return(
                                 <div key={i} className={styles.card_div}>
                                     {/* <BlogCategoryCard props={e}/> */}

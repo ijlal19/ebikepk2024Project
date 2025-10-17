@@ -509,7 +509,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
               <>
                 <Box className={styles.other_card}>
                   <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} New Bikes </Typography>
-                  <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' onBtnClick={() => { }} />
+                  <SwiperCarousels sliderName='bikesSectionSwiper1' sliderData={AllnewBikeCardArr} from='newBikeComp' currentpage='new_bike' onBtnClick={() => { }} />
                 </Box>
               </>
               : ""
@@ -520,7 +520,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                 <>
                   <Box className={styles.other_card}>
                     <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} Used Bikes </Typography>
-                    <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarBrandUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+                    <SwiperCarousels sliderName='bikeSectionSwiperUsedBikde' sliderData={similarBrandUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
                   </Box>
                 </>
                 : ""
@@ -532,7 +532,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                 <>
                   <Box className={styles.other_card}>
                     <Typography className={styles.other_card_title}> {AllnewBikeDetailsArr?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.brandName : "Similar Brand"} {AllnewBikeDetailsArr[0]?.bike?.bikeCC} CC Used Bikes </Typography>
-                    <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={similarCCUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
+                    <SwiperCarousels sliderName='bikeSectionSwiperUsedBikde' sliderData={similarCCUsedBike} from='newBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
                   </Box>
                 </>
                 : ""

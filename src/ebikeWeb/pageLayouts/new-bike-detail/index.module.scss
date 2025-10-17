@@ -186,15 +186,20 @@
                         border-collapse: collapse;
                         margin: 10px 5px 10px 5px !important;
                         text-align: center;
-
+                        
                         @media (max-width:767px) {
+                            border-radius: 10px;
+                            overflow: hidden;
+                            box-shadow: 0px 0px 10px rgba(161, 158, 158, 0.607);
                             width: 98%;
                         }
 
                         .tr {
                             border-bottom: 1px solid #e0e0e0;
                             border: 1px solid #000;
-
+                            .column:nth-child(1){
+                                border-top-left-radius: 10px !important;
+                            }
                             .column {
                                 text-wrap: wrap;
                                 padding: 10px 12px 10px 8px;
@@ -224,6 +229,7 @@
                     border: none;
                     padding: 0px;
                     margin: 0px;
+                    border-radius: 10px;
                     box-sizing: border-box;
                     box-shadow: 0px 0px 10px rgb(210, 207, 207);
                     @media (max-width:768px) {
