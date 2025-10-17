@@ -99,7 +99,8 @@ const MechanicRegistration = () => {
 
       let res = await createmechanic(obj)
       if(res.success) {
-          console.log('Mechanic submitted Successfully! Please wait for approval')
+          alert('Mechanic submitted Successfully! Please wait for approval')
+          Router.push('/mechanics')
       }
       else {
           console.log('Some thing went wrong')

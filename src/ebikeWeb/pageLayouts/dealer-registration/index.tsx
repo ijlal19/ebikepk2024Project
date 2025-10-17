@@ -97,7 +97,8 @@ const DealerRegistration = () => {
 
       let res = await createdealer(obj)
       if(res.success) {
-          console.log('Dealer submitted Successfully! Please wait for approval')
+          alert('Dealer submitted Successfully! Please wait for approval')
+          Router.push('/dealers')
       }
       else {
           console.log('Some thing went wrong')
