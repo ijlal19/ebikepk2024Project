@@ -11,9 +11,10 @@
         box-sizing: border-box;
     }
 
-    .cart_button{
+    .cart_button {
         position: fixed;
         right: 30px;
+
         @media (max-width:768px) {
             right: 10px;
             z-index: 1000;
@@ -31,7 +32,7 @@
         flex-direction: column;
         row-gap: 70px;
         padding: 10px 0px !important;
-        
+
         @media (max-width:768px) {
             row-gap: 20px;
             padding: 10px 10px !important;
@@ -42,7 +43,8 @@
         width: 100%;
         display: flex;
         padding: 8px !important;
-        box-shadow: 0px 0px 15px grey;
+        box-shadow: 0px 0px 10px rgba(149, 148, 148, 0.585);
+        border-radius: 10px;
         box-sizing: border-box;
         flex-direction: row;
 
@@ -69,6 +71,7 @@
 
                 .image {
                     width: 100%;
+                    border-radius: 10px;
                 }
             }
 
@@ -179,17 +182,21 @@
                 }
 
                 .add_btn {
-
-                    border-radius: 0px;
-                    padding: 3px 20px;
+                    border-radius: 5px;
+                    padding: 5px 20px;
                     margin: 10px 0px 0px 10px;
-                    font-size: 14px;
+                    font-size: 15px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    cursor: pointer;
                     color: white;
                     background-color: #1976d2;
 
                     @media (max-width:768px) {
                         margin: 10px 0px 10px 0px;
-
+                    }
+                    &:hover{
+                        opacity: 0.9;
                     }
                 }
             }
@@ -197,10 +204,13 @@
 
         .related_box {
             padding: 5px 0px 0px 0px;
+            // border: 1px solid #9f9f9f7f;
+            // border-radius: 10px;
+            // background-color: whitesmoke;
             display: flex;
             flex-direction: column;
 
-            .gurante_heading{
+            .gurante_heading {
                 font-size: 16px;
                 padding: 5px 0px !important;
                 border-bottom: 1px solid rgba(128, 128, 128, 0.506);
@@ -208,16 +218,16 @@
                 color: green;
             }
 
-            .related_product_heading{
+            .related_product_heading {
                 font-size: 16px;
                 padding: 5px 0px;
-                margin: 0px 0px 5px 0px !important;
+                margin: 0px 0px 10px 0px !important;
                 border-bottom: 1px solid rgba(128, 128, 128, 0.469);
                 text-align: center;
                 color: grey;
             }
 
-            .realted_content{
+            .realted_content {
                 box-sizing: border-box;
                 padding: 0px !important;
                 overflow: hidden;
@@ -225,47 +235,60 @@
                 flex-direction: column;
                 row-gap: 10px;
 
-                .related_card_main{
+                .related_card_main {
                     display: flex;
-                    align-items: center;
-                    padding: 0px !important;
+                    // align-items: center !important;
+                    // background-color: whitesmoke;
+                    border: 1px solid #99999985;
+                    // border-radius: 10px;
+                    padding: 5px 5px 0px 5px !important;
 
-
-                    .image_box{
+                    .image_box {
                         width: 70px;
-                        .image{
+                        padding: 0px !important;
+                        margin: 0px !important;
+
+                        .image {
+                            border: 1px solid #99999985;
                             margin: 0px !important;
                             width: 100%;
+                            padding: 0px !important;
+                            // border-radius: 10px;
                         }
                     }
 
-                    .card_content{
+                    .card_content {
                         display: flex;
+                        // border: 1px solid #000;
                         flex-direction: column;
+                        margin: 0px !important;
                         padding: 0px 0px 0px 0px !important;
 
-                        .card_name{
-                            color: black;
+                        .card_name {
+                            color: #333333;
                             padding: 0px 0px 0px 5px !important;
                             text-decoration: none;
+                            margin: 0px !important;
                             font-size: 14px;
-                            .card_name_link{
+
+                            .card_name_link {
                                 text-decoration: none;
-                                color: black;
+                                color: #333333;
                                 padding: 0px 0px 0px 0px !important;
                                 font-size: 14px;
+                                margin: 0px !important;
                             }
                         }
-                        
-                        .card_price{
+
+                        .card_price {
                             padding: 0px 0px 0px 5px !important;
                             margin: 0px !important;
                             font-size: 14px;
                             font-weight: bold;
                             color: green;
                         }
-                        
-                        .card_rating{
+
+                        .card_rating {
                             padding: 0px 0px 0px 5px !important;
                             margin: 0px !important;
                             display: flex;
@@ -283,7 +306,9 @@
     .tab_grid_box {
         width: 100%;
         box-sizing: border-box;
-        box-shadow: 0px 0px 15px grey;
+        box-shadow: 0px 0px 10px rgba(149, 148, 148, 0.585);
+        border-radius: 10px;
+        overflow: hidden;
 
         @media (max-width:768px) {
             box-shadow: none;
@@ -304,8 +329,11 @@
                     width: 100%;
                     font-size: 16px;
                     padding: 10px 0px 10px 0px !important;
-                    color: black;
+                    color: #4b4b4b;
+                    font-weight: bold;
+                    letter-spacing: 1px;
                     text-align: center;
+                    text-transform: capitalize !important;
                     border-bottom: 1px solid grey;
                 }
 
@@ -474,23 +502,30 @@
         }
     }
 
-    .similar_product{
+    .similar_product {
         width: 100%;
         display: flex;
         flex-direction: column;
 
-        .similar_heading{
+        .similar_heading {
             color: rgb(94, 93, 93);
-            font-size: 20px;
+            font-size: 24px;
             padding: 10px 0px !important;
             text-align: center;
-
+            font-weight: bolder;
+            letter-spacing: 1px ;
         }
-        .similar_card{
-            display: flex;
+
+        .similar_card {
+            display: grid;
+            grid-template-columns: repeat(3 , 1fr);
             flex-direction: row;
             flex-wrap: wrap;
             justify-content: space-between;
+            @media (max-width:768px) {
+                grid-template-columns: repeat(2 , 1fr);
+                column-gap: 10px;
+            }
         }
     }
 }
@@ -498,5 +533,6 @@
 .video_box {
     width: 100%;
     height: 200px;
+    border-radius: 10px;
     margin: 15px 0px 0px 0px !important;
 }

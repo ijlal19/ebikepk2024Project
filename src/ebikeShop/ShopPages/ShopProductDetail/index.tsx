@@ -291,7 +291,7 @@ const ProductDetail = () => {
 
                         <Box className={styles.tab_grid_box}>
                             <Box sx={{ bgcolor: 'whitesmoke', width: "100%" }}>
-                                <AppBar position="static">
+                                <AppBar position="static" sx={{ boxShadow: 'none' }}>
                                     <Tabs
                                         value={value}
                                         onChange={handleChange}
@@ -299,11 +299,11 @@ const ProductDetail = () => {
                                         textColor="inherit"
                                         variant="fullWidth"
                                         aria-label="full width tabs example"
-                                        sx={{ backgroundColor: "yellowgreen" }}
+                                        sx={{ backgroundColor: "yellowgreen",boxShadow: 'none' }}
                                     >
-                                        <Tab label="Description" {...a11yProps(0)} />
-                                        <Tab label="Review" {...a11yProps(1)} />
-                                        <Tab label="Other" {...a11yProps(2)} />
+                                        <Tab label="Description" {...a11yProps(0)} sx={{fontWeight:'bolder' , letterSpacing:"1px"}}/>
+                                        <Tab label="Review" {...a11yProps(1)} sx={{fontWeight:'bolder' , letterSpacing:"1px"}} />
+                                        <Tab label="Other" {...a11yProps(2)} sx={{fontWeight:'bolder' , letterSpacing:"1px"}} />
                                     </Tabs>
                                 </AppBar>
 
@@ -312,7 +312,7 @@ const ProductDetail = () => {
                                         <Grid item xs={isMobile ? 12 : 5.5} className={styles.product_tab_info}>
                                             <Box>
                                                 <Typography className={styles.heading}>
-                                                    PRODUCT DETAIL
+                                                    Product Detail
                                                 </Typography>
                                                 {
                                                     ProductDetail.map((e: any, i: any) => {
@@ -356,7 +356,7 @@ const ProductDetail = () => {
                                         <Grid item xs={isMobile ? 12 : 5.5} className={styles.product_tab_info}>
                                             <Box>
                                                 <Typography className={styles.heading}>
-                                                    VIDEO
+                                                    Video
                                                 </Typography>
                                                 {
                                                     ProductDetail.map((e: any, i: any) => {
@@ -461,7 +461,7 @@ const ProductDetail = () => {
                                         })
                                     )
                                         :
-                                        (filterProduct?.slice(4, 8).map((e: any, i: any) => {
+                                        (filterProduct?.slice(4, 7).map((e: any, i: any) => {
                                             return (
                                                 <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i} />
                                             )

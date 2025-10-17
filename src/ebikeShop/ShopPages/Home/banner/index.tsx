@@ -37,7 +37,7 @@ const Banner = () => {
                 {sliderData.length > 0 &&
                     sliderData.map((item, index) => (
                         <SwiperSlide key={index}>
-                            <img className={styles.brand_img} src={cloudinaryLoader(item , 400 , 'auto')} alt="banner.image" />
+                            <img className={styles.brand_img} src={cloudinaryLoader(item , 1200 , 'auto')} alt="banner.image" />
                         </SwiperSlide>
                     ))}
             </Swiper>
