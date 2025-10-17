@@ -249,8 +249,9 @@
         .moreBlog {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            // justify-content: center;
             row-gap: 30px !important;
+            margin-top: -10px;
 
             @media (max-width:768px) {
                 display: none;
