@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
 .popup_container {
     width: 100%;
     border-radius: 5px;
@@ -18,16 +32,17 @@
     .popup_main {
         background-color: white;
         width: 100%;
-        padding: 10px 10px 10px 10px !important;
+        padding: 15px 15px 15px 15px !important;
         box-sizing: border-box;
         border-radius: 5px;
         
 
         .title_section {
             width: 100%;
-            margin: 0px auto 5px auto;
+            margin: 0px auto 10px auto;
             display: flex;
             column-gap: 5px;
+            box-sizing: border-box;
             justify-content: left;
             padding: 0px 0px !important;
 
@@ -44,6 +59,9 @@
                 text-transform: capitalize;
                 justify-content: center;
                 align-items: center;
+                @media (max-width:768px) {
+                    font-size: 16px;
+                }
             }
 
             .title_input {
@@ -54,6 +72,7 @@
                 outline: none;
                 border: none;
                 color: #191500;
+                border: 1px solid #d8d6d6;
 
             }
 
@@ -71,8 +90,13 @@
 
             .label {
                 font-size: 18px;
+                padding: 10px 0px 0px 0px !important ;
                 font-weight: bold;
-                color: #191500;
+                font-family: 'Lato';
+                letter-spacing: 1px;
+                color: #333333;
+                box-sizing: border-box;
+                
             }
 
             .message_box {
@@ -86,6 +110,7 @@
                 font-size: 14px;
                 max-height: 80px;
                 min-height: 80px;
+                border-radius: 5px;
                 margin: 5px 0px 0px 0px !important;
                 // border: none;
             }
@@ -99,6 +124,7 @@
                 background-color: #f2f2f2;
                 border: none;
                 border-radius: 5px;
+                border: 1px solid #d8d6d6;
             }
         }
 
@@ -114,9 +140,13 @@
                 color: white;
                 text-transform: none !important;
                 font-size: 12px;
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
                 padding: 3px 10px 3px 10px !important;
             }
             .cancel_btn{
+                font-family: 'LatoBold';
+                letter-spacing: 1px;
                 background-color: white;
                 border: 1px solid #3c3c3c;
                 color: #191500;

@@ -50,6 +50,9 @@ const Header = () => {
         else if(URL.includes('/ebike-panel')){
             setIsEbikePanel(true)
         }
+        else if(URL.includes('/forum')){
+            setIsEbikePanel(true)
+        }
         else {
             setIsUserBike(false)
         }

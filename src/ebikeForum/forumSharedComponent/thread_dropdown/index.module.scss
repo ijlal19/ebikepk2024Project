@@ -5,13 +5,14 @@
 
     .category_main,.subcatgegory{
         width: 100%;
-        padding: 5px 0px !important;
+        padding: 8px 0px !important;
 
         .catgegory_select,.subcatgegory_select{
             width: 100%;
             border: 1px solid #b4b2b2;
             outline: none;
-            padding: 2px 0px !important;
+            padding: 8px 0px !important;
+            border-radius: 5px;
             font-size: 14px;
             font-weight: bold;
             color: rgb(111, 106, 106);
