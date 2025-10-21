@@ -35,7 +35,7 @@ const Header = () => {
     const [openmodal, setOpenmodal] = useState(false);
     const [options, setOptions] = useState(false);
     const [open, setOpen] = useState(false);
-
+    const [query, setQuery] = useState("");
    
 
     useEffect(() => {
@@ -58,6 +58,23 @@ const Header = () => {
     useEffect(() => {
         setOpen(false);
     }, [pathname]);
+
+    const handleSearch = () => {
+        if (!query.trim()) return; // ignore empty search
+        // Update the URL with the search query
+        // const params = new URLSearchParams(window.location.search);
+        // params.set("q", query);
+        // const newUrl = `/used-bikes?${params.toString()}`;
+        router.push(`/used-bikes?${query.trim()} `)
+        // window.history.pushState({}, "", newUrl);
+    } ;
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+        handleSearch();
+        }
+    };
+
 
     function authenticateUser() {
 
@@ -249,6 +266,21 @@ const Header = () => {
                     </Box>
 
                 </Box>
+
+                 {/* <Box className={styles.search_box}>
+                    <span className={styles.search_icon}>🔍</span>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        className={styles.search_input}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <button className={styles.search_btn} onClick={handleSearch}>
+                        Search
+                    </button>
+                </Box> */}
 
                 <div className={styles.header_btn_sec}>
 
