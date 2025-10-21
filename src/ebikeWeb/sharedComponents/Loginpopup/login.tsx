@@ -40,6 +40,70 @@ export default function LoginPopup({props,values}: any) {
   const recaptchaRef = useRef<HTMLDivElement | null>(null);
   const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
 
+  // ✅ Initialize Facebook SDK
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    (window as any).fbAsyncInit = function () {
+      (window as any).FB.init({
+        appId: '1044746900622305', // your App ID
+        cookie: true,
+        xfbml: true,
+        version: 'v23.0'
+      });
+      (window as any).FB.AppEvents.logPageView();
+    };
+
+    // load SDK
+    (function (d, s, id) {
+      let js: HTMLScriptElement;
+      const fjs = d.getElementsByTagName(s)[0] as HTMLScriptElement;
+      if (d.getElementById(id)) return;
+      js = d.createElement(s) as HTMLScriptElement;
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode?.insertBefore(js, fjs);
+    })(document, 'script', 'facebook-jssdk');
+  }, []);
+
+  // ✅ Facebook Login Handler
+  const handleFacebookLogin = () => {
+    if (typeof window === "undefined") return;
+    const FB = (window as any).FB;
+
+    FB.login(
+      (response: any) => {
+        if (response.authResponse) {
+          // Get user data
+          FB.api('/me', { fields: 'name,email,picture' }, async (userInfo: any) => {
+            console.log('Facebook user info:', userInfo);
+
+            // example payload for backend login/signup
+            const obj = {
+              social_uid: userInfo.id,
+              email: userInfo.email,
+              userFullName: userInfo.name,
+              signupType: "facebook",
+              isVerified: true
+            };
+
+            // 🔽 Example backend call (adjust according to your API)
+            // const res = await userSignup(obj);
+            // if (res.token) {
+            //   jsCookie.set('userInfo_e', JSON.stringify(res.user), { expires: 7 });
+            //   jsCookie.set('accessToken_e', res.token, { expires: 7 });
+            //   props.showmodal('showloginpopup');
+            //   props.updateAfterLogin();
+            //   window.location.reload();
+            // }
+          });
+        } else {
+          alert('Facebook login failed or cancelled.');
+        }
+      },
+      { scope: 'public_profile,email' }
+    );
+  };
 
   useEffect(() => {
 
@@ -296,6 +360,19 @@ export default function LoginPopup({props,values}: any) {
                     updateAfterLogin = {() => props.updateAfterLogin()}
                   />
               </div>
+
+              {/* ✅ Facebook Login */}
+              <div className={styles.facebook_box}>
+                <Button
+                  onClick={handleFacebookLogin}
+                  fullWidth
+                  className={styles.fb_button}
+                  sx={{ backgroundColor: "#1877F2", color: "#fff", mt: 2 }}
+                >
+                  Continue with Facebook
+                </Button>
+              </div>
+
 
               <Link href='/signup'  onClick={handlesignup}>
                 <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
