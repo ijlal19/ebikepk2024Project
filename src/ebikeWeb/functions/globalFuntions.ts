@@ -384,7 +384,7 @@ function sendEmailLetter(data: any) {
 }
 
 function getdatabycitybrand(brandId: any, cityId: any, limit: any) {
-    return fetch(`http://localhost:4001/api/classified/get-bike-data-by-city-brand/${brandId}/${cityId}/5/${limit}`, {
+    return fetch(Gconfig.ebikeApi + `classified/get-bike-data-by-city-brand/${brandId}/${cityId}/5/${limit}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" }
     }).then(response => response.json()).then(data => {

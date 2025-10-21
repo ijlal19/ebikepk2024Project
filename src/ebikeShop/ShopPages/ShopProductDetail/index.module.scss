@@ -195,7 +195,8 @@
                     @media (max-width:768px) {
                         margin: 10px 0px 10px 0px;
                     }
-                    &:hover{
+
+                    &:hover {
                         opacity: 0.9;
                     }
                 }
@@ -505,6 +506,8 @@
     .similar_product {
         width: 100%;
         display: flex;
+        padding: 10px 0px !important;
+        box-sizing: border-box;
         flex-direction: column;
 
         .similar_heading {
@@ -512,20 +515,21 @@
             font-size: 24px;
             padding: 10px 0px !important;
             text-align: center;
-            font-weight: bolder; 
-            letter-spacing: 1px ;
+            font-weight: bolder;
+            letter-spacing: 1px;
         }
 
         .similar_card {
-            display: grid;
-            grid-template-columns: repeat(3 , 1fr);
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            @media (max-width:768px) {
-                grid-template-columns: repeat(2 , 1fr);
-                column-gap: 10px;
-            }
+            width: 100%;
+            // display: grid;
+            // grid-template-columns: repeat(3 , 1fr);
+            // flex-direction: row;
+            // flex-wrap: wrap;
+            // justify-content: space-between;
+            // @media (max-width:768px) {
+            //     grid-template-columns: repeat(2 , 1fr);
+            //     column-gap: 10px;
+            // }
         }
     }
 }
@@ -535,4 +539,12 @@
     height: 200px;
     border-radius: 10px;
     margin: 15px 0px 0px 0px !important;
+}
+
+.box_main {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 0px 5px !important;
+    box-sizing: border-box;
 }

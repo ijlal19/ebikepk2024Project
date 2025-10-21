@@ -2,9 +2,14 @@ import MainCatgeoryCard from "@/ebikeShop/ShopSharedComponent/MainCategoryCard";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
 import Filters from "@/ebikeShop/ShopSharedComponent/filters";
 import { Button, Grid, useMediaQuery } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css/navigation";
+import { Pagination } from 'swiper/modules';
 import { useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import { useState } from "react";
+import "swiper/css";
 
 const ShopMainCategory = ({ props }: any) => {
     const IsMobile = useMediaQuery('(max-width:768px');
@@ -31,18 +36,17 @@ const ShopMainCategory = ({ props }: any) => {
                     <>
                         {/* <Grid container>
                             <Grid item xs={IsMobile ? 12 : 12}> */}
-                                <div className={styles.container}>
-                                    {
-                                        props?.slice(0, 7)?.map((e: any, i: any) => {
-                                            const ratingData = i % 2 === 0 ? reviewNum : reviewNum2; // alternate arrays
-                                            return (
-                                                <div className={styles.main_category} key={i}>
+                        <div className={styles.container}>
+                            {
+                                props?.slice(0, 7)?.map((e: any, i: any) => {
+                                    const ratingData = i % 2 === 0 ? reviewNum : reviewNum2; // alternate arrays
+                                    return (
+                                        <div className={styles.main_category} key={i}>
 
-                                                    <div className={styles.heading_box}>
-                                                        <p className={styles.heading} onClick={() => goToRoute(e)}>{e?.name}</p>
-                                                    </div>
-
-                                                    <div className={styles.product_main}>
+                                            <div className={styles.heading_box}>
+                                                <p className={styles.heading} onClick={() => goToRoute(e)}>{e?.name}</p>
+                                            </div>
+                                            {/* <div className={styles.product_main}>
                                                         {e?.products?.slice(0, 4).map((eProduct: any, index: any) => {
                                                             return (
                                                                 <div key={index} className={styles.box_main}>
@@ -50,14 +54,53 @@ const ShopMainCategory = ({ props }: any) => {
                                                                 </div>
                                                             )
                                                         })}
-                                                    </div>
+                                                    </div> */}
 
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </div>
-                            {/* </Grid>
+                                            {/* <div className={styles.product_main}> */}
+                                            {/* <div className={styles.featured_bike_swiper_main}> */}
+                                            <Swiper
+                                                className={styles.product_main}
+                                                modules={[Navigation]}
+                                                navigation
+                                                spaceBetween={0}
+                                                // sx={{width:'100%'}}
+                                                loop={true}
+                                                slidesPerView={3}        // default (desktop)
+                                                slidesPerGroup={1}       // ek time me 1 slide move kare
+                                                breakpoints={{
+                                                    0: {
+                                                        slidesPerView: 2,    // mobile (0px se upar)
+                                                        slidesPerGroup: 1,
+                                                    },
+                                                    400: {
+                                                        slidesPerView: 2,    // mobile (0px se upar)
+                                                        slidesPerGroup: 1,
+                                                    },
+                                                    768: {
+                                                        slidesPerView: 3,    // tablet/desktop (768px se upar)
+                                                        slidesPerGroup: 1,
+                                                    },
+                                                    1000: {
+                                                        slidesPerView: 4,    // tablet/desktop (768px se upar)
+                                                        slidesPerGroup: 1,
+                                                    },
+                                                }}
+                                            >
+                                                {e?.products.map((eProduct: any, index: any) => {
+                                                    return (
+                                                        <SwiperSlide key={i}  className={styles.box_main}>
+                                                            <MainCatgeoryCard props={eProduct} rating={ratingData} i={index} />
+                                                        </SwiperSlide>
+                                                    )
+                                                })}
+                                            </Swiper>
+
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        {/* </Grid>
 
                         </Grid> */}
                     </>
@@ -67,8 +110,47 @@ const ShopMainCategory = ({ props }: any) => {
                         </div>
                     </div>
             }
-        </div>
+        </div >
     )
 }
 
 export default ShopMainCategory
+
+//    <div className={styles.featured_bike_swiper_main}>
+//                             <Swiper
+//                                 modules={[Navigation]}
+//                                 navigation
+//                                 spaceBetween={0}
+//                                 loop={true}
+//                                 slidesPerView={3}        // default (desktop)
+//                                 slidesPerGroup={1}       // ek time me 1 slide move kare
+//                                 breakpoints={{
+//                                     0: {
+//                                         slidesPerView: 2,    // mobile (0px se upar)
+//                                         slidesPerGroup: 1,
+//                                     },
+//                                     768: {
+//                                         slidesPerView: 3,    // tablet/desktop (768px se upar)
+//                                         slidesPerGroup: 1,
+//                                     },
+//                                 }}
+//                             >
+//                                 {featuredData?.map((item, i) => (
+//                                     <SwiperSlide key={i}>
+//                                         <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds} />
+//                                     </SwiperSlide>
+//                                 ))}
+//                             </Swiper>
+//                         </div>
+
+
+
+//  <div className={styles.product_main}>
+//                                                         {e?.products?.slice(0, 4).map((eProduct: any, index: any) => {
+//                                                             return (
+//                                                                 <div key={index} className={styles.box_main}>
+//                                                                     <MainCatgeoryCard props={eProduct} rating={ratingData} i={index} />
+//                                                                 </div>
+//                                                             )
+//                                                         })}
+//                                                     </div>

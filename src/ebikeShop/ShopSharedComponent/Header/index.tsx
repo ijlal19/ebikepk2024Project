@@ -62,12 +62,12 @@ const TopbarCategory = () => {
     return (
         <Box className={styles.headers_main}>
 
-            <Box className={styles.Input_box}>
+            {/* <Box className={styles.Input_box}> */}
                 <div className={styles.inputWrapper}>
                     <input type="text" className={styles.input} placeholder="Search..." />
                     <SearchIcon className={styles.searchIcon} />
                 </div>
-            </Box>
+            {/* </Box> */}
             <Box className={styles.cart_btn_main}>
                 <Box className={styles.cart_button}>
                     <CartIcon />

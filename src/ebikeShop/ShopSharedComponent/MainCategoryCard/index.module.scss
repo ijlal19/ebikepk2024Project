@@ -23,13 +23,14 @@
     padding: 0px 0px 10px 0px !important;
     transition: all 0.5s ease;
     overflow: hidden;
+    margin: auto;
 
     @media (max-width:768px) {
         padding: 0px 0px 20px 0px !important;
         max-width: 165px;
         height: 265px;
         row-gap: 2px;
-        margin: 5px 0px !important;
+        margin: 5px auto !important;
     }
 
     .image_box {

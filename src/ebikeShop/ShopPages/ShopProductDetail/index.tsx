@@ -21,6 +21,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import 'swiper/swiper-bundle.css';
 import '@/app/globals.scss';
+import "swiper/css/navigation";
 
 const ProductDetail = () => {
 
@@ -31,7 +32,7 @@ const ProductDetail = () => {
     const [IsLogin, setIsLogin] = useState<any>('not_login');
     const isMobile = useMediaQuery('(max-width:600px)');
     const [quantity, setQuantity] = useState(1);
-    const [rating,setRating] = useState('');
+    const [rating, setRating] = useState('');
     const [value, setValue] = useState(0);
     const params = useParams();
     const router = useRouter();
@@ -44,7 +45,7 @@ const ProductDetail = () => {
         let _isLoginUser = isLoginUser()
         if (_isLoginUser?.login) {
             setIsLogin(_isLoginUser.info)
-            console.log("data" , _isLoginUser?.info?.id)
+            console.log("data", _isLoginUser?.info?.id)
         }
         else {
             setIsLogin("not_login")
@@ -213,14 +214,14 @@ const ProductDetail = () => {
                                                                     return (
                                                                         <SwiperSlide key={imgUrl} className={styles.image_box}>
                                                                             <img src={
-                                                                                cloudinaryLoader(imgUrl, 400 , 'auto')
+                                                                                cloudinaryLoader(imgUrl, 400, 'auto')
                                                                             } alt="" className={styles.image} />
                                                                         </SwiperSlide>
                                                                     )
                                                                 }) :
                                                                 <SwiperSlide key=''>
                                                                     <img src={
-                                                                        cloudinaryLoader('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png', 400 , 'auto')
+                                                                        cloudinaryLoader('https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png', 400, 'auto')
                                                                     } alt='' className={styles.slider_img} />
                                                                 </SwiperSlide>
                                                         }
@@ -265,7 +266,7 @@ const ProductDetail = () => {
                                                 <Box className={styles.related_card_main} key={i} onClick={() => goToRoute(e)}>
                                                     <Box className={styles.image_box}>
                                                         <img src={
-                                                            cloudinaryLoader(e?.images[0], 400 , 'auto')
+                                                            cloudinaryLoader(e?.images[0], 400, 'auto')
                                                         } alt="" className={styles.image} />
                                                     </Box>
                                                     <Box className={styles.card_content}>
@@ -299,11 +300,11 @@ const ProductDetail = () => {
                                         textColor="inherit"
                                         variant="fullWidth"
                                         aria-label="full width tabs example"
-                                        sx={{ backgroundColor: "yellowgreen",boxShadow: 'none' }}
+                                        sx={{ backgroundColor: "yellowgreen", boxShadow: 'none' }}
                                     >
-                                        <Tab label="Description" {...a11yProps(0)} sx={{fontWeight:'bolder' , letterSpacing:"1px"}}/>
-                                        <Tab label="Review" {...a11yProps(1)} sx={{fontWeight:'bolder' , letterSpacing:"1px"}} />
-                                        <Tab label="Other" {...a11yProps(2)} sx={{fontWeight:'bolder' , letterSpacing:"1px"}} />
+                                        <Tab label="Description" {...a11yProps(0)} sx={{ fontWeight: 'bolder', letterSpacing: "1px" }} />
+                                        <Tab label="Review" {...a11yProps(1)} sx={{ fontWeight: 'bolder', letterSpacing: "1px" }} />
+                                        <Tab label="Other" {...a11yProps(2)} sx={{ fontWeight: 'bolder', letterSpacing: "1px" }} />
                                     </Tabs>
                                 </AppBar>
 
@@ -451,8 +452,8 @@ const ProductDetail = () => {
 
                         <Box className={styles.similar_product}>
                             <Typography className={styles.similar_heading}>Similar Product</Typography>
-                            <Box className={styles.similar_card}>
-                                {
+                            {/* <Box className={styles.similar_card}> */}
+                            {/* {
                                     isMobile ? (
                                         filterProduct?.slice(4, 6).map((e: any, i: any) => {
                                             return (
@@ -467,9 +468,48 @@ const ProductDetail = () => {
                                             )
                                         })
                                         )
-                                }
+                                } */}
 
-                            </Box>
+                            <Swiper
+                                className={styles.similar_card}
+                                modules={[Navigation]}
+                                navigation
+                                spaceBetween={0}
+                                // sx={{width:'100%'}}
+                                loop={true}
+                                slidesPerView={3}        // default (desktop)
+                                slidesPerGroup={1}       // ek time me 1 slide move kare
+                                breakpoints={{
+                                    0: {
+                                        slidesPerView: 2,    // mobile (0px se upar)
+                                        slidesPerGroup: 1,
+                                    },
+                                    400: {
+                                        slidesPerView: 2,    // mobile (0px se upar)
+                                        slidesPerGroup: 1,
+                                    },
+                                    768: {
+                                        slidesPerView: 3,    // tablet/desktop (768px se upar)
+                                        slidesPerGroup: 1,
+                                    },
+                                    1000: {
+                                        slidesPerView: 3,    // tablet/desktop (768px se upar)
+                                        slidesPerGroup: 1,
+                                    },
+                                }}
+                            >
+                                {
+                                    filterProduct?.map((e: any, i: any) => {
+                                        return (
+                                            <SwiperSlide key={i} className={styles.box_main}>
+                                                <MainCatgeoryCard props={e} rating={staticRatings[i % staticRatings.length]} key={i} />
+                                            </SwiperSlide>
+                                        )
+                                    })
+                                }
+                            </Swiper>
+
+                            {/* </Box> */}
                         </Box>
 
                     </Box>
@@ -480,7 +520,7 @@ const ProductDetail = () => {
                         </div>
                     </div>
             }
-        </Box>
+        </Box >
     )
 }
 
