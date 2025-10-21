@@ -49,7 +49,7 @@ export default function LoginPopup({props,values}: any) {
         appId: '1044746900622305', // your App ID
         cookie: true,
         xfbml: true,
-        version: 'v23.0'
+        version: 'v19.0'
       });
       (window as any).FB.AppEvents.logPageView();
     };
