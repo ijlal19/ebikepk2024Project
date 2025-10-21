@@ -1,14 +1,22 @@
 'use client'
 import { Box, Button, IconButton, InputBase, Paper, TextField, Typography, useMediaQuery } from "@mui/material";
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+import MoreHorizSharpIcon from '@mui/icons-material/MoreHorizSharp';
+// import EditSquareIcon from '@mui/icons-material/EditSquare';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { isLoginUser } from "@/genericFunctions/geneFunc";
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import MenuIcon from '@mui/icons-material/Menu';
+
+// import SearchIcon from '@mui/icons-material/Search';
 import SearchIcon from '@mui/icons-material/Search';
 import Create_thread_popup from "../thread_popup";
 import { useEffect, useState } from "react";
 import styles from './index.module.scss';
 
 const Header = () => {
-    const isMobile = useMediaQuery("(max-width:600px)")
+    const isMobile = useMediaQuery("(max-width:768px)")
     const [IsLogin, setIsLogin] = useState<any>('not_login')
     const [open, setOpen] = useState(false);
 
@@ -45,15 +53,60 @@ const Header = () => {
                         <Box className={styles.logo_box}>
                             <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592465223/staticFiles/logon_ayhmct.png " alt="" className={styles.logo_image} />
                         </Box>
-                        <Button
-                            className={styles.thread_box}
-                            onClick={handlepopup}
-                            disableRipple
-                        >
-                            <EditNoteIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
-                            <Typography className={styles.ct_thread} onClick={handlepopup}>Create Thread</Typography>
-                        </Button>
+                        <div className={styles.input_box} style={isMobile ? { display: 'flex' } : { display: 'flex' }}>
+                            <input type="text" className={styles.input1} placeholder="Search" />
+                            <button className={styles.btn}><SearchIcon /></button>
+                        </div>
+                        <div className={styles.thread_main_box}  style={{display: isMobile ? "none" : "flex"}}>
+                            <Button
+                                className={styles.thread_box}
+                                onClick={handlepopup}
+                                disableRipple
+                            >
+                                <EditCalendarIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
+                                <Typography className={styles.ct_thread} onClick={handlepopup}>Create Thread</Typography>
+                            </Button>
+                            <Button
+                                className={styles.thread_box}
+                                onClick={handlepopup}
+                                disableRipple
+                            >
+                                <LocalFireDepartmentIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
+                                <Typography className={styles.ct_thread} >New</Typography>
+                            </Button>
+                            <Button
+                                className={styles.thread_box}
+                                onClick={handlepopup}
+                                disableRipple
+                            >
+                                <FormatListBulletedOutlinedIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
+                                <Typography className={styles.ct_thread} >Froum</Typography>
+                            </Button>
+                            <Button
+                                className={styles.thread_box}
+                                onClick={handlepopup}
+                                disableRipple
+                            >
+                                <MoreHorizSharpIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
+                                <Typography className={styles.ct_thread} >More</Typography>
+                            </Button>
+                        </div>
+                        <div className={styles.thread_main_box} style={{display: isMobile ? "flex" : "none"}}>
+                            <Button
+                                className={styles.thread_box}
+                                onClick={handlepopup}
+                                disableRipple
+                            >
+                                <MenuIcon sx={{ color: "white", marginRight: "4px", fontSize: "20px" }} />
+                                {/* <Typography className={styles.ct_thread} onClick={handlepopup}>Create Thread</Typography> */}
+                            </Button>
+                        </div>
+                        <div className={styles.input_box}style={isMobile ? { display: 'none' } : { display: 'none' }}>
+                            <input type="text" className={styles.input1} placeholder="Search" />
+                            <button className={styles.btn}><SearchIcon /></button>
+                        </div>
                     </Box>
+
                 </Box>
             </Box>
             <Create_thread_popup open={open} setOpen={setOpen} IsLogin={IsLogin} />

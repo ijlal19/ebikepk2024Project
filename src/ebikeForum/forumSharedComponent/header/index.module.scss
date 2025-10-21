@@ -28,10 +28,12 @@
         height: auto;
         padding: 0px !important;
         margin: 0px !important;
+        box-sizing: border-box;
 
         @media (max-width:450px) {
-            height: 100px;
-            padding: 10px 0px 0px 0px !important;
+            box-sizing: border-box;
+            height: auto !important;
+            padding: 0px 0px 0px 0px !important;
         }
     }
 
@@ -48,6 +50,10 @@
         display: flex;
         justify-content: center !important;
         align-items: center !important;
+        @media (max-width:768px) {
+            padding: 10px 0px 10px 0px !important ;
+            position: none;
+        }
 
         .header_container {
             width: 100%;
@@ -58,7 +64,7 @@
 
             @media (max-width:768px) {
                 margin: 0px 5px;
-                padding: 10px 20px 10px 20px !important;
+                padding: 0px 5px 0px 5px !important;
             }
 
             .content_box {
@@ -73,6 +79,7 @@
                 @media (max-width:768px) {
                     padding: 10px 0px 10px 0px !important;
                     justify-content: space-between;
+                    flex-wrap: wrap;
                 }
 
                 .logo_box {
@@ -85,12 +92,15 @@
                     .logo_image {
                         height: 70px;
                         padding: 0px 0px 0px 0px !important;
-                        width: 100%
+                        width: 100%;
+                        @media (max-width:768px) {
+                            height: 50px;
+                        }
                     }
 
                     @media (max-width:768px) {
-                        width: 150px;
-                        height: 40px;
+                        width: 120px;
+                        height: auto;
                     }
                 }
 
@@ -154,7 +164,7 @@
 }
 
 .thread_box {
-    background-color: #06477a;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,6 +175,10 @@
     white-space: nowrap;
     font-size: 16px;
     font-weight: bolder;
+    @media (max-width:768px) {
+        padding: 8px 0px !important;
+        font-size: 14px;
+    }
 }
 
 .ct_thread {
@@ -172,4 +186,72 @@
     text-transform: capitalize;
     font-family: "LatoBold";
     color: white;
+    letter-spacing: 1px;
+
+    @media (max-width:768px) {
+        display: none;
+    }
+}
+
+.input_box {
+    // justify-content: center;
+    // align-items: center;
+    box-sizing: border-box !important;
+    width: 100%;
+    // height: 10px;
+    max-width: 250px !important;
+    // background-color: red;
+    // overflow: hidden !important;
+    // border: 1px solid #a9a9a9;
+    border-radius: 5px;
+    background-color: #333333 !important;
+    // @media (max-width:768px) {
+    //     width: 100%;
+    //     border: 1px solid #ff0404;
+    // }
+    
+    .input1 {
+        height: 100%;
+        width: 100% !important;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        padding: 0px 10px 0px 10px  !important;
+        // border: 1px solid #ff0000;
+        margin: 0px !important;
+        border: none;
+        background-color: #333333;
+        color: #a9a9a9 !important;
+        outline: none;
+        font-size: 14px;
+        box-sizing: border-box;
+
+        &::placeholder {
+            color: #a9a9a9 !important;
+            font-size: 16px;
+            font-weight: bolder;
+            letter-spacing: 1px;
+        }
+    }
+
+    .btn {
+        margin: 0px !important;
+        padding: 0px 5px 0px 7px !important;
+        // width: 100%;
+        height: 100%;
+        cursor: pointer;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        // background-color: rgba(175, 175, 175, 0.634);
+        color: #a9a9a9 !important;
+        border: none;
+        border-bottom-right-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+}
+.thread_main_box{
+    justify-content: center;
+    align-items: center;
 }

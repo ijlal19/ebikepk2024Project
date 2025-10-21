@@ -11,7 +11,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 400, 
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -68,12 +68,12 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
                             <Box>
 
                                 <label htmlFor="44" className={styles.label}>Message<span style={{ color: 'red' }}>*</span></label>
-                                <textarea name="" id="44" className={styles.message_box} onChange={(e) => setMessage(e.target.value)}></textarea>
+                                <textarea name="" id="44" className={styles.message_box} onChange={(e) => setMessage(e.target.value)} placeholder='Enter Your Question!' ></textarea>
                             </Box>
                             <Thread_dropdown setMainCatge={setMainCatge} setSubCatgeId={setSubCatgeId} />
                             <Box>
                                 <label htmlFor="" className={styles.label}>Tags</label>
-                                <input type="text" className={styles.tag_input} onChange={(e) => setTag(e.target.value)} />
+                                <input type="text" className={styles.tag_input} onChange={(e) => setTag(e.target.value)} placeholder='Enter Youe Tags (Optional)' />
                             </Box>
                         </Box>
                         <Box className={styles.btn_box}>
