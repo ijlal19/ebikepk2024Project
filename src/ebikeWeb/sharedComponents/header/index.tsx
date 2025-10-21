@@ -72,7 +72,7 @@ const Header = () => {
         // window.history.pushState({}, "", newUrl);
     } ;
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e:any) => {
         if (e.key === "Enter") {
         handleSearch();
         }
