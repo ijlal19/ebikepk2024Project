@@ -842,7 +842,7 @@ const AllUsedBikeByFilter = () => {
 
                                     <Grid item xs={isTabView ? 12 : isMiniDesktopView ? 8.5 : 7.5} className={styles.cards_grid} >
                                        
-                                       { params?.slug?.indexOf('used-bikes') > -1 ? "" : <h5 className={styles.heading2}> {heading} </h5> }
+                                       {/* { params?.slug?.indexOf('used-bikes') > -1 ? "" : <h5 className={styles.heading2}> {heading} </h5> } */}
 
                                         <Box className={styles.all_bike_main}>
                                             <div className={styles.main_box}>
