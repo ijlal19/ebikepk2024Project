@@ -5,25 +5,28 @@ import {
   setPersistence,
 } from "firebase/auth";
 
+
 // const firebaseConfig = {
-//   apiKey: "AIzaSyBo63LmONrFnt2pAQXveetQnywDZCCkNAU",
-//   authDomain: "ebike-2024.firebaseapp.com",
-//   projectId: "ebike-2024",
-//   storageBucket: "ebike-2024.firebasestorage.app",
-//   messagingSenderId: "709255266285",
-//   appId: "1:709255266285:web:cee39514c1aa39bf4871e4",
-//   measurementId: "G-ZDB6B41M1K"
+//   apiKey: "AIzaSyBrZzy2Z-vjYcUy_LX2sqOmxmG0FNdkIz4",
+//   authDomain: "testingebike.firebaseapp.com",
+//   projectId: "testingebike",
+//   storageBucket: "testingebike.firebasestorage.app",
+//   messagingSenderId: "37982166530",
+//   appId: "1:37982166530:web:e79424ae7408938259111b",
+//   measurementId: "G-H31GJ5NV87"
 // };
 
+// indutrialandcommercials@gmail.com
 const firebaseConfig = {
-  apiKey: "AIzaSyBrZzy2Z-vjYcUy_LX2sqOmxmG0FNdkIz4",
-  authDomain: "testingebike.firebaseapp.com",
-  projectId: "testingebike",
-  storageBucket: "testingebike.firebasestorage.app",
-  messagingSenderId: "37982166530",
-  appId: "1:37982166530:web:e79424ae7408938259111b",
-  measurementId: "G-H31GJ5NV87"
+  apiKey: "AIzaSyDeH3szAmq7tHBtX0p5xN5MX1BbXpr3wx8",
+  authDomain: "ebikepk-b5fa9.firebaseapp.com",
+  projectId: "ebikepk-b5fa9",
+  storageBucket: "ebikepk-b5fa9.firebasestorage.app",
+  messagingSenderId: "109022209927",
+  appId: "1:109022209927:web:6e75bdf13d3826fa66d522",
+  measurementId: "G-8JSYYQ10Q8"
 };
+
 
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
