@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+https://www.ebike.pk/sitemap.xml
