@@ -71,12 +71,12 @@ function BrandSection() {
   return (
     <Box className={styles.brand_main}>
       <Container >
-        <Typography className={styles.heading}>
-          Bike Brands
+        <h2 className={styles.heading}>
+          Bike Brands In Pakistan
           <Link className={styles.view_new_bik_btn} href={'/new-bikes'}>
             <span> View Bike Brands </span>
           </Link>
-        </Typography>
+        </h2>
 
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

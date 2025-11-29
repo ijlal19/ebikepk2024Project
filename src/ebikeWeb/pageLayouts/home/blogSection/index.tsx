@@ -72,7 +72,7 @@ function BlogSection(props: any) {
     <Box className={styles.main_blog}>
       <Box className={styles.blog_section_main}>
         <Container>
-          <Typography className={styles.heading}>Latest Bikes News</Typography>
+          <h2 className={styles.heading}>Latest Bikes News</h2>
 
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

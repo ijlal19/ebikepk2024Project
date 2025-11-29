@@ -45,9 +45,9 @@ const Section2 = () => {
       
       <Container>
 
-        <Typography className={styles.featuer_title} >
+        <h2 className={styles.featuer_title} >
           Sell Your Bike on ebike.pk <span className={styles.titleShow}> and Get a Best Price of your bike </span>
-        </Typography>
+        </h2>
         
         <Grid 
           container 

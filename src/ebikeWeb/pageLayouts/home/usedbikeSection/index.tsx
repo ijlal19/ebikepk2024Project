@@ -79,13 +79,13 @@ function UsedBikesSection({ from, featuredData, usedBikeData }: any) {
   return (
     <Box className={styles.usedbike_main}>
       <Container>
-        <Typography className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `} >
-          {from == 'featuredBike' ? 'Featured Bikes' : 'Used Bikes'}
+        <h2 className={`${styles.heading} ${from == 'featuredBike' ? styles.featuredHeading : ""} `} >
+          {from == 'featuredBike' ? 'Featured Bikes' : 'Used Bikes For Sale'}
           {/* {from != 'featuredBike' ?
             <Link className={styles.view_new_bik_btn} href={'/used-bikes'}>
               <span> View Used Bikes </span>
             </Link> : ""} */}
-        </Typography>
+        </h2>
 
         {from == 'featuredBike' ? <hr /> : ""}
 

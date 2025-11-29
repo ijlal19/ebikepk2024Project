@@ -8,9 +8,9 @@ const Explore = () => {
   return (
     <Box className={styles.explore_main}>
       <Container className={styles.explore_container}>
-        <Typography className={styles.explore_heading}>
+        <h2 className={styles.explore_heading}>
           Explore ebike.pk
-        </Typography>
+        </h2>
         <Box className={styles.explore_grid}>
           <Card data={Data[0]}/>
           <Card data={Data[1]}/>

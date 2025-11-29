@@ -47,12 +47,12 @@ function NewBikesSection(props: any) {
   return (
     <Box className={styles.bike_sec_main}>
       <Container>
-        <Typography className={styles.heading}>
-          Bike Collection
+        <h2 className={styles.heading}>
+          New Bikes
           {/* <Link className={styles.view_new_bik_btn} href={'/new-bikes'}>
             <span> View New Bikes </span>
           </Link> */}
-        </Typography>
+        </h2>
 
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
