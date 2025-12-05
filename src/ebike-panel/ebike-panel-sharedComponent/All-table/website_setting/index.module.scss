@@ -1,0 +1,94 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    height: auto;
+    padding: 10px !important;
+    box-sizing: border-box;
+
+    .container {
+        width: 100%;
+        max-width: 1100px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 15px;
+        padding: 10px !important;
+        box-sizing: border-box;
+
+        .heading {
+            font-size: 28px;
+            color: black;
+            width: 100%;
+            text-align: left;
+            padding: 0px !important;
+            font-family: sans-serif;
+            letter-spacing: 1px;
+            font-weight: bold;
+            margin: 0px 0px 15px 0px !important;
+        }
+
+        .table_main {
+            width: 100%;
+            border-collapse: collapse;
+
+            .thead {
+                width: 100%;
+                background-color: #7f7f7fe1;
+                color: white;
+
+                .td {
+                    padding: 10px 20px !important;
+                    box-sizing: border-box;
+                    border-bottom: none;
+                    border-top: 1px solid #ffffffd1;
+                    border-left: 1px solid #ffffffd1;
+                    border-right: 1px solid #ffffffd1;
+                    font-family: sans-serif;
+                    box-sizing: border-box;
+                    letter-spacing: 1px;
+                    font-size: 16px;
+                    font-weight: none;
+                    min-width: 200px !important;
+                    text-align: center;
+                }
+
+                .td:nth-child(1) {
+                    min-width: 10px !important;
+                    border-left: 1px solid #7f7f7fe1;
+                }
+
+                .td:last-child {
+                    border-right: 1px solid #7f7f7fe1;
+                    min-width: 100px !important;
+                }
+            }
+
+            .tbody {
+                border-top: 1px solid #bababa;
+
+                .td {
+                    border: 1px solid #bababa;
+                    padding: 10px !important;
+                    box-sizing: border-box;
+                    font-family: sans-serif;
+                    color: #333333;
+                    font-size: 15px;
+                    font-weight: none;
+                    box-sizing: border-box;
+                    text-align: center;
+
+                    .icon {
+                        cursor: pointer;
+                        font-size: 25px;
+                    }
+                }
+
+                .td:last-child {
+                    min-width: 100px !important;
+                }
+            }
+        }
+    }
+}

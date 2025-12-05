@@ -9,6 +9,7 @@ import OrderListPage from "@/ebike-panel/ebike-panel-sharedComponent/Order-list-
 import CouponCode from "@/ebike-panel/ebike-panel-sharedComponent/Coupon-list";
 import BikeForums from "@/ebike-panel/ebike-panel-sharedComponent/panel-ebike-fourms/bikers-forums";
 import ForumSubCateg from "@/ebike-panel/ebike-panel-sharedComponent/panel-ebike-fourms/forum-sub-category";
+import All_Website_Setting from "@/ebike-panel/ebike-panel-sharedComponent/All-table/website_setting";
 
 const Dashboard_page = () => {
 
@@ -101,6 +102,9 @@ const Dashboard_page = () => {
         }
         else if(route == "add-new-video"){
             return <AddVideoForm />
+        }
+        else if(route == "all-website-settings"){
+            return <All_Website_Setting />
         }
     }
 

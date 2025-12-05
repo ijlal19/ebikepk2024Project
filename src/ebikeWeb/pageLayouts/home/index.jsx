@@ -20,6 +20,7 @@ import featuredData from './newbikesSection/Data'
 import GoGreen from './go-green'
 import Treanding_Stories from '@/ebikeWeb/sharedComponents/NewSectionM/trending_stories'
 import { List_Card, MotorCycle_News_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card'
+import Petrol_Price_Section from './petrol-price-section'
 
 function Index() {
 
@@ -81,6 +82,7 @@ function Index() {
         <BannerSection />
         <MobileBanner />
         <h1 style={{ textAlign:"center", fontSize:"20px", margin:"20px auto" }}> Pakistan’s #1 Marketplace for New & Used Bikes</h1>
+        <Petrol_Price_Section />
         <NewBikesSection featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />
         <FeatureSection />
         <UsedBikesSection usedBikeData={homeData.homeUsedBike} />
