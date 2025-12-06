@@ -12,7 +12,7 @@ const Petrol_Price_Section = () => {
             price: "PKR 263.45"
         },
         {
-            type: "High Speed Diesel",
+            type: "Hi Speed Diesel",
             price: "PKR 279.65"
         }
     ]
@@ -40,7 +40,7 @@ const Petrol_Price_Section = () => {
                     })
                 }
                 <div className={styles.powerd_div}>
-                    Powerd By: <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png" alt="ebiek.pk" className={styles.image} />
+                    Powered By: <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png" alt="ebiek.pk" className={styles.image} />
                 </div>
             </div>
         </div>
