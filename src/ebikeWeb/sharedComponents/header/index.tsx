@@ -64,10 +64,6 @@ const Header = () => {
 
     const handleSearch = () => {
         if (!query.trim()) return; // ignore empty search
-        // Update the URL with the search query
-        // const params = new URLSearchParams(window.location.search);
-        // params.set("q", query);
-        // const newUrl = `/used-bikes?${params.toString()}`;
         const formattedQuery = query.trim().replace(/\s+/g, ",");
         router.push(`/used-bikes?query=${formattedQuery} `)
         // window.history.pushState({}, "", newUrl);

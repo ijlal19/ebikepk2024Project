@@ -30,6 +30,7 @@ import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
 import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
 import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
 import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
+import { useSearchParams } from "next/navigation";
 
 const AdsArray = [
     {
@@ -84,6 +85,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const is9Inch = useMediaQuery('(max-width:910px)');
 
     const router = useRouter()
+    const searchParams = useSearchParams();
 
     useEffect(() => {
 
@@ -113,6 +115,14 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
 
     }, [])
+
+    useEffect(() => {
+        let q = searchParams.get("query") || "";
+        setSearchValue(q?.replaceAll(",", " "));
+        setTimeout(()=> {
+            handleSearch(1, q?.replaceAll(",", " "))
+        },500)
+    }, [searchParams]);
 
     const fetchFavouriteAds = async (uid) => {
         setIsLoading(true)
@@ -417,12 +427,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         window.scrollTo(0, 0);
     }
 
-    const handleSearch = async (_page) => {
-        if (!SearchValue == '') {
+    const handleSearch = async (_page, query) => {
+        if (!SearchValue == '' || query) {
             setIsLoading(true)
             setSearchApply(true)
             const obj = {
-                search: SearchValue,
+                search: query  ? query : SearchValue ,
                 page: _page,
                 adslimit: 12
             }
@@ -432,6 +442,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 setAllBikesArr(res?.data)
                 setCurrentPage(res.currentPage)
                 setTotalPage(res.pages)
+
+               
             }
             else {
                 setCurrentPage(res?.data?.currentPage)
@@ -441,10 +453,17 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             setIsLoading(false)
 
             setTimeout(() => {
-                window.scrollTo({
-                    top: GetScroll || 0,
-                    behavior: 'smooth'
-                });
+
+                if(query) {
+                    window.scrollTo(0, 300)
+                }
+                else {
+                    window.scrollTo({
+                        top: GetScroll || 0,
+                        behavior: 'smooth'
+                    });
+                }
+
             }, 500);
         }
         else {
