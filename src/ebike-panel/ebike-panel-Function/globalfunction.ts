@@ -1,6 +1,6 @@
 import Gconfig from 'globalconfig'
 const jsCookie = require('js-cookie');
-
+const Port = 'http://localhost:4000/api/'
 function PostLogin(data: any) {
     return fetch(Gconfig.ebikeApi + `user-role/login`, {
         method: 'POST',
@@ -426,7 +426,7 @@ function DeleteDealerbyId(id: any) {
         .catch((err) => {
             console.log(err);
         });
-} 
+}
 
 /////////////////////////////////////// MECHANICS FUNCTION ///////////////////////////////////////////////////////
 function getAllMechanics() {
@@ -1243,7 +1243,7 @@ function GetAllMainForumCategory() {
 
 function GetAllThreads() {
     return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-thread`, {
-    // return fetch(`http://localhoslt:4001/api/new-forum/get-new-forum-thread`, {
+        // return fetch(`http://localhoslt:4001/api/new-forum/get-new-forum-thread`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -1258,7 +1258,7 @@ function GetAllThreads() {
 
 function GetAllThreadsComments() {
     return fetch(Gconfig.ebikeApi + `forum/get-all-comments`, {
-    // return fetch(`http://localhodst:4001/api/forum/get-all-comments`, {
+        // return fetch(`http://localhodst:4001/api/forum/get-all-comments`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -1350,7 +1350,7 @@ function DeleteThread(id: any) {
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `new-forum/delete-forum-thread/${id}`, {
-    // return fetch(`http://localkhost:4001/api/new-forum/delete-forum-thread/${id}`, {
+        // return fetch(`http://localkhost:4001/api/new-forum/delete-forum-thread/${id}`, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -1371,7 +1371,7 @@ function DeleteThreadComment(id: any) {
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `forum/delete-thread-comments/${id}`, {
-    // return fetch(`http://localhosmt:4001/api/forum/delete-thread-comments/${id}`, {
+        // return fetch(`http://localhosmt:4001/api/forum/delete-thread-comments/${id}`, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
@@ -1393,7 +1393,7 @@ function UpdateThreadById(id: any, payload: any) {
     const token = userData?.accessToken;
 
     return fetch(Gconfig.ebikeApi + `new-forum/update-forum-thread/${id}`, {
-    // return fetch(`http://localhnost:4001/api/new-forum/update-forum-thread/${id}`, {
+        // return fetch(`http://localhnost:4001/api/new-forum/update-forum-thread/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
@@ -1416,7 +1416,7 @@ function UpdateThreadCommentById(id: any, payload: any) {
     const token = userData?.accessToken;
 
     return fetch(Gconfig.ebikeApi + `forum/update-thread-comments/${id}`, {
-    // return fetch(`http://localhojst:4001/api/forum/update-thread-comments/${id}`, {
+        // return fetch(`http://localhojst:4001/api/forum/update-thread-comments/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
@@ -1439,7 +1439,7 @@ function AddNewVideo(data: any) {
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
     return fetch(Gconfig.ebikeApi + `videos/create-videos`, {
-    // return fetch(`http://localhosjt:4000/api/videos/create-videos`, {
+        // return fetch(`http://localhosjt:4000/api/videos/create-videos`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -1459,7 +1459,7 @@ function UpdateVideoByID(id: any, payload: any) {
     const token = userData?.accessToken;
 
     return fetch(Gconfig.ebikeApi + `videos/update-by-id/${id}`, {
-    // return fetch(`http://localhhost:4000/api/videos/update-by-id/${id}`, {
+        // return fetch(`http://localhhost:4000/api/videos/update-by-id/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
@@ -1478,7 +1478,7 @@ function UpdateVideoByID(id: any, payload: any) {
 
 function GetAllVideos() {
     return fetch(Gconfig.ebikeApi + `videos/get-all-bike-videos`, {
-    // return fetch(`http://locjalhost:4000/api/videos/get-all-bike-videos`, {
+        // return fetch(`http://locjalhost:4000/api/videos/get-all-bike-videos`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -1495,7 +1495,7 @@ function DeleteBikeVideo(id: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
-    
+
     return fetch(Gconfig.ebikeApi + `videos/delete-by-id/${id}`, {
         method: 'DELETE',
         headers: {
@@ -1512,6 +1512,81 @@ function DeleteBikeVideo(id: any) {
         });
 }
 
+////////////////////////////////////////////// WEBSITE SETTING FUNCTION //////////////////////////////////////////////
+function AddNewSetting(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Port + `website-setting/create-setting`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function UpdateSettingByID(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Port + `website-setting/setting-update-by-id/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
+function GetAllSetting() {
+    return fetch(Port + `website-setting/get-all-website-settings`, {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function DeleteSetting(id: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+
+    return fetch(Port + `website-setting/setting-delete-by-id/${id}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
 
 export {
@@ -1614,5 +1689,10 @@ export {
     AddNewVideo,
     GetAllVideos,
     UpdateVideoByID,
-    DeleteBikeVideo
+    DeleteBikeVideo,
+
+    AddNewSetting,
+    GetAllSetting,
+    UpdateSettingByID,
+    DeleteSetting
 }

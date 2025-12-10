@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateThreadById, UpdateThreadCommentById, UpdateVideoByID } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, AddNewSetting, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateSettingByID, UpdateThreadById, UpdateThreadCommentById, UpdateVideoByID } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -658,4 +658,114 @@ const EditVideo = ({ open, onClose, funct, Data }: any) => {
     )
 }
 
-export { BasicModal, EditVideo, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread, EditForumThreadComment }
+
+const EditWebsiteSetting = ({ open, onClose, funct, Data }: any) => {
+    const [Value, setValue] = useState<any>();
+    const [Name, setName] = useState('');
+    const [Description, setDescription] = useState('');
+    const [title, setTitle] = useState('');
+
+    React.useEffect(() => {
+        if (Data) {
+            setName(Data?.name || "");
+            setValue(Data?.value || "");
+            setDescription(Data?.description || "");
+        }
+    }, [Data])
+
+    const handleUpdateVideo = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: Name,
+            value: Value,
+            description: Description,
+        }
+
+        const res = await UpdateSettingByID(Data?.id, obj)
+        if (res && res?.success && res?.info == "Setting updated successfully") {
+            alert("Setting updated successfully")
+            setName('')
+            setValue('')
+            setDescription('')
+            onClose()
+            funct()
+        }
+        else {
+            alert("something is wrong try again")
+            onClose()
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={handleUpdateVideo} className={styles.main_}>
+
+                    <label htmlFor="name" className={styles.label}>Setting Name:</label>
+                    <input id="name" name="name" value={Name} onChange={(e) => setName(e.target.value)} className={styles.input} />
+                    <label htmlFor="value" className={styles.label}>Setting Value:</label>
+                    <textarea id="value" name="value" value={Value} onChange={(e) => setValue(e.target.value)} className={styles.textarea1} />
+                    <label htmlFor="description" className={styles.label}>Setting Description:</label>
+                    <textarea id="description" name="description" value={Description} onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <button type="submit" className={styles.button}>Save Edit</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+const AddNewWebsiteSetting = ({ open, onClose, funct }: any) => {
+    const [Value, setValue] = useState<any>();
+    const [Name, setName] = useState('');
+    const [Description, setDescription] = useState('');
+
+    const handleAddNewSetting = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: Name,
+            value: Value,
+            description: Description,
+        }
+
+        const res = await AddNewSetting(obj)
+        if (res && res?.success && res?.info == "Added Successfully!") {
+            alert("Setting Add successfully")
+            setName('')
+            setValue('')
+            setDescription('')
+            onClose()
+            funct()
+        }
+        else {
+            alert("something is wrong try again")
+            onClose()
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={handleAddNewSetting} className={styles.main_}>
+
+                    <label htmlFor="name" className={styles.label}>Setting Name:</label>
+                    <input id="name" name="name" value={Name} onChange={(e) => setName(e.target.value)} className={styles.input} />
+                    <label htmlFor="value" className={styles.label}>Setting Value:</label>
+                    <textarea id="value" name="value" value={Value} onChange={(e) => setValue(e.target.value)} className={styles.textarea1} />
+                    <label htmlFor="description" className={styles.label}>Setting Description:</label>
+                    <textarea id="description" name="description" value={Description} onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <button type="submit" className={styles.button}>Add Setting</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+export { BasicModal, EditVideo, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread, EditForumThreadComment, EditWebsiteSetting , AddNewWebsiteSetting}

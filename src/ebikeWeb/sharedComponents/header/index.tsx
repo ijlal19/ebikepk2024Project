@@ -4,6 +4,7 @@ import { isLoginUser } from '../../../genericFunctions/geneFunc';
 import ListItemButton from '@mui/material/ListItemButton';
 import { usePathname, useRouter } from 'next/navigation';
 import ListItemText from '@mui/material/ListItemText';
+import SearchIcon from '@mui/icons-material/Search';
 import React, { useEffect, useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import MechanicsList from './findMechanic/index';
@@ -36,21 +37,20 @@ const Header = () => {
     const [options, setOptions] = useState(false);
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
-   
 
     useEffect(() => {
         let URL = window.location.pathname
         authenticateUser()
-        if(URL.includes('/used-bikes/')){
+        if (URL.includes('/used-bikes/')) {
             setIsUserBike(false)
         }
         else if (URL.includes('/used-bikes')) {
             setIsUserBike(true)
         }
-        else if(URL.includes('/ebike-panel')){
+        else if (URL.includes('/ebike-panel')) {
             setIsEbikePanel(true)
         }
-        else if(URL.includes('/forum')){
+        else if (URL.includes('/forum')) {
             setIsEbikePanel(true)
         }
         else {
@@ -68,16 +68,16 @@ const Header = () => {
         // const params = new URLSearchParams(window.location.search);
         // params.set("q", query);
         // const newUrl = `/used-bikes?${params.toString()}`;
-        router.push(`/used-bikes?${query.trim()} `)
+        const formattedQuery = query.trim().replace(/\s+/g, ",");
+        router.push(`/used-bikes?query=${formattedQuery} `)
         // window.history.pushState({}, "", newUrl);
-    } ;
-
-    const handleKeyDown = (e:any) => {
-        if (e.key === "Enter") {
-        handleSearch();
-        }
     };
 
+    const handleKeyDown = (e: any) => {
+        if (e.key === "Enter") {
+            handleSearch();
+        }
+    };
 
     function authenticateUser() {
 
@@ -179,8 +179,22 @@ const Header = () => {
 
     const DrawerList = (
         <>
-            <Box sx={{ width: 250 }} role="presentation">
-
+            <Box className={styles.drawer_main} sx={{width : 250}} role="presentation">
+                <Box className={styles.searc_drawer}>
+                <Box className={styles.search_box_inner}>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        className={styles.search_input}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <button className={styles.search_btn} onClick={handleSearch}>
+                        <SearchIcon />
+                    </button>
+                </Box>
+                </Box>
                 <List>
                     <BuyandSell props={OptionBuySell} />
                     <Divider />
@@ -248,7 +262,7 @@ const Header = () => {
 
     return (
         <>
-            <Box className={`${isUsedBike ? styles.header_main_used_bike : styles.header_main}`} sx={{display:IsEbikePanel?"none":"flex"}}>
+            <Box className={`${isUsedBike ? styles.header_main_used_bike : styles.header_main}`} sx={{ display: IsEbikePanel ? "none" : "flex" }}>
                 <Box className={styles.logo_side}>
 
                     <Button className={styles.menu_button} disableRipple onClick={toggleDrawer(true)}>
@@ -270,8 +284,7 @@ const Header = () => {
 
                 </Box>
 
-                 {/* <Box className={styles.search_box}>
-                    <span className={styles.search_icon}>🔍</span>
+                <Box className={styles.search_box}>
                     <input
                         type="text"
                         placeholder="Search..."
@@ -281,9 +294,9 @@ const Header = () => {
                         onKeyDown={handleKeyDown}
                     />
                     <button className={styles.search_btn} onClick={handleSearch}>
-                        Search
+                        <SearchIcon />
                     </button>
-                </Box> */}
+                </Box>
 
                 <div className={styles.header_btn_sec}>
 
