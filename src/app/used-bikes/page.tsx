@@ -19,13 +19,11 @@ export default async function AllUsedBikes() {
 
   let obj = {
     adslimit: 12,
-    // page: 1
   }
   let allUsedBike = await getCustomBikeAd(obj);
 
   let featureObject = {
     isFeatured: true,
-    // random: true,
     adslimit: 20
   }
   let allFeaturedBike = await getCustomBikeAd(featureObject);
