@@ -511,82 +511,41 @@ const New_bike_card = () => {
                     </div>
                     <div className={styles.card_container}>
                         {displayedBikes.length > 0 ? (
-                            <>
-                                {displayedBikes.map((e: any, i: any) => (
-                                    <div className={styles.main_box_card} key={i}>
-                                        <div className={styles.card_container_box}>
-                                            <div className={styles.card_header}>
-                                                <h3 className={styles.heading}>{add3Dots(e?.title, 45) || 'No Title'}</h3>
-                                                <span className={styles.ad_id}>Ad ID: {e?.id}</span>
-                                            </div>
-
-                                            <div className={styles.card_content}>
-                                                <div className={styles.cardimage_box}>
-                                                    <Swiper
-                                                        spaceBetween={50}
-                                                        slidesPerView={1}
-                                                        onSlideChange={() => console.log('slide change')}
-                                                        onSwiper={(swiper) => console.log(swiper)}
-                                                        modules={[Navigation, FreeMode]}
-                                                        navigation={true}
-                                                        initialSlide={0}
-                                                        loop={true}
-                                                        className={styles.image}
-                                                    >
-                                                        {
-                                                            e?.images && e?.images.length > 0 ?
-                                                                e.images.map((imgUrl: any, ind: any) => {
-                                                                    return (
-                                                                        <SwiperSlide key={imgUrl} className={styles.image} >
-                                                                            <img src={cloudinaryLoader(imgUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
-                                                                        </SwiperSlide>
-                                                                    )
-                                                                }) :
-                                                                <SwiperSlide key=''>
-                                                                    <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={e?.title} className={styles.image} />
-                                                                </SwiperSlide>
-                                                        }
-                                                    </Swiper>
-                                                </div>
-
-                                                <div className={styles.card_detail}>
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>ID:</span>
-                                                        <span>{e?.id}</span>
-                                                    </div>
-
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Brand:</span>
-                                                        <span>{GetName("brand", e?.brandId)}</span>
-                                                    </div>
-
-                                                    <div className={styles.detail_row}>
-                                                        <span className={styles.detail_label}>Price:</span>
-                                                        <span className={styles.price}>
-                                                            {e?.price ? priceWithCommas(e.price) : '0'}
-                                                        </span>
-                                                    </div>
-
-                                                    <div className={styles.description} >
-                                                        <p style={{ margin: "0px 10px", padding: "0px", color: "black", fontSize: "14px" }} className={styles.description_text} dangerouslySetInnerHTML={{ __html: add3Dots(e?.description, 75) }}></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className={styles.card_actions}>
-                                                <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
-                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
-                                                        Edit
+                            <table className={styles.table_main}>
+                                <thead className={styles.thead}>
+                                    <tr >
+                                        <td className={styles.td} >ID</td>
+                                        <td className={styles.td} >Image</td>
+                                        <td className={styles.td} >Title</td>
+                                        <td className={styles.td} >Brand</td>
+                                        <td className={styles.td} >Price</td>
+                                        <td className={styles.td} >Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody className={styles.tbody}>
+                                    {displayedBikes.map((e: any, i: any) => (
+                                        <tr className={styles.tr}>
+                                            <td className={styles.td} >{e?.id}</td>
+                                            <td className={styles.td} ><img src={cloudinaryLoader(e?.images[0], 400, 'auto')} alt="" className={styles.image} /></td>
+                                            <td className={styles.td} >{add3Dots(e?.title, 20)}</td>
+                                            <td className={styles.td} >{GetName("brand", e?.brandId) || 'N/A'}</td>
+                                            <td className={styles.td} >{e?.price ? priceWithCommas(e.price) : '0'}</td>
+                                            <td className={styles.td_action}>
+                                                <div className={styles.card_actions}>
+                                                    <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
+                                                            Edit
+                                                        </button>
+                                                    </Link>
+                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                        Delete
                                                     </button>
-                                                </Link>
-                                                <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                                    Delete
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         ) : (
                             <div className={styles.no_results}>
                                 <p>No bikes found matching your search criteria.</p>
@@ -1822,58 +1781,41 @@ const AllBrands_Card = () => {
                             }} >Add New Brand</Link></button>
                     </div>
                     <div className={styles.card_container}>
-                        {displayedAllBrands.map((e: any, i: any) => (
-
-                            <div className={styles.main_box_card} key={i}>
-                                <div className={styles.card_container_box}>
-                                    <div className={styles.card_header}>
-                                        <h3 className={styles.heading}>{add3Dots(e?.brandName, 50) || 'No Title'}</h3>
-                                        <span className={styles.ad_id}>Brand ID: {e?.id}</span>
-                                    </div>
-
-                                    <div className={styles.card_content}>
-                                        <div className={styles.cardimage_box}
-                                            style={{
-                                                background: `url(${e?.logoUrl})`,
-                                                backgroundPosition: "center",
-                                                backgroundRepeat: 'no-repeat',
-                                                backgroundSize: '100px auto'
-                                            }}>
-                                        </div>
-
-                                        <div className={styles.card_detail}>
-                                            <div className={styles.detail_row}>
-                                                <span className={styles.detail_label}>Date:</span>
-                                                <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
+                        <table className={styles.table_main}>
+                            <thead className={styles.thead}>
+                                <tr >
+                                    <td className={styles.td} >ID</td>
+                                    <td className={styles.td} >Image</td>
+                                    <td className={styles.td} >Brand</td>
+                                    <td className={styles.td} >Description</td>
+                                    {/* <td className={styles.td} >Price</td> */}
+                                    <td className={styles.td} >Action</td>
+                                </tr>
+                            </thead>
+                            <tbody className={styles.tbody}>
+                                {displayedAllBrands.map((e: any, i: any) => (
+                                    <tr className={styles.tr}>
+                                        <td className={styles.td} >{e?.id}</td>
+                                        <td className={styles.td} ><img src={cloudinaryLoader(e?.logoUrl, 400, 'auto')} alt="" className={styles.image} /></td>
+                                        <td className={styles.td_name} >{e?.brandName || 'N/A'}</td>
+                                        <td className={styles.td_desc} >{add3Dots(e?.description, 100)}</td>
+                                        {/* <td className={styles.td} >{add3Dots(e?.title, 20)}</td> */}
+                                        <td className={styles.td_action}>
+                                            <div className={styles.card_actions}>
+                                                <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
+                                                        Edit
+                                                    </button>
+                                                </Link>
+                                                <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                    Delete
+                                                </button>
                                             </div>
-
-
-                                            <div className={styles.detail_row}>
-                                                <span className={styles.detail_label}>Brand Name:</span>
-                                                <span>{e?.brandName ? e?.brandName : "N/A"}</span>
-                                            </div>
-
-                                            <div className={styles.description}>
-                                                Description:
-                                                <p className={styles.description_text}>
-                                                    {add3Dots(e?.description, 165) || 'No description available'}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.card_actions}>
-                                        {/* <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => setOpen(true)} > */}
-                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrandDATA(e.id)} >
-                                            Edit
-                                        </button>
-                                        <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                            Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                     <div className={styles.pagination}>
                         {filteredAllBrands?.length > 0 && (
