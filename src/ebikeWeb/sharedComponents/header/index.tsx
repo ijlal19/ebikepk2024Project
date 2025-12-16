@@ -177,7 +177,7 @@ const Header = () => {
         <>
             <Box className={styles.drawer_main} sx={{width : 250}} role="presentation">
                 <Box className={styles.searc_drawer}>
-                <Box className={styles.search_box_inner}>
+                {/* <Box className={styles.search_box_inner}>
                     <input
                         type="text"
                         placeholder="Search..."
@@ -189,7 +189,7 @@ const Header = () => {
                     <button className={styles.search_btn} onClick={handleSearch}>
                         <SearchIcon />
                     </button>
-                </Box>
+                </Box> */}
                 </Box>
                 <List>
                     <BuyandSell props={OptionBuySell} />
@@ -280,7 +280,7 @@ const Header = () => {
 
                 </Box>
 
-                <Box className={styles.search_box}>
+                {/* <Box className={styles.search_box}>
                     <input
                         type="text"
                         placeholder="Search..."
@@ -292,7 +292,7 @@ const Header = () => {
                     <button className={styles.search_btn} onClick={handleSearch}>
                         <SearchIcon />
                     </button>
-                </Box>
+                </Box> */}
 
                 <div className={styles.header_btn_sec}>
 

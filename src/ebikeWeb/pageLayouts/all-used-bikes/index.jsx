@@ -30,7 +30,7 @@ import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
 import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
 import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
 import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 const AdsArray = [
     {
@@ -85,7 +85,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const is9Inch = useMediaQuery('(max-width:910px)');
 
     const router = useRouter()
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
 
     useEffect(() => {
 
@@ -98,12 +98,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             setIsLogin("not_login")
         }
 
-        // if (_allFeaturedBike?.data.length > 0) {
-        //     setFeaturedData(_allFeaturedBike?.data)
-        // }
-        // else {
-        //     fetchFeaturedBike()
-        // }
         fetchFeaturedBike()
 
         const pageNoRaw = localStorage.getItem('PageNo');
@@ -116,13 +110,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
     }, [])
 
-    useEffect(() => {
-        let q = searchParams.get("query") || "";
-        setSearchValue(q?.replaceAll(",", " "));
-        setTimeout(()=> {
-            handleSearch(1, q?.replaceAll(",", " "))
-        },500)
-    }, [searchParams]);
+    // useEffect(() => {
+    //     let q = searchParams.get("query") || "";
+    //     setSearchValue(q?.replaceAll(",", " "));
+    //     setTimeout(()=> {
+    //         handleSearch(1, q?.replaceAll(",", " "))
+    //     },500)
+    // }, [searchParams]);
 
     const fetchFavouriteAds = async (uid) => {
         setIsLoading(true)

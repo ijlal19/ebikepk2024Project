@@ -13,7 +13,7 @@ const Petrol_Price_Section = () => {
         },
         {
             type: "Hi Speed Diesel",
-            price: "PKR 279.65"
+            price: "PKR 265.65"
         }
     ]
 
