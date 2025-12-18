@@ -1,4 +1,4 @@
-'use cleint';
+'use client';
 import { Pagination } from '@mui/material';
 import Loader from '../../loader/loader';
 import { New_header } from '../../panel-header';

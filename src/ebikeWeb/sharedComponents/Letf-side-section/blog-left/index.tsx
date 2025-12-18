@@ -1,4 +1,4 @@
-'use cleint';
+'use client';
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import { NewMoreBlogCard } from '@/ebikeWeb/sharedComponents/new_item_card';
 import { BlogShuffle } from '@/genericFunctions/geneFunc';

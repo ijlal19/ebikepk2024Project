@@ -10,6 +10,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 
 export default function AllNewBikes() {
 
@@ -47,15 +48,15 @@ export default function AllNewBikes() {
       setAllDelaerArr(DealerDataRes.dealers)
     }
     else {
-        setAllnewBikeArr([])
-        setDesc("")
-        setLogo("")
-        setIsLoading(false)
-        setTimeout(() => {
-          window.scrollTo(0, 0)
-        }, 1000);
-        // let DealerDataRes = await getdealerData(res[0].brandId)
-        setAllDelaerArr([])
+      setAllnewBikeArr([])
+      setDesc("")
+      setLogo("")
+      setIsLoading(false)
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 1000);
+      // let DealerDataRes = await getdealerData(res[0].brandId)
+      setAllDelaerArr([])
     }
   }
 
@@ -72,7 +73,7 @@ export default function AllNewBikes() {
             <Box className={styles.description_box}>
               <Box className={styles.card_main}>
                 <img
-                  src={cloudinaryLoader(logo , 400 , 'auto')}
+                  src={cloudinaryLoader(logo, 400, 'auto')}
                   alt={brandname}
                   className={styles.card_image}
                 />
@@ -89,12 +90,12 @@ export default function AllNewBikes() {
                         onClick={showmore}
                         disableRipple
                       >
-                        {Showmore ? 
+                        {Showmore ?
                           <>
                             Show More
                             <KeyboardArrowDownIcon sx={{ fontSize: '15px' }} />
                           </>
-                        : 
+                          :
                           <>
                             Show Less
                             <KeyboardArrowUpIcon sx={{ fontSize: '15px' }} />
@@ -127,7 +128,7 @@ export default function AllNewBikes() {
                           allDealerArr?.map((e: any, i: any) => {
                             return (
                               <Box className={styles.card_main} key={i}>
-                                <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400 , 'auto')} alt='' className={styles.card_image} />
+                                <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt='' className={styles.card_image} />
                                 <Box className={styles.card_text}>
                                   <Typography className={styles.card_title}>{e?.shop_name}</Typography>
                                   <Typography className={styles.card_location}>{e?.city?.city_name}</Typography>
@@ -136,17 +137,22 @@ export default function AllNewBikes() {
                             )
                           })
                         }
-                        <Button className={styles.view_detail_btn} onClick={()=>{router.push('/dealers')}}><Link href="/dealers" className={styles.Link_tag}>View Related Dealers <KeyboardArrowRightIcon /></Link></Button>
+                        <Button className={styles.view_detail_btn} onClick={() => { router.push('/dealers') }}><Link href="/dealers" className={styles.Link_tag}>View Related Dealers <KeyboardArrowRightIcon /></Link></Button>
                       </Box> </> : ''
+                }
+                {
+                  allnewBikeArr?.length > 6 ?
+                    <MechaniLeft />
+                    : ""
                 }
               </Grid>
             </Grid>
           </Box>
-          : 
+          :
           <div className={styles.load_main}>
-          <div className={styles.load_div}>
-            <Loader isLoading={isLoading} />
-          </div>
+            <div className={styles.load_div}>
+              <Loader isLoading={isLoading} />
+            </div>
           </div>
       }
     </>

@@ -108,6 +108,7 @@ async function SendMail(e: any) {
         let obj = { email: Mail }
         let res = await sendEmailLetter(obj)
         alert('Email Submitted Successfully')
+        setMail("")
     }
 
     else {

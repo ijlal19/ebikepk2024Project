@@ -408,27 +408,31 @@
       }
 
       .grid_bike_list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 10px;
+        // display: flex;
+        // flex-wrap: wrap;
+        // gap: 5px;
+        // justify-content: center;
 
-        @media (max-width:600px) {
-          justify-content: center;
-          gap: 15px;
+        @media (max-width:768px) {
+          grid-template-columns: repeat(2, 1fr);
+          // gap: 15px;
+          column-gap: 15px;
         }
 
         .grid_card {
-          width: 28%;
+          width: 100%;
           height: auto;
           padding: 0px !important;
           background: white;
           border: 1px solid #e6e6e6;
-          margin: 10px 5px;
+          margin: 10px 0px;
           cursor: pointer;
 
           @media (max-width:600px) {
-            width: 46%;
+            width: 100%;
           }
 
           .grid_image_box {
@@ -995,37 +999,38 @@
     height: 100%;
     margin: auto !important;
     float: center;
-      border-radius: 10px;
-        box-shadow: 0px 0px 10px rgb(194, 194, 194);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(194, 194, 194);
+
     @media (max-width:600px) {
       width: 300px;
     }
   }
 }
 
-.featured_bike_swiper_main{
+.featured_bike_swiper_main {
   width: 100%;
   max-width: 1000px;
   margin: auto;
 }
 
- .featuredHeading {
-        text-align: center;
-        font-size: 25px;
-        width: 100%;
-        max-width: 1000px;
-        margin: 10px auto 15px auto;
-        letter-spacing: 1px;
-        font-family: 'Lato';
-        color: #1976d2;
-        border-bottom: 2px solid rgba(142, 142, 142, 0.444);
+.featuredHeading {
+  text-align: center;
+  font-size: 25px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 10px auto 15px auto;
+  letter-spacing: 1px;
+  font-family: 'Lato';
+  color: #1976d2;
+  border-bottom: 2px solid rgba(142, 142, 142, 0.444);
 
-        @media (max-width:767px) {
-            display: block;
-            padding: 0px !important;
-            margin: 0px auto 10px auto !important;
-            border: none !important;
-            box-sizing: border-box;
-            font-size: 22px;
-        }
-    }
+  @media (max-width:767px) {
+    display: block;
+    padding: 0px !important;
+    margin: 0px auto 10px auto !important;
+    border: none !important;
+    box-sizing: border-box;
+    font-size: 22px;
+  }
+}
