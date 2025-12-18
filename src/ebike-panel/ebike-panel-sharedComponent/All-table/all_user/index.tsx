@@ -268,4 +268,4 @@ const All_User = () => {
     )
 }
 
-export default All_User
+export default All_User;
