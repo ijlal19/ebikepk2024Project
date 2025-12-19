@@ -233,7 +233,10 @@ const All_User = () => {
                                                             return (
                                                                 <tr className={styles.tr} key={i}>
                                                                     {/* <tr> */}
-                                                                    <td className={styles.td} >{i}</td>
+                                                                    <td className={styles.td} >
+                                                                        {/* {i} */}
+                                                                        {(currentPageNews - 1) * itemsPerPage + i + 1}
+                                                                    </td>
                                                                     <td className={styles.td} >{e?.email || 'N/A'}</td>
                                                                     <td className={styles.td} >
                                                                         <button className={styles.del_btn}
