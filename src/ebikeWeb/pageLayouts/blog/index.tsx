@@ -84,11 +84,11 @@ const Blog = () => {
     getAllBlogList()
     setFade(true);
 
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.log(e);
-    }
+    // try {
+    //   (window.adsbygoogle = window.adsbygoogle || []).push({});
+    // } catch (e) {
+    //   console.log(e);
+    // }
 
   }, [])
 
@@ -253,14 +253,14 @@ const Blog = () => {
                   <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
                 </Box>
 
-                <div className='text-center mt-2 mb-2'>
+                {/* <div className='text-center mt-2 mb-2'>
                     <ins
                       className="adsbygoogle"
                       style={{ display: "inline-block", width: "336px", height: "280px" }}
                       data-ad-client="ca-pub-5167970563180610"
                       data-ad-slot="5915965531"
                     />
-                </div>
+                </div> */}
 
                 {
                   !isFilterApply ?
