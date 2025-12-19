@@ -201,7 +201,7 @@ const All_User = () => {
                                                                     <td className={styles.td} >{i}</td>
                                                                      <td className={styles.td} >{e?.userFullName}</td>
                                                                     <td className={styles.td} >{e?.email || 'N/A'}</td>
-                                                                    <td className={styles.td} >{e?.signupType}</td>
+                                                                     <td className={styles.td} >{e?.signupType}</td>
                                                                     <td className={styles.td} >{e?.userType}</td>
                                                                     <td className={styles.td} >{e?.status}</td>
                                                                     {/* <td className={styles.td} >
