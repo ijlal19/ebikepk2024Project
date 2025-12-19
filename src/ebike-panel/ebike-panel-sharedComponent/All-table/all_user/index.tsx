@@ -199,7 +199,7 @@ const All_User = () => {
                                                             return (
                                                                 <tr className={styles.tr} key={i}>
                                                                     <td className={styles.td} >{i}</td>
-                                                                    <td className={styles.td} >{e?.userFullName}</td>
+                                                                     <td className={styles.td} >{e?.userFullName}</td>
                                                                     <td className={styles.td} >{e?.email || 'N/A'}</td>
                                                                     <td className={styles.td} >{e?.signupType}</td>
                                                                     <td className={styles.td} >{e?.userType}</td>
