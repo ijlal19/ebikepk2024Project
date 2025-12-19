@@ -198,7 +198,9 @@ const All_User = () => {
                                                         displayedUser.length > 0 ? displayedUser.map((e: any, i: any) => {
                                                             return (
                                                                 <tr className={styles.tr} key={i}>
-                                                                    <td className={styles.td} >{i}</td>
+                                                                    <td className={styles.td} >
+                                                                        {(currentPage - 1) * itemsPerPage + i + 1}
+                                                                    </td>
                                                                      <td className={styles.td} >{e?.userFullName}</td>
                                                                     <td className={styles.td} >{e?.email || 'N/A'}</td>
                                                                      <td className={styles.td} >{e?.signupType}</td>
