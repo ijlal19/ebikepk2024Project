@@ -21,6 +21,8 @@ import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import CATEGORYdATA from './Data';
+import Script from "next/script";
+
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 const TagArray = [
   "Honda",
@@ -84,11 +86,11 @@ const Blog = () => {
     getAllBlogList()
     setFade(true);
 
-    // try {
-    //   (window.adsbygoogle = window.adsbygoogle || []).push({});
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.log(e);
+    }
 
   }, [])
 
@@ -220,6 +222,14 @@ const Blog = () => {
 
   return (
     <>
+
+      <Script
+        async
+        strategy="afterInteractive"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+        crossOrigin="anonymous"
+      />
+
       {
         !isLoading ?
           <Box className={styles.blog_main}>
@@ -253,14 +263,14 @@ const Blog = () => {
                   <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
                 </Box>
 
-                {/* <div className='text-center mt-2 mb-2'>
-                    <ins
-                      className="adsbygoogle"
-                      style={{ display: "inline-block", width: "336px", height: "280px" }}
-                      data-ad-client="ca-pub-5167970563180610"
-                      data-ad-slot="5915965531"
-                    />
-                </div> */}
+                <div className="text-center mt-2 mb-2">
+                  <ins
+                    className="adsbygoogle"
+                    style={{ display: "inline-block", width: "336px", height: "280px" }}
+                    data-ad-client="ca-pub-5167970563180610"
+                    data-ad-slot="5915965531"
+                  />
+                </div>
 
                 {
                   !isFilterApply ?
