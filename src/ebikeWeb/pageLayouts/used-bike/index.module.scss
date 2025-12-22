@@ -50,6 +50,9 @@
 
 .info_content {
     text-align: center;
+    // margin:10px 0px !important;
+    box-sizing: border-box;
+    // box-shadow: ;
 
     .info_field {
         font-size: 13px;
@@ -62,6 +65,8 @@
         max-width: 150px;
         overflow: hidden;
         font-size: 12px;
+        margin: 0px !important;
+        box-sizing: border-box;
 
         @media (max-width:767px) {
             font-size: 11px;

@@ -197,7 +197,7 @@ export default function UsedBike({_bikeDetail}:any) {
 
                 <table width="100%" className={styles.info_content}>
                   <tbody>
-                    <tr>
+                    <tr style={{boxShadow:"0px 0px 10px #ababab91" ,}}>
                       <td>
                         <p className={styles.info_field}> <b> Model </b> </p>
                         <p className={styles.info_field}> {bikeYear && bikeYear?.length > 0 && bikeYear[0].year} </p>
@@ -215,8 +215,8 @@ export default function UsedBike({_bikeDetail}:any) {
                 </table>
 
                 <table width="100%" className={styles.info_content}>
-                  <tbody>
-                    <tr>
+                  <tbody style={{boxShadow:"0px 0px 10px #ababab91"}}>
+                    <tr >
                       <td className={styles.info_field_two}> <b> Location </b> </td>
                       <td className={styles.info_field_two}> {bikeCity && bikeCity.length > 0 && bikeCity[0].city_name} </td>
 

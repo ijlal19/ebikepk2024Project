@@ -21,6 +21,8 @@ import { NewVideoCard } from "@/ebikeWeb/sharedComponents/new_item_card";
 
 let savedPage: any;
 let saveNewBike: any;
+let Usedbikewindowscroll: any;
+let Newbikewindowscroll: any;
 
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
@@ -38,10 +40,24 @@ const Used_bike_card: any = () => {
     const router = useRouter();
 
     useEffect(() => {
-        let savedPageStr = localStorage.getItem("PageUsedBike");
-        let savedPagefinal = savedPageStr ? parseInt(savedPageStr, 10) : null;
-        savedPage = savedPagefinal
-        fetchAllUsedBike(savedPage || 1);
+        let savedPageStr = Number(localStorage.getItem("PageUsedBike"));
+        const savedScrollStr = localStorage.getItem("UsedBikeScroll");
+        const prev_page = localStorage.getItem("prev_page");
+        savedPage = savedPageStr
+
+        if (savedScrollStr && prev_page === 'edit-used-bike') {
+            fetchAllUsedBike(savedPage);
+            setCurrentPage(savedPage);
+            localStorage.removeItem("prev_page");
+            Usedbikewindowscroll = Number(savedScrollStr)
+        }
+        else {
+            fetchAllUsedBike(1);
+            setCurrentPage(1);
+        }
+        setTimeout(() => {
+            localStorage.removeItem("PageUsedBike");
+        }, 1000);
     }, []);
 
     useEffect(() => {
@@ -62,7 +78,6 @@ const Used_bike_card: any = () => {
     }, [filteredBikes, currentPage]);
 
     const handlePaginationChange = async (event: any, page: any) => {
-        localStorage.setItem("PageUsedBike", page)
         setCurrentPage(page);
         window.scrollTo(0, 0);
     };
@@ -91,6 +106,9 @@ const Used_bike_card: any = () => {
     };
 
     const handleEdit = (id: any) => {
+        localStorage.setItem("PageUsedBike", String(currentPage))
+        localStorage.setItem("UsedBikeScroll", window.scrollY.toString());
+        localStorage.setItem("prev_page", "edit-used-bike");
         router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}`);
     };
 
@@ -186,7 +204,11 @@ const Used_bike_card: any = () => {
             // setAllBikeArr(res1.data);
             setIsLoading(false);
             setTimeout(() => {
-                window.scrollTo(0, 0)
+                window.scrollTo({
+                    top: Usedbikewindowscroll,
+                    left: 0,
+                    behavior: 'smooth'
+                });
             }, 500);
 
             // } else {
@@ -386,7 +408,7 @@ const New_bike_card = () => {
     const [filteredBikes, setFilteredBikes] = useState<any>([]);
     const [displayedBikes, setDisplayedBikes] = useState<any>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(18);
+    const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
 
@@ -395,9 +417,23 @@ const New_bike_card = () => {
 
     useEffect(() => {
         const savedPage = Number(localStorage.getItem("PageNewBike"));
+        const savedScrollStr = localStorage.getItem("NewBikeScroll");
+        const prev_page = localStorage.getItem("prev_page");
         saveNewBike = savedPage
-        fetchAllNewBike(saveNewBike || 1);
-        setCurrentPage(saveNewBike || 1);
+
+        if (savedScrollStr && prev_page === 'edit-new-bike') {
+            fetchAllNewBike(saveNewBike);
+            setCurrentPage(saveNewBike);
+            localStorage.removeItem("prev_page");
+            Newbikewindowscroll = Number(savedScrollStr)
+        }
+        else {
+            fetchAllNewBike(1);
+            setCurrentPage(1);
+        }
+        setTimeout(() => {
+            localStorage.removeItem("PageNewBike");
+        }, 1000);
     }, []);
 
     useEffect(() => {
@@ -434,12 +470,16 @@ const New_bike_card = () => {
         }
         setIsLoading(false);
         setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000)
+            window.scrollTo({
+                top: Newbikewindowscroll,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }, 500);
     };
 
     const handlePaginationChange = (event: any, page: any) => {
-        localStorage.setItem("PageNewBike", String(page))
+        // localStorage.setItem("PageNewBike", String(page))
         setCurrentPage(page);
         window.scrollTo(0, 0);
     };
@@ -471,6 +511,8 @@ const New_bike_card = () => {
 
     const handleEdit = (id: any) => {
         localStorage.setItem("PageNewBike", String(currentPage))
+        localStorage.setItem("NewBikeScroll", window.scrollY.toString());
+        localStorage.setItem("prev_page", "edit-new-bike");
         router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`);
     };
 
