@@ -8,7 +8,7 @@ import { Grid, Link, Pagination } from "@mui/material";
 import { Navigation, FreeMode } from 'swiper/modules';
 import SearchIcon from '@mui/icons-material/Search';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { New_header } from "../panel-header";
+import { New_header } from "../panel-header"; 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from './index.module.scss';
