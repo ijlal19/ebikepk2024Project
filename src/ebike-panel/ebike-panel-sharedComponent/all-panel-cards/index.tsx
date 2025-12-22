@@ -2443,7 +2443,8 @@ const Electric_Bike_Card = () => {
                                 color: "white", textDecoration: 'none'
                             }} >Add Electric Bike</Link></button>
                     </div>
-                    <div className={styles.card_container}>
+
+                    {/* <div className={styles.card_container}>
                         {displayedBikes.length > 0 ? (
                             <>
                                 {displayedBikes.map((e: any, i: any) => (
@@ -2526,7 +2527,54 @@ const Electric_Bike_Card = () => {
                                 <p>No bikes found matching your search criteria.</p>
                             </div>
                         )}
+                    </div> */}
+
+                    <div className={styles.card_container}>
+                        {displayedBikes.length > 0 ? (
+                            <table className={styles.table_main}>
+                                <thead className={styles.thead}>
+                                    <tr >
+                                        <td className={styles.td} >ID</td>
+                                        <td className={styles.td} >Image</td>
+                                        <td className={styles.td} >Title</td>
+                                        <td className={styles.td} >Brand</td>
+                                        <td className={styles.td} >Price</td>
+                                        <td className={styles.td} >Action</td>
+                                    </tr>
+                                </thead>
+                                <tbody className={styles.tbody}>
+                                    {displayedBikes.map((e: any, i: any) => (
+                                        <tr className={styles.tr}>
+                                            <td className={styles.td} >{e?.id}</td>
+                                            <td className={styles.td} ><img src={cloudinaryLoader(e?.images[0], 400, 'auto')} alt="" className={styles.image} /></td>
+                                            <td className={styles.td} >{add3Dots(e?.title, 20)}</td>
+                                            <td className={styles.td} >{GetName("brand", e?.brandId) || 'N/A'}</td>
+                                            <td className={styles.td} >{e?.price ? priceWithCommas(e.price) : '0'}</td>
+                                            <td className={styles.td_action}>
+                                                <div className={styles.card_actions}>
+                                                    <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
+                                                            Edit
+                                                        </button>
+                                                    </Link>
+                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div className={styles.no_results}>
+                                <p>No bikes found matching your search criteria.</p>
+                            </div>
+                        )}
                     </div>
+
+
+
                     <div className={styles.pagination}>
                         {filteredBikes?.length > 0 && (
                             <div className={styles.used_bike_list_pagination}>
