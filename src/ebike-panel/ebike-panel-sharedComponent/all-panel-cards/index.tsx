@@ -1846,7 +1846,7 @@ const AllBrands_Card = () => {
                                             <div className={styles.card_actions}>
                                                 <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
                                                     <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
-                                                        Edit
+                                                    Edit
                                                     </button>
                                                 </Link>
                                                 <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
