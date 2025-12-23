@@ -38,7 +38,8 @@ export default function AllNewBikes() {
 
     if (res?.length > 0) {
       setAllnewBikeArr(res)
-      setDesc(res[0]?.bike_brand?.description)
+      let _des = res[0]?.bike_brand?.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '')
+      setDesc(_des)
       setLogo(res[0]?.bike_brand?.logoUrl)
       setIsLoading(false)
       setTimeout(() => {
@@ -80,9 +81,15 @@ export default function AllNewBikes() {
               </Box>
               {desc && desc.length > 0 && (
                 <>
-                  <Typography className={styles.descriptionPara}>
+                  {/* <Typography className={styles.descriptionPara} >
                     {Showmore ? desc.slice(0, 100) : desc}
-                  </Typography>
+                  </Typography> */}
+                  <Typography
+                    className={styles.descriptionPara}
+                    dangerouslySetInnerHTML={{
+                      __html: Showmore ? desc.slice(0, 100) : desc,
+                    }}
+                  />
                   <Box>
                     <Box className={styles.buttons_box}>
                       <Button
