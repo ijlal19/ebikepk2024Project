@@ -1580,7 +1580,7 @@ const EditBrandForm = () => {
     const fetchPageByID = async (id: any) => {
         setIsLoading(true)
         const res = await getBrandFromId(id, BrandArr)
-        console.log("DataCheck", res)
+        console.log("hello", res)
         if (res && res) {
             setNewBrandName(res[0].brandName)
             setNewLogoUrl(res[0].logoUrl)
@@ -1642,10 +1642,9 @@ const EditBrandForm = () => {
         }
     };
 
-    const goBack = () => {
+    const goBack1 = () => {
         router.push('/ebike-panel/dashboard/all-bike-brands')
     }
-
 
     return (
         <div className={styles.main_brand_box}>
@@ -1653,7 +1652,7 @@ const EditBrandForm = () => {
                 !isLoading ?
                     <form onSubmit={handleSubmit} className={styles.main}>
                         <div className={styles.formHeader}>
-                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                            <p className={styles.a} onClick={goBack1} ><ArrowBackIosIcon className={styles.icon} /></p>
                             <p className={styles.heading}>Edit Brand</p>
                         </div>
 

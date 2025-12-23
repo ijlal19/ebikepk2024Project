@@ -1844,7 +1844,7 @@ const AllBrands_Card = () => {
                                         {/* <td className={styles.td} >{add3Dots(e?.title, 20)}</td> */}
                                         <td className={styles.td_action}>
                                             <div className={styles.card_actions}>
-                                                <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
                                                     <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
                                                         Edit
                                                     </button>

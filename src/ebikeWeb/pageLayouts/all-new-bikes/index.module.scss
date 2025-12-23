@@ -85,6 +85,10 @@
             box-sizing: border-box;
             margin: auto;
             padding: 10px 10px !important;
+
+            @media (max-width:768px) {
+                text-align: justify;
+            }
         }
 
         .buttons_box {
