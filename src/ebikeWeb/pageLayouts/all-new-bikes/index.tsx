@@ -86,6 +86,7 @@ export default function AllNewBikes() {
                   </Typography> */}
                   <Typography
                     className={styles.descriptionPara}
+                    sx={{textAlign : Showmore ? "center" : "left"}}
                     dangerouslySetInnerHTML={{
                       __html: Showmore ? desc.slice(0, 100) : desc,
                     }}

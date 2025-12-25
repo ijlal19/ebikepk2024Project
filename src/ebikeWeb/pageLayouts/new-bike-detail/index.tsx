@@ -213,25 +213,28 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   }
 
   function embebedYoutubeVideoId(videoURL: string) {
-    if (videoURL) {
-      var url = videoURL;
-      if (url.split('https://youtu.be/')[1]) {
-        let videoID = url.split('https://youtu.be/')[1]
-        let videoUrl = 'https://www.youtube.com/embed/' + videoID
-        return videoUrl;
-      }
-      else if (url.split('https://www.youtube.com/watch?v=')[1]) {
-        let videoID = url.split('https://www.youtube.com/watch?v=')[1]
-        let videoUrl = 'https://www.youtube.com/embed/' + videoID;
-        return videoUrl;
-      }
-      else {
-        return ""
-      }
+    if (!videoURL) return "";
+
+    let videoId = "";
+
+    // youtu.be short url
+    if (videoURL.includes("youtu.be/")) {
+      videoId = videoURL.split("youtu.be/")[1].split("?")[0];
     }
-    else {
-      return ""
+
+    // youtube watch url
+    else if (videoURL.includes("watch?v=")) {
+      videoId = videoURL.split("watch?v=")[1].split("&")[0];
     }
+
+    // already embed url
+    else if (videoURL.includes("youtube.com/embed/")) {
+      videoId = videoURL.split("embed/")[1].split("?")[0];
+    }
+
+    return videoId
+      ? `https://www.youtube.com/embed/${videoId}`
+      : "";
   }
 
   return (
@@ -436,9 +439,9 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                     <Button className={styles.view_detail_btn}
                                       onClick={() => {
                                         allDealerArr?.length > 0 ?
-                                        router.push(`/dealers?brand=${allDealerArr[0]?.brand_id}`)
-                                        :
-                                        router.push(`/dealers`)
+                                          router.push(`/dealers?brand=${allDealerArr[0]?.brand_id}`)
+                                          :
+                                          router.push(`/dealers`)
                                       }}>
                                       <Link href={allDealerArr.length > 0 ? `/dealers?brand=${allDealerArr[0]?.brand_id}` : '/dealers'} className={styles.Link_tag}>
                                         More Dealers <KeyboardArrowRightIcon />
@@ -471,9 +474,9 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                     <Button className={styles.view_detail_btn}
                                       onClick={() => {
                                         allMechanicArr?.length > 0 ?
-                                        router.push(`/mechanics?brand=${allMechanicArr[0]?.brand_id}`)
-                                        :
-                                        router.push(`/mechanics`)
+                                          router.push(`/mechanics?brand=${allMechanicArr[0]?.brand_id}`)
+                                          :
+                                          router.push(`/mechanics`)
                                       }}>
                                       <Link href={allMechanicArr.length > 0 ? `/mechanics?brand=${allMechanicArr[0]?.brand_id}` : '/mechanics'} className={styles.Link_tag}>
                                         More Mechanics <KeyboardArrowRightIcon />
