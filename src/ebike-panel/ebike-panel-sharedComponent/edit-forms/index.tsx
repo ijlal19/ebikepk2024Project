@@ -1316,7 +1316,8 @@ const EditBrandForm = () => {
 
     const fetchPageByID = async (id: any) => {
         setIsLoading(true)
-        const res = await getBrandFromId(id, BrandArr)
+        const getBrandArray = await getbrandData()
+        const res = await getBrandFromId(id, getBrandArray)
         console.log("hello", res)
         if (res && res) {
             setNewBrandName(res[0].brandName)

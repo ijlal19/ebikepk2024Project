@@ -36,7 +36,7 @@ export default function AllNewBikes() {
     let res = await getnewBikeData({ brand: brandName })
 
 
-    if (res?.length > 0) {
+    if (res && res?.length > 0) {
       setAllnewBikeArr(res)
       let _des = res[0]?.bike_brand?.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '')
       setDesc(_des)
@@ -69,7 +69,7 @@ export default function AllNewBikes() {
   return (
     <>
       {
-        !isLoading ?
+        !isLoading && allnewBikeArr?.length > 0 ?
           <Box className={styles.all_new_bike_main}>
             <Box className={styles.description_box}>
               <Box className={styles.card_main}>
@@ -86,7 +86,7 @@ export default function AllNewBikes() {
                   </Typography> */}
                   <Typography
                     className={styles.descriptionPara}
-                    sx={{textAlign : Showmore ? "center" : "left"}}
+                    sx={{ textAlign: Showmore ? "center" : "left" }}
                     dangerouslySetInnerHTML={{
                       __html: Showmore ? desc.slice(0, 100) : desc,
                     }}
@@ -157,11 +157,17 @@ export default function AllNewBikes() {
             </Grid>
           </Box>
           :
-          <div className={styles.load_main}>
-            <div className={styles.load_div}>
-              <Loader isLoading={isLoading} />
+          isLoading ? (
+            <div className={styles.load_main}>
+              <div className={styles.load_div}>
+                <Loader isLoading={isLoading} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <Typography className={styles.no_data}>
+              No Bikes Found
+            </Typography>
+          )
       }
     </>
 

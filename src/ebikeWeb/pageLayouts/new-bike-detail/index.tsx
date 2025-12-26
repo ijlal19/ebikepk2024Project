@@ -213,8 +213,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   }
 
   function embebedYoutubeVideoId(videoURL: string) {
-    if (!videoURL) return "";
-
     let videoId = "";
 
     // youtu.be short url
@@ -386,16 +384,19 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             </Box>
                           </Box>
                           {/* BIKE YOUTUBE VIDEO */}
-                          <Box className={styles.bike_video_box}>
-                            <Box className={styles.bike_video}>
-                              <iframe
-                                src={e?.bike?.videoUrl ? embebedYoutubeVideoId(e?.bike?.videoUrl) : "https://www.youtube.com/embed/9g0U8s83jkw"}
-                                title="YouTube video player"
-                                className={styles.bike_video}
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              ></iframe>
-                            </Box>
-                          </Box>
+                          {
+                            e?.bike?.videoUrl ?
+                              < Box className={styles.bike_video_box}>
+                                <Box className={styles.bike_video}>
+                                  <iframe
+                                    src={embebedYoutubeVideoId(e?.bike?.videoUrl)}
+                                    title="YouTube video player"
+                                    className={styles.bike_video}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  ></iframe>
+                                </Box>
+                              </Box> : ""
+                          }
 
                         </Grid>
 
@@ -492,10 +493,11 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                               <img style={{ width: "100%" }} src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" />
                             </Link>
                           </Box>
-                          <Side_brands />
+                          {e?.bike?.videoUrl &&
+                            <Side_brands />}
                           {/* <List_Card /> */}
                         </Grid>
-                      </Grid>
+                      </Grid >
                     </>)
                 })}
             </Box>

@@ -1,125 +1,5 @@
 let BrandArr = [
     {
-        "id": 12,
-        "brandName": "bmw",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/BMW.png",
-        "description": "BMW is German well-known automobile company, the word BMW stands for Bayerische Motoren Werke AG in German. Whereas in English, Bavarian Motor Works. BMW is known for manufacturing quality cars and motorcycles.\nBMW started its motorcycle manufacturing in 1921 and later it merged with Bayerische Flugzeugwerke. The company inherited Helios motorcycle and 02 stroke small motorized bicycle called Friz. BMW introduced R32 motorcycle, which is equipped 486 cc engine with 8.5 hp with a top speed of 95 to 100 km/h. \n\nBMW introduced recirculating wet sump oil system with drip feed to roller bearing. Whereas other manufacturers total loss oiling system.\n",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "BMW New Bikes in Pakistan, Get yourself updated from the latest super bike news and videos reviews about BMW New Bikes in Pakistan on ebike.pk.",
-        "focus_keyword": "bmw",
-        "createdAt": "2018-12-14T12:35:34.243Z",
-        "updatedAt": "2019-11-07T12:11:38.285Z"
-    },
-    {
-        "id": 10,
-        "brandName": "zxmco",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_80,dpr_auto/v1540624361/bike_brands/Zxmco.png",
-        "description": "ZXMCO Motorcycle, a renowned motorcycle brand is introduced by Abdul Samad Group. The company started its motorcycle production in August 2004. The company introduced various models from 70cc to 250cc motorcycle segment.\nZXMCO has focused on providing reliable motorcycles to its customers. Therefore, they developed strong 03 S dealer network throughout Pakistan.\n",
-        "vediourl": null,
-        "meta_title": "ZXMCO Motorcycles in Pakistan | Abdul Samad Group | ebike.pk",
-        "meta_description": "ZXMCO New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about ZXMCO New Bikes in Pakistan.",
-        "focus_keyword": "zxmco motorcycles",
-        "createdAt": "2018-12-14T12:34:10.413Z",
-        "updatedAt": "2019-11-12T12:09:52.597Z"
-    },
-    {
-        "id": 24,
-        "brandName": "hi_speed",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/High_speed.jpg",
-        "description": "Raazy Motor Industries, the manufacturers of Hi Speed Motorcycles established in 2004. The company is engaged in manufacturing of 70cc, 100cc, 125cc & 150cc motorcycles. Moreover, the company also manufactures 150cc cargo loaders. Hi Speed 150cc is the premier brand of Raazy Motors. ",
-        "vediourl": null,
-        "meta_title": "Hi Speed Motorcycles | Razzy Motors Industries Pvt. Ltd | ebike.pk",
-        "meta_description": "Hi-Speed New Bikes in Pakistan, Get yourself updated from the latest news and video reviews about Hi Speed New Bikes in Pakistan.",
-        "focus_keyword": "hi speed",
-        "createdAt": "2018-12-14T12:44:07.891Z",
-        "updatedAt": "2019-11-19T11:17:08.413Z"
-    },
-    {
-        "id": 2,
-        "brandName": "kawasaki",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_30,q_auto,w_50,dpr_auto/v1540624358/bike_brands/kawasaki.png",
-        "description": "Kawasaki Heavy Industries Limited is leading Japanese Conglomerate engage in manufacturing of heavy equipment, aerospace, defense equipment, motorcycles, rolling stock and ships, industrial robots, gas turbines and boilers. Kawasaki was formed by Shozo Kawasaki on October 15, 1896. The Kawasaki headquarters is situated in Chuo-ku, kobe & Minato, Tokyo.  ",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "Kawasaki New Bikes in Pakistan, Get yourself updated from the latest sportbike news and videos reviews about Kawasaki New Bikes on ebike.pk.",
-        "focus_keyword": "kawasaki",
-        "createdAt": "2018-12-14T12:19:27.265Z",
-        "updatedAt": "2019-11-07T12:12:02.196Z"
-    },
-    {
-        "id": 15,
-        "brandName": "metro",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/metro.jpg",
-        "description": "",
-        "vediourl": null,
-        "meta_title": "Metro Motorcycle Manufacturer | Ohad Motors | ebike.pk",
-        "meta_description": "Metro New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Metro New Bikes in Pakistan.",
-        "focus_keyword": "metro motorcycle",
-        "createdAt": "2018-12-14T12:37:21.982Z",
-        "updatedAt": "2019-11-12T12:10:21.381Z"
-    },
-    {
-        "id": 9,
-        "brandName": "ghani",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624357/bike_brands/Ghani.png",
-        "description": "\nGhani Automobile Limited, a public listed company Pakistan Stock Exchange started its operations in 2005. Ghani Automobile is engaged in assembling 70 to 100cc motorcycles. The factory is situated at Multan Road, Whereas the office of the company is situated at Model Town Lahore.\n\nThe objective of the company is to provide the economical and quality motorcycles to its customers in 70cc and 100cc range. So far they are successful in providing the quality motorbikes to their customers. Ghani has sizeable market share in Punjab.\n",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "Ghani New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Ghani New Bikes in Pakistan.",
-        "focus_keyword": "ghani motorcycles",
-        "createdAt": "2018-12-14T12:33:32.989Z",
-        "updatedAt": "2019-11-13T09:32:06.305Z"
-    },
-    {
-        "id": 14,
-        "brandName": "ducati",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/Ducati.jpg",
-        "description": "Ducati Motor Holding S.P.A, an Italian manufacturing motorcycle division headquartered in Bologna, Italy. Ducati is owned by German automotive manufacturer Audi through its Italian Subsidary Lamborghini.\nDucati has been known for manufacturing quality motorcycles with four stroke 90 v twin engines. As  Ducati refers this configuration as L-twin mainly because one cylinder is vertical whereas the other is horizontal, making it look like a letter \"L\". Today Ducati has been regarded as the dominant performance motorcycle in the world due to desmodromic valve design.\n\nThe chief designer of Ducati motorcycles in 1950’s was Fabio Taglioni. These designs ranges from small single cylinder machines. Those machines were successful in Italian Street Races.\n",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "Ducati Sport New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Ducati Sport New Bikes in Pakistan.",
-        "focus_keyword": "ducati bikes",
-        "createdAt": "2018-12-14T12:36:42.910Z",
-        "updatedAt": "2019-11-13T09:32:59.700Z"
-    },
-    {
-        "id": 38,
-        "brandName": "sport",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/Sports_logo.jpg",
-        "description": "",
-        "vediourl": null,
-        "meta_title": null,
-        "meta_description": "Sport New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Sport New Bikes in Pakistan.",
-        "focus_keyword": null,
-        "createdAt": "2019-01-28T06:17:44.216Z",
-        "updatedAt": "2019-11-15T10:22:19.154Z"
-    },
-    {
-        "id": 39,
-        "brandName": "ktm",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1548851462/ktm.jpg",
-        "description": "KTM known for its off road motorcycles (supermoto, endure and motocross). However, later it has expanded to street motorcycles and started manufacturing sports cars as well.\nKTM AG is an Austrian firm established in 1932 and it is owned by KTM Industries AG & Bajaj Auto India. KTM has been the largest motorbike manufacturer in Europe for 04 years since 2012. KTM is one of the leading off-road motorcycle manufacturers of the world. \n",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "KTM New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about KTM New Bikes in Pakistan.",
-        "focus_keyword": "ktm motorcycles",
-        "createdAt": "2019-01-30T12:33:13.275Z",
-        "updatedAt": "2019-11-08T11:33:43.786Z"
-    },
-    {
-        "id": 37,
-        "brandName": "aprilia",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_80,dpr_auto/v1540624357/bike_brands/Aprilia.png",
-        "description": "",
-        "vediourl": null,
-        "meta_title": null,
-        "meta_description": "Aprilia New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Aprilia New Bikes in Pakistan.",
-        "focus_keyword": null,
-        "createdAt": "2019-01-18T07:04:00.195Z",
-        "updatedAt": "2019-11-08T11:34:53.820Z"
-    },
-    {
         "id": 32,
         "brandName": "china",
         "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1547794602/bike_brands/Capture.png",
@@ -132,40 +12,112 @@ let BrandArr = [
         "updatedAt": "2019-11-15T10:21:57.301Z"
     },
     {
+        "id": 2,
+        "brandName": "kawasaki",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752580726/kawasaki_z7e84j.jpg",
+        "description": "Kawasaki Heavy Industries Limited is leading Japanese Conglomerate engage in manufacturing of heavy equipment, aerospace, defense equipment, motorcycles, rolling stock and ships, industrial robots, gas turbines and boilers. Kawasaki was formed by Shozo Kawasaki on October 15, 1896. The Kawasaki headquarters is situated in Chuo-ku, kobe & Minato, Tokyo.  ",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Kawasaki New Bikes in Pakistan, Get yourself updated from the latest sportbike news and videos reviews about Kawasaki New Bikes on ebike.pk.",
+        "focus_keyword": "kawasaki",
+        "createdAt": "2018-12-14T12:19:27.265Z",
+        "updatedAt": "2025-09-09T10:49:23.530Z"
+    },
+    {
+        "id": 15,
+        "brandName": "metro",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752580859/metro_agxabk.jpg",
+        "description": "metro",
+        "vediourl": "",
+        "meta_title": "Metro Motorcycle Manufacturer | Ohad Motors | ebike.pk",
+        "meta_description": "Metro New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Metro New Bikes in Pakistan.",
+        "focus_keyword": "metro motorcycle",
+        "createdAt": "2018-12-14T12:37:21.982Z",
+        "updatedAt": "2025-09-09T10:51:32.952Z"
+    },
+    {
+        "id": 9,
+        "brandName": "ghani",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757416422/ghani_q3om8e.jpg",
+        "description": "\nGhani Automobile Limited, a public listed company Pakistan Stock Exchange started its operations in 2005. Ghani Automobile is engaged in assembling 70 to 100cc motorcycles. The factory is situated at Multan Road, Whereas the office of the company is situated at Model Town Lahore.\n\nThe objective of the company is to provide the economical and quality motorcycles to its customers in 70cc and 100cc range. So far they are successful in providing the quality motorbikes to their customers. Ghani has sizeable market share in Punjab.\n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Ghani New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Ghani New Bikes in Pakistan.",
+        "focus_keyword": "ghani motorcycles",
+        "createdAt": "2018-12-14T12:33:32.989Z",
+        "updatedAt": "2025-09-09T11:14:18.623Z"
+    },
+    {
         "id": 22,
         "brandName": "ravi",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540640213/bike_brands/Ravi.jpg",
-        "description": "",
-        "vediourl": null,
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757491619/WhatsApp_Image_2025-09-09_at_21.16.21_2_o5lv0p.jpg",
+        "description": "Ravi",
+        "vediourl": "",
         "meta_title": "",
         "meta_description": "Ravi New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Ravi New Bikes in Pakistan.",
         "focus_keyword": "ravi motorcycle",
         "createdAt": "2018-12-14T12:42:24.334Z",
-        "updatedAt": "2019-11-14T13:03:33.010Z"
+        "updatedAt": "2025-09-10T08:07:50.100Z"
     },
     {
-        "id": 11,
-        "brandName": "treet",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_30,q_auto,w_60,dpr_auto/v1540624360/bike_brands/treat_bike_logo.png",
-        "description": "Ali Group, the brain child of Sir Syed Maratib Ali who expanded its agricultural business in to industrial and trading business. The history of this group started prior to the indo-pak partition. Soon after the partition the Treet Corporation started its business operations in 1952. \nTreet Corporation, a public listed company engaged in the manufacturing of various kind of razors and blades since decades. Treet has been recognized for its quality razors and blades.\n\nThe rising demand of motorcycles in the last one and a half decade has forced this group to launch economical motorcycles. The company has introduced wide range of 70cc motorcycles with self-start option, 100cc and three wheelers for the loading purpose.\n\nIt is worth mentioning here that Packages Ltd, IGI Insurance, Loads Limited and Liaqat National is also part of this group.\n",
-        "vediourl": null,
+        "id": 37,
+        "brandName": "aprilia",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757491729/WhatsApp_Image_2025-09-09_at_21.16.20_3_o70npd.jpg",
+        "description": "Aprilia",
+        "vediourl": "",
         "meta_title": "",
-        "meta_description": "Treet New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Treet New Bikes in Pakistan.",
-        "focus_keyword": "treet motorcycles",
-        "createdAt": "2018-12-14T12:35:00.417Z",
-        "updatedAt": "2019-11-14T13:04:21.340Z"
+        "meta_description": "Aprilia New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Aprilia New Bikes in Pakistan.",
+        "focus_keyword": "",
+        "createdAt": "2019-01-18T07:04:00.195Z",
+        "updatedAt": "2025-09-10T08:09:49.787Z"
     },
     {
-        "id": 25,
-        "brandName": "crown",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624357/bike_brands/Crown.jpg",
-        "description": "Lifan group entered into an agreement with Crown group Karachi with an objective to get a sizeable market share in the motorcycle industry of Pakistan. The Joint Venture between these two has achieved remarkable position of CRLF products within two years. In addition to this the Crown group has introduced its motorcycles in 2005 with an objective to meet a growing demand of motorcycles.\n\nCrown Motorcycles are being made from CRLF products. The company manufactures 85,000 motorcycles per annum from their plant situated at Sadiqabad, Punjab. Crown Motorcycles plant is equipped with state of the art machines.\n\n",
-        "vediourl": null,
-        "meta_title": "Crown Bike in Pakistan Pakistan | Crown Motor Company Ltd |ebike.pk",
-        "meta_description": "Crown bike is introduced by Crown & Lifan in Pakistan. Crown bike is available in 70cc, 100cc & 150cc. Crown Lifan is mainly due to its motorcycle parts.",
-        "focus_keyword": "crown bike",
-        "createdAt": "2018-12-14T12:45:16.674Z",
-        "updatedAt": "2019-04-03T10:50:35.014Z"
+        "id": 39,
+        "brandName": "ktm",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757491825/WhatsApp_Image_2025-09-09_at_21.16.20_2_e8hmmw.jpg",
+        "description": "KTM known for its off road motorcycles (supermoto, endure and motocross). However, later it has expanded to street motorcycles and started manufacturing sports cars as well.\nKTM AG is an Austrian firm established in 1932 and it is owned by KTM Industries AG & Bajaj Auto India. KTM has been the largest motorbike manufacturer in Europe for 04 years since 2012. KTM is one of the leading off-road motorcycle manufacturers of the world. \n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "KTM New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about KTM New Bikes in Pakistan.",
+        "focus_keyword": "ktm motorcycles",
+        "createdAt": "2019-01-30T12:33:13.275Z",
+        "updatedAt": "2025-09-10T08:10:44.208Z"
+    },
+    {
+        "id": 14,
+        "brandName": "ducati",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757492339/WhatsApp_Image_2025-09-09_at_21.16.19_3_mwuwdj.jpg",
+        "description": "Ducati Motor Holding S.P.A, an Italian manufacturing motorcycle division headquartered in Bologna, Italy. Ducati is owned by German automotive manufacturer Audi through its Italian Subsidary Lamborghini.\nDucati has been known for manufacturing quality motorcycles with four stroke 90 v twin engines. As  Ducati refers this configuration as L-twin mainly because one cylinder is vertical whereas the other is horizontal, making it look like a letter \"L\". Today Ducati has been regarded as the dominant performance motorcycle in the world due to desmodromic valve design.\n\nThe chief designer of Ducati motorcycles in 1950’s was Fabio Taglioni. These designs ranges from small single cylinder machines. Those machines were successful in Italian Street Races.\n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Ducati Sport New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Ducati Sport New Bikes in Pakistan.",
+        "focus_keyword": "ducati bikes",
+        "createdAt": "2018-12-14T12:36:42.910Z",
+        "updatedAt": "2025-09-10T08:19:58.337Z"
+    },
+    {
+        "id": 24,
+        "brandName": "hi_speed",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757492490/WhatsApp_Image_2025-09-09_at_21.16.19_2_whhtwj.jpg",
+        "description": "Raazy Motor Industries, the manufacturers of Hi Speed Motorcycles established in 2004. The company is engaged in manufacturing of 70cc, 100cc, 125cc & 150cc motorcycles. Moreover, the company also manufactures 150cc cargo loaders. Hi Speed 150cc is the premier brand of Raazy Motors. ",
+        "vediourl": "",
+        "meta_title": "Hi Speed Motorcycles | Razzy Motors Industries Pvt. Ltd | ebike.pk",
+        "meta_description": "Hi-Speed New Bikes in Pakistan, Get yourself updated from the latest news and video reviews about Hi Speed New Bikes in Pakistan.",
+        "focus_keyword": "hi speed",
+        "createdAt": "2018-12-14T12:44:07.891Z",
+        "updatedAt": "2025-09-10T08:21:53.951Z"
+    },
+    {
+        "id": 10,
+        "brandName": "zxmco",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757679316/WhatsApp_Image_2025-09-12_at_17.13.30_yi1m0h.jpg",
+        "description": "ZXMCO Motorcycle, a renowned motorcycle brand is introduced by Abdul Samad Group. The company started its motorcycle production in August 2004. The company introduced various models from 70cc to 250cc motorcycle segment.\nZXMCO has focused on providing reliable motorcycles to its customers. Therefore, they developed strong 03 S dealer network throughout Pakistan.\n",
+        "vediourl": "",
+        "meta_title": "ZXMCO Motorcycles in Pakistan | Abdul Samad Group | ebike.pk",
+        "meta_description": "ZXMCO New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about ZXMCO New Bikes in Pakistan.",
+        "focus_keyword": "zxmco motorcycles",
+        "createdAt": "2018-12-14T12:34:10.413Z",
+        "updatedAt": "2025-09-12T12:18:17.591Z"
     },
     {
         "id": 8,
@@ -180,64 +132,64 @@ let BrandArr = [
         "updatedAt": "2019-11-19T11:18:12.453Z"
     },
     {
-        "id": 7,
-        "brandName": "yamaha",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624361/bike_brands/Yamaha.png",
-        "description": "Yamaha Motors entered into Pakistani market in 2013 with an aim to provide the quality motorcycles in 125cc segment. Earlier the Yamaha brand was represented and marketed by Dawood Group in Pakistan. \nInitially Yamaha Motors invested U$ 180 Mn on plant and machinery and setup their plant at Port Qasim, near Karachi. The company has introduced its 03 models in 125cc range i.e. YBR 125, YBR 125G and YB 125Z meeting its international standards. Yamaha focusing on developing its strong 03 S (Sales, Service & Spares) dealer network in Pakistan.\n",
-        "vediourl": null,
+        "id": 38,
+        "brandName": "sport ",
+        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/Sports_logo.jpg",
+        "description": "sport ",
+        "vediourl": "",
         "meta_title": "",
-        "meta_description": "Yamaha New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Yamaha New Bikes YBR 125, YB125z and YBR 125G.",
-        "focus_keyword": "yamaha",
-        "createdAt": "2018-12-14T12:25:19.604Z",
-        "updatedAt": "2019-11-06T07:45:21.345Z"
-    },
-    {
-        "id": 35,
-        "brandName": "harley_davidson",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/Harley_Davidson.png",
-        "description": "Harley Davidson, an American brand known for manufacturing cruiser and chopper motorbikes. The company was founded by William S. Harley, Arthur Davidson, Walter Davidson, William A. Davidson in 1903. Harley Davidson factories located in Kansas City, Wisconsin, Milwaukee, Pennsylvania, York, Manaus, Brazil, Bawal, India",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "Harley Davidson Cruiser/Choppers Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Harley Davidson Cruiser/Choppers Bikes in Pakistan on ebike.pk.",
-        "focus_keyword": "harley davidson",
-        "createdAt": "2019-01-18T07:01:30.883Z",
-        "updatedAt": "2019-11-07T10:54:55.016Z"
+        "meta_description": "Sport New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Sport New Bikes in Pakistan.",
+        "focus_keyword": "",
+        "createdAt": "2019-01-28T06:17:44.216Z",
+        "updatedAt": "2025-08-20T07:09:15.714Z"
     },
     {
         "id": 36,
         "brandName": "derbi",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_40,q_auto,w_70,dpr_auto/v1540624357/bike_brands/Derbi.jpg",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757415806/derbi_egw2ox.jpg",
         "description": "Derbi Pakistan is a project of Ravi Automobile & Piaggio & C.S.P.A (Italy). The reason for this project is to introduce the quality sporty street bikes to the young generation of Pakistan. The arrival of Derbi in 150cc category has provided an opportunity for the young riders to get the solution for road riding, off-road and racing\nInitially Derbi Pakistan introduces 2 models in 150cc category\n\n1. DERBI STX (Sporty and Aggressive Design)\n2. DERBI ETX (Enduro motorcycle, the new shining star)\n",
-        "vediourl": null,
+        "vediourl": "",
         "meta_title": "",
         "meta_description": "Derbi New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Derbi New Bikes in Pakistan.",
         "focus_keyword": "derbi",
         "createdAt": "2019-01-18T07:02:24.966Z",
-        "updatedAt": "2019-11-08T11:34:19.710Z"
+        "updatedAt": "2025-09-09T11:04:51.345Z"
     },
     {
-        "id": 19,
-        "brandName": "road_prince",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_80,dpr_auto/v1540624358/bike_brands/Road_Prince.jpg",
-        "description": "Omega Industries, the firm behind Road Prince motorcycles started its journey a decade ago.  It is the brain child of Mr. Tanveer Ahmed, who played a key role in the success of this brand. The objective of the company is to provide the quality motorcycles with complete back up support. So far they are successful in making Road Prince the 3rd largest selling motorcycle brand of Pakistan.\nOmega Industries is offering 70cc, 110cc, 125cc, 150cc, 250cc & loader trucks. The famous brand Wego 150 and Robinson 150cc motorcycle make the Road prince brand popular. Both brands are designed in collaboration with Piaggio, Italy. The unique design and durability of Wego and Robinson has forced the bike users to purchase it. In addition to this the company has been focusing on providing the backup support facility to its customers.\n",
-        "vediourl": null,
-        "meta_title": "Road Prince Motorcycles 2019 | Omega Industries | ebike.pk",
-        "meta_description": "Road Prince New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Road Prince New Bikes 70cc, 110cc, 125cc, 150cc and 250cc. Road Prince Wego 150",
-        "focus_keyword": "road prince",
-        "createdAt": "2018-12-14T12:39:57.026Z",
-        "updatedAt": "2019-11-09T09:19:30.605Z"
-    },
-    {
-        "id": 1,
-        "brandName": "honda",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624358/bike_brands/Honda.png",
-        "description": "Atlas Honda limited first lay it’s foundation on 16th of October 1962 and proved to be a well-known public limited company. The company is a joint collaboration between Honda Motors Limited, which is a renowned motorcycle brand in the world, and The Atlas group which is Pakistan’s most well reputed business conglomerates. Atlas Honda is known to be the largest assembler of motorcycles and enjoys the position of being the market leader in the industry. \n\n\nThe company believes in progressive manufacturing and has engaged itself in progressive and up to date methods of marketing of motorcycles and their parts. Atlas Honda therefore has the strongest brand reputation and remarkable loyalty received from their customers. The brand has over the years created an image that is now nearly impossible to shatter and hence increased competitiveness. \n\n\nConsidered the pioneers of the motorcycle industry Atlas Honda has successfully covered fifty years into the dynamic industry without failure. As for now the company has a large production capacity, approximately about 1.35 million units per year. Atlas Honda refused to stay back in any field and is also an exporter of its motorcycles including their spare parts to countries like Afghanistan and Bangladesh. \n\n\nOwning state of the art manufacturing tools and facilities as well as having the highest quality products and not to forget their after sales services, the company has created the benchmark for manufacturing motorcycles. \n\n\nProudly Atlas Honda has set the bar so high for the rest of the industry that it is hard for others to compete with the capabilities and professionalism of the company. Being one of the largest tax payers and market leaders in the private sector, Atlas Honda provides amazing employment opportunities. The company proves to be a mentor for all sectors of the industry. ",
-        "vediourl": null,
+        "id": 35,
+        "brandName": "harley_davidson",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752580696/harley_ufkbvn.jpg",
+        "description": "Harley Davidson, an American brand known for manufacturing cruiser and chopper motorbikes. The company was founded by William S. Harley, Arthur Davidson, Walter Davidson, William A. Davidson in 1903. Harley Davidson factories located in Kansas City, Wisconsin, Milwaukee, Pennsylvania, York, Manaus, Brazil, Bawal, India",
+        "vediourl": "",
         "meta_title": "",
-        "meta_description": "Honda New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Honda New Bikes CD 70, CG 125, CB 125F, CG125S, CB150f, CB250f",
-        "focus_keyword": "honda",
-        "createdAt": "2018-12-14T12:18:45.057Z",
-        "updatedAt": "2019-11-06T07:43:18.264Z"
+        "meta_description": "Harley Davidson Cruiser/Choppers Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Harley Davidson Cruiser/Choppers Bikes in Pakistan on ebike.pk.",
+        "focus_keyword": "harley davidson",
+        "createdAt": "2019-01-18T07:01:30.883Z",
+        "updatedAt": "2025-09-09T11:06:08.353Z"
+    },
+    {
+        "id": 25,
+        "brandName": "crown",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752580559/crown_ywhiqa.jpg",
+        "description": "Lifan group entered into an agreement with Crown group Karachi with an objective to get a sizeable market share in the motorcycle industry of Pakistan. The Joint Venture between these two has achieved remarkable position of CRLF products within two years. In addition to this the Crown group has introduced its motorcycles in 2005 with an objective to meet a growing demand of motorcycles.\n\nCrown Motorcycles are being made from CRLF products. The company manufactures 85,000 motorcycles per annum from their plant situated at Sadiqabad, Punjab. Crown Motorcycles plant is equipped with state of the art machines.\n\n",
+        "vediourl": "",
+        "meta_title": "Crown Bike in Pakistan Pakistan | Crown Motor Company Ltd |ebike.pk",
+        "meta_description": "Crown bike is introduced by Crown & Lifan in Pakistan. Crown bike is available in 70cc, 100cc & 150cc. Crown Lifan is mainly due to its motorcycle parts.",
+        "focus_keyword": "crown bike",
+        "createdAt": "2018-12-14T12:45:16.674Z",
+        "updatedAt": "2025-09-09T11:16:17.627Z"
+    },
+    {
+        "id": 11,
+        "brandName": "treet",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757679296/WhatsApp_Image_2025-09-12_at_17.13.31_sfrwkc.jpg",
+        "description": "Ali Group, the brain child of Sir Syed Maratib Ali who expanded its agricultural business in to industrial and trading business. The history of this group started prior to the indo-pak partition. Soon after the partition the Treet Corporation started its business operations in 1952. \nTreet Corporation, a public listed company engaged in the manufacturing of various kind of razors and blades since decades. Treet has been recognized for its quality razors and blades.\n\nThe rising demand of motorcycles in the last one and a half decade has forced this group to launch economical motorcycles. The company has introduced wide range of 70cc motorcycles with self-start option, 100cc and three wheelers for the loading purpose.\n\nIt is worth mentioning here that Packages Ltd, IGI Insurance, Loads Limited and Liaqat National is also part of this group.\n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Treet New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Treet New Bikes in Pakistan.",
+        "focus_keyword": "treet motorcycles",
+        "createdAt": "2018-12-14T12:35:00.417Z",
+        "updatedAt": "2025-09-12T12:19:23.652Z"
     },
     {
         "id": 16,
@@ -252,18 +204,6 @@ let BrandArr = [
         "updatedAt": "2019-11-09T09:18:32.109Z"
     },
     {
-        "id": 5,
-        "brandName": "super_power",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624359/bike_brands/Super_Power.jpg",
-        "description": "NJ Auto Industries, manufacturer of Superpower motorcycles started its operation in 2004 with an objective to meet the growing demand of 02 wheelers. N.J Auto Industries has also been involved in manufacturing of Auto Rickshaw.\n\nPresently the company has been assembling 70cc, 100cc, 125cc, 150cc and 250cc motorcycles. Superpower Motorcycles has been engaged with Pakistan Super League (PSL) as a top sponsor of the event. The strong dealer and service network of Superpower Motorcycles make the brand successful. Superpower Motorcycles brand has been selling in Sindh & Balochistan under the umbrella of N.J Auto Industries. Whereas Kausar Automobile Pvt Ltd, the part of Pirani group is selling these motorcycles with  Power Motorcycles brand in KPK & Punjab.\n\n",
-        "vediourl": null,
-        "meta_title": "",
-        "meta_description": "Super Power New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Super Power New Bikes SP 70cc, SP125, Sultan and Girls Scooty 150.",
-        "focus_keyword": "super power bike",
-        "createdAt": "2018-12-14T12:23:32.846Z",
-        "updatedAt": "2019-11-09T09:20:33.477Z"
-    },
-    {
         "id": 20,
         "brandName": "eagle",
         "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540640242/bike_brands/Eagle.jpg",
@@ -276,68 +216,164 @@ let BrandArr = [
         "updatedAt": "2019-11-14T13:04:50.182Z"
     },
     {
-        "id": 6,
-        "brandName": "suzuki",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624359/bike_brands/Suzuki.png",
-        "description": "Pak Suzuki is a listed company, established in 1983 as a joint venture between Govt. of Pakistan and Suzuki Motors Japan.  Pak Suzuki hardly face any competition and enjoyed full monopoly.  It is undoubtedly the market leader in automobiles in Pakistan. Pak Suzuki not only assembling cars but also engage in manufacturing of motorcycles mainly  110cc to 150cc range ",
+        "id": 7,
+        "brandName": "yamaha",
+        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1540624361/bike_brands/Yamaha.png",
+        "description": "\u003Cp id=\"isPasted\"\u003EYamaha Motor Pakistan (Pvt.) Ltd., is the Pakistani subsidiary of Yamaha Motor Co., Ltd., Japan, a globally renowned leader in motorcycles and mobility solutions. With a legacy spanning decades and a reputation built on innovation, performance, and quality, Yamaha stands as one of the most respected names in the global two-wheeler industry.\u003C/p\u003E\u003Cp\u003EYamaha officially re-entered the Pakistani market in 2013, reaffirming its long-term commitment to Pakistan by establishing direct operations and bringing world-class Japanese engineering standards to local riders.\u003C/p\u003E\u003Cp\u003E&nbsp;\u003C/p\u003E\u003Cp\u003EYamaha&rsquo;s return to Pakistan marked a strategic shift toward direct brand presence, manufacturing oversight, and quality control. In 2013, Yamaha Motor Co., Ltd. formed Yamaha Motor Pakistan (Pvt.) Ltd. as a wholly owned subsidiary, enabling the company to independently manage operations and uphold global Yamaha standards.\u003C/p\u003E\u003Cp\u003ETo support this vision, Yamaha developed a modern manufacturing facility at Bin Qasim Industrial Park, Karachi, with construction beginning in 2014. By 2015, the facility became operational, laying the foundation for localized production, employment generation, and sustainable growth in Pakistan&rsquo;s motorcycle industry.\u003C/p\u003E\u003Cp\u003E&nbsp;\u003C/p\u003E\u003Cp\u003EYamaha motorcycles in Pakistan are designed to deliver a refined balance of \u003Cstrong\u003Eperformance, durability, and efficiency\u003C/strong\u003E, making them ideal for both daily commuting and extended riding. Built using Yamaha&rsquo;s advanced engineering expertise, these motorcycles are tailored to meet local road conditions while maintaining global quality benchmarks.\u003C/p\u003E\u003Cp\u003EKey attributes include:\u003C/p\u003E\u003Cul type=\"disc\"\u003E\u003Cli\u003ESmooth, fuel-efficient, and responsive engines\u003C/li\u003E\u003Cli\u003EStrong chassis and long-term durability\u003C/li\u003E\u003Cli\u003EComfortable ergonomics for everyday riding\u003C/li\u003E\u003Cli\u003EModern styling inspired by Yamaha&rsquo;s global lineup\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EInnovation remains central to Yamaha Motors Pvt. Ltd. The company continuously applies global research and development capabilities to improve performance, efficiency, and reliability. Yamaha&rsquo;s engineering philosophy focuses on creating motorcycles that offer not only dependable mobility but also an engaging riding experience.\u003C/p\u003E\u003Cp\u003ECore areas of innovation include:\u003C/p\u003E\u003Cul type=\"disc\"\u003E\u003Cli\u003EAdvanced engine and fuel management systems\u003C/li\u003E\u003Cli\u003EReduced emissions and improved efficiency\u003C/li\u003E\u003Cli\u003EEnhanced handling, braking, and ride stability\u003C/li\u003E\u003Cli\u003ERider-focused design and comfort\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003E&nbsp;\u003C/p\u003E\u003Cp\u003EYamaha Motor Pakistan follows strict international manufacturing and quality assurance processes. Every motorcycle is subjected to comprehensive testing to ensure safety, reliability, and consistent performance.\u003C/p\u003E\u003Cp\u003EBeyond manufacturing, Yamaha is committed to:\u003C/p\u003E\u003Cul type=\"disc\"\u003E\u003Cli\u003EEnvironmentally responsible production practices\u003C/li\u003E\u003Cli\u003EContinuous product quality improvement\u003C/li\u003E\u003Cli\u003EPromoting road safety awareness and responsible riding\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003E&nbsp;\u003C/p\u003E\u003Cp\u003EYamaha Motors Pvt. Ltd. operates through a growing network of \u003Cstrong\u003Eauthorized dealerships and service centers across Pakistan\u003C/strong\u003E, ensuring customers receive reliable sales and after-sales support.\u003C/p\u003E\u003Cp\u003E&nbsp;\u003C/p\u003E\u003Cp data-f-id=\"pbf\" style=\"text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;\"\u003EPowered by \u003Ca href=\"https://www.froala.com/wysiwyg-editor?pb=1\" title=\"Froala Editor\"\u003EFroala Editor\u003C/a\u003E\u003C/p\u003E",
         "vediourl": null,
-        "meta_title": "",
-        "meta_description": "Suzuki New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Suzuki New Bikes GR 150cc, GS 150, GS150se, GD110, GD, GD 110s and Hayabusa.",
-        "focus_keyword": "suzuki bikes",
-        "createdAt": "2018-12-14T12:24:37.544Z",
-        "updatedAt": "2019-11-19T11:16:39.339Z"
+        "meta_title": "Yamaha Motors Pvt Ltd Pakistan",
+        "meta_description": "Discover Yamaha Motors Pvt. Ltd. in Pakistan – premium motorcycles engineered with global standards, innovation, and long-term reliability.",
+        "focus_keyword": "yamaha",
+        "createdAt": "2018-12-14T12:25:19.604Z",
+        "updatedAt": "2025-12-22T11:07:08.624Z"
     },
     {
         "id": 41,
         "brandName": "benelli",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1582175161/bike_brands/Logo-Benelli-Motorcycles.jpg",
-        "description": "",
-        "vediourl": null,
-        "meta_title": null,
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757415215/benelli_sc7m0m.jpg",
+        "description": "Benelli",
+        "vediourl": "",
+        "meta_title": "",
         "meta_description": "Benelli New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Benelli New Bikes in Pakistan.",
-        "focus_keyword": null,
+        "focus_keyword": "",
         "createdAt": "2019-02-18T05:50:55.299Z",
-        "updatedAt": "2020-02-20T05:22:00.926Z"
+        "updatedAt": "2025-09-09T10:54:38.507Z"
     },
     {
-        "id": 40,
-        "brandName": "osaka",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_50,q_auto,w_auto,dpr_auto/v1582176239/bike_brands/OSAKA.png",
-        "description": "",
-        "vediourl": null,
-        "meta_title": "Osaka Motorcycle Manufacturer in Pakistan | Osaka Bikes | ebike.pk",
-        "meta_description": "Osaka New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Osaka New Bikes in Pakistan.",
-        "focus_keyword": "osaka motorcycle",
-        "createdAt": "2019-02-01T10:12:28.158Z",
-        "updatedAt": "2020-02-20T05:26:33.615Z"
+        "id": 6,
+        "brandName": "suzuki",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757415384/suzuki_sxo7fq.jpg",
+        "description": "Pak Suzuki is a listed company, established in 1983 as a joint venture between Govt. of Pakistan and Suzuki Motors Japan.  Pak Suzuki hardly face any competition and enjoyed full monopoly.  It is undoubtedly the market leader in automobiles in Pakistan. Pak Suzuki not only assembling cars but also engage in manufacturing of motorcycles mainly  110cc to 150cc range ",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Suzuki New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Suzuki New Bikes GR 150cc, GS 150, GS150se, GD110, GD, GD 110s and Hayabusa.",
+        "focus_keyword": "suzuki bikes",
+        "createdAt": "2018-12-14T12:24:37.544Z",
+        "updatedAt": "2025-09-09T10:57:11.097Z"
+    },
+    {
+        "id": 48,
+        "brandName": "norton12",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757415520/norton_xicuwh.jpg",
+        "description": "Norton Mortorcycles",
+        "vediourl": "",
+        "meta_title": "Norton Mortorcycles",
+        "meta_description": "Norton Mortorcycles",
+        "focus_keyword": "",
+        "createdAt": "2020-11-25T09:33:19.261Z",
+        "updatedAt": "2025-09-09T10:59:16.497Z"
     },
     {
         "id": 47,
         "brandName": "vespa",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/v1606129162/Vespa_1.jpg",
-        "description": "",
-        "vediourl": null,
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757491461/WhatsApp_Image_2025-09-09_at_21.16.22_wdkosk.jpg",
+        "description": "Vespa",
+        "vediourl": "",
         "meta_title": "",
         "meta_description": "",
         "focus_keyword": "",
         "createdAt": "2020-11-25T08:23:47.573Z",
-        "updatedAt": "2020-11-25T09:36:25.047Z"
+        "updatedAt": "2025-09-10T08:05:12.173Z"
     },
     {
-        "id": 48,
-        "brandName": "norton",
-        "logoUrl": "https://res.cloudinary.com/dtroqldun/image/upload/c_scale,dpr_auto,f_auto,q_auto,h_50,w_100/v1605954952/bike_brands/Norten_logo.jpg",
-        "description": "Norton Mortorcycles",
+        "id": 40,
+        "brandName": "osaka",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757491544/WhatsApp_Image_2025-09-09_at_21.16.21_3_w39ehi.jpg",
+        "description": "Osaka",
+        "vediourl": "",
+        "meta_title": "Osaka Motorcycle Manufacturer in Pakistan | Osaka Bikes | ebike.pk",
+        "meta_description": "Osaka New Bikes in Pakistan, Get yourself updated from the latest news and videos reviews about Osaka New Bikes in Pakistan.",
+        "focus_keyword": "osaka motorcycle",
+        "createdAt": "2019-02-01T10:12:28.158Z",
+        "updatedAt": "2025-09-10T08:06:22.742Z"
+    },
+    {
+        "id": 12,
+        "brandName": "bmw",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1756809819/WhatsApp_Image_2025-09-02_at_15.12.34_z3lfkc.jpg",
+        "description": "BMW is German well-known automobile company, the word BMW stands for Bayerische Motoren Werke AG in German. Whereas in English, Bavarian Motor Works. BMW is known for manufacturing quality cars and motorcycles.\nBMW started its motorcycle manufacturing in 1921 and later it merged with Bayerische Flugzeugwerke. The company inherited Helios motorcycle and 02 stroke small motorized bicycle called Friz. BMW introduced R32 motorcycle, which is equipped 486 cc engine with 8.5 hp with a top speed of 95 to 100 km/h. \n\nBMW introduced recirculating wet sump oil system with drip feed to roller bearing. Whereas other manufacturers total loss oiling system.\n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "BMW New Bikes in Pakistan, Get yourself updated from the latest super bike news and videos reviews about BMW New Bikes in Pakistan on ebike.pk.",
+        "focus_keyword": "bmw",
+        "createdAt": "2018-12-14T12:35:34.243Z",
+        "updatedAt": "2025-09-02T10:50:21.139Z"
+    },
+    {
+        "id": 19,
+        "brandName": "road_prince",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752581269/roadprince_ecpme2.jpg",
+        "description": "Omega Industries, the firm behind Road Prince motorcycles started its journey a decade ago.  It is the brain child of Mr. Tanveer Ahmed, who played a key role in the success of this brand. The objective of the company is to provide the quality motorcycles with complete back up support. So far they are successful in making Road Prince the 3rd largest selling motorcycle brand of Pakistan.\nOmega Industries is offering 70cc, 110cc, 125cc, 150cc, 250cc & loader trucks. The famous brand Wego 150 and Robinson 150cc motorcycle make the Road prince brand popular. Both brands are designed in collaboration with Piaggio, Italy. The unique design and durability of Wego and Robinson has forced the bike users to purchase it. In addition to this the company has been focusing on providing the backup support facility to its customers.\n",
+        "vediourl": "",
+        "meta_title": "Road Prince Motorcycles 2019 | Omega Industries | ebike.pk",
+        "meta_description": "Road Prince New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Road Prince New Bikes 70cc, 110cc, 125cc, 150cc and 250cc. Road Prince Wego 150",
+        "focus_keyword": "road prince",
+        "createdAt": "2018-12-14T12:39:57.026Z",
+        "updatedAt": "2025-09-09T10:48:20.256Z"
+    },
+    {
+        "id": 149,
+        "brandName": "okla",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752580950/okla_n2xeik.jpg",
+        "description": "Okla Pakistan is a pioneering company in the field of electric mobility, dedicated to providing innovative and sustainable transportation solutions across the country. Since its inception, Okla has focused on designing and manufacturing high-quality electric bikes that combine modern technology, efficiency, and reliability. The company has quickly emerged as a trusted brand for individuals and businesses seeking eco-friendly, cost-effective, and practical alternatives to conventional fuel-based motorcycles.\n\nThe history of Okla Pakistan began with a vision to transform urban transportation in the country through clean and efficient electric vehicles. Recognizing the growing challenges of fuel prices, traffic congestion, and environmental pollution, the founders aimed to develop electric bikes that were not only affordable but also durable, high-performing, and suitable for Pakistan’s unique road conditions. Early on, Okla invested heavily in research and development, focusing on battery technology, motor efficiency, and lightweight yet robust design.\n\nOver the years, Okla Pakistan expanded its range of electric bikes, introducing models that cater to diverse riders, from students and professionals to daily commuters. By integrating advanced motor technology, high-capacity batteries, and intelligent energy management systems, the company ensured that its electric bikes offered reliable performance, extended travel range, and minimal maintenance requirements. This focus on quality and innovation quickly earned Okla a strong reputation in the emerging electric vehicle market in Pakistan.\n\nOkla’s commitment to sustainable transportation goes beyond producing electric bikes. The company actively promotes eco-friendly mobility solutions to reduce carbon emissions and create cleaner urban environments. Each model is designed with practicality, comfort, and safety in mind, featuring modern digital displays, ergonomic seating, efficient braking systems, and durable frames capable of handling Pakistan’s diverse road conditions.\n\nAs demand for electric mobility continues to grow in Pakistan, Okla remains at the forefront of innovation, consistently improving battery life, performance, and overall rider experience. The company’s long-term vision is to make electric bikes accessible to every household in Pakistan, providing an environmentally responsible and cost-efficient transportation solution for daily commuting. With a strong foundation built on research, engineering, and customer satisfaction, Okla Pakistan continues to lead the country toward a greener and more sustainable future in transportation.",
+        "vediourl": "",
+        "meta_title": "OKLA New Bikes in Pakistan ",
+        "meta_description": "OKLA Pakistan is leading the charge in revolutionizing the way we commute and explore our surroundings. As a globally renowned brand with a presence in multiple continents, OKLA is dedicated to making a positive impact on the environment while enhancing the lives of individuals.",
+        "focus_keyword": "electric-bike",
+        "createdAt": "2025-08-18T10:58:02.680Z",
+        "updatedAt": "2025-12-03T11:31:07.474Z"
+    },
+    {
+        "id": 5,
+        "brandName": "super_power",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757415656/superpower_me3smc.jpg",
+        "description": "NJ Auto Industries, manufacturer of Superpower motorcycles started its operation in 2004 with an objective to meet the growing demand of 02 wheelers. N.J Auto Industries has also been involved in manufacturing of Auto Rickshaw.\n\nPresently the company has been assembling 70cc, 100cc, 125cc, 150cc and 250cc motorcycles. Superpower Motorcycles has been engaged with Pakistan Super League (PSL) as a top sponsor of the event. The strong dealer and service network of Superpower Motorcycles make the brand successful. Superpower Motorcycles brand has been selling in Sindh & Balochistan under the umbrella of N.J Auto Industries. Whereas Kausar Automobile Pvt Ltd, the part of Pirani group is selling these motorcycles with  Power Motorcycles brand in KPK & Punjab.\n\n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Super Power New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Super Power New Bikes SP 70cc, SP125, Sultan and Girls Scooty 150.",
+        "focus_keyword": "super power bike",
+        "createdAt": "2018-12-14T12:23:32.846Z",
+        "updatedAt": "2025-09-09T11:01:17.057Z"
+    },
+    {
+        "id": 248,
+        "brandName": "VLEKTRA",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1727873799/Vlektra_aydtg7.png",
+        "description": "VLEKTRA electric bike Pakistan is redefining urban mobility by combining advanced electric technology, powerful performance, and cost-efficient transportation. Designed specifically for daily commuting and city riding, VLEKTRA electric bikes offer a smooth, reliable, and environmentally friendly alternative to traditional fuel-powered motorcycles in Pakistan.\n\nEngineered for efficiency and durability, VLEKTRA electric bikes in Pakistan feature high-performance motors, long-lasting batteries, and low maintenance requirements. These electric bikes help riders significantly reduce fuel expenses while enjoying quiet operation and consistent power delivery. With increasing fuel costs and traffic challenges, VLEKTRA electric bikes provide a smart and economical mobility solution for modern riders.\n\nBuilt to handle Pakistan’s road conditions, VLEKTRA electric bikes deliver strong acceleration, stable handling, and dependable braking for a safe and comfortable riding experience. Their modern design, ergonomic structure, and advanced features make them ideal for students, professionals, and daily commuters seeking reliable electric bikes in Pakistan.\n\nAs demand for electric vehicles continues to grow, VLEKTRA remains committed to supporting sustainable transportation in Pakistan. VLEKTRA electric bike Pakistan stands for innovation, quality, and long-term value, offering riders a future-ready solution that reduces environmental impact while enhancing everyday mobility.\n\nWith a focus on smart performance, energy efficiency, and rider comfort, VLEKTRA electric bikes are shaping the future of electric transportation in Pakistan by delivering dependable, affordable, and eco-friendly electric mobility solutions.\n",
         "vediourl": null,
-        "meta_title": "Norton Mortorcycles",
-        "meta_description": "Norton Mortorcycles",
-        "focus_keyword": null,
-        "createdAt": "2020-11-25T09:33:19.261Z",
-        "updatedAt": "2020-11-30T06:52:03.842Z"
+        "meta_title": "VLEKTRA | Advanced Technology & Smart Innovation Solutions",
+        "meta_description": "Explore VLEKTRA, a forward-thinking brand offering high-quality, reliable solutions built for performance, innovation, and modern needs.",
+        "focus_keyword": "vlektra",
+        "createdAt": "2025-12-25T07:45:28.059Z",
+        "updatedAt": "2025-12-25T07:45:28.059Z"
+    },
+    {
+        "id": 1,
+        "brandName": "honda",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1757416241/honda_xqpb4f.jpg",
+        "description": "Atlas Honda Limited began its journey on October 16, 1962, and has since evolved into biggest business conglomerate of Pakistan. Atlas started its journey with a strategic partnership with Honda Motor Company Ltd., a global leader in motorcycle manufacturing and now Atlas Honda has become a symbol of quality, reliability, and innovation.\n\nToday, Atlas Honda is widely recognized as the largest motorcycle assembler in Pakistan and undisputed market leader in the industry. With a strong commitment to progressive manufacturing, the company consistently embraces cutting-edge technology, modern marketing approaches, and continuous improvement in all areas of production.\n\nOver the decades, Atlas Honda has built an incredibly strong brand reputation one that enjoys remarkable customer loyalty and a level of trust that few others in the industry can match. Its brand image, strengthened through consistent performance and customer-focused values, has made it nearly impossible to challenge.\n\nAtlas Honda is Celebrating more than five decades of excellence, the company operates with an impressive annual production capacity of approximately 1.35 million units. Beyond its dominant presence in Pakistan, Atlas Honda also exports motorcycles and high-quality spare parts to international markets such as Afghanistan and Bangladesh, showcasing the brand’s global reach.\n\nEquipped with state-of-the-art facilities and advanced manufacturing tools, Atlas Honda sets the industry benchmark for quality, durability, and reliability. Coupled with exceptional after-sales service, the company has raised the standard of motorcycle manufacturing to a level that competitors struggle to match.\n\n",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "Honda New Bikes in Pakistan, Get yourself updated from latest news and videos reviews about Honda New Bikes CD 70, CG 125, CB 125F, CG125S, CB150f, CB250f",
+        "focus_keyword": "honda",
+        "createdAt": "2018-12-14T12:18:45.057Z",
+        "updatedAt": "2025-12-01T08:10:21.813Z"
+    },
+    {
+        "id": 50,
+        "brandName": "Evee",
+        "logoUrl": "https://res.cloudinary.com/dzfd4phly/image/upload/v1752580522/evee_aztwp4.jpg",
+        "description": "Evee Electric Pakistan is a leading company in Pakistan electric mobility sector, dedicated to delivering modern, eco-friendly, and cost-effective transportation solutions. Powered by Fusion Engineering, the company combines advanced engineering expertise with cutting-edge electric vehicle technology to design and manufacture high-performance electric scooters that are tailored for Pakistan’s roads and riders.\n\nThe mission of Evee Electric is to make electric mobility accessible and practical for every household in Pakistan. By integrating Fusion Engineering’s technology, Evee’s scooters offer superior battery performance, efficient motors, durable frames, and enhanced riding comfort. These features make Evee Electric bikes an ideal choice for students, professionals, and daily commuters who seek an affordable, reliable, and eco-friendly alternative to traditional petrol motorcycles.\n\nSince entering in Pakistani market, Evee Electric has quickly established a reputation for innovation, quality, and sustainability. The company’s partnership with Fusion Engineering has enabled it to introduce advanced battery management systems, smart motor controls, and optimized designs that improve performance, extend battery life, and enhance the overall riding experience.\n\nEvee Electric Pakistan is committed to leading the nation toward a cleaner, greener future by reducing carbon emissions and promoting sustainable urban mobility. With its focus on Fusion Engineering-driven technology, modern design, and customer satisfaction, Evee Electric continues to shape the next generation of smart and environmentally conscious commuting solutions in Pakistan.",
+        "vediourl": "",
+        "meta_title": "",
+        "meta_description": "",
+        "focus_keyword": "electric-bike",
+        "createdAt": "2025-07-17T03:45:38.666Z",
+        "updatedAt": "2025-12-03T11:18:20.714Z"
     }
 ]
 
- const CityArr = [
+const CityArr = [
     {
         "id": 1,
         "city_name": "Karachi",
@@ -4277,12 +4313,12 @@ let YearArr = [
         "createdAt": "2020-06-18T03:52:52.624Z",
         "updatedAt": "2020-06-18T04:14:50.816Z"
     },
-    {
-        "id": 53,
-        "year": "non register",
-        "createdAt": "2020-06-18T03:54:05.563Z",
-        "updatedAt": "2020-06-18T04:17:03.933Z"
-    },
+    // {
+    //     "id": 53,
+    //     "year": "non register",
+    //     "createdAt": "2020-06-18T03:54:05.563Z",
+    //     "updatedAt": "2020-06-18T04:17:03.933Z"
+    // },
     {
         "id": 54,
         "year": "2021",
@@ -4315,9 +4351,9 @@ let YearArr = [
     }
 ]
 
-export let CcArr = [ 50, 70 ,100,110,125,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,
-    1050,1100,1150,1200,1250,1300,1350,1400,1450,1500,1550,1600,1650,1700]
+export let CcArr = [50, 70, 100, 110, 125, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000,
+    1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450, 1500, 1550, 1600, 1650, 1700]
 
 
-export {BrandArr, CityArr, YearArr}
+export { BrandArr, CityArr, YearArr }
 
