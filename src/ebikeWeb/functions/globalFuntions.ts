@@ -488,7 +488,7 @@ function getViewsByID(id: any) {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        } 
+        }
     })
         .then(response => response.json())
         .then(data => {
@@ -546,8 +546,8 @@ export {
     getAllFeaturedBike,
     getMyAds,
     MarkBikeAsSold,
-    sendEmailLetter
-    , getdatabycitybrand,
+    sendEmailLetter,
+    getdatabycitybrand,
     getDealerByFilter,
     getMechanicByBrandId,
     getCustomBikeAd,

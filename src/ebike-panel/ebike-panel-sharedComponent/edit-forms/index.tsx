@@ -259,7 +259,7 @@ const EditUsedBikeForm = () => {
                         <div className={styles.imagePreview}>
                             {imageArr.map((img, index) => (
                                 <div key={index} className={styles.imageWrapper}>
-                                    <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} />
+                                    <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} />
                                     <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                                 </div>
                             ))}
@@ -333,11 +333,24 @@ const EditNewBikeForm = () => {
     const [AddcityId, setCityID] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const { slug, slug1 } = useParams()
+    const [AllBrandsArr, setAllBrands] = useState<any>([])
     let id = slug1
     const router = useRouter()
     useEffect(() => {
+        fetchBrands()
         if (id) fetchNewBikeByID(id);
     }, [id])
+
+    const fetchBrands = async () => {
+        setIsLoading(true)
+        const res = await getbrandData();
+        if (res && res.length > 0) {
+            setAllBrands(res);
+        } else {
+            setAllBrands(BrandArr);
+        }
+        setIsLoading(false)
+    }
 
     const fetchNewBikeByID = async (id: any) => {
         setIsLoading(true);
@@ -475,7 +488,7 @@ const EditNewBikeForm = () => {
     };
 
     const GetBrandName = (id: any) => {
-        const GetbrandObject: any = BrandArr.find((item: any) => item.id === id)
+        const GetbrandObject: any = AllBrandsArr.find((item: any) => item.id === id)
         return GetbrandObject?.brandName
     }
 
@@ -515,7 +528,7 @@ const EditNewBikeForm = () => {
                         <div className={styles.imagePreview}>
                             {imageArr?.map((img, index) => (
                                 <div key={index}>
-                                    <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                    <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
                                     <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                                 </div>
                             ))}
@@ -525,11 +538,13 @@ const EditNewBikeForm = () => {
                             <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
                                 <option value="" disabled selected hidden>{GetBrandName(NewField?.newbrandId)}</option>
                                 {
-                                    BrandArr.map((e: any, index: any) => (
-                                        <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                            {e?.brandName}
-                                        </option>
-                                    ))
+                                    AllBrandsArr.map((e: any, index: any) => {
+                                        return (
+                                            <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                                {e?.brandName}
+                                            </option>
+                                        )
+                                    })
                                 }
                             </select>
 
@@ -615,7 +630,7 @@ const EditElectricBikeForm = () => {
         newmeta_title: "",
         newothers: "",
         newpetrolCapacity: "",
-        newprice: "",
+        newprice: 0,
         newstarting: "",
         newtitle: "",
         newtransmission: "",
@@ -660,7 +675,10 @@ const EditElectricBikeForm = () => {
             const { uid, createdAt, images, newbike_comments, newbike_ratings, updatedAt, cityId, id, ...cleandData } = bike
             const transformedData: any = {};
             Object.keys(cleandData).forEach((key) => {
-                transformedData["new" + key] = bike[key] || "";
+                transformedData["new" + key] = key === "price"
+                    ? bike[key] ?? 0
+                    : bike[key] ?? "";
+
             });
             transformedData.uid = bike.uid || "";
             console.log("data", transformedData)
@@ -727,7 +745,7 @@ const EditElectricBikeForm = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
-                                               // const invalidChars = /[\/,?#$!+]/;
+        // const invalidChars = /[\/,?#$!+]/;
 
         const userCookie = jsCookie.get("userData_ebike_panel");
         const userData = JSON.parse(userCookie);
@@ -828,7 +846,7 @@ const EditElectricBikeForm = () => {
                         <div className={styles.imagePreview}>
                             {imageArr?.map((img, index) => (
                                 <div key={index}>
-                                    <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                    <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
                                     <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                                 </div>
                             ))}
@@ -1104,7 +1122,7 @@ const EditBlogForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArr?.map((img: any, index: any) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index)}>×</button>
                         </div>
                     ))}
@@ -1307,10 +1325,17 @@ const EditBrandForm = () => {
     const [NewFocusKeyword, setNewFocusKeyword] = useState('');
     const [NewLogoUrl, setNewLogoUrl] = useState('');
     const { slug, slug1 } = useParams();
+    const [TabNum, setTabNum] = useState("1")
     const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
+        const url = new URL(window.location.href);
+        const tab = url.searchParams.get("tab");
+
+        if (tab !== null) {
+            setTabNum(tab)
+        }
         fetchPageByID(slug1)
     }, [])
 
@@ -1373,7 +1398,7 @@ const EditBrandForm = () => {
         const res = await UpdateBrandById(slug1, obj)
         if (res && res.info == "brand is updated successfully") {
             alert('Updated Successfully')
-            router.push('/ebike-panel/dashboard/all-bike-brands')
+            router.push(`/ebike-panel/dashboard/all-bike-brands?tab=${TabNum}`)
         }
         else {
             alert('Something is Wrong!')
@@ -1381,7 +1406,7 @@ const EditBrandForm = () => {
     };
 
     const goBack1 = () => {
-        router.push('/ebike-panel/dashboard/all-bike-brands')
+        router.push(`/ebike-panel/dashboard/all-bike-brands?tab=${TabNum}`)
     }
 
     return (
@@ -1404,7 +1429,7 @@ const EditBrandForm = () => {
                         />
 
                         <label htmlFor="title" className={styles.label}>Logo Url</label>
-                        <input id="title" name="title" value={NewLogoUrl} onChange={(e) => setNewVideoUrl(e.target.value)} className={styles.input} />
+                        <input id="title" name="title" value={NewLogoUrl} onChange={(e) => setNewLogoUrl(e.target.value)} className={styles.input} />
 
                         <label htmlFor="title" className={styles.label}>Video Url</label>
                         <input id="title" name="title" value={NewVideoUrl} onChange={(e) => setNewVideoUrl(e.target.value)} className={styles.input} />
@@ -1438,8 +1463,8 @@ const EditProductForm = () => {
     const [SubCategoryName, setSubCategoryName] = useState([]);
     const [ProductCompany, setProductCompany] = useState([]);
     const [variants, setVariants] = useState<any>([]);
-    const params = useParams() 
-    const ProductIdParams = params?.slug1   
+    const params = useParams()
+    const ProductIdParams = params?.slug1
 
     const [AllFieldIDs, setAllFieldIds] = useState<any>({
         sell: false,
@@ -1812,7 +1837,7 @@ const EditProductForm = () => {
                 <div className={styles.imagePreview}>
                     {imageArrProduct.map((img, index) => (
                         <div key={index}>
-                            <img src={cloudinaryLoader(img , 400 , 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
                             <button type="button" onClick={() => handleImageDelete(index, 'product')}>×</button>
                         </div>
                     ))}

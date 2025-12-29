@@ -8,7 +8,7 @@ import { Grid, Link, Pagination } from "@mui/material";
 import { Navigation, FreeMode } from 'swiper/modules';
 import SearchIcon from '@mui/icons-material/Search';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { New_header } from "../panel-header"; 
+import { New_header } from "../panel-header";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from './index.module.scss';
@@ -23,6 +23,18 @@ let savedPage: any;
 let saveNewBike: any;
 let Usedbikewindowscroll: any;
 let Newbikewindowscroll: any;
+let brandScroll: any;
+let AllBrandArr: any[] = [];
+
+const getBrand = async () => {
+    const res = await getbrandData()
+    if (res && res?.length > 0) {
+        AllBrandArr = res
+    }
+    else {
+        AllBrandArr = BrandArr
+    }
+}
 
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
@@ -44,6 +56,7 @@ const Used_bike_card: any = () => {
         const savedScrollStr = localStorage.getItem("UsedBikeScroll");
         const prev_page = localStorage.getItem("prev_page");
         savedPage = savedPageStr
+        getBrand()
 
         if (savedScrollStr && prev_page === 'edit-used-bike') {
             fetchAllUsedBike(savedPage);
@@ -84,7 +97,7 @@ const Used_bike_card: any = () => {
 
     const GetName = (from: any, id: any) => {
         if (from == 'brand') {
-            let brand = getBrandFromId(id, BrandArr);
+            let brand = getBrandFromId(id, AllBrandArr);
             return brand[0]?.brandName || 'N/A';
         } else {
             let city = getCityFromId(id, CityArr);
@@ -416,11 +429,11 @@ const New_bike_card = () => {
     const router = useRouter();
 
     useEffect(() => {
+        getBrand()
         const savedPage = Number(localStorage.getItem("PageNewBike"));
         const savedScrollStr = localStorage.getItem("NewBikeScroll");
         const prev_page = localStorage.getItem("prev_page");
         saveNewBike = savedPage
-
         if (savedScrollStr && prev_page === 'edit-new-bike') {
             fetchAllNewBike(saveNewBike);
             setCurrentPage(saveNewBike);
@@ -486,7 +499,8 @@ const New_bike_card = () => {
 
     const GetName = (from: any, id: any) => {
         if (from === 'brand') {
-            const brand = getBrandFromId(id, BrandArr);
+            console.log("hello21" , AllBrandArr)
+            const brand = getBrandFromId(id, AllBrandArr);
             return brand[0]?.brandName || "";
         } else {
             const city = getCityFromId(id, CityArr);
@@ -1713,12 +1727,27 @@ const AllBrands_Card = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
-
     const itemsPerPage = 8;
     const router = useRouter()
     useEffect(() => {
-        fetchAllBrands(1);
+        const savedScrollStr = localStorage.getItem("BrandScroll");
+        const url = new URL(window.location.href);
+        const tab = url.searchParams.get("tab");
+
+        if (tab !== null) {
+            const tabNumber = Number(tab);
+
+            if (!isNaN(tabNumber)) {
+                brandScroll = Number(savedScrollStr) || 0;
+                fetchAllBrands(tabNumber);
+            }
+        } else {
+            brandScroll = 0;
+            fetchAllBrands(1);
+        }
+
     }, []);
+
 
     useEffect(() => {
         const filtered = AllBrands.filter((bike: any) =>
@@ -1726,7 +1755,8 @@ const AllBrands_Card = () => {
         );
         setfilteredAllBrands(filtered);
         setCurrentPage(1);
-    }, [searchTerm, AllBrands]);
+        console.log("hello1", filtered)
+    }, [searchTerm]);
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -1738,7 +1768,7 @@ const AllBrands_Card = () => {
     const fetchAllBrands = async (_page: number) => {
         setIsLoading(true);
         const res = await getbrandData();
-        console.log("Brands", res)
+        console.log("hello123", _page)
         if (res && res.length > 0) {
             setAllBrands(res);
             setfilteredAllBrands(res);
@@ -1752,8 +1782,12 @@ const AllBrands_Card = () => {
         }
         setIsLoading(false);
         setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000)
+            window.scrollTo({
+                top: brandScroll,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }, 500);
     };
 
     const handlePaginationChange = (event: any, page: any) => {
@@ -1779,7 +1813,8 @@ const AllBrands_Card = () => {
     };
 
     const handleEditBrand = (id: any) => {
-        router.push(`/ebike-panel/dashboard/edit-brand/${id}`);
+        localStorage.setItem("BrandScroll", window.scrollY.toString());
+        router.push(`/ebike-panel/dashboard/edit-brand/${id}?tab=${currentPage}`);
     };
 
     const [open, setOpen] = useState(false);
@@ -1840,13 +1875,16 @@ const AllBrands_Card = () => {
                                         <td className={styles.td} >{e?.id}</td>
                                         <td className={styles.td} ><img src={cloudinaryLoader(e?.logoUrl, 400, 'auto')} alt="" className={styles.image} /></td>
                                         <td className={styles.td_name} >{e?.brandName || 'N/A'}</td>
-                                        <td className={styles.td_desc} >{add3Dots(e?.description, 100)}</td>
+                                        <td className={styles.td_desc}>
+                                            <p className={styles.seller_comments_desc} dangerouslySetInnerHTML={{ __html: add3Dots(e?.description, 100) }} ></p>
+                                        </td>
+                                        {/* <td className={styles.td_desc} >{add3Dots(e?.description, 100)}</td> */}
                                         {/* <td className={styles.td} >{add3Dots(e?.title, 20)}</td> */}
                                         <td className={styles.td_action}>
                                             <div className={styles.card_actions}>
-                                                <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}?tab=${currentPage}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
                                                     <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
-                                                    Edit
+                                                        Edit
                                                     </button>
                                                 </Link>
                                                 <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>

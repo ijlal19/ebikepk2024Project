@@ -1,0 +1,1053 @@
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'LatoBold';
+    src: url('/fonts/Lato-Bold.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@import '../../styles/variable';
+
+.main {
+    width: 100%;
+    padding: 0px;
+    background: #f2f3f3;
+    min-height: 50vh;
+    box-sizing: border-box;
+    font-family: sans-serif;
+
+    @media (max-width:991px) {
+        padding: 0px 10px !important;
+    }
+
+    @media (max-width:600px) {
+        padding: 0px !important;
+    }
+
+    .usedBike_headingBpx {
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+        // max-width: 1200px;
+        padding: 10px 0px 10px 10px !important;
+        margin: auto;
+        background-color: #1976d2;
+        // margin-top: 20px;
+
+        @media (max-width:768px) {
+            // padding: 10px 0px 0px 0px !important;
+            max-width: 100%;
+        }
+
+        .headinh_sale {
+            font-size: 24px;
+            box-sizing: border-box;
+            color: white;
+            margin: 0px 0px -2px;
+            font-weight: normal;
+
+            @media (max-width:767px) {
+                font-size: 18px;
+            }
+        }
+
+        .path_text {
+            font-size: 12px;
+            color: white;
+            margin: 0px 15px 0px 0px;
+        }
+    }
+}
+
+.filter_button {
+    background-color: #1976d2 !important;
+    color: white !important;
+    z-index: 1000;
+    font-size: 20px;
+    position: sticky !important;
+    font-weight: bolder;
+    top: 51px;
+    display: flex;
+    padding: 4px 10px 4px 10px !important;
+    border-radius: 0px;
+    // text-align: right !important;
+    justify-content: space-between !important;
+    width: 100%;
+    border-radius: 0px !important;
+
+    @media (max-width:768px) {
+        font-size: 16px;
+    }
+}
+
+.load_main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .load_div {
+        border: 1px solid #000;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+@media (max-width:768px) {
+    .load_main {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .load_div {
+            border: 1px solid #000;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    }
+}
+
+.used_bike_desktop_pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    column-gap: 60px !important;
+
+}
+
+.main_pagination {
+    max-width: 400px !important;
+    width: 100%;
+    flex-wrap: nowrap;
+    margin-left: 0px !important;
+    margin: 0px 0px 5px 0px;
+
+    .used_bike_mobile_pagination {
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        margin: 20px auto;
+        flex-wrap: nowrap;
+
+        .pagintation {
+            width: 100%;
+            display: flex;
+            border-radius: 3px;
+            padding: 0px !important;
+            box-sizing: border-box;
+            flex-wrap: nowrap;
+            margin: auto;
+            text-overflow: ellipsis;
+            font-size: 1px;
+            white-space: nowrap;
+            cursor: pointer;
+            justify-content: center;
+        }
+    }
+
+
+}
+
+.icon_box {
+    display: flex;
+    padding: 5px 0px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 30px;
+    margin-left: auto;
+    margin-right: 5px;
+    height: 18px;
+
+    .icon {
+        margin-top: 10px;
+        font-size: 18px;
+        filter: drop-shadow(0px 0px 10px rgb(0, 0, 0));
+    }
+}
+
+.not_found {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+
+.similarBikeDiv {
+    background-color: white;
+
+    margin: 0px auto !important;
+    padding: 0px !important;
+
+    @media (max-width:767px) {
+        // padding: 0px;
+        padding: 0px !important;
+    }
+
+    .similarBikeDiv_inner {
+        margin: 20px auto;
+        max-width: 1060px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+    }
+
+    .similar_heading {
+        text-align: center;
+        margin-bottom: 10px !important;
+        margin-top: 10px !important;
+        color: #1976d2;
+        font-size: 22px;
+        // font-weight: normal !important;\
+        font-weight: 600;
+
+        @media (max-width:767px) {
+            margin-top: 5px !important;
+            display: block;
+            font-size: 22px;
+            margin-bottom: 0px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.grid_container {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    flex-direction: row !important;
+    justify-content: left;
+
+    .filter_grid {
+        position: sticky;
+        top: 0px;
+        padding: 0px !important;
+
+        @media (max-width:910px) {
+            position: unset;
+        }
+    }
+
+    .cards_grid {
+        padding: 15px 0px 0px 0px !important;
+        box-sizing: border-box;
+
+        @media (max-width:768px) {
+            padding: 5px 0px 0px 0px !important;
+        }
+
+        .heading2 {
+            font-size: 25px;
+            display: none;
+            text-align: center;
+            font-weight: none;
+            padding-top: 10px;
+            justify-content: center;
+            margin: 10px 0px 5px 0px !important;
+
+            @media (max-width:768px) {
+                font-size: 17px;
+                display: flex;
+                padding-top: 4px !important;
+            }
+        }
+
+        .all_bike_main {
+            display: flex;
+            padding: 0px 10px;
+            box-sizing: border-box;
+            width: 100% !important;
+            margin: auto;
+            align-items: start;
+
+            .main_box {
+                padding: 0px 10px !important;
+                width: 100% !important;
+                height: 100%;
+                max-width: 100%;
+                margin: 0px auto 0px auto;
+
+                @media (max-width:690px) {
+                    padding: 0px 0px !important;
+                }
+
+                .navigation {
+                    max-width: 800px;
+                    height: 30px;
+                    background: white;
+                    border: 1px solid #e6e6e6;
+                    padding: 10px;
+                    margin: auto;
+                    position: relative;
+                    justify-content: space-between;
+                    margin-bottom: 20px;
+                    display: flex;
+                    flex-wrap: nowrap;
+                    align-items: center;
+
+                    @media (max-width:900px) {
+                        width: 95%;
+                    }
+
+                    @media (max-width:600px) {
+                        flex-wrap: wrap;
+                        height: auto;
+                        row-gap: 10px;
+                    }
+
+                    .bike_text {
+                        font-size: 16px;
+                        float: left;
+                    }
+
+                    .swap_button_container {
+                        .swap_icon {
+                            font-size: 20px;
+                            cursor: pointer;
+                        }
+                    }
+
+                    .search_box {
+                        width: 100%;
+                        display: flex;
+                        max-width: 300px;
+                        justify-content: left;
+
+                        @media (max-width:600px) {
+                            max-width: 100%;
+                        }
+
+                        .search_box_inner {
+                            width: 100%;
+                            border: 1px solid #84818194;
+                            display: flex;
+                            justify-content: center;
+                            border-radius: 5px;
+
+                            .search_input {
+                                padding-left: 10px;
+                                font-size: 14px;
+                                color: black;
+                                border: none;
+                                border-top-left-radius: 10px;
+                                border-bottom-left-radius: 10px;
+                                outline: none;
+                                width: 100%;
+                                background: transparent;
+                            }
+
+                            .search_btn {
+                                border-top-right-radius: 10px;
+                                border: none;
+                                background: transparent;
+                                color: rgb(0, 0, 0);
+                                border-left: 1px solid rgba(128, 128, 128, 0.543);
+                                padding: 4px 7px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                border-bottom-right-radius: 10px;
+                                cursor: pointer;
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            .grid_bike_list {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                column-gap: 10px;
+                // display: flex;
+                // flex-wrap: wrap;
+                // gap: 5px;
+                // justify-content: center;
+
+                @media (max-width:768px) {
+                    grid-template-columns: repeat(2, 1fr);
+                    // gap: 15px;
+                    column-gap: 15px;
+                }
+
+                .grid_card {
+                    width: 100%;
+                    height: auto;
+                    padding: 0px !important;
+                    background: white;
+                    border: 1px solid #e6e6e6;
+                    margin: 10px 0px;
+                    cursor: pointer;
+
+                    @media (max-width:600px) {
+                        width: 100%;
+                    }
+
+                    .grid_image_box {
+                        width: 100%;
+                        height: 140px;
+                        position: relative;
+
+                        .grid_image_upper {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+
+                        .soldout {
+                            color: white;
+                            width: 100%;
+                            padding: 1px 0px;
+                            box-sizing: border-box;
+                            text-align: center;
+                            background-color: #e83c3e;
+                        }
+
+
+                        img {
+                            width: 100%;
+                            height: 140px;
+                        }
+
+
+                        .featured_tag {
+                            background-color: yellowgreen;
+                            color: white;
+                            box-sizing: border-box;
+                            width: 70px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: flex-end;
+                            padding-bottom: 4px !important;
+                            padding-left: 0px !important;
+                            height: 22px !important;
+                            font-size: 11px !important;
+                            position: absolute;
+                            top: 0px;
+
+                            @media (max-width:768px) {
+                                width: 70px;
+                                padding-bottom: 3px !important;
+                                font-size: 10px;
+                                height: 22px !important;
+                                top: 0px;
+
+                            }
+                        }
+
+                    }
+
+                    .grid_card_info {
+                        text-decoration: none;
+                        height: auto;
+                        padding: 0px;
+                        max-width: 100%;
+                        margin-top: 0px;
+                        margin-left: 0px;
+                        width: 100%;
+                        padding-left: 10px;
+                        padding-bottom: 10px;
+
+                        .grid_icon_title {
+                            width: 100%;
+                            display: flex;
+                            justify-content: space-between;
+
+                            .grid_card_title {
+                                color: $black;
+                                font-weight: bold;
+                                font-size: 14px;
+                                width: 100%;
+                                max-width: 150px;
+                                padding: 5px 0px 4px 0px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                overflow: hidden;
+                                display: block;
+
+                                @media (max-width:430px) {
+                                    width: 130px;
+                                }
+                            }
+                        }
+
+                        .grid_card_location {
+                            padding: 0px 0px 0px;
+                            font-size: 13px;
+                            color: #434343;
+                            box-sizing: border-box;
+                            display: flex;
+                            align-items: center;
+                            justify-content: left
+                        }
+
+                        .grid_card_price {
+                            width: 100%;
+                            white-space: nowrap;
+                            font-size: 13px;
+                            font-weight: bolder;
+                            color: $primary_two;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+                        }
+
+                        .grid_bike_details {
+                            font-size: 13px;
+                            color: #434343;
+                            padding: 0px 0px 0px;
+                            width: 100%;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            overflow: hidden;
+                            display: block;
+
+                            @media (max-width:430px) {
+                                max-width: 130px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                display: block;
+                            }
+
+                            .grid_verticl_line {
+                                padding-right: 2px;
+                                padding-left: 2px;
+
+                                @media (max-width:440px) {
+                                    padding-right: 0px;
+                                    padding-left: 0px;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+            .bike_ad_list {
+                @media (max-width:600px) {
+                    display: flex;
+                    width: 100%;
+                    margin-bottom: 20px;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    column-gap: 15px;
+                    row-gap: 15px;
+                    box-sizing: border-box;
+                }
+
+                .long_card {
+                    box-shadow: 0px 0px 10px rgba(117, 117, 117, 0.395);
+                    display: flex;
+                    padding: 10px 0px !important;
+                    margin: 0px 0px 20px;
+                    border-radius: 10px;
+                    background: white;
+                    border: 1px solid #e6e6e6;
+                    height: 155px;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    cursor: pointer;
+                    flex-direction: row;
+                    padding-left: 2px !important;
+                    padding-right: 10px !important;
+                    box-sizing: border-box !important;
+
+                    @media (max-width:600px) {
+                        height: auto !important;
+                        padding: 0px !important;
+                        flex-direction: column;
+                        max-width: 250px;
+                        margin: 5px 8px !important;
+                        border: 1px solid #e4e4e4;
+                        background: rgb(249, 249, 249);
+                        border-radius: 0;
+                        width: 44%;
+                        overflow: hidden;
+                    }
+
+                    .bike_image_box {
+                        height: 150px;
+                        width: 220px;
+                        padding: 0px 10px;
+                        display: flex;
+                        box-sizing: border-box;
+                        justify-content: center;
+                        align-items: center;
+                        position: relative;
+
+                        @media (max-width:600px) {
+                            height: 150px !important;
+                            width: 220px;
+                            padding: 0px 0px;
+                            box-sizing: border-box;
+                        }
+
+                        .long_card_img {
+                            display: flex;
+                            justify-content: center;
+                            align-items: flex-end;
+                        }
+
+                        .soldout {
+                            color: white;
+                            width: 100%;
+                            padding: 1px 0px;
+                            box-sizing: border-box;
+                            text-align: center;
+                            background-color: #e83c3e;
+                        }
+
+                        img {
+                            height: 100%;
+                            // width: fit-content;
+                            // object-fit: ;
+                            // width: 10%;
+                            // max-width: 10%;
+
+                            @media (max-width:600px) {
+                                height: 120px;
+                                width: 100%;
+                                min-width: unset;
+                                max-width: unset;
+                            }
+
+                        }
+                    }
+
+                    .card_info {
+
+                        height: 148px;
+                        padding: 20px 10px 10px 0px;
+
+                        @media (max-width:1050px) {
+                            padding-left: 10px;
+                        }
+
+                        @media (max-width:800px) {
+                            padding-left: 10px;
+                        }
+
+                        @media (max-width:600px) {
+                            height: auto;
+                            padding: 0px;
+                            max-width: 100%;
+                            margin-top: 0px;
+                            margin-left: 0px;
+                            width: 100%;
+                            padding-left: 10px;
+                        }
+
+
+                        .card_title {
+                            max-width: 250px;
+                            font-size: 14px;
+                            padding: 0px;
+                            display: flex;
+                            align-items: center;
+                            color: $black;
+                            font-weight: bold;
+                            width: 100%;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+
+                            @media (max-width:600px) {
+                                font-size: 13px;
+                                width: 100%;
+                                max-width: 130px;
+                                padding: 5px 0px 4px 0px;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                overflow: hidden;
+                                display: block;
+                                width: 140px;
+                            }
+                        }
+
+                        .card_price_mobile {
+                            width: 100%;
+                            white-space: nowrap;
+                            font-size: 13px;
+                            font-weight: bolder;
+                            color: $primary_two;
+                            margin-top: 10px;
+                            margin-bottom: 10px;
+
+                            @media (min-width:600px) {
+                                display: none;
+                            }
+                        }
+
+
+                        .card_location {
+                            padding: 7px 0px 0px;
+                            font-size: 13px;
+                            // border: 1px solid #000;
+                            // border: 1px solid #000;
+                            box-sizing: border-box;
+                            display: flex;
+                            align-items: center;
+                            justify-content: left;
+                            color: #434343;
+                        }
+
+                        .bike_details {
+                            font-size: 13px;
+                            color: #434343;
+                            padding: 5px 0px 0px;
+                            width: 100%;
+
+                            @media (max-width:500px) {
+                                max-width: 150px;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                display: block;
+                            }
+
+                            .verticl_line {
+                                padding-right: 7px;
+                                padding-left: 7px;
+
+                                @media (max-width:440px) {
+                                    padding-right: 0px;
+                                    padding-left: 0px;
+                                }
+                            }
+
+                        }
+
+                        box-sizing: border-box;
+                    }
+
+                    .price_section_desktop {
+                        display: flex;
+                        height: 148px;
+                        box-sizing: border-box;
+                        justify-content: right !important;
+                        flex-direction: column;
+                        align-items: center;
+                        row-gap: 65px;
+                        white-space: nowrap;
+                        padding: 20px 0px 0px 0px;
+
+                        @media (max-width:600px) {
+                            display: none;
+                        }
+
+                        span {
+                            color: #1976d2;
+                            width: 100%;
+                            text-align: right;
+                            box-sizing: border-box;
+                            padding: 0px 10px 0px 0px !important;
+                            font-size: 16px;
+                        }
+
+                        .fav_box {
+                            display: flex;
+                            column-gap: 2px !important;
+                            flex-direction: row;
+                            margin: 0px 10px 0px 5px !important;
+                            box-sizing: border-box;
+
+                            .icon_box {
+                                display: flex;
+                                // padding: 5px 0px 5px 0px !important;
+                                justify-content: center !important;
+                                align-items: center !important;
+                                width: 30px;
+                                // background-color: red !important;
+                                border-radius: 50%;
+                                height: 25px;
+                                overflow: hidden;
+
+                                .icon {
+                                    // filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.635));
+                                    font-size: 18px;
+                                }
+                            }
+
+                            .phone_box {
+                                display: flex;
+                                justify-content: left;
+                                align-items: center;
+                                column-gap: 5px;
+                                border-radius: 2px;
+                                padding: 0px 5px !important;
+                                box-sizing: border-box;
+                                border: 1px solid yellowgreen;
+                                background-color: yellowgreen;
+                                font-size: 11px;
+                                color: white;
+
+                                .icon {
+                                    font-size: 16px;
+                                    color: white;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+            .viewMoreBtnContainer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 40px auto;
+
+                .viewMoreBtn {
+                    padding: 10px 30px;
+                    background-color: $primary_two;
+                    color: #fff;
+                    font-size: 14px;
+                    border: none;
+                    cursor: pointer;
+                }
+
+                .viewMoreBtnDisabled {
+                    pointer-events: none;
+                }
+
+            }
+
+            // .add_area {
+            //   width: 150px;
+            //   margin-top: 20px;
+            //   background: white;
+            //   color: rgb(0, 0, 0);
+            //   border: 1px solid #000;
+
+            //   @media (max-width:768px) {
+            //     display: none;
+            //   }
+            // }
+        }
+    }
+
+    .add_area {
+        margin-top: 10px;
+        padding: 5px 20px 5px 5px !important;
+
+        .add_box {
+            row-gap: 30px;
+            background-color: whitesmoke;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            .add_image {
+                width: 100%;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px rgb(194, 194, 194);
+                max-width: 230px;
+                margin: auto;
+            }
+
+            @media (max-width:1200px) {
+                display: none;
+            }
+
+        }
+
+        @media (max-width:1200px) {
+            display: none;
+        }
+    }
+
+    @media (max-width:690px) {
+        padding: 0px 10px !important;
+        box-sizing: border-box;
+    }
+}
+
+.used_bike_list_pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    .pagination_box {
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        border: 1px solid #434242;
+        padding: 0px !important;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        font-size: 12px;
+        cursor: pointer;
+    }
+}
+
+.filter_box_main {
+    position: sticky;
+    top: 10px;
+    margin-bottom: 20px;
+
+    @media (max-width:910px) {
+        position: unset;
+        margin: auto;
+        margin-top: 0px;
+    }
+}
+
+.item_div {
+    display: none;
+
+    @media (max-width:600px) {
+        width: 200px;
+        max-width: 160px;
+        display: flex;
+        // gap: 10px;
+    }
+}
+
+.item_div1 {
+    display: none;
+
+    @media (max-width:600px) {
+        width: 200px;
+        max-width: 160px;
+        display: flex;
+    }
+}
+
+.banner_1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px !important;
+
+    @media (max-width:991px) {
+        width: 100%;
+
+    }
+
+
+    .baner_image {
+        box-sizing: border-box;
+        width: 400px;
+        text-align: center;
+        height: 100%;
+        margin: auto !important;
+        float: center;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgb(194, 194, 194);
+
+        @media (max-width:600px) {
+            width: 300px;
+        }
+    }
+}
+
+.featured_bike_swiper_main {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.featuredHeading {
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 10px auto 15px auto;
+    letter-spacing: 1px;
+    font-family: 'Lato';
+    color: #1976d2;
+    border-bottom: 2px solid rgba(142, 142, 142, 0.444);
+
+    @media (max-width:767px) {
+        display: block;
+        padding: 0px !important;
+        margin: 0px auto 10px auto !important;
+        border: none !important;
+        box-sizing: border-box;
+        font-size: 22px;
+    }
+}

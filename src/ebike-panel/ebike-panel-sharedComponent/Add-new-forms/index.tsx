@@ -8,6 +8,7 @@ import styles from './index.module.scss';
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from 'react';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import Loader from '../loader/loader';
 
 const jsCookie = require('js-cookie');
 
@@ -107,6 +108,23 @@ const AddNewBikeForm = () => {
         tyreFront: '',
         videoUrl: '',
     });
+    const [AllBrandArr, setAllBrandArr] = useState<any>([])
+
+    useEffect(() => {
+        getBrand()
+    }, [])
+
+    const getBrand = async () => {
+        setIsLoading(true)
+        const res = await getbrandData()
+        if (res && res?.length > 0) {
+            setAllBrandArr(res)
+        }
+        else {
+            setAllBrandArr(BrandArr)
+        }
+        setIsLoading(false)
+    }
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -278,98 +296,105 @@ const AddNewBikeForm = () => {
 
     return (
         <div className={styles.main_box}>
-            <form onSubmit={handleSubmit} className={styles.main}>
-                <div className={styles.formHeader}>
-                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                    <p className={styles.heading}>Add New Bike</p>
-                </div>
-
-                <label htmlFor="title" className={styles.label}>Title</label>
-                <input id="title" name="title" value={BikeData.title} onChange={handleInputChange} className={styles.input} />
-
-                <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
-                <input id="bikeUrl" name="bikeUrl" value={BikeData.bikeUrl} onChange={handleInputChange} className={styles.input} />
-
-                <label htmlFor="description" className={styles.label}>Description</label>
-                <FloaraTextArea
-                    value={BikeData.description}
-                    onChange={(desc: any) => setBikeData((prev) => ({ ...prev, description: desc }))}
-                />
-
-                {selectedImages.length < 4 && (
-                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                )}
-
-                <label className={styles.label}>Images (max 4)</label>
-                <div className={styles.imagePreview}>
-                    {imageArr.map((img, index) => (
-                        <div key={index}>
-                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
-                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
-                        </div>
-                    ))}
-                </div>
-
-                <div className={styles.drop_downBox}>
-                    <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                        <option value="" disabled selected hidden>Select Brand</option>
-                        {
-                            BrandArr.map((e: any, index) => (
-                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                    {e?.brandName}
-                                </option>
-                            ))
-                        }
-                    </select>
-
-                    <div style={{ marginTop: '10px' }}>
-                        <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                        <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
+            {!isLoading ?
+                <form onSubmit={handleSubmit} className={styles.main}>
+                    <div className={styles.formHeader}>
+                        <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                        <p className={styles.heading}>Add New Bike</p>
                     </div>
-                </div>
 
-                <div className={styles.all_inputs}>
-                    {[
-                        { name: "price", label: "Price" },
-                        { name: "engine", label: "Engine" },
-                        { name: "boreAndStroke", label: "Bore & Stroke" },
-                        { name: "clutch", label: "Clutch" },
-                        { name: "starting", label: "Starting" },
-                        { name: "dimention", label: "Dimension" },
-                        { name: "petrolCapacity", label: "Petrol Capacity" },
-                        { name: "displacement", label: "Displacement" },
-                        { name: "compressionRatio", label: "Compression Ratio" },
-                        { name: "transmission", label: "Transmission" },
-                        { name: "frame", label: "Frame" },
-                        { name: "groundClearance", label: "Ground Clearance" },
-                        { name: "tyreBack", label: "Tyre Back" },
-                        { name: "tyreFront", label: "Tyre Front" },
-                        { name: "dryWeight", label: "Dry Weight" }
-                    ].map(({ name, label }) => (
-                        <div key={name}>
-                            <label htmlFor={name} className={styles.label}>{label}</label>
-                            <input
-                                id={name}
-                                name={name}
-                                value={(BikeData as any)[name]}
-                                onChange={handleInputChange}
-                                className={styles.input_}
-                            />
+                    <label htmlFor="title" className={styles.label}>Title</label>
+                    <input id="title" name="title" value={BikeData.title} onChange={handleInputChange} className={styles.input} />
+
+                    <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
+                    <input id="bikeUrl" name="bikeUrl" value={BikeData.bikeUrl} onChange={handleInputChange} className={styles.input} />
+
+                    <label htmlFor="description" className={styles.label}>Description</label>
+                    <FloaraTextArea
+                        value={BikeData.description}
+                        onChange={(desc: any) => setBikeData((prev) => ({ ...prev, description: desc }))}
+                    />
+
+                    {selectedImages.length < 4 && (
+                        <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                    )}
+
+                    <label className={styles.label}>Images (max 4)</label>
+                    <div className={styles.imagePreview}>
+                        {imageArr.map((img, index) => (
+                            <div key={index}>
+                                <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                                <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className={styles.drop_downBox}>
+                        <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
+                            <option value="" disabled selected hidden>Select Brand</option>
+                            {
+                                AllBrandArr.map((e: any, index: any) => {
+                                    console.log("hello335", AllBrandArr, e?.id)
+                                    return (
+                                        <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                            {e?.brandName}
+                                        </option>
+                                    )
+                                })
+                            }
+                        </select>
+
+                        <div style={{ marginTop: '10px' }}>
+                            <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
+                            <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
                         </div>
-                    ))}
-                </div>
+                    </div>
 
-                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                <textarea id="meta_title" name="meta_title" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                <textarea id="meta_description" name="meta_description" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="others" className={styles.label}>Others</label>
-                <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
+                    <div className={styles.all_inputs}>
+                        {[
+                            { name: "price", label: "Price" },
+                            { name: "engine", label: "Engine" },
+                            { name: "boreAndStroke", label: "Bore & Stroke" },
+                            { name: "clutch", label: "Clutch" },
+                            { name: "starting", label: "Starting" },
+                            { name: "dimention", label: "Dimension" },
+                            { name: "petrolCapacity", label: "Petrol Capacity" },
+                            { name: "displacement", label: "Displacement" },
+                            { name: "compressionRatio", label: "Compression Ratio" },
+                            { name: "transmission", label: "Transmission" },
+                            { name: "frame", label: "Frame" },
+                            { name: "groundClearance", label: "Ground Clearance" },
+                            { name: "tyreBack", label: "Tyre Back" },
+                            { name: "tyreFront", label: "Tyre Front" },
+                            { name: "dryWeight", label: "Dry Weight" }
+                        ].map(({ name, label }) => (
+                            <div key={name}>
+                                <label htmlFor={name} className={styles.label}>{label}</label>
+                                <input
+                                    id={name}
+                                    name={name}
+                                    value={(BikeData as any)[name]}
+                                    onChange={handleInputChange}
+                                    className={styles.input_}
+                                />
+                            </div>
+                        ))}
+                    </div>
 
-                <button type="submit" className={styles.button}>Add Bike</button>
-            </form>
+                    <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                    <textarea id="meta_title" name="meta_title" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                    <textarea id="meta_description" name="meta_description" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                    <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="others" className={styles.label}>Others</label>
+                    <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
+
+                    <button type="submit" className={styles.button}>Add Bike</button>
+                </form> :
+                <div className={styles.loader_container}>
+                    <Loader isLoading={isLoading} />
+                </div>}
         </div>
     );
 };
@@ -408,20 +433,21 @@ const AddNewElectricBikeForm = () => {
         tyreFront: '',
         videoUrl: '',
     });
-    const [allBrands, setAllBrands] = useState([])
+    const [allBrands, setAllBrands] = useState<any>([])
 
     useEffect(() => {
         fetchBrands()
     }, [])
 
-    async function fetchBrands() {
+    const fetchBrands = async () => {
+        setIsLoading(true)
         const res = await getbrandData();
-        console.log("Brands", res)
         if (res && res.length > 0) {
             setAllBrands(res);
         } else {
-            setAllBrands([]);
+            setAllBrands(BrandArr);
         }
+        setIsLoading(false)
     }
 
     const handleInputChange = (e: any) => {
@@ -607,100 +633,106 @@ const AddNewElectricBikeForm = () => {
 
     return (
         <div className={styles.main_box}>
-            <form onSubmit={handleSubmit} className={styles.main}>
-                <div className={styles.formHeader}>
+            {!isLoading ?
+                <form onSubmit={handleSubmit} className={styles.main}>
+                    <div className={styles.formHeader}>
 
-                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                    <p className={styles.heading}>Add Electric Bike</p>
-                </div>
+                        <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
+                        <p className={styles.heading}>Add Electric Bike</p>
+                    </div>
 
-                <label htmlFor="title" className={styles.label}>Title</label>
-                <input id="title" name="title" value={BikeData.title} onChange={handleInputChange} className={styles.input} />
+                    <label htmlFor="title" className={styles.label}>Title</label>
+                    <input id="title" name="title" value={BikeData.title} onChange={handleInputChange} className={styles.input} />
 
-                <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
-                <input id="bikeUrl" name="bikeUrl" value={BikeData.bikeUrl} onChange={handleInputChange} className={styles.input} />
+                    <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
+                    <input id="bikeUrl" name="bikeUrl" value={BikeData.bikeUrl} onChange={handleInputChange} className={styles.input} />
 
-                <label htmlFor="description" className={styles.label}>Description</label>
-                <FloaraTextArea
-                    value={BikeData.description}
-                    onChange={(desc: any) => setBikeData((prev) => ({ ...prev, description: desc }))}
-                />
+                    <label htmlFor="description" className={styles.label}>Description</label>
+                    <FloaraTextArea
+                        value={BikeData.description}
+                        onChange={(desc: any) => setBikeData((prev) => ({ ...prev, description: desc }))}
+                    />
 
-                {selectedImages.length < 4 && (
-                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                )}
+                    {selectedImages.length < 4 && (
+                        <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                    )}
 
-                <label className={styles.label}>Images (max 4)</label>
-                <div className={styles.imagePreview}>
-                    {imageArr.map((img, index) => (
-                        <div key={index}>
-                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
-                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
-                        </div>
-                    ))}
-                </div>
+                    <label className={styles.label}>Images (max 4)</label>
+                    <div className={styles.imagePreview}>
+                        {imageArr.map((img, index) => (
+                            <div key={index}>
+                                <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: '100%', height: "100%" }} />
+                                <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+                            </div>
+                        ))}
+                    </div>
 
-                {allBrands?.length > 0 ?
-                    <div className={styles.drop_downBox}>
-                        <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                            <option value="" disabled selected hidden>Select Brand</option>
-                            {
-                                allBrands.map((e: any, index) => (
-                                    <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                        {e?.brandName}
-                                    </option>
-                                ))
-                            }
-                        </select>
+                    {allBrands?.length > 0 ?
+                        <div className={styles.drop_downBox}>
+                            <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
+                                <option value="" disabled selected hidden>Select Brand</option>
+                                {
+                                    allBrands.map((e: any, index: any) => {
+                                        return (
+                                            <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                                {e?.brandName}
+                                            </option>
+                                        )
+                                    })
+                                }
+                            </select>
 
-                        <div style={{ marginTop: '10px' }}>
-                            <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                            <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
-                        </div>
-                    </div> : ""}
+                            <div style={{ marginTop: '10px' }}>
+                                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
+                                <input id="videoUrl" name="videoUrl" value={BikeData.videoUrl} onChange={handleInputChange} className={styles.input_bike_url} />
+                            </div>
+                        </div> : ""}
 
-                <div className={styles.all_inputs}>
-                    {[
-                        { name: "price", label: "Price" },
-                        { name: "dimention", label: "Type" },
-                        { name: "engine", label: "Seat Length" },
-                        { name: "boreAndStroke", label: "Battery" }, // change
-                        { name: "frame", label: "Head Light" },
-                        { name: "petrolCapacity", label: "Range Per Charge" }, // change
-                        { name: "starting", label: "Speed" },
-                        { name: "groundClearance", label: "Motor" },
-                        { name: "clutch", label: "Wheel" }, // change
-                        { name: "dryWeight", label: "Tyre Size" },
-                        { name: "transmission", label: "Shock Absorption" }, // change
-                        { name: "tyreBack", label: "Brake (Front/Rear)" },
-                        { name: "tyreFront", label: "Charge Time" },
-                        { name: "displacement", label: "Battery Type" }, // change
-                        { name: "compressionRatio", label: "Frame" },
-                    ].map(({ name, label }) => (
-                        <div key={name}>
-                            <label htmlFor={name} className={styles.label}>{label}</label>
-                            <input
-                                id={name}
-                                name={name}
-                                value={(BikeData as any)[name]}
-                                onChange={handleInputChange}
-                                className={styles.input_}
-                            />
-                        </div>
-                    ))}
-                </div>
+                    <div className={styles.all_inputs}>
+                        {[
+                            { name: "price", label: "Price" },
+                            { name: "dimention", label: "Type" },
+                            { name: "engine", label: "Seat Length" },
+                            { name: "boreAndStroke", label: "Battery" }, // change
+                            { name: "frame", label: "Head Light" },
+                            { name: "petrolCapacity", label: "Range Per Charge" }, // change
+                            { name: "starting", label: "Speed" },
+                            { name: "groundClearance", label: "Motor" },
+                            { name: "clutch", label: "Wheel" }, // change
+                            { name: "dryWeight", label: "Tyre Size" },
+                            { name: "transmission", label: "Shock Absorption" }, // change
+                            { name: "tyreBack", label: "Brake (Front/Rear)" },
+                            { name: "tyreFront", label: "Charge Time" },
+                            { name: "displacement", label: "Battery Type" }, // change
+                            { name: "compressionRatio", label: "Frame" },
+                        ].map(({ name, label }) => (
+                            <div key={name}>
+                                <label htmlFor={name} className={styles.label}>{label}</label>
+                                <input
+                                    id={name}
+                                    name={name}
+                                    value={(BikeData as any)[name]}
+                                    onChange={handleInputChange}
+                                    className={styles.input_}
+                                />
+                            </div>
+                        ))}
+                    </div>
 
-                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                <textarea id="meta_title" name="meta_title" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                <textarea id="meta_description" name="meta_description" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
-                <label htmlFor="others" className={styles.label}>Others</label>
-                <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                    <textarea id="meta_title" name="meta_title" value={BikeData.meta_title} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                    <textarea id="meta_description" name="meta_description" value={BikeData.meta_description} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                    <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
+                    <label htmlFor="others" className={styles.label}>Others</label>
+                    <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
 
-                <button type="submit" className={styles.button}>Add Bike</button>
-            </form>
+                    <button type="submit" className={styles.button}>Add Bike</button>
+                </form> :
+                <div className={styles.loader_container}>
+                    <Loader isLoading={isLoading} />
+                </div>}
         </div>
     );
 };
