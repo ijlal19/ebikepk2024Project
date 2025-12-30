@@ -53,7 +53,7 @@ let catagory_arr = [
     { title: "Showroom", url: "/dealers" },
     { title: "Videos", url: "https://www.youtube.com/@ebikepk" },
     { title: "Bikers Forum", url: "/forum" },
-    { title: "Shop", url: "/shop" },
+    { title: "Shop", url: "" },
     { title: "Blog", url: "/blog" },
     { title: "Bikes Price List", url: "/new-bike-price" },
     { title: "Dealers", url: "/dealers" },
