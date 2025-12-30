@@ -1,29 +1,27 @@
 'use client'
-import React from "react";
-import { useEffect } from "react";
-import styles from './index.module.scss';
+import { checkAuthAndRedirect, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { Used_bike_card } from "@/ebike-panel/ebike-panel-sharedComponent/all-panel-cards";
 import { useRouter } from "next/navigation";
-import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import styles from './index.module.scss';
+import { useEffect } from "react";
+import React from "react";
 
 const Main_DashBoard = () => {
     const router = useRouter()
     useEffect(() => {
-        checkAuthAndRedirect(router , '/ebike-panel/dashboard' )
+        fetchAllBrand()
+        checkAuthAndRedirect(router, '/ebike-panel/dashboard')
     }, []);
+
+    const fetchAllBrand = async () => {
+        const res = await getbrandData()
+    }
+
     return (
         <div className={styles.main}>
-            {/* {
-                !IsLoading ? */}
-                            <Used_bike_card />
-                            {/* : */}
-                    {/* <div className={styles.load_main}>
-                        <div className={styles.load_div}>
-                            <Loader isLoading={IsLoading} />
-                        </div>
-                    </div>} */}
+            <Used_bike_card />
         </div>
     )
 }
 
-export default Main_DashBoard
+export default Main_DashBoard;

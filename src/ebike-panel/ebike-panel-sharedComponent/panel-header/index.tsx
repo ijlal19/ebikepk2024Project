@@ -52,7 +52,7 @@ const NavOptionArray = [
             },
             {
                 OptionName: "Brands",
-                OptionRoute: "all-bike-brands"
+                OptionRoute: "all-bike-brands?page=1"
             },
             {
                 OptionName: "Cities",

@@ -1,3 +1,4 @@
+import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import Gconfig from 'globalconfig'
 const jsCookie = require('js-cookie');
 const Port = 'http://localhost:4000/api/'
@@ -48,6 +49,20 @@ const GetUserDetail = () => {
         const userData = JSON.parse(userCookie);
         return userData
     }
+}
+
+function getSessionData(key: string) {
+    const dataStr = sessionStorage.getItem(key);
+
+    if (dataStr) {
+        const parsedData = JSON.parse(dataStr);
+
+        if (Array.isArray(parsedData) && parsedData.length > 0) {
+            return parsedData;
+        }
+    }
+
+    return BrandArr;
 }
 
 /////////////////////////////////////// NEW BIKE FUNCTIONS ///////////////////////////////////////////////////
@@ -607,13 +622,33 @@ function addNewPage(data: any) {
 /////////////////////////////////////// ALL GENERAL BRAND FUNCTION ///////////////////////////////////////////////////////
 function getbrandData() {
     return fetch(Gconfig.ebikeApi + 'brand/get-brand')
-        .then(response => response.json()).then(data => {
-            return data
+        .then(response => response.json())
+        .then(data => {
+
+            if (Array.isArray(data) && data.length > 0) {
+                sessionStorage.setItem("BrandsData", JSON.stringify(data));
+            }
+            else{
+                sessionStorage.setItem("BrandsData", JSON.stringify(BrandArr));
+            }
+
+            return data;
         })
         .catch((err) => {
-            console.log(err)
-        })
+            console.log(err);
+            return [];
+        });
 }
+
+// function getbrandData() {
+//     return fetch(Gconfig.ebikeApi + 'brand/get-brand')
+//         .then(response => response.json()).then(data => {
+//             return data
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//         })
+// }
 
 function getBrandFromId(id: any, dataArr: any) {
     if (dataArr && dataArr.length > 0 && id) {
@@ -1635,6 +1670,7 @@ export {
     UpdateBrandById,
     DeleteBrandbyId,
     addNewBrand,
+    getSessionData,
 
     getCityData,
     DeleteCitybyId,

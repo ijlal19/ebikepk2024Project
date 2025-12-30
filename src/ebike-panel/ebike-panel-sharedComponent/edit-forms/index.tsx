@@ -1,5 +1,5 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById, getSessionData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { cloudinaryLoader, numericOnly } from '@/genericFunctions/geneFunc';
@@ -66,6 +66,9 @@ let product_size = [
         SizeName: 'Small'
     }
 ]
+
+let AllBrandArray: any[] = [];
+
 
 //////////////////////////////////////////////// EDIT USED BIKE
 const EditUsedBikeForm = () => {
@@ -1331,19 +1334,21 @@ const EditBrandForm = () => {
 
     useEffect(() => {
         const url = new URL(window.location.href);
-        const tab = url.searchParams.get("tab");
+        const tab = url.searchParams.get("page");
 
         if (tab !== null) {
             setTabNum(tab)
         }
+
+        const brandData = getSessionData("BrandsData")
+        AllBrandArray = brandData
+
         fetchPageByID(slug1)
     }, [])
 
     const fetchPageByID = async (id: any) => {
         setIsLoading(true)
-        const getBrandArray = await getbrandData()
-        const res = await getBrandFromId(id, getBrandArray)
-        console.log("hello", res)
+        const res = await getBrandFromId(id, AllBrandArray)
         if (res && res) {
             setNewBrandName(res[0].brandName)
             setNewLogoUrl(res[0].logoUrl)
@@ -1398,7 +1403,7 @@ const EditBrandForm = () => {
         const res = await UpdateBrandById(slug1, obj)
         if (res && res.info == "brand is updated successfully") {
             alert('Updated Successfully')
-            router.push(`/ebike-panel/dashboard/all-bike-brands?tab=${TabNum}`)
+            router.push(`/ebike-panel/dashboard/all-bike-brands?page=${TabNum}`)
         }
         else {
             alert('Something is Wrong!')
@@ -1406,7 +1411,7 @@ const EditBrandForm = () => {
     };
 
     const goBack1 = () => {
-        router.push(`/ebike-panel/dashboard/all-bike-brands?tab=${TabNum}`)
+        router.push(`/ebike-panel/dashboard/all-bike-brands?page=${TabNum}`)
     }
 
     return (

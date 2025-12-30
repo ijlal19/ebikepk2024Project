@@ -1,9 +1,10 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getbrandData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads, DeleteThread, DeleteThreadComment, GetAllThreadsComments, AddNewVideo, GetAllVideos, DeleteBikeVideo } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getSessionData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads, DeleteThread, DeleteThreadComment, GetAllThreadsComments, AddNewVideo, GetAllVideos, DeleteBikeVideo, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
 import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
-import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
+import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
+import { CityArr } from "@/ebikeWeb/constants/globalData";
 import { Grid, Link, Pagination } from "@mui/material";
 import { Navigation, FreeMode } from 'swiper/modules';
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,27 +15,16 @@ import { useRouter } from "next/navigation";
 import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
-import 'swiper/css';
-import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
 import Data from "./data";
-import { NewVideoCard } from "@/ebikeWeb/sharedComponents/new_item_card";
+import 'swiper/css';
 
 let savedPage: any;
 let saveNewBike: any;
 let Usedbikewindowscroll: any;
 let Newbikewindowscroll: any;
 let brandScroll: any;
-let AllBrandArr: any[] = [];
+let AllBrandArray: any[] = [];
 
-const getBrand = async () => {
-    const res = await getbrandData()
-    if (res && res?.length > 0) {
-        AllBrandArr = res
-    }
-    else {
-        AllBrandArr = BrandArr
-    }
-}
 
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
@@ -56,7 +46,9 @@ const Used_bike_card: any = () => {
         const savedScrollStr = localStorage.getItem("UsedBikeScroll");
         const prev_page = localStorage.getItem("prev_page");
         savedPage = savedPageStr
-        getBrand()
+
+        const brandData = getSessionData("BrandsData")
+        AllBrandArray = brandData
 
         if (savedScrollStr && prev_page === 'edit-used-bike') {
             fetchAllUsedBike(savedPage);
@@ -97,7 +89,7 @@ const Used_bike_card: any = () => {
 
     const GetName = (from: any, id: any) => {
         if (from == 'brand') {
-            let brand = getBrandFromId(id, AllBrandArr);
+            let brand = getBrandFromId(id, AllBrandArray);
             return brand[0]?.brandName || 'N/A';
         } else {
             let city = getCityFromId(id, CityArr);
@@ -429,11 +421,14 @@ const New_bike_card = () => {
     const router = useRouter();
 
     useEffect(() => {
-        getBrand()
         const savedPage = Number(localStorage.getItem("PageNewBike"));
         const savedScrollStr = localStorage.getItem("NewBikeScroll");
         const prev_page = localStorage.getItem("prev_page");
         saveNewBike = savedPage
+
+        const brandData = getSessionData("BrandsData")
+        AllBrandArray = brandData
+
         if (savedScrollStr && prev_page === 'edit-new-bike') {
             fetchAllNewBike(saveNewBike);
             setCurrentPage(saveNewBike);
@@ -499,9 +494,8 @@ const New_bike_card = () => {
 
     const GetName = (from: any, id: any) => {
         if (from === 'brand') {
-            console.log("hello21" , AllBrandArr)
-            const brand = getBrandFromId(id, AllBrandArr);
-            return brand[0]?.brandName || "";
+            const brand = getBrandFromId(id, AllBrandArray);
+            return brand[0]?.brandName || "N/A";
         } else {
             const city = getCityFromId(id, CityArr);
             return city[0]?.city_name || "";
@@ -1727,12 +1721,16 @@ const AllBrands_Card = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
+    const [BrandName, setBrandName] = useState<any>("")
     const itemsPerPage = 8;
     const router = useRouter()
     useEffect(() => {
         const savedScrollStr = localStorage.getItem("BrandScroll");
         const url = new URL(window.location.href);
-        const tab = url.searchParams.get("tab");
+        const tab = url.searchParams.get("page");
+        const SingleBrandName = url.searchParams.get("brand");
+        setBrandName(SingleBrandName)
+        console.log("hello", url?.search, tab)
 
         if (tab !== null) {
             const tabNumber = Number(tab);
@@ -1755,7 +1753,6 @@ const AllBrands_Card = () => {
         );
         setfilteredAllBrands(filtered);
         setCurrentPage(1);
-        console.log("hello1", filtered)
     }, [searchTerm]);
 
     useEffect(() => {
@@ -1768,7 +1765,6 @@ const AllBrands_Card = () => {
     const fetchAllBrands = async (_page: number) => {
         setIsLoading(true);
         const res = await getbrandData();
-        console.log("hello123", _page)
         if (res && res.length > 0) {
             setAllBrands(res);
             setfilteredAllBrands(res);
@@ -1812,9 +1808,9 @@ const AllBrands_Card = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleEditBrand = (id: any) => {
+    const handleEditBrand = (e: any) => {
         localStorage.setItem("BrandScroll", window.scrollY.toString());
-        router.push(`/ebike-panel/dashboard/edit-brand/${id}?tab=${currentPage}`);
+        router.push(`/ebike-panel/dashboard/edit-brand/${e?.id}?page=${currentPage}&brand=${e?.brandName}`);
     };
 
     const [open, setOpen] = useState(false);
@@ -1882,8 +1878,8 @@ const AllBrands_Card = () => {
                                         {/* <td className={styles.td} >{add3Dots(e?.title, 20)}</td> */}
                                         <td className={styles.td_action}>
                                             <div className={styles.card_actions}>
-                                                <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}?tab=${currentPage}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
-                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e?.id)}>
+                                                <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}?page=${currentPage}&brand=${e?.brandName}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e)}>
                                                         Edit
                                                     </button>
                                                 </Link>

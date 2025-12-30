@@ -1488,14 +1488,14 @@ const AddBrandForm = () => {
         const res = await addNewBrand(finalBikeData);
         if (res && res?.success && res.info === "Added Successfully!") {
             alert("Brand Add Successfully")
-            router.push('/ebike-panel/dashboard/all-bike-brands');
+            router.push('/ebike-panel/dashboard/all-bike-brands?page=1');
         } else {
             alert('Something went wrong!');
         }
     };
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/all-bike-brands')
+        router.push('/ebike-panel/dashboard/all-bike-brands?page=1')
     }
 
     return (
