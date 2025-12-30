@@ -337,18 +337,26 @@ const EditNewBikeForm = () => {
     const [isLoading, setIsLoading] = useState(false)
     const { slug, slug1 } = useParams()
     const [AllBrandsArr, setAllBrands] = useState<any>([])
+    const [TabNum, setTabNum] = useState("1")
     let id = slug1
     const router = useRouter()
     useEffect(() => {
+        const brandData = getSessionData("BrandsData")
+        AllBrandArray = brandData
         fetchBrands()
+        const url = new URL(window.location.href);
+        const tab = url.searchParams.get("page");
+        if (tab !== null) {
+            setTabNum(tab)
+        }
         if (id) fetchNewBikeByID(id);
     }, [id])
 
     const fetchBrands = async () => {
         setIsLoading(true)
-        const res = await getbrandData();
-        if (res && res.length > 0) {
-            setAllBrands(res);
+        // const res = await getbrandData();
+        if (AllBrandArray && AllBrandArray.length > 0) {
+            setAllBrands(AllBrandArray);
         } else {
             setAllBrands(BrandArr);
         }
@@ -496,7 +504,7 @@ const EditNewBikeForm = () => {
     }
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/all-new-bikes')
+        router.push(`/ebike-panel/dashboard/all-new-bikes?page=${TabNum}`)
     }
 
     return (

@@ -421,17 +421,20 @@ const New_bike_card = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const savedPage = Number(localStorage.getItem("PageNewBike"));
+        // const savedPage = Number(localStorage.getItem("PageNewBike"));
+        const url = new URL(window.location.href);
+        const tab = url.searchParams.get("page");
+        const tabNumber = Number(tab);
         const savedScrollStr = localStorage.getItem("NewBikeScroll");
         const prev_page = localStorage.getItem("prev_page");
-        saveNewBike = savedPage
+        saveNewBike = tabNumber
 
         const brandData = getSessionData("BrandsData")
         AllBrandArray = brandData
 
-        if (savedScrollStr && prev_page === 'edit-new-bike') {
-            fetchAllNewBike(saveNewBike);
-            setCurrentPage(saveNewBike);
+        if (savedScrollStr && prev_page === 'edit-new-bike' && tab) {
+            fetchAllNewBike(tabNumber);
+            setCurrentPage(tabNumber);
             localStorage.removeItem("prev_page");
             Newbikewindowscroll = Number(savedScrollStr)
         }
@@ -518,10 +521,10 @@ const New_bike_card = () => {
     };
 
     const handleEdit = (id: any) => {
-        localStorage.setItem("PageNewBike", String(currentPage))
+        // localStorage.setItem("PageNewBike", String(currentPage))
         localStorage.setItem("NewBikeScroll", window.scrollY.toString());
         localStorage.setItem("prev_page", "edit-new-bike");
-        router.push(`/ebike-panel/dashboard/edit-new-bike/${id}`);
+        router.push(`/ebike-panel/dashboard/edit-new-bike/${id}?page=${currentPage}`);
     };
 
     const handleSearch = (e: any) => {
@@ -582,7 +585,7 @@ const New_bike_card = () => {
                                             <td className={styles.td} >{e?.price ? priceWithCommas(e.price) : '0'}</td>
                                             <td className={styles.td_action}>
                                                 <div className={styles.card_actions}>
-                                                    <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
+                                                    <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}?page=${currentPage}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
                                                         <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
                                                             Edit
                                                         </button>
@@ -1730,7 +1733,6 @@ const AllBrands_Card = () => {
         const tab = url.searchParams.get("page");
         const SingleBrandName = url.searchParams.get("brand");
         setBrandName(SingleBrandName)
-        console.log("hello", url?.search, tab)
 
         if (tab !== null) {
             const tabNumber = Number(tab);
