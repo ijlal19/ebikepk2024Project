@@ -26,19 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function Blog() {
     return (
       <>
-      {/* <link
-        rel="preload"
-        href="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-        as="script"
-        crossOrigin="anonymous" // Add this
-      /> */}
-        {/* <Script
-          strategy="beforeInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-          crossOrigin="anonymous"
-        ></Script> */}
-        
         <BlogDetails /> 
-        </>
+      </>
     )
 }

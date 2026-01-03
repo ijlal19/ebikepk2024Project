@@ -247,12 +247,22 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
             return `/used-bikes/${urlTitle}/${val.id}`
         }
+
+
         return (
             <>
                 {ind % 4 == 0 ?
                     <div className={styles.banner_1}>
                         <a href="/">
-                            <img className={styles.baner_image} src={is10Inch ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} />
+                            {/* <img className={styles.baner_image} src={is10Inch ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} /> */}
+                            { is10Inch ? 
+                            <ins className="adsbygoogle"
+                                style={{display:"block"}}
+                                data-ad-client="ca-pub-5167970563180610"
+                                data-ad-slot="9214599249"
+                                data-ad-format="auto"
+                                data-full-width-responsive="true">
+                            </ins> : "" }
                         </a>
                     </div> : ""}
                 {!isMobileView ?
@@ -633,7 +643,9 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                                         <p className={styles.not_found}>No results found.</p> :
                                                         allBikesArr.map((val, ind) => {
                                                             return (
-                                                                isGridSelected ? GridCard(val, ind) : longCard(val, ind)
+                                                                isGridSelected ? 
+                                                                GridCard(val, ind) : 
+                                                                longCard(val, ind) 
                                                             )
                                                         })
                                                     }

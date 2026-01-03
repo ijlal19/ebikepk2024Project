@@ -264,12 +264,13 @@ const Blog = () => {
                 </Box>
 
                 <div className="text-center mt-2 mb-2">
-                  <ins
-                    className="adsbygoogle"
-                    style={{ display: "inline-block", width: "336px", height: "280px" }}
-                    data-ad-client="ca-pub-5167970563180610"
-                    data-ad-slot="5915965531"
-                  />
+                      <ins className="adsbygoogle"
+                          style={{ display: "block" }}
+                          data-ad-client="ca-pub-5167970563180610"
+                          data-ad-slot="9214599249"
+                          data-ad-format="auto"
+                          data-full-width-responsive="true">
+                    </ins>
                 </div>
 
                 {

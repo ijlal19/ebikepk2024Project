@@ -19,11 +19,11 @@ const AdSense = ({ client, slot, style, format = "auto" }) => {
 
   return (
     <div>
-       <script
+       {/* <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
         crossOrigin="anonymous"
-      ></script>
+      ></script> */}
         <div style={{ textAlign: "center", margin: "20px 0" }}>
           <ins
             className="adsbygoogle"
