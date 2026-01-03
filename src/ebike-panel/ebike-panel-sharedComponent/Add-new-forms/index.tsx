@@ -81,7 +81,7 @@ const AddNewBikeForm = () => {
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBrandId, setSelectedBrandId] = useState('');
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [BikeData, setBikeData] = useState({
         bikeUrl: '',
         boreAndStroke: '',
@@ -139,10 +139,8 @@ const AddNewBikeForm = () => {
     };
 
     function uploadImage(event: any) {
-        setIsLoading(true)
         const reader = new FileReader()
         reader.readAsDataURL(event.target.files[0])
-
         reader.onload = (event: any) => {
 
             const imgElement: any = document.createElement("img");
@@ -463,7 +461,6 @@ const AddNewElectricBikeForm = () => {
     };
 
     function uploadImage(event: any) {
-        setIsLoading(true)
         const reader = new FileReader()
         reader.readAsDataURL(event.target.files[0])
 
