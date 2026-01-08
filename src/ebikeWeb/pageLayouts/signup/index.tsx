@@ -54,10 +54,11 @@ const Signup = () => {
         setIsLoading(false)
 
         if(res.success) {
-            setError('Account Created Successfully!. Verification Link has been sent to your Email. Please Verify your Email address for login.')
-            // setTimeout(()=> {
-            //     Router.push('/')
-            // }, 10000)
+            // setError('Account Created Successfully!. Verification Link has been sent to your Email. Please Verify your Email address for login.')
+            setError('Account Created Successfully!')
+            setTimeout(()=> {
+                Router.push('/')
+            }, 2000)
         }
         else {
           setError(res.info)
