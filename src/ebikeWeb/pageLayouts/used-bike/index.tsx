@@ -195,7 +195,7 @@ export default function UsedBike({_bikeDetail}:any) {
                 </Swiper>
 
 
-                <table width="100%" className={styles.info_content}>
+                <table width="100%" className={styles.info_content} style={{ marginTop: "20px" }}>
                   <tbody>
                     <tr style={{boxShadow:"0px 0px 10px #ababab91" ,}}>
                       <td>
@@ -215,7 +215,8 @@ export default function UsedBike({_bikeDetail}:any) {
                 </table>
 
                 <table width="100%" className={styles.info_content}>
-                  <tbody style={{boxShadow:"0px 0px 10px #ababab91"}}>
+                  {/* style={{boxShadow:"0px 0px 10px #ababab91"}} */}
+                  <tbody>
                     <tr >
                       <td className={styles.info_field_two}> <b> Location </b> </td>
                       <td className={styles.info_field_two}> {bikeCity && bikeCity.length > 0 && bikeCity[0].city_name} </td>
