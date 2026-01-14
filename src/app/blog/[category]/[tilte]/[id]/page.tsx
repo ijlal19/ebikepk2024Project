@@ -19,6 +19,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
      return `https://www.ebike.pk/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
   };
 
+  const ogImage = cloudinaryLoader(
+    blog?.featuredImage?.split(' #$# ')[0]?.trim(),
+    1200,
+    'jpg'
+  )
+
   return {
     title: `${blog?.blogTitle} | ebike.pk`,
     description: blog?.meta_description,
@@ -30,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'ebike.pk',
       images: [
         {
-          url: cloudinaryLoader(blog?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto'),
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: blog?.blogTitle,
@@ -43,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: blog?.blogTitle,
       description: blog?.meta_description,
-      images: [cloudinaryLoader(blog?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')],
+      images: [ogImage],
     },
   }
 }
