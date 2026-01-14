@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = cloudinaryLoader(
     blog?.featuredImage?.split(' #$# ')[0]?.trim(),
     1200,
-    'jpg'
+    'auto'
   )
 
   return {
