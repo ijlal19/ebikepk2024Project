@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title = title.replace(/\s+/g, '-');
     var lowerTitle = title.toLowerCase();
     lowerTitle = '' + lowerTitle.replaceAll("?", "")
-     return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
+     return `https://www.ebike.pk/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
   };
 
   return {

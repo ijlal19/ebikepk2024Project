@@ -279,7 +279,8 @@ const BlogDetails = () => {
                     <TwitterIcon size={32} round />
                   </TwitterShareButton>
 
-                  <LinkedinShareButton url={Href}>
+                  <LinkedinShareButton 
+                    url={Href}>
                     <LinkedinIcon size={32} round />
                   </LinkedinShareButton>
 
