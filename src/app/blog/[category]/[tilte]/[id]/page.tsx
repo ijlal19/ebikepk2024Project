@@ -1,52 +1,45 @@
-import * as React from 'react';
-import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index';
+import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index'
 import { Metadata } from 'next'
-import {getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions';
-import Head from "next/head";
+import { getSingleBlogData } from '@/ebikeWeb/functions/globalFuntions'
 
 type Props = {
-    params: { id: string }
+  params: { id: string }
 }
-let blog:any = {}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { id } = params
-    blog = await getSingleBlogData(id)
+  const blog = await getSingleBlogData(params.id)
 
-    return {
-      title: blog?.blogTitle + ' | ebike.pk',
+  return {
+    title: `${blog?.blogTitle} | ebike.pk`,
+    description: blog?.meta_description,
+
+    openGraph: {
+      title: `${blog?.blogTitle} | ebike.pk`,
       description: blog?.meta_description,
-      openGraph: {
-        title:  blog.blogTitle + ' | ebike.pk',
-        description: blog?.meta_description,
-        images: [
+      url: `https://ebike.pk/blog/${params.id}`,
+      siteName: 'ebike.pk',
+      images: [
         {
-          url:  blog.featuredImage,
+          url: blog?.featuredImage,
           width: 1200,
           height: 630,
-          alt: 'blog Image',
+          alt: blog?.blogTitle,
         },
-        ],
-        tags: [blog.blogTitle, blog?.meta_description, 'blog', blog.featuredImage]
-      },
-    }
+      ],
+      type: 'article',
+    },
+
+    twitter: {
+      card: 'summary_large_image',
+      title: blog?.blogTitle,
+      description: blog?.meta_description,
+      images: [blog?.featuredImage],
+    },
   }
+}
 
-export default function Blog() {
-    return (
-      <>
-        <Head>
-            <meta property="og:title" content={blog?.blogTitle} />
-            <meta property="og:description" content={blog?.meta_description} />
-            <meta property="og:image" content={blog.featuredImage} />
+export default async function Blog({ params }: Props) {
+  const blog = await getSingleBlogData(params.id)
 
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={blog?.blogTitle} />
-            <meta name="twitter:description" content={blog?.meta_description} />
-            <meta name="twitter:image" content={blog.featuredImage} />
-
-        </Head>
-        <BlogDetails /> 
-      </>
-    )
+  return <BlogDetails  />
 }
