@@ -254,39 +254,42 @@ const BlogDetails = () => {
                     <ShareIcon sx={{ mr: 1, fontSize: '15px', fontWeight: 'bolder' }} />
                     Share
                   </Fab>
-
-                  <FacebookShareButton
-                    url={Href}
-                    quote={'next-share is a social share buttons for your next React apps.'}
-                    hashtag={'#nextshare'} style={{ display: 'flex', alignItems: 'center' }}>
-                    <FacebookIcon size={32} round />
-                  </FacebookShareButton>
-
+{/*                  
                   <PinterestShareButton
                     url={Href}
                     media={'next-share is a social share buttons for your next React apps.'}
                     style={{ display: isMobile ? displayicon ? 'none' : 'flex' : 'flex', alignItems: 'center' }}
                   >
                     <PinterestIcon size={32} round />
-                  </PinterestShareButton>
+                  </PinterestShareButton> */}
+
+                  <FacebookShareButton
+                    url={Href}
+                    quote={DataBlog.blogTitle}
+                    hashtag="#blog"
+                  >
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+               
                   <TwitterShareButton
                     url={Href}
-                    title={'next-share is a social share buttons for your next React apps.'} style={{ display: 'flex', alignItems: 'center' }}>
+                    title={DataBlog.blogTitle}
+                  >
                     <TwitterIcon size={32} round />
                   </TwitterShareButton>
 
-                  <LinkedinShareButton url={Href}
-                    style={{ display: 'flex', alignItems: 'center' }}>
+                  <LinkedinShareButton url={Href}>
                     <LinkedinIcon size={32} round />
                   </LinkedinShareButton>
 
+{/* 
                   <EmailShareButton
                     url={Href}
                     subject={'Next Share'}
                     body="body" style={{ display: isMobile ? displayicon ? 'none' : 'flex' : 'flex', alignItems: 'center' }}
                   >
                     <EmailIcon size={32} round />
-                  </EmailShareButton>
+                  </EmailShareButton> */}
                   <AddCircleRoundedIcon sx={{ fontSize: '35px', height: 35, display: isMobile ? 'flex' : 'none', color: '#b5b2b2' }} onClick={handleicons} />
                 </Typography>
               </Box>
