@@ -291,7 +291,7 @@ const BlogDetails = () => {
                   >
                     <EmailIcon size={32} round />
                   </EmailShareButton> */}
-                  <AddCircleRoundedIcon sx={{ fontSize: '35px', height: 35, display: isMobile ? 'flex' : 'none', color: '#b5b2b2' }} onClick={handleicons} />
+                  {/* <AddCircleRoundedIcon sx={{ fontSize: '35px', height: 35, display: isMobile ? 'flex' : 'none', color: '#b5b2b2' }} onClick={handleicons} /> */}
                 </Typography>
               </Box>
 

@@ -11,6 +11,14 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const blog = await getSingleBlogData(params.id)
 
+  const handleRoute = (blogInfo: any) => {
+    var title = blogInfo.blogTitle;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+    lowerTitle = '' + lowerTitle.replaceAll("?", "")
+     return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
+  };
+
   return {
     title: `${blog?.blogTitle} | ebike.pk`,
     description: blog?.meta_description,
@@ -18,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${blog?.blogTitle} | ebike.pk`,
       description: blog?.meta_description,
-      url: `https://ebike.pk/blog/${params.id}`,
+      url: handleRoute(blog),
       siteName: 'ebike.pk',
       images: [
         {
