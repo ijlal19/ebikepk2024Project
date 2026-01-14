@@ -72,6 +72,7 @@ const BlogDetails = () => {
     if (res?.length > 0 && id) {
       const filteredBlogs = res.filter((blog: any) => blog.id.toString() !== id.toString());
       setBlogData(filteredBlogs);
+      console.log('currentblog', filteredBlogs)
     }
   }
 
