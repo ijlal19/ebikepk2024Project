@@ -148,6 +148,16 @@ export default function DropwDownMenu({ props }: any) {
                 {
                     props?.option.map((e: any, i: any) => {
                         return (
+                           e?.OptionRoute?.indexOf("sell-used-bike") > -1 ?
+                            
+                            <Link href={`/${e?.OptionRoute}`} key={i} sx={{ textDecoration: 'none', color: '#181818' }} >
+                                <MenuItem onClick={handleClose} disableRipple>
+                                    {e?.OptionName}
+                                </MenuItem>
+                            </Link>
+
+                            :
+                            
                             <Link href={`/ebike-panel/dashboard/${e?.OptionRoute}`} key={i} sx={{ textDecoration: 'none', color: '#181818' }} >
                                 <MenuItem onClick={handleClose} disableRipple>
                                     {e?.OptionName}

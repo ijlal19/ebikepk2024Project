@@ -8,6 +8,8 @@ import { cloudinaryLoader, isLoginUser } from "@/genericFunctions/geneFunc";
 import { numericOnly, publishAd } from "@/genericFunctions/geneFunc"
 import { uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader"
+import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+const jsCookie = require('js-cookie');
 
 const SellUsedBike = () => {
 
@@ -28,6 +30,9 @@ const SellUsedBike = () => {
     const [customer, setCustomer] = useState<any>('not_login')
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
+    const [adminToken, setAdminToken] = useState(null);
+
+    const router = useRouter()
 
     useEffect(() => {
         let _isLoginUser = isLoginUser()
@@ -35,6 +40,17 @@ const SellUsedBike = () => {
             setCustomer(_isLoginUser.info)
         }
         else {
+            const userCookie = jsCookie.get("userData_ebike_panel");
+            
+            if (userCookie) {
+                const userData = JSON.parse(userCookie);
+                const token = userData?.accessToken;
+                if (token) {
+                    setAdminToken(token)
+                    return
+                }
+            }
+
             setCustomer("not_login")
             Router.push('/')
         }
@@ -66,7 +82,7 @@ const SellUsedBike = () => {
 
     const handelsubmit = async () => {
   
-        if (!customer || customer == "not_login" || customer?.id == undefined) {
+        if ((!customer || customer == "not_login" || customer?.id == undefined) && !adminToken) {
             Router.push('/')
         }
 
@@ -121,7 +137,7 @@ const SellUsedBike = () => {
             _phone = _phone.substring(1);
         }
 
-        let obj = {
+        let obj:any = {
             "brandId": brand,
             "cityId": city,
             "description": description,
@@ -137,12 +153,34 @@ const SellUsedBike = () => {
             "requestedForFeatured": false
         }
 
+        if(adminToken){
+           obj["is_certified"] = true
+        }
+
         setIsLoading(true)
-        let res = await publishAd(obj)
+        
+        let res = await publishAd(obj, adminToken ? adminToken : null)
         
         if (res.success) {
             alert('Ad submitted Successfully! Please wait for approval')
-            Router.push('/used-bikes')
+            if(!adminToken) {
+                setTimeout(()=>{
+                    Router.push('/used-bikes')
+                },2000)
+            }
+            else {
+                    setCity("");
+                    setModelYear("");
+                    setCc("");
+                    setBrand("");
+                    setTitle("");
+                    setDescription("");
+                    setPrice("");
+                    setVideoUrl("");
+                    setSellerName("");
+                    setMobile("");
+            }
+           
         }
         else {
             alert('Some thing went wrong')

@@ -125,8 +125,8 @@ function verifyUserFromAuthenticationEmail(email: any, token: any) {
   })
 }
 
-function publishAd(data: any) {
-  let token = jsCookie.get('accessToken_e')
+function publishAd(data: any, adminToken:any) {
+  let token = adminToken ? adminToken : jsCookie.get('accessToken_e')
   return fetch(Gconfig.ebikeApi + `classified/crete-add`, {
     method: 'POST',
     headers: { "Content-Type": "application/json", "x-access-token": token },

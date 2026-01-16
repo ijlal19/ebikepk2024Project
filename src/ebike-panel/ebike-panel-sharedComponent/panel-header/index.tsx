@@ -24,6 +24,10 @@ const NavOptionArray = [
                 OptionName: "Electric Bikes",
                 OptionRoute: "all-electric-bikes"
             },
+            {
+                OptionName: "Add Certified Bike",
+                OptionRoute: "used-bikes/sell-used-bike"
+            },
         ]
     },
     {
