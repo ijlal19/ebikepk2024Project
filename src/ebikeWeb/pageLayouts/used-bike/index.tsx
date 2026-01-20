@@ -108,31 +108,69 @@ export default function UsedBike({_bikeDetail}:any) {
   }
 
 
-    function embebedYoutubeVideoId(videoURL: string) {
-    if (videoURL) {
-      var url = videoURL;
-      if (url.indexOf('short') > -1) {
-        let videoUrl = url.replace('shorts', 'embed')
-        return videoUrl;
-      }
-      else if (url.split('https://youtu.be/')[1]) {
-        let videoID = url.split('https://youtu.be/')[1]
-        let videoUrl = 'https://www.youtube.com/embed/' + videoID
-        return videoUrl;
-      }
-      else if (url.split('https://www.youtube.com/watch?v=')[1]) {
-        let videoID = url.split('https://www.youtube.com/watch?v=')[1]
-        let videoUrl = 'https://www.youtube.com/embed/' + videoID;
-        return videoUrl;
-      }
-      else {
-        return ""
-      }
-    }
-    else {
-      return ""
-    }
+  // function embebedYoutubeVideoId(videoURL: string) {
+  //   if (videoURL) {
+  //     var url = videoURL;
+  //     if (url.indexOf('short') > -1) {
+  //       let videoUrl = url.replace('shorts', 'embed')
+  //       return videoUrl;
+  //     }
+  //     else if (url.split('https://youtu.be/')[1]) {
+  //       let videoID = url.split('https://youtu.be/')[1]
+  //       let videoUrl = 'https://www.youtube.com/embed/' + videoID
+  //       return videoUrl;
+  //     }
+  //     else if (url.split('https://www.youtube.com/watch?v=')[1]) {
+  //       let videoID = url.split('https://www.youtube.com/watch?v=')[1]
+  //       let videoUrl = 'https://www.youtube.com/embed/' + videoID;
+  //       return videoUrl;
+  //     }
+  //     else {
+  //       return ""
+  //     }
+  //   }
+  //   else {
+  //     return ""
+  //   }
+  // }
+
+function embebedVideoUrl(videoURL: string) {
+  if (!videoURL) return "";
+
+  const url = videoURL.trim();
+
+  // YouTube Shorts
+  if (url.includes('youtube.com/shorts/')) {
+    return url.replace('youtube.com/shorts/', 'youtube.com/embed/');
   }
+
+  // YouTube short link
+  if (url.includes('youtu.be/')) {
+    const videoID = url.split('youtu.be/')[1]?.split('?')[0];
+    return `https://www.youtube.com/embed/${videoID}`;
+  }
+
+  // YouTube watch link
+  if (url.includes('youtube.com/watch?v=')) {
+    const videoID = url.split('v=')[1]?.split('&')[0];
+    return `https://www.youtube.com/embed/${videoID}`;
+  }
+
+  // TikTok full video
+  if (url.includes('tiktok.com') && url.match(/video\/(\d+)/)) {
+    const match = url.match(/video\/(\d+)/);
+    return `https://www.tiktok.com/embed/v2/${match![1]}`;
+  }
+
+  // TikTok short share link (vt.tiktok.com)
+  if (url.includes('vt.tiktok.com')) {
+    // fallback: embed the share link directly
+    return url;
+  }
+
+  return "";
+}
+
 
   let bikeBrand = getBrandFromId(bikeDetail?.brandId, BrandArr)
   let bikeCity = getCityFromId(bikeDetail?.cityId, CityArr)
@@ -242,12 +280,30 @@ export default function UsedBike({_bikeDetail}:any) {
                 <div className={styles.seller_comments}>
                   <h6 className={styles.bike_dec_title} > Bike Video </h6>
                   <div className={styles.bike_video}>
-                    <iframe
+                    {/* <iframe
                       src={bikeDetail?.videoUrl ? embebedYoutubeVideoId(bikeDetail?.videoUrl) : ""}
                       title="YouTube video player"
                       className={styles.bike_video}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    ></iframe>
+                    ></iframe> */}
+                     {bikeDetail?.videoUrl?.includes("tiktok.com") ? (
+                        <iframe
+                          src={embebedVideoUrl(bikeDetail.videoUrl)}
+                          className={styles.bike_video}
+                          allow="autoplay; encrypted-media"
+                          title="TikTok video"
+                          allowFullScreen
+                        ></iframe>
+                      ) : (
+                        <iframe
+                          src={embebedVideoUrl(bikeDetail.videoUrl)}
+                          className={styles.bike_video}
+                          allow="autoplay; encrypted-media"
+                          title="YouTube video"
+                          allowFullScreen
+                        ></iframe>
+                      )}
+
                   </div>
                 </div> : "" }
 
