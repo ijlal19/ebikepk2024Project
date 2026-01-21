@@ -56,6 +56,65 @@ const SellUsedBike = () => {
         }
     }, [])
 
+    function validateVideoUrl(url: string) {
+        if (!url) {
+            return { valid: true, error: "Video URL required" };
+        }
+
+        try {
+            const parsed = new URL(url);
+
+            const host = parsed.hostname.replace("www.", "");
+
+            // Allowed domains
+            const allowedHosts = [
+            "youtube.com",
+            "youtu.be",
+            "tiktok.com",
+            "vt.tiktok.com",
+            ];
+
+            if (!allowedHosts.some(h => host === h || host.endsWith(`.${h}`))) {
+            return { valid: false, error: "Only YouTube or TikTok links are allowed" };
+            }
+
+            // YouTube validation
+            if (host.includes("youtube.com")) {
+            if (
+                parsed.pathname.startsWith("/watch") ||
+                parsed.pathname.startsWith("/shorts/")
+            ) {
+                return { valid: true };
+            }
+            return { valid: false, error: "Invalid YouTube URL" };
+            }
+
+            if (host === "youtu.be") {
+            return parsed.pathname.length > 1
+                ? { valid: true }
+                : { valid: false, error: "Invalid YouTube short link" };
+            }
+
+            // TikTok validation
+            if (host.includes("tiktok.com")) {
+            if (parsed.pathname.includes("/video/")) {
+                return { valid: true };
+            }
+            return { valid: false, error: "Invalid TikTok video URL" };
+            }
+
+            // TikTok short URL
+            if (host === "vt.tiktok.com") {
+            return { valid: true };
+            }
+
+            return { valid: false, error: "Invalid video URL" };
+        } catch {
+            return { valid: false, error: "Invalid URL format" };
+        }
+    }
+
+
     const handleChange = (field: any, value: any) => {
         if (field === 'city') {
             setCity(value);
@@ -129,6 +188,10 @@ const SellUsedBike = () => {
         }
         else if (!isAggreed) {
             alert("Please checked terms and conditions")
+            return
+        }
+        else if (validateVideoUrl(videoUrl).valid == false) {
+            alert(validateVideoUrl(videoUrl).error)
             return
         }
 
