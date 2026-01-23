@@ -8,12 +8,12 @@ const Petrol_Price_Section = () => {
 
     const Data = [
         {
-            type: "Perol (Super)",
-            price: "PKR 263.45"
+            type: "Petrol (Super)",
+            price: "PKR 253.17"
         },
         {
             type: "Hi Speed Diesel",
-            price: "PKR 265.65"
+            price: "PKR 257.08"
         }
     ]
 
