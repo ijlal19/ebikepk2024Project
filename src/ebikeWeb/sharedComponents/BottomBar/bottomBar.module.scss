@@ -1,0 +1,97 @@
+.bottomBar {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+
+  // similar look to screenshot: white bar with top border/shadow
+  background: #fff;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.06);
+
+  // safe area for iPhone
+  padding-bottom: env(safe-area-inset-bottom);
+
+  @media (max-width:767px) {
+    display: block;
+  }
+
+}
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 70px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+}
+
+.item {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  color: rgba(0, 0, 0, 0.65);
+  gap: 6px;
+
+  transition: transform 0.12s ease, color 0.12s ease, background 0.12s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+
+  display: grid;
+  place-items: center;
+
+  svg {
+    width: 26px;
+    height: 26px;
+    fill: currentColor;
+  }
+}
+
+.label {
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+
+  // keep neat on small screens
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.active {
+  color: #1f6feb; // blue active like screenshot
+}
+
+@media (min-width: 768px) {
+  .inner {
+    height: 76px;
+  }
+
+  .item {
+    height: 76px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+}

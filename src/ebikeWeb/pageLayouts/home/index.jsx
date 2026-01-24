@@ -21,6 +21,7 @@ import GoGreen from './go-green'
 import Treanding_Stories from '@/ebikeWeb/sharedComponents/NewSectionM/trending_stories'
 import { List_Card, MotorCycle_News_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card'
 import Petrol_Price_Section from './petrol-price-section'
+import BottomBar from '@/ebikeWeb/sharedComponents/BottomBar/BottomBar'
 
 function Index() {
 
@@ -90,6 +91,8 @@ function Index() {
         <BrandSection />
         <Explore />
         <BlogSection blogData={homeData.homeBlogs} />
+        <BottomBar />
+
 
         <details>
           <summary style={{display:"none"}}></summary>
