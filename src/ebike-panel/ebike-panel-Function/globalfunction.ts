@@ -1552,7 +1552,7 @@ function AddNewSetting(data: any) {
     const userCookie = jsCookie.get("userData_ebike_panel");
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
-    return fetch(Port + `website-setting/create-setting`, {
+    return fetch(Gconfig.ebikeApi + `website-setting/create-setting`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
@@ -1571,7 +1571,7 @@ function UpdateSettingByID(id: any, payload: any) {
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
 
-    return fetch(Port + `website-setting/setting-update-by-id/${id}`, {
+    return fetch(Gconfig.ebikeApi + `website-setting/setting-update-by-id/${id}`, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
@@ -1589,7 +1589,7 @@ function UpdateSettingByID(id: any, payload: any) {
 }
 
 function GetAllSetting() {
-    return fetch(Port + `website-setting/get-all-website-settings`, {
+    return fetch(Gconfig.ebikeApi + `website-setting/get-all-website-settings`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })
@@ -1607,7 +1607,7 @@ function DeleteSetting(id: any) {
     const userData = JSON.parse(userCookie);
     const token = userData?.accessToken;
 
-    return fetch(Port + `website-setting/setting-delete-by-id/${id}`, {
+    return fetch(Gconfig.ebikeApi + `website-setting/setting-delete-by-id/${id}`, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",

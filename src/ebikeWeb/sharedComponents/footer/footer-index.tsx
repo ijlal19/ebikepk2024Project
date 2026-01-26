@@ -7,6 +7,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import styles from './footer-index.module.scss';
 import { useEffect, useState } from "react";
 import Link from 'next/link';
+import XIcon from '@mui/icons-material/X';
+
 
 let cities_arr = [
     { title: "Used Bike by City", url: "" },
@@ -200,12 +202,12 @@ return (
                                 <LinkedIn sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
                             </Link>
 
-                            <Link href='https://www.pinterest.com/ebikepk/' target="blank" className={styles.Link}>
+                            {/* <Link href='https://www.pinterest.com/ebikepk/' target="blank" className={styles.Link}>
                                 <Pinterest sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
-                            </Link>
+                            </Link> */}
 
                             <Link href='https://twitter.com/ebikepk' target="blank" className={styles.Link}>
-                                <Twitter sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
+                                <XIcon sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
                             </Link>
 
                             <Link href='https://www.youtube.com/@ebikepk' target="blank" className={styles.Link}>

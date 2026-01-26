@@ -62,12 +62,18 @@
                 padding: 10px 0px;
                 flex-wrap: wrap;
                 gap: 5px;
+                column-gap: 10px;
                 justify-content: left;
                 align-items: center;
                 height: auto;
 
                 .Link{
                     color: White;
+                    font-size: 20px;
+                    transition: all .5s ease;
+                    &:hover{
+                        color: #1976d2;
+                    }
                 }
             }
 

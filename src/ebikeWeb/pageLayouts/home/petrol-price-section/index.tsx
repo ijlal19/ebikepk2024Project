@@ -1,9 +1,12 @@
-import React from "react";
+'use client';
+import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from "@mui/material";
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import { GetAllSetting } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const Petrol_Price_Section = () => {
+    const [settingData, setSettingData] = useState<any>([]);
     const isMobile = useMediaQuery("(max-width:768px)");
 
     const Data = [
@@ -16,6 +19,19 @@ const Petrol_Price_Section = () => {
             price: "PKR 257.08"
         }
     ]
+
+    useEffect(() => {
+        fetchAllSetting()
+    }, [])
+
+    const fetchAllSetting = async () => {
+        const res = await GetAllSetting(
+        )
+        if (res && res?.data) {
+            setSettingData(res?.data)
+        }
+        console.log("test", res)
+    }
 
     return (
         <div className={styles.main} style={{ display: isMobile ? "flex" : "none" }}>
@@ -30,12 +46,29 @@ const Petrol_Price_Section = () => {
                     Type <span>Price Per Liter</span>
                 </div>
                 {
-                    Data?.map((e: any, i: any) => {
+                    settingData?.map((e: any, i: any) => {
+                        if (e?.name !== "petrol_price_key") return
+
+                        let prices: { petrol?: number; diesel?: number } = {};
+
+                        try {
+                            prices = typeof e.value === "string" ? JSON.parse(e.value) : e.value;
+                        } catch (err) {
+                            console.error("Invalid JSON", err);
+                            return null;
+                        }
+
                         return (
-                            <div className={styles.price_div} key={i} >
-                                {e?.type}
-                                <p className={styles.price}>{e?.price}</p>
-                            </div>
+                            <>
+                                <div className={styles.price_div} key={i} >
+                                    Petrol {e?.value?.JSON?.petrol}
+                                    <p className={styles.price}>Rs {prices.petrol}</p>
+                                </div>
+                                <div className={styles.price_div}  >
+                                    Diesel {e?.value?.JSON?.petrol}
+                                    <p className={styles.price}>Rs {prices.diesel}</p>
+                                </div>
+                            </>
                         )
                     })
                 }
