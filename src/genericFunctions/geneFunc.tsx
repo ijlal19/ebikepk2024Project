@@ -106,6 +106,27 @@ function userLogin(data: any) {
   })
 }
 
+function resetPassword(data: any) {
+  return fetch(Gconfig.ebikeApi + `reset-password`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).then(response => response.json()).then(data => {
+    return data
+  })
+}
+
+function changePassword(data: any) {
+  return fetch(Gconfig.ebikeApi + `user/change-password`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).then(response => response.json()).then(data => {
+    return data
+  })
+}
+
+
 function userSignup(data: any) {
   return fetch(Gconfig.ebikeApi + `user/createUser`, {
     method: 'POST',
@@ -276,5 +297,7 @@ export {
   GetFavouriteObject,
   cloudinaryLoader,
   BlogShuffle,
-  timeAgo
+  timeAgo,
+  resetPassword,
+  changePassword
 }

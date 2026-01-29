@@ -1,6 +1,6 @@
 "use client"
 import { Avatar, Container, Divider, Grid, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, OutlinedInput, TextField, Typography } from '@mui/material'
-import { validateEmail, userLogin } from "@/genericFunctions/geneFunc";
+import { validateEmail, userLogin, resetPassword } from "@/genericFunctions/geneFunc";
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import React, { useState, useEffect, useRef } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
@@ -31,7 +31,7 @@ export default function LoginPopup({props,values}: any) {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [phoneLoading, setPhoneLoading] = useState(false)
-  
+  const [isForgotPass, setIsForgotPass] = useState(false)
  
   const [phone, setPhone] = useState("+923001234567"); // E.164 format
   const [otp, setOtp] = useState("");
@@ -104,31 +104,6 @@ export default function LoginPopup({props,values}: any) {
       { scope: 'public_profile,email' }
     );
   };
-
-  useEffect(() => {
-
-    (window as any).fbAsyncInit = function () {
-      (window as any).FB.init({
-        appId: '1044746900622305', 
-        cookie: true,
-        xfbml: true,
-        version: 'v23.0' 
-      });
-
-      (window as any).FB.AppEvents.logPageView();
-
-    };
-
-    (function (d, s, id) {
-      let js: HTMLScriptElement;
-      const fjs = d.createElement(s) as HTMLScriptElement;
-      if (d.getElementById(id)) return;
-      fjs.id = id;
-      fjs.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.async = true;
-      d.getElementsByTagName("head")[0].appendChild(fjs);
-    })(document, "script", "facebook-jssdk");
-  }, []);
 
   // recaptcha for phone verification
   useEffect(() => {
@@ -236,8 +211,32 @@ export default function LoginPopup({props,values}: any) {
       setError(res.info)
     }
   }
-  const handlesignup =()=> {
+  const handlesignup = () => {
     props.showmodal('showloginpopup')
+  }
+
+  const handleResetPass  = async () => {
+      if(!email || !validateEmail(email)) {
+        setError('Please Enter Valid Email')
+        return
+      }
+
+      let obj = {
+        email: email,
+      }
+
+      setIsLoading(true)
+
+      let res = await resetPassword(obj)
+      setIsLoading(false)
+
+      if(res.success) {
+       
+      }
+      else {
+         setError(res.message)
+      }
+
   }
 
   return (
@@ -262,125 +261,144 @@ export default function LoginPopup({props,values}: any) {
       >
       <>
         <Box className={styles.login_main}>
-          <Container className={styles.login_container}>
-            <div className={styles.login_form}>
-              <Grid>
-                  <img className={styles.ebike_logo} src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' />
-                  <h2 className={styles.login_heading}>Sign in</h2>
-              </Grid>
+          {
+          !isForgotPass ?
+            <Container className={styles.login_container}>
+              <div className={styles.login_form}>
+                <Grid>
+                    <img className={styles.ebike_logo} src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' />
+                    <h2 className={styles.login_heading}>Sign in</h2>
+                </Grid>
 
-          
-              {jsCookie.get("phone_login") == "yes" ? <div>
+            
+                {jsCookie.get("phone_login") == "yes" ? <div>
+                <div className="space-y-3">
+                  <label className="block text-sm">Phone:</label>
+                  <input
+                    className="w-full rounded border p-2"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+923001234567"
+                  />
+                  <button
+                    onClick={sendCodePhone}
+                    disabled={false}
+                    className="w-full rounded bg-black p-2 text-white disabled:opacity-50"
+                  >
+                    {false ? "Sending..." : "Send Code"}
+                  </button>
+
+              </div>
+
               <div className="space-y-3">
-                <label className="block text-sm">Phone:</label>
+                <label className="block text-sm">Enter OTP:</label>
                 <input
                   className="w-full rounded border p-2"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+923001234567"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="123456"
                 />
                 <button
-                  onClick={sendCodePhone}
+                  onClick={verifyCodePhone}
                   disabled={false}
                   className="w-full rounded bg-black p-2 text-white disabled:opacity-50"
                 >
-                  {false ? "Sending..." : "Send Code"}
+                  {false ? "Verifying..." : "Verify & Login"}
                 </button>
-
-            </div>
-
-            <div className="space-y-3">
-              <label className="block text-sm">Enter OTP:</label>
-              <input
-                className="w-full rounded border p-2"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="123456"
-              />
-              <button
-                onClick={verifyCodePhone}
-                disabled={false}
-                className="w-full rounded bg-black p-2 text-white disabled:opacity-50"
-              >
-                {false ? "Verifying..." : "Verify & Login"}
-              </button>
-              <button
-                onClick={() => setStep("enter-phone")}
-                className="w-full rounded border p-2"
-              >
-                Change Number
-              </button>
-            </div>
-
-
-            </div> : "" }
-
-              <TextField
-                placeholder='Email*'
-                size="small"
-                fullWidth
-                type='email'
-                required
-                className={styles.login_field}
-                onChange={(e) => { setEmail(e.target.value) }}
-                value={email} 
-              />
-
-              <OutlinedInput
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                size='small'
-                value={password}
-                fullWidth
-                className={styles.login_field}
-                placeholder='Password*'
-                onChange={(e) => { setPassword(e.target.value) }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-
-              <Typography className={ styles.error } >  { error } </Typography>
-
-              {/* <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button> */}
-              <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
-              <Divider/>
-
-              <div className={styles.google_box}>
-                  <GoogleLoginButton  
-                    showmodal = {() => props.showmodal('showloginpopup')}
-                    updateAfterLogin = {() => props.updateAfterLogin()}
-                  />
-              </div>
-
-              {/* ✅ Facebook Login */}
-              <div className={styles.facebook_box}>
-                <Button
-                  onClick={handleFacebookLogin}
-                  fullWidth
-                  className={styles.fb_button}
-                  sx={{ backgroundColor: "#1877F2", color: "#fff", mt: 2 }}
+                <button
+                  onClick={() => setStep("enter-phone")}
+                  className="w-full rounded border p-2"
                 >
-                  Continue with Facebook
-                </Button>
+                  Change Number
+                </button>
               </div>
 
 
-              <Link href='/signup'  onClick={handlesignup}>
-                <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
-              </Link>
+                </div> : "" }
 
+                <TextField
+                  placeholder='Email*'
+                  size="small"
+                  fullWidth
+                  type='email'
+                  required
+                  className={styles.login_field}
+                  onChange={(e) => { setEmail(e.target.value) }}
+                  value={email} 
+                />
+
+                <OutlinedInput
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  size='small'
+                  value={password}
+                  fullWidth
+                  className={styles.login_field}
+                  placeholder='Password*'
+                  onChange={(e) => { setPassword(e.target.value) }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+
+                <Typography className={ styles.error } >  { error } </Typography>
+
+                {/* <Button disabled={isLoading} className={styles.reset_password} >Reset Password</Button> */}
+                <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleSubmit(e) }>Sign in</Button>
+                <Divider/>
+
+                <div className={styles.google_box}>
+                    <GoogleLoginButton  
+                      showmodal = {() => props.showmodal('showloginpopup')}
+                      updateAfterLogin = {() => props.updateAfterLogin()}
+                    />
+                </div>
+
+                <Button onClick={()=>setIsForgotPass(true)} className={styles.signup_button} fullWidth> Forgot Password </Button>
+              
+
+                <Link href='/signup'  onClick={handlesignup}>
+                  <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
+                </Link>
+
+
+              </div>
+            </Container>
+          :
+          <Container className={styles.login_container}>
+            <div className={styles.login_form}>
+                
+                <Grid>
+                  <img className={styles.ebike_logo} src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' />
+                  <h2 className={styles.login_heading}>Forgot Password</h2>
+                </Grid>
+
+                <TextField
+                  placeholder='Email*'
+                  size="small"
+                  fullWidth
+                  type='email'
+                  required
+                  className={styles.login_field}
+                  onChange={(e) => { setEmail(e.target.value) }}
+                  value={email} 
+                />
+
+                <Button disabled={isLoading} className={styles.button} fullWidth onClick={(e)=> handleResetPass() }> Submit </Button>
+                <Typography className={ styles.error } >  { error } </Typography>
+                <Button onClick={()=>setIsForgotPass(false)} className={styles.signup_button} fullWidth> Login </Button>
 
             </div>
           </Container>
+        }
         </Box>
 
 

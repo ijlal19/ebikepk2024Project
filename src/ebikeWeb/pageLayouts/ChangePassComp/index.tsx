@@ -1,22 +1,37 @@
 "use client"
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import { Avatar, Grid, Button, TextField, Typography, Box, Container, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
 import styles from './index.module.scss'
 import { Visibility, VisibilityOff } from "@mui/icons-material"
-import { validateEmail, userSignup } from "@/genericFunctions/geneFunc"
+import { validateEmail, userSignup, changePassword } from "@/genericFunctions/geneFunc"
 import { useRouter } from 'next/navigation'
+import { useParams } from "next/navigation";
 
-const Signup = () => {
+const ChangePass = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
     const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [usedId, setUserId] = useState("")
 
     const Router = useRouter()
+    const params = useParams();
+
+    useEffect(() => {
+        if (!params) {
+            Router.push("/")
+        };
+        const id = params.id;
+        const token = params.token;
+        if(!id) {
+            Router.push("/")
+        }
+        else {
+            setUserId(id)   
+        }
+    }, [params]);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
@@ -25,14 +40,7 @@ const Signup = () => {
         e.preventDefault()
         setError('')
 
-        if(!name || name.length < 4) {
-            setError('Please Enter Valid Name')
-            return
-        }
-        else if(!email || !validateEmail(email)) {
-            setError('Please Enter Valid Email')
-        }
-        else if(!password || password?.length < 6) {
+        if(!password || password?.length < 6) {
             setError('Password length must be greather or equal to 6')
             return
         }
@@ -42,29 +50,23 @@ const Signup = () => {
         }
 
         let obj = {
-            userFullName: name,
-            email: email,
+            userId: usedId,
             password: password,
-            confirmpassword: password,
-            isVerified: false
         }
 
         setIsLoading(true)
-        let res = await userSignup(obj)
+        let res = await changePassword(obj)
         setIsLoading(false)
 
         if(res.success) {
-            setError('Account Created Successfully!. Verification Link has been sent to your Email. Please Verify your Email address for login.')
-            // setError('Account Created Successfully!')
+            setError('Password Updated successfully.')
             setTimeout(()=> {
                 Router.push('/')
             }, 2000)
         }
         else {
-          setError(res.info)
+          setError(res.message)
         }
-        
-        console.log(res)
     }
 
     return (
@@ -74,28 +76,9 @@ const Signup = () => {
                 <div className={styles.signup_form} >
                     <Grid>
                         <img className={styles.ebike_logo} src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' />
-                        <h2 className={styles.signup_heading}>Sign Up</h2>
-                        <Typography variant='caption' > Please fill this form to create an account  !</Typography>
+                        <h2 className={styles.signup_heading}>Change Password</h2>
                     </Grid>
                     
-                    <TextField fullWidth
-                        placeholder="Name"
-                        size="small"
-                        onChange={(e) => { setName(e.target.value) }}
-                        className={styles.signup_field}
-                        required
-                        value={name}
-                    />
-
-                    <TextField fullWidth
-                        placeholder="Email address"
-                        size="small"
-                        className={styles.signup_field}
-                        required
-                        onChange={(e) => { setEmail(e.target.value) }}
-                        type="email"
-                        value={email}
-                    />
 
                     <OutlinedInput
                         id="password"
@@ -141,9 +124,9 @@ const Signup = () => {
                         }
                     />
 
-                    <Typography className={ styles.error} style={error?.indexOf('Account Created Successfully') > -1 ?  { color:"green"} : {}} >  { error } </Typography>
+                    <Typography className={ styles.error} style={error?.indexOf('Successfully') > -1 ?  { color:"green"} : {}} >  { error } </Typography>
 
-                    <Button fullWidth type="submit" className={`${styles.button} ${isLoading ? 'noPointerEvent':''} `} onClick={(e) => handlesubmit(e)} > Sign Up</Button>
+                    <Button fullWidth type="submit" className={`${styles.button} ${isLoading ? 'noPointerEvent':''} `} onClick={(e) => handlesubmit(e)} > Change password </Button>
 
                 </div>
 
@@ -152,4 +135,4 @@ const Signup = () => {
     )
 }
 
-export default Signup;
+export default ChangePass;
