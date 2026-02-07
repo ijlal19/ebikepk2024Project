@@ -179,7 +179,7 @@ export default function SearchPage() {
           <Section
             title="Used Bikes"
             sectionKey="used_bikes"
-            viewAllUrl={`/used-bikes}`}
+            viewAllUrl={`/used-bikes`}
             renderItem={(bike: any) => (
               <Box
                 key={bike.id}
