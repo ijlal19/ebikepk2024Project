@@ -1,187 +1,214 @@
 @import '../ebikeWeb/styles/variable';
 
+/* Main container */
 .main {
-    width: 90%;
-    display: flex;
-    margin: auto;
-    justify-content: center;
-    flex-direction: column;
-    min-height: 70vh;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 30px auto;
+  min-height: 70vh;
+  @media (max-width:767px) {
+    margin: 30px 10px;
+  }
+
+}
+
+/* -----------------------------
+   Search Bar
+------------------------------ */
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 30px;
+
+   @media (max-width:767px) {
+    margin: 30px 0px;
+  }
+
+  input {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.3s;
+
+
+    &:focus {
+      outline: none;
+      border-color: #1976d2; // MUI primary color
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    }
+  }
+
+  button {
+    background-color: #1976d2;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    min-width: 50px;
+
     @media (max-width:767px) {
-      width: 100%;
+        max-width: 50px !important;
+        flex-direction: row;
     }
 
-    .main_header {
-        // min-height: 50vh;
-        width: 100%;
-        padding: 5px 0px !important;
-        display: flex;
-        justify-content: center;
-
-        .input_box {
-            width: 100%;
-            max-width: 250px;
-            display: flex;
-            padding: 0px !important;
-            border: 1px solid #000;
-            border-radius: 5px;
-
-            .input {
-                border: none;
-                border-radius: 5px;
-                width: 100%;
-                outline: none;
-                padding: 0px 0px 0px 10px !important;
-            }
-
-            .search_button {
-                color: black;
-                // background-color: blue;
-                padding: 0px;
-                width: 20px !important;
-                background-color: transparent;
-                padding: 5px 0px;
-                border-radius: 0px;
-                border-left: 1px solid grey;
-
-                .icon {
-                    padding: 0px;
-                }
-            }
-        }
+    &:hover {
+      background-color: #115293;
     }
 
-    .pagination {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
-
-        .pagination_box{
-            width: 15px;
-            height: 15px;
-            border-radius: 3px;
-            border: 1px solid #434242;
-            padding: 0px !important;
-            display: flex;
-            justify-content: center;
-            text-align: center;
-            align-items: center;
-            font-size: 12px;
-            cursor: pointer;
-        }
+    svg {
+      font-size: 22px;
     }
+  }
 }
 
+/* -----------------------------
+   Loader
+------------------------------ */
+.loader {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
 
-.grid_bike_list {
+/* -----------------------------
+   No Result Message
+------------------------------ */
+.noResult {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin-top: 40px;
+}
 
+/* -----------------------------
+   Sections
+------------------------------ */
+.section {
+  margin-bottom: 50px;
+
+  .sectionHeader {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
-    .grid_card {
-  
-      width: 28%;
-      height: auto;
-      padding: 0px !important;
-      background: white;
-      border: 1px solid #e6e6e6;
-      margin: 10px 5px;
-      max-width: 300px;
-      cursor: pointer;
-
-      @media (max-width:600px) {
-        width: 46%;
-      }
-  
-      .grid_image_box {
-        width: 100%;
-          img {
-            width: 100%;
-            height: 140px;
-          }
-      }
-  
-      .grid_card_info {
-  text-decoration: none;
-        height: auto;
-        padding: 0px;
-        max-width: 100%;   
-        margin-top: 0px;
-        margin-left: 0px;  
-        width: 100%;
-        padding-left: 10px;
-        padding-bottom: 10px;
-
-        .grid_card_title {
-          color: $black;
-          font-weight: bold;
-          font-size: 14px;
-          width: 100%;
-          max-width: 150px;
-          padding: 5px 0px 4px 0px;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          overflow: hidden;
-          display: block;
-          @media (max-width:430px) {
-            width: 130px;
-          }
-        }
-  
-        .grid_card_location {
-          padding: 0px 0px 0px;
-          font-size: 13px;
-          color: #434343;
-        }
-  
-        .grid_card_price {
-          width: 100%;
-          white-space: nowrap;
-          font-size: 13px;
-          font-weight: bolder;
-          color:  $primary_two;
-          margin-top: 10px;
-          margin-bottom: 10px;
-        }
-  
-        .grid_bike_details {
-          font-size: 13px;
-          color: #434343;
-          padding: 0px 0px 0px;
-          width: 100%;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          overflow: hidden;
-          display: block;
-          @media (max-width:430px) {
-            max-width: 130px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-          }
-            
-            .grid_verticl_line {
-              padding-right: 2px;
-              padding-left: 2px;
-              @media (max-width:440px) {
-                padding-right: 0px;
-                padding-left: 0px;
-              }
-            }
-        }
-  
-      }
-  
+    h5 {
+      font-weight: 600;
+      font-size: 22px;
     }
-  
+
+    button {
+      font-size: 14px;
+      text-transform: none;
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-3px);
+    }
+
+    img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    p,
+    span,
+    h6,
+    h5 {
+      margin: 2px 0;
+      font-size: 14px;
+      color: #333;
+    }
+  }
+
+  .MuiPagination-root {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
 }
 
-.load_main {
-  min-height: 50vh;
+/* -----------------------------
+   Responsive
+------------------------------ */
+@media (max-width: 768px) {
+  .searchBar {
+    flex-direction: row;
+    input {
+      width: 70%;
+    }
+    button {
+      width: 20%;
+    }
+  }
+
+  .section .grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .sectionHeader {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+/* -----------------------------
+   Pagination
+------------------------------ */
+.pagination {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  margin-top: 20px;
+
+  .MuiPagination-ul {
+    gap: 8px; /* space between page numbers */
+  }
+
+  .MuiPaginationItem-root {
+    border-radius: 50%; /* round buttons */
+    min-width: 36px;
+    height: 36px;
+    font-size: 14px;
+    color: #1976d2;
+
+    &:hover {
+      background-color: rgba(25, 118, 210, 0.1);
+    }
+
+    &.Mui-selected {
+      background-color: #1976d2;
+      color: #fff;
+
+      &:hover {
+        background-color: #115293;
+      }
+    }
+  }
 }

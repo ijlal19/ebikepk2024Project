@@ -1,137 +1,262 @@
 'use client'
-import React, { useState } from "react";
-import { Box, Button, Grid, Link, Typography, Pagination } from "@mui/material";
-import styles from './index.module.scss';
-import SearchIcon from '@mui/icons-material/Search';
-import { postSearch, priceWithCommas } from '@/genericFunctions/geneFunc'
-import NewUsedBikesCard from "@/ebikeWeb/sharedComponents/itemCard";
-import { useRouter } from "next/navigation";
-import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
+
+import React, { useEffect, useState } from 'react'
+import {
+  Box,
+  Typography,
+  Button,
+  Pagination,
+  CircularProgress
+} from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
+import { useRouter, useSearchParams } from 'next/navigation'
+import styles from './index.module.scss'
+import { postSearch, priceWithCommas, postSearchNew } from '@/genericFunctions/geneFunc'
+
+/* ---------------------------------------------
+   Types (optional but recommended)
+---------------------------------------------- */
+type SectionKey =
+  | 'used_bikes'
+  | 'new_bikes'
+  | 'blogs'
+  | 'dealers'
+  | 'mechanics'
+
+const PAGE_LIMIT = 10
 
 export default function SearchPage() {
-    const [SearchValue, setSearchValue] = useState('')
-    const [ads, setAds] = useState([])
-    const router = useRouter()
-    const [IsLoading, setIsLoading] = useState(false)
-    const [currentpage, setCurrentPage] = useState(1)
-    const [totalPage, setTotalPage] = useState(1)
-    const [message, setMessage] = useState('')
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-    const handlepost = async (event:any, page: number) => {
-        
-        console.log('_currentPage', page)
-        setMessage("")
-        setIsLoading(true)
-        if (!SearchValue) {
-            alert('Pleas fill rquire field')
-            return
-        }
-        const obj = {
-            search: SearchValue,
-            page: page,
-            limit: '12'
-        }
+  const queryFromUrl = searchParams.get('query') || ''
 
-        const Post = await postSearch(obj)
-        if (Post?.ads?.length > 0) {
-            setAds(Post.ads)
-            setIsLoading(false)
-            setTimeout(() => {
-                window.scrollTo(0, 0)
-            }, 300);
-            setTotalPage(Post?.totalPages)
-        }
-        else {
-            setAds([])
-            setIsLoading(false)
-            setTotalPage(0)
-            setMessage("No Result Found!")
-        }
+  const [query, setQuery] = useState(queryFromUrl)
+  const [loading, setLoading] = useState(false)
+
+  const [results, setResults] = useState<any>(null)
+
+  const [pages, setPages] = useState<Record<SectionKey, number>>({
+    used_bikes: 1,
+    new_bikes: 1,
+    blogs: 1,
+    dealers: 1,
+    mechanics: 1
+  })
+
+  /* ---------------------------------------------
+     Fetch Search Results
+  ---------------------------------------------- */
+  const fetchSearch = async () => {
+    if (!query.trim()) return
+
+    setLoading(true)
+
+    const payload = {
+      search: query,
+      page: 1,
+      limit: PAGE_LIMIT
     }
 
-    function goToDetailPage(val: any) {
-        let title = val.title
-        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        router.push(`/used-bikes/${urlTitle}/${val.id}`)
+    const res = await postSearchNew(payload)
+
+    setResults(res?.results || null)
+    setLoading(false)
+
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  /* ---------------------------------------------
+     On URL Query Change
+  ---------------------------------------------- */
+  useEffect(() => {
+    if (queryFromUrl) {
+      setQuery(queryFromUrl)
+      fetchSearch()
     }
+  }, [queryFromUrl])
 
-    function GridCard(val: any, ind: any) {
-        let title = val.title
-        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        let href = `/used-bikes/${urlTitle}/${val.id}`
+  /* ---------------------------------------------
+     Submit Search
+  ---------------------------------------------- */
+  const handleSearch = () => {
+    if (!query.trim()) return
 
-        return (
-            <Link
-                href={href}
-                key={ind}
-                className={styles.grid_card}
-                sx={{ textDecoration: "none" }}
-            >
-                <Grid container onClick={() => { goToDetailPage(val) }}>
+    router.push(`/search?query=${encodeURIComponent(query)}`)
+  }
 
-                    <Grid item className={styles.grid_image_box}>
-                        {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />}
-                    </Grid>
+  /* ---------------------------------------------
+     Helpers
+  ---------------------------------------------- */
+  const hasAnyResult =
+    results &&
+    Object.values(results).some((section: any) => section?.total > 0)
 
-                    <Grid item className={styles.grid_card_info}>
+  /* ---------------------------------------------
+     Renderers
+  ---------------------------------------------- */
 
-                        <Typography className={styles.grid_card_title}> {val?.title} </Typography>
+  let ebike_logo = "https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png"
 
-                        <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
+  const Section = ({
+    title,
+    sectionKey,
+    renderItem,
+    viewAllUrl
+  }: {
+    title: string
+    sectionKey: SectionKey
+    renderItem: (item: any) => React.ReactNode
+    viewAllUrl: string
+  }) => {
+    const section = results?.[sectionKey]
 
-                        <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
+    if (!section || section.total === 0) return null
 
-                        <Typography className={styles.grid_bike_details}>
-                            {val?.year?.year}
-                            <span className={styles.grid_verticl_line}> | </span>
-                            <span> {val?.bike_brand?.brandName} </span>
-                            <span className={styles.grid_verticl_line}> | </span>
-                            <span className={styles.grid_verticl_line}> {val?.city?.city_name} </span>
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </Link>
-        )
-    }
+    const totalPages = Math.ceil(section.total / PAGE_LIMIT)
 
     return (
-        <Box className={styles.main}>
-            {
-                !IsLoading ?
-                    <>
-                        <Box className={styles.main_header}>
-                            <Box className={styles.input_box}>
-                                <input type="text" placeholder="search bike here..." className={styles.input} onChange={(e) => setSearchValue(e.target.value)} value={SearchValue} />
-                                <Button className={styles.search_button} onClick={() => handlepost("",1)}><SearchIcon className={styles.icon} /></Button>
-                            </Box>
-                        </Box>
-                        { message ? <p className="mt-5" > {message} </p> : "" }  
-                        <Box>
-                            <Box className={styles.grid_bike_list}>
-                                {
-                                    ads?.map((e: any, i: any) => {
-                                        return (
-                                            GridCard(e, i)
-                                        )
-                                    })
-                                }
-                            </Box>
-                        </Box>    
-                        {ads?.length > 0 ? <Box className={styles.pagination}>
-                            <Pagination
-                                count={totalPage}
-                                onChange={handlepost}
-                            />
-                        </Box>  : "" }     
-                    </>
-                    :
-                    <div className={styles.load_main}>
-                        <div className={styles.load_div}>
-                            <Loader isLoading={IsLoading} />
-                        </div>
-                    </div>
-            }
-            
+      <Box className={styles.section}>
+        <Box className={styles.sectionHeader}>
+          <Typography variant="h5">{title}</Typography>
+          <Button onClick={() => router.push(viewAllUrl)}>View All</Button>
         </Box>
+
+        <Box className={styles.grid}>
+          {section.data.map((item: any) => renderItem(item))}
+        </Box>
+
+        {/* {totalPages > 1 && (
+          <Pagination
+            className={styles.pagination}
+            count={totalPages}
+            page={pages[sectionKey]}
+            onChange={(_, page) =>
+              setPages(prev => ({ ...prev, [sectionKey]: page }))
+            }
+          />
+        )} */}
+      </Box>
     )
+  }
+
+  /* ---------------------------------------------
+     JSX
+  ---------------------------------------------- */
+  return (
+    <Box className={styles.main}>
+      {/* Search Bar */}
+      <Box className={styles.searchBar}>
+        <input
+          placeholder="Search bikes, blogs, dealers…"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && handleSearch()}
+        />
+        <Button onClick={handleSearch}>
+          <SearchIcon />
+        </Button>
+      </Box>
+
+      {/* Loader */}
+      {loading && (
+        <Box className={styles.loader}>
+          <CircularProgress />
+        </Box>
+      )}
+
+      {/* No Results */}
+      {!loading && query && !hasAnyResult && (
+        <Typography className={styles.noResult}>
+          No results found for “{query}”
+        </Typography>
+      )}
+
+      {/* Results */}
+      {!loading && results && (
+        <>
+          {/* Used Bikes */}
+          <Section
+            title="Used Bikes"
+            sectionKey="used_bikes"
+            viewAllUrl={`/used-bikes}`}
+            renderItem={(bike: any) => (
+              <Box
+                key={bike.id}
+                className={styles.card}
+                onClick={() =>
+                  router.push(`/used-bikes/${bike.title
+                    .toLowerCase()
+                    .replaceAll(' ', '-')}/${bike.id}`)
+                }
+              >
+                <img src={bike.images?.[0]} />
+                <Typography>{bike.title}</Typography>
+                <Typography>
+                  PKR {priceWithCommas(bike.price)}
+                </Typography>
+              </Box>
+            )}
+          />
+
+          {/* New Bikes */}
+          <Section
+            title="New Bikes"
+            sectionKey="new_bikes"
+            viewAllUrl={`/new-bikes`}
+            renderItem={(bike: any) => (
+              <Box key={bike.id} className={styles.card}>
+                 <img src={bike.images?.[0]} />
+                <Typography>{bike.title}</Typography>
+                <Typography>
+                  PKR {priceWithCommas(bike.price)}
+                </Typography>
+              </Box>
+            )}
+          />
+
+          {/* Blogs */}
+          <Section
+            title="Blogs"
+            sectionKey="blogs"
+            viewAllUrl={`/blogs}`}
+            renderItem={(blog: any) => (
+              <Box key={blog.id} className={styles.card}>
+                <img src={blog.featuredImage?.split('#$#')[0]?.trim()} />
+                <Typography>{blog.blogTitle}</Typography>
+              </Box>
+            )}
+          />
+
+          {/* Dealers */}
+          <Section
+            title="Dealers"
+            sectionKey="dealers"
+            viewAllUrl={`/dealers`}
+            renderItem={(d: any) => (
+              <Box key={d.id} className={styles.card}>
+                 <img src={ebike_logo} />
+                <Typography>{d.shop_name}</Typography>
+                <Typography>{d.phone}</Typography>
+              </Box>
+            )}
+          />
+
+          {/* Mechanics */}
+          <Section
+            title="Mechanics"
+            sectionKey="mechanics"
+            viewAllUrl={`/mechanics`}
+            renderItem={(m: any) => (
+              <Box key={m.id} className={styles.card}>
+                 <img src={ebike_logo} />
+                <Typography>{m.shop_name}</Typography>
+                <Typography>{m.phone}</Typography>
+              </Box>
+            )}
+          />
+        </>
+      )}
+    </Box>
+  )
 }

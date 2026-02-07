@@ -170,6 +170,20 @@ function postSearch(data: any) {
     })
 }
 
+function postSearchNew(data: any) {
+  return fetch(Gconfig.ebikeApi + 'global-search', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+    .then(res => res.json())
+    .then(data => { return data })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+
 function getFavouriteAds(userId: any) {
   return fetch(Gconfig.ebikeApi + `favourite/getFavourite/${userId}`, {
     // return fetch(Gconfig.ebikeApi + `favourite/getFavourite/2274bfde0b-49e9-41a7-828a-e8c118ee17b2`, {
@@ -299,5 +313,6 @@ export {
   BlogShuffle,
   timeAgo,
   resetPassword,
-  changePassword
+  changePassword,
+  postSearchNew
 }
