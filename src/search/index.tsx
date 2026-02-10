@@ -6,12 +6,14 @@ import {
   Typography,
   Button,
   Pagination,
-  CircularProgress
+  CircularProgress,
+  useMediaQuery
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './index.module.scss'
-import { postSearch, priceWithCommas, postSearchNew } from '@/genericFunctions/geneFunc'
+import { postSearch, postSearchNew } from '@/genericFunctions/geneFunc'
+import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
 
 /* ---------------------------------------------
    Types (optional but recommended)
@@ -43,6 +45,8 @@ export default function SearchPage() {
     dealers: 1,
     mechanics: 1
   })
+
+  const isMobile = useMediaQuery('(max-width:768px)');
 
   /* ---------------------------------------------
      Fetch Search Results
@@ -95,6 +99,30 @@ export default function SearchPage() {
   /* ---------------------------------------------
      Renderers
   ---------------------------------------------- */
+
+  const handleBlogRoute = (blogInfo: any) => {
+    var title = blogInfo.blogTitle;
+    title = title.replace(/\s+/g, '-');
+    var lowerTitle = title.toLowerCase();
+    lowerTitle = '' + lowerTitle.replaceAll("?", "")
+    router.push(`/blog/${'general'}/${lowerTitle}/${blogInfo.id}`);
+  };
+
+  function dealerDetailPage(bike: any) {
+    var shop_name = bike.shop_name;
+    shop_name = shop_name.replace(/\s+/g, '-');
+    var lowerTitle = shop_name.toLowerCase();
+    router.push(`/dealers/${lowerTitle}/${bike.id}`)
+  }
+
+  function mechanicToDetailPage(bike: any) {
+      var shop_name = bike.shop_name;
+      shop_name = shop_name.replace(/\s+/g, '-');
+      var lowerTitle = shop_name.toLowerCase();
+      router.push(`/mechanics/${lowerTitle}/${bike.id}`)
+      // return `/mechanics/${lowerTitle}/${bike.id}`
+  }
+
 
   let ebike_logo = "https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png"
 
@@ -184,19 +212,49 @@ export default function SearchPage() {
               <Box
                 key={bike.id}
                 className={styles.card}
-                onClick={() =>
-                  router.push(`/used-bikes/${bike.title
-                    .toLowerCase()
-                    .replaceAll(' ', '-')}/${bike.id}`)
-                }
+                // onClick={() =>
+                //   router.push(
+                //     `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
+                //   )
+                // }
               >
-                <img src={bike.images?.[0]} />
-                <Typography>{bike.title}</Typography>
-                <Typography>
-                  PKR {priceWithCommas(bike.price)}
-                </Typography>
+                <Box className={styles.imgWrap}>
+                  <img src={bike.images?.[0]} alt={bike.title} />
+                  <span className={`${styles.tag} ${styles.tagUsed}`}>Used</span>
+                </Box>
+
+                <Box className={styles.cardBody}>
+                  <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
+
+                  <Box className={styles.metaRow}>
+                    <Typography className={styles.price}>
+                      PKR {priceWithCommas(bike.price)}
+                    </Typography>
+                  </Box>
+
+                  <Box className={styles.cardActions} onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      className={styles.btnPrimary}
+                      onClick={() =>
+                        router.push(
+                          `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
+                        )
+                      }
+                    >
+                      View Details
+                    </Button>
+
+                    {/* <Button
+                      className={styles.btnGhost}
+                      onClick={() => router.push(`/used-bikes`)}
+                    >
+                      More Used
+                    </Button> */}
+                  </Box>
+                </Box>
               </Box>
             )}
+
           />
 
           {/* New Bikes */}
@@ -206,11 +264,29 @@ export default function SearchPage() {
             viewAllUrl={`/new-bikes`}
             renderItem={(bike: any) => (
               <Box key={bike.id} className={styles.card}>
-                 <img src={bike.images?.[0]} />
-                <Typography>{bike.title}</Typography>
-                <Typography>
-                  PKR {priceWithCommas(bike.price)}
-                </Typography>
+                <Box className={styles.imgWrap}>
+                  <img src={bike.images?.[0]} alt={bike.title} />
+                  <span className={`${styles.tag} ${styles.tagNew}`}>New</span>
+                </Box>
+
+                <Box className={styles.cardBody}>
+                  <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
+
+                  <Box className={styles.metaRow}>
+                    <Typography className={styles.price}>
+                      PKR {priceWithCommas(bike.price)}
+                    </Typography>
+                  </Box>
+
+                  <Box className={styles.cardActions}>
+                    <Button className={styles.btnPrimary} onClick={() =>  router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)}>
+                      View Details
+                    </Button>
+                    {/* <Button className={styles.btnGhost} onClick={() => router.push(`/new-bikes`)}>
+                      Compare
+                    </Button> */}
+                  </Box>
+                </Box>
               </Box>
             )}
           />
@@ -219,13 +295,29 @@ export default function SearchPage() {
           <Section
             title="Blogs"
             sectionKey="blogs"
-            viewAllUrl={`/blogs}`}
+            viewAllUrl={`/blog`}
             renderItem={(blog: any) => (
               <Box key={blog.id} className={styles.card}>
-                <img src={blog.featuredImage?.split('#$#')[0]?.trim()} />
-                <Typography>{blog.blogTitle}</Typography>
+                <Box className={styles.imgWrap}>
+                  <img
+                    src={blog.featuredImage?.split('#$#')[0]?.trim()}
+                    alt={blog.blogTitle}
+                  />
+                  <span className={`${styles.tag} ${styles.tagBlog}`}>Blog</span>
+                </Box>
+
+                <Box className={styles.cardBody}>
+                  <Typography className={styles.cardTitle}>{add3Dots(blog.blogTitle, isMobile ? "20" : "25")}</Typography>
+                  <Typography className={`${styles.subText} mb-0 mt-0`} > Author : {blog.authorname} </Typography>
+                  <Box className={styles.cardActions}>
+                    <Button className={styles.btnPrimary} onClick={() => handleBlogRoute(blog)}>
+                      Read
+                    </Button>
+                  </Box>
+                </Box>
               </Box>
             )}
+
           />
 
           {/* Dealers */}
@@ -235,11 +327,28 @@ export default function SearchPage() {
             viewAllUrl={`/dealers`}
             renderItem={(d: any) => (
               <Box key={d.id} className={styles.card}>
-                 <img src={ebike_logo} />
-                <Typography>{d.shop_name}</Typography>
-                <Typography>{d.phone}</Typography>
+                <Box className={styles.imgWrap}>
+                  <img src={ebike_logo} alt={d.shop_name} />
+                  <span className={`${styles.tag} ${styles.tagDealer}`}>Dealer</span>
+                </Box>
+
+                <Box className={styles.cardBody}>
+                  <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
+                  <Typography className={styles.subText}>{d.phone}</Typography>
+
+                  <Box className={styles.cardActions}>
+                    <Button
+                      className={styles.btnPrimary}
+                      onClick={() => dealerDetailPage(d) }
+                    >
+                      Details
+                    </Button>
+                  
+                  </Box>
+                </Box>
               </Box>
             )}
+
           />
 
           {/* Mechanics */}
@@ -247,13 +356,32 @@ export default function SearchPage() {
             title="Mechanics"
             sectionKey="mechanics"
             viewAllUrl={`/mechanics`}
-            renderItem={(m: any) => (
-              <Box key={m.id} className={styles.card}>
-                 <img src={ebike_logo} />
-                <Typography>{m.shop_name}</Typography>
-                <Typography>{m.phone}</Typography>
-              </Box>
-            )}
+            renderItem={(d: any) => (
+                <Box key={d.id} className={styles.card}>
+                  <Box className={styles.imgWrap}>
+                    <img src={ebike_logo} alt={d.shop_name} />
+                    <span className={`${styles.tag} ${styles.tagDealer}`}> mechanic </span>
+                  </Box>
+
+                  <Box className={styles.cardBody}>
+                    <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
+                    <Typography className={styles.subText}>{d.phone}</Typography>
+
+                    <Box className={styles.cardActions}>
+                      <Button
+                        className={styles.btnPrimary}
+                        onClick={() => mechanicToDetailPage(d)}
+                      >
+                       Details
+                      </Button>
+                      {/* <Button className={styles.btnGhost} onClick={() => router.push(`/dealers`)}>
+                        View All
+                      </Button> */}
+                    </Box>
+                  </Box>
+                </Box>
+              )}
+
           />
         </>
       )}

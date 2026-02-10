@@ -296,7 +296,7 @@ const BlogDetails = () => {
                 </Typography>
               </Box>
 
-              <div className={styles.blog_content} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }} ></div>
+              <div className={`${styles.blog_content} mb-0 mt-0`} dangerouslySetInnerHTML={{ __html: DataBlog.bloghtml }} ></div>
 
               <Box className={styles.comment_box}>
                 <Typography className={styles.shortblogheading}>Leave a Reply <span className={styles.underline}></span></Typography>

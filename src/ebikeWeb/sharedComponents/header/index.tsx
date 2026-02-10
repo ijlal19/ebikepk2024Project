@@ -64,8 +64,8 @@ const Header = () => {
 
     const handleSearch = () => {
         if (!query.trim()) return; // ignore empty search
-        const formattedQuery = query.trim().replace(/\s+/g, ",");
-        router.push(`/used-bikes?query=${formattedQuery} `)
+        const formattedQuery = query.trim().replace(/\s+/g, " ");
+        router.push(`/search?query=${formattedQuery} `)
         // window.history.pushState({}, "", newUrl);
     };
 
@@ -177,7 +177,7 @@ const Header = () => {
         <>
             <Box className={styles.drawer_main} sx={{width : 250}} role="presentation">
                 <Box className={styles.searc_drawer}>
-                {/* <Box className={styles.search_box_inner}>
+                <Box className={styles.search_box_inner}>
                     <input
                         type="text"
                         placeholder="Search..."
@@ -189,7 +189,7 @@ const Header = () => {
                     <button className={styles.search_btn} onClick={handleSearch}>
                         <SearchIcon />
                     </button>
-                </Box> */}
+                </Box>
                 </Box>
                 <List>
                     <BuyandSell props={OptionBuySell} />
@@ -280,19 +280,23 @@ const Header = () => {
 
                 </Box>
 
-                {/* <Box className={styles.search_box}>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className={styles.search_input}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <button className={styles.search_btn} onClick={handleSearch}>
-                        <SearchIcon />
-                    </button>
-                </Box> */}
+                {
+                    location.href?.indexOf("search") == -1 || true ? 
+                    <Box className={styles.search_box}>
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className={styles.search_input}
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <button className={styles.search_btn} onClick={handleSearch}>
+                            <SearchIcon />
+                        </button>
+                    </Box> : ""
+                }
+               
 
                 <div className={styles.header_btn_sec}>
 
