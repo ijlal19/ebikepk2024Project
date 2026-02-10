@@ -280,8 +280,6 @@ const Header = () => {
 
                 </Box>
 
-                {
-                    location.href?.indexOf("search") == -1 || true ? 
                     <Box className={styles.search_box}>
                         <input
                             type="text"
@@ -294,8 +292,8 @@ const Header = () => {
                         <button className={styles.search_btn} onClick={handleSearch}>
                             <SearchIcon />
                         </button>
-                    </Box> : ""
-                }
+                    </Box> 
+                
                
 
                 <div className={styles.header_btn_sec}>
