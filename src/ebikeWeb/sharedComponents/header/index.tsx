@@ -18,6 +18,7 @@ import { Label } from '@mui/icons-material';
 import MoreList from './moreOptions/index';
 import Drawer from '@mui/material/Drawer';
 import styles from './index.module.scss';
+import BottomBar from '@/ebikeWeb/sharedComponents/BottomBar/BottomBar'
 
 const jsCookie = require('js-cookie');
 
@@ -315,6 +316,7 @@ const Header = () => {
                 </div>
 
             </Box>
+            <BottomBar />
         </>
     )
 }

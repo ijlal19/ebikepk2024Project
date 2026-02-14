@@ -71,9 +71,26 @@
                     color: White;
                     font-size: 20px;
                     transition: all .5s ease;
-                    &:hover{
-                        color: #1976d2;
-                    }
+                }
+
+                .facebook:hover {
+                    color: #1877f2;
+                }
+
+                .instagram:hover {
+                    color: #e4405f;
+                }
+
+                .linkedin:hover {
+                    color: #0a66c2;
+                }
+
+                .twitterX:hover {
+                    color: #1d9bf0;
+                }
+
+                .youtube:hover {
+                    color: #ff0000;
                 }
             }
 

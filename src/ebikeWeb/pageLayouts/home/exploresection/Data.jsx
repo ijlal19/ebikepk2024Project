@@ -2,7 +2,7 @@ export const Data = [
     {
       // img_url: "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608024052/Youtube%20Ad%20banners/Vinyage_Motorcycle_1_n5wbcn.jpg",
       img_url: "https://res.cloudinary.com/dzfd4phly/image/upload/v1757678416/WhatsApp_Image_2025-09-12_at_15.58.57_gabtpm.jpg",
-      title: "Certified BikeBike by ebike.pk",
+      title: "Certified Bike by ebike.pk",
       description: "Highest Quality Bikes With Warranty By ebike.pk",
       url: "/new-bikes"
     },
