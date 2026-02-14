@@ -147,6 +147,16 @@
                 cursor: pointer;
             }
 
+            .phone_login_button {
+                font-size: 12px;
+                margin-top: 10px;
+                font-weight: 700;
+                text-transform: none;
+                border: 1px solid $primary_two;
+                color: $primary_two;
+                background: #fff;
+            }
+
         }
     }
 }

@@ -369,6 +369,12 @@ export default function LoginPopup({props,values}: any) {
                   <Button disabled={isLoading}  className={styles.signup_button} fullWidth> Signup for Ebike </Button>
                 </Link>
 
+                <Link href='/phone' onClick={() => props.showmodal('showloginpopup')}>
+                  <Button className={styles.phone_login_button} fullWidth>
+                    Login with phone number
+                  </Button>
+                </Link>
+
 
               </div>
             </Container>
