@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
+import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getCustomBikeAd, incrementClassifiedViews } from "@/ebikeWeb/functions/globalFuntions";
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { numericOnly, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
@@ -16,6 +16,9 @@ import { useRouter } from 'next/navigation';
 import styles from "./index.module.scss";
 import 'swiper/swiper-bundle.css';
 import Data from './data'
+
+const USED_BIKE_VIEW_DEDUP_MS = 10000;
+const usedBikeViewLastHitAt: Record<string, number> = {};
 
 export default function UsedBike({_bikeDetail}:any) {
 
@@ -39,6 +42,18 @@ export default function UsedBike({_bikeDetail}:any) {
 
       if (numericOnly(adsId)) {
         setIsLoading(true)
+        const adId = String(adsId)
+        const now = Date.now()
+        const mapLastHit = usedBikeViewLastHitAt[adId] || 0
+        const storageKey = `used-bike-view-hit-${adId}`
+        const storageLastHit = Number(sessionStorage.getItem(storageKey) || 0)
+        const lastHitAt = Math.max(mapLastHit, storageLastHit)
+
+        if (now - lastHitAt > USED_BIKE_VIEW_DEDUP_MS) {
+          usedBikeViewLastHitAt[adId] = now
+          sessionStorage.setItem(storageKey, String(now))
+          incrementClassifiedViews(adId)
+        }
 
         console.log('_bikeDetail', _bikeDetail)
 

@@ -1,6 +1,6 @@
 'use client';
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
-import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData, UpdateView } from '@/ebikeWeb/functions/globalFuntions';
+import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData, incrementBlogViews } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button, Link } from '@mui/material';
 import { add3Dots, cloudinaryLoader, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -24,6 +24,9 @@ import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bi
 import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
+
+const BLOG_VIEW_DEDUP_MS = 5000;
+const blogViewLastHitAt: Record<string, number> = {};
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -98,6 +101,15 @@ const BlogDetails = () => {
   }
 
   async function fetchBrandInfo() {
+    if (id) {
+      const blogId = String(id);
+      const now = Date.now();
+      const lastHitAt = blogViewLastHitAt[blogId] || 0;
+      if (now - lastHitAt > BLOG_VIEW_DEDUP_MS) {
+        blogViewLastHitAt[blogId] = now;
+        incrementBlogViews(blogId);
+      }
+    }
     let res = await getSingleBlogData(id)
 
     if (res.bloghtml) {

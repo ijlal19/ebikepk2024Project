@@ -292,8 +292,8 @@ const Blog = () => {
                                 <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
                                   <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8, display: 'flex', alignItems: 'center' }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{timeAgo(e.createdAt)}</span> |
-                                  <span style={{ color: '#1976d2', marginLeft: 8 }}>
-                                    {e.id}
+                                  <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center', color: '#1976d2' }}>
+                                    {e?.views_count || 0} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} />
                                   </span>
                                   {/* {
                                     (() => {
@@ -320,7 +320,7 @@ const Blog = () => {
                               <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
                                 <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
                                 <Typography className={styles.blog_card_date}>
-                                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.createdAt.slice(0, 10)}</span> | <span style={{ color: '#1976d2', marginLeft: 8 }}>{e.id}</span>
+                                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.createdAt.slice(0, 10)}</span> | <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center', color: '#1976d2' }}>{e?.views_count || 0} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} /></span>
                                 </Typography>
                                 <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
                               </Box>

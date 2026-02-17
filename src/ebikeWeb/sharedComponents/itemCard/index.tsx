@@ -2,6 +2,7 @@
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Button, Grid, Link } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -114,6 +115,7 @@ export default function NewUsedBikesCard(props: any) {
     }
 
     let bike = props.data
+    const hasLocation = !!bike?.location
 
     const AddFavourite = async (id: any) => {
         if (!IsLogin || IsLogin == "not_login") {
@@ -199,7 +201,7 @@ export default function NewUsedBikesCard(props: any) {
                         {props.from == "usedBikeComp" ?
 
                             <Typography className={styles.card_location}>
-                                {bike.location}
+                                {hasLocation ? bike.location : ''}{hasLocation ? ' | ' : ''}<span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>{bike?.views_count ?? 0} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} /></span>
                             </Typography>
 
                             : ""}

@@ -3,6 +3,7 @@ import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeA
 import { cloudinaryLoader, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { BrandFilter, CC_Filter, CityFilter, YearFilter } from "@/ebikeWeb/sharedComponents/brand_filter";
 import { Box, Button, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Apps, FormatListBulleted, PagesRounded } from '@mui/icons-material';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import BrowseUsedBike from "@/ebikeWeb/sharedComponents/BrowseUsedBike";
@@ -350,6 +351,10 @@ const AllUsedBikeByFilter = () => {
     function longCard(val, ind) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        const bikeYear = val?.year?.year
+        const brandName = brand && brand?.length > 0 ? brand[0].brandName : ''
+        const cityName = city && city?.length > 0 ? city[0].city_name : ''
+        const viewsCount = val?.views_count ?? 0
         
         const GetHref = () => {
             let title = val.title
@@ -401,11 +406,15 @@ const AllUsedBikeByFilter = () => {
                                 <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
 
                                 <Typography className={styles.bike_details}>
-                                    {val?.year?.year}
-                                    <span className={styles.verticl_line}> | </span>
-                                    <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                                    <span className={styles.verticl_line}> | </span>
-                                    <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                    {bikeYear ? <span>{bikeYear}</span> : null}
+                                    {bikeYear && brandName ? <span className={styles.verticl_line}> | </span> : null}
+                                    {brandName ? <span>{brandName}</span> : null}
+                                    {(bikeYear || brandName) && cityName ? <span className={styles.verticl_line}> | </span> : null}
+                                    {cityName ? <span className={styles.verticl_line}>{cityName}</span> : null}
+                                    {(bikeYear || brandName || cityName) ? <span className={styles.verticl_line}> | </span> : null}
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>
+                                        {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
+                                    </span>
                                 </Typography>
 
                                 <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
@@ -452,6 +461,10 @@ const AllUsedBikeByFilter = () => {
     function GridCard(val, ind) {
             let brand = getBrandFromId(val?.brandId, BrandArr)
             let city = getCityFromId(val?.cityId, CityArr)
+            const bikeYear = val?.year?.year
+            const brandName = brand && brand?.length > 0 ? brand[0].brandName : ''
+            const cityName = city && city?.length > 0 ? city[0].city_name : ''
+            const viewsCount = val?.views_count ?? 0
             const GetHref = () => {
                 let title = val.title
                 let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
@@ -490,11 +503,15 @@ const AllUsedBikeByFilter = () => {
                                     <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
     
                                     <Typography className={styles.grid_bike_details}>
-                                        {val?.year?.year}
-                                        <span className={styles.grid_verticl_line}> | </span>
-                                        <span> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                                        <span className={styles.grid_verticl_line}> | </span>
-                                        <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                        {bikeYear ? <span>{bikeYear}</span> : null}
+                                        {bikeYear && brandName ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                        {brandName ? <span>{brandName}</span> : null}
+                                        {(bikeYear || brandName) && cityName ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                        {cityName ? <span className={styles.grid_verticl_line}>{cityName}</span> : null}
+                                        {(bikeYear || brandName || cityName) ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                        <span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>
+                                            {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
+                                        </span>
                                     </Typography>
                                 </Grid>
                             </Grid>

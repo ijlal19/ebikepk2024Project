@@ -3,6 +3,7 @@ import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } 
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, optimizeImage, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { Box, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
@@ -205,6 +206,10 @@ export default function AllCertifiedBikes() {
     function longCard(val: any, ind: any) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        const bikeYear = val?.year?.year
+        const brandName = brand && brand?.length > 0 ? brand[0].brandName : ''
+        const cityName = city && city?.length > 0 ? city[0].city_name : ''
+        const viewsCount = val?.views_count ?? 0
         const GetHref = () => {
             let title = val.title
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
@@ -255,11 +260,15 @@ export default function AllCertifiedBikes() {
                                 <Typography className={styles.card_location}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />{val?.sellerName}</Typography>
 
                                 <Typography className={styles.bike_details}>
-                                    {val?.year?.year}
-                                    <span className={styles.verticl_line}> | </span>
-                                    <span style={{ textTransform: "capitalize" }}> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                                    <span className={styles.verticl_line}> | </span>
-                                    <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                    {bikeYear ? <span>{bikeYear}</span> : null}
+                                    {bikeYear && brandName ? <span className={styles.verticl_line}> | </span> : null}
+                                    {brandName ? <span style={{ textTransform: "capitalize" }}>{brandName}</span> : null}
+                                    {(bikeYear || brandName) && cityName ? <span className={styles.verticl_line}> | </span> : null}
+                                    {cityName ? <span className={styles.verticl_line}>{cityName}</span> : null}
+                                    {(bikeYear || brandName || cityName) ? <span className={styles.verticl_line}> | </span> : null}
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>
+                                        {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
+                                    </span>
                                 </Typography>
 
                                 <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
@@ -306,6 +315,10 @@ export default function AllCertifiedBikes() {
     function GridCard(val: any, ind: any) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        const bikeYear = val?.year?.year
+        const brandName = brand && brand?.length > 0 ? brand[0].brandName : ''
+        const cityName = city && city?.length > 0 ? city[0].city_name : ''
+        const viewsCount = val?.views_count ?? 0
         const GetHref = () => {
             let title = val.title
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
@@ -349,11 +362,15 @@ export default function AllCertifiedBikes() {
                             <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
 
                             <Typography className={styles.grid_bike_details}>
-                                {val?.year?.year}
-                                <span className={styles.grid_verticl_line}> | </span>
-                                <span style={{ textTransform: "capitalize" }}> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                                <span className={styles.grid_verticl_line}> | </span>
-                                <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                {bikeYear ? <span>{bikeYear}</span> : null}
+                                {bikeYear && brandName ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                {brandName ? <span style={{ textTransform: "capitalize" }}>{brandName}</span> : null}
+                                {(bikeYear || brandName) && cityName ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                {cityName ? <span className={styles.grid_verticl_line}>{cityName}</span> : null}
+                                {(bikeYear || brandName || cityName) ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                <span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>
+                                    {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
+                                </span>
                             </Typography>
                         </Grid>
                     </Grid>

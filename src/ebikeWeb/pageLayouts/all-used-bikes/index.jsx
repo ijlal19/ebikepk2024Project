@@ -1,8 +1,9 @@
 'use client'
-import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
+import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById, getnewBikeData } from "@/ebikeWeb/functions/globalFuntions";
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, optimizeImage, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
@@ -79,6 +80,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(null);
+    const [priceTableData, setPriceTableData] = useState([]);
+    const [priceTableBrandName, setPriceTableBrandName] = useState('');
     const is12InchScreen = useMediaQuery('(max-width:1200px)');
     const isMobileView = useMediaQuery('(max-width:600px)');
     const is10Inch = useMediaQuery('(max-width:991px)');
@@ -99,6 +102,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
 
         fetchFeaturedBike()
+        fetchRandomBikePriceTable()
 
         const pageNoRaw = localStorage.getItem('PageNo');
         if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
@@ -211,6 +215,23 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
     }
 
+    async function fetchRandomBikePriceTable() {
+        const randomBrandIds = [1, 2, 3];
+        const randomBrandId = randomBrandIds[Math.floor(Math.random() * randomBrandIds.length)];
+        const selectedBrand = getBrandFromId(randomBrandId, BrandArr);
+        const brandName = selectedBrand?.[0]?.brandName;
+
+        if (!brandName) {
+            setPriceTableData([]);
+            setPriceTableBrandName('');
+            return;
+        }
+
+        setPriceTableBrandName(brandName);
+        const res = await getnewBikeData({ brand: brandName });
+        setPriceTableData(Array.isArray(res) ? res : []);
+    }
+
     function goToDetailPage(val) {
         localStorage.setItem("PageNo", currentPage);
         // localStorage.setItem("WindowScroll", window.scrollY);
@@ -242,6 +263,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     function longCard(val, ind) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        const bikeYear = val?.year?.year
+        const brandName = brand && brand?.length > 0 ? brand[0].brandName : ''
+        const cityName = city && city?.length > 0 ? city[0].city_name : ''
+        const viewsCount = val?.views_count ?? 0
         const GetHref = () => {
             let title = val.title
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
@@ -305,11 +330,15 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 <Typography className={styles.card_location}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />{val?.sellerName}</Typography>
 
                                 <Typography className={styles.bike_details}>
-                                    {val?.year?.year}
-                                    <span className={styles.verticl_line}> | </span>
-                                    <span style={{ textTransform: "capitalize" }}> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                                    <span className={styles.verticl_line}> | </span>
-                                    <span className={styles.verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                    {bikeYear ? <span>{bikeYear}</span> : null}
+                                    {bikeYear && brandName ? <span className={styles.verticl_line}> | </span> : null}
+                                    {brandName ? <span style={{ textTransform: "capitalize" }}>{brandName}</span> : null}
+                                    {(bikeYear || brandName) && cityName ? <span className={styles.verticl_line}> | </span> : null}
+                                    {cityName ? <span className={styles.verticl_line}>{cityName}</span> : null}
+                                    {(bikeYear || brandName || cityName) ? <span className={styles.verticl_line}> | </span> : null}
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>
+                                        {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
+                                    </span>
                                 </Typography>
 
                                 <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
@@ -357,6 +386,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     function GridCard(val, ind) {
         let brand = getBrandFromId(val?.brandId, BrandArr)
         let city = getCityFromId(val?.cityId, CityArr)
+        const bikeYear = val?.year?.year
+        const brandName = brand && brand?.length > 0 ? brand[0].brandName : ''
+        const cityName = city && city?.length > 0 ? city[0].city_name : ''
+        const viewsCount = val?.views_count ?? 0
         const GetHref = () => {
             let title = val.title
             let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
@@ -406,11 +439,15 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
 
                             <Typography className={styles.grid_bike_details}>
-                                {val?.year?.year}
-                                <span className={styles.grid_verticl_line}> | </span>
-                                <span style={{ textTransform: "capitalize" }}> {brand && brand?.length > 0 && brand[0].brandName} </span>
-                                <span className={styles.grid_verticl_line}> | </span>
-                                <span className={styles.grid_verticl_line}> {city && city?.length > 0 && city[0].city_name} </span>
+                                {bikeYear ? <span>{bikeYear}</span> : null}
+                                {bikeYear && brandName ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                {brandName ? <span style={{ textTransform: "capitalize" }}>{brandName}</span> : null}
+                                {(bikeYear || brandName) && cityName ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                {cityName ? <span className={styles.grid_verticl_line}>{cityName}</span> : null}
+                                {(bikeYear || brandName || cityName) ? <span className={styles.grid_verticl_line}> | </span> : null}
+                                <span style={{ display: 'inline-flex', alignItems: 'center', columnGap: '2px' }}>
+                                    {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
+                                </span>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -706,6 +743,40 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     page={currentPage}
                                 />
                             </Box>
+                            : ""}
+                        {priceTableData?.length > 0 ?
+                            <div className={styles.bike_price_main}>
+                                <div className={styles.heading_box}>
+                                    <p className={styles.heading}>{priceTableBrandName} Bike Price in Pakistan 2025</p>
+                                </div>
+
+                                <table
+                                    border={1}
+                                    style={{ borderCollapse: 'collapse', width: '100%' }}
+                                    className={styles.bike_price_table}
+                                >
+                                    <thead>
+                                        <tr>
+                                            <th className={styles.th}>#</th>
+                                            <th className={styles.th}>Bike Name</th>
+                                            <th className={styles.th}>Price</th>
+                                            <th className={styles.th}>Last Update</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            priceTableData.map((e, i) => (
+                                                <tr key={i}>
+                                                    <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{i + 1}</td>
+                                                    <td className={styles.td}>{e?.title ? e.title : '-'}</td>
+                                                    <td className={styles.td} style={{ fontWeight: 'bolder', color: 'black' }}>{priceWithCommas(e?.price ? e.price : '-')}</td>
+                                                    <td className={styles.td}>{e?.updatedAt ? e.updatedAt.slice(0, 10) : '-'}</td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                             : ""}
                     </>
 

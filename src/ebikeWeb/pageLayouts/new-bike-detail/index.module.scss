@@ -44,11 +44,60 @@
 
             .desc {
                 padding: 10px;
-                font-size: 12px;
-                margin: 10px;
-                text-align: justify !important;
+                margin: 10px 0px;
+                color: #000;
+                font-size: 15px;
+                line-height: 1.7;
+                text-align: left;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+
                 @media (max-width:768px) {
-                    text-align: justify !important;
+                    padding: 8px 4px;
+                    margin: 8px 0px;
+                    font-size: 14px;
+                    line-height: 1.65;
+                }
+
+                p,
+                span,
+                li,
+                a {
+                    font-size: inherit !important;
+                    line-height: inherit !important;
+                }
+
+                p,
+                ul,
+                ol,
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                    margin-top: 0px;
+                    margin-bottom: 12px;
+                }
+
+                ul,
+                ol {
+                    padding-left: 20px;
+                }
+
+                img,
+                iframe,
+                video {
+                    max-width: 100% !important;
+                    height: auto !important;
+                    display: block;
+                }
+
+                table {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    display: block;
+                    overflow-x: auto;
                 }
             }
 

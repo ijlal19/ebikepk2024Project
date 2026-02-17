@@ -513,6 +513,34 @@ function UpdateView(Data: any) {
         })
 }
 
+function incrementBlogViews(id: any) {
+    if (!id) return Promise.resolve(null)
+    return fetch(Gconfig.ebikeApi + `blog/increment-views/${id}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => data)
+        .catch((err) => {
+            console.log('incrementBlogViews error', err)
+            return null
+        })
+}
+
+function incrementClassifiedViews(id: any) {
+    if (!id) return Promise.resolve(null)
+    return fetch(Gconfig.ebikeApi + `classified/increment-views/${id}`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" }
+    })
+        .then(response => response.json())
+        .then(data => data)
+        .catch((err) => {
+            console.log('incrementClassifiedViews error', err)
+            return null
+        })
+}
+
 
 
 export {
@@ -555,5 +583,7 @@ export {
     getAllPages,
     getPageById,
     getViewsByID,
-    UpdateView
+    UpdateView,
+    incrementBlogViews,
+    incrementClassifiedViews
 }
