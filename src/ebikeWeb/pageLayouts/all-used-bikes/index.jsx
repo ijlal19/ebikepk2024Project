@@ -18,7 +18,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ItemCard from '../../sharedComponents/itemCard';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -87,7 +86,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const is10Inch = useMediaQuery('(max-width:991px)');
     const is9Inch = useMediaQuery('(max-width:910px)');
 
-    const router = useRouter()
     // const searchParams = useSearchParams();
 
     useEffect(() => {
@@ -234,10 +232,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
     function goToDetailPage(val) {
         localStorage.setItem("PageNo", currentPage);
-        // localStorage.setItem("WindowScroll", window.scrollY);
-        let title = val.title;
-        let urlTitle = title.toLowerCase().replaceAll(' ', '-');
-        router.push(`/used-bikes/${urlTitle}/${val.id}`);
     }
 
     const AddFavourite = async (id) => {

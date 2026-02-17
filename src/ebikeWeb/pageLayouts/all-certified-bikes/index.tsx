@@ -11,7 +11,6 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ItemCard from '../../sharedComponents/itemCard';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import DealerLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left";
 import MechaniLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left";
@@ -70,8 +69,6 @@ export default function AllCertifiedBikes() {
     const isMobileView = useMediaQuery('(max-width:600px)');
     const is10Inch = useMediaQuery('(max-width:991px)');
     const is9Inch = useMediaQuery('(max-width:910px)');
-
-    const router = useRouter()
 
     useEffect(() => {
 
@@ -178,9 +175,6 @@ export default function AllCertifiedBikes() {
 
     function goToDetailPage(val: any) {
         localStorage.setItem("PageNo", currentPage);
-        let title = val.title;
-        let urlTitle = title.toLowerCase().replaceAll(' ', '-');
-        router.push(`/used-bikes/${urlTitle}/${val.id}`);
     }
 
     const AddFavourite = async (id: any) => {

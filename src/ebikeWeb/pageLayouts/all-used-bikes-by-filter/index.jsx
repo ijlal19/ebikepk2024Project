@@ -12,7 +12,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Filters from '@/ebikeWeb/sharedComponents/filters';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
@@ -50,7 +50,6 @@ const AllUsedBikeByFilter = () => {
     const SelectedCCData = []
 
     const params = useParams()
-    const router = useRouter()
 
     useEffect(() => {
         if (BrandArray && BrandArray.length > 0) {
@@ -343,9 +342,7 @@ const AllUsedBikeByFilter = () => {
     }
 
     function goToDetailPage(val) {
-        let title = val.title
-        let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-        router.push(`/used-bikes/${urlTitle}/${val.id}`)
+        return
     }
 
     function longCard(val, ind) {

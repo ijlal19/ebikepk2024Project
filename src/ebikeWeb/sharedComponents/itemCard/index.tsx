@@ -1,6 +1,6 @@
 'use client'
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader } from '@/genericFunctions/geneFunc';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Button, Grid, Link } from '@mui/material';
@@ -19,7 +19,6 @@ export default function NewUsedBikesCard(props: any) {
     const [IsLogin, setIsLogin] = useState<any>('not_login');
     const [FavouriteData, setFavouriteData] = useState<any>([]);
     const [isFeatureTagShow, setIsFeaturedTagShow] = useState(false)
-    const Router = useRouter()
 
     useEffect(() => {
         if (window.location.pathname.indexOf('used-bikes') !== -1) {
@@ -58,34 +57,6 @@ export default function NewUsedBikesCard(props: any) {
     }
     else if (props?.data?.images && props.data?.images?.length > 0) {
         imgUrl = props.data?.images[0]
-    }
-
-    function goToDetailPage(bike: any) {
-
-        if (props.currentpage == 'new_bike') {
-            Router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)
-        }
-
-        else if (props.currentpage == 'featured_bike') {
-            let title = bike?.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            Router.push(`/used-bikes/${urlTitle}/${bike?.id}`)
-        }
-
-        else if (props.currentpage == 'trending_bike') {
-            Router.push(bike?.url)
-        }
-
-        else if (props.currentpage == 'used_bike') {
-            let title = bike?.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
-            Router.push(`/used-bikes/${urlTitle}/${bike?.id}`)
-        }
-
-        else {
-            alert('Route not found')
-        }
-
     }
 
     function getBikeUrl(bike: any) {
@@ -209,7 +180,7 @@ export default function NewUsedBikesCard(props: any) {
                         {props.from != "myAdsComp" ?
 
                             <Link href={getBikeUrl(bike)} sx={{ textDecoration: 'none' }}>
-                                <Button className={styles.view_detail_btn} onClick={() => { goToDetailPage(bike) }}>
+                                <Button className={styles.view_detail_btn}>
                                     View Detail
                                 </Button>
                             </Link>
