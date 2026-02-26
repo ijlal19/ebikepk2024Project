@@ -7,7 +7,6 @@ import styles from './index.module.scss';
 import { useEffect } from "react";
 import OrderListPage from "@/ebike-panel/ebike-panel-sharedComponent/Order-list-page";
 import CouponCode from "@/ebike-panel/ebike-panel-sharedComponent/Coupon-list";
-import BikeForums from "@/ebike-panel/ebike-panel-sharedComponent/panel-ebike-fourms/bikers-forums";
 import ForumSubCateg from "@/ebike-panel/ebike-panel-sharedComponent/panel-ebike-fourms/forum-sub-category";
 import All_Website_Setting from "@/ebike-panel/ebike-panel-sharedComponent/All-table/website_setting";
 
@@ -81,9 +80,6 @@ const Dashboard_page = () => {
         }
         else if(route == "coupon-list"){
             return <CouponCode />
-        }
-        else if(route == "forum-main-category"){
-            return <BikeForums />
         }
         else if(route == "all-main-category"){
             return <ForuAllMainCateg />

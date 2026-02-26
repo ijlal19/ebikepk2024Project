@@ -105,14 +105,6 @@ const NavOptionArray = [
         heading: "Bikers Forums",
         option: [
             {
-                OptionName: "Main Category",
-                OptionRoute: "forum-main-category"
-            },
-            {
-                OptionName: "Topic/Comment",
-                OptionRoute: "bikers-topic-list"
-            },
-            {
                 OptionName: "All Forums Main Category",
                 OptionRoute: "all-main-category"
             },

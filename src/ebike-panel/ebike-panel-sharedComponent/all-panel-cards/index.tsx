@@ -1,6 +1,6 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getSessionData, GetCompanyBrand, DeleteBrandCompany, GetAllMainForumCategory, GetAllThreads, DeleteThread, DeleteThreadComment, GetAllThreadsComments, AddNewVideo, GetAllVideos, DeleteBikeVideo, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
-import { AddForumMainCategory, AddShopBrandPopup, BasicModal, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandCompany, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMainForumCategory, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteThread, DeleteThreadComment, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getSessionData, GetAllMainForumCategory, GetAllSubForumCategory, GetAllThreads, GetAllThreadsComments, GetCompanyBrand, GetAllVideos, DeleteBikeVideo, AddNewVideo, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { AddForumMainCategory, AddForumThread, AddForumThreadComment, AddShopBrandPopup, BasicModal, EditForumMainCategory, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
 import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { New_header } from "../panel-header";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
@@ -2792,9 +2792,12 @@ const ShopBrand = () => {
 ////////////////////////////////////////////////////// FORUM MAIN LIST
 const ForuAllMainCateg = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [AllCateg, setAllCateg] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [AllCateg, setAllCateg] = useState<any[]>([]);
     const [open, setOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedData, setSelectedData] = useState<any>(null);
+    const router = useRouter();
 
     useEffect(() => {
         fetchAllCateg()
@@ -2802,50 +2805,88 @@ const ForuAllMainCateg = () => {
     const fetchAllCateg = async () => {
         setIsLoading(true)
         const res = await GetAllMainForumCategory()
-        console.log("res", res?.data)
-        if (res && res?.data.length > 0) {
-            setAllCateg(res?.data)
-        }
-        else {
-            alert("Failed to fetch Data try again!")
-            setAllCateg([])
-        }
+        const categoryList = Array.isArray(res?.data) ? res.data : [];
+        setAllCateg(categoryList)
         setIsLoading(false)
     }
-
-    const handleSearch = (e: any) => {
-        setSearchTerm(e.target.value);
-    };
 
     const handleAddBrand = () => {
         setOpen(true);
     }
 
+    const handleOpenEdit = (data: any) => {
+        setSelectedData(data);
+        setEditOpen(true);
+    }
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm('Are you sure to delete this main category?');
+        if (!isConfirm) return;
+        const res = await DeleteMainForumCategory(id);
+        if (res?.success) {
+            alert('Deleted Successfully')
+            fetchAllCateg()
+        }
+        else {
+            alert(res?.msg || 'SomeThing is Wrong!')
+        }
+    }
+
+    const filteredCategory = AllCateg.filter((item: any) =>
+        String(item?.id || "").includes(searchTerm) ||
+        String(item?.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(item?.description || "").toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
-        <div className={styles.main_forums_Categ}>
+        <div className={styles.forum_table_page}>
             <New_header />
             {
                 !isLoading ?
-                    <div className={styles.card_section}>
-                        <div className={styles.page_header}>
-                            <p className={styles.forums_main_heading}>Forum Main Category</p>
-                            <button className={styles.add_new_btn} onClick={handleAddBrand} >Add New Category</button>
+                    <div className={styles.forum_table_container}>
+                        <div className={styles.forum_table_header}>
+                            <p className={styles.forum_table_heading}>Forum Main Categories</p>
+                            <button className={styles.forum_primary_btn} onClick={handleAddBrand}>Add Main Category</button>
                         </div>
-                        <div className={styles.card_main_box}>
-                            {
-                                AllCateg?.map((e: any, i: any) => {
-                                    return (
-                                        <div className={styles.card_main} key={i} >
-                                            <div className={styles.header}>
-                                                <p className={styles.title}>{e?.id} | {add3Dots(e?.name, 20)}</p>
-                                            </div>
-                                            <div className={styles.body}>
-                                                <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {e?.description} </p>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            }
+                        <div className={styles.forum_table_toolbar}>
+                            <input
+                                type="text"
+                                className={styles.forum_search_input}
+                                placeholder="Search by ID, name or description"
+                                value={searchTerm}
+                                onChange={(e: any) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                        <div className={styles.forum_table_wrapper}>
+                            <table className={styles.forum_table}>
+                                <thead>
+                                    <tr>
+                                        <th>Index</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Sub Categories</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredCategory.map((e: any, index: number) => (
+                                        <tr key={e?.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{e?.name || "N/A"}</td>
+                                            <td>{add3Dots(e?.description || "N/A", 120)}</td>
+                                            <td>{e?.subCategories?.length || 0}</td>
+                                            <td>
+                                                <div className={styles.forum_action_group}>
+                                                    <button className={styles.forum_edit_btn} onClick={() => handleOpenEdit(e)}>Edit</button>
+                                                    <button className={styles.forum_delete_btn} onClick={() => handleDelete(e?.id)}>Delete</button>
+                                                    <button className={styles.forum_link_btn} onClick={() => router.push(`/ebike-panel/dashboard/all-sub-category?main=${e?.id}`)}>Sub Categories</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            {filteredCategory.length === 0 && <p className={styles.forum_empty}>No main categories found.</p>}
                         </div>
                     </div>
                     :
@@ -2854,70 +2895,50 @@ const ForuAllMainCateg = () => {
                     </div>
             }
             <AddForumMainCategory open={open} onClose={() => setOpen(false)} funct={fetchAllCateg} />
+            <EditForumMainCategory open={editOpen} onClose={() => setEditOpen(false)} funct={fetchAllCateg} Data={selectedData} />
         </div>
     )
 }
 
 ////////////////////////////////////////////////////// ALL THREAD CARD
 const ThreadList_Card = () => {
-    const [AllthreadFilter, setAllthreadFilter] = useState([]);
-    const [filteredthread, setFilteredthread] = useState([]);
-    const [displayedthread, setDisplayedthread] = useState([]);
+    const [allThread, setAllThread] = useState<any[]>([]);
     const [PropsData, setDataProps] = useState();
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [addOpen, setAddOpen] = useState(false);
+    const [allSubCategory, setAllSubCategory] = useState<any[]>([]);
 
-    const itemsPerPage = 12;
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const filterSubId = searchParams.get("sub");
+    const filterMainId = searchParams.get("main");
 
     useEffect(() => {
         fetchAllThread()
+        fetchAllSubCategories()
     }, []);
-    useEffect(() => {
-        const filtered = AllthreadFilter.filter((bike: any) =>
-            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredthread(filtered);
-        setCurrentPage(1);
-    }, [searchTerm, AllthreadFilter]);
-    useEffect(() => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        setDisplayedthread(filteredthread.slice(startIndex, endIndex));
-        setTotalPage(Math.ceil(filteredthread.length / itemsPerPage));
-    }, [filteredthread, currentPage]);
 
     const fetchAllThread = async () => {
         setIsLoading(true);
         const res = await GetAllThreads()
-        if (res && res?.success && res?.data?.length > 0) {
-            setAllthreadFilter(res?.data);
-            setFilteredthread(res?.data);
-            // setCurrentPage(_page);
-        } else {
-            setAllthreadFilter([]);
-            setFilteredthread([]);
-            setDisplayedthread([]);
-            setCurrentPage(1);
-            setTotalPage(0);
-        }
-        console.log("datares", res)
+        const threadList = Array.isArray(res?.data) ? res.data : [];
+        setAllThread(threadList);
         setIsLoading(false);
     }
 
-    const handlePaginationChange = (event: any, page: any) => {
-        setCurrentPage(page);
-        window.scrollTo(0, 0);
-    };
+    const fetchAllSubCategories = async () => {
+        const res = await GetAllSubForumCategory();
+        const subCategoryList = Array.isArray(res?.data) ? res.data : [];
+        setAllSubCategory(subCategoryList);
+    }
 
     const handleDelete = async (id: any) => {
         const isConfirm = window.confirm('Are you sure to delete this Thread?')
         if (!isConfirm) return;
         const res = await DeleteThread(id);
-        if (res && res.info == 'Deleted successfully', res?.success) {
+        if (res?.success) {
             alert('Deleted Successfully')
             fetchAllThread()
         }
@@ -2935,63 +2956,82 @@ const ThreadList_Card = () => {
         setOpen(true);
     }
 
+    const handleOpenAdd = () => {
+        setAddOpen(true);
+    }
+
+    const baseThreadList = allThread.filter((item: any) => {
+        if (!filterSubId) return true;
+        return String(item?.sub_categ_id) === String(filterSubId);
+    });
+
+    const filteredThread = baseThreadList.filter((item: any) =>
+        String(item?.id || "").includes(searchTerm) ||
+        String(item?.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(item?.description || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(item?.user_name || "").toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const selectedSubCategory = allSubCategory.find((item: any) => String(item?.id) === String(filterSubId));
+
     return (
-        <div className={styles.main_thread}>
+        <div className={styles.forum_table_page}>
             <New_header />
             {!IsLoading ? (
-                <div className={styles.big_container}>
-                    <div className={styles.page_header}>
-                        <p className={styles.forums_main_heading}>Forum Thread List</p>
-                        {filteredthread?.length > 0 && (
-                            <div className={styles.used_bike_list_pagination}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="medium"
-                                />
-                            </div>
-                        )}
+                <div className={styles.forum_table_container}>
+                    <div className={styles.forum_table_header}>
+                        <p className={styles.forum_table_heading}>Forum Threads</p>
+                        <button className={styles.forum_primary_btn} onClick={handleOpenAdd}>Add Thread</button>
+                    </div>
+                    <div className={styles.forum_table_toolbar}>
+                        <div className={styles.forum_filter_badges}>
+                            {filterMainId && <button className={styles.forum_filter_btn} onClick={() => router.push(`/ebike-panel/dashboard/all-sub-category?main=${filterMainId}`)}>Back To Sub Categories</button>}
+                            {filterSubId && <span className={styles.forum_filter_label}>Sub Category: {selectedSubCategory?.name || `#${filterSubId}`}</span>}
+                        </div>
                         <form className={styles.input_box}>
                             <input
                                 type="text"
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                placeholder='Search Thread with Title'
+                                placeholder='Search by ID, title or user'
                                 className={styles.input} />
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
                     </div>
-                    <div className={styles.card_container}>
-                        {displayedthread.map((e: any, i: any) => (
-                            <div className={styles.card_main} key={i} >
-                                <div className={styles.header}>
-                                    <p className={styles.title}>{add3Dots(e?.title, 30)}</p>
-                                </div>
-                                <div className={styles.body}>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>ID:</span> {e?.id} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Name:</span> {e?.user_name || "N/A"} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Sub Category Id:</span> {e?.sub_categ_id || "N/A"} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {add3Dots(e?.description, 90) || 'N/A'} </p>
-                                </div>
-                                <div className={styles.action_btn}>
-                                    <button className={styles.edit_btn} onClick={() => handleOpenPOpup(e)} >Edit</button>
-                                    <button className={styles.del_btn} onClick={() => handleDelete(e?.id)} >Delete</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles.pagination_btm}>
-                        {filteredthread?.length > 0 && (
-                            <div className={styles.used_bike_list_pagination}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="medium"
-                                />
-                            </div>
-                        )}
+                    <div className={styles.forum_table_wrapper}>
+                        <table className={styles.forum_table}>
+                            <thead>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>Title</th>
+                                    <th>User</th>
+                                    <th>Sub Category</th>
+                                    <th>Comments</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredThread.map((e: any, index: number) => (
+                                    <tr key={e?.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{add3Dots(e?.title || "N/A", 40)}</td>
+                                        <td>{e?.user_name || "N/A"}</td>
+                                        <td>{e?.subCategory?.name || e?.sub_categ_id || "N/A"}</td>
+                                        <td>{e?.Comments?.length || 0}</td>
+                                        <td>{add3Dots(e?.description || "N/A", 90)}</td>
+                                        <td>
+                                            <div className={styles.forum_action_group}>
+                                                <button className={styles.forum_edit_btn} onClick={() => handleOpenPOpup(e)}>Edit</button>
+                                                <button className={styles.forum_delete_btn} onClick={() => handleDelete(e?.id)}>Delete</button>
+                                                <button className={styles.forum_link_btn} onClick={() => router.push(`/ebike-panel/dashboard/all-threads-comments?thread=${e?.id}&sub=${e?.sub_categ_id}${filterMainId ? `&main=${filterMainId}` : ''}`)}>Comments</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {filteredThread.length === 0 && <p className={styles.forum_empty}>No threads found.</p>}
                     </div>
                 </div>
             ) : (
@@ -3002,70 +3042,55 @@ const ThreadList_Card = () => {
                 </div>
             )}
             <EditForumThread open={open} onClose={() => setOpen(false)} funct={fetchAllThread} Data={PropsData} />
+            <AddForumThread open={addOpen} onClose={() => setAddOpen(false)} funct={fetchAllThread} subCategoryData={allSubCategory} />
         </div>
     )
 }
 
 ////////////////////////////////////////////////////// ALL THREAD COMMENT CARD
 const ThreadComments_Card = () => {
-    const [AllthreadFilter, setAllthreadFilter] = useState([]);
-    const [filteredthread, setFilteredthread] = useState([]);
-    const [displayedthread, setDisplayedthread] = useState([]);
+    const [allComments, setAllComments] = useState<any[]>([]);
     const [PropsData, setDataProps] = useState();
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [addOpen, setAddOpen] = useState(false);
+    const [allThreads, setAllThreads] = useState<any[]>([]);
 
-    const itemsPerPage = 12;
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const filterThreadId = searchParams.get("thread");
+    const filterSubId = searchParams.get("sub");
+    const filterMainId = searchParams.get("main");
 
     useEffect(() => {
         fetchAllComment()
+        fetchAllThreadList()
     }, []);
-    useEffect(() => {
-        const filtered = AllthreadFilter.filter((bike: any) =>
-            bike.thread_id.toString().includes(searchTerm)
-        );
-        setFilteredthread(filtered);
-        setCurrentPage(1);
-    }, [searchTerm, AllthreadFilter]);
-    useEffect(() => {
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        setDisplayedthread(filteredthread.slice(startIndex, endIndex));
-        setTotalPage(Math.ceil(filteredthread.length / itemsPerPage));
-    }, [filteredthread, currentPage]);
 
     const fetchAllComment = async () => {
         setIsLoading(true);
         const res = await GetAllThreadsComments()
-        console.log("resData", res?.data)
-        if (res && res?.success && res?.data?.length > 0) {
-            setAllthreadFilter(res?.data);
-            setFilteredthread(res?.data);
-        } else {
-            setAllthreadFilter([]);
-            setFilteredthread([]);
-            setDisplayedthread([]);
-            setCurrentPage(1);
-            setTotalPage(0);
-        }
-        console.log("datares", res)
+        const commentList = Array.isArray(res?.data)
+            ? res.data
+            : Array.isArray(res?.comments)
+                ? res.comments
+                : [];
+        setAllComments(commentList);
         setIsLoading(false);
     }
 
-    const handlePaginationChange = (event: any, page: any) => {
-        setCurrentPage(page);
-        window.scrollTo(0, 0);
-    };
+    const fetchAllThreadList = async () => {
+        const res = await GetAllThreads();
+        const threadList = Array.isArray(res?.data) ? res.data : [];
+        setAllThreads(threadList);
+    }
 
     const handleDelete = async (id: any) => {
         const isConfirm = window.confirm('Are you sure to delete this Comment?')
         if (!isConfirm) return;
         const res = await DeleteThreadComment(id);
-        if (res && res.info == 'Deleted successfully', res?.success) {
+        if (res?.success) {
             alert('Deleted Successfully')
             fetchAllComment()
         }
@@ -3083,63 +3108,79 @@ const ThreadComments_Card = () => {
         setOpen(true);
     }
 
+    const handleOpenAdd = () => {
+        setAddOpen(true);
+    }
+
+    const baseComments = allComments.filter((item: any) => {
+        if (!filterThreadId) return true;
+        return String(item?.thread_id) === String(filterThreadId);
+    });
+
+    const filteredComments = baseComments.filter((item: any) =>
+        String(item?.id || "").includes(searchTerm) ||
+        String(item?.thread_id || "").includes(searchTerm) ||
+        String(item?.description || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(item?.user_name || "").toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const selectedThread = allThreads.find((item: any) => String(item?.id) === String(filterThreadId));
+
     return (
-        <div className={styles.main_thread}>
+        <div className={styles.forum_table_page}>
             <New_header />
             {!IsLoading ? (
-                <div className={styles.big_container}>
-                    <div className={styles.page_header}>
-                        <p className={styles.forums_main_heading}>Thread Comment List</p>
-                        {filteredthread?.length > 0 && (
-                            <div className={styles.used_bike_list_pagination}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="medium"
-                                />
-                            </div>
-                        )}
+                <div className={styles.forum_table_container}>
+                    <div className={styles.forum_table_header}>
+                        <p className={styles.forum_table_heading}>Forum Comments</p>
+                        <button className={styles.forum_primary_btn} onClick={handleOpenAdd}>Add Comment</button>
+                    </div>
+                    <div className={styles.forum_table_toolbar}>
+                        <div className={styles.forum_filter_badges}>
+                            {filterSubId && <button className={styles.forum_filter_btn} onClick={() => router.push(`/ebike-panel/dashboard/all-threads?sub=${filterSubId}${filterMainId ? `&main=${filterMainId}` : ''}`)}>Back To Threads</button>}
+                            {filterThreadId && <span className={styles.forum_filter_label}>Thread: {selectedThread?.title || `#${filterThreadId}`}</span>}
+                        </div>
                         <form className={styles.input_box}>
                             <input
                                 type="text"
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                placeholder='Search Comment Thread ID'
+                                placeholder='Search by ID, thread ID, user or comment'
                                 className={styles.input} />
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
                     </div>
-                    <div className={styles.card_container}>
-                        {displayedthread.map((e: any, i: any) => (
-                            <div className={styles.card_main} key={i} >
-                                {/* <div className={styles.header}>
-                                            <p className={styles.title}>{add3Dots(e?.title, 30)}</p>
-                                        </div> */}
-                                <div className={styles.body}>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Name:</span> {e?.user_name || "N/A"} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Thread ID:</span> {e?.thread_id || "N/A"} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Comment ID:</span> {e?.id} </p>
-                                    <p className={styles.text}><span style={{ fontWeight: "bold" }}>Comment:</span> {add3Dots(e?.description, 90) || 'N/A'} </p>
-                                </div>
-                                <div className={styles.action_btn}>
-                                    <button className={styles.edit_btn} onClick={() => handleOpenPOpup(e)} >Edit</button>
-                                    <button className={styles.del_btn} onClick={() => handleDelete(e?.id)} >Delete</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles.pagination_btm}>
-                        {filteredthread?.length > 0 && (
-                            <div className={styles.used_bike_list_pagination}>
-                                <Pagination
-                                    count={totalPage}
-                                    onChange={handlePaginationChange}
-                                    page={currentPage}
-                                    size="medium"
-                                />
-                            </div>
-                        )}
+                    <div className={styles.forum_table_wrapper}>
+                        <table className={styles.forum_table}>
+                            <thead>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>Thread ID</th>
+                                    <th>Thread Title</th>
+                                    <th>User</th>
+                                    <th>Comment</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredComments.map((e: any, index: number) => (
+                                    <tr key={e?.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{e?.thread_id || "N/A"}</td>
+                                        <td>{add3Dots(e?.thread?.title || "N/A", 40)}</td>
+                                        <td>{e?.user_name || "N/A"}</td>
+                                        <td>{add3Dots(e?.description || "N/A", 120)}</td>
+                                        <td>
+                                            <div className={styles.forum_action_group}>
+                                                <button className={styles.forum_edit_btn} onClick={() => handleOpenPOpup(e)}>Edit</button>
+                                                <button className={styles.forum_delete_btn} onClick={() => handleDelete(e?.id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {filteredComments.length === 0 && <p className={styles.forum_empty}>No comments found.</p>}
                     </div>
                 </div>
             ) : (
@@ -3150,6 +3191,7 @@ const ThreadComments_Card = () => {
                 </div>
             )}
             <EditForumThreadComment open={open} onClose={() => setOpen(false)} funct={fetchAllComment} Data={PropsData} />
+            <AddForumThreadComment open={addOpen} onClose={() => setAddOpen(false)} funct={fetchAllComment} threadData={allThreads} />
         </div>
     )
 }

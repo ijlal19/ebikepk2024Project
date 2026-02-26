@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import styles from './index.module.scss';
 const jsCookie = require('js-cookie');
 import { useState } from "react";
-import { addNewBrandCompany, AddNewCouponCode, AddNewForumCategory, AddNewForumMainCategory, AddNewForumSubCategory, AddNewSetting, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateSettingByID, UpdateThreadById, UpdateThreadCommentById, UpdateVideoByID } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewBrandCompany, AddNewCouponCode, AddNewForumComment, AddNewForumMainCategory, AddNewForumSubCategory, AddNewForumThread, AddNewSetting, GetUserDetail, UpdateBrandById, UpdateBrandCompany, UpdateMainForumCategoryById, UpdateSettingByID, UpdateSubForumCategoryById, UpdateThreadById, UpdateThreadCommentById, UpdateVideoByID } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 
 const style = {
     position: "absolute",
@@ -295,46 +295,6 @@ const AddCOuponCode = ({ open, onClose, funct }: any) => {
     )
 }
 
-const AddForumCategory = ({ open, onClose, funct }: any) => {
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-
-    const handleAddCode = async (e: any) => {
-        e.preventDefault()
-        const obj = {
-            name: name,
-            description: description,
-            images: [],
-        }
-        const res = await AddNewForumCategory(obj)
-        if (res && res?.success && res?.info == "Added Successfully") {
-            alert("Category Successfully Add")
-            onClose();
-            funct()
-        }
-        else {
-            alert("Something went wrong")
-            onClose()
-        }
-    }
-    return (
-        <Modal
-            open={open}
-            onClose={onClose}
-            aria-labelledby="modal-title"
-            aria-describedby="modal-description"
-        >
-            <Box sx={style}>
-                <form onSubmit={handleAddCode} className={styles.form}  >
-                    <input type="text" className={styles.input} placeholder="Category Name" onChange={(e: any) => setName(e?.target.value)} value={name} required />
-                    <input type="text" className={styles.input} placeholder="Description" required value={description} onChange={(e: any) => setDescription(e?.target.value)} />
-                    <button type="submit" className={styles.btn} >Add Category</button>
-                </form>
-            </Box>
-        </Modal>
-    )
-}
-
 const AddForumMainCategory = ({ open, onClose, funct }: any) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
@@ -407,6 +367,10 @@ const AddForumSubCategory = ({ open, onClose, funct, data }: any) => {
 
     const handleAddCode = async (e: any) => {
         e.preventDefault()
+        if (!data || data.length === 0) {
+            alert("Please add main category first")
+            return;
+        }
         const obj = {
             name: name,
             description: description,
@@ -451,10 +415,9 @@ const AddForumSubCategory = ({ open, onClose, funct, data }: any) => {
                     <textarea id="Description" name="Description" value={description} placeholder="Description" required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
                     <label className={styles.label}>Select Main Category</label>
                     <div className={styles.drop_downBox}>
-                        <select name="company_id" id="" className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
-                            <option value={data[0]?.id} disabled selected hidden>{data[0]?.name}</option>
+                        <select name="company_id" id="" className={styles.selected} value={AllFieldIDs || data?.[0]?.id || ''} onChange={(e) => handleproductChange(e, 'company')}>
                             {
-                                data.map((e: any, index: any) => (
+                                (data || []).map((e: any, index: any) => (
                                     <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
                                         {e?.name}
                                     </option>
@@ -464,6 +427,231 @@ const AddForumSubCategory = ({ open, onClose, funct, data }: any) => {
                     </div>
 
                     <button type="submit" className={styles.btn} >Add Category</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+const EditForumMainCategory = ({ open, onClose, funct, Data }: any) => {
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+
+    React.useEffect(() => {
+        if (Data) {
+            setName(Data?.name || "")
+            setDescription(Data?.description || "")
+        }
+    }, [Data])
+
+    const handleUpdate = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: name,
+            description: description
+        }
+
+        const res = await UpdateMainForumCategoryById(Data?.id, obj)
+        if (res?.success) {
+            alert("Main category updated")
+            onClose()
+            funct()
+        }
+        else {
+            alert(res?.msg || "something is wrong try again")
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={handleUpdate} className={styles.form}  >
+                    <input type="text" className={styles.input} value={name} onChange={(e: any) => setName(e?.target.value)} required />
+                    <textarea id="Description" name="Description" value={description} required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <button type="submit" className={styles.btn} >Save Edit</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+const EditForumSubCategory = ({ open, onClose, funct, Data, MainCategoryData }: any) => {
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [mainCategId, setMainCategId] = useState<any>('')
+
+    React.useEffect(() => {
+        if (Data) {
+            setName(Data?.name || "")
+            setDescription(Data?.description || "")
+            setMainCategId(Data?.main_categ_id || Data?.mainCategory?.id || "")
+        }
+    }, [Data])
+
+    const handleUpdate = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            name: name,
+            description: description,
+            main_categ_id: Number(mainCategId)
+        }
+
+        const res = await UpdateSubForumCategoryById(Data?.id, obj)
+        if (res?.success) {
+            alert("Sub category updated")
+            onClose()
+            funct()
+        }
+        else {
+            alert(res?.msg || "something is wrong try again")
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={handleUpdate} className={styles.form}  >
+                    <input type="text" className={styles.input} value={name} onChange={(e: any) => setName(e?.target.value)} required />
+                    <textarea id="Description" name="Description" value={description} required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <label className={styles.label}>Select Main Category</label>
+                    <select className={styles.selected} value={mainCategId} onChange={(e) => setMainCategId(e.target.value)} required>
+                        <option value="" disabled>Select category</option>
+                        {(MainCategoryData || []).map((item: any) => (
+                            <option key={item?.id} value={item?.id}>{item?.name}</option>
+                        ))}
+                    </select>
+                    <button type="submit" className={styles.btn} >Save Edit</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+const AddForumThread = ({ open, onClose, funct, subCategoryData }: any) => {
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [subCategoryId, setSubCategoryId] = useState<any>('')
+    const [userName, setUserName] = useState('')
+    const [userId, setUserId] = useState('')
+
+    React.useEffect(() => {
+        const userData = GetUserDetail()
+        setUserName(userData?.name || "")
+        setUserId(userData?.uid || "")
+        setSubCategoryId(subCategoryData?.[0]?.id || '')
+    }, [subCategoryData])
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            title: title,
+            description: description,
+            user_name: userName,
+            user_id: userId,
+            isShow: true,
+            isVerified: true,
+            sub_categ_id: Number(subCategoryId)
+        }
+
+        const res = await AddNewForumThread(obj)
+        if (res?.success) {
+            alert("Thread created")
+            setTitle('')
+            setDescription('')
+            onClose()
+            funct()
+        }
+        else {
+            alert(res?.msg || "something is wrong try again")
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <input type="text" className={styles.input} placeholder="Thread title" value={title} onChange={(e: any) => setTitle(e.target.value)} required />
+                    <textarea id="threadDescription" name="threadDescription" value={description} placeholder="Description" required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <label className={styles.label}>Select Sub Category</label>
+                    <select className={styles.selected} value={subCategoryId} onChange={(e) => setSubCategoryId(e.target.value)} required>
+                        <option value="" disabled>Select sub category</option>
+                        {(subCategoryData || []).map((item: any) => (
+                            <option key={item?.id} value={item?.id}>{item?.name}</option>
+                        ))}
+                    </select>
+                    <button type="submit" className={styles.btn}>Add Thread</button>
+                </form>
+            </Box>
+        </Modal>
+    )
+}
+
+const AddForumThreadComment = ({ open, onClose, funct, threadData }: any) => {
+    const [description, setDescription] = useState('')
+    const [threadId, setThreadId] = useState<any>('')
+    const [userName, setUserName] = useState('')
+    const [userId, setUserId] = useState('')
+
+    React.useEffect(() => {
+        const userData = GetUserDetail()
+        setUserName(userData?.name || "")
+        setUserId(userData?.uid || "")
+        setThreadId(threadData?.[0]?.id || '')
+    }, [threadData])
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        const obj = {
+            title: "Thread Comment",
+            description: description,
+            thread_id: Number(threadId),
+            user_name: userName,
+            user_id: userId,
+            isShow: true,
+            isVerified: true
+        }
+
+        const res = await AddNewForumComment(obj)
+        if (res?.success) {
+            alert("Comment added")
+            setDescription('')
+            onClose()
+            funct()
+        }
+        else {
+            alert(res?.msg || "something is wrong try again")
+        }
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description">
+            <Box sx={style}>
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <textarea id="commentDescription" name="commentDescription" value={description} placeholder="Comment text" required onChange={(e) => setDescription(e.target.value)} className={styles.textarea1} />
+                    <label className={styles.label}>Select Thread</label>
+                    <select className={styles.selected} value={threadId} onChange={(e) => setThreadId(e.target.value)} required>
+                        <option value="" disabled>Select thread</option>
+                        {(threadData || []).map((item: any) => (
+                            <option key={item?.id} value={item?.id}>{item?.title || `Thread #${item?.id}`}</option>
+                        ))}
+                    </select>
+                    <button type="submit" className={styles.btn}>Add Comment</button>
                 </form>
             </Box>
         </Modal>
@@ -490,7 +678,7 @@ const EditForumThread = ({ open, onClose, funct, Data }: any) => {
         }
 
         const res = await UpdateThreadById(Data?.id, obj)
-        if (res && res?.success && res?.info == "updated successfully") {
+        if (res?.success) {
             alert("Thread Successfully Edit")
             setDescription('')
             setName("")
@@ -536,7 +724,7 @@ const EditForumThreadComment = ({ open, onClose, funct, Data }: any) => {
         }
 
         const res = await UpdateThreadCommentById(Data?.id, obj)
-        if (res && res?.success && res?.info == "Updated Successfully") {
+        if (res?.success) {
             alert("Comment Successfully Edit")
             setDescription('')
             onClose()
@@ -768,4 +956,20 @@ const AddNewWebsiteSetting = ({ open, onClose, funct }: any) => {
     )
 }
 
-export { BasicModal, EditVideo, ShopBrandPopup, AddShopBrandPopup, AddCOuponCode, AddForumCategory, AddForumMainCategory, AddForumSubCategory, EditForumThread, EditForumThreadComment, EditWebsiteSetting , AddNewWebsiteSetting}
+export {
+    BasicModal,
+    EditVideo,
+    ShopBrandPopup,
+    AddShopBrandPopup,
+    AddCOuponCode,
+    AddForumMainCategory,
+    AddForumSubCategory,
+    EditForumMainCategory,
+    EditForumSubCategory,
+    AddForumThread,
+    AddForumThreadComment,
+    EditForumThread,
+    EditForumThreadComment,
+    EditWebsiteSetting,
+    AddNewWebsiteSetting
+}

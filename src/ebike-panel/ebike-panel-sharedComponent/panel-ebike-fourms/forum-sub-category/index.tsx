@@ -2,68 +2,113 @@
 import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import { New_header } from "../../panel-header";
-import { GetAllForumCategory, GetAllMainForumCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { DeleteSubForumCategory, GetAllMainForumCategory, GetAllSubForumCategory } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { add3Dots } from "@/genericFunctions/geneFunc";
 import Loader from "../../loader/loader";
-import { AddForumSubCategory } from "../../all-panel-cards/popup";
+import { AddForumSubCategory, EditForumSubCategory } from "../../all-panel-cards/popup";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ForumSubCateg = () => {
-    const [AllCategory, setAllCategory] = useState<any>([])
-    const [AllSubCategory, setAllSubCategory] = useState<any>([])
+    const [AllCategory, setAllCategory] = useState<any[]>([])
+    const [AllSubCategory, setAllSubCategory] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState(false)
-    const [CategoryNameId, setCategoryNameId] = useState(1)
+    const [selectedMainId, setSelectedMainId] = useState<any>('')
     const [open, setOpen] = useState(false);
-
-    const [AllFieldIDs, setAllFieldIds] = useState<any>(0)
+    const [editOpen, setEditOpen] = useState(false)
+    const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null)
+    const [searchTerm, setSearchTerm] = useState('')
+    const [subCategoryThreadCount, setSubCategoryThreadCount] = useState<any>({})
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const mainCategoryFromQuery = searchParams.get("main");
 
     useEffect(() => {
         fetchAllCateg()
     }, [])
     useEffect(() => {
-        const filtered = AllCategory.filter((e: any) => e?.id == AllFieldIDs);
-       setAllSubCategory(filtered[0]?.subCategories)
-    }, [AllFieldIDs])
+        if (!selectedMainId) {
+            setAllSubCategory(AllCategory?.[0]?.subCategories || [])
+            return
+        }
+        const filtered = AllCategory.find((e: any) => String(e?.id) === String(selectedMainId));
+        setAllSubCategory(filtered?.subCategories || [])
+    }, [selectedMainId, AllCategory])
 
     const fetchAllCateg = async () => {
         setIsLoading(true)
-        const res = await GetAllMainForumCategory()
-        console.log("res", res?.data)
-        if (res && res?.data.length > 0) {
-            setAllCategory(res?.data)
-            setAllSubCategory(res?.data[0]?.subCategories)
-            console.log("datares", res?.data[0]?.subCategories)
-        }
-        else {
-            alert("Failed to fetch Data try again!")
-            setAllCategory([])
-        }
+        const [mainRes, subRes] = await Promise.all([
+            GetAllMainForumCategory(),
+            GetAllSubForumCategory()
+        ]);
+        const categoryList = Array.isArray(mainRes?.data) ? mainRes.data : [];
+        const subCategoryList = Array.isArray(subRes?.data) ? subRes.data : [];
+
+        const threadCountMap: any = {};
+        subCategoryList.forEach((item: any) => {
+            threadCountMap[item?.id] = Array.isArray(item?.threads) ? item.threads.length : 0;
+        });
+        setSubCategoryThreadCount(threadCountMap)
+
+        setAllCategory(categoryList)
+        const defaultMainId = mainCategoryFromQuery || categoryList?.[0]?.id || '';
+        setSelectedMainId(defaultMainId)
+        const mainCategory = categoryList.find((e: any) => String(e?.id) === String(defaultMainId));
+        setAllSubCategory(mainCategory?.subCategories || [])
         setIsLoading(false)
     }
 
-    const handleBtn = (id: any) => {
-        setCategoryNameId(id)
-    }
     const handleproductChange = (e: any, from: any) => {
-        const { name, value } = e.target;
+        const { value } = e.target;
         if (from == "company") {
-            setAllFieldIds(value);
-            console.log("datares" , Number(value) )
+            setSelectedMainId(value);
         }
     };
-     const handleAddCategory = () => {
+    const handleAddCategory = () => {
         setOpen(true);
     }
 
+    const handleOpenEdit = (data: any) => {
+        setSelectedSubCategory(data);
+        setEditOpen(true);
+    }
+
+    const handleDelete = async (id: any) => {
+        const isConfirm = window.confirm("Are you sure to delete this sub category?");
+        if (!isConfirm) return;
+        const res = await DeleteSubForumCategory(id)
+        if (res?.success) {
+            alert("Deleted successfully")
+            fetchAllCateg()
+        }
+        else {
+            alert(res?.msg || "Something went wrong")
+        }
+    }
+
+    const currentMainCategory = AllCategory.find((item: any) => String(item?.id) === String(selectedMainId));
+    const filteredSubCategories = AllSubCategory.filter((item: any) =>
+        String(item?.id || "").includes(searchTerm) ||
+        String(item?.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        String(item?.description || "").toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
-        <div className={styles.main_forums_Categ}>
+        <div className={styles.forum_table_page}>
             <New_header />
             {
                 !isLoading ?
-                    <div className={styles.card_section}>
-                        <div className={styles.page_header}>
+                    <div className={styles.forum_table_container}>
+                        <div className={styles.forum_table_header}>
+                            <p className={styles.forum_table_heading}>Forum Sub Categories</p>
+                            <button className={styles.forum_primary_btn} onClick={handleAddCategory}>Add Sub Category</button>
+                        </div>
+                        <div className={styles.forum_table_toolbar}>
+                            <div className={styles.forum_filter_badges}>
+                                <button className={styles.forum_filter_btn} onClick={() => router.push('/ebike-panel/dashboard/all-main-category')}>Back To Main Categories</button>
+                                {selectedMainId && <span className={styles.forum_filter_label}>Main Category: {currentMainCategory?.name || `#${selectedMainId}`}</span>}
+                            </div>
                             <div className={styles.drop_downBox}>
-                                <select name="company_id" id={AllCategory[0]?.id} className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
-                                    <option value="" disabled selected hidden>{AllCategory[0]?.name}</option>
+                                <select name="company_id" value={selectedMainId} className={styles.selected} onChange={(e) => handleproductChange(e, 'company')}>
                                     {
                                         AllCategory.map((e: any, index: any) => (
                                             <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
@@ -73,33 +118,45 @@ const ForumSubCateg = () => {
                                     }
                                 </select>
                             </div>
-                            {/* <p className={styles.forums_main_heading}>Forum Main Category</p> */}
-                            {/* <button className={styles.add_new_btn} >Add New Category</button> */}
-                            <button className={styles.add_new_btn} onClick={handleAddCategory} >Add New Category</button>
+                            <input
+                                type="text"
+                                className={styles.forum_search_input}
+                                placeholder="Search by ID, name or description"
+                                value={searchTerm}
+                                onChange={(e: any) => setSearchTerm(e.target.value)}
+                            />
                         </div>
-                        {
-                            AllSubCategory && AllSubCategory.length > 0 ?
-                        <div className={styles.card_main_box}>
-                            {
-                                AllSubCategory?.map((e: any, i: any) => {
-                                    return (
-                                        <div className={styles.card_main} key={i} >
-                                            <div className={styles.header}>
-                                                <p className={styles.title}>{add3Dots(e?.name, 30)}</p>
-                                            </div>
-                                            <div className={styles.body}>
-                                                <p className={styles.text}><span style={{ fontWeight: "bold" }}>ID:</span> {e?.id} </p>
-                                                <p className={styles.text}><span style={{ fontWeight: "bold" }}>Name:</span> {e?.user_name || "N/A"} </p>
-                                                <p className={styles.text}><span style={{ fontWeight: "bold" }}>Description:</span> {e?.description || 'N/A'} </p>
-                                            </div>
-                                        </div>
-                                    )
-                                })
-                            }
+                        <div className={styles.forum_table_wrapper}>
+                            <table className={styles.forum_table}>
+                                <thead>
+                                    <tr>
+                                        <th>Index</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Threads</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredSubCategories.map((e: any, index: number) => (
+                                        <tr key={e?.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{e?.name || "N/A"}</td>
+                                            <td>{add3Dots(e?.description || "N/A", 120)}</td>
+                                            <td>{subCategoryThreadCount?.[e?.id] ?? e?.threads?.length ?? 0}</td>
+                                            <td>
+                                                <div className={styles.forum_action_group}>
+                                                    <button className={styles.forum_edit_btn} onClick={() => handleOpenEdit(e)}>Edit</button>
+                                                    <button className={styles.forum_delete_btn} onClick={() => handleDelete(e?.id)}>Delete</button>
+                                                    <button className={styles.forum_link_btn} onClick={() => router.push(`/ebike-panel/dashboard/all-threads?sub=${e?.id}&main=${selectedMainId}`)}>Threads</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                            {filteredSubCategories.length === 0 && <p className={styles.forum_empty}>No sub categories found.</p>}
                         </div>
-                        : 
-                        <p className={styles.not}>No categories found!</p>
-                        }
                     </div>
                     :
                     <div className={styles.load_div}>
@@ -107,6 +164,7 @@ const ForumSubCateg = () => {
                     </div>
             }
             <AddForumSubCategory open={open} onClose={() => setOpen(false)} funct={fetchAllCateg} data={AllCategory} />
+            <EditForumSubCategory open={editOpen} onClose={() => setEditOpen(false)} funct={fetchAllCateg} Data={selectedSubCategory} MainCategoryData={AllCategory} />
         </div>
     )
 }
