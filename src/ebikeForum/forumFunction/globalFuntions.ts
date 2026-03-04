@@ -1,108 +1,75 @@
 import Gconfig from "globalconfig";
 
+async function forumRequest(endpoint: string, options: RequestInit = {}) {
+    try {
+        const response = await fetch(Gconfig.ebikeApi + endpoint, {
+            headers: { "Content-Type": "application/json" },
+            ...options
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.log(err);
+        return { success: false, data: [] };
+    }
+}
+
 function getMainCategory() {
-    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-main-categ`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-    })
-        .then(response => response.json())
-        .then(data => {
-            return data
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    return forumRequest(`new-forum/get-new-forum-main-categ`, {
+        method: "GET"
+    });
 }
 
 function getSubCategory() {
-    return fetch(Gconfig.ebikeApi + `new-forum/get-new-forum-sub-categ`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-    })
-        .then(response => response.json())
-        .then(data => {
-            return data
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    return forumRequest(`new-forum/get-new-forum-sub-categ`, {
+        method: "GET"
+    });
 }
 
-function getSubCatgeorybyId(id:any) {
-    return fetch(Gconfig.ebikeApi + `new-forum/new-forum-sub-categ-byId/${id}`, {
-        method: 'GET',
-        headers: { "Content-Type": "application/json" },
-    })
-    .then(response => response.json())
-    .then(data => {
-        return data
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+function getSubCatgeorybyId(id: any) {
+    return forumRequest(`new-forum/new-forum-sub-categ-byId/${id}`, {
+        method: "GET"
+    });
 }
 
-function postThread(data:any){
-    return fetch( Gconfig.ebikeApi + `new-forum/crete-new-forum-thread`,{
-        method:'POST',
-        headers: { "Content-Type": "application/json" },
+function postThread(data: any) {
+    return forumRequest(`new-forum/crete-new-forum-thread`, {
+        method: "POST",
         body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then( data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
+    });
 }
 
-function getAllthread(){
-    return fetch( Gconfig.ebikeApi + `new-forum/get-new-forum-thread`,{
-        method:'GET',
-        headers: { "Content-Type": "application/json" }
-    })
-    .then(res => res.json())
-    .then(data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
+function getAllthread() {
+    return forumRequest(`new-forum/get-new-forum-thread`, {
+        method: "GET"
+    });
 }
 
-function getthreadbyId(id:any){
-    return fetch( Gconfig.ebikeApi + `new-forum/get-new-forum-thread/${id}`,{
-        method:'GET',
-        headers: { "Content-Type": "application/json" }
-    })
-    .then(res => res.json())
-    .then(data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
+function getthreadbyId(id: any) {
+    return forumRequest(`new-forum/get-new-forum-thread/${id}`, {
+        method: "GET"
+    });
 }
 
-function postthreadComment(data:any){
-    return fetch(Gconfig.ebikeApi + `new-forum/crete-new-forum-comment`,{
-        method:'POST',
-        headers: { "Content-Type": "application/json" },
+function getAllThreadComments() {
+    return forumRequest(`new-forum/get-new-forum-comment`, {
+        method: "GET"
+    });
+}
+
+function postthreadComment(data: any) {
+    return forumRequest(`new-forum/crete-new-forum-comment`, {
+        method: "POST",
         body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then( data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
+    });
 }
 
-function ViewCountAdd(data:any){
-    return fetch( Gconfig.ebikeApi + `new-forum/crete-new-forum-view-count`,{
-        method:'POST',
-        headers: { "Content-Type": "application/json" },
+function ViewCountAdd(data: any) {
+    return forumRequest(`new-forum/crete-new-forum-view-count`, {
+        method: "POST",
         body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then( data => {return data})
-    .catch((err) => {
-        console.log(err)
-    })
+    });
 }
 
 export {
@@ -112,6 +79,7 @@ export {
     postThread,
     getAllthread,
     getthreadbyId,
+    getAllThreadComments,
     postthreadComment,
     ViewCountAdd
 }

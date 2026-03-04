@@ -1,12 +1,12 @@
 'use client'
 import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
-import { getMainCategory, getSubCatgeorybyId, ViewCountAdd } from "@/ebikeForum/forumFunction/globalFuntions";
+import { getMainCategory, ViewCountAdd } from "@/ebikeForum/forumFunction/globalFuntions";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
 import CommentIcon from '@mui/icons-material/Comment';
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import styles from './index.module.scss';
 import { timeAgo } from "@/genericFunctions/geneFunc";
 
@@ -16,41 +16,66 @@ const Home = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter()
+    const searchParams = useSearchParams();
+    const searchQuery = (searchParams.get("q") || "").trim().toLowerCase();
+    const sortType = (searchParams.get("sort") || "").trim().toLowerCase();
 
-    useEffect(() => {
-        fetchMainCategory()
-    }, [])
-
-    const fetchMainCategory = async () => {
+    const fetchMainCategory = useCallback(async () => {
         setIsLoading(true)
         const main_category = await getMainCategory()
-        setMainCategoryData(main_category?.data)
+        const data = Array.isArray(main_category?.data) ? main_category.data : [];
+
+        const filtered = data.map((mainItem: any) => {
+            const subCategories = Array.isArray(mainItem?.subCategories) ? mainItem.subCategories : [];
+            const searchedSub = !searchQuery
+                ? subCategories
+                : subCategories.filter((subItem: any) => {
+                    const name = String(subItem?.name || "").toLowerCase();
+                    const desc = String(subItem?.description || "").toLowerCase();
+                    return name.includes(searchQuery) || desc.includes(searchQuery);
+                });
+
+            const sortedSub = [...searchedSub].sort((a: any, b: any) => {
+                if (sortType === "new") {
+                    return new Date(b?.createdAt || 0).getTime() - new Date(a?.createdAt || 0).getTime();
+                }
+                if (sortType === "top") {
+                    return (b?.ViewCount?.[0]?.count || 0) - (a?.ViewCount?.[0]?.count || 0);
+                }
+                return 0;
+            });
+
+            return { ...mainItem, subCategories: sortedSub };
+        }).filter((mainItem: any) => (mainItem?.subCategories?.length || 0) > 0 || !searchQuery);
+
+        setMainCategoryData(filtered)
         setIsLoading(false)
         setTimeout(() => {
             window.scrollTo(0, 0)
         }, 1000);
-    }
+    }, [searchQuery, sortType]);
+
+    useEffect(() => {
+        fetchMainCategory()
+    }, [fetchMainCategory])
 
     const handleRoute = async (subCateginfo: any, mainCateginfo: any) => {
+        const mainViews = mainCateginfo?.ViewCount?.[0]?.count || 0;
+        const subViews = subCateginfo?.ViewCount?.[0]?.count || 0;
 
-        const [{ main_categ_id, count }] = mainCateginfo?.ViewCount
         const mainCountObj = {
-            main_categ_id: main_categ_id,
-            count: count + 1,
+            main_categ_id: mainCateginfo?.id,
+            count: mainViews + 1,
         }
 
-        const mainCategoryCount = await ViewCountAdd(mainCountObj)
+        await ViewCountAdd(mainCountObj)
 
         if (subCateginfo) {
-            const [{ count }] = subCateginfo?.ViewCount
             const subCountObj = {
                 sub_categ_id: subCateginfo.id,
-                count: count + 1,
+                count: subViews + 1,
             }
-            console.log("data" , subCountObj)
-            const subCategoryCount = await ViewCountAdd(subCountObj)
-            console.log("data" , mainCategoryCount , subCategoryCount)
-            console.log("data" , mainCountObj)
+            await ViewCountAdd(subCountObj)
         }
 
         var name = subCateginfo.name;
@@ -67,7 +92,7 @@ const Home = () => {
                 !isLoading ?
                     <Box sx={{ backgroundColor: '#f2f2f2', }}>
                         <Grid container className={styles.forums_container}>
-                            <Grid item xs={isMobile ? 12 : 8.5} className={styles.content_grid}>
+                            <Grid item xs={12} className={styles.content_grid}>
                                 {
                                     [...(mainCategoryData || [])].reverse().map((e: any, i: any) => {
                                         return (
@@ -81,21 +106,21 @@ const Home = () => {
                                                 {e?.subCategories?.map((data: any, i: any) => {
                                                     return (
                                                         <Grid container className={styles.forums_box} key={i}>
-                                                            <Grid item xs={isMobile ? 1.5 : 1} className={styles.logo_grid}>
+                                                            <Grid item xs={2} md={1} className={styles.logo_grid}>
                                                                 <Box className={styles.logo}>
                                                                     <CommentIcon className={styles.comment_icon} />
                                                                 </Box>
                                                             </Grid>
-                                                            <Grid item xs={isMobile ? 10.5 : 11} className={styles.card_main}>
+                                                            <Grid item xs={10} md={11} className={styles.card_main}>
                                                                 <Grid container>
-                                                                    <Grid item xs={isMobile ? 12 : 8} className={styles.card_details}>
+                                                                    <Grid item xs={12} md={8} className={styles.card_details}>
                                                                         <Typography className={styles.card_title} onClick={() => handleRoute(data, e)}>{data?.name}</Typography>
                                                                         <Typography className={styles.card_desc} sx={{ display: isMobile ? 'none' : '' }}>{data?.description}</Typography>
                                                                     </Grid>
 
-                                                                    <Grid item xs={isMobile ? 12 : 4} className={styles.card_analys}>
+                                                                    <Grid item xs={12} md={4} className={styles.card_analys}>
                                                                         <Typography className={styles.view_box}>
-                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />{data?.ViewCount[0]?.count}</span></Typography>
+                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />{data?.ViewCount?.[0]?.count || 0}</span></Typography>
                                                                         <Typography className={styles.timeago}>{timeAgo(data?.createdAt)}</Typography>
                                                                     </Grid>
                                                                 </Grid>
@@ -106,8 +131,14 @@ const Home = () => {
                                         )
                                     })
                                 }
+                                {mainCategoryData?.length === 0 && (
+                                    <Box className={styles.empty_state}>
+                                        <Typography className={styles.empty_title}>No forum category matched</Typography>
+                                        <Typography className={styles.empty_desc}>Try another search keyword or clear filters.</Typography>
+                                    </Box>
+                                )}
                             </Grid>
-                            <Grid item xs={isMobile ? 12 : 3.5} sx={{ display: isMobile ? 'none' : '' }}>
+                            <Grid item xs={12} sx={{ display: isMobile ? 'none' : '' }}>
                                 <Motorforums />
                                 <Topcontributer />
                                 <Communities />

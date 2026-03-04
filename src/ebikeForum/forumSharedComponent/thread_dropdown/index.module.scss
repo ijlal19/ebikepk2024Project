@@ -1,21 +1,25 @@
-.main{
+.main {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    gap: 2px;
 
-    .category_main,.subcatgegory{
+    .category_main,
+    .subcatgegory {
         width: 100%;
-        padding: 8px 0px !important;
+        padding: 8px 0 !important;
 
-        .catgegory_select,.subcatgegory_select{
+        .catgegory_select,
+        .subcatgegory_select {
             width: 100%;
-            border: 1px solid #b4b2b2;
+            box-sizing: border-box;
+            border: 1px solid #cfdde8;
             outline: none;
-            padding: 8px 0px !important;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            color: rgb(111, 106, 106);
+            padding: 10px 12px !important;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            color: #243746;
+            background: #f8fbfe;
         }
     }
 }

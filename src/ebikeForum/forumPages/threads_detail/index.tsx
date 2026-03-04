@@ -1,16 +1,12 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
 import { getthreadbyId, postthreadComment } from "@/ebikeForum/forumFunction/globalFuntions";
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
-import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
-import {isLoginUser, timeAgo} from '@/genericFunctions/geneFunc';
+import { isLoginUser, timeAgo } from '@/genericFunctions/geneFunc';
 import { useParams } from "next/navigation";
 import styles from './index.module.scss';
-import data from "../home/data";
 
 const Forum_details = () => {
     const isMobile = useMediaQuery('(max-width:768px)');
@@ -23,6 +19,16 @@ const Forum_details = () => {
     const { slug2 } = params;
     const Idnumber = Number(slug2)
 
+    const fetchthreadbyId = useCallback(async () => {
+        setIsLoading(true)
+        const getthread = await getthreadbyId(slug2)
+        setFilterThread(getthread?.data || {})
+        setIsLoading(false)
+        setTimeout(() => {
+            window.scrollTo(0, 0)
+        }, 1000);
+    }, [slug2]);
+
     useEffect(() => {
         fetchthreadbyId()
         let _isLoginUser = isLoginUser()
@@ -30,20 +36,9 @@ const Forum_details = () => {
             setIsLogin(_isLoginUser.info)
         }
         else {
-            console.log(`login data${_isLoginUser}`)
             setIsLogin("not_login")
         }
-    }, [])
-
-    const fetchthreadbyId = async () => {
-        setIsLoading(true)
-        const getthread = await getthreadbyId(slug2)
-        setFilterThread(getthread?.data)
-        setIsLoading(false)
-        setTimeout(() => {
-            window.scrollTo(0, 0)
-        }, 1000);
-    }
+    }, [fetchthreadbyId])
 
     const PostReply = async () => {
 
@@ -56,21 +51,23 @@ const Forum_details = () => {
         }
         else {
             const obj = {
-                title: '',
+                title: 'Thread Comment',
                 description: reply,
                 image: "",
                 video_url: "",
                 user_name: IsLogin?.userFullName,
                 user_id: IsLogin?.id,
                 isVerified: IsLogin?.isVerified,
+                isShow: true,
                 thread_id: Idnumber
             }
             const postcomment = await postthreadComment(obj)
-            if (postcomment) {
-                window.location.reload()
+            if (postcomment?.success) {
+                setReply("");
+                fetchthreadbyId();
             }
             else {
-                console.log("data error")
+                alert(postcomment?.msg || "Unable to post comment")
             }
         }
     }
@@ -79,8 +76,8 @@ const Forum_details = () => {
         <Box className={styles.main}>
             {
                 !isLoading ?
-                    <Grid container className={styles.forums_details_main} sx={{ display: 'flex', justifyContent: 'space-between', boxSizing: 'border-box' }}>
-                        <Grid item xs={isMobile ? 12 : 8.5} className={styles.details_box}>
+                    <Grid container className={styles.forums_details_main}>
+                        <Grid item xs={12} className={styles.details_box}>
                             <Box className={styles.user_detail_box}>
                                 <Typography className={styles.title}>{FilterThread?.title}</Typography>
                                 <Box className={styles.logo_grid}>
@@ -91,7 +88,7 @@ const Forum_details = () => {
                                     <Box className={styles.user_details_box}>
                                         <Box>
                                             <Typography className={styles.username}>{FilterThread?.user_name}</Typography>
-                                            <Typography className={styles.post_join}>1 post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {FilterThread?.createdAt.slice(0, 10)}</Typography>
+                                            <Typography className={styles.post_join}>1 post <span style={{ marginRight: '4', marginLeft: '4' }}>·</span> Joined {FilterThread?.createdAt?.slice(0, 10)}</Typography>
                                         </Box>
                                     </Box>
                                     <Typography className={styles.days_ago}>{timeAgo(FilterThread?.createdAt)}</Typography>
@@ -103,36 +100,40 @@ const Forum_details = () => {
                             {
                                 FilterThread?.Comments?.map((e: any, i: any) => {
                                     return (
-                                        <>
-                                            <Box className={styles.reply_box}>
-                                                <Box className={styles.logo_grid}>
-                                                    <Box
-                                                        className={styles.logo}>
-                                                        {e?.user_name?.slice(0, 1)}
-                                                    </Box>
-                                                    <Box className={styles.user_details_box}>
-                                                        <Box>
-                                                            <Typography className={styles.username}>{e?.user_name}</Typography>
-                                                            <Typography className={styles.post_join}>Joined {e?.createdAt.slice(0, 10)}</Typography>
-                                                        </Box>
-                                                    </Box>
-                                                    <Typography className={styles.days_ago}>{timeAgo(e?.createdAt)}</Typography>
+                                        <Box key={e?.id || i} className={styles.reply_box}>
+                                            <Box className={styles.logo_grid}>
+                                                <Box
+                                                    className={styles.logo}>
+                                                    {e?.user_name?.slice(0, 1)}
                                                 </Box>
-                                                <Box>
-                                                    <Typography className={styles.reply}>{e?.description}</Typography>
+                                                <Box className={styles.user_details_box}>
+                                                    <Box>
+                                                        <Typography className={styles.username}>{e?.user_name}</Typography>
+                                                        <Typography className={styles.post_join}>Joined {e?.createdAt?.slice(0, 10)}</Typography>
+                                                    </Box>
                                                 </Box>
+                                                <Typography className={styles.days_ago}>{timeAgo(e?.createdAt)}</Typography>
                                             </Box>
-                                        </>
+                                            <Box>
+                                                <Typography className={styles.reply}>{e?.description}</Typography>
+                                            </Box>
+                                        </Box>
                                     )
                                 })
                             }
+                            {FilterThread?.Comments?.length === 0 && (
+                                <Box className={styles.empty_replies}>
+                                    <Typography className={styles.empty_title}>No replies yet</Typography>
+                                    <Typography className={styles.empty_desc}>Drop the first reply and get the conversation rolling.</Typography>
+                                </Box>
+                            )}
                             <Box className={styles.comment_box}>
                                 <textarea name="" id="" value={reply} className={styles.textarea} onChange={(e) => setReply(e.target.value)} placeholder="Write your reply..."></textarea>
                             </Box>
                             <Button className={styles.postcmnt_btn} onClick={PostReply}>Post Reply</Button>
                         </Grid>
                         {/* ADD Grid */}
-                        <Grid item xs={isMobile ? 12 : 3.5} className={styles.side_grid} sx={{ display: isMobile ? 'none' : '' }}>
+                        <Grid item xs={12} className={styles.side_grid} sx={{ display: isMobile ? 'none' : '' }}>
                             <Motorforums />
                             <Topcontributer />
                             <Communities />

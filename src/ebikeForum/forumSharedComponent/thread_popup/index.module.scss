@@ -14,145 +14,147 @@
 
 .popup_container {
     width: 100%;
-    border-radius: 5px;
-    max-width: 430px;
-    min-width: 100px;
-    border: none !important;
+    max-width: 520px;
     box-sizing: border-box;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     outline: none;
-    @media (max-width:768px) {
-        max-width:350px;
-        padding: 0px 10px !important;
+
+    @media (max-width: 768px) {
+        max-width: 96vw;
+        padding: 0 10px !important;
     }
 
     .popup_main {
-        background-color: white;
+        background: linear-gradient(165deg, #ffffff 0%, #f6fafe 100%);
         width: 100%;
-        padding: 15px 15px 15px 15px !important;
+        padding: 16px !important;
         box-sizing: border-box;
-        border-radius: 5px;
-        
+        border-radius: 16px;
+        border: 1px solid #d9e4ec;
+        box-shadow: 0 18px 40px rgba(14, 37, 55, 0.26);
+        max-height: min(86vh, 760px);
+        overflow-y: auto;
+        overflow-x: hidden;
 
         .title_section {
             width: 100%;
-            margin: 0px auto 10px auto;
+            margin: 0 auto 10px;
             display: flex;
-            column-gap: 5px;
+            column-gap: 8px;
             box-sizing: border-box;
-            justify-content: left;
-            padding: 0px 0px !important;
 
             .logo {
-                padding: 0px 0px 0px 0px !important;
-                width: 35px;
-                height: 33px;
-                border-radius: 5px;
-                background-color: grey;
-                font-size: 20px;
-                color: white;
-                font-family: sans-serif;
+                width: 38px;
+                height: 38px;
+                border-radius: 12px;
+                background: linear-gradient(145deg, #127fc3, #0c5f93);
+                font-size: 1rem;
+                color: #ffffff;
+                font-family: 'LatoBold';
                 display: flex;
                 text-transform: capitalize;
                 justify-content: center;
                 align-items: center;
-                @media (max-width:768px) {
-                    font-size: 16px;
-                }
             }
 
             .title_input {
-                width: 95%;
-                border-radius: 5px;
-                padding: 6px;
-                background-color: #f2f2f2;
+                width: 100%;
+                box-sizing: border-box;
+                border-radius: 12px;
+                padding: 10px 12px;
+                background-color: #f5f9fc;
                 outline: none;
-                border: none;
-                color: #191500;
-                border: 1px solid #d8d6d6;
+                border: 1px solid #cfdde8;
+                color: #122636;
+                font-size: 0.9rem;
 
-            }
-
-            .title_input::placeholder {
-                color: grey;
+                &::placeholder {
+                    color: #7b8e9f;
+                }
             }
         }
 
         .message_section {
             width: 100%;
-            margin: 0px auto;
             box-sizing: border-box;
-            padding: 0px 0px 15px 0px!important;
-            border-bottom: 1px solid #c8c4c4;
+            padding: 0 0 14px !important;
+            border-bottom: 1px solid #d8e3eb;
 
             .label {
-                font-size: 18px;
-                padding: 10px 0px 0px 0px !important ;
-                font-weight: bold;
-                font-family: 'Lato';
-                letter-spacing: 1px;
-                color: #333333;
-                box-sizing: border-box;
-                
+                font-size: 0.86rem;
+                padding-top: 10px !important;
+                font-family: 'LatoBold';
+                letter-spacing: 0.2px;
+                color: #13293a;
             }
 
             .message_box {
                 width: 100%;
-                min-width: 100%;
-                box-sizing: border-box;
+                min-width: 0;
                 max-width: 100%;
-                background-color: white;
+                box-sizing: border-box;
+                background-color: #f8fbfe;
                 outline: none;
-                padding: 10px !important;
-                font-size: 14px;
-                max-height: 80px;
-                min-height: 80px;
-                border-radius: 5px;
-                margin: 5px 0px 0px 0px !important;
-                // border: none;
+                padding: 11px !important;
+                font-size: 0.84rem;
+                max-height: 140px;
+                min-height: 110px;
+                border-radius: 12px;
+                margin-top: 6px !important;
+                border: 1px solid #cfdde8;
+                resize: vertical;
+
+                &::placeholder {
+                    color: #7b8e9f;
+                }
             }
-            .tag_input{
+
+            .tag_input {
                 width: 100%;
                 box-sizing: border-box;
-                margin: 5px 0px 0px 0px;
-                padding: 6px 10px;
-                font-size: 14px;
+                margin-top: 6px;
+                padding: 9px 10px;
+                font-size: 0.84rem;
                 outline: none;
-                background-color: #f2f2f2;
-                border: none;
-                border-radius: 5px;
-                border: 1px solid #d8d6d6;
+                background-color: #f8fbfe;
+                border-radius: 10px;
+                border: 1px solid #cfdde8;
+
+                &::placeholder {
+                    color: #7b8e9f;
+                }
             }
         }
 
-        .btn_box{
+        .btn_box {
             display: flex;
             justify-content: right;
             column-gap: 10px;
-            box-sizing: border-box;
-            margin: 10px 0px 0px 0px !important;
+            margin-top: 12px !important;
 
-            .post_btn{
-                background-color: #085998;
-                color: white;
+            .post_btn {
+                background: linear-gradient(135deg, #1382ca 0%, #0f6297 100%);
+                color: #ffffff;
                 text-transform: none !important;
-                font-size: 12px;
+                font-size: 0.78rem;
                 font-family: 'LatoBold';
-                letter-spacing: 1px;
-                padding: 3px 10px 3px 10px !important;
+                letter-spacing: 0.2px;
+                padding: 8px 14px !important;
+                border-radius: 999px;
             }
-            .cancel_btn{
+
+            .cancel_btn {
                 font-family: 'LatoBold';
-                letter-spacing: 1px;
-                background-color: white;
-                border: 1px solid #3c3c3c;
-                color: #191500;
+                border: 1px solid #8fa2b0;
+                color: #243746;
                 text-transform: none !important;
-                font-size: 12px;
-                padding: 3px 10px 3px 10px!important;
+                font-size: 0.78rem;
+                padding: 8px 14px !important;
+                border-radius: 999px;
+                background-color: #ffffff;
             }
         }
     }

@@ -1,7 +1,7 @@
 const data = [
     {
         "id": 1,
-        "name": 'General Motorcycle Discussion',
+        "name": 'General eBike Discussion',
         "description": 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae unde ab aspernatur modi facere, qui nihil eius consequuntur maiores repellendus harum voluptatum! Alias placeat nam rem omnis deserunt reprehenderit laudantium inventore facere dolores, at fugit aspernatur itaque minus maiores cumque enim eveniet maxime! Ipsum soluta dicta sint dolor nulla distinctio, pariatur aspernatur, at quos possimus repellat quo quas minima atque, fugiat incidunt nihil nam natus sequi illum dolores asperiores tenetur! Facere nesciunt delectus quidem nisi consequatur dignissimos inventore, itaque magni aperiam id doloremque, placeat voluptatum enim aut veniam dolor eius blanditiis earum magnam! Consectetur delectus corporis architecto aspernatur culpa sunt omnis sapiente tenetur voluptate. Nisi quas nam nulla repudiandae quos quae necessitatibus. Velit sed voluptatum tempora nam, asperiores maiores perspiciatis ut doloremque, officia, similique ipsum rem fuga aperiam deleniti facere autem saepe laudantium at aliquam expedita suscipit? Distinctio, adipisci officiis? Hic harum in tempore ad architecto dolorum incidunt accusamus. Sint!',
         "sub_category":  [
             {
@@ -399,7 +399,7 @@ const data = [
     },
     {
         "id": 3,
-        "name": 'Motorcycle Training, Safety, and Riding Techniques',
+        "name": 'eBike Safety and Riding Techniques',
         "description": 'nsectetur adipisicing elit. Beatae unde ab aspernatur modi facere, qui nihil eius consequuntur maiores repellendus harum voluptatum! Alias placeat nam rem omnis deserunt reprehenderit laudantium inventore facere dolores, at fugit aspernatur itaque minus maiores cumque enim eveniet maxime! Ipsum soluta dicta sint dolor nulla distinctio, pariatur aspernatur, at quos possimus repellat quo quas minima atque, fugiat incidunt nihil nam natus sequi illum dolores asperiores tenetur! Facere nesciunt delectus quidem nisi consequatur dignissimos inventore, itaque magni aperiam id doloremque, placeat voluptatum enim aut veniam dolor eius blanditiis earum magnam! Consectetur delectus corporis architecto aspernatur culpa sunt omnis sapiente tenetur voluptate. Nisi quas nam nulla repudiandae quos quae necessitatibus. Velit sed voluptatum tempora nam, asperiores maiores perspiciatis ut doloremque, officia, similique ipsum rem fuga aperiam deleniti facere autem saepe laudantium at aliquam expedita suscipit? Distinctio, adipisci officiis? Hic harum in tempore ad architecto dolorum incidunt accusamus. Sint!',
         "sub_category": [
             {
@@ -907,7 +907,7 @@ const data = [
     },
     {
         "id": 5,
-        "name": 'Motorcycle Stories',
+        "name": 'eBike Stories',
         "description": 'maiorporis architecto aspernatur culpa sunt omnis sapiente tenetur voluptate. Nisi quas nam nulla repudiandae quos quae necessitatibus. Velit sed voluptatum tempora nam, asperiores maiores perspiciatis ut doloremque, officia, similique ipsum rem fuga aperiam deleniti facere autem saepe laudantium at aliquam expedita suscipit? Distinctio, adipisci officiis? Hic harum in tempore ad architecto dolorum incidunt accusamus. Sint!',
         "sub_category": [
             {

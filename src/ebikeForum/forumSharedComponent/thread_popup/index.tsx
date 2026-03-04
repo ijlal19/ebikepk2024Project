@@ -18,35 +18,44 @@ const style = {
     p: 4,
 };
 
-export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
+export default function Create_thread_popup({ open, setOpen, IsLogin, onThreadCreated }: any) {
 
     const [threadMessage, setMessage] = React.useState('')
     const [threadTitle, setTitle] = React.useState('')
     const [threadTag, setTag] = React.useState('')
-    const [MainCatge,setMainCatge]=React.useState<number | null>(null)
-    const [SubCateg,setSubCatgeId]=React.useState('')
+    const [SubCateg, setSubCatgeId] = React.useState<any>('')
     const handleClose = () => setOpen(false);
 
-    const handlePost =async () => {
-        if (!threadTitle || !threadMessage || !threadTag || !SubCateg) {
+    const handlePost = async () => {
+        if (!threadTitle || !threadMessage || !SubCateg) {
             alert('Please fill in all required fields before posting your thread.')
             return
         }
         else {
-            const obj ={
-                title:threadTitle,
-                description:threadMessage,
-                user_name:IsLogin?.userFullName,
-                image:"",
-                video_url:"",
-                user_id:IsLogin?.id,
+            const obj = {
+                title: threadTitle,
+                description: threadMessage,
+                user_name: IsLogin?.userFullName,
+                image: "",
+                video_url: "",
+                user_id: IsLogin?.id,
                 isVerified:IsLogin?.isVerified,
-                sub_categ_id:SubCateg,
-                threadTag:threadTag
+                isShow: true,
+                sub_categ_id: Number(SubCateg),
+                threadTag: threadTag
             }
             const threadPost = await postThread(obj)
-            if(threadPost){
-                window.location.reload()
+            if (threadPost?.success) {
+                setTitle("");
+                setMessage("");
+                setTag("");
+                setSubCatgeId("");
+                handleClose();
+                if (typeof onThreadCreated === "function") {
+                    onThreadCreated();
+                }
+            } else {
+                alert(threadPost?.msg || "Unable to create thread")
             }
         }
     }
@@ -61,19 +70,19 @@ export default function Create_thread_popup({ open, setOpen,IsLogin }: any) {
                 <Box className={styles.popup_container}>
                     <Box className={styles.popup_main}>
                         <Box className={styles.title_section}>
-                            <Box className={styles.logo}>{IsLogin?.userFullName?.slice(0,1)}</Box>
-                            <input type="text" className={styles.title_input} onChange={(e) => setTitle(e.target.value)} placeholder='Thread Title' />
+                            <Box className={styles.logo}>{IsLogin?.userFullName?.slice(0, 1)}</Box>
+                            <input type="text" className={styles.title_input} value={threadTitle} onChange={(e) => setTitle(e.target.value)} placeholder='Thread Title' />
                         </Box>
                         <Box className={styles.message_section}>
                             <Box>
 
                                 <label htmlFor="44" className={styles.label}>Message<span style={{ color: 'red' }}>*</span></label>
-                                <textarea name="" id="44" className={styles.message_box} onChange={(e) => setMessage(e.target.value)} placeholder='Enter Your Question!' ></textarea>
+                                <textarea name="" id="44" value={threadMessage} className={styles.message_box} onChange={(e) => setMessage(e.target.value)} placeholder='Ask your eBike question...' ></textarea>
                             </Box>
-                            <Thread_dropdown setMainCatge={setMainCatge} setSubCatgeId={setSubCatgeId} />
+                            <Thread_dropdown setSubCatgeId={setSubCatgeId} />
                             <Box>
                                 <label htmlFor="" className={styles.label}>Tags</label>
-                                <input type="text" className={styles.tag_input} onChange={(e) => setTag(e.target.value)} placeholder='Enter Youe Tags (Optional)' />
+                                <input type="text" className={styles.tag_input} value={threadTag} onChange={(e) => setTag(e.target.value)} placeholder='Add tags (optional)' />
                             </Box>
                         </Box>
                         <Box className={styles.btn_box}>

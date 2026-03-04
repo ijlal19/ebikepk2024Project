@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="620" viewBox="0 0 1800 620" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1800" y2="620" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#041827"/>
+      <stop offset="0.5" stop-color="#0A2D47"/>
+      <stop offset="1" stop-color="#073555"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22B3FF"/>
+      <stop offset="1" stop-color="#1172B8"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1430 120) rotate(130) scale(520 380)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1DB2FF" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#1DB2FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-120" y="-120" width="2040" height="860" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="32"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="620" fill="url(#bg)"/>
+  <rect width="1800" height="620" fill="url(#glow)"/>
+
+  <g opacity="0.2">
+    <path d="M0 480C220 410 350 390 560 410C750 428 840 488 1010 500C1260 520 1450 458 1800 340V620H0V480Z" fill="#0E5E94"/>
+    <path d="M0 530C180 470 420 450 640 478C850 504 970 568 1230 560C1450 553 1620 510 1800 460V620H0V530Z" fill="#073A5F"/>
+  </g>
+
+  <g opacity="0.22">
+    <circle cx="250" cy="170" r="105" stroke="#46C3FF" stroke-width="2"/>
+    <circle cx="470" cy="130" r="58" stroke="#46C3FF" stroke-width="2"/>
+    <path d="M690 98H880" stroke="#46C3FF" stroke-width="2"/>
+    <path d="M740 155H1010" stroke="#46C3FF" stroke-width="2"/>
+    <path d="M1130 190H1490" stroke="#46C3FF" stroke-width="2"/>
+  </g>
+
+  <g filter="url(#blur)" opacity="0.2">
+    <ellipse cx="1550" cy="92" rx="230" ry="120" fill="#20B1FF"/>
+  </g>
+
+  <g transform="translate(180 190)">
+    <circle cx="96" cy="196" r="62" stroke="#9ED9FF" stroke-width="10"/>
+    <circle cx="426" cy="196" r="62" stroke="#9ED9FF" stroke-width="10"/>
+    <path d="M96 196L170 196L216 140H312L350 196H426" stroke="#E5F5FF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M214 140L178 84H246L280 140" stroke="#E5F5FF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M280 92H356L384 130" stroke="#E5F5FF" stroke-width="10" stroke-linecap="round"/>
+    <path d="M246 84L224 44H276L258 78" fill="url(#accent)"/>
+    <path d="M246 84L224 44H276L258 78" stroke="#BDE7FF" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="338" y="164" width="26" height="18" rx="5" fill="#1AA5F2"/>
+  </g>
+
+  <g opacity="0.96">
+    <text x="760" y="250" fill="#E9F7FF" font-family="Segoe UI, Arial, sans-serif" font-size="64" font-weight="700">ebike Forum</text>
+    <text x="760" y="304" fill="#9FD9FF" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="500">Ride smarter. Charge better. Share your experience.</text>
+  </g>
+
+  <rect x="0" y="0" width="1800" height="620" fill="url(#bg)" opacity="0.12"/>
+</svg>
