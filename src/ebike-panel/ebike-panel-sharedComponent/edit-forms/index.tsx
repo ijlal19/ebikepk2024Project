@@ -3,7 +3,7 @@ import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBi
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { cloudinaryLoader, numericOnly } from '@/genericFunctions/geneFunc';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import FloaraTextarea from '../floaraEditiorTextarea';
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
@@ -85,6 +85,8 @@ const EditUsedBikeForm = () => {
     const [bikeData, setBikeData] = useState<any>();
 
     const { slug, slug1 } = useParams();
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
     let id = slug1
     const router = useRouter()
 
@@ -175,7 +177,7 @@ const EditUsedBikeForm = () => {
     }
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/view-classified-ads')
+        router.push(`/ebike-panel/dashboard/view-classified-ads?page=${pageFromUrl}`)
     }
 
     const handleSubmit = async (e: any) => {
@@ -234,7 +236,7 @@ const EditUsedBikeForm = () => {
         const res = await UpdateUsedBikeById(id, obj)
         if (res?.success) {
             alert('Updated Successfully')
-            router.push('/ebike-panel/dashboard/view-classified-ads')
+            router.push(`/ebike-panel/dashboard/view-classified-ads?page=${pageFromUrl}`)
         }
         else {
             alert('Something is Wrong!')
@@ -483,7 +485,7 @@ const EditNewBikeForm = () => {
         const res = await UpdateNewBikeById(slug1, finalData);
         if (res && res.success && res.info == "Bike updated") {
             alert("Bike Updated Successfully")
-            router.push('/ebike-panel/dashboard/all-new-bikes')
+            router.push(`/ebike-panel/dashboard/all-new-bikes?page=${TabNum}`)
         }
         else {
             alert('Something is Wrong!')
@@ -952,6 +954,8 @@ const EditBlogForm = () => {
     const [imageArr, setImageArr] = useState<any>([]);
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const { slug, slug1 } = useParams();
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter();
 
@@ -1080,7 +1084,7 @@ const EditBlogForm = () => {
         const res = await UpdateBlogById(slug1, obj)
         if (res && res.info == "blog updated" && res.success) {
             alert('Updated Successfully')
-            router.push('/ebike-panel/dashboard/blog-list')
+            router.push(`/ebike-panel/dashboard/blog-list?page=${pageFromUrl}`)
         }
         else {
             alert('Something is Wrong!')
@@ -1088,7 +1092,7 @@ const EditBlogForm = () => {
     };
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/blog-list')
+        router.push(`/ebike-panel/dashboard/blog-list?page=${pageFromUrl}`)
     }
 
     return (

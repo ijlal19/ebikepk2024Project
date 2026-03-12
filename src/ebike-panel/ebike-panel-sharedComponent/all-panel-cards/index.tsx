@@ -11,17 +11,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { New_header } from "../panel-header";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import Data from "./data";
 import 'swiper/css';
 
-let savedPage: any;
-let saveNewBike: any;
 let Usedbikewindowscroll: any;
 let Newbikewindowscroll: any;
+let Blogwindowscroll: any;
 let brandScroll: any;
 let AllBrandArray: any[] = [];
 
@@ -33,36 +32,31 @@ const Used_bike_card: any = () => {
     const [AllBikeForFilter, setAllBikeForFilter] = useState([]);
     const [filteredBikes, setFilteredBikes] = useState([]);
     const [totalPage, setTotalPage] = useState<any>(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [IsLoading, setIsLoading] = useState(false);
     const [AllBikeArr, setAllBikeArr] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const itemsPerPage = 12;
 
-    const router = useRouter();
-
     useEffect(() => {
-        let savedPageStr = Number(localStorage.getItem("PageUsedBike"));
-        const savedScrollStr = localStorage.getItem("UsedBikeScroll");
-        const prev_page = localStorage.getItem("prev_page");
-        savedPage = savedPageStr
+        const savedScrollStr = localStorage.getItem("PanelUsedBikeScroll");
+        const shouldRestore = localStorage.getItem("PanelUsedBikeRestore") === "1";
 
         const brandData = getSessionData("BrandsData")
         AllBrandArray = brandData
 
-        if (savedScrollStr && prev_page === 'edit-used-bike') {
-            fetchAllUsedBike(savedPage);
-            setCurrentPage(savedPage);
-            localStorage.removeItem("prev_page");
+        if (savedScrollStr && shouldRestore) {
             Usedbikewindowscroll = Number(savedScrollStr)
+            localStorage.removeItem("PanelUsedBikeRestore");
         }
-        else {
-            fetchAllUsedBike(1);
-            setCurrentPage(1);
-        }
-        setTimeout(() => {
-            localStorage.removeItem("PageUsedBike");
-        }, 1000);
+
+        fetchAllUsedBike();
     }, []);
 
     useEffect(() => {
@@ -70,8 +64,11 @@ const Used_bike_card: any = () => {
             bike.id.toString().includes(searchTerm)
         );
         setFilteredBikes(filtered);
-        setCurrentPage(savedPage || 1);
     }, [searchTerm, AllBikeForFilter]);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+    }, [initialPage]);
 
     useEffect(() => {
 
@@ -84,6 +81,7 @@ const Used_bike_card: any = () => {
 
     const handlePaginationChange = async (event: any, page: any) => {
         setCurrentPage(page);
+        router.push(`${pathname}?page=${page}`, { scroll: false });
         window.scrollTo(0, 0);
     };
 
@@ -108,13 +106,14 @@ const Used_bike_card: any = () => {
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
     };
 
     const handleEdit = (id: any) => {
-        localStorage.setItem("PageUsedBike", String(currentPage))
-        localStorage.setItem("UsedBikeScroll", window.scrollY.toString());
-        localStorage.setItem("prev_page", "edit-used-bike");
-        router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}`);
+        localStorage.setItem("PanelUsedBikeScroll", window.scrollY.toString());
+        localStorage.setItem("PanelUsedBikeRestore", "1");
+        router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}?page=${currentPage}`);
     };
 
     const handleDelete = async (id: any) => {
@@ -124,7 +123,7 @@ const Used_bike_card: any = () => {
         const res = await DeleteUsedBikeById(id);
         if (res && res?.success) {
             alert('Delete Successfully')
-            fetchAllUsedBike(currentPage);
+            fetchAllUsedBike();
         } else {
             alert("Something went wrong!");
         }
@@ -141,7 +140,7 @@ const Used_bike_card: any = () => {
         const res = await ChangeFeatured(id, obj)
         if (res && res?.info && res?.info?.indexOf("feature Ad") > -1) {
             alert('Updated Successfully ')
-            fetchAllUsedBike(savedPage || 1)
+            fetchAllUsedBike()
         }
         else {
             alert('Something is Wrong!')
@@ -159,14 +158,14 @@ const Used_bike_card: any = () => {
         const res = await ChangeApprove(id, obj)
         if (res && res?.info?.indexOf('Approve Ad') > -1) {
             alert('Updated Successfully')
-            fetchAllUsedBike(savedPage || 1)
+            fetchAllUsedBike()
         }
         else {
             alert('Something is Wrong!')
         }
     };
 
-    const fetchAllUsedBike = async (_page: any) => {
+    const fetchAllUsedBike = async () => {
         setIsLoading(true);
 
         try {
@@ -192,7 +191,6 @@ const Used_bike_card: any = () => {
             console.log("res", res1)
             if (res1 && res1?.data?.length > 0) {
                 setAllBikeForFilter(res1.data);
-                setCurrentPage(res1?.currentPage)
                 setAllBikeArr(res1?.data)
                 setTotalPage(res1?.pages)
             }
@@ -349,7 +347,7 @@ const Used_bike_card: any = () => {
                                             </div>
 
                                             <div className={styles.card_actions}>
-                                                <Link href={`/ebike-panel/dashboard/edit-classified-ads/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
+                                                <Link href={`/ebike-panel/dashboard/edit-classified-ads/${e?.id}?page=${currentPage}`} style={{ textDecoration: 'none', color: "white" }}>
                                                     <button
                                                         className={`${styles.action_btn} ${styles.edit_btn}`}
                                                         onClick={() => handleEdit(e?.id)}>
@@ -413,38 +411,31 @@ const New_bike_card = () => {
     const [filteredBikes, setFilteredBikes] = useState<any>([]);
     const [displayedBikes, setDisplayedBikes] = useState<any>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
 
     const itemsPerPage = 12;
-    const router = useRouter();
 
     useEffect(() => {
-        // const savedPage = Number(localStorage.getItem("PageNewBike"));
-        const url = new URL(window.location.href);
-        const tab = url.searchParams.get("page");
-        const tabNumber = Number(tab);
-        const savedScrollStr = localStorage.getItem("NewBikeScroll");
-        const prev_page = localStorage.getItem("prev_page");
-        saveNewBike = tabNumber
+        const savedScrollStr = localStorage.getItem("PanelNewBikeScroll");
+        const shouldRestore = localStorage.getItem("PanelNewBikeRestore") === "1";
 
         const brandData = getSessionData("BrandsData")
         AllBrandArray = brandData
 
-        if (savedScrollStr && prev_page === 'edit-new-bike' && tab) {
-            fetchAllNewBike(tabNumber);
-            setCurrentPage(tabNumber);
-            localStorage.removeItem("prev_page");
+        if (savedScrollStr && shouldRestore) {
             Newbikewindowscroll = Number(savedScrollStr)
+            localStorage.removeItem("PanelNewBikeRestore");
         }
-        else {
-            fetchAllNewBike(1);
-            setCurrentPage(1);
-        }
-        setTimeout(() => {
-            localStorage.removeItem("PageNewBike");
-        }, 1000);
+
+        fetchAllNewBike();
     }, []);
 
     useEffect(() => {
@@ -452,8 +443,11 @@ const New_bike_card = () => {
             bike.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredBikes(filtered);
-        setCurrentPage(saveNewBike || 1);
     }, [searchTerm, AllNewBikeForFilter]);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+    }, [initialPage]);
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -463,7 +457,7 @@ const New_bike_card = () => {
         console.log('res', Math.ceil(filteredBikes.length / itemsPerPage))
     }, [filteredBikes, currentPage]);
 
-    const fetchAllNewBike = async (_page: number) => {
+    const fetchAllNewBike = async () => {
         setIsLoading(true);
         try {
             const res = await getAllNewBike();
@@ -490,8 +484,8 @@ const New_bike_card = () => {
     };
 
     const handlePaginationChange = (event: any, page: any) => {
-        // localStorage.setItem("PageNewBike", String(page))
         setCurrentPage(page);
+        router.push(`${pathname}?page=${page}`, { scroll: false });
         window.scrollTo(0, 0);
     };
 
@@ -512,7 +506,7 @@ const New_bike_card = () => {
         const res = await DeleteNewBikeById(id);
         if (res && res.deleted && res.info == "successfully deleted") {
             alert('Delete Successfully')
-            fetchAllNewBike(saveNewBike || 1);
+            fetchAllNewBike();
         }
         else {
             alert('Something is Wrong!')
@@ -521,14 +515,20 @@ const New_bike_card = () => {
     };
 
     const handleEdit = (id: any) => {
-        // localStorage.setItem("PageNewBike", String(currentPage))
-        localStorage.setItem("NewBikeScroll", window.scrollY.toString());
-        localStorage.setItem("prev_page", "edit-new-bike");
+        localStorage.setItem("PanelNewBikeScroll", window.scrollY.toString());
+        localStorage.setItem("PanelNewBikeRestore", "1");
         router.push(`/ebike-panel/dashboard/edit-new-bike/${id}?page=${currentPage}`);
     };
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
+    };
+
+    const handleNavigateToAdd = () => {
+        localStorage.setItem("PanelNewBikeScroll", window.scrollY.toString());
+        localStorage.setItem("PanelNewBikeRestore", "1");
     };
 
     return (
@@ -558,7 +558,7 @@ const New_bike_card = () => {
                             </div>
                         )}
                         <button className={styles.add_new_btn}>
-                            <Link href="/ebike-panel/dashboard/add-new-bike" sx={{
+                            <Link href={`/ebike-panel/dashboard/add-new-bike?page=${currentPage}`} onClick={handleNavigateToAdd} sx={{
                                 color: "white", textDecoration: 'none'
                             }} >Add New Bike</Link></button>
                     </div>
@@ -635,16 +635,26 @@ const Blog_Card = () => {
     const [filteredBlog, setFilteredBlog] = useState([]);
     const [displayedBlog, setDisplayedBlog] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
 
 
     const itemsPerPage = 12;
-    const router = useRouter();
 
     useEffect(() => {
-        fetchAllBlog(1);
+        const savedScrollStr = localStorage.getItem("PanelBlogScroll");
+        const shouldRestore = localStorage.getItem("PanelBlogRestore") === "1";
+        if (savedScrollStr && shouldRestore) {
+            Blogwindowscroll = Number(savedScrollStr);
+            localStorage.removeItem("PanelBlogRestore");
+        }
+        fetchAllBlog();
     }, []);
 
     useEffect(() => {
@@ -652,8 +662,11 @@ const Blog_Card = () => {
             bike.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredBlog(filtered);
-        setCurrentPage(1);
     }, [searchTerm, AllBlogFilter]);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+    }, [initialPage]);
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -662,7 +675,7 @@ const Blog_Card = () => {
         setTotalPage(Math.ceil(filteredBlog.length / itemsPerPage));
     }, [filteredBlog, currentPage]);
 
-    const fetchAllBlog = async (_page: number) => {
+    const fetchAllBlog = async () => {
         setIsLoading(true);
         try {
             const res = await getAllBlog();
@@ -670,7 +683,6 @@ const Blog_Card = () => {
             if (res && res.length > 0) {
                 setAllBlogFilter(res);
                 setFilteredBlog(res);
-                setCurrentPage(_page);
             } else {
                 setAllBlogFilter([]);
                 setFilteredBlog([]);
@@ -683,12 +695,17 @@ const Blog_Card = () => {
         }
         setIsLoading(false);
         setTimeout(() => {
-            window.scrollTo(0, 0)
+            window.scrollTo({
+                top: Blogwindowscroll || 0,
+                left: 0,
+                behavior: 'smooth'
+            });
         }, 1000)
     };
 
     const handlePaginationChange = (event: any, page: any) => {
         setCurrentPage(page);
+        router.push(`${pathname}?page=${page}`, { scroll: false });
         window.scrollTo(0, 0);
     };
 
@@ -698,19 +715,27 @@ const Blog_Card = () => {
         const res = await DeleteBlogById(id);
         if (res && res.info == 'Blog has been deleted') {
             alert('Delete Successfully')
-            fetchAllBlog(currentPage);
+            fetchAllBlog();
         }
         else {
             alert('SomeThing is Wrong!')
         }
     };
 
-    const handleEditBlog = (id: any) => {
-        router.push(`/ebike-panel/dashboard/edit-blog/${id}`);
+    const handleEditBlog = () => {
+        localStorage.setItem("PanelBlogScroll", window.scrollY.toString());
+        localStorage.setItem("PanelBlogRestore", "1");
     };
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
+    };
+
+    const handleNavigateToAdd = () => {
+        localStorage.setItem("PanelBlogScroll", window.scrollY.toString());
+        localStorage.setItem("PanelBlogRestore", "1");
     };
 
     return (
@@ -741,7 +766,7 @@ const Blog_Card = () => {
                             </div>
                         )}
                         <button className={styles.add_new_btn}>
-                            <Link href="/ebike-panel/dashboard/create-blog-post" sx={{
+                            <Link href={`/ebike-panel/dashboard/create-blog-post?page=${currentPage}`} onClick={handleNavigateToAdd} sx={{
                                 color: "white", textDecoration: 'none'
                             }} >Add New Blog</Link></button>
                     </div>
@@ -810,11 +835,11 @@ const Blog_Card = () => {
                                     </div>
 
                                     <div className={styles.card_actions}>
-                                        <a href={`/ebike-panel/dashboard/edit-blog/${e?.id}`} style={{ textDecoration: 'none', color: "white" }}>
-                                            <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBlog(e?.id)}>
+                                        <Link href={`/ebike-panel/dashboard/edit-blog/${e?.id}?page=${currentPage}`} onClick={handleEditBlog} style={{ textDecoration: 'none', color: "white" }}>
+                                            <button className={`${styles.action_btn} ${styles.edit_btn}`}>
                                                 Edit
                                             </button>
-                                        </a>
+                                        </Link>
                                         <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
                                             Delete
                                         </button>
@@ -849,8 +874,14 @@ const Blog_Card = () => {
 
 /////////////////////////////////////////////////////// DEALERS CARD
 const Dealer_Card = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+
     const [totalApprovePage, setTotalApprovePage] = useState<any>(null);
-    const [currentpageapprove, setCurrentpageapprove] = useState(1);
+    const [currentpageapprove, setCurrentpageapprove] = useState(initialPage);
     const [AllApprovedDealer, setAllApprovedDealer] = useState([]);
     const [displayedApprove, setdisplayedApprove] = useState([]);
     const [HandleOpenTabs, setHandleOpenTabs] = useState(false);
@@ -860,7 +891,7 @@ const Dealer_Card = () => {
     const [FilterApprove, setFilterApprove] = useState(false);
     const [filteredDealer, setfilteredDealer] = useState([]);
     const [totalPage, setTotalPage] = useState<any>(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [IsLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -869,6 +900,27 @@ const Dealer_Card = () => {
     useEffect(() => {
         fetchAllDealers(1);
     }, []);
+
+    useEffect(() => {
+        const savedScrollStr = localStorage.getItem("PanelDealerScroll");
+        const shouldRestore = localStorage.getItem("PanelDealerRestore") === "1";
+        if (savedScrollStr && shouldRestore) {
+            window.scrollTo(0, Number(savedScrollStr));
+            localStorage.removeItem("PanelDealerRestore");
+        }
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            localStorage.setItem("PanelDealerScroll", window.scrollY.toString());
+            localStorage.setItem("PanelDealerRestore", "1");
+        };
+    }, []);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+        setCurrentpageapprove(initialPage);
+    }, [initialPage]);
     ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllDealerFilter.filter((bike: any) =>
@@ -947,11 +999,13 @@ const Dealer_Card = () => {
     const handlePaginationChange = (event: any, page: any) => {
         if (!HandleOpenTabs) {
             setCurrentPage(page);
+            router.push(`${pathname}?page=${page}`, { scroll: false });
             window.scrollTo(0, 0);
             return
         }
         else {
             setCurrentpageapprove(page);
+            router.push(`${pathname}?page=${page}`, { scroll: false });
             window.scrollTo(0, 0);
         }
     };
@@ -1007,6 +1061,9 @@ const Dealer_Card = () => {
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        setCurrentpageapprove(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
     };
 
     const handleTabs = (value: any) => {
@@ -1199,8 +1256,14 @@ const Dealer_Card = () => {
 
 ////////////////////////////////////////////////////// MECHANICS Card
 const Mechanic_Card = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+
     const [totalApprovePage, setTotalApprovePage] = useState<any>(null);
-    const [currentpageapprove, setCurrentpageapprove] = useState(1);
+    const [currentpageapprove, setCurrentpageapprove] = useState(initialPage);
     const [AllApprovedmechanic, setAllApprovedmechanic] = useState([]);
     const [displayedApprove, setdisplayedApprove] = useState([]);
     const [HandleOpenTabs, setHandleOpenTabs] = useState(false);
@@ -1210,7 +1273,7 @@ const Mechanic_Card = () => {
     const [FilterApprove, setFilterApprove] = useState(false);
     const [filteredmechanic, setfilteredmechanic] = useState([]);
     const [totalPage, setTotalPage] = useState<any>(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [IsLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -1219,6 +1282,27 @@ const Mechanic_Card = () => {
     useEffect(() => {
         fetchAllmechanics(1);
     }, []);
+
+    useEffect(() => {
+        const savedScrollStr = localStorage.getItem("PanelMechanicScroll");
+        const shouldRestore = localStorage.getItem("PanelMechanicRestore") === "1";
+        if (savedScrollStr && shouldRestore) {
+            window.scrollTo(0, Number(savedScrollStr));
+            localStorage.removeItem("PanelMechanicRestore");
+        }
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            localStorage.setItem("PanelMechanicScroll", window.scrollY.toString());
+            localStorage.setItem("PanelMechanicRestore", "1");
+        };
+    }, []);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+        setCurrentpageapprove(initialPage);
+    }, [initialPage]);
     ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllmechanicFilter.filter((bike: any) =>
@@ -1297,11 +1381,13 @@ const Mechanic_Card = () => {
     const handlePaginationChange = (event: any, page: any) => {
         if (!HandleOpenTabs) {
             setCurrentPage(page);
+            router.push(`${pathname}?page=${page}`, { scroll: false });
             window.scrollTo(0, 0);
             return
         }
         else {
             setCurrentpageapprove(page);
+            router.push(`${pathname}?page=${page}`, { scroll: false });
             window.scrollTo(0, 0);
         }
     };
@@ -1357,6 +1443,9 @@ const Mechanic_Card = () => {
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        setCurrentpageapprove(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
     };
 
     const handleTabs = (value: any) => {

@@ -3,7 +3,7 @@ import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProd
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './index.module.scss';
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from 'react';
@@ -77,6 +77,8 @@ let VideoCategoryArr = [
 ////////////////////////////////////////////////////////// ADD NEW BIKE
 const AddNewBikeForm = () => {
     let router = useRouter()
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
@@ -279,7 +281,7 @@ const AddNewBikeForm = () => {
         const res = await addNewBike(finalBikeData)
         if (res && res.success) {
             alert("Add Successfully")
-            router.push('/ebike-panel/dashboard/all-new-bikes')
+            router.push(`/ebike-panel/dashboard/all-new-bikes?page=${pageFromUrl}`)
         }
         else {
             alert('Something is Wrong!')
@@ -288,7 +290,7 @@ const AddNewBikeForm = () => {
     }
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/all-new-bikes')
+        router.push(`/ebike-panel/dashboard/all-new-bikes?page=${pageFromUrl}`)
     }
 
 
@@ -753,6 +755,8 @@ const AddBlogForm = () => {
     });
 
     let router = useRouter()
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -847,14 +851,14 @@ const AddBlogForm = () => {
         const res = await addNewBlog(finalBikeData);
         if (res?.success && res.info === "add blog success") {
             alert("Blog Add Successfully")
-            router.push('/ebike-panel/dashboard/blog-list');
+            router.push(`/ebike-panel/dashboard/blog-list?page=${pageFromUrl}`);
         } else {
             alert('Something went wrong!');
         }
     };
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/blog-list')
+        router.push(`/ebike-panel/dashboard/blog-list?page=${pageFromUrl}`)
     }
 
     return (
