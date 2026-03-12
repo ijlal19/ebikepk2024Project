@@ -1340,13 +1340,13 @@ const EditBrandForm = () => {
     const [NewFocusKeyword, setNewFocusKeyword] = useState('');
     const [NewLogoUrl, setNewLogoUrl] = useState('');
     const { slug, slug1 } = useParams();
+    const searchParams = useSearchParams();
     const [TabNum, setTabNum] = useState("1")
     const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
-        const url = new URL(window.location.href);
-        const tab = url.searchParams.get("page");
+        const tab = searchParams.get("page");
 
         if (tab !== null) {
             setTabNum(tab)
@@ -1356,7 +1356,7 @@ const EditBrandForm = () => {
         AllBrandArray = brandData
 
         fetchPageByID(slug1)
-    }, [])
+    }, [searchParams])
 
     const fetchPageByID = async (id: any) => {
         setIsLoading(true)

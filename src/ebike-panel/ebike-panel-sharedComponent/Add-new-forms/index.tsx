@@ -1460,6 +1460,8 @@ const AddBrandForm = () => {
     });
 
     let router = useRouter()
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -1489,14 +1491,14 @@ const AddBrandForm = () => {
         const res = await addNewBrand(finalBikeData);
         if (res && res?.success && res.info === "Added Successfully!") {
             alert("Brand Add Successfully")
-            router.push('/ebike-panel/dashboard/all-bike-brands?page=1');
+            router.push(`/ebike-panel/dashboard/all-bike-brands?page=${pageFromUrl}`);
         } else {
             alert('Something went wrong!');
         }
     };
 
     const goBack = () => {
-        router.push('/ebike-panel/dashboard/all-bike-brands?page=1')
+        router.push(`/ebike-panel/dashboard/all-bike-brands?page=${pageFromUrl}`)
     }
 
     return (

@@ -1810,32 +1810,31 @@ const AllBrands_Card = () => {
     const [filteredAllBrands, setfilteredAllBrands] = useState([]);
     const [displayedAllBrands, setdisplayedAllBrands] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
+    const router = useRouter()
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+
+    const [currentPage, setCurrentPage] = useState(initialPage);
     const [totalPage, setTotalPage] = useState<any>(null);
     const [IsLoading, setIsLoading] = useState(false);
-    const [BrandName, setBrandName] = useState<any>("")
     const itemsPerPage = 8;
-    const router = useRouter()
     useEffect(() => {
-        const savedScrollStr = localStorage.getItem("BrandScroll");
-        const url = new URL(window.location.href);
-        const tab = url.searchParams.get("page");
-        const SingleBrandName = url.searchParams.get("brand");
-        setBrandName(SingleBrandName)
-
-        if (tab !== null) {
-            const tabNumber = Number(tab);
-
-            if (!isNaN(tabNumber)) {
-                brandScroll = Number(savedScrollStr) || 0;
-                fetchAllBrands(tabNumber);
-            }
+        const savedScrollStr = localStorage.getItem("PanelBrandScroll");
+        const shouldRestore = localStorage.getItem("PanelBrandRestore") === "1";
+        if (savedScrollStr && shouldRestore) {
+            brandScroll = Number(savedScrollStr) || 0;
+            localStorage.removeItem("PanelBrandRestore");
         } else {
             brandScroll = 0;
-            fetchAllBrands(1);
         }
-
+        fetchAllBrands(initialPage);
     }, []);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+    }, [initialPage]);
 
 
     useEffect(() => {
@@ -1843,7 +1842,6 @@ const AllBrands_Card = () => {
             bike?.brandName?.toLowerCase().includes(searchTerm.toLowerCase())
         );
         setfilteredAllBrands(filtered);
-        setCurrentPage(1);
     }, [searchTerm]);
 
     useEffect(() => {
@@ -1879,6 +1877,7 @@ const AllBrands_Card = () => {
 
     const handlePaginationChange = (event: any, page: any) => {
         setCurrentPage(page);
+        router.push(`${pathname}?page=${page}`, { scroll: false });
         window.scrollTo(0, 0);
     };
 
@@ -1897,11 +1896,18 @@ const AllBrands_Card = () => {
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
     };
 
-    const handleEditBrand = (e: any) => {
-        localStorage.setItem("BrandScroll", window.scrollY.toString());
-        router.push(`/ebike-panel/dashboard/edit-brand/${e?.id}?page=${currentPage}&brand=${e?.brandName}`);
+    const handleEditBrand = () => {
+        localStorage.setItem("PanelBrandScroll", window.scrollY.toString());
+        localStorage.setItem("PanelBrandRestore", "1");
+    };
+
+    const handleNavigateToAdd = () => {
+        localStorage.setItem("PanelBrandScroll", window.scrollY.toString());
+        localStorage.setItem("PanelBrandRestore", "1");
     };
 
     const [open, setOpen] = useState(false);
@@ -1940,7 +1946,7 @@ const AllBrands_Card = () => {
                             </div>
                         )}
                         <button className={styles.add_new_btn}>
-                            <Link href="/ebike-panel/dashboard/add-new-brand" sx={{
+                            <Link href={`/ebike-panel/dashboard/add-new-brand?page=${currentPage}`} onClick={handleNavigateToAdd} sx={{
                                 color: "white", textDecoration: 'none'
                             }} >Add New Brand</Link></button>
                     </div>
@@ -1970,7 +1976,7 @@ const AllBrands_Card = () => {
                                         <td className={styles.td_action}>
                                             <div className={styles.card_actions}>
                                                 <Link href={`/ebike-panel/dashboard/edit-brand/${e?.id}?page=${currentPage}&brand=${e?.brandName}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
-                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEditBrand(e)}>
+                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={handleEditBrand}>
                                                         Edit
                                                     </button>
                                                 </Link>
