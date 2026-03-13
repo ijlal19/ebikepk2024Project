@@ -1,7 +1,7 @@
 'use client';
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
-import { getthreadbyId, postthreadComment } from "@/ebikeForum/forumFunction/globalFuntions";
+import { getthreadbyId, incrementForumView, postthreadComment } from "@/ebikeForum/forumFunction/globalFuntions";
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
 import { isLoginUser, timeAgo } from '@/genericFunctions/geneFunc';
@@ -14,6 +14,7 @@ const Forum_details = () => {
     const [FilterThread, setFilterThread] = useState<any>();
     const [IsLogin, setIsLogin] = useState<any>('not_login')
     const [reply, setReply] = useState('')
+    const hasTrackedThreadView = useRef(false);
 
     const params = useParams();
     const { slug2 } = params;
@@ -39,6 +40,23 @@ const Forum_details = () => {
             setIsLogin("not_login")
         }
     }, [fetchthreadbyId])
+
+    useEffect(() => {
+        if (!FilterThread?.id || Number(FilterThread.id) !== Idnumber || hasTrackedThreadView.current) {
+            return;
+        }
+
+        hasTrackedThreadView.current = true;
+        incrementForumView("thread", FilterThread);
+    }, [FilterThread, Idnumber]);
+
+    const handleCommentView = async (commentInfo: any) => {
+        if (!commentInfo?.id) {
+            return;
+        }
+
+        await incrementForumView("comment", commentInfo);
+    }
 
     const PostReply = async () => {
 
@@ -100,7 +118,11 @@ const Forum_details = () => {
                             {
                                 FilterThread?.Comments?.map((e: any, i: any) => {
                                     return (
-                                        <Box key={e?.id || i} className={styles.reply_box}>
+                                        <Box
+                                            key={e?.id || i}
+                                            className={styles.reply_box}
+                                            onClick={() => handleCommentView(e)}
+                                        >
                                             <Box className={styles.logo_grid}>
                                                 <Box
                                                     className={styles.logo}>

@@ -1,6 +1,6 @@
 import PermIdentityOutlinedIcon from '@mui/icons-material/PermIdentityOutlined';
 import { isLoginUser } from '@/genericFunctions/geneFunc';
-import { getAllThreadComments, getAllthread, getMainCategory } from '@/ebikeForum/forumFunction/globalFuntions';
+import { getAllThreadComments, getAllthread, getCurrentForumViews, getMainCategory } from '@/ebikeForum/forumFunction/globalFuntions';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button, Typography } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -184,8 +184,8 @@ const Topforums = () => {
             const threads = Array.isArray(res?.data) ? res.data : [];
             const sorted = [...threads]
                 .sort((a: any, b: any) => {
-                    const aViews = a?.ViewCount?.[0]?.count || 0;
-                    const bViews = b?.ViewCount?.[0]?.count || 0;
+                    const aViews = getCurrentForumViews(a);
+                    const bViews = getCurrentForumViews(b);
                     const aComments = Array.isArray(a?.Comments) ? a.Comments.length : 0;
                     const bComments = Array.isArray(b?.Comments) ? b.Comments.length : 0;
                     return (bViews + bComments) - (aViews + aComments);
@@ -204,7 +204,7 @@ const Topforums = () => {
                 {
                     topForums?.map((e: any, i: any) => {
                         const commentsCount = Array.isArray(e?.Comments) ? e.Comments.length : 0;
-                        const viewsCount = e?.ViewCount?.[0]?.count || 0;
+                        const viewsCount = getCurrentForumViews(e);
                         return (<Box key={e?.id || i}>
                             <Typography className={styles.top_forums_title}>{e?.title}</Typography>
                             <Typography className={styles.top_forums_analys}>

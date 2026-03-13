@@ -1,6 +1,6 @@
 'use client'
 import { Communities, Motorforums, Topcontributer } from "@/ebikeForum/forumSharedComponent/motrocycle_forums";
-import { getMainCategory, ViewCountAdd } from "@/ebikeForum/forumFunction/globalFuntions";
+import { getCurrentForumViews, getMainCategory, incrementForumView } from "@/ebikeForum/forumFunction/globalFuntions";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import Loader from "@/ebikeForum/forumSharedComponent/loader/loader";
@@ -40,7 +40,7 @@ const Home = () => {
                     return new Date(b?.createdAt || 0).getTime() - new Date(a?.createdAt || 0).getTime();
                 }
                 if (sortType === "top") {
-                    return (b?.ViewCount?.[0]?.count || 0) - (a?.ViewCount?.[0]?.count || 0);
+                    return getCurrentForumViews(b) - getCurrentForumViews(a);
                 }
                 return 0;
             });
@@ -59,24 +59,8 @@ const Home = () => {
         fetchMainCategory()
     }, [fetchMainCategory])
 
-    const handleRoute = async (subCateginfo: any, mainCateginfo: any) => {
-        const mainViews = mainCateginfo?.ViewCount?.[0]?.count || 0;
-        const subViews = subCateginfo?.ViewCount?.[0]?.count || 0;
-
-        const mainCountObj = {
-            main_categ_id: mainCateginfo?.id,
-            count: mainViews + 1,
-        }
-
-        await ViewCountAdd(mainCountObj)
-
-        if (subCateginfo) {
-            const subCountObj = {
-                sub_categ_id: subCateginfo.id,
-                count: subViews + 1,
-            }
-            await ViewCountAdd(subCountObj)
-        }
+    const handleRoute = async (subCateginfo: any) => {
+        await incrementForumView("sub", subCateginfo);
 
         var name = subCateginfo.name;
         name = name.replace(/\s+/g, '-');
@@ -114,13 +98,13 @@ const Home = () => {
                                                             <Grid item xs={10} md={11} className={styles.card_main}>
                                                                 <Grid container>
                                                                     <Grid item xs={12} md={8} className={styles.card_details}>
-                                                                        <Typography className={styles.card_title} onClick={() => handleRoute(data, e)}>{data?.name}</Typography>
+                                                                        <Typography className={styles.card_title} onClick={() => handleRoute(data)}>{data?.name}</Typography>
                                                                         <Typography className={styles.card_desc} sx={{ display: isMobile ? 'none' : '' }}>{data?.description}</Typography>
                                                                     </Grid>
 
                                                                     <Grid item xs={12} md={4} className={styles.card_analys}>
                                                                         <Typography className={styles.view_box}>
-                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />{data?.ViewCount?.[0]?.count || 0}</span></Typography>
+                                                                            <span className={styles.view_box_inner}><VisibilityOutlinedIcon className={styles.analys_icon} />{getCurrentForumViews(data)}</span></Typography>
                                                                         <Typography className={styles.timeago}>{timeAgo(data?.createdAt)}</Typography>
                                                                     </Grid>
                                                                 </Grid>

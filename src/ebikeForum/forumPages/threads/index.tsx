@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
-import { getSubCatgeorybyId, ViewCountAdd } from '@/ebikeForum/forumFunction/globalFuntions';
+import { getCurrentForumViews, getSubCatgeorybyId } from '@/ebikeForum/forumFunction/globalFuntions';
 import { Motorforums, Topforums } from '../../forumSharedComponent/motrocycle_forums/index'
 import Create_thread_popup from '@/ebikeForum/forumSharedComponent/thread_popup';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
@@ -46,7 +46,7 @@ function Allforums() {
                     return new Date(b?.createdAt || 0).getTime() - new Date(a?.createdAt || 0).getTime();
                 }
                 if (sortType === "top") {
-                    return (b?.ViewCount?.[0]?.count || 0) - (a?.ViewCount?.[0]?.count || 0);
+                    return getCurrentForumViews(b) - getCurrentForumViews(a);
                 }
                 return 0;
             });
@@ -85,15 +85,7 @@ function Allforums() {
         }
     }
 
-    const handleRoute = async (Threadinfo: any) => {
-        const threadcount =
-        {
-            thread_id: Threadinfo.id,
-            count: (Threadinfo?.ViewCount?.[0]?.count || 0) + 1
-        }
-
-        await ViewCountAdd(threadcount)
-
+    const handleRoute = (Threadinfo: any) => {
         var title = Threadinfo.title;
         title = title.replace(/\s+/g, '-');
         var lowerTitle = title.toLowerCase();
@@ -137,7 +129,7 @@ function Allforums() {
                                                     <Grid item xs={12} md={4} className={styles.card_analys}>
                                                                     <Typography className={styles.view_box}>
                                                                         <span className={styles.view_box_inner}>
-                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {e?.ViewCount?.[0]?.count || 0}
+                                                                            <VisibilityOutlinedIcon className={styles.analys_icon} /> {getCurrentForumViews(e)}
                                                                         </span>
                                                                     </Typography>
                                                         <Typography className={styles.timeago}>{timeAgo(e?.createdAt)}</Typography>

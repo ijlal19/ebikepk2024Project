@@ -53,7 +53,7 @@ const Header = () => {
 
     return (
         <Box className={styles.banner_box}>
-            <img src="/images/forum/ebike-forum-banner.svg" alt="ebike forum banner" className={styles.image} />
+            <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1773120019/1.jpg_4_rgclgp.jpg" alt="ebike forum banner" className={styles.image} />
             <Box className={styles.header_main}>
                 <Box className={styles.header_container}>
                     <Box className={styles.content_box}>
