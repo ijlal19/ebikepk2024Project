@@ -5,6 +5,7 @@ import { DealerInPakistan } from './dealer-in-pakistan';
 import { FeatureDelers } from './feature-dealers';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import { getMechanicTypeFilterOptions, matchesMechanicType } from '@/constants/mechanicType';
 
 type DealerComp = {
   featuredDelaer: any;
@@ -16,6 +17,7 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
   const [allDealers, setAllDealers] = useState([])
   const [featuredDealers, setFeaturedDealers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all")
 
   useEffect(() => {
     fetchInfo()
@@ -71,9 +73,27 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
          </>
           : 
           <>
-            {featuredDealers?.length > 0 ? <FeatureDelers featuredDealers={featuredDealers}/> : "" }
-            {allDealers?.length > 0 ? <DealerInPakistan dealers={allDealers}  /> : "" }
-            { featuredDealers?.length == 0 &&  allDealers?.length == 0 ? <p className={styles.noData} > No Dealer Data Found </p> : "" }
+            <div className={styles.filter_bar}>
+              <span className={styles.filter_label}>Dealer Type</span>
+              <div className={styles.filter_tabs}>
+                {getMechanicTypeFilterOptions("dealer").map((option) => {
+                  const isActive = selectedType === option.value;
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setSelectedType(option.value)}
+                      className={`${styles.filter_tab} ${isActive ? styles.filter_tab_active : ""}`}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {featuredDealers.filter((item: any) => matchesMechanicType(item, selectedType)).length > 0 ? <FeatureDelers featuredDealers={featuredDealers.filter((item: any) => matchesMechanicType(item, selectedType))} selectedType={selectedType} /> : "" }
+            {allDealers.filter((item: any) => matchesMechanicType(item, selectedType)).length > 0 ? <DealerInPakistan dealers={allDealers.filter((item: any) => matchesMechanicType(item, selectedType))} selectedType={selectedType} /> : "" }
+            { featuredDealers.filter((item: any) => matchesMechanicType(item, selectedType)).length == 0 &&  allDealers.filter((item: any) => matchesMechanicType(item, selectedType)).length == 0 ? <p className={styles.noData} > No Dealer Data Found </p> : "" }
           </>
       }
     </div>

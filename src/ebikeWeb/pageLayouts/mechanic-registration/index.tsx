@@ -7,6 +7,7 @@ import { numericOnly } from "@/genericFunctions/geneFunc";
 import { createmechanic } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CcArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
 import {isLoginUser} from "@/genericFunctions/geneFunc";
+import { getMechanicTypeFilterOptions } from '@/constants/mechanicType';
 
 
 const MechanicRegistration = () => {
@@ -18,6 +19,7 @@ const MechanicRegistration = () => {
   const [Phone, setPhone] = useState('');
   const [Phone2, setPhone2] = useState('');
   const [Address, setAddress] = useState('');
+  const [mechanicType, setMechanicType] = useState('1');
   const [isAggreed, setIsAggreed] = useState(false)
   const [customer, setCustomer]  = useState<any>('not_login')
 
@@ -45,6 +47,8 @@ const MechanicRegistration = () => {
           setPhone(value);
       } else if (field === 'other-number') {
         setPhone2(value);
+      } else if (field === 'mechanic-type') {
+        setMechanicType(value);
       }
   };
 
@@ -79,6 +83,10 @@ const MechanicRegistration = () => {
           alert("Please add Address")
           return
       }  
+      else if(!mechanicType) {
+          alert("Please select mechanic type")
+          return
+      }
       
       let _phone = Phone
       while(_phone.charAt(0) === '0')
@@ -93,6 +101,7 @@ const MechanicRegistration = () => {
           "phone":Phone,
           "phone2":Phone2,
           "address": Address,
+          "mechanic_type": Number(mechanicType),
           "uid": customer?.id,
           "requestedForFeatured": false
       }
@@ -146,6 +155,26 @@ const MechanicRegistration = () => {
                 </div>
 
                 <div className={styles.dropdown_div2}>
+                    <div className={styles.dropdown_main2}>
+                        <Typography>
+                            <label htmlFor="mechanicType" className={styles.inputs_label}>Mechanic Type*</label>
+                        </Typography>
+                        <Typography>
+                            <select
+                                name=""
+                                id="mechanicType"
+                                className={styles.section_main}
+                                value={mechanicType}
+                                onChange={(e) => handleChange('mechanic-type', e.target.value)}
+                            >
+                                {getMechanicTypeFilterOptions("mechanic").filter((option) => option.value !== "all").map((option) => (
+                                    <option key={option.value} value={option.value} className={styles.drop_option}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </Typography>
+                    </div>
 
                     <div className={styles.dropdown_main2}>
                         <Typography>
@@ -200,4 +229,3 @@ const MechanicRegistration = () => {
  };
 
 export default MechanicRegistration;
-

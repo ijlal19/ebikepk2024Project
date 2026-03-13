@@ -15,6 +15,7 @@ import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-
 import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/UsedBikecard';
 import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike-section';
 import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
+import { getMechanicTypeLabel } from '@/constants/mechanicType';
 
 const AdsArray = [
     {
@@ -46,7 +47,7 @@ const AdsArray = [
 ]
 
 
-export const DealerInPakistan = ({ dealers }: any) => {
+export const DealerInPakistan = ({ dealers, selectedType = "all" }: any) => {
     console.log("Datacheck", dealers);
     const [filteredResults, setFilteredResults] = useState(dealers);
     const [isFilterApply, setisFilterApply] = useState(false);
@@ -141,7 +142,7 @@ export const DealerInPakistan = ({ dealers }: any) => {
                     }
                     <div className={styles.inner_box}>
                         <div className={styles.heading_box}>
-                            <p className={styles.showrooms_heading}>Bike Showrooms / Dealers in Pkaistan</p>
+                            <p className={styles.showrooms_heading}>{selectedType === "all" ? "Bike Showrooms / Dealers in Pkaistan" : `${getMechanicTypeLabel(selectedType, "dealer")} in Pakistan`}</p>
                             <div className={styles.search_box}>
                                 {
                                     isMobile ?

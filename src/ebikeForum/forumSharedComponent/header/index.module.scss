@@ -22,6 +22,7 @@
         width: 100%;
         height: clamp(200px, 32vw, 360px);
         object-fit: cover;
+        object-position: top center;
         filter: saturate(1.08) contrast(1.02);
         display: block;
     }

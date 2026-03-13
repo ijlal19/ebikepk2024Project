@@ -236,7 +236,6 @@ function GetFavouriteObject(userId: any, PageFrom: string, SelectedAds: any, adI
 }
 
 function cloudinaryLoader(src:any, width:any, quality:any) {
-  console.log('src', src)
     if (!src?.startsWith("http")) {
       return src 
     }

@@ -903,6 +903,16 @@
                     border: 1px solid #75737384;
                     height: 35px;
 
+                    .filter_select {
+                        border: none;
+                        border-right: 1px solid #d1d1d1;
+                        padding: 0 10px;
+                        background: white;
+                        outline: none;
+                        font-size: 13px;
+                        min-width: 170px;
+                    }
+
                     .input {
                         width: 200px;
                         min-width: 100px;
@@ -1368,6 +1378,16 @@
                     border-radius: 5px;
                     border: 1px solid #75737384;
                     height: 35px;
+
+                    .filter_select {
+                        border: none;
+                        border-right: 1px solid #d1d1d1;
+                        padding: 0 10px;
+                        background: white;
+                        outline: none;
+                        font-size: 13px;
+                        min-width: 170px;
+                    }
 
                     .input {
                         width: 200px;

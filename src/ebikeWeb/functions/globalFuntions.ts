@@ -291,7 +291,7 @@ function getSingleMechanicsDetails(id: any) {
 }
 
 function getSimilarMechanics(id: any) {
-    return fetch(Gconfig.ebikeApi + `dealer/dealer-by-brand/${id}`, {
+    return fetch(Gconfig.ebikeApi + `mechanic/mechanic-by-brand/${id}`, {
         method: 'GET',
         headers: { "Content-Type": "application/json" },
     })

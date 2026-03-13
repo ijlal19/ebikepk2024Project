@@ -7,6 +7,7 @@ import {isLoginUser } from '@/genericFunctions/geneFunc';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
+import { getMechanicTypeFilterOptions } from '@/constants/mechanicType';
 
 const DealerRegistration = () => {
 
@@ -17,6 +18,7 @@ const DealerRegistration = () => {
   const [Phone, setPhone] = useState('');
   const [Phone2, setPhone2] = useState('');
   const [Address, setAddress] = useState('');
+  const [mechanicType, setMechanicType] = useState('1');
   const [customer, setCustomer]  = useState<any>('not_login')
 
   useEffect(() => {
@@ -43,6 +45,8 @@ const DealerRegistration = () => {
           setPhone(value);
       } else if (field === 'other-number') {
         setPhone2(value);
+      } else if (field === 'mechanic-type') {
+        setMechanicType(value);
       }
   };
 
@@ -77,6 +81,10 @@ const DealerRegistration = () => {
           alert("Please add Address")
           return
       }  
+      else if(!mechanicType) {
+          alert("Please select dealer type")
+          return
+      }
       
       let _phone = Phone
       while(_phone.charAt(0) === '0')
@@ -91,6 +99,7 @@ const DealerRegistration = () => {
           "phone":Phone,
           "phone2":Phone2,
           "address": Address,
+          "mechanic_type": Number(mechanicType),
           "uid": customer?.id,
           "requestedForFeatured": false
       }
@@ -144,6 +153,26 @@ const DealerRegistration = () => {
                 </div>
 
                 <div className={styles.dropdown_div2}>
+                    <div className={styles.dropdown_main2}>
+                        <Typography>
+                            <label htmlFor="dealerType" className={styles.inputs_label}>Dealer Type*</label>
+                        </Typography>
+                        <Typography>
+                            <select
+                                name=""
+                                id="dealerType"
+                                className={styles.section_main}
+                                value={mechanicType}
+                                onChange={(e) => handleChange('mechanic-type', e.target.value)}
+                            >
+                                {getMechanicTypeFilterOptions("dealer").filter((option) => option.value !== "all").map((option) => (
+                                    <option key={option.value} value={option.value} className={styles.drop_option}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        </Typography>
+                    </div>
 
                     <div className={styles.dropdown_main2}>
                         <Typography>
@@ -198,4 +227,3 @@ const DealerRegistration = () => {
  };
 
 export default DealerRegistration;
-

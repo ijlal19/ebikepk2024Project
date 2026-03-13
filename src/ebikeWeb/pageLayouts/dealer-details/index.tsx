@@ -9,6 +9,7 @@ import { useMediaQuery } from '@mui/material';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { cloudinaryLoader } from "@/genericFunctions/geneFunc";
+import { getMechanicTypeLabel, matchesMechanicType } from '@/constants/mechanicType';
 
 const DealerDetails = () => {
   const [dealersDetails, setDealerDetails]: any = useState([])
@@ -37,12 +38,14 @@ const DealerDetails = () => {
       if (res.brand_id) {
         let res1 = await getSimilarDealers(res.brand_id)
         if (res1) {
-          res1?.dealers?.map((e: any, i: any) => {
+          const similarItems = Array.isArray(res1?.dealers) ? res1.dealers : [];
+          const filteredItems = similarItems.filter((item: any) => item?.id !== res?.id && matchesMechanicType(item, Number(res?.mechanic_type) === 2 ? 2 : 1));
+          filteredItems?.forEach((e: any) => {
             if (e?.phone?.charAt(0) != '0') {
               e.phone = '0' + e.phone
             }
-            setSimilarDealers(res1.dealers)
           })
+          setSimilarDealers(filteredItems)
         }
         setIsLoading(false)
         setTimeout(() => {
@@ -77,7 +80,7 @@ const DealerDetails = () => {
                       <div className={styles.main_card_details}>
                         <p className={styles.shop_name}>{dealersDetails?.shop_name}</p>
                         <p className={styles.address}><BadgeIcon
-                          className={styles.icon} />Dealer in - {dealersDetails?.city?.city_name}</p>
+                          className={styles.icon} />{getMechanicTypeLabel(dealersDetails?.mechanic_type, "dealer")} in - {dealersDetails?.city?.city_name}</p>
                         <p className={styles.full_address}><LocationOnIcon
                           className={styles.icon} />{dealersDetails?.address}</p>
                         <p className={styles.phone}><PhoneIcon
@@ -144,4 +147,3 @@ const DealerDetails = () => {
 };
 
 export default DealerDetails;
-

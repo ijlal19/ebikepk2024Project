@@ -9,6 +9,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { getSimilarMechanics, getSingleMechanicsDetails } from '@/ebikeWeb/functions/globalFuntions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import { getMechanicTypeLabel, matchesMechanicType } from '@/constants/mechanicType';
 
 const MechanicsDetails = () => {
   
@@ -37,12 +38,14 @@ const MechanicsDetails = () => {
       if(res.brand_id) {
         let res1 = await getSimilarMechanics(res.brand_id)
         if(res1){
-          res1?.dealers?.map((e:any, i:any)=>{
+          const similarItems = Array.isArray(res1?.mechanics) ? res1.mechanics : Array.isArray(res1?.dealers) ? res1.dealers : [];
+          const filteredItems = similarItems.filter((item: any) => item?.id !== res?.id && matchesMechanicType(item, Number(res?.mechanic_type) === 2 ? 2 : 1));
+          filteredItems?.forEach((e:any)=>{
             if(e?.phone?.charAt(0) != '0'){
               e.phone = '0'+e.phone
             }
-            setSimilarMechanics(res1.dealers)
           })
+          setSimilarMechanics(filteredItems)
         }
         setIsLoading(false)
        setTimeout(() => {
@@ -55,7 +58,7 @@ const MechanicsDetails = () => {
     var shop_name = bike.shop_name;
     shop_name = shop_name.replace(/\s+/g, '-');
     var lowerTitle = shop_name.toLowerCase();
-    router.push(`/dealers/${lowerTitle}/${bike.id}`)
+    router.push(`/mechanics/${lowerTitle}/${bike.id}`)
 }
 
 const isMobile = useMediaQuery('(max-width:562px)')
@@ -76,7 +79,7 @@ const isMobile = useMediaQuery('(max-width:562px)')
             <div className={styles.main_card_details}>
               <p className={styles.shop_name}>{MechanicsDetails?.shop_name}</p>
               <p className={styles.address}><BadgeIcon
-              className={styles.icon}/>Mechanic in - {MechanicsDetails?.city?.city_name}</p>
+              className={styles.icon}/>{getMechanicTypeLabel(MechanicsDetails?.mechanic_type, "mechanic")} in - {MechanicsDetails?.city?.city_name}</p>
               <p className={styles.full_address}><LocationOnIcon
               className={styles.icon}/>{MechanicsDetails?.address}</p>
               <p className={styles.phone}><PhoneIcon

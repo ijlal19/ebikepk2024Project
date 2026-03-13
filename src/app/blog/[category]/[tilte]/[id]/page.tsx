@@ -1,7 +1,7 @@
 import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index'
 import { Metadata } from 'next'
 import { getSingleBlogData,  } from '@/ebikeWeb/functions/globalFuntions'
-import {cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import { DEFAULT_SHARE_IMAGE, resolveBlogShareImage, trimText } from '@/app/metadata-utils';
 type Props = {
   params: { id: string }
 }
@@ -10,8 +10,14 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const blog = await getSingleBlogData(params.id)
+  const title = blog?.blogTitle ? `${blog.blogTitle} | ebike.pk` : "Blog | ebike.pk";
+  const description = trimText(blog?.meta_description || blog?.bloghtml || blog?.blogDescription, 170);
 
   const handleRoute = (blogInfo: any) => {
+    if (!blogInfo) {
+      return `https://www.ebike.pk/blog`;
+    }
+
     var title = blogInfo.blogTitle;
     title = title.replace(/\s+/g, '-');
     var lowerTitle = title.toLowerCase();
@@ -19,19 +25,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
      return `https://www.ebike.pk/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
   };
 
-  const ogImage = cloudinaryLoader(
-    blog?.featuredImage?.split(' #$# ')[0]?.trim(),
-    1200,
-    'auto'
-  )
+  const ogImage = resolveBlogShareImage(blog?.featuredImage) || DEFAULT_SHARE_IMAGE;
 
   return {
-    title: `${blog?.blogTitle} | ebike.pk`,
-    description: blog?.meta_description,
+    title,
+    description,
+    alternates: {
+      canonical: handleRoute(blog)
+    },
 
     openGraph: {
-      title: `${blog?.blogTitle} | ebike.pk`,
-      description: blog?.meta_description,
+      title,
+      description,
       url: handleRoute(blog),
       siteName: 'ebike.pk',
       images: [
@@ -47,8 +52,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     twitter: {
       card: 'summary_large_image',
-      title: blog?.blogTitle,
-      description: blog?.meta_description,
+      title,
+      description,
       images: [ogImage],
     },
   }

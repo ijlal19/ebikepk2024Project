@@ -3,6 +3,7 @@ import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, C
 import { AddForumMainCategory, AddForumThread, AddForumThreadComment, AddShopBrandPopup, BasicModal, EditForumMainCategory, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
 import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
+import { getMechanicTypeFilterOptions, getMechanicTypeLabel, matchesMechanicType } from "@/constants/mechanicType";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";
 import { CityArr } from "@/ebikeWeb/constants/globalData";
 import { Grid, Link, Pagination } from "@mui/material";
@@ -894,6 +895,7 @@ const Dealer_Card = () => {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [IsLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all");
 
     const itemsPerPage = 10;
 
@@ -924,11 +926,11 @@ const Dealer_Card = () => {
     ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllDealerFilter.filter((bike: any) =>
-            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase()) && matchesMechanicType(bike, selectedType)
         );
         setfilteredDealer(filtered);
         setCurrentPage(1);
-    }, [searchTerm, AllDealerFilter]);
+    }, [searchTerm, AllDealerFilter, selectedType]);
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -947,11 +949,11 @@ const Dealer_Card = () => {
 
     useEffect(() => {
         const filtered = AllApprovedDealer.filter((bike: any) =>
-            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase())
+            bike.shop_name.toLowerCase().includes(searchTerm.toLowerCase()) && matchesMechanicType(bike, selectedType)
         );
         setApprovefiltered(filtered);
         setCurrentpageapprove(1);
-    }, [searchTerm, AllApprovedDealer]);
+    }, [searchTerm, AllApprovedDealer, selectedType]);
 
     const fetchAllDealers = async (_page: number) => {
         setIsLoading(true);
@@ -1088,6 +1090,15 @@ const Dealer_Card = () => {
                                 <button className={`${styles.btn} ${HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('showdisapprove')} >DISAPPROVE</button>
                             </div>
                             <form className={styles.input_box}>
+                                <select
+                                    value={selectedType}
+                                    onChange={(e) => setSelectedType(e.target.value === "all" ? "all" : Number(e.target.value) as 1 | 2)}
+                                    className={styles.filter_select}
+                                >
+                                    {getMechanicTypeFilterOptions("dealer").map((option) => (
+                                        <option key={option.value} value={option.value}>{option.label}</option>
+                                    ))}
+                                </select>
                                 <input
                                     type="text"
                                     value={searchTerm}
@@ -1116,6 +1127,7 @@ const Dealer_Card = () => {
                                             <thead className={styles.thead}>
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Type</th>
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
@@ -1131,6 +1143,7 @@ const Dealer_Card = () => {
                                                                     <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{getMechanicTypeLabel(e?.mechanic_type, "dealer")}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
                                                                 <td className={styles.td} ><button
                                                                     className={`${styles.action_btn} ${styles.disapprove_btn}`}
@@ -1174,6 +1187,7 @@ const Dealer_Card = () => {
                                                 {/* <th className={styles.th} >ID</th> */}
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Type</th>
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
@@ -1189,6 +1203,7 @@ const Dealer_Card = () => {
                                                                     <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{getMechanicTypeLabel(e?.mechanic_type, "dealer")}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
                                                                 {/* <td className={styles.td} >{e?.is_approved? "True" : "False"}/{e?.is_featured?"True":"False"}</td> */}
                                                                 <td className={styles.td} ><button
@@ -1276,6 +1291,7 @@ const Mechanic_Card = () => {
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [IsLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all");
 
     const itemsPerPage = 10;
 
@@ -1306,11 +1322,11 @@ const Mechanic_Card = () => {
     ///////////////////////////////////////////// For Approved
     useEffect(() => {
         const filtered = AllmechanicFilter.filter((bike: any) =>
-            bike?.shop_name?.toLowerCase().includes(searchTerm.toLowerCase())
+            bike?.shop_name?.toLowerCase().includes(searchTerm.toLowerCase()) && matchesMechanicType(bike, selectedType)
         );
         setfilteredmechanic(filtered);
         setCurrentPage(1);
-    }, [searchTerm, AllmechanicFilter]);
+    }, [searchTerm, AllmechanicFilter, selectedType]);
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -1329,11 +1345,11 @@ const Mechanic_Card = () => {
 
     useEffect(() => {
         const filtered = AllApprovedmechanic.filter((bike: any) =>
-            bike.shop_name?.toLowerCase().includes(searchTerm.toLowerCase())
+            bike.shop_name?.toLowerCase().includes(searchTerm.toLowerCase()) && matchesMechanicType(bike, selectedType)
         );
         setApprovefiltered(filtered);
         setCurrentpageapprove(1);
-    }, [searchTerm, AllApprovedmechanic]);
+    }, [searchTerm, AllApprovedmechanic, selectedType]);
 
     const fetchAllmechanics = async (_page: number) => {
         setIsLoading(true);
@@ -1470,6 +1486,15 @@ const Mechanic_Card = () => {
                                 <button className={`${styles.btn} ${HandleOpenTabs ? styles.selected : styles.btn}`} onClick={() => handleTabs('showdisapprove')} >DISAPPROVE</button>
                             </div>
                             <form className={styles.input_box}>
+                                <select
+                                    value={selectedType}
+                                    onChange={(e) => setSelectedType(e.target.value === "all" ? "all" : Number(e.target.value) as 1 | 2)}
+                                    className={styles.filter_select}
+                                >
+                                    {getMechanicTypeFilterOptions("mechanic").map((option) => (
+                                        <option key={option.value} value={option.value}>{option.label}</option>
+                                    ))}
+                                </select>
                                 <input
                                     type="text"
                                     value={searchTerm}
@@ -1499,6 +1524,7 @@ const Mechanic_Card = () => {
                                                 {/* <th className={styles.th} >ID</th> */}
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Type</th>
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
@@ -1514,6 +1540,7 @@ const Mechanic_Card = () => {
                                                                     <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.shop_name} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{getMechanicTypeLabel(e?.mechanic_type, "mechanic")}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
                                                                 <td className={styles.td} ><button
                                                                     className={`${styles.action_btn} ${styles.disapprove_btn}`}
@@ -1557,6 +1584,7 @@ const Mechanic_Card = () => {
                                                 {/* <th className={styles.th} >ID</th> */}
                                                 <th className={styles.th} >Brand Logo</th>
                                                 <th className={styles.th} >Shop Name</th>
+                                                <th className={styles.th} >Type</th>
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
@@ -1572,6 +1600,7 @@ const Mechanic_Card = () => {
                                                                     <img src={cloudinaryLoader(e?.bike_brand?.logoUrl, 400, 'auto')} alt={e?.title} className={styles.image} />
                                                                 </td>
                                                                 <td className={styles.td} >{add3Dots(e?.shop_name, 30) || 'No Title'}</td>
+                                                                <td className={styles.td} >{getMechanicTypeLabel(e?.mechanic_type, "mechanic")}</td>
                                                                 <td className={styles.td} >{add3Dots(e?.address, 30) || "N/A"}</td>
                                                                 {/* <td className={styles.td} >{e?.is_approved? "True" : "False"}/{e?.is_featured?"True":"False"}</td> */}
                                                                 <td className={styles.td} ><button

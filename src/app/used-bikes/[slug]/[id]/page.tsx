@@ -1,9 +1,9 @@
 import * as React from 'react';
 import UsedBikeCompDetail from "@/ebikeWeb/pageLayouts/used-bike/index"
-import Head  from 'next/head';
 import { Metadata } from 'next'
 import { getSinglebikesDetail, getCityFromId } from "@/ebikeWeb/functions/globalFuntions"
-import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData"
+import { CityArr } from "@/ebikeWeb/constants/globalData"
+import { resolveClassifiedShareImage, trimText } from '@/app/metadata-utils';
 
 type Props = {
     params: { id: string }
@@ -14,14 +14,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const product = await getSinglebikesDetail(id)
     const city = getCityFromId(product?.add?.cityId, CityArr); 
     const cityName = city && city?.length > 0 ?  city[0].city_name : ""
+    const title = `${product?.add?.title || "Used Bike"}${cityName ? ` for sale in ${cityName}` : ""} | ebike.pk`;
+    const description = trimText(product?.add?.description || product?.add?.title, 170);
+    const image = resolveClassifiedShareImage(product?.add?.images);
+    const url = `https://www.ebike.pk/used-bikes/${params.slug}/${id}`;
+
     return {
-      title: product?.add?.title + ' for sale in '+  cityName + ' | ebike.pk',
-      description: product?.add?.description,
-      openGraph: {
-        title:  product?.add?.title,
-        description: product?.add?.description,
-        images: [product?.add?.images[0]],
+      title,
+      description,
+      alternates: {
+        canonical: url
       },
+      openGraph: {
+        title,
+        description,
+        url,
+        siteName: "ebike.pk",
+        type: "article",
+        images: [
+          {
+            url: image,
+            width: 1200,
+            height: 630,
+            alt: product?.add?.title || "Used Bike Ad"
+          }
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [image]
+      }
     }
   }
 

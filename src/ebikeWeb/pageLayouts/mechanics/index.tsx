@@ -5,6 +5,7 @@ import { FeatureMechanics } from './feature-mechanics';
 import { MechanicsInPakistan } from './mechanic-in-pakistan';
 import { getAllMechanics, getFeaturedMechanics } from '@/ebikeWeb/functions/globalFuntions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { getMechanicTypeFilterOptions, matchesMechanicType } from '@/constants/mechanicType';
 
 type MechanicComp = {
   featuredMechanic: any;
@@ -16,6 +17,7 @@ const Mechanic = ({ featuredMechanic, mechanic }: MechanicComp) => {
   const [allMechanics, setAllMechanics]: any = useState([])
   const [featuredMechanics, setFeaturedMechanics]: any = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all")
 
   useEffect(() => {
     fetchInfo()
@@ -71,9 +73,27 @@ const Mechanic = ({ featuredMechanic, mechanic }: MechanicComp) => {
           </>
           :
           <>
-            {featuredMechanics.length > 0 ? <FeatureMechanics featuredmechanics={featuredMechanics} /> : ""}
-            {allMechanics.length > 0 ? <MechanicsInPakistan mechanics={allMechanics} /> : ""}
-            {featuredMechanic.length == 0 && allMechanics.length == 0 ? <p className={styles.noData} >No Mechanic Data Found</p> : "" }
+            <div className={styles.filter_bar}>
+              <span className={styles.filter_label}>Mechanic Type</span>
+              <div className={styles.filter_tabs}>
+                {getMechanicTypeFilterOptions("mechanic").map((option) => {
+                  const isActive = selectedType === option.value;
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setSelectedType(option.value)}
+                      className={`${styles.filter_tab} ${isActive ? styles.filter_tab_active : ""}`}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {featuredMechanics.filter((item: any) => matchesMechanicType(item, selectedType)).length > 0 ? <FeatureMechanics featuredmechanics={featuredMechanics.filter((item: any) => matchesMechanicType(item, selectedType))} selectedType={selectedType} /> : ""}
+            {allMechanics.filter((item: any) => matchesMechanicType(item, selectedType)).length > 0 ? <MechanicsInPakistan mechanics={allMechanics.filter((item: any) => matchesMechanicType(item, selectedType))} selectedType={selectedType} /> : ""}
+            {featuredMechanics.filter((item: any) => matchesMechanicType(item, selectedType)).length == 0 && allMechanics.filter((item: any) => matchesMechanicType(item, selectedType)).length == 0 ? <p className={styles.noData} >No Mechanic Data Found</p> : "" }
           </>
       }
     </div>
