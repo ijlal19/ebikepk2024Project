@@ -69,14 +69,14 @@ const DealerRegistration = () => {
           alert("Please select brand")
           return
       }
-      else if(!Phone || Phone.length != 11 || !numericOnly(Phone)) {
-        alert("Please write correct mobile number")
-        return
-      }
-      else if(!Phone2 || Phone2.length != 11 || !numericOnly(Phone2)) {
-        alert("Please write correct mobile number")
-        return
-      }
+    //   else if(!Phone || Phone.length != 11 || !numericOnly(Phone)) {
+    //     alert("Please write correct mobile number")
+    //     return
+    //   }
+    //   else if(!Phone2 || Phone2.length != 11 || !numericOnly(Phone2)) {
+    //     alert("Please write correct mobile number")
+    //     return
+    //   }
       else if(!Address || Address.length < 4) {
           alert("Please add Address")
           return
@@ -204,7 +204,7 @@ const DealerRegistration = () => {
                 </Typography>
 
                 <Typography>
-                    <label htmlFor="other-number" className={styles.inputs_label}>Other Phine Number*</label>
+                    <label htmlFor="other-number" className={styles.inputs_label}>Other Phone Number*</label>
                 </Typography>
 
                 <Typography className={styles.input_parent}>
