@@ -1,18 +1,21 @@
-import DashBoard_form from "@/ebike-panel/ebike-panel-Pages/dashboard_form"
-import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar"
-import Head from "next/head"
+import DashBoard_form from "@/ebike-panel/ebike-panel-Pages/dashboard_form";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
+export const metadata: Metadata = {
+    title: "Ebike Panel Edit",
+    robots: {
+        index: false,
+        follow: false
+    }
+};
 
 const Dashborad = () => {
-    <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Ebike Panel Edit </title>
-    </Head>
     return (
-        <div >
-            {/* <SideBar /> */}
+        <Suspense fallback={null}>
             <DashBoard_form />
-        </div>
-    )
-}
-export default Dashborad
+        </Suspense>
+    );
+};
+
+export default Dashborad;

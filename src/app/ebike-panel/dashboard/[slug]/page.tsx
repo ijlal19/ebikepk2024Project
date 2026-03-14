@@ -1,17 +1,21 @@
-import Dashboard_page from "@/ebike-panel/ebike-panel-Pages/card_list_dashboard"
-import SideBar from "@/ebike-panel/ebike-panel-sharedComponent/SideBar"
-import Head from "next/head"
+import Dashboard_page from "@/ebike-panel/ebike-panel-Pages/card_list_dashboard";
+import type { Metadata } from "next";
+import { Suspense } from "react";
+
+export const metadata: Metadata = {
+    title: "Ebike Panel Dashboard",
+    robots: {
+        index: false,
+        follow: false
+    }
+};
 
 const Dashboard_slug = () => {
-    <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Ebike Panel Dashboard </title>
-    </Head>
     return (
-        <div>
-            {/* <SideBar /> */}
+        <Suspense fallback={null}>
             <Dashboard_page />
-        </div>
-    )
-}
-export default Dashboard_slug
+        </Suspense>
+    );
+};
+
+export default Dashboard_slug;

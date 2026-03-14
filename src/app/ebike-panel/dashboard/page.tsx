@@ -1,17 +1,21 @@
 import Main_DashBoard from "@/ebike-panel/ebike-panel-Pages/main_dashboard";
-import * as React from 'react';
-import Head from "next/head";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
-const MainDashBoard   = ()  =>{
-    <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Ebike Panel Dashboard </title>
-    </Head>
+export const metadata: Metadata = {
+    title: "Ebike Panel Dashboard",
+    robots: {
+        index: false,
+        follow: false
+    }
+};
+
+const MainDashBoard = () => {
     return (
-        <div  >
-            {/* <SideBar /> */}
+        <Suspense fallback={null}>
             <Main_DashBoard />
-        </div>
-    )
-}
-export default MainDashBoard
+        </Suspense>
+    );
+};
+
+export default MainDashBoard;

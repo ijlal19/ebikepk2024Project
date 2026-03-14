@@ -1,15 +1,21 @@
-import EbikePanel from "@/ebike-panel/ebike-panel-sharedComponent/ebike-panel-select-route"
-import Head from "next/head"
-import * as React from 'react';
+import EbikePanel from "@/ebike-panel/ebike-panel-sharedComponent/ebike-panel-select-route";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
+export const metadata: Metadata = {
+    title: "Ebike Panel",
+    robots: {
+        index: false,
+        follow: false
+    }
+};
 
-const ebike_panel_main = ()=>{
-     <Head>
-            <meta name="robots" content="noindex, nofollow" />
-            <title> Ebike Panel</title>
-        </Head>
-    return(
-        <EbikePanel />
-    )
-}
-export default ebike_panel_main
+const ebike_panel_main = () => {
+    return (
+        <Suspense fallback={null}>
+            <EbikePanel />
+        </Suspense>
+    );
+};
+
+export default ebike_panel_main;

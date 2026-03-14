@@ -1,16 +1,21 @@
-import LoginForm from "@/ebike-panel/ebike-panel-sharedComponent/Login"
-import Head from "next/head"
-import * as React from 'react';
+import LoginForm from "@/ebike-panel/ebike-panel-sharedComponent/Login";
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
-const Login = ()=>{
-    <Head>
-        <meta name="robots" content="noindex, nofollow" />
-        <title> Ebike Panel Login </title>
-    </Head>
-    return(
-        <div>
+export const metadata: Metadata = {
+    title: "Ebike Panel Login",
+    robots: {
+        index: false,
+        follow: false
+    }
+};
+
+const Login = () => {
+    return (
+        <Suspense fallback={null}>
             <LoginForm />
-        </div>
-    )
-}
-export default Login
+        </Suspense>
+    );
+};
+
+export default Login;
