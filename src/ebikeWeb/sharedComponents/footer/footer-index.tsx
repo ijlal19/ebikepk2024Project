@@ -81,6 +81,8 @@ let headerlink_arr = [
     { title: "About us", url: "/page/about-us/14" },
     { title: "Bike Verification Sindh", url: "/mtmis-sindh" },
     { title: "Bike Verification Punjab", url: "/mtmis-punjab" },
+    { title: "Bike Verification Islamabad", url: "/mtmis-islamabad" },
+    { title: "Bike Verification KPK", url: "/mtmis-kpk" },
     // { title: "Testing Api", url: "/testing/1/3" }
 ]
 

@@ -18,7 +18,9 @@ export default function MoreList({ props }: any) {
     { label: 'Bike Video', url: 'https://www.youtube.com/@ebikepk' ,isLoginReq: false },
     // {label: 'MTMIS Pakistan',url:''},
     { label: 'Bike Verification Sindh', url: '/mtmis-sindh',isLoginReq: false  },
-    { label: 'Bike Verification Punjab', url: '/mtmis-punjab' ,isLoginReq: false }
+    { label: 'Bike Verification Punjab', url: '/mtmis-punjab' ,isLoginReq: false },
+    { label: 'Bike Verification Islamabad', url: '/mtmis-islamabad', isLoginReq: false },
+    { label: 'Bike Verification KPK', url: '/mtmis-kpk', isLoginReq: false }
   ]
 
   function goToRoute(data: any) {
