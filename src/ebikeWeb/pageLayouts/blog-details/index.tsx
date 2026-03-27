@@ -364,7 +364,7 @@ const BlogDetails = () => {
 
 
             </Grid>
-            <Blog_Category_Comp heading="More Blogs" data={BlogData} />
+            <Blog_Category_Comp heading="More Blogs" data={BlogData} showAds />
             <BrowseUsedBike />
           </Grid>
           : <></>} </>

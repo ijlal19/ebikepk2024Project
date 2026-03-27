@@ -22,6 +22,7 @@ import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import CATEGORYdATA from './Data';
 import Script from "next/script";
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 const TagArray = [
@@ -85,13 +86,6 @@ const Blog = () => {
 
     getAllBlogList()
     setFade(true);
-
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.log(e);
-    }
-
   }, [])
 
   useEffect(() => {
@@ -220,6 +214,44 @@ const Blog = () => {
     return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
   }
 
+  const renderBlogCards = (blogs: any[]) => {
+    return blogs.flatMap((e: any, i: number) => {
+      const blogCard = (
+        <Grid className={styles.blog_grid1} item xs={12} key={`blog-${e.id || i}`}>
+          <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
+            <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
+              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.blog_images} />
+            </Grid>
+            <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
+              <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
+                <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
+                <Typography className={styles.blog_card_date}>
+                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8, display: 'flex', alignItems: 'center' }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{timeAgo(e.createdAt)}</span> |
+                  <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center', color: '#1976d2' }}>
+                    {e?.views_count || 0} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} />
+                  </span>
+                </Typography>
+                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Grid>
+      );
+
+      const showAd = (i + 1) % 3 === 0 && i !== blogs.length - 1;
+      const adCard = showAd ? (
+        <Grid item xs={12} key={`ad-${i}`} className={styles.blog_ad_row}>
+          <AdSense
+            client="ca-pub-5167970563180610"
+            slot="9214599249"
+          />
+        </Grid>
+      ) : null;
+
+      return adCard ? [blogCard, adCard] : [blogCard];
+    });
+  }
+
   return (
     <>
 
@@ -263,16 +295,6 @@ const Blog = () => {
                   <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
                 </Box>
 
-                <div className="text-center mt-2 mb-2">
-                      <ins className="adsbygoogle"
-                          style={{ display: "block" }}
-                          data-ad-client="ca-pub-5167970563180610"
-                          data-ad-slot="9214599249"
-                          data-ad-format="auto"
-                          data-full-width-responsive="true">
-                    </ins>
-                </div>
-
                 {
                   !isFilterApply ?
                     <Grid container>
@@ -281,53 +303,10 @@ const Blog = () => {
 
                       <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}> Bike News <span className={styles.underline}></span></Typography>
 
-                      {currentBlogs?.length > 0 && currentBlogs?.map((e: any, i: any) => (
-                        <Grid className={styles.blog_grid1} item xs={12} key={i}>
-                          <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
-                            <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.blog_images} />
-                            </Grid>
-                            <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
-                              <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
-                                <Typography className={styles.blog_card_date}>
-                                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8, display: 'flex', alignItems: 'center' }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{timeAgo(e.createdAt)}</span> |
-                                  <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center', color: '#1976d2' }}>
-                                    {e?.views_count || 0} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} />
-                                  </span>
-                                  {/* {
-                                    (() => {
-                                      const matched = AllViews.find((viewd: any) => viewd.AdID === e.id);
-                                      return matched ? <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>{matched.views_count} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} /></span> : <span style={{ display: 'flex', alignItems: 'center', marginLeft: 8 }}>0 <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} /></span>;
-                                    })()
-                                  } */}
-                                </Typography>
-                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      ))}
+                      {currentBlogs?.length > 0 && renderBlogCards(currentBlogs)}
                     </Grid> :
                     <Grid container>
-                      {filterBlogs.length > 0 && filterBlogs.map((e: any, i: any) => (
-                        <Grid className={styles.blog_grid1} item xs={12} key={i}>
-                          <Grid container onClick={() => handleRoute(e)} className={styles.blog_grid1_container}>
-                            <Grid item xs={isMobile ? 12 : 4.5} className={styles.grid1_child1} >
-                              <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt="" className={styles.blog_images} />
-                            </Grid>
-                            <Grid item xs={isMobile ? 12 : 7.4} className={styles.grid1_child2} >
-                              <Box style={isMobile ? {} : { paddingLeft: "9px" }}>
-                                <Typography className={styles.blog_card_title} ><Link href={getRoute(e)} className={styles.link_title} >{add3Dots(e.blogTitle, 60)}</Link></Typography>
-                                <Typography className={styles.blog_card_date}>
-                                  <span style={{ marginRight: 8, display: 'flex', alignItems: 'center' }}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.authorname}</span> | <span style={{ marginRight: 8, marginLeft: 8 }}><DateRangeIcon sx={{ fontSize: '15px', marginRight: '2px' }} />{e.createdAt.slice(0, 10)}</span> | <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center', color: '#1976d2' }}>{e?.views_count || 0} <VisibilityOutlinedIcon sx={{ fontSize: '13px', marginRight: '2px', marginLeft: '2px' }} /></span>
-                                </Typography>
-                                <Typography className={styles.blog_card_description}>{add3Dots(e?.meta_description, 200)}</Typography>
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      ))}
+                      {filterBlogs.length > 0 && renderBlogCards(filterBlogs)}
                     </Grid>
                 }
 
