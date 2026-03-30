@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import "swiper/css/navigation";
 import "swiper/css";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Blog_Category_Comp from '@/ebikeWeb/sharedComponents/blog_Category';
 import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
@@ -24,6 +25,8 @@ import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bi
 import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
+import Script from 'next/script';
 
 const BLOG_VIEW_DEDUP_MS = 5000;
 const blogViewLastHitAt: Record<string, number> = {};
@@ -202,6 +205,12 @@ const BlogDetails = () => {
 
   return (
     <Box className={styles.blog_details_main}>
+      <Script
+        async
+        strategy="afterInteractive"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+        crossOrigin="anonymous"
+      />
       {!isLoading ?
         <> {DataBlog ?
           <Grid container className={styles.gird_box_main}>
@@ -248,6 +257,10 @@ const BlogDetails = () => {
                     : DataBlog?.featuredImage} />
                   <span>
                     <span style={{ color: 'grey' }}>By</span> <span style={{ marginRight: 8 }}>{DataBlog.authorname}</span> <span style={{ color: 'grey', marginRight: 8 }}>- On</span> {DataBlog.createdAt.slice(0, 10)}
+                    <span className={styles.view_count}>
+                      <VisibilityOutlinedIcon sx={{ fontSize: '16px' }} />
+                      {DataBlog?.views_count || 0} views
+                    </span>
                   </span>
                 </Typography>
 
@@ -347,6 +360,12 @@ const BlogDetails = () => {
             </Grid>
 
             <Grid item xs={isMobile ? 12 : 3.4} className={styles.moreBlog}>
+              <Box className={styles.sidebar_ads}>
+                <AdSense
+                  client="ca-pub-5167970563180610"
+                  slot="9214599249"
+                />
+              </Box>
 
               <Side_brands />
 
@@ -359,6 +378,13 @@ const BlogDetails = () => {
               <NewBike_left />
 
               <Usedbike_left />
+
+              <Box className={styles.sidebar_ads}>
+                <AdSense
+                  client="ca-pub-5167970563180610"
+                  slot="9214599249"
+                />
+              </Box>
 
               <DealerLeft />
 

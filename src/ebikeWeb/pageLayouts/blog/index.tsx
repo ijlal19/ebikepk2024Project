@@ -324,6 +324,12 @@ const Blog = () => {
               </Grid>
               <Grid className={styles.blog_grid2} item xs={isMobile ? 12 : 3.5}>
                 <Box className={styles.add_area_content}>
+                  <Box className={styles.sidebar_ads}>
+                    <AdSense
+                      client="ca-pub-5167970563180610"
+                      slot="9214599249"
+                    />
+                  </Box>
 
                   <Side_brands />
 

@@ -1,16 +1,20 @@
 import * as React from 'react';
+import Link from 'next/link';
+
 export default function DeleteMyData() {
     return (
-        <div style={{ margin:"10%" }}>
+        <div style={{ margin: "10%", lineHeight: 1.7 }}>
             <h3>Data Deletion Instructions</h3>
             <p>
-                We do not store any personal data from users. If you wish to remove app permissions from your Facebook account, please follow these steps:
+                You can submit your account deletion request by visiting the{' '}
+                <Link href="/my-ads">My Ads</Link> page and clicking the delete account button.
             </p>
-            <ol>
-            <li>Go to <a href="https://www.facebook.com/settings?tab=applications" target="_blank">Facebook Settings → Apps and Websites</a></li>
-            <li>Find and select our app</li>
-            <li>Click “Remove”</li>
-            </ol>
+            <p>
+                We do not use user data for any marketing purposes.
+            </p>
+            <p>
+                Once the account deletion request is submitted, the account will be deleted within 7 working days.
+            </p>
         </div>
     )
 }

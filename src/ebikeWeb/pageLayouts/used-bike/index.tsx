@@ -11,6 +11,7 @@ import { Navigation, FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import styles from "./index.module.scss";
@@ -220,6 +221,10 @@ function embebedVideoUrl(videoURL: string) {
               <div className={styles.container_one}>
 
                 <h1 className={styles.title}> {bikeDetail?.title}  </h1>
+                <p className={styles.view_count}>
+                  <VisibilityOutlinedIcon className={styles.view_icon} />
+                  {bikeDetail?.views_count || 0} views
+                </p>
 
                 <Swiper
                   spaceBetween={50}

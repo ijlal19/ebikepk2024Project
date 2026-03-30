@@ -2,15 +2,15 @@
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation'
-import { Box, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { getMyAds, MarkBikeAsSold } from '@/ebikeWeb/functions/globalFuntions'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 import {isLoginUser} from "@/genericFunctions/geneFunc";
-import ImgCard from '@/ebikeWeb/sharedComponents/itemCard'
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider'
 
 const MyAddComponent = () => {
     const [isLoading, setIsLoading] = useState(false)
+    const [isDeleteRequestLoading, setIsDeleteRequestLoading] = useState(false)
     const [MyAdsData, setMyAdsData] = useState([])
     const [customer, setCustomer]  = useState<any>('not_login')
 
@@ -29,7 +29,7 @@ const MyAddComponent = () => {
             setCustomer("not_login")
             router.push('/')
         }
-    }, [])
+    }, [router])
 
     async function getAllMyAds(uid:any) {
         setIsLoading(true)
@@ -64,6 +64,35 @@ const MyAddComponent = () => {
           }
       }
 
+    async function handleDeleteAccountRequest() {
+        try {
+            setIsDeleteRequestLoading(true)
+
+            const response = await fetch('/api/delete-account-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: customer?.id
+                })
+            })
+
+            const result = await response.json()
+
+            if (!response.ok || !result?.success) {
+                throw new Error(result?.message || 'Unable to submit delete account request')
+            }
+
+            alert('We have received your account deletion request. We will process it within 7 working days.')
+        } catch (error) {
+            console.error('Delete account request failed', error)
+            alert('Unable to submit delete account request right now. Please try again later.')
+        } finally {
+            setIsDeleteRequestLoading(false)
+        }
+    }
+
     return (
         <Box className={styles.add_main}>
             < Box className={styles.slider_main}>
@@ -82,6 +111,18 @@ const MyAddComponent = () => {
           </div>
           </div>
             }
+            {customer !== 'not_login' && (
+                <Box className={styles.delete_account_wrapper}>
+                    <Button
+                        className={styles.delete_account_btn}
+                        variant="contained"
+                        onClick={handleDeleteAccountRequest}
+                        disabled={isDeleteRequestLoading}
+                    >
+                        {isDeleteRequestLoading ? 'Sending...' : 'Delete my account'}
+                    </Button>
+                </Box>
+            )}
             </Box>
         </Box >
     )

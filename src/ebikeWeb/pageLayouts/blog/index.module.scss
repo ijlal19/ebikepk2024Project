@@ -263,6 +263,14 @@
          flex-direction: column;
          row-gap: 30px !important;
 
+         .sidebar_ads {
+            width: 100%;
+            box-shadow: 0 0.5rem 1rem rgba(58, 57, 57, 0.08);
+            background: #fff;
+            padding: 8px;
+            box-sizing: border-box;
+         }
+
          .shortBlog_main {
             padding: 0px 0px !important;
             box-sizing: border-box;

@@ -30,6 +30,8 @@ import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
 import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
 import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
 import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
+import AdSense from "@/ebikeWeb/sharedComponents/googleAdsense/adsense";
+import Script from "next/script";
 // import { useSearchParams } from "next/navigation";
 
 const AdsArray = [
@@ -270,19 +272,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         return (
             <>
-                {ind % 4 == 0 ?
+                {(ind + 1) % 4 == 0 ?
                     <div className={styles.banner_1}>
-                        <a href="/">
-                            {/* <img className={styles.baner_image} src={is10Inch ? "https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" : "https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg"} /> */}
-                            { is10Inch ? 
-                            <ins className="adsbygoogle"
-                                style={{display:"block"}}
-                                data-ad-client="ca-pub-5167970563180610"
-                                data-ad-slot="9214599249"
-                                data-ad-format="auto"
-                                data-full-width-responsive="true">
-                            </ins> : "" }
-                        </a>
+                        <AdSense
+                            client="ca-pub-5167970563180610"
+                            slot="9214599249"
+                            style={{ margin: 0 }}
+                        />
                     </div> : ""}
                 {!isMobileView ?
                     <Link href={GetHref()} sx={{ textDecoration: 'none' }} onClick={() => { goToDetailPage(val) }}>
@@ -516,6 +512,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     is9Inch ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
                 }
                 <Box className={styles.main}>
+                    <Script
+                        async
+                        strategy="afterInteractive"
+                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+                        crossOrigin="anonymous"
+                    />
                     <>
                         <Box className={styles.usedBike_headingBpx}>
                             <Typography className={styles.headinh_sale}>Find Used Bikes & Motorcycles in Pakistan</Typography>
@@ -688,6 +690,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                             <Grid item xs={is9Inch ? 12 : 3} className={styles.add_area}>
                                 <Box className={styles.add_box}>
+                                    <Box className={styles.sidebar_ads}>
+                                        <AdSense
+                                            client="ca-pub-5167970563180610"
+                                            slot="9214599249"
+                                        />
+                                    </Box>
                                     {
                                         AdsArray?.map((e, i) => {
                                             return (
@@ -738,6 +746,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 />
                             </Box>
                             : ""}
+                        <Box className={styles.bottom_ads}>
+                            <AdSense
+                                client="ca-pub-5167970563180610"
+                                slot="9214599249"
+                            />
+                        </Box>
                         {priceTableData?.length > 0 ?
                             <div className={styles.bike_price_main}>
                                 <div className={styles.heading_box}>

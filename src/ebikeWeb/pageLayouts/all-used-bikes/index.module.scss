@@ -116,6 +116,23 @@
 
 }
 
+.sidebar_ads {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+  padding: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.bottom_ads {
+  width: 100%;
+  max-width: 1060px;
+  margin: 10px auto 20px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
 .main_pagination {
   max-width: 400px !important;
   width: 100%;

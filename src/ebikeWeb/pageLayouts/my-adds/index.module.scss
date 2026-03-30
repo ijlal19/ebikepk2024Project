@@ -35,6 +35,34 @@
 
     }
 }
+
+.delete_account_wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    padding: 0 12px 24px;
+}
+
+.delete_account_btn{
+    background-color: #c62828 !important;
+    color: #fff !important;
+    text-transform: none !important;
+    border-radius: 10px !important;
+    padding: 10px 22px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+.delete_account_btn:hover{
+    background-color: #a61f1f !important;
+}
+
+.delete_account_btn:disabled{
+    background-color: #d98d8d !important;
+    color: #fff !important;
+}
+
 @media (max-width:768px) {
     .load_main{
         width: 100%;
@@ -50,5 +78,15 @@
             align-items: center;
     
         }
+    }
+
+    .delete_account_wrapper{
+        margin-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .delete_account_btn{
+        width: 100%;
+        max-width: 280px;
     }
 }
