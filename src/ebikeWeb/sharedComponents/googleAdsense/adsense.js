@@ -2,15 +2,24 @@
 
 import { useEffect, useRef } from "react";
 
+const ADSENSE_SCRIPT_ID = "google-adsense-script";
+const ADSENSE_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610";
+
 const AdSense = ({ client, slot, style, format = "auto" }) => {
   const adRef = useRef(null);
 
   useEffect(() => {
+    let retryTimeoutId = null;
+    let scriptLoadHandler = null;
+
     const initializeAd = () => {
       try {
         if (!adRef.current) return;
         if (adRef.current.getAttribute("data-adsbygoogle-status")) return;
-        if (!window.adsbygoogle || !Array.isArray(window.adsbygoogle)) return;
+        if (!window.adsbygoogle || typeof window.adsbygoogle.push !== "function") {
+          retryTimeoutId = window.setTimeout(initializeAd, 300);
+          return;
+        }
 
         window.adsbygoogle.push({});
       } catch (e) {
@@ -18,9 +27,36 @@ const AdSense = ({ client, slot, style, format = "auto" }) => {
       }
     };
 
-    const timeoutId = window.setTimeout(initializeAd, 150);
+    const existingScript =
+      document.getElementById(ADSENSE_SCRIPT_ID) ||
+      document.getElementById("google-adsense");
 
-    return () => window.clearTimeout(timeoutId);
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = ADSENSE_SCRIPT_ID;
+      script.async = true;
+      script.src = ADSENSE_SCRIPT_SRC;
+      script.crossOrigin = "anonymous";
+      scriptLoadHandler = () => initializeAd();
+      script.addEventListener("load", scriptLoadHandler);
+      document.head.appendChild(script);
+    } else {
+      scriptLoadHandler = () => initializeAd();
+      existingScript.addEventListener("load", scriptLoadHandler);
+    }
+
+    initializeAd();
+
+    return () => {
+      if (retryTimeoutId) {
+        window.clearTimeout(retryTimeoutId);
+      }
+
+      const scriptEl = document.getElementById(ADSENSE_SCRIPT_ID);
+      if (scriptEl && scriptLoadHandler) {
+        scriptEl.removeEventListener("load", scriptLoadHandler);
+      }
+    };
   }, []);
 
   return (
