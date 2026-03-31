@@ -258,7 +258,7 @@ const BlogDetails = () => {
                   <span>
                     <span style={{ color: 'grey' }}>By</span> <span style={{ marginRight: 8 }}>{DataBlog.authorname}</span> <span style={{ color: 'grey', marginRight: 8 }}>- On</span> {DataBlog.createdAt.slice(0, 10)}
                     <span className={styles.view_count}>
-                      <VisibilityOutlinedIcon sx={{ fontSize: '16px' }} />
+                      {/* <VisibilityOutlinedIcon sx={{ fontSize: '16px' }} /> */}
                       {DataBlog?.views_count || 0} views
                     </span>
                   </span>

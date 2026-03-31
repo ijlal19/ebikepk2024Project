@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 export default function AllNewBikes() {
 
@@ -115,6 +116,13 @@ export default function AllNewBikes() {
                 </>
               )}
 
+              <Box className={styles.descriptionAdBox}>
+                <AdSense
+                  client="ca-pub-5167970563180610"
+                  slot="9214599249"
+                />
+              </Box>
+
             </Box>
             <Grid container className={styles.grid_sectiion_box}>
               <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
@@ -128,6 +136,12 @@ export default function AllNewBikes() {
                 }
               </Grid>
               <Grid item xs={isMobile ? 12 : 3} className={styles.Dealers_grid_box}>
+                <Box className={styles.sidebarAdBox}>
+                  <AdSense
+                    client="ca-pub-5167970563180610"
+                    slot="9214599249"
+                  />
+                </Box>
                 {
                   allDealerArr.length > 0 ?
                     <> <Typography className={styles.heading}>Related Dealers</Typography>

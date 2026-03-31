@@ -26,6 +26,7 @@ import { getAllbikesDetail, getAllFeaturedBike, getBrandFromId, getCityFromId } 
 import { initialDealers, initialMechanics } from "./dummy_data"
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand-section';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 type NewBikeDetailsCompProps = {
   _responsedetails: any;
@@ -422,6 +423,13 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             <WriteModal props={writepopupData} closeFunction={writeclose} />
                           </Box>
 
+                          <Box className={styles.sidebarAdBox}>
+                            <AdSense
+                              client="ca-pub-5167970563180610"
+                              slot="9214599249"
+                            />
+                          </Box>
+
                           <Box className={styles.dealers_box} sx={{ display: isMobile ? 'none' : 'flex' }}>
                             {
                               allDealerArr.length > 0 ?
@@ -457,6 +465,12 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             }
                           </Box>
 
+                          <Box className={styles.sidebarAdBox}>
+                            <AdSense
+                              client="ca-pub-5167970563180610"
+                              slot="9214599249"
+                            />
+                          </Box>
 
                           <Box className={styles.dealers_box} sx={{ display: isMobile ? 'none' : 'flex' }}>
                             {
@@ -492,6 +506,13 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             }
                           </Box>
 
+                          <Box className={styles.sidebarAdBox}>
+                            <AdSense
+                              client="ca-pub-5167970563180610"
+                              slot="9214599249"
+                            />
+                          </Box>
+
                           <Box sx={{ display: isMobile ? 'none' : 'flex' }}>
                             <Link href='/forum'>
                               <img style={{ width: "100%" }} src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" />
@@ -505,6 +526,13 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                     </>)
                 })}
             </Box>
+
+            <div className={styles.reviewTopAd}>
+              <AdSense
+                client="ca-pub-5167970563180610"
+                slot="9214599249"
+              />
+            </div>
 
             <div className={styles.review_section_newbikes}>
               <ReviewSection orignal_review={AllnewBikeDetailsArr[0]?.bike?.newbike_comments?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.newbike_comments : []} />

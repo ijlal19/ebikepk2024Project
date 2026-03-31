@@ -559,6 +559,10 @@
                 }
             }
 
+            .sidebarAdBox {
+                width: 100%;
+                overflow: hidden;
+            }
 
 
         }
@@ -623,4 +627,12 @@
 .review_section_newbikes {
     max-width: 1000px;
     margin: auto;
+}
+
+.reviewTopAd {
+    max-width: 1000px;
+    margin: 10px auto 20px;
+    padding: 0 5px;
+    box-sizing: border-box;
+    overflow: hidden;
 }

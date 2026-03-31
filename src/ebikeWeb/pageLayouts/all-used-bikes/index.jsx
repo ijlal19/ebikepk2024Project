@@ -731,10 +731,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 }
                                 <br />
                                 <br />
-                                {
+                                {/* {
                                     !isGridSelected ?
                                         <DealerLeft /> : ""
-                                }
+                                } */}
                             </Grid>
                         </Grid>
                         {allBikesArr?.length > 0 ?

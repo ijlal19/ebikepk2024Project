@@ -450,6 +450,28 @@
 
 }
 
+.sidebarAdWrapper {
+    width: 250px;
+    margin: 0 30px 30px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgb(197, 197, 197);
+    border-radius: 10px;
+    overflow: hidden;
+
+    @media (max-width: 767px) {
+        width: 99%;
+        margin: 5px auto 20px;
+    }
+}
+
+.similarAdWrapper {
+    margin: 0 5px 18px;
+
+    @media (max-width:767px) {
+        margin: 0 10px 14px;
+    }
+}
+
 .container_five .notify {
     border: 1px solid whitesmoke;
     text-align: center;

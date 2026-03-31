@@ -6,6 +6,7 @@ import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { numericOnly, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Navigation, FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -352,12 +353,25 @@ function embebedVideoUrl(videoURL: string) {
                     </ol>
                   </div>
                 </div>
+
+                <div className={styles.sidebarAdWrapper}>
+                  <AdSense
+                    client="ca-pub-5167970563180610"
+                    slot="9214599249"
+                  />
+                </div>
               </div>
 
             </main>
 
             {similarBikeArr?.length > 0 ? 
               <div className={styles.similarBikeDiv}>
+                <div className={styles.similarAdWrapper}>
+                  <AdSense
+                    client="ca-pub-5167970563180610"
+                    slot="9214599249"
+                  />
+                </div>
                 <h6 className={styles.similar_heading}> Similar Bikes </h6>
                 <SwiperCarousels sliderName='bikeSectionSwiperUsedBikde' sliderData={similarBikeArr} from='usedBikeComp' currentpage="used_bike" onBtnClick={() => { }} />
               </div> 

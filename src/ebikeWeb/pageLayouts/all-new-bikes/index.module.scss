@@ -105,6 +105,13 @@
                 padding: 0px !important;
             }
         }
+
+        .descriptionAdBox {
+            margin: 16px auto 0;
+            max-width: 970px;
+            width: 100%;
+            overflow: hidden;
+        }
     }
 
     .grid_sectiion_box {
@@ -147,6 +154,12 @@
     .Dealers_grid_box {
         display: inline-block;
         justify-content: center;
+
+        .sidebarAdBox {
+            width: 100%;
+            margin: 0 0 20px;
+            overflow: hidden;
+        }
 
         .heading {
             width: 100%;
