@@ -1,20 +1,33 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const AdSense = ({ client, slot, style, format = "auto" }) => {
+  const adRef = useRef(null);
+
   useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (e) {
-      console.error("Adsense error: ", e);
-    }
+    const initializeAd = () => {
+      try {
+        if (!adRef.current) return;
+        if (adRef.current.getAttribute("data-adsbygoogle-status")) return;
+        if (!window.adsbygoogle || !Array.isArray(window.adsbygoogle)) return;
+
+        window.adsbygoogle.push({});
+      } catch (e) {
+        console.error("Adsense error: ", e);
+      }
+    };
+
+    const timeoutId = window.setTimeout(initializeAd, 150);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   return (
     <div>
         <div style={{ textAlign: "center", margin: "20px 0", ...style }}>
           <ins
+            ref={adRef}
             className="adsbygoogle"
             style={{ display: 'block' }}
             data-ad-client={client}

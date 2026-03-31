@@ -43,7 +43,14 @@ export default function RootLayout({  children }: Readonly<{ children: React.Rea
 
   return (
     <html lang="en">
-       <head>
+      <head>
+      <Script
+          id="google-adsense"
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
+        />
    
       <script
           async
