@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 const ADSENSE_SCRIPT_ID = "google-adsense-script";
 const ADSENSE_SCRIPT_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610";
 
-const AdSense = ({ client, slot, style, format = "auto" }) => {
+const AdSense = ({ client, slot, style, adStyle, format = "auto", responsive = true }) => {
   const adRef = useRef(null);
 
   useEffect(() => {
@@ -65,11 +65,11 @@ const AdSense = ({ client, slot, style, format = "auto" }) => {
           <ins
             ref={adRef}
             className="adsbygoogle"
-            style={{ display: 'block' }}
+            style={{ display: 'block', ...adStyle }}
             data-ad-client={client}
             data-ad-slot={slot}
-            data-ad-format={format}
-            data-full-width-responsive="true"
+            {...(format ? { "data-ad-format": format } : {})}
+            data-full-width-responsive={responsive ? "true" : "false"}
           ></ins>
         </div>
     </div>
