@@ -452,14 +452,19 @@
 
 .sidebarAdWrapper {
     width: 250px;
+    height: 250px;
     margin: 0 30px 30px;
     background-color: #fff;
     box-shadow: 0px 0px 10px rgb(197, 197, 197);
     border-radius: 10px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media (max-width: 767px) {
         width: 99%;
+        height: 250px;
         margin: 5px auto 20px;
     }
 }
