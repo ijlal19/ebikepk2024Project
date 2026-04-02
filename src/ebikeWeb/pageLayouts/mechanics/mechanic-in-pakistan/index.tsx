@@ -15,6 +15,7 @@ import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike
 import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import { getMechanicTypeLabel } from '@/constants/mechanicType';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 const AdsArray = [
     {
@@ -173,6 +174,15 @@ export const MechanicsInPakistan = ({ mechanics, selectedType = "all" }: any) =>
                         </div>
                     </div>
                     <div className={styles.add_area}>
+                        <Box className={styles.sidebar_ads}>
+                            <AdSense
+                                client="ca-pub-5167970563180610"
+                                slot="9214599249"
+                                format={null}
+                                responsive={false}
+                                adStyle={{ display: "inline-block", width: "250px", height: "250px" }}
+                            />
+                        </Box>
                         <DealerLeft />
                         <Usedbike_left />
                         <NewBike_left />

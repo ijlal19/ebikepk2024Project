@@ -10,6 +10,7 @@ import { getSimilarMechanics, getSingleMechanicsDetails } from '@/ebikeWeb/funct
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { getMechanicTypeLabel, matchesMechanicType } from '@/constants/mechanicType';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 const MechanicsDetails = () => {
   
@@ -85,6 +86,15 @@ const isMobile = useMediaQuery('(max-width:562px)')
               <p className={styles.phone}><PhoneIcon
               className={styles.icon}/>{MechanicsDetails?.phone?.slice(0,4)}-{MechanicsDetails?.phone?.slice(4)}</p>
             </div>
+          </div>
+          <div className={styles.sidebarAdWrapper}>
+            <AdSense
+              client="ca-pub-5167970563180610"
+              slot="9214599249"
+              format={null}
+              responsive={false}
+              adStyle={{ display: "inline-block", width: "250px", height: "250px" }}
+            />
           </div>
         </div>
 

@@ -140,6 +140,9 @@ export default function AllNewBikes() {
                   <AdSense
                     client="ca-pub-5167970563180610"
                     slot="9214599249"
+                    format={null}
+                    responsive={false}
+                    adStyle={{ display: "inline-block", width: "250px", height: "250px" }}
                   />
                 </Box>
                 {

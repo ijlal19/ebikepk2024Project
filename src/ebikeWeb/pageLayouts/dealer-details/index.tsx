@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { getMechanicTypeLabel, matchesMechanicType } from '@/constants/mechanicType';
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 const DealerDetails = () => {
   const [dealersDetails, setDealerDetails]: any = useState([])
@@ -86,6 +87,15 @@ const DealerDetails = () => {
                         <p className={styles.phone}><PhoneIcon
                           className={styles.icon} />{dealersDetails?.phone?.slice(0, 4)}-{dealersDetails?.phone?.slice(4)}</p>
                       </div>
+                    </div>
+                    <div className={styles.sidebarAdWrapper}>
+                      <AdSense
+                        client="ca-pub-5167970563180610"
+                        slot="9214599249"
+                        format={null}
+                        responsive={false}
+                        adStyle={{ display: "inline-block", width: "250px", height: "250px" }}
+                      />
                     </div>
                   </div>
                   <div className={styles.more_dealers}>
