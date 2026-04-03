@@ -21,6 +21,7 @@ import GoGreen from './go-green'
 import Treanding_Stories from '@/ebikeWeb/sharedComponents/NewSectionM/trending_stories'
 import { List_Card, MotorCycle_News_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card'
 import Petrol_Price_Section from './petrol-price-section'
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 
 
 function Index() {
@@ -73,6 +74,17 @@ function Index() {
       });
   }
 
+  const homeSections = [
+    <Petrol_Price_Section key="petrol-price" />,
+    <NewBikesSection key="new-bikes" featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />,
+    <FeatureSection key="feature-section" />,
+    <UsedBikesSection key="used-bikes" usedBikeData={homeData.homeUsedBike} />,
+    <GoGreen key="go-green" />,
+    <BrandSection key="brand-section" />,
+    <Explore key="explore" />,
+    <BlogSection key="blog-section" blogData={homeData.homeBlogs} />,
+  ]
+
   return (
     isLoading ?
       <div className={styles.load_div}>
@@ -83,14 +95,17 @@ function Index() {
         <BannerSection />
         <MobileBanner />
         <h1 style={{ textAlign:"center", fontSize:"20px", margin:"20px auto" }}> Pakistan’s #1 Marketplace for New & Used Bikes</h1>
-        <Petrol_Price_Section />
-        <NewBikesSection featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />
-        <FeatureSection />
-        <UsedBikesSection usedBikeData={homeData.homeUsedBike} />
-        <GoGreen />
-        <BrandSection />
-        <Explore />
-        <BlogSection blogData={homeData.homeBlogs} />
+        {homeSections.map((section, index) => (
+          <div key={index}>
+            {section}
+            {(index + 1) % 2 === 0 && (
+              <AdSense
+                client="ca-pub-5167970563180610"
+                slot="9214599249"
+              />
+            )}
+          </div>
+        ))}
 
 
         <details>

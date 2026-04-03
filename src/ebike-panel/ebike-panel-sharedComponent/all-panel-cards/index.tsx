@@ -652,6 +652,25 @@ const Blog_Card = () => {
 
 
     const itemsPerPage = 12;
+    const formatDate = (date: any) => {
+        if (!date) return "N/A";
+        const parsedDate = new Date(date);
+        if (Number.isNaN(parsedDate.getTime())) return "N/A";
+
+        return parsedDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+    };
+
+    const getBlogImages = (featuredImage: any) => {
+        if (!featuredImage) return [];
+        return String(featuredImage)
+            .split(' #$# ')
+            .map((img: string) => img.trim())
+            .filter(Boolean);
+    };
 
     useEffect(() => {
         const savedScrollStr = localStorage.getItem("PanelBlogScroll");
@@ -664,9 +683,22 @@ const Blog_Card = () => {
     }, []);
 
     useEffect(() => {
-        const filtered = AllBlogFilter.filter((bike: any) =>
-            bike.blogTitle.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        const normalizedTerm = searchTerm.trim().toLowerCase();
+        const filtered = AllBlogFilter.filter((blog: any) => {
+            if (!normalizedTerm) return true;
+
+            const searchableValues = [
+                blog?.id,
+                blog?.blogTitle,
+                blog?.authorname,
+                blog?.blog_category?.name,
+                blog?.meta_description
+            ]
+                .filter(Boolean)
+                .map((value: any) => String(value).toLowerCase());
+
+            return searchableValues.some((value: string) => value.includes(normalizedTerm));
+        });
         setFilteredBlog(filtered);
     }, [searchTerm, AllBlogFilter]);
 
@@ -752,6 +784,16 @@ const Blog_Card = () => {
             {!IsLoading ? (
                 <div className={styles.big_container}>
                     <div className={styles.page_header}>
+                        <div className={styles.blog_summary}>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Total Blogs</span>
+                                <strong className={styles.summary_value}>{AllBlogFilter?.length || 0}</strong>
+                            </div>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Showing</span>
+                                <strong className={styles.summary_value}>{displayedBlog?.length || 0}</strong>
+                            </div>
+                        </div>
                         <form className={styles.input_box}>
                             <input
                                 type="text"
@@ -777,82 +819,87 @@ const Blog_Card = () => {
                             }} >Add New Blog</Link></button>
                     </div>
                     <div className={styles.card_container}>
-                        {displayedBlog.map((e: any, i: any) => (
+                        {displayedBlog?.length > 0 ? (
+                            <div className={styles.blog_table_section}>
+                                <div className={styles.blog_table_scroll}>
+                                    <table className={styles.blog_table}>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Blog</th>
+                                                <th>Author</th>
+                                                <th>Category</th>
+                                                <th>Published</th>
+                                                <th>Description</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {displayedBlog.map((e: any, i: any) => {
+                                                const images = getBlogImages(e?.featuredImage);
+                                                const featuredImage = images?.[0];
 
-                            <div className={styles.main_box_card} key={i}>
-                                <div className={styles.card_container_box}>
-                                    <div className={styles.card_header}>
-                                        <h3 className={styles.heading}>{add3Dots(e?.blogTitle, 25) || 'No Title'}</h3>
-                                        {/* <span className={styles.ad_id}>Blog ID: {e?.id}</span> */}
-                                    </div>
-
-                                    <div className={styles.card_content}>
-                                        <div className={styles.cardimage_box}>
-                                            <Swiper
-                                                spaceBetween={50}
-                                                slidesPerView={1}
-                                                onSlideChange={() => console.log('slide change')}
-                                                onSwiper={(swiper) => console.log(swiper)}
-                                                modules={[Navigation, FreeMode]}
-                                                navigation={true}
-                                                initialSlide={0}
-                                                loop={true}
-                                                className={styles.image}
-                                            >
-                                                {
-                                                    e?.featuredImage && e.featuredImage.includes(' #$# ') ? (
-                                                        e.featuredImage.split(' #$# ').map((imgUrl: any, ind: any) => (
-                                                            <SwiperSlide key={ind} className={styles.image}>
-                                                                <img src={cloudinaryLoader(imgUrl.trim(), 400, 'auto')} alt={e?.title} className={styles.image} />
-                                                            </SwiperSlide>
-                                                        ))
-                                                    ) :
-                                                        <SwiperSlide key=''>
-                                                            <img src={cloudinaryLoader(e?.featuredImage?.split(' #$# ')[0].trim(), 400, 'auto')} alt={e?.title} className={styles.image} />
-                                                        </SwiperSlide>
-                                                }
-                                            </Swiper>
-                                        </div>
-
-                                        <div className={styles.card_detail}>
-                                            {/* <div className={styles.detail_row}>
-                                            <span className={styles.detail_label}>Date:</span>
-                                            <span>{e?.createdAt ? e?.createdAt.slice(0, 10) : "N/A"}</span>
-                                        </div> */}
-
-
-                                            <div className={styles.detail_row}>
-                                                <span className={styles.detail_label}>Author Name:</span>
-                                                <span>{e?.authorname ? e?.authorname : "N/A"}</span>
-                                            </div>
-
-                                            <div className={styles.detail_row}>
-                                                <span className={styles.detail_label}>Category:</span>
-                                                <span>{e?.blog_category?.name ? e?.blog_category?.name : "N/A"}</span>
-                                            </div>
-
-                                            <div className={styles.description}>
-                                                Description:
-                                                <p className={styles.description_text}>
-                                                    {add3Dots(e?.meta_description, 110) || 'No description available'}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.card_actions}>
-                                        <Link href={`/ebike-panel/dashboard/edit-blog/${e?.id}?page=${currentPage}`} onClick={handleEditBlog} style={{ textDecoration: 'none', color: "white" }}>
-                                            <button className={`${styles.action_btn} ${styles.edit_btn}`}>
-                                                Edit
-                                            </button>
-                                        </Link>
-                                        <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                            Delete
-                                        </button>
-                                    </div>
+                                                return (
+                                                    <tr key={e?.id || i}>
+                                                        <td className={styles.id_cell}>#{e?.id || 'N/A'}</td>
+                                                        <td>
+                                                            <div className={styles.blog_cell}>
+                                                                <div className={styles.blog_thumb_wrap}>
+                                                                    {featuredImage ? (
+                                                                        <img
+                                                                            src={cloudinaryLoader(featuredImage, 220, 'auto')}
+                                                                            alt={e?.blogTitle || 'Blog'}
+                                                                            className={styles.blog_thumb}
+                                                                        />
+                                                                    ) : (
+                                                                        <div className={styles.blog_thumb_placeholder}>No Image</div>
+                                                                    )}
+                                                                </div>
+                                                                <div className={styles.blog_meta}>
+                                                                    <p className={styles.blog_title}>{add3Dots(e?.blogTitle, 64) || 'No Title'}</p>
+                                                                    <span className={styles.blog_subtext}>
+                                                                        {images?.length > 1 ? `${images.length} images attached` : 'Single image blog'}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className={styles.stack_cell}>
+                                                                <span className={styles.primary_text}>{e?.authorname || 'N/A'}</span>
+                                                                <span className={styles.secondary_text}>Blog author</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span className={styles.category_badge}>{e?.blog_category?.name || 'N/A'}</span>
+                                                        </td>
+                                                        <td className={styles.date_cell}>{formatDate(e?.createdAt)}</td>
+                                                        <td>
+                                                            <p className={styles.blog_description}>{add3Dots(e?.meta_description, 140) || 'No description available'}</p>
+                                                        </td>
+                                                        <td>
+                                                            <div className={styles.table_actions}>
+                                                                <Link href={`/ebike-panel/dashboard/edit-blog/${e?.id}?page=${currentPage}`} onClick={handleEditBlog} style={{ textDecoration: 'none', width: '100%' }}>
+                                                                    <button className={`${styles.action_btn} ${styles.edit_btn}`}>
+                                                                        Edit
+                                                                    </button>
+                                                                </Link>
+                                                                <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                                    Delete
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        ))}
+                        ) : (
+                            <div className={styles.no_results}>
+                                <p>No blogs found matching your search criteria.</p>
+                            </div>
+                        )}
                     </div>
                     <div className={styles.pagination_btm}>
                         {filteredBlog?.length > 0 && (

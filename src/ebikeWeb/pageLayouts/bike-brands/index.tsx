@@ -8,6 +8,7 @@ import styles from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Link from 'next/link'
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 
 interface TabPanelProps {
@@ -76,6 +77,13 @@ export default function NewBikeBrand() {
       {
         !isLoading ?
           <Container>
+            <Box className={styles.pageAdBox}>
+              <AdSense
+                client="ca-pub-5167970563180610"
+                slot="9214599249"
+              />
+            </Box>
+
             <Typography className={styles.heading}>
               New Bikes By Make
             </Typography>
@@ -126,6 +134,13 @@ export default function NewBikeBrand() {
           {props?.trendingData ? <CustomTabPanel value={value} index={1}>
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike' onBtnClick={() => { }} />
           </CustomTabPanel> : ""} */}
+            </Box>
+
+            <Box className={styles.pageAdBox}>
+              <AdSense
+                client="ca-pub-5167970563180610"
+                slot="9214599249"
+              />
             </Box>
 
           </Container>

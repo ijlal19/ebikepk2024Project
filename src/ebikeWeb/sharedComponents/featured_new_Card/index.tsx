@@ -102,16 +102,6 @@ const Featured_New_Card = ({ props , fetchFavouriteAds }: any) => {
                     style={{
                         backgroundImage: `url(${cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')})`,
                     }}>
-                    {
-                        props?.is_sold ?
-                            <div className={styles.btns}>
-                                <p className={styles.tag1}>FEATURED</p>
-                                <p className={styles.tag1}>SOLD OUT</p>
-                            </div> :
-                            <div className={styles.btns}>
-                                <p className={styles.tag1}>FEATURED</p>
-                            </div>
-                    }
                     <p className={styles.heart_box} onClick={() => AddFavourite(props?.id)}>
                         {
                             FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(props?.id) ?
@@ -120,6 +110,16 @@ const Featured_New_Card = ({ props , fetchFavouriteAds }: any) => {
                         }
                     </p>
                 </div>
+                {
+                    props?.is_sold ?
+                        <div className={styles.status_tags}>
+                            <p className={styles.tag1}>FEATURED</p>
+                            <p className={styles.tag1}>SOLD OUT</p>
+                        </div> :
+                        <div className={styles.status_tags}>
+                            <p className={styles.tag1}>FEATURED</p>
+                        </div>
+                }
 
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</p>
@@ -214,23 +214,21 @@ const FavouriteAds = ({ props }: any) => {
                     style={{
                         backgroundImage: `url(${cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')})`,
                     }}>
-                    {
-                        props?.isFeatured ?
-                            (props?.is_sold ?
-                                <div className={styles.btns}>
-                                    <p className={styles.tag1}>FEATURED</p>
-                                    <p className={styles.tag1}>SOLD OUT</p>
-                                </div> :
-                                <div className={styles.btns}>
-                                    <p className={styles.tag1}>FEATURED</p>
-                                </div>) : ""
-                    }
-
-
                     <p className={styles.heart_box}>
                         <FavoriteRoundedIcon className={styles.icon} sx={{ color: "#1976d2" }} />
                     </p>
                 </div>
+                {
+                    props?.isFeatured ?
+                        (props?.is_sold ?
+                            <div className={styles.status_tags}>
+                                <p className={styles.tag1}>FEATURED</p>
+                                <p className={styles.tag1}>SOLD OUT</p>
+                            </div> :
+                            <div className={styles.status_tags}>
+                                <p className={styles.tag1}>FEATURED</p>
+                            </div>) : ""
+                }
 
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</p>
