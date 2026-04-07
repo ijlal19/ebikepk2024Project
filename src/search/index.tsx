@@ -12,6 +12,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './index.module.scss'
+import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 import { postSearch, postSearchNew } from '@/genericFunctions/geneFunc'
 import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
 
@@ -186,205 +187,222 @@ export default function SearchPage() {
         </Button>
       </Box>
 
-      {/* Loader */}
-      {loading && (
-        <Box className={styles.loader}>
-          <CircularProgress />
-        </Box>
-      )}
+      <Box className={styles.contentWrap}>
+        <Box className={styles.resultsColumn}>
+          {/* Loader */}
+          {loading && (
+            <Box className={styles.loader}>
+              <CircularProgress />
+            </Box>
+          )}
 
-      {/* No Results */}
-      {!loading && query && !hasAnyResult && (
-        <Typography className={styles.noResult}>
-          No results found for “{query}”
-        </Typography>
-      )}
+          {/* No Results */}
+          {!loading && query && !hasAnyResult && (
+            <Typography className={styles.noResult}>
+              No results found for “{query}”
+            </Typography>
+          )}
 
-      {/* Results */}
-      {!loading && results && (
-        <>
-          {/* Used Bikes */}
-          <Section
-            title="Used Bikes"
-            sectionKey="used_bikes"
-            viewAllUrl={`/used-bikes`}
-            renderItem={(bike: any) => (
-              <Box
-                key={bike.id}
-                className={styles.card}
-                // onClick={() =>
-                //   router.push(
-                //     `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
-                //   )
-                // }
-              >
-                <Box className={styles.imgWrap}>
-                  <img src={bike.images?.[0]} alt={bike.title} />
-                  <span className={`${styles.tag} ${styles.tagUsed}`}>Used</span>
-                </Box>
+          {/* Results */}
+          {!loading && results && (
+            <>
+              {/* Used Bikes */}
+              <Section
+                title="Used Bikes"
+                sectionKey="used_bikes"
+                viewAllUrl={`/used-bikes`}
+                renderItem={(bike: any) => (
+                  <Box
+                    key={bike.id}
+                    className={styles.card}
+                    // onClick={() =>
+                    //   router.push(
+                    //     `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
+                    //   )
+                    // }
+                  >
+                    <Box className={styles.imgWrap}>
+                      <img src={bike.images?.[0]} alt={bike.title} />
+                      <span className={`${styles.tag} ${styles.tagUsed}`}>Used</span>
+                    </Box>
 
-                <Box className={styles.cardBody}>
-                  <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
+                    <Box className={styles.cardBody}>
+                      <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
 
-                  <Box className={styles.metaRow}>
-                    <Typography className={styles.price}>
-                      PKR {priceWithCommas(bike.price)}
-                    </Typography>
-                  </Box>
+                      <Box className={styles.metaRow}>
+                        <Typography className={styles.price}>
+                          PKR {priceWithCommas(bike.price)}
+                        </Typography>
+                      </Box>
 
-                  <Box className={styles.cardActions} onClick={(e) => e.stopPropagation()}>
-                    <Button
-                      className={styles.btnPrimary}
-                      onClick={() =>
-                        router.push(
-                          `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
-                        )
-                      }
-                    >
-                      View Details
-                    </Button>
+                      <Box className={styles.cardActions} onClick={(e) => e.stopPropagation()}>
+                        <Button
+                          className={styles.btnPrimary}
+                          onClick={() =>
+                            router.push(
+                              `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
+                            )
+                          }
+                        >
+                          View Details
+                        </Button>
 
-                    {/* <Button
-                      className={styles.btnGhost}
-                      onClick={() => router.push(`/used-bikes`)}
-                    >
-                      More Used
-                    </Button> */}
-                  </Box>
-                </Box>
-              </Box>
-            )}
-
-          />
-
-          {/* New Bikes */}
-          <Section
-            title="New Bikes"
-            sectionKey="new_bikes"
-            viewAllUrl={`/new-bikes`}
-            renderItem={(bike: any) => (
-              <Box key={bike.id} className={styles.card}>
-                <Box className={styles.imgWrap}>
-                  <img src={bike.images?.[0]} alt={bike.title} />
-                  <span className={`${styles.tag} ${styles.tagNew}`}>New</span>
-                </Box>
-
-                <Box className={styles.cardBody}>
-                  <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
-
-                  <Box className={styles.metaRow}>
-                    <Typography className={styles.price}>
-                      PKR {priceWithCommas(bike.price)}
-                    </Typography>
-                  </Box>
-
-                  <Box className={styles.cardActions}>
-                    <Button className={styles.btnPrimary} onClick={() =>  router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)}>
-                      View Details
-                    </Button>
-                    {/* <Button className={styles.btnGhost} onClick={() => router.push(`/new-bikes`)}>
-                      Compare
-                    </Button> */}
-                  </Box>
-                </Box>
-              </Box>
-            )}
-          />
-
-          {/* Blogs */}
-          <Section
-            title="Blogs"
-            sectionKey="blogs"
-            viewAllUrl={`/blog`}
-            renderItem={(blog: any) => (
-              <Box key={blog.id} className={styles.card}>
-                <Box className={styles.imgWrap}>
-                  <img
-                    src={blog.featuredImage?.split('#$#')[0]?.trim()}
-                    alt={blog.blogTitle}
-                  />
-                  <span className={`${styles.tag} ${styles.tagBlog}`}>Blog</span>
-                </Box>
-
-                <Box className={styles.cardBody}>
-                  <Typography className={styles.cardTitle}>{add3Dots(blog.blogTitle, isMobile ? "20" : "25")}</Typography>
-                  <Typography className={`${styles.subText} mb-0 mt-0`} > Author : {blog.authorname} </Typography>
-                  <Box className={styles.cardActions}>
-                    <Button className={styles.btnPrimary} onClick={() => handleBlogRoute(blog)}>
-                      Read
-                    </Button>
-                  </Box>
-                </Box>
-              </Box>
-            )}
-
-          />
-
-          {/* Dealers */}
-          <Section
-            title="Dealers"
-            sectionKey="dealers"
-            viewAllUrl={`/dealers`}
-            renderItem={(d: any) => (
-              <Box key={d.id} className={styles.card}>
-                <Box className={styles.imgWrap}>
-                  <img src={ebike_logo} alt={d.shop_name} />
-                  <span className={`${styles.tag} ${styles.tagDealer}`}>Dealer</span>
-                </Box>
-
-                <Box className={styles.cardBody}>
-                  <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
-                  <Typography className={styles.subText}>{d.phone}</Typography>
-
-                  <Box className={styles.cardActions}>
-                    <Button
-                      className={styles.btnPrimary}
-                      onClick={() => dealerDetailPage(d) }
-                    >
-                      Details
-                    </Button>
-                  
-                  </Box>
-                </Box>
-              </Box>
-            )}
-
-          />
-
-          {/* Mechanics */}
-          <Section
-            title="Mechanics"
-            sectionKey="mechanics"
-            viewAllUrl={`/mechanics`}
-            renderItem={(d: any) => (
-                <Box key={d.id} className={styles.card}>
-                  <Box className={styles.imgWrap}>
-                    <img src={ebike_logo} alt={d.shop_name} />
-                    <span className={`${styles.tag} ${styles.tagDealer}`}> mechanic </span>
-                  </Box>
-
-                  <Box className={styles.cardBody}>
-                    <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
-                    <Typography className={styles.subText}>{d.phone}</Typography>
-
-                    <Box className={styles.cardActions}>
-                      <Button
-                        className={styles.btnPrimary}
-                        onClick={() => mechanicToDetailPage(d)}
-                      >
-                       Details
-                      </Button>
-                      {/* <Button className={styles.btnGhost} onClick={() => router.push(`/dealers`)}>
-                        View All
-                      </Button> */}
+                        {/* <Button
+                          className={styles.btnGhost}
+                          onClick={() => router.push(`/used-bikes`)}
+                        >
+                          More Used
+                        </Button> */}
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
-              )}
+                )}
 
-          />
-        </>
-      )}
+              />
+
+              {/* New Bikes */}
+              <Section
+                title="New Bikes"
+                sectionKey="new_bikes"
+                viewAllUrl={`/new-bikes`}
+                renderItem={(bike: any) => (
+                  <Box key={bike.id} className={styles.card}>
+                    <Box className={styles.imgWrap}>
+                      <img src={bike.images?.[0]} alt={bike.title} />
+                      <span className={`${styles.tag} ${styles.tagNew}`}>New</span>
+                    </Box>
+
+                    <Box className={styles.cardBody}>
+                      <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
+
+                      <Box className={styles.metaRow}>
+                        <Typography className={styles.price}>
+                          PKR {priceWithCommas(bike.price)}
+                        </Typography>
+                      </Box>
+
+                      <Box className={styles.cardActions}>
+                        <Button className={styles.btnPrimary} onClick={() =>  router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)}>
+                          View Details
+                        </Button>
+                        {/* <Button className={styles.btnGhost} onClick={() => router.push(`/new-bikes`)}>
+                          Compare
+                        </Button> */}
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+              />
+
+              {/* Blogs */}
+              <Section
+                title="Blogs"
+                sectionKey="blogs"
+                viewAllUrl={`/blog`}
+                renderItem={(blog: any) => (
+                  <Box key={blog.id} className={styles.card}>
+                    <Box className={styles.imgWrap}>
+                      <img
+                        src={blog.featuredImage?.split('#$#')[0]?.trim()}
+                        alt={blog.blogTitle}
+                      />
+                      <span className={`${styles.tag} ${styles.tagBlog}`}>Blog</span>
+                    </Box>
+
+                    <Box className={styles.cardBody}>
+                      <Typography className={styles.cardTitle}>{add3Dots(blog.blogTitle, isMobile ? "20" : "25")}</Typography>
+                      <Typography className={`${styles.subText} mb-0 mt-0`} > Author : {blog.authorname} </Typography>
+                      <Box className={styles.cardActions}>
+                        <Button className={styles.btnPrimary} onClick={() => handleBlogRoute(blog)}>
+                          Read
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+
+              />
+
+              {/* Dealers */}
+              <Section
+                title="Dealers"
+                sectionKey="dealers"
+                viewAllUrl={`/dealers`}
+                renderItem={(d: any) => (
+                  <Box key={d.id} className={styles.card}>
+                    <Box className={styles.imgWrap}>
+                      <img src={ebike_logo} alt={d.shop_name} />
+                      <span className={`${styles.tag} ${styles.tagDealer}`}>Dealer</span>
+                    </Box>
+
+                    <Box className={styles.cardBody}>
+                      <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
+                      <Typography className={styles.subText}>{d.phone}</Typography>
+
+                      <Box className={styles.cardActions}>
+                        <Button
+                          className={styles.btnPrimary}
+                          onClick={() => dealerDetailPage(d) }
+                        >
+                          Details
+                        </Button>
+                      
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
+
+              />
+
+              {/* Mechanics */}
+              <Section
+                title="Mechanics"
+                sectionKey="mechanics"
+                viewAllUrl={`/mechanics`}
+                renderItem={(d: any) => (
+                    <Box key={d.id} className={styles.card}>
+                      <Box className={styles.imgWrap}>
+                        <img src={ebike_logo} alt={d.shop_name} />
+                        <span className={`${styles.tag} ${styles.tagDealer}`}> mechanic </span>
+                      </Box>
+
+                      <Box className={styles.cardBody}>
+                        <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
+                        <Typography className={styles.subText}>{d.phone}</Typography>
+
+                        <Box className={styles.cardActions}>
+                          <Button
+                            className={styles.btnPrimary}
+                            onClick={() => mechanicToDetailPage(d)}
+                          >
+                           Details
+                          </Button>
+                          {/* <Button className={styles.btnGhost} onClick={() => router.push(`/dealers`)}>
+                            View All
+                          </Button> */}
+                        </Box>
+                      </Box>
+                    </Box>
+                  )}
+
+              />
+            </>
+          )}
+        </Box>
+
+        <Box className={styles.sidebarColumn}>
+          <Box className={styles.sidebarInner}>
+            <AdSense
+              client="ca-pub-5167970563180610"
+              slot="9214599249"
+              format={null}
+              responsive={false}
+              style={{ margin: 0 }}
+              adStyle={{ display: 'inline-block', width: '300px', height: '600px' }}
+            />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   )
 }

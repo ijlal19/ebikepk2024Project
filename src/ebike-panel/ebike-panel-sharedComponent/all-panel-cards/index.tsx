@@ -24,6 +24,7 @@ let Newbikewindowscroll: any;
 let Blogwindowscroll: any;
 let brandScroll: any;
 let AllBrandArray: any[] = [];
+const BIKE_IMAGE_PLACEHOLDER = 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
 
 
 /////////////////////////////////////////////////////// USED BIKE CARD
@@ -445,9 +446,21 @@ const New_bike_card = () => {
     }, []);
 
     useEffect(() => {
-        const filtered = AllNewBikeForFilter.filter((bike: any) =>
-            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        const normalizedTerm = searchTerm.trim().toLowerCase();
+        const filtered = AllNewBikeForFilter.filter((bike: any) => {
+            if (!normalizedTerm) return true;
+
+            const searchableValues = [
+                bike?.id,
+                bike?.title,
+                GetName("brand", bike?.brandId),
+                bike?.price,
+            ]
+                .filter(Boolean)
+                .map((value: any) => String(value).toLowerCase());
+
+            return searchableValues.some((value: string) => value.includes(normalizedTerm));
+        });
         setFilteredBikes(filtered);
     }, [searchTerm, AllNewBikeForFilter]);
 
@@ -544,12 +557,22 @@ const New_bike_card = () => {
             {!IsLoading ? (
                 <div className={styles.big_container}>
                     <div className={styles.page_header}>
+                        <div className={styles.inventory_summary}>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Total New Bikes</span>
+                                <strong className={styles.summary_value}>{AllNewBikeForFilter?.length || 0}</strong>
+                            </div>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Showing</span>
+                                <strong className={styles.summary_value}>{displayedBikes?.length || 0}</strong>
+                            </div>
+                        </div>
                         <form className={styles.input_box}>
                             <input
                                 type="text"
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                placeholder='Search New Bike with Title'
+                                placeholder='Search by ID, title, brand or price'
                                 className={styles.input} />
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
@@ -570,44 +593,64 @@ const New_bike_card = () => {
                     </div>
                     <div className={styles.card_container}>
                         {displayedBikes.length > 0 ? (
-                            <table className={styles.table_main}>
-                                <thead className={styles.thead}>
-                                    <tr >
-                                        <td className={styles.td} >ID</td>
-                                        <td className={styles.td} >Image</td>
-                                        <td className={styles.td} >Title</td>
-                                        <td className={styles.td} >Brand</td>
-                                        <td className={styles.td} >Price</td>
-                                        <td className={styles.td} >Action</td>
-                                    </tr>
-                                </thead>
-                                <tbody className={styles.tbody}>
-                                    {displayedBikes.map((e: any, i: any) => (
-                                        <tr className={styles.tr}>
-                                            <td className={styles.td} >{e?.id}</td>
-                                            <td className={styles.td} ><img src={cloudinaryLoader(e?.images[0], 400, 'auto')} alt="" className={styles.image} /></td>
-                                            <td className={styles.td} >{add3Dots(e?.title, 20)}</td>
-                                            <td className={styles.td} >{GetName("brand", e?.brandId) || 'N/A'}</td>
-                                            <td className={styles.td} >{e?.price ? priceWithCommas(e.price) : '0'}</td>
-                                            <td className={styles.td_action}>
-                                                <div className={styles.card_actions}>
-                                                    <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}?page=${currentPage}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
-                                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
-                                                            Edit
-                                                        </button>
-                                                    </Link>
-                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <div className={styles.inventory_table_section}>
+                                <div className={styles.inventory_table_scroll}>
+                                    <table className={styles.inventory_table}>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Bike</th>
+                                                <th>Brand</th>
+                                                <th>Price</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {displayedBikes.map((e: any) => (
+                                                <tr className={styles.inventory_row} key={e?.id}>
+                                                    <td className={styles.id_cell}>#{e?.id}</td>
+                                                    <td>
+                                                        <div className={styles.inventory_bike_cell}>
+                                                            <img
+                                                                src={e?.images?.[0] ? cloudinaryLoader(e.images[0], 400, 'auto') : BIKE_IMAGE_PLACEHOLDER}
+                                                                alt={e?.title || 'Bike image'}
+                                                                className={styles.inventory_thumb}
+                                                            />
+                                                            <div className={styles.inventory_meta}>
+                                                                <p className={styles.inventory_title}>{add3Dots(e?.title, 52) || 'Untitled bike'}</p>
+                                                                <span className={styles.inventory_subtext}>Manage listing details and pricing from here.</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span className={styles.inventory_brand_badge}>{GetName("brand", e?.brandId) || 'N/A'}</span>
+                                                    </td>
+                                                    <td className={styles.inventory_price}>{e?.price ? priceWithCommas(e.price) : '0'}</td>
+                                                    <td>
+                                                        <span className={`${styles.inventory_status_badge} ${styles.inventory_status_default}`}>New Bike</span>
+                                                    </td>
+                                                    <td>
+                                                        <div className={styles.inventory_actions}>
+                                                            <Link href={`/ebike-panel/dashboard/edit-new-bike/${e?.id}?page=${currentPage}`} style={{ textDecoration: 'none', width: '100%' }}>
+                                                                <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         ) : (
-                            <div className={styles.no_results}>
-                                <p>No bikes found matching your search criteria.</p>
+                            <div className={styles.inventory_empty_state}>
+                                <p>No new bikes found matching your search criteria.</p>
                             </div>
                         )}
                     </div>
@@ -2525,19 +2568,38 @@ const Electric_Bike_Card = () => {
     const [allBrands, setAllBrands] = useState([])
     const itemsPerPage = 12;
     const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
 
     useEffect(() => {
-        fetchAllNewBike(1);
+        fetchAllNewBike(initialPage);
         fetchBrands()
     }, []);
 
     useEffect(() => {
-        const filtered = AllNewBikeForFilter.filter((bike: any) =>
-            bike.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        const normalizedTerm = searchTerm.trim().toLowerCase();
+        const filtered = AllNewBikeForFilter.filter((bike: any) => {
+            if (!normalizedTerm) return true;
+
+            const searchableValues = [
+                bike?.id,
+                bike?.title,
+                GetName("brand", bike?.brandId),
+                bike?.price,
+            ]
+                .filter(Boolean)
+                .map((value: any) => String(value).toLowerCase());
+
+            return searchableValues.some((value: string) => value.includes(normalizedTerm));
+        });
         setFilteredBikes(filtered);
-        setCurrentPage(1);
     }, [searchTerm, AllNewBikeForFilter]);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+    }, [initialPage]);
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -2587,6 +2649,7 @@ const Electric_Bike_Card = () => {
 
     const handlePaginationChange = (event: any, page: any) => {
         setCurrentPage(page);
+        router.push(`${pathname}?page=${page}`, { scroll: false });
         window.scrollTo(0, 0);
     };
 
@@ -2621,6 +2684,8 @@ const Electric_Bike_Card = () => {
 
     const handleSearch = (e: any) => {
         setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
     };
 
     return (
@@ -2631,12 +2696,22 @@ const Electric_Bike_Card = () => {
             {!IsLoading ? (
                 <div className={styles.big_container}>
                     <div className={styles.page_header}>
+                        <div className={styles.inventory_summary}>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Total Electric Bikes</span>
+                                <strong className={styles.summary_value}>{AllNewBikeForFilter?.length || 0}</strong>
+                            </div>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Showing</span>
+                                <strong className={styles.summary_value}>{displayedBikes?.length || 0}</strong>
+                            </div>
+                        </div>
                         <form className={styles.input_box}>
                             <input
                                 type="text"
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                placeholder='Search New Bike with Title'
+                                placeholder='Search by ID, title, brand or price'
                                 className={styles.input} />
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
@@ -2743,44 +2818,64 @@ const Electric_Bike_Card = () => {
 
                     <div className={styles.card_container}>
                         {displayedBikes.length > 0 ? (
-                            <table className={styles.table_main}>
-                                <thead className={styles.thead}>
-                                    <tr >
-                                        <td className={styles.td} >ID</td>
-                                        <td className={styles.td} >Image</td>
-                                        <td className={styles.td} >Title</td>
-                                        <td className={styles.td} >Brand</td>
-                                        <td className={styles.td} >Price</td>
-                                        <td className={styles.td} >Action</td>
-                                    </tr>
-                                </thead>
-                                <tbody className={styles.tbody}>
-                                    {displayedBikes.map((e: any, i: any) => (
-                                        <tr className={styles.tr}>
-                                            <td className={styles.td} >{e?.id}</td>
-                                            <td className={styles.td} ><img src={cloudinaryLoader(e?.images[0], 400, 'auto')} alt="" className={styles.image} /></td>
-                                            <td className={styles.td} >{add3Dots(e?.title, 20)}</td>
-                                            <td className={styles.td} >{GetName("brand", e?.brandId) || 'N/A'}</td>
-                                            <td className={styles.td} >{e?.price ? priceWithCommas(e.price) : '0'}</td>
-                                            <td className={styles.td_action}>
-                                                <div className={styles.card_actions}>
-                                                    <Link href={`/ebike-panel/dashboard/edit-electric-bike/${e?.id}`} style={{ textDecoration: 'none', color: "white", width: '100%' }}>
-                                                        <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
-                                                            Edit
-                                                        </button>
-                                                    </Link>
-                                                    <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <div className={styles.inventory_table_section}>
+                                <div className={styles.inventory_table_scroll}>
+                                    <table className={styles.inventory_table}>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Bike</th>
+                                                <th>Brand</th>
+                                                <th>Price</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {displayedBikes.map((e: any) => (
+                                                <tr className={styles.inventory_row} key={e?.id}>
+                                                    <td className={styles.id_cell}>#{e?.id}</td>
+                                                    <td>
+                                                        <div className={styles.inventory_bike_cell}>
+                                                            <img
+                                                                src={e?.images?.[0] ? cloudinaryLoader(e.images[0], 400, 'auto') : BIKE_IMAGE_PLACEHOLDER}
+                                                                alt={e?.title || 'Bike image'}
+                                                                className={styles.inventory_thumb}
+                                                            />
+                                                            <div className={styles.inventory_meta}>
+                                                                <p className={styles.inventory_title}>{add3Dots(e?.title, 52) || 'Untitled bike'}</p>
+                                                                <span className={styles.inventory_subtext}>Focused electric inventory with quick edit access.</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span className={styles.inventory_brand_badge}>{GetName("brand", e?.brandId) || 'N/A'}</span>
+                                                    </td>
+                                                    <td className={styles.inventory_price}>{e?.price ? priceWithCommas(e.price) : '0'}</td>
+                                                    <td>
+                                                        <span className={`${styles.inventory_status_badge} ${styles.inventory_status_success}`}>Electric</span>
+                                                    </td>
+                                                    <td>
+                                                        <div className={styles.inventory_actions}>
+                                                            <Link href={`/ebike-panel/dashboard/edit-electric-bike/${e?.id}`} style={{ textDecoration: 'none', width: '100%' }}>
+                                                                <button className={`${styles.action_btn} ${styles.edit_btn}`} onClick={() => handleEdit(e?.id)}>
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         ) : (
-                            <div className={styles.no_results}>
-                                <p>No bikes found matching your search criteria.</p>
+                            <div className={styles.inventory_empty_state}>
+                                <p>No electric bikes found matching your search criteria.</p>
                             </div>
                         )}
                     </div>
