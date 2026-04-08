@@ -12,10 +12,11 @@ import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import DateRangeIcon from '@mui/icons-material/DateRange';
+import BlogSidebarSection, { BLOG_TAGS } from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 import Autocomplete from '@mui/material/Autocomplete';
 import { GiConsoleController } from 'react-icons/gi';
 import TextField from '@mui/material/TextField';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
@@ -25,34 +26,7 @@ import Script from "next/script";
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
-const TagArray = [
-  "Honda",
-  "Price",
-  "Bike",
-  "Tips",
-  "CC",
-  "Suzuki",
-  "125",
-  "2025",
-  "Petrol",
-  "New",
-  "Used",
-  "Riding",
-  "Fuel",
-  "KTM",
-  "Pakistan",
-  "Launch",
-  "Model",
-  "Yamaha",
-  "Review",
-  "Vehicle",
-  "Kawasaki",
-  "Motorcycle",
-  "Electric",
-  "Introduce",
-  "Scooter",
-  "BMW",
-]
+
 const Blog = () => {
   const [filteredResults, setFilteredResults] = useState([]);
   const [isFilterApply, setisFilterApply] = useState(false);
@@ -74,6 +48,7 @@ const Blog = () => {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     let _isLoginUser = isLoginUser()
@@ -87,6 +62,23 @@ const Blog = () => {
     getAllBlogList()
     setFade(true);
   }, [])
+
+  useEffect(() => {
+    if (BlogData.length === 0) return;
+
+    const tagFromQuery = searchParams.get('tag');
+    if (tagFromQuery && BLOG_TAGS.includes(tagFromQuery)) {
+      const normalizedTag = tagFromQuery.trim();
+      setSelectedTag(normalizedTag);
+      handleSearch({ target: { value: normalizedTag } });
+      return;
+    }
+
+    if (SelectedTags) {
+      setSelectedTag('');
+      setFilteredResults([]);
+    }
+  }, [searchParams, BlogData]);
 
   useEffect(() => {
     setisFilterApply(true)
@@ -158,8 +150,9 @@ const Blog = () => {
   };
 
   const handleSearch = (e: any) => {
+    const value = e?.target?.value || '';
     const results = BlogData.filter((item: any) =>
-      item.blogTitle.toLowerCase().includes(e?.target?.value?.toLowerCase())
+      item.blogTitle.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredResults(results);
     setTimeout(() => {
@@ -177,10 +170,8 @@ const Blog = () => {
 
   const handleTag = async (e: any) => {
     setSelectedTag(e)
-    const obj = {
-      target: { value: e }
-    }
-    handleSearch(obj)
+    router.replace(`/blog?tag=${encodeURIComponent(e)}`)
+    handleSearch({ target: { value: e } })
   }
 
   const blogCardMini = (e: any, i: any) => {
@@ -340,19 +331,11 @@ const Blog = () => {
                     <List_Card />
                   </div>
 
-                  <button className={styles.btn} onClick={gotoSellBike}>Sell your bike</button>
-                  <Box className={styles.tags_main} >
-                    <Typography className={styles.shortblogheading}>Popular Tags <span className={styles.underline}></span></Typography>
-                    <Box className={styles.tags_content}>
-                      {
-                        TagArray.map((e: any, i: any) => {
-                          return (
-                            <Button className={SelectedTags !== e ? styles.tags_btn : styles.tags_select_btn} onClick={() => { handleTag(e) }} key={i} >{e}</Button>
-                          )
-                        })
-                      }
-                    </Box>
-                  </Box>
+                  <BlogSidebarSection
+                    selectedTag={SelectedTags}
+                    onTagClick={handleTag}
+                    onSellBikeClick={gotoSellBike}
+                  />
                 </Box>
               </Grid>
             </Grid>

@@ -22,11 +22,11 @@ import { Side_brands } from '@/ebikeWeb/sharedComponents/Letf-side-section/brand
 import NewBike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/new-bike-section';
 import Featrued_Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/featuredBikecard';
 import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bike-section/UsedBikecard';
-import Blog_left from '@/ebikeWeb/sharedComponents/Letf-side-section/blog-left';
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 import Script from 'next/script';
+import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 
 const BLOG_VIEW_DEDUP_MS = 5000;
 const blogViewLastHitAt: Record<string, number> = {};
@@ -201,6 +201,19 @@ const BlogDetails = () => {
         </Box>
       </Box>
     )
+  }
+
+  const gotoSellBike = () => {
+    if (!IsLogin || IsLogin == "not_login" || IsLogin?.id == undefined) {
+      alert('Please Login to Sell Your Bike!')
+      return
+    }
+
+    router.push('/used-bikes/sell-used-bike')
+  }
+
+  const handleSidebarTagClick = (tag: string) => {
+    router.push(`/blog?tag=${encodeURIComponent(tag)}`);
   }
 
   return (
@@ -378,6 +391,11 @@ const BlogDetails = () => {
               <NewBike_left />
 
               <Usedbike_left />
+
+              <BlogSidebarSection
+                onSellBikeClick={gotoSellBike}
+                onTagClick={handleSidebarTagClick}
+              />
 
               <Box className={styles.sidebar_ads}>
                 <AdSense

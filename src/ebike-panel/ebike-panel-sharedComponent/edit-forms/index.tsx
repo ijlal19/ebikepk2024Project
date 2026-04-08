@@ -964,6 +964,7 @@ const EditBlogForm = () => {
     }, [])
 
     const fetchBlogByID = async (id: any) => {
+        setIsLoading(true)
         const res = await getSingleblogDetail(id)
         if (res) {
             setCategoryId(res.blogCategoryId)
@@ -983,6 +984,7 @@ const EditBlogForm = () => {
                 setImageArr([res.featuredImage])
             }
         }
+        setIsLoading(false)
     }
 
     const handleImageDelete = (index: number) => {
@@ -1095,80 +1097,146 @@ const EditBlogForm = () => {
         router.push(`/ebike-panel/dashboard/blog-list?page=${pageFromUrl}`)
     }
 
+    const currentCategoryName = BlogCategory.find((e: any) => Number(e.id) === Number(CategoryId || BlogData.blogCategoryId))?.categoryName || "Select Category";
+
     return (
         <div className={styles.main_blog_box}>
-            <form onSubmit={handleSubmit} className={styles.main}>
-                <div className={styles.formHeader}>
-                    <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                    <p className={styles.heading}>Edit Blog</p>
-                </div>
-                <label htmlFor="blogTitle" className={styles.label}>Title</label>
-                <input id="blogTitle" name="blogTitle" value={Blog_Title} onChange={(e) => setBlog_Title(e.target.value)} className={styles.input} />
-
-                <label htmlFor="authorname" className={styles.label}>Author Name</label>
-                <input id="authorname" name="authorname" value={Author_Name} onChange={(e) => setAuthor_Name(e.target.value)} className={styles.input} />
-
-                <label htmlFor="bloghtml" className={styles.label}>Description</label>
-                <FloaraTextarea
-                    value={Blog_Html}
-                    onChange={(e: any) => setBlog_Html(e)}
-                />
-
-                {/* <input
-                    type="file"
-                    className={styles.fileInput}
-                    accept="image/*"
-                    onChange={(e) => uploadImage(e)}
-                />
-                {Blog_Featured_Image && (
-                    <img
-                        src={Blog_Featured_Image}
-                        alt="Preview"
-                        style={{ width: '150px', height: '100px', marginTop: '10px', border: '1px solid grey', borderRadius: '3px' }}
-                    />
-                )} */}
-
-                {imageArr.length < 4 && (
-                    <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                )}
-
-                {/* Images */}
-                <label className={styles.label}>Images (max 4)</label>
-                <div className={styles.imagePreview}>
-                    {imageArr?.map((img: any, index: any) => (
-                        <div key={index}>
-                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
-                            <button type="button" onClick={() => handleImageDelete(index)}>×</button>
+            {!isLoading ?
+                <form onSubmit={handleSubmit} className={styles.main}>
+                    <div className={styles.formHeader}>
+                        <button type="button" className={styles.a} onClick={goBack} aria-label="Go back">
+                            <ArrowBackIosIcon className={styles.icon} />
+                        </button>
+                        <div className={styles.topText}>
+                            <p className={styles.eyebrow}>Content Manager</p>
+                            <p className={styles.heading}>Edit Blog</p>
+                            <p className={styles.subheading}>Update content, visuals, category, and SEO details from one professional workspace.</p>
                         </div>
-                    ))}
+                    </div>
+
+                    <div className={styles.contentGrid}>
+                        <div className={styles.mainColumn}>
+                            <div className={styles.sectionCard}>
+                                <div className={styles.sectionHeader}>
+                                    <p className={styles.sectionTitle}>Basic Information</p>
+                                    <p className={styles.sectionHint}>Keep the title clear, category accurate, and author details consistent.</p>
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label htmlFor="blogTitle" className={styles.label}>Title</label>
+                                    <input id="blogTitle" name="blogTitle" value={Blog_Title} onChange={(e) => setBlog_Title(e.target.value)} className={styles.input} />
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label htmlFor="authorname" className={styles.label}>Author Name</label>
+                                    <input id="authorname" name="authorname" value={Author_Name} onChange={(e) => setAuthor_Name(e.target.value)} className={styles.input} />
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label htmlFor="blogCategory" className={styles.label}>Category</label>
+                                    <div className={styles.drop_downBox}>
+                                        <select name="blogCategory" id="blogCategory" className={styles.selected} onChange={CategoryChange} value={CategoryId || BlogData.blogCategoryId || ''}>
+                                            <option value="" disabled>Select Category</option>
+                                            {BlogCategory.map((e: any, index) => (
+                                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                                    {e?.categoryName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles.sectionCard}>
+                                <div className={styles.sectionHeader}>
+                                    <p className={styles.sectionTitle}>Blog Content</p>
+                                    <p className={styles.sectionHint}>Use the rich editor to refine article structure and readability.</p>
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label htmlFor="bloghtml" className={styles.label}>Description</label>
+                                    <div className={styles.editorWrap}>
+                                        <FloaraTextarea
+                                            value={Blog_Html}
+                                            onChange={(e: any) => setBlog_Html(e)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.sideColumn}>
+                            <div className={styles.sectionCard}>
+                                <div className={styles.sectionHeader}>
+                                    <p className={styles.sectionTitle}>Media</p>
+                                    <p className={styles.sectionHint}>Manage featured blog visuals and keep the gallery concise.</p>
+                                </div>
+
+                                <div className={styles.mediaSummary}>
+                                    <div>
+                                        <span className={styles.summaryLabel}>Current Category</span>
+                                        <strong className={styles.summaryValue}>{currentCategoryName}</strong>
+                                    </div>
+                                    <div>
+                                        <span className={styles.summaryLabel}>Images</span>
+                                        <strong className={styles.summaryValue}>{imageArr.length}/4</strong>
+                                    </div>
+                                </div>
+
+                                {imageArr.length < 4 && (
+                                    <div className={styles.imageUploader}>
+                                        <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                                        <p className={styles.uploaderHint}>Upload sharp cover images. The first image usually works best as the lead preview.</p>
+                                    </div>
+                                )}
+
+                                <label className={styles.label}>Image Preview</label>
+                                <div className={styles.imagePreview}>
+                                    {imageArr?.map((img: any, index: any) => (
+                                        <div key={index} className={styles.imageCard}>
+                                            <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
+                                            <button type="button" onClick={() => handleImageDelete(index)} className={styles.removeImage}>×</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className={styles.sectionCard}>
+                                <div className={styles.sectionHeader}>
+                                    <p className={styles.sectionTitle}>SEO Settings</p>
+                                    <p className={styles.sectionHint}>Polish metadata so the blog is easier to discover and share.</p>
+                                </div>
+
+                                <div className={styles.metaGrid}>
+                                    <div className={styles.fieldGroup}>
+                                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
+                                        <textarea id="meta_title" name="meta_title" value={Blog_Meta_Title} onChange={(e) => setBlog_Meta_Title(e.target.value)} className={styles.textarea} />
+                                    </div>
+                                    <div className={styles.fieldGroup}>
+                                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
+                                        <textarea id="meta_description" name="meta_description" value={Blog_Meta_Description} onChange={(e) => setBlog_Meta_description(e.target.value)} className={styles.textarea} />
+                                    </div>
+                                    <div className={styles.fieldGroup}>
+                                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
+                                        <textarea id="focus_keyword" name="focus_keyword" value={Blog_Focus_keyword} onChange={(e) => setBlog_Focus_keyword(e.target.value)} className={styles.textarea} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.actionRow}>
+                        <button type="button" className={styles.ghostButton} onClick={goBack}>Cancel</button>
+                        <button type="submit" className={styles.button}>Save Changes</button>
+                    </div>
+                </form>
+                :
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
                 </div>
-
-
-                {/* {selectedImages} */}
-                <div className={styles.drop_downBox}>
-                    <select name="" id="" className={styles.selected} onChange={CategoryChange}>
-                        <option value={BlogData.blogCategoryId || ''} disabled selected hidden>
-                            {BlogCategory.find((e: any) => e.id === BlogData.blogCategoryId)?.categoryName || "Select Category"}
-                        </option>
-                        {
-                            BlogCategory.map((e: any, index) => (
-                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                    {e?.categoryName}
-                                </option>
-                            ))
-                        }
-                    </select>
-                </div>
-
-                <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                <textarea id="meta_title" name="meta_title" value={Blog_Meta_Title} onChange={(e) => setBlog_Meta_Title(e.target.value)} className={styles.textarea} />
-                <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                <textarea id="meta_description" name="meta_description" value={Blog_Meta_Description} onChange={(e) => setBlog_Meta_description(e.target.value)} className={styles.textarea} />
-                <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                <textarea id="focus_keyword" name="focus_keyword" value={Blog_Focus_keyword} onChange={(e) => setBlog_Focus_keyword(e.target.value)} className={styles.textarea} />
-
-                <button type="submit" className={styles.button}>Save Edit</button>
-            </form>
+            }
         </div>
     );
 }
