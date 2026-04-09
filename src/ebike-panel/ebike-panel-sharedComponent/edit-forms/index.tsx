@@ -69,6 +69,100 @@ let product_size = [
 
 let AllBrandArray: any[] = [];
 
+const newBikeSpecFields = [
+    { name: "newprice", label: "Price" },
+    { name: "newengine", label: "Engine" },
+    { name: "newboreAndStroke", label: "Bore & Stroke" },
+    { name: "newclutch", label: "Clutch" },
+    { name: "newstarting", label: "Starting" },
+    { name: "newdimention", label: "Dimension" },
+    { name: "newpetrolCapacity", label: "Petrol Capacity" },
+    { name: "newdisplacement", label: "Displacement" },
+    { name: "newcompressionRatio", label: "Compression Ratio" },
+    { name: "newtransmission", label: "Transmission" },
+    { name: "newframe", label: "Frame" },
+    { name: "newgroundClearance", label: "Ground Clearance" },
+    { name: "newtyreBack", label: "Tyre Back" },
+    { name: "newtyreFront", label: "Tyre Front" },
+    { name: "newdryWeight", label: "Dry Weight" }
+];
+
+const electricBikeSpecFields = [
+    { name: "newprice", label: "Price" },
+    { name: "newdimention", label: "Type" },
+    { name: "newengine", label: "Engine" },
+    { name: "newboreAndStroke", label: "Battery" },
+    { name: "newframe", label: "Head Light" },
+    { name: "newpetrolCapacity", label: "Range Per Charge" },
+    { name: "newstarting", label: "Speed" },
+    { name: "newgroundClearance", label: "Motor" },
+    { name: "newclutch", label: "Wheel" },
+    { name: "newdryWeight", label: "Tyre Size" },
+    { name: "newtransmission", label: "Shock Absorption" },
+    { name: "newtyreBack", label: "Brake (Front/Rear)" },
+    { name: "newtyreFront", label: "Charge Time" },
+    { name: "newdisplacement", label: "Battery Type" },
+    { name: "newcompressionRatio", label: "Frame" },
+];
+
+const DashboardFormHeader = ({
+    eyebrow,
+    title,
+    subtitle,
+    onBack,
+}: {
+    eyebrow: string;
+    title: string;
+    subtitle: string;
+    onBack: () => void;
+}) => (
+    <div className={styles.formHeader}>
+        <button type="button" className={styles.a} onClick={onBack} aria-label="Go back">
+            <ArrowBackIosIcon className={styles.icon} />
+        </button>
+        <div className={styles.topText}>
+            <p className={styles.eyebrow}>{eyebrow}</p>
+            <p className={styles.heading}>{title}</p>
+            <p className={styles.subheading}>{subtitle}</p>
+        </div>
+    </div>
+);
+
+const DashboardSection = ({
+    title,
+    hint,
+    children,
+}: {
+    title: string;
+    hint: string;
+    children: React.ReactNode;
+}) => (
+    <div className={styles.sectionCard}>
+        <div className={styles.sectionHeader}>
+            <p className={styles.sectionTitle}>{title}</p>
+            <p className={styles.sectionHint}>{hint}</p>
+        </div>
+        {children}
+    </div>
+);
+
+const DashboardField = ({
+    label,
+    htmlFor,
+    children,
+}: {
+    label: string;
+    htmlFor: string;
+    children: React.ReactNode;
+}) => (
+    <div className={styles.fieldGroup}>
+        <label htmlFor={htmlFor} className={styles.label}>{label}</label>
+        <div className={styles.fieldControl}>
+            {children}
+        </div>
+    </div>
+);
+
 
 //////////////////////////////////////////////// EDIT USED BIKE
 const EditUsedBikeForm = () => {
@@ -244,54 +338,94 @@ const EditUsedBikeForm = () => {
     };
 
     return (
-        <div className={styles.main_box}>
+        <div className={styles.main_blog_box}>
             {
                 !isLoading ?
                     <form onSubmit={handleSubmit} className={styles.main}>
-                        <div className={styles.formHeader}>
-                            <p className={styles.a} onClick={goBack}><ArrowBackIosIcon className={styles.icon} /></p>
-                            <p className={styles.heading}>Edit Used Bike</p>
+                        <DashboardFormHeader
+                            eyebrow="Marketplace Editor"
+                            title="Edit Classified Ad"
+                            subtitle="Refresh the listing details, seller profile, and media in a cleaner admin workspace."
+                            onBack={goBack}
+                        />
+
+                        <div className={styles.contentGrid}>
+                            <div className={styles.mainColumn}>
+                                <DashboardSection
+                                    title="Listing Details"
+                                    hint="Keep the ad title sharp, the description easy to scan, and the pricing clear."
+                                >
+                                    <DashboardField label="Title" htmlFor="title">
+                                        <input id="title" name="title" value={newtitle} onChange={(e) => handleChange('title', e.target.value)} className={styles.input} />
+                                    </DashboardField>
+
+                                    <DashboardField label="Description" htmlFor="description">
+                                        <textarea id="description" name="description" value={newdescription} onChange={(e) => handleChange('description', e.target.value)} className={styles.textarea} />
+                                    </DashboardField>
+                                </DashboardSection>
+
+                                <DashboardSection
+                                    title="Seller Information"
+                                    hint="These contact fields help keep the ad credible and ready for follow-up."
+                                >
+                                    <div className={styles.mediaSummary}>
+                                        <div>
+                                            <span className={styles.summaryLabel}>Listing Price</span>
+                                            <span className={styles.summaryValue}>{newprice ? `PKR ${newprice}` : "Not set"}</span>
+                                        </div>
+                                        <div>
+                                            <span className={styles.summaryLabel}>Images</span>
+                                            <span className={styles.summaryValue}>{imageArr.length}/4 attached</span>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.inlineGrid}>
+                                        <DashboardField label="Price (PKR)" htmlFor="price">
+                                            <input id="price" name="price" value={newprice} onChange={(e) => handleChange('price', e.target.value)} className={styles.input} />
+                                        </DashboardField>
+
+                                        <DashboardField label="Video URL" htmlFor="videoUrl">
+                                            <input id="videoUrl" name="videoUrl" value={newvideoUrl} onChange={(e) => handleChange('videoUrl', e.target.value)} className={styles.input} />
+                                        </DashboardField>
+
+                                        <DashboardField label="Seller Name" htmlFor="sellerName">
+                                            <input id="sellerName" name="sellerName" value={newsellerName} onChange={(e) => handleChange('sellerName', e.target.value)} className={styles.input} />
+                                        </DashboardField>
+
+                                        <DashboardField label="Seller Mobile" htmlFor="sellerMobile">
+                                            <input id="sellerMobile" name="sellerMobile" value={mobile} onChange={(e) => handleChange('mobile', e.target.value)} className={styles.input} />
+                                        </DashboardField>
+                                    </div>
+                                </DashboardSection>
+                            </div>
+
+                            <div className={styles.sideColumn}>
+                                <DashboardSection
+                                    title="Listing Media"
+                                    hint="Add up to four images and remove outdated visuals directly from here."
+                                >
+                                    <div className={styles.imageUploader}>
+                                        {imageArr.length < 4 && (
+                                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                                        )}
+                                        <p className={styles.uploaderHint}>Recommended: clear front, side, dashboard, and condition photos.</p>
+                                    </div>
+
+                                    <div className={styles.imagePreview}>
+                                        {imageArr.map((img, index) => (
+                                            <div key={index} className={styles.imageCard}>
+                                                <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index + 1}`} />
+                                                <button type="button" className={styles.removeImage} onClick={() => handleImageDelete(index)}>×</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </DashboardSection>
+                            </div>
                         </div>
 
-                        <label htmlFor="title" className={styles.label}>Title</label>
-                        <input id="title" name="title" value={newtitle} onChange={(e) => handleChange('title', e.target.value)} className={styles.input} />
-
-                        {imageArr.length < 4 && (
-                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                        )}
-
-                        <label className={styles.label}>Images (max 4)</label>
-                        <div className={styles.imagePreview}>
-                            {imageArr.map((img, index) => (
-                                <div key={index} className={styles.imageWrapper}>
-                                    <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} />
-                                    <button type="button" onClick={() => handleImageDelete(index)}>×</button>
-                                </div>
-                            ))}
+                        <div className={styles.actionRow}>
+                            <button type="submit" className={styles.button}>Update Bike</button>
                         </div>
-                        <label htmlFor="description" className={styles.label}>Description</label>
-                        <textarea id="description" name="description" value={newdescription} onChange={(e) => handleChange('description', e.target.value)} className={styles.textarea} />
-                        <div className={styles.inputs_group}>
-                            <div>
-                                <label htmlFor="price" className={styles.label}>Price (PKR)</label>
-                                <input id="price" name="price" value={newprice} onChange={(e) => handleChange('price', e.target.value)} className={styles.input_} />
-                            </div>
-                            <div>
-                                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                                <input id="videoUrl" name="videoUrl" value={newvideoUrl} onChange={(e) => handleChange('videoUrl', e.target.value)} className={styles.input_} />
-                            </div>
-                            <div>
-                                <label htmlFor="sellerName" className={styles.label}>Seller Name</label>
-                                <input id="sellerName" name="sellerName" value={newsellerName} onChange={(e) => handleChange('sellerName', e.target.value)} className={styles.input_} />
-                            </div>
-                            <div>
-                                <label htmlFor="sellerMobile" className={styles.label}>Seller Mobile</label>
-                                <input id="sellerMobile" name="sellerMobile" value={mobile} onChange={(e) => handleChange('mobile', e.target.value)} className={styles.input_} />
-                            </div>
-                        </div>
-
-
-                        <button type="submit" className={styles.button}>Update Bike</button>
                     </form>
                     :
                     <div className={styles.load_main}>
@@ -510,107 +644,134 @@ const EditNewBikeForm = () => {
     }
 
     return (
-        <div className={styles.New_main_box}>
+        <div className={styles.main_blog_box}>
             {
                 !isLoading ?
                     <form onSubmit={handleSubmit} className={styles.main}>
-                        <div className={styles.formHeader}>
-                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                            <p className={styles.heading}>Edit New Bike</p>
-                        </div>
-                        {/* Title */}
-                        <label htmlFor="title" className={styles.label}>Title</label>
-                        <input id="title" name="title" value={NewField?.newtitle} onChange={(e) => handleChange('newtitle', e.target.value)} className={styles.input} />
-
-                        {/* Video URL */}
-                        <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
-                        <input id="bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
-
-                        {/* Description */}
-                        <FloaraTextarea
-                            value={NewField.newdescription}
-                            onChange={(e: any) => handleChange('newdescription', e)}
+                        <DashboardFormHeader
+                            eyebrow="Inventory Editor"
+                            title="Edit New Bike"
+                            subtitle="Manage overview, specs, media, and SEO content from a cleaner product editing layout."
+                            onBack={goBack}
                         />
 
-                        {imageArr.length < 4 && (
-                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                        )}
+                        <div className={styles.contentGrid}>
+                            <div className={styles.mainColumn}>
+                                <DashboardSection
+                                    title="Overview"
+                                    hint="Keep the title, URL, and description aligned with the public product page."
+                                >
+                                    <DashboardField label="Title" htmlFor="title">
+                                        <input id="title" name="title" value={NewField?.newtitle} onChange={(e) => handleChange('newtitle', e.target.value)} className={styles.input} />
+                                    </DashboardField>
 
-                        {/* Images */}
-                        <label className={styles.label}>Images (max 4)</label>
-                        <div className={styles.imagePreview}>
-                            {imageArr?.map((img, index) => (
-                                <div key={index}>
-                                    <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
-                                    <button type="button" onClick={() => handleImageDelete(index)}>×</button>
-                                </div>
-                            ))}
-                        </div>
+                                    <DashboardField label="Unique URL" htmlFor="bikeUrl">
+                                        <input id="bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
+                                    </DashboardField>
 
-                        <div className={styles.drop_downBox}>
-                            <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                                <option value="" disabled selected hidden>{GetBrandName(NewField?.newbrandId)}</option>
-                                {
-                                    AllBrandsArr.map((e: any, index: any) => {
-                                        return (
-                                            <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                                {e?.brandName}
-                                            </option>
-                                        )
-                                    })
-                                }
-                            </select>
+                                    <DashboardField label="Description" htmlFor="newBikeDescription">
+                                        <div className={styles.editorWrap}>
+                                            <FloaraTextarea
+                                                value={NewField.newdescription}
+                                                onChange={(e: any) => handleChange('newdescription', e)}
+                                            />
+                                        </div>
+                                    </DashboardField>
+                                </DashboardSection>
 
-                            <div>
-                                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                                <input id="videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input_bike_url} />
+                                <DashboardSection
+                                    title="Technical Specifications"
+                                    hint="Use concise, searchable values so the bike detail page stays easy to compare."
+                                >
+                                    <div className={styles.inlineGrid}>
+                                        {newBikeSpecFields.map(({ name, label }) => (
+                                            <DashboardField key={name} label={label} htmlFor={name}>
+                                                <input
+                                                    id={name}
+                                                    name={name}
+                                                    value={(NewField as any)[name]}
+                                                    onChange={(e) => handleChange(name, e.target.value)}
+                                                    className={styles.input}
+                                                />
+                                            </DashboardField>
+                                        ))}
+                                    </div>
+                                </DashboardSection>
+
+                                <DashboardSection
+                                    title="SEO & Additional Details"
+                                    hint="These fields help with discoverability and allow you to add any remaining notes."
+                                >
+                                    <div className={styles.metaGrid}>
+                                        <DashboardField label="Meta Title" htmlFor="meta_title">
+                                            <textarea id="meta_title" name="meta_title" value={NewField.newmeta_title} onChange={(e) => handleChange('newmeta_title', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                        <DashboardField label="Meta Description" htmlFor="meta_description">
+                                            <textarea id="meta_description" name="meta_description" value={NewField?.newmeta_description} onChange={(e) => handleChange('newmeta_description', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                        <DashboardField label="Focus Keyword" htmlFor="focus_keyword">
+                                            <textarea id="focus_keyword" name="focus_keyword" value={NewField?.newfocus_keyword} onChange={(e) => handleChange('newfocus_keyword', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                        <DashboardField label="Others" htmlFor="others">
+                                            <textarea id="others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                    </div>
+                                </DashboardSection>
+                            </div>
+
+                            <div className={styles.sideColumn}>
+                                <DashboardSection
+                                    title="Media & Publishing"
+                                    hint="Update brand, video, and gallery assets without leaving the form."
+                                >
+                                    <div className={styles.mediaSummary}>
+                                        <div>
+                                            <span className={styles.summaryLabel}>Selected Brand</span>
+                                            <span className={styles.summaryValue}>{GetBrandName(NewField?.newbrandId) || "Not selected"}</span>
+                                        </div>
+                                        <div>
+                                            <span className={styles.summaryLabel}>Images</span>
+                                            <span className={styles.summaryValue}>{imageArr.length}/4 attached</span>
+                                        </div>
+                                    </div>
+
+                                    <DashboardField label="Brand" htmlFor="brand-select">
+                                        <select id="brand-select" className={styles.selected} onChange={handleBrandChange} value={NewField?.newbrandId || ""}>
+                                            <option value="" disabled>Select brand</option>
+                                            {AllBrandsArr.map((e: any, index: any) => (
+                                                <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                                    {e?.brandName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </DashboardField>
+
+                                    <DashboardField label="Video URL" htmlFor="videoUrl">
+                                        <input id="videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input} />
+                                    </DashboardField>
+
+                                    <div className={styles.imageUploader}>
+                                        {imageArr.length < 4 && (
+                                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                                        )}
+                                        <p className={styles.uploaderHint}>Use consistent studio shots or product images for a cleaner catalog page.</p>
+                                    </div>
+
+                                    <div className={styles.imagePreview}>
+                                        {imageArr?.map((img, index) => (
+                                            <div key={index} className={styles.imageCard}>
+                                                <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index + 1}`} />
+                                                <button type="button" className={styles.removeImage} onClick={() => handleImageDelete(index)}>×</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </DashboardSection>
                             </div>
                         </div>
 
-                        {/* Other fields */}
-                        <div className={styles.all_inputs}>
-                            {[
-                                { name: "newprice", label: "Price" },
-                                { name: "newengine", label: "Engine" },
-                                { name: "newboreAndStroke", label: "Bore & Stroke" },
-                                { name: "newclutch", label: "Clutch" },
-                                { name: "newstarting", label: "Starting" },
-                                { name: "newdimention", label: "Dimension" },
-                                { name: "newpetrolCapacity", label: "Petrol Capacity" },
-                                { name: "newdisplacement", label: "Displacement" },
-                                { name: "newcompressionRatio", label: "Compression Ratio" },
-                                { name: "newtransmission", label: "Transmission" },
-                                { name: "newframe", label: "Frame" },
-                                { name: "newgroundClearance", label: "Ground Clearance" },
-                                { name: "newtyreBack", label: "Tyre Back" },
-                                { name: "newtyreFront", label: "Tyre Front" },
-                                { name: "newdryWeight", label: "Dry Weight" }
-                            ].map(({ name, label }) => (
-                                <div key={name}>
-                                    <label htmlFor={name} className={styles.label}>{label}</label>
-                                    <input
-                                        id={name}
-                                        name={name}
-                                        value={(NewField as any)[name]}
-                                        onChange={(e) => handleChange(name, e.target.value)}
-                                        className={styles.input_}
-                                    />
-                                </div>
-                            ))}
+                        <div className={styles.actionRow}>
+                            <button type="submit" className={styles.button}>Save Edit</button>
                         </div>
-
-                        {/* Others textarea */}
-                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                        <textarea id="meta_title" name="meta_title" value={NewField.newmeta_title} onChange={(e) => handleChange('newmeta_title', e.target.value)} className={styles.textarea} />
-                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                        <textarea id="meta_description" name="meta_description" value={NewField?.newmeta_description} onChange={(e) => handleChange('newmeta_description', e.target.value)} className={styles.textarea} />
-                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                        <textarea id="focus_keyword" name="focus_keyword" value={NewField?.newfocus_keyword} onChange={(e) => handleChange('newfocus_keyword', e.target.value)} className={styles.textarea} />
-                        <label htmlFor="others" className={styles.label}>Others</label>
-                        <textarea id="others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
-
-                        {/* Submit */}
-                        <button type="submit" className={styles.button}>Save Edit</button>
                     </form>
                     :
                     <div className={styles.load_main}>
@@ -828,106 +989,136 @@ const EditElectricBikeForm = () => {
     }
 
     return (
-        <div className={styles.New_main_box}>
+        <div className={styles.main_blog_box}>
             {
                 !isLoading ?
                     <form onSubmit={handleSubmit} className={styles.main}>
-                        <div className={styles.formHeader}>
-                            <p className={styles.a} onClick={goBack} ><ArrowBackIosIcon className={styles.icon} /></p>
-                            <p className={styles.heading}>Edit Electric Bike</p>
-                        </div>
-                        {/* Title */}
-                        <label htmlFor="title" className={styles.label}>Title</label>
-                        <input id="title" name="title" value={NewField?.newtitle} onChange={(e) => handleChange('newtitle', e.target.value)} className={styles.input} />
-
-                        {/* Video URL */}
-                        <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
-                        <input id="bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
-
-                        {/* Description */}
-                        <FloaraTextarea
-                            value={NewField.newdescription}
-                            onChange={(e: any) => handleChange('newdescription', e)}
+                        <DashboardFormHeader
+                            eyebrow="Electric Inventory"
+                            title="Edit Electric Bike"
+                            subtitle="Refine product storytelling, EV specs, and media in a more polished dashboard form."
+                            onBack={goBack}
                         />
 
-                        {imageArr.length < 4 && (
-                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
-                        )}
+                        <div className={styles.contentGrid}>
+                            <div className={styles.mainColumn}>
+                                <DashboardSection
+                                    title="Overview"
+                                    hint="Keep product naming, URL structure, and description aligned with the EV catalog."
+                                >
+                                    <DashboardField label="Title" htmlFor="electric-title">
+                                        <input id="electric-title" name="title" value={NewField?.newtitle} onChange={(e) => handleChange('newtitle', e.target.value)} className={styles.input} />
+                                    </DashboardField>
 
-                        {/* Images */}
-                        <label className={styles.label}>Images (max 4)</label>
-                        <div className={styles.imagePreview}>
-                            {imageArr?.map((img, index) => (
-                                <div key={index}>
-                                    <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index}`} style={{ width: "100%", height: "100%" }} />
-                                    <button type="button" onClick={() => handleImageDelete(index)}>×</button>
-                                </div>
-                            ))}
-                        </div>
+                                    <DashboardField label="Unique URL" htmlFor="electric-bikeUrl">
+                                        <input id="electric-bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
+                                    </DashboardField>
 
-                        {allBrands?.length > 0 ? <div className={styles.drop_downBox}>
-                            <select name="" id="" className={styles.selected} onChange={handleBrandChange}>
-                                <option value="" disabled selected hidden>{GetBrandName(NewField?.newbrandId)}</option>
-                                {
-                                    allBrands.map((e: any, index: any) => (
-                                        <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
-                                            {e?.brandName}
-                                        </option>
-                                    ))
-                                }
-                            </select>
+                                    <DashboardField label="Description" htmlFor="electric-description">
+                                        <div className={styles.editorWrap}>
+                                            <FloaraTextarea
+                                                value={NewField.newdescription}
+                                                onChange={(e: any) => handleChange('newdescription', e)}
+                                            />
+                                        </div>
+                                    </DashboardField>
+                                </DashboardSection>
 
-                            <div>
-                                <label htmlFor="videoUrl" className={styles.label}>Video URL</label>
-                                <input id="videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input_bike_url} />
+                                <DashboardSection
+                                    title="Electric Specifications"
+                                    hint="Highlight the EV-specific features that buyers compare most often."
+                                >
+                                    <div className={styles.inlineGrid}>
+                                        {electricBikeSpecFields.map(({ name, label }) => (
+                                            <DashboardField key={name} label={label} htmlFor={name}>
+                                                <input
+                                                    id={name}
+                                                    name={name}
+                                                    value={(NewField as any)[name]}
+                                                    onChange={(e) => handleChange(name, e.target.value)}
+                                                    className={styles.input}
+                                                />
+                                            </DashboardField>
+                                        ))}
+                                    </div>
+                                </DashboardSection>
+
+                                <DashboardSection
+                                    title="SEO & Additional Details"
+                                    hint="Complete search metadata and keep any overflow notes organized."
+                                >
+                                    <div className={styles.metaGrid}>
+                                        <DashboardField label="Meta Title" htmlFor="electric-meta_title">
+                                            <textarea id="electric-meta_title" name="meta_title" value={NewField.newmeta_title} onChange={(e) => handleChange('newmeta_title', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                        <DashboardField label="Meta Description" htmlFor="electric-meta_description">
+                                            <textarea id="electric-meta_description" name="meta_description" value={NewField?.newmeta_description} onChange={(e) => handleChange('newmeta_description', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                        <DashboardField label="Focus Keyword" htmlFor="electric-focus_keyword">
+                                            <textarea id="electric-focus_keyword" name="focus_keyword" value={NewField?.newfocus_keyword} onChange={(e) => handleChange('newfocus_keyword', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                        <DashboardField label="Others" htmlFor="electric-others">
+                                            <textarea id="electric-others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
+                                        </DashboardField>
+                                    </div>
+                                </DashboardSection>
                             </div>
-                        </div> : ""}
 
-                        {/* Other fields */}
-                        <div className={styles.all_inputs}>
-                            {[
-                                { name: "newprice", label: "Price" },
-                                { name: "newdimention", label: "Type" },
-                                { name: "newengine", label: "Engine" },
-                                { name: "newboreAndStroke", label: "Battery" }, // change
-                                { name: "newframe", label: "Head Light" },
-                                { name: "newpetrolCapacity", label: "Range Per Charge" }, // change
-                                { name: "newstarting", label: "Speed" },
-                                { name: "newgroundClearance", label: "Motor" },
-                                { name: "newclutch", label: "Wheel" }, // change
-                                { name: "newdryWeight", label: "Tyre Size" },
-                                { name: "newtransmission", label: "Shock Absorption" }, // change
-                                { name: "newtyreBack", label: "Brake (Front/Rear)" },
-                                { name: "newtyreFront", label: "Charge Time" },
-                                { name: "newdisplacement", label: "Battery Type" }, // change
-                                { name: "newcompressionRatio", label: "Frame" },
+                            <div className={styles.sideColumn}>
+                                <DashboardSection
+                                    title="Media & Publishing"
+                                    hint="Keep the EV brand, supporting video, and product gallery updated together."
+                                >
+                                    <div className={styles.mediaSummary}>
+                                        <div>
+                                            <span className={styles.summaryLabel}>Selected Brand</span>
+                                            <span className={styles.summaryValue}>{GetBrandName(NewField?.newbrandId) || "Not selected"}</span>
+                                        </div>
+                                        <div>
+                                            <span className={styles.summaryLabel}>Images</span>
+                                            <span className={styles.summaryValue}>{imageArr.length}/4 attached</span>
+                                        </div>
+                                    </div>
 
-                            ].map(({ name, label }) => (
-                                <div key={name}>
-                                    <label htmlFor={name} className={styles.label}>{label}</label>
-                                    <input
-                                        id={name}
-                                        name={name}
-                                        value={(NewField as any)[name]}
-                                        onChange={(e) => handleChange(name, e.target.value)}
-                                        className={styles.input_}
-                                    />
-                                </div>
-                            ))}
+                                    {allBrands?.length > 0 ? (
+                                        <DashboardField label="Brand" htmlFor="electric-brand-select">
+                                            <select id="electric-brand-select" className={styles.selected} onChange={handleBrandChange} value={NewField?.newbrandId || ""}>
+                                                <option value="" disabled>Select brand</option>
+                                                {allBrands.map((e: any, index: any) => (
+                                                    <option key={index} value={e?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                                        {e?.brandName}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </DashboardField>
+                                    ) : null}
+
+                                    <DashboardField label="Video URL" htmlFor="electric-videoUrl">
+                                        <input id="electric-videoUrl" name="videoUrl" value={NewField.newvideoUrl} onChange={(e) => handleChange('newvideoUrl', e.target.value)} className={styles.input} />
+                                    </DashboardField>
+
+                                    <div className={styles.imageUploader}>
+                                        {imageArr.length < 4 && (
+                                            <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
+                                        )}
+                                        <p className={styles.uploaderHint}>Prioritize product angles that show battery area, design lines, and dashboard details.</p>
+                                    </div>
+
+                                    <div className={styles.imagePreview}>
+                                        {imageArr?.map((img, index) => (
+                                            <div key={index} className={styles.imageCard}>
+                                                <img src={cloudinaryLoader(img, 400, 'auto')} alt={`Preview ${index + 1}`} />
+                                                <button type="button" className={styles.removeImage} onClick={() => handleImageDelete(index)}>×</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </DashboardSection>
+                            </div>
                         </div>
 
-                        {/* Others textarea */}
-                        <label htmlFor="meta_title" className={styles.label}>Meta Title</label>
-                        <textarea id="meta_title" name="meta_title" value={NewField.newmeta_title} onChange={(e) => handleChange('newmeta_title', e.target.value)} className={styles.textarea} />
-                        <label htmlFor="meta_description" className={styles.label}>Meta Description</label>
-                        <textarea id="meta_description" name="meta_description" value={NewField?.newmeta_description} onChange={(e) => handleChange('newmeta_description', e.target.value)} className={styles.textarea} />
-                        <label htmlFor="focus_keyword" className={styles.label}>Focus Keyword</label>
-                        <textarea id="focus_keyword" name="focus_keyword" value={NewField?.newfocus_keyword} onChange={(e) => handleChange('newfocus_keyword', e.target.value)} className={styles.textarea} />
-                        <label htmlFor="others" className={styles.label}>Others</label>
-                        <textarea id="others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
-
-                        {/* Submit */}
-                        <button type="submit" className={styles.button}>Save Edit</button>
+                        <div className={styles.actionRow}>
+                            <button type="submit" className={styles.button}>Save Edit</button>
+                        </div>
                     </form>
                     :
                     <div className={styles.load_main}>
