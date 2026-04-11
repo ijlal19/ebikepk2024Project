@@ -45,125 +45,149 @@
         font-size: 11px !important;
     }
 }
-.login_main {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px;
-    position: relative;
 
-    .login_container {
-        padding: 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+.backdrop{
+  background: rgba(12, 18, 28, 0.55) !important;
+  backdrop-filter: blur(6px);
+}
 
-        .ebike_logo {
-            width: 120px;
-            height: auto;
-            display: block;
-            margin: auto;
-        }
+.modalRoot{
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+}
 
-        .login_form {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, 25%);
-            padding: 15px 10px;
-            border-radius: 5px;
-            width: 285px;
-            background: white;
-            box-shadow: 0px 0px 5px grey;
+.card{
+  width: min(92vw, 420px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px 16px 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+  position: relative;
+  outline: none;
+}
 
-            .heading_box {
-                margin: auto;
-                text-align: center;
-            }
+.closeBtn{
+  position: absolute !important;
+  top: 10px;
+  right: 10px;
+  color: rgba(0,0,0,0.65) !important;
+}
 
-            .login_heading {
-                font-size: 18px;
-                font-weight: bolder;
-                text-align: center;
-                margin-bottom: 15px;
-                margin-top: 0px;
-                padding: 0px;
-                padding-bottom: 10px;
-                color: navy;
-                border-bottom: 2px solid navy;
-            }
+.brand{
+  text-align: center;
+  padding: 6px 4px 8px 4px;
+}
 
-            .login_field {
-                margin: 5px 0px;
-                outline: none;
-                border: none;
-            }
+.content{
+  padding: 0 10px 6px 10px;
+}
 
-            .error {
-                color: rgb(157, 20, 20);
-                font-size: 13px;
-                text-align: center;
-                
-            }
+.logo{
+  width: 90px;
+  height: auto;
+  display: block;
+  margin: 4px auto 10px auto;
+}
 
-            .button {
-                font-size: 12px;
-                margin-top: 5px;
-                font-weight: bolder;
-                text-align: center;
-                padding: 5px 0px;
-                color: white;
-                background-color: $primary_two;
-                cursor: pointer;
-            }
+.title{
+  font-family: 'LatoBold';
+  font-size: 22px !important;
+  line-height: 1.2;
+  margin: 0;
+  color: #0b1b3a;
+}
 
-            .reset_password {
-                float: right;
-                color: $primary_two;
-                background: transparent;
-                border: none;
-                font-size: 12px;
-                cursor: pointer;
-                padding: 0;
-                margin-top: 20px;
+.subtitle{
+  font-family: 'Lato';
+  font-size: 13px !important;
+  color: rgba(0,0,0,0.65);
+  margin: 6px 0 0 0;
+}
 
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+}
 
-            .signup_button {
-                font-size: 12px;
-                margin-top: 10px;
-                font-weight: bolder;
-                text-align: center;
-                text-decoration: none !important;
-                padding: 10px 0px 0px 0px;
-                border-radius: 0px;
-                border-top: 1px solid rgb(211, 204, 204);
-                color: Black;
-                cursor: pointer;
-            }
+.field{
+  margin: 0 !important;
+}
 
-            .phone_login_button {
-                font-size: 12px;
-                margin-top: 10px;
-                font-weight: 700;
-                text-transform: none;
-                border: 1px solid $primary_two;
-                color: $primary_two;
-                background: #fff;
-            }
+.error{
+  color: rgb(157, 20, 20);
+  font-size: 13px !important;
+  text-align: center;
+  margin-top: 2px !important;
+}
 
-        }
-    }
+.success{
+  font-size: 13px !important;
+  color: rgba(0,0,0,0.72);
+  text-align: center;
+  padding: 6px 0 2px 0;
+}
+
+.primaryButton{
+  margin-top: 2px !important;
+  padding: 9px 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  border-radius: 10px !important;
+  background-color: $primary_two !important;
+  color: #fff !important;
+}
+
+.secondaryButton{
+  margin-top: 2px !important;
+  padding: 9px 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(0,0,0,0.18) !important;
+  color: rgba(0,0,0,0.86) !important;
+  background: #fff !important;
+}
+
+.textButton{
+  text-transform: none !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  color: rgba(0,0,0,0.75) !important;
+}
+
+.divider{
+  margin: 12px 0 10px 0 !important;
+}
+
+.orText{
+  font-family: 'Lato';
+  font-size: 12px;
+  color: rgba(0,0,0,0.55);
+}
+
+.phoneBlock{
+  padding-top: 4px;
 }
 
 .google_box{
     text-align: center;
-    margin: 10px auto 0px auto !important;
+    margin: 12px auto 0px auto !important;
     display: flex;
     justify-content: center;
+}
+
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 6px;
 }

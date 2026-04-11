@@ -1,70 +1,119 @@
 @import '../../styles/variable';
-.signup_main {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px;
 
-    .signup_container {
-        width: 100%;
-        padding: 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        .signup_form {
-            padding: 15px 10px;
-            border-radius: 5px;
-            width: 285px;
-            box-shadow: 0px 0px 5px grey;
-            .heading_box{
-                margin: auto;
-                text-align: center;
-            }
-     
-            .ebike_logo {
-                width: 120px;
-                height: auto;
-                display: block;
-                margin: auto;
-            }
+.root{
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 28px 12px;
+  background:
+    radial-gradient(900px 360px at 20% 10%, rgba(25, 118, 210, 0.18), rgba(25, 118, 210, 0) 60%),
+    radial-gradient(700px 320px at 90% 20%, rgba(25, 118, 210, 0.12), rgba(25, 118, 210, 0) 55%),
+    $primary_bg;
+}
 
-            .signup_heading {
-                font-size: 18px;
-                font-weight: bolder;
-                text-align: center;
-                margin-top: 0px;
-                margin-bottom: 15px;
-                padding: 0px 0px 10px 0px;
-                color: navy;
-                border-bottom: 2px solid navy;
-            }
+.container{
+  width: 100%;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
 
-            .signup_field {
-                margin: 5px 0px;
-                outline: none;
-                border: none;
-            }
+.card{
+  width: min(92vw, 460px);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
 
-            .error {
-                color: rgb(157, 20, 20);
-                font-size: 13px;
-                text-align: center;
-                
-            }
+.brand{
+  text-align: center;
+  padding: 22px 18px 12px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
 
-            .button {
-                font-size: 12px;
-                margin-top: 5px;
-                font-weight: bolder;
-                text-align: center;
-                padding: 5px 0px;
-                color: white;
-                background-color: $primary_two;
-                cursor: pointer;
-            }
-        }
-    }
+.logo{
+  width: 92px;
+  height: auto;
+  display: block;
+  margin: 2px auto 12px auto;
+}
+
+.title{
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #0b1b3a;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle{
+  font-size: 13px !important;
+  color: rgba(0,0,0,0.65);
+  margin-top: 6px !important;
+}
+
+.content{
+  padding: 16px 18px 16px 18px;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field{
+  margin: 0 !important;
+}
+
+.notice{
+  font-size: 13px !important;
+  text-align: center;
+  margin-top: 2px !important;
+}
+
+.noticeError{
+  color: rgb(157, 20, 20);
+}
+
+.noticeSuccess{
+  color: #0a7a2f;
+}
+
+.primaryButton{
+  margin-top: 2px !important;
+  padding: 9px 12px !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  border-radius: 10px !important;
+  background-color: $primary_two !important;
+  color: #fff !important;
+}
+
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.footerText{
+  font-size: 13px !important;
+  color: rgba(0,0,0,0.7);
+}
+
+.footerLink{
+  font-size: 13px;
+  font-weight: 700;
+  color: $primary_two;
+  text-decoration: none;
+}
+
+.footerLink:hover{
+  text-decoration: underline;
 }

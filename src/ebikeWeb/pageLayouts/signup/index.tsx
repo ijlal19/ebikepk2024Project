@@ -1,10 +1,11 @@
 "use client"
 import React, {useState} from "react"
-import { Avatar, Grid, Button, TextField, Typography, Box, Container, OutlinedInput, InputAdornment, IconButton } from '@mui/material'
+import { Button, TextField, Typography, Box, Container, InputAdornment, IconButton } from '@mui/material'
 import styles from './index.module.scss'
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { validateEmail, userSignup } from "@/genericFunctions/geneFunc"
 import { useRouter } from 'next/navigation'
+import Link from "next/link"
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -13,7 +14,7 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
-    const [error, setError] = useState('')
+    const [notice, setNotice] = useState<{ type: 'error' | 'success', message: string } | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 
     const Router = useRouter()
@@ -23,21 +24,22 @@ const Signup = () => {
 
     const handlesubmit = async (e:any) => {
         e.preventDefault()
-        setError('')
+        setNotice(null)
 
         if(!name || name.length < 4) {
-            setError('Please Enter Valid Name')
+            setNotice({ type: 'error', message: 'Please enter a valid name (min 4 characters).' })
             return
         }
         else if(!email || !validateEmail(email)) {
-            setError('Please Enter Valid Email')
+            setNotice({ type: 'error', message: 'Please enter a valid email address.' })
+            return
         }
         else if(!password || password?.length < 6) {
-            setError('Password length must be greather or equal to 6')
+            setNotice({ type: 'error', message: 'Password length must be greater than or equal to 6.' })
             return
         }
         else if (password !== confirmpassword) {
-            setError('Confirm Password not match')
+            setNotice({ type: 'error', message: 'Confirm password does not match.' })
             return
         }
 
@@ -54,99 +56,157 @@ const Signup = () => {
         setIsLoading(false)
 
         if(res.success) {
-            setError('Account Created Successfully!. Verification Link has been sent to your Email. Please Verify your Email address for login.')
-            // setError('Account Created Successfully!')
+            setNotice({
+                type: 'success',
+                message:
+                    'Account created successfully. Verification link has been sent to your email — please verify your email to login.',
+            })
             setTimeout(()=> {
                 Router.push('/')
             }, 2000)
         }
         else {
-          setError(res.info)
+          setNotice({ type: 'error', message: res.info })
         }
         
         console.log(res)
     }
 
     return (
-        <Box className={styles.signup_main}>
-            <Container className={styles.signup_container}>
+        <Box className={styles.root}>
+            <Container className={styles.container} maxWidth={false}>
+                <div className={styles.card}>
+                    <div className={styles.brand}>
+                        <img
+                            className={styles.logo}
+                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png"
+                            alt="Ebike"
+                        />
+                        <Typography component="h1" className={styles.title}>
+                            Create your account
+                        </Typography>
+                        <Typography className={styles.subtitle}>
+                            Please fill this form to create an account.
+                        </Typography>
+                    </div>
 
-                <div className={styles.signup_form} >
-                    <Grid>
-                        <img className={styles.ebike_logo} src='https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png' />
-                        <h2 className={styles.signup_heading}>Sign Up</h2>
-                        <Typography variant='caption' > Please fill this form to create an account  !</Typography>
-                    </Grid>
-                    
-                    <TextField fullWidth
-                        placeholder="Name"
-                        size="small"
-                        onChange={(e) => { setName(e.target.value) }}
-                        className={styles.signup_field}
-                        required
-                        value={name}
-                    />
+                    <div className={styles.content}>
+                        <form className={styles.form} onSubmit={handlesubmit}>
+                            <TextField
+                                fullWidth
+                                label="Full name"
+                                size="small"
+                                onChange={(e) => setName(e.target.value)}
+                                className={styles.field}
+                                required
+                                autoComplete="name"
+                                value={name}
+                            />
 
-                    <TextField fullWidth
-                        placeholder="Email address"
-                        size="small"
-                        className={styles.signup_field}
-                        required
-                        onChange={(e) => { setEmail(e.target.value) }}
-                        type="email"
-                        value={email}
-                    />
+                            <TextField
+                                fullWidth
+                                label="Email"
+                                size="small"
+                                className={styles.field}
+                                required
+                                onChange={(e) => setEmail(e.target.value)}
+                                type="email"
+                                autoComplete="email"
+                                value={email}
+                            />
 
-                    <OutlinedInput
-                        id="password"
-                        type={showPassword ? 'text' : 'password'}
-                        size='small'
-                        value={password}
-                        fullWidth
-                        className={styles.signup_field}
-                        placeholder='Password*'
-                        onChange={(e) => { setPassword(e.target.value) }}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    edge="end"
+                            <TextField
+                                label="Password"
+                                size="small"
+                                fullWidth
+                                required
+                                type={showPassword ? "text" : "password"}
+                                autoComplete="new-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className={styles.field}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                                onClick={handleClickShowPassword}
+                                                edge="end"
+                                                size="small"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff fontSize="small" />
+                                                ) : (
+                                                    <Visibility fontSize="small" />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+
+                            <TextField
+                                label="Confirm password"
+                                size="small"
+                                fullWidth
+                                required
+                                type={showConfirmPassword ? "text" : "password"}
+                                autoComplete="new-password"
+                                value={confirmpassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                className={styles.field}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                                                onClick={handleClickShowConfirmPassword}
+                                                edge="end"
+                                                size="small"
+                                            >
+                                                {showConfirmPassword ? (
+                                                    <VisibilityOff fontSize="small" />
+                                                ) : (
+                                                    <Visibility fontSize="small" />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+
+                            {notice ? (
+                                <Typography
+                                    className={`${styles.notice} ${
+                                        notice.type === "success" ? styles.noticeSuccess : styles.noticeError
+                                    }`}
+                                    role="alert"
+                                    aria-live="polite"
                                 >
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
+                                    {notice.message}
+                                </Typography>
+                            ) : null}
 
-                    <OutlinedInput
-                        id="confirm password"
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        size='small'
-                        value={confirmpassword}
-                        fullWidth
-                        className={styles.signup_field}
-                        placeholder='Confirm Password*'
-                        onChange={(e) => { setConfirmPassword(e.target.value) }}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowConfirmPassword}
-                                    edge="end"
-                                >
-                                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                    />
+                            <Button
+                                fullWidth
+                                type="submit"
+                                disabled={isLoading}
+                                className={styles.primaryButton}
+                            >
+                                {isLoading ? "Creating…" : "Create account"}
+                            </Button>
+                        </form>
 
-                    <Typography className={ styles.error} style={error?.indexOf('Account Created Successfully') > -1 ?  { color:"green"} : {}} >  { error } </Typography>
-
-                    <Button fullWidth type="submit" className={`${styles.button} ${isLoading ? 'noPointerEvent':''} `} onClick={(e) => handlesubmit(e)} > Sign Up</Button>
-
+                        <div className={styles.footer}>
+                            <Typography className={styles.footerText}>
+                                Already have an account?
+                            </Typography>
+                            <Link className={styles.footerLink} href="/">
+                                Back to home
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-
             </Container>
         </Box>
     )
