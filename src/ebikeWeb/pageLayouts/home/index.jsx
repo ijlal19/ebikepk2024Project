@@ -12,7 +12,8 @@ import styles from './index.module.scss'
 import { isLoginUser } from "@/genericFunctions/geneFunc";
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 
-import blogData from './blogSection/Data'
+// import blogData from './blogSection/Data'
+import { BlogData as blogData } from './blogSection/Data'
 import youTubeData from './ourVideos/Data'
 import usedBikeData from './usedbikeSection/Data'
 import trendingData from './newbikesSection/TrendingData'
