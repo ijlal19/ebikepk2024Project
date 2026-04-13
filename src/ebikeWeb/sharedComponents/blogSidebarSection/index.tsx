@@ -83,7 +83,7 @@ const BlogSidebarSection = ({
         <Box className={styles.facebookTop}>
           <img src={EBIKE_LOGO_URL} alt="ebike.pk" className={styles.logo} />
           <Box className={styles.pageInfo}>
-            <Typography className={styles.pageTitle}>eBike.pk</Typography>
+            <Typography className={styles.pageTitle}>ebike.pk</Typography>
             <Typography className={styles.pageSubtitle}>Join our official Facebook page</Typography>
           </Box>
         </Box>
