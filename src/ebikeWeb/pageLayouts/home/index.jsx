@@ -92,7 +92,6 @@ function Index() {
         <Loader isLoading={isLoading} />
       </div> :
       <>
-         
         <BannerSection />
         <MobileBanner />
         <h1 style={{ textAlign:"center", fontSize:"20px", margin:"20px auto" }}> Pakistan’s #1 Marketplace for New & Used Bikes</h1>
@@ -108,28 +107,15 @@ function Index() {
           </div>
         ))}
 
-
-        <details>
-          <summary style={{display:"none"}}></summary>
-          <section>
-            <h1> Pakistan’s #1 Marketplace for New & Used Bikes</h1>
-            <p>
-              Ebike.pk is Pakistan’s most reliable and user-friendly online platform for buying and selling new bikes, used bikes, and electric bikes. Our website is designed to give buyers and sellers a fast, safe, and convenient experience, making the entire process smooth and hassle-free.
-
-              If you’re looking for a new bike, Ebike.pk offers all the popular brands including Honda, Yamaha, Suzuki, Super Power, Road Prince, United, and many others. You can explore updated bike prices, compare models, check specifications, and find the best options according to your budget and needs.
-
-              For used bike buyers, we provide verified listings where sellers upload clear images, mileage details, condition reports, and price demands. This helps buyers get a real understanding of the bike’s condition and current market value without visiting multiple showrooms.
-
-              Ebike.pk also features a wide collection of electric bikes, offering eco-friendly and cost-efficient alternatives for daily commuting. With rising fuel prices, electric bikes are becoming a popular choice in Pakistan, and our platform helps you explore the latest EV models with complete details.
-
-              Our goal is to make bike buying and selling in Pakistan simple, transparent, and accessible for everyone. New ads are added daily, giving users fresh listings to choose from. Whether you want to buy your next bike or sell your current one, Ebike.pk makes the process quick and easy.
-
-              Selling your bike is completely free—just upload pictures, add important details, and your ad goes live instantly. Thousands of buyers visit our website every day, increasing your chances of a quick sale.
-
-              Visit Ebike.pk today and experience a smarter way to buy and sell bikes across Pakistan.
-            </p>
-          </section>
-        </details>
+        <section
+          className={styles.seoContent}
+          aria-label="Electric bike and motorcycle marketplace information"
+        >
+          <h2>Ebike Pakistan Marketplace for New, Used, and Electric Bikes</h2>
+          <p>
+            ebike.pk helps riders across Pakistan discover new bikes, used bike listings, and electric bikes with updated prices, features, specifications, and reviews. Users can compare Honda, Yamaha, Suzuki, Road Prince, United, Super Power, and emerging electric bike models for daily commuting, delivery use, and city travel. The platform also supports bike buyers with dealer information, mechanic listings, motorcycle news, and bike-related updates, making ebike.pk a complete resource for motorcycle and electric bike research in Pakistan.
+          </p>
+        </section>
 
       </>
   )
