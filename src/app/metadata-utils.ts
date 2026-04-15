@@ -48,6 +48,30 @@ function trimText(value?: string | null, limit = 160) {
     return `${text.slice(0, limit).trim()}...`;
 }
 
+function formatTitleText(value?: string | null) {
+    if (!value) {
+        return "";
+    }
+
+    return value
+        .replace(/[-_]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function slugify(value?: string | null) {
+    if (!value) {
+        return "";
+    }
+
+    return value
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+}
+
 function resolveBlogShareImage(featuredImage?: string | null) {
     const rawImage = featuredImage?.split(" #$# ")[0]?.trim();
     if (!rawImage) {
@@ -72,6 +96,8 @@ export {
     toSecureUrl,
     stripHtml,
     trimText,
+    formatTitleText,
+    slugify,
     resolveBlogShareImage,
     resolveClassifiedShareImage
 };
