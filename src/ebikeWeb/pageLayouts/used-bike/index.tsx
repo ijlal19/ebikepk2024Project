@@ -22,6 +22,25 @@ import Data from './data'
 const USED_BIKE_VIEW_DEDUP_MS = 10000;
 const usedBikeViewLastHitAt: Record<string, number> = {};
 
+const getNumericViewCount = (value: any) => {
+  const count = Number(value);
+  return Number.isFinite(count) ? count : 0;
+}
+
+const getUpdatedViewsCount = (incrementResponse: any) => {
+  const candidates = [
+    incrementResponse?.views_count,
+    incrementResponse?.data?.views_count,
+    incrementResponse?.add?.views_count,
+    incrementResponse?.data?.add?.views_count,
+    incrementResponse?.classified?.views_count,
+    incrementResponse?.data?.classified?.views_count,
+  ];
+
+  const count = candidates.find((value) => value !== undefined && value !== null);
+  return count !== undefined ? getNumericViewCount(count) : null;
+}
+
 export default function UsedBike({_bikeDetail}:any) {
 
   const [similarBikeArr, setSimilarBikeArr]: any = useState([]);
@@ -50,11 +69,12 @@ export default function UsedBike({_bikeDetail}:any) {
         const storageKey = `used-bike-view-hit-${adId}`
         const storageLastHit = Number(sessionStorage.getItem(storageKey) || 0)
         const lastHitAt = Math.max(mapLastHit, storageLastHit)
+        let shouldIncrementView = false
 
         if (now - lastHitAt > USED_BIKE_VIEW_DEDUP_MS) {
           usedBikeViewLastHitAt[adId] = now
           sessionStorage.setItem(storageKey, String(now))
-          incrementClassifiedViews(adId)
+          shouldIncrementView = true
         }
 
         console.log('_bikeDetail', _bikeDetail)
@@ -64,7 +84,15 @@ export default function UsedBike({_bikeDetail}:any) {
           res = _bikeDetail
         }
         else {
-          await getSinglebikesDetail(adsId);
+          res = await getSinglebikesDetail(adsId);
+        }
+
+        let didIncrementView = false
+        let updatedViewsCount = null
+        if (shouldIncrementView) {
+          const incrementResponse = await incrementClassifiedViews(adId)
+          didIncrementView = !!incrementResponse
+          updatedViewsCount = getUpdatedViewsCount(incrementResponse)
         }
 
         setIsLoading(false)
@@ -76,13 +104,17 @@ export default function UsedBike({_bikeDetail}:any) {
 
         if (res) {
           if (res.add) {
-            if (res?.add?.mobileNumber && res?.add?.mobileNumber?.charAt(0) != "0") {
-              res.add.mobileNumber = '0' + res.add.mobileNumber
+            const addDetail = { ...res.add }
+            if (didIncrementView) {
+              addDetail.views_count = updatedViewsCount ?? getNumericViewCount(addDetail.views_count) + 1
             }
-            setBikeDetail(res?.add)
+            if (addDetail?.mobileNumber && addDetail?.mobileNumber?.charAt(0) != "0") {
+              addDetail.mobileNumber = '0' + addDetail.mobileNumber
+            }
+            setBikeDetail(addDetail)
 
             const objBrand = {
-              brand_filter: res.add.brandId ? [res.add.brandId] : [],
+              brand_filter: addDetail.brandId ? [addDetail.brandId] : [],
               adslimit: 6,
               random: true
             }
@@ -93,7 +125,7 @@ export default function UsedBike({_bikeDetail}:any) {
             }
 
             const objCC = {
-              cc: res.add.cc? [res.add.cc] : [],
+              cc: addDetail.cc? [addDetail.cc] : [],
               adslimit: 6,
               random: true
             }
@@ -103,8 +135,8 @@ export default function UsedBike({_bikeDetail}:any) {
             }
 
             const objSimilarBike = {
-              cc: res.add.cc? [res.add.cc] : [],
-              brand_filter: res.add.brandId ? [res.add.brandId] : [],
+              cc: addDetail.cc? [addDetail.cc] : [],
+              brand_filter: addDetail.brandId ? [addDetail.brandId] : [],
               adslimit: 6,
               random: true
             }
