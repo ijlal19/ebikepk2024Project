@@ -1,0 +1,495 @@
+@import "../../styles/variable";
+
+.page {
+  background: #f2f3f7;
+  color: #233244;
+  padding: 28px 16px 72px;
+}
+
+.hero,
+.section {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.heroContent,
+.heroPanel,
+.stepCard,
+.featureCard,
+.storyCard,
+.infoCard,
+.sidePanel,
+.newsCard,
+.faqCard,
+.longFormCard {
+  background: #ffffff;
+  border: 1px solid #dfe5ec;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.heroContent {
+  border-radius: 4px;
+  padding: 34px 38px;
+}
+
+.heroPanel {
+  border-radius: 4px;
+  padding: 18px;
+}
+
+.eyebrow,
+.sectionTag,
+.previewLabel,
+.newsTag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.eyebrow,
+.sectionTag,
+.previewLabel {
+  padding: 7px 12px;
+  background: #e8f1fb;
+  color: #1d5fa8;
+}
+
+.heroTitle {
+  margin: 16px 0 14px;
+  font-size: clamp(2rem, 3.4vw, 3.35rem);
+  line-height: 1.1;
+  max-width: 13ch;
+  color: #233244;
+}
+
+.heroText,
+.previewText,
+.sectionHeader p,
+.storyQuote,
+.featureCard p,
+.stepCard p,
+.infoCard p,
+.sidePanel p,
+.newsCard p,
+.faqCard p,
+.longFormCard p,
+.paragraph,
+.ctaBand p {
+  margin: 0;
+  line-height: 1.7;
+  color: #6b7b8c;
+  font-size: 0.97rem;
+}
+
+.heroText {
+  max-width: 64ch;
+  margin-bottom: 22px;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.primaryButton,
+.secondaryButton,
+.inlineLink {
+  text-decoration: none;
+  transition: 0.2s ease;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.97rem;
+}
+
+.primaryButton {
+  background: #c0392b;
+  color: #fff;
+}
+
+.primaryButton:hover {
+  background: #a92f24;
+}
+
+.secondaryButton {
+  background: #f7f9fb;
+  border: 1px solid #d9e1ea;
+  color: #3e5368;
+}
+
+.secondaryButton:hover,
+.inlineLink:hover {
+  background: #eef3f8;
+}
+
+.highlightGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.highlightCard {
+  border: 1px solid #e3e9f0;
+  border-radius: 4px;
+  padding: 16px;
+  background: #fafbfd;
+}
+
+.highlightCard strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #1f4977;
+  font-size: 1.2rem;
+}
+
+.highlightCard span {
+  color: #6b7b8c;
+  font-size: 0.9rem;
+}
+
+.previewCard {
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #dfe5ec;
+  background: #fff;
+}
+
+.heroArtwork {
+  position: relative;
+  min-height: 205px;
+  background:
+    linear-gradient(180deg, rgba(33, 97, 168, 0.14) 0%, rgba(33, 97, 168, 0.04) 100%),
+    #eff5fb;
+  overflow: hidden;
+}
+
+.bikeShape {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 210px;
+  height: 78px;
+  transform: translate(-50%, -50%);
+  border-radius: 48px 60px 22px 22px;
+  background: linear-gradient(135deg, #0d4f8f 0%, #2671b6 100%);
+  box-shadow:
+    -85px 46px 0 -18px #24384d,
+    85px 46px 0 -18px #24384d;
+}
+
+.bikeShape::before,
+.bikeShape::after {
+  content: "";
+  position: absolute;
+  bottom: -42px;
+  width: 72px;
+  height: 72px;
+  border: 10px solid #24384d;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.bikeShape::before {
+  left: 4px;
+}
+
+.bikeShape::after {
+  right: 4px;
+}
+
+.heroBadge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: #c0392b;
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(192, 57, 43, 0.18);
+}
+
+.heroBadge strong {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.heroBadge span {
+  font-size: 0.7rem;
+  opacity: 0.95;
+}
+
+.previewBody {
+  padding: 20px;
+}
+
+.previewBody h2 {
+  margin: 14px 0 10px;
+  font-size: 1.65rem;
+  line-height: 1.2;
+}
+
+.previewChecklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.previewChecklist span {
+  display: block;
+  padding: 11px 12px;
+  border-radius: 4px;
+  background: #f7f9fb;
+  border: 1px solid #e1e8ef;
+  color: #3d5268;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.section {
+  padding-top: 28px;
+}
+
+.sectionHeader,
+.sectionHeaderCentered {
+  margin-bottom: 18px;
+}
+
+.sectionHeader {
+  max-width: 760px;
+}
+
+.sectionHeaderCentered {
+  text-align: center;
+}
+
+.sectionHeader h2,
+.sectionHeaderCentered h2 {
+  margin: 12px 0 0;
+  font-size: clamp(1.7rem, 2.7vw, 2.45rem);
+  line-height: 1.2;
+  color: #233244;
+}
+
+.stepGrid,
+.featureGrid,
+.storyGrid,
+.newsGrid,
+.faqGrid,
+.longFormGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.stepGrid,
+.featureGrid,
+.storyGrid,
+.newsGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.faqGrid,
+.longFormGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stepCard,
+.featureCard,
+.storyCard,
+.infoCard,
+.sidePanel,
+.newsCard,
+.faqCard,
+.longFormCard {
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.cardIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+  background: #edf4fb;
+  border: 1px solid #d6e4f3;
+  color: #1d5fa8;
+  font-weight: 800;
+  font-size: 1.15rem;
+}
+
+.stepNumber {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #c0392b;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.stepCard h3,
+.featureCard h3,
+.newsCard h3,
+.faqCard h3,
+.infoCard h2,
+.sidePanel h3,
+.longFormCard h2 {
+  margin: 0 0 10px;
+  color: #233244;
+}
+
+.tintedSection {
+  padding: 28px 22px 8px;
+  border-radius: 4px;
+  background: #edf3f8;
+  border: 1px solid #dee6ee;
+}
+
+.storyCard {
+  border-left: 4px solid #1d5fa8;
+}
+
+.storyQuote {
+  margin-bottom: 16px;
+}
+
+.storyCard strong {
+  display: block;
+  color: #233244;
+}
+
+.storyCard span {
+  color: #708294;
+  font-size: 0.92rem;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 16px;
+}
+
+.list {
+  margin: 16px 0 0;
+  padding-left: 18px;
+}
+
+.list li {
+  margin-bottom: 10px;
+  line-height: 1.7;
+  color: #4d6277;
+}
+
+.inlineLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 4px;
+  background: #f6f8fa;
+  border: 1px solid #d9e1ea;
+  color: #3d5268;
+  font-weight: 700;
+  font-size: 0.93rem;
+}
+
+.newsTag {
+  padding: 5px 10px;
+  margin-bottom: 14px;
+  background: #f7f0dd;
+  color: #8a6b12;
+}
+
+@media (max-width: 992px) {
+  .hero,
+  .stepGrid,
+  .featureGrid,
+  .storyGrid,
+  .newsGrid,
+  .faqGrid,
+  .longFormGrid,
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroContent,
+  .heroPanel,
+  .stepCard,
+  .featureCard,
+  .storyCard,
+  .infoCard,
+  .sidePanel,
+  .newsCard,
+  .faqCard,
+.longFormCard {
+    padding: 22px;
+  }
+
+  .heroTitle {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 16px 12px 52px;
+  }
+
+  .highlightGrid,
+  .previewChecklist {
+    grid-template-columns: 1fr;
+  }
+
+  .heroActions {
+    flex-direction: column;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+
+  .heroArtwork {
+    min-height: 170px;
+  }
+
+  .bikeShape {
+    width: 160px;
+    height: 60px;
+  }
+}

@@ -390,7 +390,7 @@ const BlogDetails = () => {
 
               <NewBike_left />
 
-              <Usedbike_left />
+              <Featrued_Usedbike_left />
 
               <BlogSidebarSection
                 onSellBikeClick={gotoSellBike}
