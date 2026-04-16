@@ -128,12 +128,12 @@
 }
 
 .primaryButton {
-  background: #c0392b;
+  background: #1976d2;
   color: #fff;
 }
 
 .primaryButton:hover {
-  background: #a92f24;
+  background: #1976d2;
 }
 
 .secondaryButton {
@@ -234,7 +234,7 @@
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  background: #c0392b;
+  background: #1976d2;
   color: #fff;
   box-shadow: 0 10px 20px rgba(192, 57, 43, 0.18);
 }
@@ -479,10 +479,12 @@
     flex-direction: column;
   }
 
-  .primaryButton,
-  .secondaryButton {
-    width: 100%;
-  }
+  .primaryButton {
+     width: 100%;
+  } 
+  // .secondaryButton {
+  //   // width: 100%;
+  // }
 
   .heroArtwork {
     min-height: 170px;
