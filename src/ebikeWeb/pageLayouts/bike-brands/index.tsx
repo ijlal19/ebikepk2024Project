@@ -7,7 +7,7 @@ import BikesBrandCard from './Card/index';
 import styles from './index.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Link from 'next/link'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 
@@ -34,22 +34,28 @@ function CustomTabPanel(props: TabPanelProps) {
 }
 
 
-export default function NewBikeBrand() {
+export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: any[] }) {
 
-  const [allBrandArr, setAllBrandArr] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [allBrandArr, setAllBrandArr] = useState(initialBrands)
+  const [isLoading, setIsLoading] = useState(initialBrands.length === 0)
   const [value, setValue] = React.useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const CheckPath =  window?.location?.href?.includes("tab=2")
-    if(CheckPath){
-      setValue(1)
+    setValue(searchParams.get('tab') === '2' ? 1 : 0);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (initialBrands.length > 0) {
+      setAllBrandArr(initialBrands);
+      setIsLoading(false);
+      return;
     }
-    else{
-      setValue(0)
-    }
+
     fetchBrandInfo()
-  }, [])
+  }, [initialBrands])
 
   const fetchBrandInfo = async () => {
     setIsLoading(true)
@@ -67,9 +73,18 @@ export default function NewBikeBrand() {
   }
 
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log(newValue)
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (newValue === 1) {
+      params.set('tab', '2');
+    } else {
+      params.delete('tab');
+    }
+
+    const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+    router.replace(nextUrl, { scroll: false });
   };
 
   return (
@@ -85,7 +100,7 @@ export default function NewBikeBrand() {
             </Box>
 
             <Typography className={styles.heading}>
-              New Bikes By Make
+              {value === 1 ? 'Electric Bikes By Make' : 'New Bikes By Make'}
             </Typography>
 
             <Box sx={{ width: '100%', boxSizing: 'border-box' }}>

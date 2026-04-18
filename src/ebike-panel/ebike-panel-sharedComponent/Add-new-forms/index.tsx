@@ -1513,7 +1513,7 @@ const AddBrandForm = () => {
                 <input id="brandName" name="brandName" value={BrandData.brandName} onChange={handleInputChange} className={styles.input} />
 
                 <label htmlFor="description" className={styles.label}>Description:</label>
-                <textarea id="description" name="description" value={BrandData.description} onChange={handleInputChange} className={styles.textarea} />
+                <textarea id="description" name="description" value={BrandData.description} onChange={handleInputChange} className={`${styles.textarea} ${styles.brandDescriptionTextarea}`} />
 
                 <label htmlFor="videourl" className={styles.label}>Video URL:</label>
                 <input id="videourl" name="videourl" value={BrandData.videourl} onChange={handleInputChange} className={styles.input} />

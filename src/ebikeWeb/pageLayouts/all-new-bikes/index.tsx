@@ -13,59 +13,89 @@ import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
-export default function AllNewBikes() {
+function stripHtml(value: string) {
+  return value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
-  const [allnewBikeArr, setAllnewBikeArr] = useState([]);
+export default function AllNewBikes({ initialBrandData = [] }: { initialBrandData?: any[] }) {
+
+  const [allnewBikeArr, setAllnewBikeArr] = useState(initialBrandData);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [allDealerArr, setAllDelaerArr] = useState([]);
-  const [brandname, setbrandName]: any = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [brandname, setbrandName]: any = useState(initialBrandData?.[0]?.bike_brand?.brandName || '');
+  const [isLoading, setIsLoading] = useState(initialBrandData.length === 0);
   const [Showmore, setShowmore] = useState(true);
   const [desc, setDesc] = useState('');
-  const [logo, setLogo] = useState('');
+  const [logo, setLogo] = useState(initialBrandData?.[0]?.bike_brand?.logoUrl || '');
   const router = useRouter();
 
   const params = useParams()
   const brandName = params.slug
   useEffect(() => {
-    fetchBrandInfo()
-  }, [])
-
-  async function fetchBrandInfo() {
-    setIsLoading(true)
-    setbrandName(brandName)
-    let res = await getnewBikeData({ brand: brandName })
-
-
-    if (res && res?.length > 0) {
+    const applyBrandData = async (res: any[]) => {
+      setbrandName(res?.[0]?.bike_brand?.brandName || brandName)
       setAllnewBikeArr(res)
-      let _des = res[0]?.bike_brand?.description.toString().replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '')
-      setDesc(_des)
-      setLogo(res[0]?.bike_brand?.logoUrl)
+      const cleanedDescription = (res?.[0]?.bike_brand?.description || '')
+        .toString()
+        .replace('<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>', '');
+      setDesc(cleanedDescription)
+      setLogo(res?.[0]?.bike_brand?.logoUrl || '')
       setIsLoading(false)
       setTimeout(() => {
         window.scrollTo(0, 0)
       }, 1000);
-      let DealerDataRes = await getdealerData(res[0].brandId)
-      setAllDelaerArr(DealerDataRes.dealers)
-    }
-    else {
-      setAllnewBikeArr([])
-      setDesc("")
-      setLogo("")
-      setIsLoading(false)
-      setTimeout(() => {
-        window.scrollTo(0, 0)
-      }, 1000);
-      // let DealerDataRes = await getdealerData(res[0].brandId)
-      setAllDelaerArr([])
-    }
-  }
+
+      if (res?.[0]?.brandId) {
+        const dealerDataRes = await getdealerData(res[0].brandId)
+        setAllDelaerArr(dealerDataRes?.dealers || [])
+      } else {
+        setAllDelaerArr([])
+      }
+    };
+
+    const loadBrandInfo = async () => {
+      if (initialBrandData.length > 0) {
+        await applyBrandData(initialBrandData);
+        return;
+      }
+
+      setIsLoading(true)
+      const res = await getnewBikeData({ brand: brandName })
+
+      if (res && res?.length > 0) {
+        await applyBrandData(res)
+      }
+      else {
+        setAllnewBikeArr([])
+        setDesc("")
+        setLogo("")
+        setIsLoading(false)
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 1000);
+        setAllDelaerArr([])
+      }
+    };
+
+    loadBrandInfo()
+  }, [brandName, initialBrandData])
 
 
   const showmore = () => {
     setShowmore(!Showmore);
   };
+
+  const visibleBrandName = brandname
+    ? `${brandname.charAt(0).toUpperCase()}${brandname.slice(1)}`
+    : '';
+  const plainDescription = stripHtml(desc);
+  const seoParagraph = visibleBrandName
+    ? `${visibleBrandName} new bikes in Pakistan with latest prices, specifications, features, photos and reviews. Explore ${allnewBikeArr.length} ${visibleBrandName} motorcycle models and compare details on ebike.pk. ${plainDescription}`.trim()
+    : '';
 
   return (
     <>
@@ -73,10 +103,21 @@ export default function AllNewBikes() {
         !isLoading && allnewBikeArr?.length > 0 ?
           <Box className={styles.all_new_bike_main}>
             <Box className={styles.description_box}>
+              <Typography component="h1" className={styles.pageTitle}>
+                {visibleBrandName} New Bikes in Pakistan
+              </Typography>
+              <Typography className={styles.pageIntro}>
+                Compare {allnewBikeArr.length} latest {visibleBrandName} bike models with updated prices, specs and reviews.
+              </Typography>
+              {seoParagraph ? (
+                <p className={styles.seoHiddenParagraph}>
+                  {seoParagraph}
+                </p>
+              ) : null}
               <Box className={styles.card_main}>
                 <img
                   src={cloudinaryLoader(logo, 400, 'auto')}
-                  alt={brandname}
+                  alt={`${visibleBrandName} logo`}
                   className={styles.card_image}
                 />
               </Box>
@@ -126,7 +167,7 @@ export default function AllNewBikes() {
             </Box>
             <Grid container className={styles.grid_sectiion_box}>
               <Grid item xs={isMobile ? 12 : 9} className={styles.card_grid}>
-                <Typography className={styles.heading}>New Bikes</Typography>
+                <Typography className={styles.heading}>{visibleBrandName} Bike Models</Typography>
                 {
                   allnewBikeArr.map((e, i) => {
                     return (

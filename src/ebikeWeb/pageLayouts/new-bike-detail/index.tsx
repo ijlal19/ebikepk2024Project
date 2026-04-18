@@ -318,7 +318,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                 <Grid item xs={isMobile ? 12 : 6}>
                                   <table className={styles.table}>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>{isElectricBike ? "Head Light" : "Frame"}</td>
+                                      <td className={styles.column}>{isElectricBike ? "Headlight" : "Frame"}</td>
                                       <td className={styles.column}>{e?.bike?.frame ? e.bike.frame : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
@@ -326,7 +326,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.displacement ? e.bike?.displacement?.split(',')[0] : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr} >
-                                      <td className={styles.column}>{isElectricBike ? "Type" : "Dimention"} </td>
+                                      <td className={styles.column}>{isElectricBike ? "Type" : "Dimension"} </td>
                                       <td className={styles.column}>{e?.bike?.dimention ? e.bike.dimention : "-"}</td>
                                     </tr>
                                     <tr className={styles.tr} >
@@ -368,19 +368,19 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                                       <td className={styles.column}>{e?.bike?.petrolCapacity ? e.bike.petrolCapacity : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Brake (Front/Rear)" : "Tyre Back"} </td>
+                                      <td className={styles.column}>{isElectricBike ? "Brake (Front/Rear)" : "Tyre Rear"} </td>
                                       <td className={styles.column}>{e?.bike?.tyreBack ? e.bike.tyreBack : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Frame" : "Comp-Ration"} </td>
+                                      <td className={styles.column}>{isElectricBike ? "Frame" : "Compression Ratio"} </td>
                                       <td className={styles.column}>{e?.bike?.compressionRatio ? e.bike.compressionRatio : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}>{isElectricBike ? "Motor" : "Ground Clearence"}</td>
+                                      <td className={styles.column}>{isElectricBike ? "Motor" : "Ground Clearance"}</td>
                                       <td className={styles.column}>{e?.bike?.groundClearance ? e.bike.groundClearance : '-'}</td>
                                     </tr>
                                     <tr className={styles.tr}>
-                                      <td className={styles.column}> {isElectricBike ? "Shock Absorption" : "Transmittion"} </td>
+                                      <td className={styles.column}> {isElectricBike ? "Shock Absorption" : "Transmission"} </td>
                                       <td className={styles.column}>{e?.bike?.transmission ? e.bike.transmission : '-'}</td>
                                     </tr>
                                   </table>
@@ -423,12 +423,14 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             <WriteModal props={writepopupData} closeFunction={writeclose} />
                           </Box>
 
-                          <Box className={styles.sidebarAdBox}>
-                            <AdSense
-                              client="ca-pub-5167970563180610"
-                              slot="9214599249"
-                            />
-                          </Box>
+                          {e?.bike?.videoUrl ? (
+                            <Box className={styles.sidebarAdBox}>
+                              <AdSense
+                                client="ca-pub-5167970563180610"
+                                slot="9214599249"
+                              />
+                            </Box>
+                          ) : null}
 
                           <Box className={styles.dealers_box} sx={{ display: isMobile ? 'none' : 'flex' }}>
                             {
@@ -506,18 +508,6 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                             }
                           </Box>
 
-                          <Box className={styles.sidebarAdBox}>
-                            <AdSense
-                              client="ca-pub-5167970563180610"
-                              slot="9214599249"
-                            />
-                          </Box>
-
-                          <Box sx={{ display: isMobile ? 'none' : 'flex' }}>
-                            <Link href='/forum'>
-                              <img style={{ width: "100%" }} src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" />
-                            </Link>
-                          </Box>
                           {e?.bike?.videoUrl &&
                             <Side_brands />}
                           {/* <List_Card /> */}
