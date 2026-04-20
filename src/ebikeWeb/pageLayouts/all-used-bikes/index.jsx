@@ -31,7 +31,6 @@ import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/fea
 import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
 import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
 import AdSense from "@/ebikeWeb/sharedComponents/googleAdsense/adsense";
-import Script from "next/script";
 // import { useSearchParams } from "next/navigation";
 
 const AdsArray = [
@@ -512,12 +511,6 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     is9Inch ? <Button disableRipple onClick={filtershow} className={styles.filter_button}>Filters <FilterListIcon sx={{ marginLeft: 1 }} /></Button> : ''
                 }
                 <Box className={styles.main}>
-                    <Script
-                        async
-                        strategy="afterInteractive"
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-                        crossOrigin="anonymous"
-                    />
                     <>
                         <Box className={styles.usedBike_headingBpx}>
                             <Typography className={styles.headinh_sale}>Find Used Bikes & Motorcycles in Pakistan</Typography>

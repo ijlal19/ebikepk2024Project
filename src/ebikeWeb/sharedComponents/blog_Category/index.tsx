@@ -5,7 +5,6 @@ import BlogCategoryCard from "./card";
 import { NewMoreBlogCard } from "../new_item_card";
 import { useMediaQuery } from "@mui/material";
 import { MotorCycle_News_Card } from "../NewSectionM/card";
-import Script from "next/script";
 import AdSense from "../googleAdsense/adsense";
 
 const Blog_Category_Comp = (props:any) => {
@@ -23,14 +22,6 @@ const Blog_Category_Comp = (props:any) => {
   }, [props.data, props.heading]);
     return (
         <div className={styles.main}>
-            {props.showAds ? (
-                <Script
-                    async
-                    strategy="afterInteractive"
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-                    crossOrigin="anonymous"
-                />
-            ) : null}
             <div className={styles.container}>
                 <div className={styles.header}>
                     <p className={styles.shortblogheading}>{props.heading} <span className={styles.underline}></span></p>

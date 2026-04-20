@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import Header from '@/ebikeWeb/sharedComponents/header/index'
 import Footer from '@/ebikeWeb/sharedComponents/footer/footer-index'
-import Script from "next/script";
 import { SITE_URL, DEFAULT_SHARE_IMAGE } from "./metadata-utils";
 
 
@@ -44,14 +43,6 @@ export default function RootLayout({  children }: Readonly<{ children: React.Rea
   return (
     <html lang="en">
       <head>
-      <Script
-          id="google-adsense"
-          async
-          strategy="afterInteractive"
-          crossOrigin="anonymous"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-        />
-   
       <script
           async
           defer

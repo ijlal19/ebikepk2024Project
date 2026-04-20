@@ -22,7 +22,6 @@ import OurVideos from '../home/ourVideos';
 import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import CATEGORYdATA from './Data';
-import Script from "next/script";
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
@@ -245,14 +244,6 @@ const Blog = () => {
 
   return (
     <>
-
-      <Script
-        async
-        strategy="afterInteractive"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-        crossOrigin="anonymous"
-      />
-
       {
         !isLoading ?
           <Box className={styles.blog_main}>

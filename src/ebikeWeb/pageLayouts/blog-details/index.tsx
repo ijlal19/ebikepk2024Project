@@ -25,7 +25,6 @@ import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bi
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
-import Script from 'next/script';
 import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 
 const BLOG_VIEW_DEDUP_MS = 5000;
@@ -218,12 +217,6 @@ const BlogDetails = () => {
 
   return (
     <Box className={styles.blog_details_main}>
-      <Script
-        async
-        strategy="afterInteractive"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5167970563180610"
-        crossOrigin="anonymous"
-      />
       {!isLoading ?
         <> {DataBlog ?
           <Grid container className={styles.gird_box_main}>
