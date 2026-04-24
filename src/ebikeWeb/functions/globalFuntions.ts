@@ -1,4 +1,5 @@
 import data from '@/ebikeWeb/pageLayouts/bike-brands/data';
+import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
 import Gconfig from 'globalconfig'
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
@@ -119,7 +120,7 @@ function getSingleBlogData(id: any) {
 function getAllBlog() {
     return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
         .then(response => response.json()).then(data => {
-            return data
+            return filterVisibleBlogs(data)
         })
         .catch((err) => {
             console.log(err)

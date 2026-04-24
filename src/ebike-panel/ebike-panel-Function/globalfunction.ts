@@ -279,7 +279,16 @@ function ChangeApprove(id: any, payload: any) {
 
 /////////////////////////////////////// BLOG FUNCTIONS //////////////////////////////////////////////////////
 function getAllBlog() {
-    return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = userCookie ? JSON.parse(userCookie) : null;
+    const token = userData?.accessToken;
+
+    return fetch(Gconfig.ebikeApi + `blog/get-all-blog`, {
+        method: 'GET',
+        headers: {
+            ...(token ? { "x-access-token": token } : {})
+        }
+    })
         .then(response => response.json()).then(data => {
             return data
         })

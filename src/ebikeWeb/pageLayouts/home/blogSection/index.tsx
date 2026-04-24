@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { getAllBlog } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import {NewCard , NewVideoCard} from '@/ebikeWeb/sharedComponents/new_item_card';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
+import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -45,7 +46,7 @@ function BlogSection(props: any) {
 
   const fetchAllBlog = async () => {
     setIsLoading(true)
-    const res = await getAllBlog()
+    const res = filterVisibleBlogs(await getAllBlog())
     if (res && res?.length > 0) {
       const first20 = res.slice(0, 20);
 

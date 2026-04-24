@@ -15,6 +15,7 @@ import styles from './index.module.scss'
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 import { postSearch, postSearchNew } from '@/genericFunctions/geneFunc'
 import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
+import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
 
 /* ---------------------------------------------
    Types (optional but recommended)
@@ -64,8 +65,18 @@ export default function SearchPage() {
     }
 
     const res = await postSearchNew(payload)
+    const nextResults = res?.results || null
 
-    setResults(res?.results || null)
+    if (nextResults?.blogs) {
+      const visibleBlogs = filterVisibleBlogs(nextResults.blogs.data)
+      nextResults.blogs = {
+        ...nextResults.blogs,
+        data: visibleBlogs,
+        total: visibleBlogs.length
+      }
+    }
+
+    setResults(nextResults)
     setLoading(false)
 
     window.scrollTo({ top: 0, behavior: 'smooth' })

@@ -750,6 +750,7 @@ const AddBlogForm = () => {
         bloghtml: '',
         blogtext: '',
         focus_keyword: '',
+        isHidden: false,
         meta_description: '',
         meta_title: '',
     });
@@ -761,6 +762,11 @@ const AddBlogForm = () => {
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setBlogData((prev: any) => ({ ...prev, [name]: value }));
+    };
+
+    const handleHiddenToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { checked } = e.target;
+        setBlogData((prev: any) => ({ ...prev, isHidden: checked }));
     };
 
     const handleImageDelete = (index: number) => {
@@ -906,6 +912,20 @@ const AddBlogForm = () => {
                             ))
                         }
                     </select>
+                </div>
+
+                <div className={styles.fieldGroup}>
+                    <label className={styles.label} htmlFor="isHidden">Visibility</label>
+                    <label htmlFor="isHidden" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                        <input
+                            id="isHidden"
+                            name="isHidden"
+                            type="checkbox"
+                            checked={Boolean(BlogData.isHidden)}
+                            onChange={handleHiddenToggle}
+                        />
+                        <span>Hide this blog from website frontend</span>
+                    </label>
                 </div>
 
                 <label htmlFor="meta_title" className={styles.label}>Meta Title</label>

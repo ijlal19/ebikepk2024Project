@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import Gconfig from "globalconfig";
 import { BrandArr } from "@/ebikeWeb/constants/globalData";
+import { filterVisibleBlogs } from "@/ebikeWeb/utils/blogVisibility";
 import { SITE_URL } from "./metadata-utils";
 
 export const revalidate = 3600;
@@ -27,6 +28,7 @@ type NewBike = {
 type Blog = {
   id?: number | string;
   blogTitle?: string;
+  isHidden?: boolean;
   updatedAt?: string;
   createdAt?: string;
   blog_category?: {
@@ -234,7 +236,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...staticRoutes,
       ...brandRoutes,
       ...buildNewBikeRoutes(newBikeGroups.flat()),
-      ...buildBlogRoutes(Array.isArray(blogs) ? blogs : []),
+      ...buildBlogRoutes(filterVisibleBlogs(Array.isArray(blogs) ? blogs : [])),
       ...buildDealerRoutes(Array.isArray(dealers) ? dealers : []),
       ...buildMechanicRoutes(Array.isArray(mechanics) ? mechanics : [])
     ];

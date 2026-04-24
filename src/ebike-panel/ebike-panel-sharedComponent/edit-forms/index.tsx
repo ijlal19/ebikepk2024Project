@@ -1136,6 +1136,7 @@ const EditBlogForm = () => {
     const [Blog_Meta_Description, setBlog_Meta_description] = useState('');
     const [Blog_Featured_Image, setBlog_Featured_Image] = useState('');
     const [Blog_Focus_keyword, setBlog_Focus_keyword] = useState('');
+    const [Blog_Is_Hidden, setBlog_Is_Hidden] = useState(false);
     const [Blog_Meta_Title, setBlog_Meta_Title] = useState('');
     const [Author_Name, setAuthor_Name] = useState('');
     const [BlogData, setBlogData] = useState<any>([]);
@@ -1162,6 +1163,7 @@ const EditBlogForm = () => {
             setBlog_Title(res.blogTitle)
             setAuthor_Name(res.authorname)
             setBlog_Html(res.bloghtml)
+            setBlog_Is_Hidden(Boolean(res.isHidden))
             setBlog_Meta_description(res.meta_description)
             setBlog_Meta_Title(res.meta_title)
             setBlog_Focus_keyword(res.focus_keyword)
@@ -1269,6 +1271,7 @@ const EditBlogForm = () => {
             blogtext: finalBlogData?.blogtext,
             featuredImage: imageArr.join(' #$# '),
             focus_keyword: Blog_Focus_keyword,
+            isHidden: Blog_Is_Hidden,
             meta_description: Blog_Meta_Description,
             meta_title: Blog_Meta_Title,
             uid: UserId
@@ -1335,6 +1338,19 @@ const EditBlogForm = () => {
                                             ))}
                                         </select>
                                     </div>
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label className={styles.label} htmlFor="editBlogHidden">Visibility</label>
+                                    <label htmlFor="editBlogHidden" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                                        <input
+                                            id="editBlogHidden"
+                                            type="checkbox"
+                                            checked={Blog_Is_Hidden}
+                                            onChange={(e) => setBlog_Is_Hidden(e.target.checked)}
+                                        />
+                                        <span>Hide this blog from website frontend</span>
+                                    </label>
                                 </div>
                             </div>
 
