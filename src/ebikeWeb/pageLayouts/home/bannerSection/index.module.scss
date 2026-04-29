@@ -8,17 +8,19 @@
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
-    @media (max-width:768px) {
-        display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+
+    @media (max-width:767px) {
+        width: 95%;
+        margin: auto;
+        background: none;
     }
 }
 
-.search{
-    width: 365px;
-    position: absolute;
-    left: 60%;
-    top: 30px;
-}
 .btn:focus{
     color: green;
     font-size: 20px;
@@ -34,7 +36,19 @@
 }
 
 @media screen and (max-width:1000px) {
-    .search{
-        display: none;
+}
+
+@media (max-width:768px) {
+    .main {
+        height: 380px;
+        padding: 0 18px;
+    }
+
+}
+
+@media (max-width:420px) {
+    .main {
+        height: 395px;
+        padding: 0 14px;
     }
 }

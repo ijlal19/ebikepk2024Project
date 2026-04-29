@@ -1,14 +1,12 @@
 import { Box } from '@mui/material'
 import styles from './index.module.scss'
-import SearchBox from './SearchBox/SearchBox'
+import BikeFilterBar from '@/ebikeWeb/sharedComponents/bikeFilterBar';
 
 const Banner = () => {
-    return(
+    return (
         <div>
-            <Box class={styles.main}>
-                <Box class={styles.search}>
-                    {/* <SearchBox/> */}
-                </Box>
+            <Box className={styles.main}>
+                <BikeFilterBar />
             </Box>
         </div>
     )

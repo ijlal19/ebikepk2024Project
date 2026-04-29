@@ -1,0 +1,206 @@
+.filterBar {
+    width: min(1040px, 100%);
+    min-height: 86px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 150px;
+    align-items: stretch;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(10px);
+}
+
+.pageFilterBar {
+    width: min(1040px, calc(100% - 32px));
+    margin: 28px auto 18px;
+    border: 1px solid #e5e8ee;
+    box-shadow: 0 8px 26px rgba(23, 38, 61, 0.1);
+}
+
+.filterField {
+    width: 100%;
+    min-width: 0;
+    border-right: 1px solid #e5e8ee;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 22px;
+    box-sizing: border-box;
+}
+
+.fieldLabel {
+    color: #697386;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    text-transform: uppercase;
+
+    svg {
+        color: #39b54a;
+        font-size: 18px;
+    }
+}
+
+.filterSelect {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    background-color: #ffffff;
+    color: #222936;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    outline: none;
+    padding: 0 34px 0 0;
+    text-transform: capitalize;
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #697386 50%),
+        linear-gradient(135deg, #697386 50%, transparent 50%);
+    background-position:
+        calc(100% - 12px) 50%,
+        calc(100% - 6px) 50%;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+.filterSelect:focus {
+    color: #0f172a;
+}
+
+.searchButton {
+    width: 100%;
+    min-width: 120px;
+    border: 0;
+    background: linear-gradient(135deg, #39b54a 0%, #22a83a 100%);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    svg {
+        font-size: 34px;
+    }
+}
+
+.searchButton:hover {
+    background: linear-gradient(135deg, #31aa42 0%, #1f9635 100%);
+    transform: translateY(-1px);
+}
+
+@media screen and (max-width:1000px) {
+    .filterBar {
+        width: min(760px, 100%);
+        grid-template-columns: repeat(3, minmax(0, 1fr)) 118px;
+    }
+
+    .pageFilterBar {
+        width: min(760px, calc(100% - 28px));
+    }
+
+    .filterField {
+        padding: 0 16px;
+    }
+
+    .filterSelect {
+        font-size: 16px;
+        padding-right: 28px;
+    }
+
+    .searchButton {
+        min-width: 104px;
+    }
+}
+
+@media (max-width:768px) {
+    .filterBar {
+        width: 90%;
+        max-width: 430px;
+        grid-template-columns: 1fr;
+        border-radius: 10px;
+        padding: 12px;
+        row-gap: 10px;
+        background: #ffffff;
+    }
+
+    .pageFilterBar {
+        width: 90%;
+        margin-top: 18px;
+    }
+
+    .filterField {
+        min-height: 64px;
+        border-right: 0;
+        border-bottom: 1px solid #e5e8ee;
+        border-radius: 8px;
+        background-color: #f8fafc;
+        padding: 0 16px;
+    }
+
+    .filterField:last-of-type {
+        border-bottom: 0;
+    }
+
+    .filterSelect {
+        font-size: 15px;
+        background-color: transparent;
+        padding-right: 30px;
+    }
+
+    .searchButton {
+        height: 56px;
+        border-radius: 8px;
+        flex-direction: row;
+        font-size: 14px;
+
+        svg {
+            font-size: 26px;
+        }
+    }
+}
+
+@media (max-width:420px) {
+    .filterBar {
+        width: 90%;
+        padding: 10px;
+        row-gap: 9px;
+    }
+
+    .pageFilterBar {
+        width: 90%;
+    }
+
+    .filterField {
+        min-height: 61px;
+        padding: 0 13px;
+    }
+
+    .fieldLabel {
+        font-size: 11px;
+        gap: 6px;
+
+        svg {
+            font-size: 16px;
+        }
+    }
+
+    .filterSelect {
+        font-size: 14px;
+    }
+}
