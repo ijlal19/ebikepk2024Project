@@ -63,24 +63,157 @@
 .bike_sec_main {
     width: 100%;
     height: auto;
-    padding: 5px 0px 5px 0px !important;
-    // max-width: 1060px;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    min-height: 70vh;
+    padding: 0 0 36px !important;
+    margin: 0 auto;
+    background: #f5f7fa;
 
-    .heading {
-        padding: 0px !important;
-        font-weight: 700;
-        color: black;
-        padding: 10px 0px;
-        margin-bottom: 0px;
-        font-size: 21px;
+    .heroSection {
+        width: 100%;
+        background:
+            linear-gradient(135deg, rgba(14, 73, 42, 0.96), rgba(22, 110, 58, 0.92)),
+            url('https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg');
+        background-size: cover;
+        background-position: center;
+        color: #ffffff;
+        padding: 42px 0 44px;
+        box-sizing: border-box;
 
         @media (max-width:768px) {
-            font-size: 19px;
-            display: flex;
-            justify-content: space-between;
+            padding: 28px 0 30px;
+        }
+    }
+
+    .heroContainer {
+        padding-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+
+        @media (max-width:768px) {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 18px;
+        }
+    }
+
+    .heroText {
+        max-width: 700px;
+    }
+
+    .pageTitle {
+        color: #ffffff;
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.15;
+        margin: 0 0 10px;
+
+        @media (max-width:768px) {
+            font-size: 28px;
+        }
+    }
+
+    .pageIntro {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 0;
+        max-width: 620px;
+
+        @media (max-width:768px) {
+            font-size: 14px;
+        }
+    }
+
+    .heroMeta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+    }
+
+    .metaItem {
+        min-width: 74px;
+        height: 58px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        text-align: center;
+    }
+
+    .metaValue {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .metaLabel {
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .metaDivider {
+        width: 1px;
+        background: rgba(255, 255, 255, 0.22);
+    }
+
+    .contentContainer {
+        margin-top: -26px;
+        position: relative;
+        z-index: 1;
+
+        @media (max-width:768px) {
+            margin-top: -18px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    }
+
+    .tabsShell {
+        width: 100%;
+        padding: 6px 14px;
+        box-sizing: border-box;
+        background: #ffffff;
+        border: 1px solid #e6eaf0;
+        border-radius: 8px;
+        box-shadow: 0 12px 30px rgba(21, 38, 64, 0.09);
+
+        @media (max-width:768px) {
+            padding: 5px 8px;
+        }
+    }
+
+    .tabs {
+        min-height: 42px;
+
+        :global(.MuiTabs-indicator) {
+            height: 3px;
+            border-radius: 999px;
+            background-color: #39b54a;
+        }
+    }
+
+    .heading {
+        padding: 0 !important;
+        font-weight: 800;
+        color: #172033;
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.2;
+
+        @media (max-width:768px) {
+            font-size: 20px;
         }
 
         .view_new_bik_btn {
@@ -101,12 +234,58 @@
     }
 
     .tab {
-        padding: 0px !important;
+        min-height: 42px !important;
+        padding: 0 18px !important;
+        border-radius: 7px !important;
+        color: #566174 !important;
+        font-size: 13px !important;
+        font-weight: 800 !important;
+        text-transform: none !important;
+
+        @media (max-width:420px) {
+            padding: 0 10px !important;
+            font-size: 12px !important;
+        }
+    }
+
+    .sectionHeader {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 18px;
+        margin: 32px 0 20px;
+
+        @media (max-width:768px) {
+            align-items: flex-start;
+            flex-direction: column;
+            margin: 24px 0 16px;
+            gap: 10px;
+        }
+    }
+
+    .subHeading {
+        color: #6c7688;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-top: 7px;
+        text-transform: capitalize;
+    }
+
+    .brandCount {
+        flex: 0 0 auto;
+        color: #1d7f35;
+        background: #eaf7ee;
+        border: 1px solid #ccebd4;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 7px 12px;
+        text-transform: uppercase;
     }
 
     .pageAdBox {
         width: 100%;
-        margin: 0 auto 20px;
+        margin: 24px auto 0;
         padding: 10px 0 0;
         overflow: hidden;
     }
@@ -114,39 +293,25 @@
 
 .tab_panel {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    // flex-wrap: wrap; 
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     justify-content: left;
-    align-items: center;
-    column-gap: 10px;
-    row-gap: 10px;
+    align-items: stretch;
+    gap: 18px;
     width: 100%;
     margin: auto;
-    padding: 10px 0px !important;
+    padding: 0 0 10px !important;
     box-sizing: border-box;
 
-    @media (max-width:1200px) {
-        grid-template-columns: repeat(6, 1fr);
-        justify-content: left;
-    }
-    @media (max-width:1000px) {
-        grid-template-columns: repeat(5, 1fr);
-        justify-content: left;
-    }
-    @media (max-width:900px) {
-        grid-template-columns: repeat(4, 1fr);
-        justify-content: left;
-    }
     @media (max-width:768px) {
-        grid-template-columns: repeat(4, 1fr);
-        justify-content: center;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
     }
+
     @media (max-width:400px) {
-        grid-template-columns: repeat(3, 1fr);
-        justify-content: center;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    // @media (max-width:768px) {
-    //     grid-template-columns: repeat(3, 1fr);
-    //     justify-content: center;
-    // }
+}
+
+.brand_image_box {
+    min-width: 0;
 }

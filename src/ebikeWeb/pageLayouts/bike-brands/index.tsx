@@ -28,9 +28,23 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
     </div>
   );
+}
+
+const hiddenBrandNames = new Set(['sport', 'china', 'sports', 'eagle']);
+
+function isHiddenBrand(brand: any) {
+  return hiddenBrandNames.has(brand?.brandName?.trim()?.toLowerCase());
+}
+
+function isElectricBrand(brand: any) {
+  return brand?.focus_keyword?.toLowerCase?.().includes('electric-bike');
+}
+
+function brandNameList(brands: any[]) {
+  return 'Honda, Suzuki, Unique, BMW, Kawasaki';
 }
 
 
@@ -87,38 +101,70 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
     router.replace(nextUrl, { scroll: false });
   };
 
+  const motorcycleBrands = allBrandArr.filter((brand: any) => !isHiddenBrand(brand) && !isElectricBrand(brand));
+  const electricBrands = allBrandArr.filter((brand: any) => !isHiddenBrand(brand) && isElectricBrand(brand));
+  const activeBrands = value === 1 ? electricBrands : motorcycleBrands;
+  const activeLabel = value === 1 ? 'Electric Bikes' : 'New Bikes';
+  const activeCopy = value === 1
+    ? 'Explore electric bike brands available in Pakistan with prices, models and specs.'
+    : 'Browse motorcycle brands available in Pakistan and compare their latest models.';
+
   return (
     <Box className={styles.bike_sec_main}>
       {
         !isLoading ?
-          <Container>
-            <Box className={styles.pageAdBox}>
-              <AdSense
-                client="ca-pub-5167970563180610"
-                slot="9214599249"
-              />
+          <>
+            <Box className={styles.heroSection}>
+              <Container className={styles.heroContainer}>
+                <Box className={styles.heroText}>
+                  <Typography component="h1" className={styles.pageTitle}>
+                    {activeLabel} in Pakistan
+                  </Typography>
+                  <Typography className={styles.pageIntro}>
+                    {activeCopy}
+                  </Typography>
+                </Box>
+                <Box className={styles.heroMeta}>
+                  <Box className={styles.metaItem}>
+                    <span className={styles.metaValue}>{activeBrands.length}</span>
+                    <span className={styles.metaLabel}>Brands</span>
+                  </Box>
+                  <Box className={styles.metaDivider} />
+                  <Box className={styles.metaItem}>
+                    <span className={styles.metaValue}>PK</span>
+                    <span className={styles.metaLabel}>Market</span>
+                  </Box>
+                </Box>
+              </Container>
             </Box>
 
-            <Typography className={styles.heading}>
-              {value === 1 ? 'Electric Bikes By Make' : 'New Bikes By Make'}
-            </Typography>
-
-            <Box sx={{ width: '100%', boxSizing: 'border-box' }}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary"  >
+            <Container className={styles.contentContainer}>
+              <Box className={styles.tabsShell}>
+                <Tabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary" className={styles.tabs}>
                   <Tab label="MotorCycles" className={styles.tab} sx={{ marginRight: 2 }} />
                   <Tab label="Electric Bikes" className={styles.tab} />
                 </Tabs>
               </Box>
+
+              <Box className={styles.sectionHeader}>
+                <Box>
+                  <Typography component="h2" className={styles.heading}>
+                    {value === 1 ? 'Electric Bikes By Make' : 'New Bikes By Make'}
+                  </Typography>
+                  <Typography className={styles.subHeading}>
+                    {brandNameList(activeBrands)}
+                  </Typography>
+                </Box>
+                <Typography className={styles.brandCount}>
+                  {activeBrands.length} brands
+                </Typography>
+              </Box>
+
+              <Box sx={{ width: '100%', boxSizing: 'border-box' }}>
               <CustomTabPanel value={value} index={0}>
                 <div className={styles.tab_panel}>
                   {
-                    allBrandArr?.map((e: any, i: any) => {
-                      if (e?.brandName?.trim()?.toLowerCase() == "sport" || e?.brandName?.trim()?.toLowerCase() == "china" || e?.brandName?.trim()?.toLowerCase() == "sports" || e?.brandName?.trim()?.toLowerCase() == "eagle") return null;
-                      // if (e?.brandName?.includes("-ebb")) {
-                      //   return null;
-                      // }
-                      if (e?.focus_keyword?.includes("electric-bike")) return null;
+                    motorcycleBrands?.map((e: any, i: any) => {
                       return (
                         <Box className={styles.brand_image_box} key={i} >
                           <BikesBrandCard key={i} data={e} />
@@ -131,9 +177,7 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
               <CustomTabPanel value={value} index={1}>
                 <div className={styles.tab_panel}>
                   {
-                    allBrandArr?.map((e: any, i: any) => {
-                      if (e?.brandName?.trim()?.toLowerCase() == "sport" || e?.brandName?.trim()?.toLowerCase() == "china" || e?.brandName?.trim()?.toLowerCase() == "sports" || e?.brandName?.trim()?.toLowerCase() == "eagle") return null;
-                      if (!e?.focus_keyword?.includes("electric-bike")) return null;
+                    electricBrands?.map((e: any, i: any) => {
                       return (
                         <Box className={styles.brand_image_box} key={i} >
                           <BikesBrandCard key={i} data={e} />
@@ -149,7 +193,7 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
           {props?.trendingData ? <CustomTabPanel value={value} index={1}>
             <SwiperCarousels sliderName='bikesSectionSwiper' sliderData={props?.trendingData} from='newBikeComp' currentpage='trending_bike' onBtnClick={() => { }} />
           </CustomTabPanel> : ""} */}
-            </Box>
+              </Box>
 
             <Box className={styles.pageAdBox}>
               <AdSense
@@ -159,6 +203,7 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
             </Box>
 
           </Container>
+          </>
           :
           <div className={styles.load_div}>
             <Loader isLoading={isLoading} />
