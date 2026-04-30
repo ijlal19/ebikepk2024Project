@@ -73,14 +73,17 @@
         background:
             linear-gradient(135deg, rgba(14, 73, 42, 0.96), rgba(22, 110, 58, 0.92)),
             url('https://res.cloudinary.com/dzfd4phly/image/upload/v1734594565/Artboard_271x-100_1_af7qlo.jpg');
-        background-size: cover;
-        background-position: center;
+        background-size: cover, min(980px, 92%) auto;
+        background-position: center, right center;
+        background-repeat: no-repeat;
         color: #ffffff;
         padding: 42px 0 44px;
         box-sizing: border-box;
 
         @media (max-width:768px) {
             padding: 28px 0 30px;
+            background-size: cover, 118% auto;
+            background-position: center, center;
         }
     }
 

@@ -2,6 +2,18 @@
     height: 100Vh;
  }
 
+.mobileFilterBar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobileFilterBar {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0 8px;
+  }
+}
+
 .seoContent {
   position: absolute;
   width: 1px;

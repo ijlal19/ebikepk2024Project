@@ -7,6 +7,7 @@ import Explore from './exploresection/index'
 import UsedBikesSection from './usedbikeSection/index'
 import BlogSection from './blogSection/index'
 import MobileBanner from './mobileBanner/index'
+import BikeFilterBar from '@/ebikeWeb/sharedComponents/bikeFilterBar'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { isLoginUser } from "@/genericFunctions/geneFunc";
@@ -94,6 +95,9 @@ function Index() {
       <>
         <BannerSection />
         <MobileBanner />
+        <div className={styles.mobileFilterBar}>
+          <BikeFilterBar />
+        </div>
         <h1 style={{ textAlign:"center", fontSize:"20px", margin:"20px auto" }}> Pakistan’s #1 Marketplace for New & Used Bikes</h1>
         {homeSections.map((section, index) => (
           <div key={index}>
