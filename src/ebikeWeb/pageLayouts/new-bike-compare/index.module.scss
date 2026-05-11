@@ -1,0 +1,362 @@
+@import '../../styles/variable';
+
+.compareMain {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 14px 42px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  @media (max-width:767px) {
+    width: 95%;
+  }
+}
+
+.heroSection {
+  width: 100%;
+  min-height: 165px;
+  padding: 32px 34px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.06);
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    padding: 22px 18px;
+    min-height: auto;
+  }
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 18px 4px 4px;
+  margin: 10px;
+
+  @media (max-width: 768px) {
+    padding: 2px 4px;
+  }
+}
+
+.pageTitle {
+  color: $primary_two;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+}
+
+.pageIntro {
+  max-width: 660px;
+  color: #475467;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.heroIcon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border-radius: 8px;
+  background: #eef6ff;
+  color: $primary_two;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+
+  svg {
+    font-size: 34px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.selectorGrid {
+  margin-top: 26px;
+}
+
+.tabsShell {
+  width: 100%;
+  margin-top: 18px;
+  padding: 6px 14px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e6eaf0;
+  border-radius: 8px;
+  box-shadow: 0 10px 26px rgba(16, 24, 40, 0.055);
+
+  @media (max-width: 768px) {
+    padding: 5px 8px;
+  }
+}
+
+.tabs {
+  min-height: 42px;
+
+  :global(.MuiTabs-indicator) {
+    height: 3px;
+    border-radius: 999px;
+    background-color: $primary_two;
+  }
+}
+
+.tab {
+  min-height: 42px !important;
+  color: #475467 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+
+  &:global(.Mui-selected) {
+    color: $primary_two !important;
+  }
+}
+
+.selectorPanel {
+  min-height: 265px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 24px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 26px rgba(16, 24, 40, 0.055);
+
+  @media (max-width: 768px) {
+    padding: 18px;
+    min-height: auto;
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+  margin: 10px;
+
+  svg {
+    color: $primary_two;
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.formControl {
+  margin: 16px !important;
+  width: 90%;
+}
+
+.fieldLabel {
+  color: #344054;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px !important;
+}
+
+.select {
+  width: 100%;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  border-radius: 8px !important;
+
+  :global(.MuiSelect-select) {
+    min-height: 24px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  fieldset {
+    border-color: #d8dee8 !important;
+  }
+
+  &:hover fieldset {
+    border-color: $primary_two !important;
+  }
+}
+
+.helperText {
+  color: #667085;
+  font-size: 13px;
+  margin-top: 4px !important;
+}
+
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+
+  @media (max-width: 768px) {
+    justify-content: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.compareButton {
+  background: $primary_two !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  padding: 11px 20px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+
+  &:disabled {
+    background: #98a2b3 !important;
+    color: #ffffff !important;
+  }
+}
+
+.resetButton {
+  color: $primary_two !important;
+  border: 1px solid $primary_two !important;
+  border-radius: 6px !important;
+  padding: 10px 18px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  background: #ffffff !important;
+}
+
+.message {
+  margin-top: 18px !important;
+  padding: 12px 14px;
+  background: #fff8e6;
+  border: 1px solid #f3d38a;
+  border-radius: 8px;
+  color: #7a4b00;
+  font-size: 14px;
+}
+
+.loaderBox {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultSection {
+  margin-top: 22px;
+}
+
+.bikeSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bikeSummary {
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #ffffff;
+  min-height: 132px;
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.05);
+
+  @media (max-width: 520px) {
+    grid-template-columns: 110px minmax(0, 1fr);
+  }
+}
+
+.bikeImage {
+  width: 100%;
+  height: 96px;
+  object-fit: contain;
+  background: #f9fafb;
+  border-radius: 6px;
+}
+
+.bikeSummaryText {
+  min-width: 0;
+}
+
+.bikeTitle {
+  color: #111827;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.bikePrice {
+  margin-top: 7px !important;
+  color: $primary_two;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.tableWrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(16, 24, 40, 0.05);
+}
+
+.compareTable {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+
+  th,
+  td {
+    width: 33.33%;
+    padding: 13px 14px;
+    border: 1px solid #e4e7ec;
+    text-align: left;
+    vertical-align: top;
+    color: #1f2937;
+    font-size: 14px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  th {
+    background: #f3f8f6;
+    color: #111827;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  td:first-child {
+    background: #fbfcfd;
+    color: #344054;
+    font-weight: 700;
+  }
+
+  tr:nth-child(even) td:not(:first-child) {
+    background: #fcfcfd;
+  }
+}

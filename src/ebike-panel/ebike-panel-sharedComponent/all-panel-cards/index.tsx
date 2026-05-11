@@ -2037,7 +2037,7 @@ const AllBrands_Card = () => {
     const [open, setOpen] = useState(false);
     const [selectedBrand, setSelectedBrand] = useState<any>([]);
     const handleEditBrandDATA = (id: any) => {
-        // array se object filter karna
+        // Filter the object from the array
         const brand = displayedAllBrands.find((b: any) => b.id == id);
         // console.log("brand" , brand)
         setSelectedBrand(brand);

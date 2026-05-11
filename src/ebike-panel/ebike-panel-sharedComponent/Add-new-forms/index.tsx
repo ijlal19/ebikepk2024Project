@@ -1446,7 +1446,7 @@ const AddProductForm = () => {
                             </select>
                         </div>
 
-                        {/* ❌ icon sirf tab show hoga jab 1 se zyada boxes ho */}
+                        {/* Show the remove icon only when there is more than one box */}
                         {variants.length > 1 && (
                             <button className={styles.cross_btn}>
                                 <CloseIcon

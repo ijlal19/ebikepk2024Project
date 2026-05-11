@@ -44,7 +44,12 @@ function isElectricBrand(brand: any) {
 }
 
 function brandNameList(brands: any[]) {
-  return 'Honda, Suzuki, Unique, BMW, Kawasaki';
+  const names = brands
+    .map((brand) => brand?.brandName)
+    .filter(Boolean)
+    .slice(0, 5);
+
+  return names.length > 0 ? names.join(', ') : 'No brands available';
 }
 
 

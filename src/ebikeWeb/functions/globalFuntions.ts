@@ -67,6 +67,22 @@ function getnewBikedetailsData(id: any) {
             console.log(err)
         })
 }
+
+function getNewBikeComparisonData(data: any) {
+    return fetch(Gconfig.ebikeApi + `new-bikes/compare`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log('new bike comparison err', err)
+            return { success: false, info: 'Failed, something went wrong' }
+        })
+}
 function getFilteredAllbikesDetail(data: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-adds-by-filter`, {
         method: 'POST',
@@ -561,6 +577,7 @@ export {
     getnewBikeData,
     getdealerData,
     getnewBikedetailsData,
+    getNewBikeComparisonData,
     uplaodImageFunc,
     getBikesBySpecificFilter,
     getAllBlog,
