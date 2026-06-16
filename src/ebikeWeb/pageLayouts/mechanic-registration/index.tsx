@@ -6,8 +6,11 @@ import { useRouter } from 'next/navigation';
 import { numericOnly } from "@/genericFunctions/geneFunc";
 import { createmechanic } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CcArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import {isLoginUser} from "@/genericFunctions/geneFunc";
 import { getMechanicTypeFilterOptions } from '@/constants/mechanicType';
+
+const cityOptions = getSortedCityOptions(CityArr);
 
 
 const MechanicRegistration = () => {
@@ -143,7 +146,7 @@ const MechanicRegistration = () => {
                             <select name="" id="city" className={styles.section_main}onChange={(e) => handleChange('city', e.target.value)}>
                                 <option value="" disabled selected hidden></option>
                                 {
-                                    CityArr.map((e: any) => {
+                                    cityOptions.map((e: any) => {
                                         return (
                                             <option key={e.city_name} value={e.id}className={styles.drop_option}>{e.city_name}</option>
                                         )

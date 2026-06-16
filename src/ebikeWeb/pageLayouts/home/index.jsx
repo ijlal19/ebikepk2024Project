@@ -24,6 +24,7 @@ import Treanding_Stories from '@/ebikeWeb/sharedComponents/NewSectionM/trending_
 import { List_Card, MotorCycle_News_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card'
 import Petrol_Price_Section from './petrol-price-section'
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
+import CompareSection from './compareSection'
 
 
 function Index() {
@@ -79,6 +80,7 @@ function Index() {
   const homeSections = [
     <Petrol_Price_Section key="petrol-price" />,
     <NewBikesSection key="new-bikes" featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />,
+    <CompareSection key="compare-section" />,
     <FeatureSection key="feature-section" />,
     <UsedBikesSection key="used-bikes" usedBikeData={homeData.homeUsedBike} />,
     <GoGreen key="go-green" />,

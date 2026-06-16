@@ -1,6 +1,7 @@
 'use client'
 import { getCustomBikeAd } from '@/ebikeWeb/functions/globalFuntions';
 import { BrandArr, CityArr } from '@/ebikeWeb/constants/globalData';
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
 import { Box, Typography } from '@mui/material';
@@ -9,6 +10,8 @@ import styles from './index.module.scss';
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import * as React from 'react';
+
+const cityOptions = getSortedCityOptions(CityArr);
 
 function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesArr, setCurrentPage }: any) {
 
@@ -138,7 +141,7 @@ function CityFilter({ setCityArray, fetchBikeInfo, setTotalPage, setAllBikesArr,
   function toggle(from: any) {
     if (from == 'city') {
       setModalOpenFor(from)
-      setpopupData(CityArr)
+      setpopupData(cityOptions)
       setOpenModal(true)
     }
     else if (from == 'close') {
@@ -195,7 +198,7 @@ function CityFilter({ setCityArray, fetchBikeInfo, setTotalPage, setAllBikesArr,
       </Box>
       <Box className={styles.brand_options}>
         {
-          CityArr.slice(0, 5).map((data: any, i: any) => {
+          cityOptions.slice(0, 5).map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input

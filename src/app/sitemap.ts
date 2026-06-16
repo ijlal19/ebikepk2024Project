@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import Gconfig from "globalconfig";
-import { BrandArr } from "@/ebikeWeb/constants/globalData";
+import { BrandArr, CityArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { filterVisibleBlogs } from "@/ebikeWeb/utils/blogVisibility";
 import { SITE_URL } from "./metadata-utils";
 
@@ -9,6 +9,20 @@ export const revalidate = 3600;
 type Brand = {
   id?: number | string;
   brandName?: string;
+  updatedAt?: string;
+  createdAt?: string;
+};
+
+type City = {
+  id?: number | string;
+  city_name?: string;
+  updatedAt?: string;
+  createdAt?: string;
+};
+
+type Year = {
+  id?: number | string;
+  year?: string | number;
   updatedAt?: string;
   createdAt?: string;
 };
@@ -140,6 +154,48 @@ function buildBrandRoutes(brands: Brand[]): MetadataRoute.Sitemap {
   });
 }
 
+function buildBikeFilterRoutes(brands: Brand[], years: Year[], cities: City[]): MetadataRoute.Sitemap {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const recentYears = years
+    .filter((year) => {
+      const numericYear = Number(year?.year);
+      return Number.isInteger(numericYear) && numericYear >= currentYear - 10 && numericYear <= currentYear;
+    })
+    .sort((a, b) => Number(b.year) - Number(a.year));
+  const priorityCities = cities.slice(0, 25);
+
+  return brands.flatMap((brand) => {
+    const brandName = slugify(brand.brandName);
+    if (!brandName) {
+      return [];
+    }
+
+    return recentYears.flatMap((year) => {
+      const yearSlug = slugify(year.year);
+      if (!yearSlug) {
+        return [];
+      }
+
+      return priorityCities.flatMap((city) => {
+        const cityName = slugify(city.city_name);
+        if (!cityName) {
+          return [];
+        }
+
+        return [
+          {
+            url: `${SITE_URL}/bikes/${brandName}/${yearSlug}/${cityName}`,
+            lastModified: toLastModified(brand.updatedAt || year.updatedAt || city.updatedAt || brand.createdAt || year.createdAt || city.createdAt),
+            changeFrequency: "weekly",
+            priority: 0.65
+          }
+        ];
+      });
+    });
+  });
+}
+
 function buildNewBikeRoutes(bikes: NewBike[]): MetadataRoute.Sitemap {
   return bikes.flatMap((bike) => {
     const brandName = slugify(bike?.bike_brand?.brandName);
@@ -215,6 +271,7 @@ function buildMechanicRoutes(mechanics: Mechanic[]): MetadataRoute.Sitemap {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = buildStaticRoutes();
   const brandRoutes = buildBrandRoutes(BrandArr as Brand[]);
+  const bikeFilterRoutes = buildBikeFilterRoutes(BrandArr as Brand[], YearArr as Year[], CityArr as City[]);
 
   try {
     const brands = (BrandArr as Brand[]).filter((brand) => brand?.brandName);
@@ -235,6 +292,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
       ...staticRoutes,
       ...brandRoutes,
+      ...bikeFilterRoutes,
       ...buildNewBikeRoutes(newBikeGroups.flat()),
       ...buildBlogRoutes(filterVisibleBlogs(Array.isArray(blogs) ? blogs : [])),
       ...buildDealerRoutes(Array.isArray(dealers) ? dealers : []),
@@ -243,7 +301,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } catch {
     return [
       ...staticRoutes,
-      ...brandRoutes
+      ...brandRoutes,
+      ...bikeFilterRoutes
     ];
   }
 }

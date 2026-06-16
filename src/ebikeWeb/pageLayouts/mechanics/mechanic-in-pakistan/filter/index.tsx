@@ -1,6 +1,9 @@
 import { BrandArr, CityArr } from '../../../../constants/globalData';
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import { useState, useEffect } from 'react';
 import styles from './index.module.scss'
+
+const cityOptions = getSortedCityOptions(CityArr);
 
 export const MechanicinPakFilter = ({ setFilterobject }: any) => {
 
@@ -85,7 +88,7 @@ export const MechanicinPakFilter = ({ setFilterobject }: any) => {
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By City</p>
                 <div className={styles.city_options}>
-                    {CityArr.map((data: any, i: any) => (
+                    {cityOptions.map((data: any, i: any) => (
                         <p className={styles.option_values} key={i}>
                             <input
                                 type="checkbox"

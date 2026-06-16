@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react"
 import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalData'
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
 import { cloudinaryLoader, isLoginUser } from "@/genericFunctions/geneFunc";
@@ -10,6 +11,7 @@ import { uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader"
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 const jsCookie = require('js-cookie');
+const cityOptions = getSortedCityOptions(CityArr);
 
 const SellUsedBike = () => {
 
@@ -346,7 +348,7 @@ const SellUsedBike = () => {
                                 <select name="" id="city" className={styles.section_main} onChange={(e) => handleChange('city', e.target.value)}>
                                     <option value="" disabled selected hidden></option>
                                     {
-                                        CityArr.map((e: any) => {
+                                        cityOptions.map((e: any) => {
                                             return (
                                                 <option key={e.city_name} value={e.id} className={styles.drop_option}>{e.city_name}</option>
                                             )

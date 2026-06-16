@@ -25,6 +25,14 @@ let Blogwindowscroll: any;
 let brandScroll: any;
 let AllBrandArray: any[] = [];
 const BIKE_IMAGE_PLACEHOLDER = 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
+const WEBSITE_URL = 'https://www.ebike.pk';
+
+const getUsedBikeSlug = (value: any) => String(value || 'used-bike')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'used-bike';
 
 
 /////////////////////////////////////////////////////// USED BIKE CARD
@@ -42,6 +50,8 @@ const Used_bike_card: any = () => {
 
     const [currentPage, setCurrentPage] = useState(initialPage);
     const [IsLoading, setIsLoading] = useState(false);
+    const [actionLoading, setActionLoading] = useState<{ id: any; action: 'feature' | 'approve' } | null>(null);
+    const [copiedAdId, setCopiedAdId] = useState<any>(null);
     const [AllBikeArr, setAllBikeArr] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const itemsPerPage = 12;
@@ -137,6 +147,31 @@ const Used_bike_card: any = () => {
         router.push(`/ebike-panel/dashboard/edit-classified-ads/${id}?page=${currentPage}`);
     };
 
+    const getUsedBikeWebsiteUrl = (bike: any) => {
+        return `${WEBSITE_URL}/used-bikes/${getUsedBikeSlug(bike?.title)}/${bike?.id}`;
+    };
+
+    const handleCopyUrl = async (bike: any) => {
+        const url = getUsedBikeWebsiteUrl(bike);
+
+        try {
+            await navigator.clipboard.writeText(url);
+            setCopiedAdId(bike?.id);
+            setTimeout(() => setCopiedAdId(null), 1600);
+        } catch {
+            window.prompt('Copy this URL', url);
+        }
+    };
+
+    const updateBikeStatusInState = (id: any, updates: any) => {
+        const updateList = (list: any[]) => list.map((bike: any) =>
+            bike?.id === id ? { ...bike, ...updates, updatedAt: new Date().toISOString() } : bike
+        );
+
+        setAllBikeForFilter((prev: any[]) => updateList(prev));
+        setAllBikeArr((prev: any[]) => updateList(prev));
+    };
+
     const handleDelete = async (id: any) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this Ad?");
         if (!confirmDelete) return;
@@ -153,36 +188,43 @@ const Used_bike_card: any = () => {
     const handleFeatureToggle = async (id: any, currentStatus: boolean) => {
         const confirmDelete = window.confirm("Are you sure to change Featured?");
         if (!confirmDelete) return;
+        setActionLoading({ id, action: 'feature' });
         const obj = {
             id: id,
             item: { isFeatured: currentStatus ? false : true }
         }
         // console.log(obj)
-        const res = await ChangeFeatured(id, obj)
-        if (res && res?.info && res?.info?.indexOf("feature Ad") > -1) {
-            alert('Updated Successfully ')
-            fetchAllUsedBike()
-        }
-        else {
-            alert('Something is Wrong!')
+        try {
+            const res = await ChangeFeatured(id, obj)
+            if (res && res?.info && res?.info?.indexOf("feature Ad") > -1) {
+                updateBikeStatusInState(id, { isFeatured: !currentStatus });
+            }
+            else {
+                alert('Something is Wrong!')
+            }
+        } finally {
+            setActionLoading(null);
         }
     };
 
     const handleApproveToggle = async (id: any, currentStatus: boolean) => {
         const confirmDelete = window.confirm("Are you sure you want to Change Ad Approve?");
         if (!confirmDelete) return;
+        setActionLoading({ id, action: 'approve' });
         const obj = {
             id: id,
             item: { isApproved: currentStatus ? false : true }
         }
-        console.log(obj)
-        const res = await ChangeApprove(id, obj)
-        if (res && res?.info?.indexOf('Approve Ad') > -1) {
-            alert('Updated Successfully')
-            fetchAllUsedBike()
-        }
-        else {
-            alert('Something is Wrong!')
+        try {
+            const res = await ChangeApprove(id, obj)
+            if (res && res?.info?.indexOf('Approve Ad') > -1) {
+                updateBikeStatusInState(id, { isApproved: !currentStatus });
+            }
+            else {
+                alert('Something is Wrong!')
+            }
+        } finally {
+            setActionLoading(null);
         }
     };
 
@@ -360,16 +402,24 @@ const Used_bike_card: any = () => {
                                                             </button>
                                                         </Link>
                                                         <button
-                                                            className={`${styles.action_btn} ${styles.feature_btn}`}
+                                                            className={`${styles.action_btn} ${styles.feature_btn} ${actionLoading?.id === e?.id && actionLoading?.action === 'feature' ? styles.action_loading : ''}`}
                                                             onClick={() => handleFeatureToggle(e?.id, e?.isFeatured)}
+                                                            disabled={!!actionLoading}
                                                         >
-                                                            {e?.isFeatured ? 'Unfeature' : 'Feature'}
+                                                            {actionLoading?.id === e?.id && actionLoading?.action === 'feature' ? 'Updating...' : e?.isFeatured ? 'Unfeature' : 'Feature'}
                                                         </button>
                                                         <button
-                                                            className={`${styles.action_btn} ${styles.disapprove_btn}`}
+                                                            className={`${styles.action_btn} ${styles.disapprove_btn} ${actionLoading?.id === e?.id && actionLoading?.action === 'approve' ? styles.action_loading : ''}`}
                                                             onClick={() => handleApproveToggle(e?.id, e?.isApproved)}
+                                                            disabled={!!actionLoading}
                                                         >
-                                                            {e?.isApproved ? "Disapprove" : "Approve"}
+                                                            {actionLoading?.id === e?.id && actionLoading?.action === 'approve' ? 'Updating...' : e?.isApproved ? "Disapprove" : "Approve"}
+                                                        </button>
+                                                        <button
+                                                            className={`${styles.action_btn} ${styles.copy_btn}`}
+                                                            onClick={() => handleCopyUrl(e)}
+                                                        >
+                                                            {copiedAdId === e?.id ? 'Copied' : 'Copy URL'}
                                                         </button>
                                                         <button
                                                             className={`${styles.action_btn} ${styles.delete_btn}`}

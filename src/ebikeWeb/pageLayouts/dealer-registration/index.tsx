@@ -1,5 +1,6 @@
 'use client';
 import { BrandArr,CityArr } from '@/ebikeWeb/constants/globalData';
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import { createdealer } from "@/ebikeWeb/functions/globalFuntions";
 import { numericOnly } from "@/genericFunctions/geneFunc";
 import { TextareaAutosize, Typography } from '@mui/material';
@@ -8,6 +9,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 import { getMechanicTypeFilterOptions } from '@/constants/mechanicType';
+
+const cityOptions = getSortedCityOptions(CityArr);
 
 const DealerRegistration = () => {
 
@@ -141,7 +144,7 @@ const DealerRegistration = () => {
                             <select name="" id="city" className={styles.section_main}onChange={(e) => handleChange('city', e.target.value)}>
                                 <option value="" disabled selected hidden></option>
                                 {
-                                    CityArr.map((e: any) => {
+                                    cityOptions.map((e: any) => {
                                         return (
                                             <option key={e.city_name} value={e.id}className={styles.drop_option}>{e.city_name}</option>
                                         )

@@ -1,6 +1,7 @@
 'use client'
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { CityArr } from '@/ebikeWeb/constants/globalData';
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import { useParams, useRouter } from 'next/navigation';
 import { Box, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
@@ -9,6 +10,7 @@ import MoreOptionPopup from './Popup';
 import * as React from 'react';
 
 let selectedcity: any = []
+const cityOptions = getSortedCityOptions(CityArr);
 
 function CityFilter() {
 
@@ -29,7 +31,7 @@ function CityFilter() {
   function toggle(from: any) {
     if (from == 'city') {
       setModalOpenFor(from)
-      setpopupData(CityArr)
+      setpopupData(cityOptions)
       setOpenModal(true)
     }
     else if (from == 'close') {
@@ -55,8 +57,7 @@ function CityFilter() {
       </Box>
       <Box className={styles.city_options}>
         {
-          CityArr.slice(0, 5).map((data: any, i: any) => {
-            console.log("data" , data)
+          cityOptions.slice(0, 5).map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input

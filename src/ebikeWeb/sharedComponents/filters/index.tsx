@@ -4,6 +4,7 @@ import styles from './index.module.scss'
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData'
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import { getCustomBikeAd, getFilteredAllbikesDetail } from "@/ebikeWeb/functions/globalFuntions"
@@ -16,6 +17,7 @@ let CCvalues: any = { start: '', end: '' }
 let yearValues: any = { start: '', end: '' }
 let selectedCC: any = []
 let selectedYear: any = []
+const cityOptions = getSortedCityOptions(CityArr);
 
 function Filters(props: any , {updateData}:any) {
   const [popupData, setpopupData]: any = useState([])
@@ -35,7 +37,7 @@ function Filters(props: any , {updateData}:any) {
   function toggle(from: any) {
     if (from == 'city') {
       setModalOpenFor(from)
-      setpopupData(CityArr)
+      setpopupData(cityOptions)
       setOpenModal(true)
 
     }
@@ -227,7 +229,7 @@ function Filters(props: any , {updateData}:any) {
       </Box>
       <Box className={styles.city_options}>
         {
-          CityArr.slice(0, 5).map((data: any, i: any) => {
+          cityOptions.slice(0, 5).map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input

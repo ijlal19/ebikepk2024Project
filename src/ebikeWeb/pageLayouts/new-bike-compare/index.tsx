@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   getbrandData,
   getnewBikeData,
@@ -61,6 +61,8 @@ type Bike = {
 };
 
 const hiddenBrandNames = new Set(['sport', 'china', 'sports', 'eagle']);
+const BIKE_ONE_PARAM = 'bike1';
+const BIKE_TWO_PARAM = 'bike2';
 
 function isHiddenBrand(brand: Brand) {
   return hiddenBrandNames.has(brand?.brandName?.trim()?.toLowerCase() || '');
@@ -149,10 +151,33 @@ export default function NewBikeCompare() {
   const [loadingSlot, setLoadingSlot] = useState<1 | 2 | null>(null);
   const [isComparing, setIsComparing] = useState(false);
   const [message, setMessage] = useState('');
+  const isHydratingFromUrl = useRef(false);
+  const lastLoadedCompareUrl = useRef('');
 
-  const compareSelectedBikes = useCallback(async () => {
-    const firstId = Number(bikeOne);
-    const secondId = Number(bikeTwo);
+  const updateCompareUrl = useCallback((firstBikeId?: string, secondBikeId?: string, nextMode = compareMode) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (nextMode === 1) {
+      params.set('tab', '2');
+    } else {
+      params.delete('tab');
+    }
+
+    if (firstBikeId && secondBikeId) {
+      params.set(BIKE_ONE_PARAM, firstBikeId);
+      params.set(BIKE_TWO_PARAM, secondBikeId);
+    } else {
+      params.delete(BIKE_ONE_PARAM);
+      params.delete(BIKE_TWO_PARAM);
+    }
+
+    const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+    router.replace(nextUrl, { scroll: false });
+  }, [compareMode, pathname, router, searchParams]);
+
+  const compareSelectedBikes = useCallback(async (firstBikeId = bikeOne, secondBikeId = bikeTwo, shouldUpdateUrl = true) => {
+    const firstId = Number(firstBikeId);
+    const secondId = Number(secondBikeId);
 
     if (!firstId || !secondId) {
       return;
@@ -170,13 +195,17 @@ export default function NewBikeCompare() {
 
     if (res?.success && Array.isArray(res?.bikes)) {
       setComparedBikes(res.bikes);
+      lastLoadedCompareUrl.current = `${firstId}-${secondId}-${compareMode === 1 ? '2' : ''}`;
+      if (shouldUpdateUrl) {
+        updateCompareUrl(String(firstId), String(secondId));
+      }
     } else {
       setComparedBikes([]);
       setMessage(res?.info || 'Comparison details could not be loaded.');
     }
 
     setIsComparing(false);
-  }, [bikeOne, bikeTwo]);
+  }, [bikeOne, bikeTwo, compareMode, updateCompareUrl]);
 
   useEffect(() => {
     fetchBrands();
@@ -187,10 +216,16 @@ export default function NewBikeCompare() {
   }, [searchParams]);
 
   useEffect(() => {
-    resetComparison();
+    if (!isHydratingFromUrl.current) {
+      resetComparison(false);
+    }
   }, [compareMode]);
 
   useEffect(() => {
+    if (isHydratingFromUrl.current) {
+      return;
+    }
+
     if (brandOne) {
       fetchBikesByBrand(brandOne, 1);
     } else {
@@ -200,6 +235,10 @@ export default function NewBikeCompare() {
   }, [brandOne]);
 
   useEffect(() => {
+    if (isHydratingFromUrl.current) {
+      return;
+    }
+
     if (brandTwo) {
       fetchBikesByBrand(brandTwo, 2);
     } else {
@@ -209,10 +248,26 @@ export default function NewBikeCompare() {
   }, [brandTwo]);
 
   useEffect(() => {
+    if (isHydratingFromUrl.current) {
+      return;
+    }
+
     if (bikeOne && bikeTwo) {
       compareSelectedBikes();
     }
   }, [bikeOne, bikeTwo, compareSelectedBikes]);
+
+  useEffect(() => {
+    const firstBikeId = searchParams.get(BIKE_ONE_PARAM) || '';
+    const secondBikeId = searchParams.get(BIKE_TWO_PARAM) || '';
+    const compareUrlKey = `${firstBikeId}-${secondBikeId}-${searchParams.get('tab') || ''}`;
+
+    if (!firstBikeId || !secondBikeId || firstBikeId === secondBikeId || compareUrlKey === lastLoadedCompareUrl.current) {
+      return;
+    }
+
+    hydrateComparisonFromUrl(firstBikeId, secondBikeId, compareUrlKey);
+  }, [searchParams]);
 
   async function fetchBrands() {
     setIsLoadingBrands(true);
@@ -225,15 +280,47 @@ export default function NewBikeCompare() {
     setIsLoadingBrands(false);
   }
 
-  async function fetchBikesByBrand(brandName: string, slot: 1 | 2) {
+  async function hydrateComparisonFromUrl(firstBikeId: string, secondBikeId: string, compareUrlKey: string) {
+    isHydratingFromUrl.current = true;
+    setIsComparing(true);
+    setMessage('');
+    const res = await getNewBikeComparisonData({ bikeIds: [Number(firstBikeId), Number(secondBikeId)] });
+
+    if (res?.success && Array.isArray(res?.bikes) && res.bikes.length === 2) {
+      const [firstBikeData, secondBikeData] = res.bikes;
+      const firstBrandName = firstBikeData?.bike_brand?.brandName || '';
+      const secondBrandName = secondBikeData?.bike_brand?.brandName || '';
+      const nextMode = res.bikes.some((bike: Bike) => isElectricBrand(bike?.bike_brand || {})) ? 1 : 0;
+
+      setCompareMode(searchParams.get('tab') === '2' ? 1 : nextMode);
+      setBrandOne(firstBrandName);
+      setBrandTwo(secondBrandName);
+      setComparedBikes(res.bikes);
+      await Promise.all([
+        firstBrandName ? fetchBikesByBrand(firstBrandName, 1, firstBikeId) : Promise.resolve(),
+        secondBrandName ? fetchBikesByBrand(secondBrandName, 2, secondBikeId) : Promise.resolve()
+      ]);
+      lastLoadedCompareUrl.current = compareUrlKey;
+    } else {
+      setComparedBikes([]);
+      setMessage(res?.info || 'Shared comparison could not be loaded.');
+    }
+
+    setIsComparing(false);
+    isHydratingFromUrl.current = false;
+  }
+
+  async function fetchBikesByBrand(brandName: string, slot: 1 | 2, selectedBikeId = '') {
     setLoadingSlot(slot);
     setMessage('');
-    setComparedBikes([]);
+    if (!isHydratingFromUrl.current) {
+      setComparedBikes([]);
+    }
     if (slot === 1) {
-      setBikeOne('');
+      setBikeOne(selectedBikeId);
       setBikeOptionsOne([]);
     } else {
-      setBikeTwo('');
+      setBikeTwo(selectedBikeId);
       setBikeOptionsTwo([]);
     }
 
@@ -253,7 +340,7 @@ export default function NewBikeCompare() {
     setLoadingSlot(null);
   }
 
-  function resetComparison() {
+  function resetComparison(shouldUpdateUrl = true) {
     setBrandOne('');
     setBrandTwo('');
     setBikeOne('');
@@ -262,6 +349,10 @@ export default function NewBikeCompare() {
     setBikeOptionsTwo([]);
     setComparedBikes([]);
     setMessage('');
+    lastLoadedCompareUrl.current = '';
+    if (shouldUpdateUrl) {
+      updateCompareUrl('', '');
+    }
   }
 
   const sortedBrands = useMemo(() => {
@@ -282,16 +373,7 @@ export default function NewBikeCompare() {
 
   function handleModeChange(_event: React.SyntheticEvent, newValue: number) {
     setCompareMode(newValue);
-    const params = new URLSearchParams(searchParams.toString());
-
-    if (newValue === 1) {
-      params.set('tab', '2');
-    } else {
-      params.delete('tab');
-    }
-
-    const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
-    router.replace(nextUrl, { scroll: false });
+    updateCompareUrl('', '', newValue);
   }
 
   function renderBrandSelect(value: string, onChange: (value: string) => void) {

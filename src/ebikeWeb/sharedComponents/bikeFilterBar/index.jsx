@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
 import { ALL_FILTER_VALUE, getBikeFilterSlug, getBikeFilterUrl } from '@/ebikeWeb/utils/bikeFilterRoute';
+import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import styles from './index.module.scss';
 
 const BikeFilterBar = ({ initialBrand = ALL_FILTER_VALUE, initialModal = ALL_FILTER_VALUE, initialCity = ALL_FILTER_VALUE, variant = 'banner' }) => {
@@ -18,7 +19,7 @@ const BikeFilterBar = ({ initialBrand = ALL_FILTER_VALUE, initialModal = ALL_FIL
 
     const yearOptions = [...YearArr].sort((a, b) => Number(b.year) - Number(a.year));
     const brandOptions = [...BrandArr].sort((a, b) => a.brandName.localeCompare(b.brandName));
-    const cityOptions = [...CityArr].sort((a, b) => a.city_name.localeCompare(b.city_name));
+    const cityOptions = getSortedCityOptions(CityArr);
 
     const handleSearch = () => {
         router.push(getBikeFilterUrl(selectedBrand, selectedModal, selectedCity));
