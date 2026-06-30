@@ -51,7 +51,8 @@
 .filterSelect {
     width: 100%;
     min-width: 0;
-    border: 0;
+    min-height: 34px;
+    border: 0 !important;
     background-color: transparent;
     color: #222936;
     cursor: pointer;
@@ -59,21 +60,100 @@
     font-weight: 700;
     line-height: 1.2;
     outline: none;
-    padding: 0 34px 0 0;
     text-transform: capitalize;
-    appearance: none;
-    background-image:
-        linear-gradient(45deg, transparent 50%, #697386 50%),
-        linear-gradient(135deg, #697386 50%, transparent 50%);
-    background-position:
-        calc(100% - 12px) 50%,
-        calc(100% - 6px) 50%;
-    background-size: 6px 6px, 6px 6px;
-    background-repeat: no-repeat;
+
+    :global(.MuiOutlinedInput-notchedOutline) {
+        border: 0 !important;
+    }
+
+    :global(.MuiSelect-select) {
+        min-height: 26px !important;
+        padding: 0 34px 0 0 !important;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    :global(.MuiSelect-icon) {
+        right: 0;
+        color: #697386;
+        font-size: 28px;
+    }
+
+    &:global(.Mui-focused) {
+        color: #0f172a;
+
+        :global(.MuiSelect-icon) {
+            color: #39b54a;
+        }
+    }
 }
 
 .filterSelect:focus {
     color: #0f172a;
+}
+
+.selectedText,
+.optionText {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 17px;
+    line-height: 1.25;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #222936;
+}
+
+.selectMenu {
+    margin-top: 8px;
+    border: 1px solid #e4e9f1;
+    border-radius: 8px !important;
+    box-shadow: 0 18px 38px rgba(16, 24, 40, 0.16) !important;
+    max-height: min(360px, calc(100vh - 120px));
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.selectMenuList {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 6px !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.selectOption {
+    min-height: 42px !important;
+    border-bottom: 1px solid #edf1f6 !important;
+    border-radius: 6px !important;
+    padding: 9px 12px !important;
+
+    &:last-child {
+        border-bottom: 0 !important;
+    }
+
+    &:global(.Mui-selected) {
+        background: #eef9f0 !important;
+
+        .optionText {
+            color: #21a43a;
+        }
+    }
+
+    &:global(.Mui-focusVisible),
+    &:hover {
+        background: #f4f8fb !important;
+    }
+}
+
+.optionText {
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .searchButton {
@@ -120,7 +200,14 @@
 
     .filterSelect {
         font-size: 16px;
-        padding-right: 28px;
+
+        :global(.MuiSelect-select) {
+            padding-right: 28px !important;
+        }
+    }
+
+    .selectedText {
+        font-size: 16px;
     }
 
     .searchButton {
@@ -160,7 +247,22 @@
     .filterSelect {
         font-size: 15px;
         background-color: transparent;
-        padding-right: 30px;
+
+        :global(.MuiSelect-select) {
+            padding-right: 30px !important;
+        }
+    }
+
+    .selectedText {
+        font-size: 15px;
+    }
+
+    .selectMenu {
+        max-height: 55vh;
+    }
+
+    .selectMenuList {
+        max-height: calc(55vh - 12px);
     }
 
     .searchButton {
@@ -201,6 +303,10 @@
     }
 
     .filterSelect {
+        font-size: 14px;
+    }
+
+    .selectedText {
         font-size: 14px;
     }
 }

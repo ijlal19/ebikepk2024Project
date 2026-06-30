@@ -2,8 +2,10 @@
 
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import SearchIcon from '@mui/icons-material/Search';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import Image from 'next/image';
 import {
   Box,
@@ -63,6 +65,8 @@ type Bike = {
 const hiddenBrandNames = new Set(['sport', 'china', 'sports', 'eagle']);
 const BIKE_ONE_PARAM = 'bike1';
 const BIKE_TWO_PARAM = 'bike2';
+const DEFAULT_COMPARE_TITLE = 'Compare New Bikes & Electric Bikes in Pakistan | ebike.pk';
+const DEFAULT_COMPARE_DESCRIPTION = 'Compare two new bikes or electric bikes in Pakistan by brand, price, engine, battery, range, charging time, tyres and other specifications.';
 
 function isHiddenBrand(brand: Brand) {
   return hiddenBrandNames.has(brand?.brandName?.trim()?.toLowerCase() || '');
@@ -91,6 +95,64 @@ function priceValue(value: any) {
   }
 
   return `Rs: ${priceWithCommas(value)}`;
+}
+
+function formatDropdownText(value?: string) {
+  const text = value?.trim() || '';
+
+  if (!text) {
+    return '';
+  }
+
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function getBikeDisplayName(bike?: Bike) {
+  const title = bike?.title?.trim();
+
+  if (!title) {
+    return '';
+  }
+
+  const cleanTitle = title
+    .replace(/\s*[-\u2013\u2014]\s*(complete\s+)?review.*$/i, '')
+    .replace(/\s+(price|complete|specs|features|review|mileage|fuel\s+average|in\s+pakistan)\b.*$/i, '')
+    .trim();
+
+  return formatDropdownText(cleanTitle);
+}
+
+function getCompareSeo(firstBike?: Bike, secondBike?: Bike) {
+  const firstBikeName = getBikeDisplayName(firstBike);
+  const secondBikeName = getBikeDisplayName(secondBike);
+
+  if (!firstBikeName || !secondBikeName) {
+    return {
+      title: DEFAULT_COMPARE_TITLE,
+      description: DEFAULT_COMPARE_DESCRIPTION,
+    };
+  }
+
+  return {
+    title: `${firstBikeName} vs ${secondBikeName} Bike Comparison | ebike.pk`,
+    description: `Compare ${firstBikeName} and ${secondBikeName} in Pakistan. Check price, specs, engine, battery, range, features and details side by side on ebike.pk.`,
+  };
+}
+
+function updateMetaTag(selector: string, attribute: 'name' | 'property', value: string, content: string) {
+  if (typeof document === 'undefined') {
+    return;
+  }
+
+  let element = document.head.querySelector<HTMLMetaElement>(selector);
+
+  if (!element) {
+    element = document.createElement('meta');
+    element.setAttribute(attribute, value);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute('content', content);
 }
 
 const motorcycleComparisonRows = [
@@ -258,6 +320,17 @@ export default function NewBikeCompare() {
   }, [bikeOne, bikeTwo, compareSelectedBikes]);
 
   useEffect(() => {
+    const { title, description } = getCompareSeo(comparedBikes[0], comparedBikes[1]);
+
+    document.title = title;
+    updateMetaTag('meta[name="description"]', 'name', 'description', description);
+    updateMetaTag('meta[property="og:title"]', 'property', 'og:title', title);
+    updateMetaTag('meta[property="og:description"]', 'property', 'og:description', description);
+    updateMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', title);
+    updateMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+  }, [comparedBikes]);
+
+  useEffect(() => {
     const firstBikeId = searchParams.get(BIKE_ONE_PARAM) || '';
     const secondBikeId = searchParams.get(BIKE_TWO_PARAM) || '';
     const compareUrlKey = `${firstBikeId}-${secondBikeId}-${searchParams.get('tab') || ''}`;
@@ -376,45 +449,77 @@ export default function NewBikeCompare() {
     updateCompareUrl('', '', newValue);
   }
 
+  const selectMenuProps = {
+    disableScrollLock: true,
+    PaperProps: {
+      className: styles.selectMenu,
+    },
+    MenuListProps: {
+      className: styles.selectMenuList,
+    },
+  };
+
   function renderBrandSelect(value: string, onChange: (value: string) => void) {
     return (
       <FormControl fullWidth className={styles.formControl}>
         <Typography className={styles.fieldLabel}>Select Brand</Typography>
-        <Select
-          value={value}
-          displayEmpty
-          onChange={(event: SelectChangeEvent) => onChange(event.target.value)}
-          className={styles.select}
-        >
-          <MenuItem value="">Choose brand</MenuItem>
-          {sortedBrands.map((brand) => (
-            <MenuItem value={brand.brandName || ''} key={`${brand.id}-${brand.brandName}`}>
-              {brand.brandName}
-            </MenuItem>
-          ))}
-        </Select>
+        <Box className={styles.selectWrap}>
+          <StorefrontIcon className={styles.selectIcon} />
+          <Select
+            value={value}
+            displayEmpty
+            IconComponent={KeyboardArrowDownIcon}
+            MenuProps={selectMenuProps}
+            onChange={(event: SelectChangeEvent) => onChange(event.target.value)}
+            className={styles.select}
+            renderValue={(selected) => selected ? (
+              <Typography component="span" className={styles.selectedText}>{formatDropdownText(selected)}</Typography>
+            ) : (
+              <Typography component="span" className={styles.placeholderText}>Choose brand</Typography>
+            )}
+          >
+            <MenuItem value="" className={styles.placeholderOption}>Choose brand</MenuItem>
+            {sortedBrands.map((brand) => (
+              <MenuItem value={brand.brandName || ''} key={`${brand.id}-${brand.brandName}`} className={styles.selectOption}>
+                <Typography component="span" className={styles.optionText}>{formatDropdownText(brand.brandName)}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
       </FormControl>
     );
   }
 
   function renderBikeSelect(value: string, onChange: (value: string) => void, bikes: Bike[], disabled: boolean) {
+    const selectedBike = bikes.find((bike) => String(bike.id) === value);
+
     return (
       <FormControl fullWidth className={styles.formControl}>
         <Typography className={styles.fieldLabel}>Select Bike</Typography>
-        <Select
-          value={value}
-          displayEmpty
-          disabled={disabled}
-          onChange={(event: SelectChangeEvent) => onChange(event.target.value)}
-          className={styles.select}
-        >
-          <MenuItem value="">Choose bike</MenuItem>
-          {bikes.map((bike) => (
-            <MenuItem value={String(bike.id)} key={bike.id}>
-              {bike.title}
-            </MenuItem>
-          ))}
-        </Select>
+        <Box className={`${styles.selectWrap} ${disabled ? styles.selectWrapDisabled : ''}`}>
+          <DirectionsBikeIcon className={styles.selectIcon} />
+          <Select
+            value={value}
+            displayEmpty
+            disabled={disabled}
+            IconComponent={KeyboardArrowDownIcon}
+            MenuProps={selectMenuProps}
+            onChange={(event: SelectChangeEvent) => onChange(event.target.value)}
+            className={styles.select}
+            renderValue={() => selectedBike ? (
+              <Typography component="span" className={styles.selectedText}>{getBikeDisplayName(selectedBike)}</Typography>
+            ) : (
+              <Typography component="span" className={styles.placeholderText}>{disabled ? 'Select brand first' : 'Choose bike'}</Typography>
+            )}
+          >
+            <MenuItem value="" className={styles.placeholderOption}>Choose bike</MenuItem>
+            {bikes.map((bike) => (
+              <MenuItem value={String(bike.id)} key={bike.id} className={styles.selectOption}>
+                <Typography component="span" className={styles.optionText}>{getBikeDisplayName(bike)}</Typography>
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
       </FormControl>
     );
   }
@@ -503,14 +608,14 @@ export default function NewBikeCompare() {
                   <Box className={styles.bikeSummary} key={bike?.id}>
                     <Image
                       src={getBikeImage(bike)}
-                      alt={bike?.title || 'New bike'}
+                      alt={getBikeDisplayName(bike) || 'New bike'}
                       width={140}
                       height={96}
                       unoptimized
                       className={styles.bikeImage}
                     />
                     <Box className={styles.bikeSummaryText}>
-                      <Typography className={styles.bikeTitle}>{bike?.title}</Typography>
+                      <Typography className={styles.bikeTitle}>{getBikeDisplayName(bike)}</Typography>
                       <Typography className={styles.bikePrice}>{priceValue(bike?.price)}</Typography>
                     </Box>
                   </Box>

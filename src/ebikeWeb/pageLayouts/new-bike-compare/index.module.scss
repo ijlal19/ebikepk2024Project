@@ -164,32 +164,162 @@
 }
 
 .fieldLabel {
-  color: #344054;
+  color: #1f2937;
   font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 6px !important;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 8px !important;
+}
+
+.selectWrap {
+  position: relative;
+  width: 100%;
+  min-height: 54px;
+  border-radius: 8px;
+  background: #fbfcfe;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.selectWrapDisabled {
+  background: #f6f8fb;
+}
+
+.selectIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  color: $primary_two;
+  font-size: 22px !important;
+  // pointer-events: none;
 }
 
 .select {
   width: 100%;
-  background: #ffffff;
+  min-height: 54px;
+  background: transparent;
   color: #111827;
   font-size: 14px;
   border-radius: 8px !important;
 
   :global(.MuiSelect-select) {
-    min-height: 24px;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    min-height: 24px !important;
+    padding: 15px 46px 15px 48px !important;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  :global(.MuiSelect-icon) {
+    right: 14px;
+    color: #667085;
+    font-size: 22px;
   }
 
   fieldset {
-    border-color: #d8dee8 !important;
+    border-color: #d7dee9 !important;
+    border-width: 1px !important;
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
   }
 
   &:hover fieldset {
     border-color: $primary_two !important;
   }
+
+  &:global(.Mui-focused) fieldset {
+    border-color: $primary_two !important;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.12);
+  }
+
+  &:global(.Mui-disabled) {
+    color: #98a2b3;
+
+    fieldset {
+      border-color: #e5e9f0 !important;
+    }
+  }
+}
+
+.selectedText,
+.placeholderText,
+.optionText {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.selectedText {
+  color: #101828;
+  font-weight: 700;
+}
+
+.placeholderText {
+  color: #98a2b3;
+  font-weight: 600;
+}
+
+.selectMenu {
+  margin-top: 8px;
+  border: 1px solid #e4e9f1;
+  border-radius: 8px !important;
+  box-shadow: 0 18px 38px rgba(16, 24, 40, 0.14) !important;
+  max-height: min(360px, calc(100vh - 120px));
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 768px) {
+    max-height: 55vh;
+  }
+}
+
+.selectMenuList {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 6px !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  @media (max-width: 768px) {
+    max-height: calc(55vh - 12px);
+  }
+}
+
+.selectOption,
+.placeholderOption {
+  min-height: 42px !important;
+  border-radius: 6px !important;
+  border-bottom: 1px solid #edf1f6 !important;
+  padding: 9px 12px !important;
+  color: #1f2937 !important;
+  font-size: 14px !important;
+  font-weight: 650 !important;
+
+  &:last-child {
+    border-bottom: 0 !important;
+  }
+
+  &:global(.Mui-selected) {
+    background: #eef6ff !important;
+    color: $primary_two !important;
+  }
+
+  &:global(.Mui-focusVisible),
+  &:hover {
+    background: #f3f7fb !important;
+  }
+}
+
+.placeholderOption {
+  color: #98a2b3 !important;
+  font-weight: 600 !important;
 }
 
 .helperText {
