@@ -1,7 +1,6 @@
 'use client'
 import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
 import { cloudinaryLoader, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
-import { BrandFilter, CC_Filter, CityFilter, YearFilter } from "@/ebikeWeb/sharedComponents/brand_filter";
 import { Box, Button, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Apps, FormatListBulleted, PagesRounded } from '@mui/icons-material';
@@ -33,7 +32,6 @@ const AllUsedBikeByFilter = () => {
     const isTabView = useMediaQuery('(max-width:910px)');
     const isMobile = useMediaQuery('(max-width:991px)');
     const [showfilter, setshowfilter] = useState(false);
-    const [filterShow, setFilterShow] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
     const [SearchValue, setSearchValue] = useState('');
     const [allBikesArr, setAllBikesArr] = useState([]);
@@ -85,27 +83,19 @@ const AllUsedBikeByFilter = () => {
        
         if (params.slug == "bike-by-brand") {
             setPlaceHolder('Brand')
-            setFilterShow(true)
         }
         
         else if (params.slug.indexOf("used-bikes") > -1 ) {
             setPlaceHolder('City')
-            setFilterShow(true)
         }
         else if (params.slug == "bike-by-city") {
             setPlaceHolder('City')
-            setFilterShow(true)
         }
         else if (params.slug == "bike-by-year") {
             setPlaceHolder('Year')
-            setFilterShow(true)
         }
         else if (params.slug == "bike-by-cc") {
             setPlaceHolder('CC')
-            setFilterShow(true)
-        }
-        else {
-            setFilterShow(false)
         }
 
 
@@ -695,41 +685,19 @@ const AllUsedBikeByFilter = () => {
         
     }
 
-    const FilterChange = () => {
-        if (params.slug == "bike-by-brand" || params?.slug?.indexOf("used-bikes") > -1) {
-            return (
-                isTabView ?
-                    showfilter ?
-                        <BrandFilter setBrandArray={setBrandArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} />
-                        : '' 
-                    : <BrandFilter setBrandArray={setBrandArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} />
-            )
-        }
-        else if (params.slug == "bike-by-city") {
-            return (
-                isTabView ?
-                    showfilter ?
-                        <CityFilter setCityArray={setCityArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} /> : '' :
-                    <CityFilter setCityArray={setCityArray} fetchBikeInfo={fetchBikeInfo} setTotalPage={setTotalPage} setAllBikesArr={setAllBikesArr} setCurrentPage={setCurrentPage} />
-            )
-        }
-        else if (params.slug == "bike-by-year") {
-            return (
-                isTabView ?
-                    showfilter ?
-                        <YearFilter fetchedYearData={fetchedYearData} SelectedYearData={SelectedYearData} fetchBikeInfo={fetchBikeInfo} />
-                        : '' :
-                        <YearFilter fetchedYearData={fetchedYearData} SelectedYearData={SelectedYearData} fetchBikeInfo={fetchBikeInfo} />
-            )
-        }
-        else if (params.slug == "bike-by-cc") {
-            return (
-                isTabView ?
-                    showfilter ?
-                        <CC_Filter fetchedCCData={fetchedCCData} SelectedCCData={SelectedCCData} fetchBikeInfo={fetchBikeInfo} /> : '' :
-                    <CC_Filter fetchedCCData={fetchedCCData} SelectedCCData={SelectedCCData} fetchBikeInfo={fetchBikeInfo} />
-            )
-        }
+    const renderFilters = () => {
+        if (isTabView && !showfilter) return null;
+
+        return (
+            <Filters
+                setLoader={setIsLoading}
+                updateData={setAllBikesArr}
+                fetchBikeInfo={fetchBikeInfo}
+                CurrentPage={setCurrentPage}
+                TotalPage={setTotalPage}
+                SearchValue={SearchValue}
+            />
+        )
     }
 
     const handleSearch = async (_page) => {
@@ -845,13 +813,9 @@ const AllUsedBikeByFilter = () => {
                                 <Grid container className={styles.grid_container}>
 
                                     <Grid item xs={isTabView ? 12 : isMiniDesktopView ? 3 : 2.5} className={styles.filter_grid} >
-                                        {
-                                            filterShow ?
-                                                <Box className={styles.filter_box_main}>
-                                                    {FilterChange()}
-                                                </Box>
-                                                : ""
-                                        }
+                                        <Box className={styles.filter_box_main}>
+                                            {renderFilters()}
+                                        </Box>
                                     </Grid>
 
                                     <Grid item xs={isTabView ? 12 : isMiniDesktopView ? 8.5 : 7.5} className={styles.cards_grid} >
