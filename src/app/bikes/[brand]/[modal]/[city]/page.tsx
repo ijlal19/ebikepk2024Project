@@ -38,6 +38,10 @@ function formatFilterLabel(value: string) {
     : cleanValue.split('-').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
+function uniqueSeoList(items: string[]) {
+  return Array.from(new Set(items.map((item) => item.trim()).filter(Boolean)));
+}
+
 function getFilterSeo(params: Props['params']) {
   const brand = formatFilterLabel(params.brand);
   const modal = formatFilterLabel(params.modal);
@@ -48,12 +52,25 @@ function getFilterSeo(params: Props['params']) {
   const bikeLabel = [brand, modelName || modelYear].filter(Boolean).join(' ');
   const locationLabel = city ? `in ${city}` : 'in Pakistan';
   const heading = `${bikeLabel ? `${bikeLabel} Used Bikes` : 'Used Bikes'} for Sale ${locationLabel}`;
-  const title = `${bikeLabel ? `${bikeLabel} Used Bikes` : 'Used Bikes'} for Sale ${locationLabel} | ebike.pk`;
+  const title = `${bikeLabel ? `${bikeLabel} Used Bikes` : 'Used Bikes'} for Sale ${locationLabel} | Prices & Ads | ebike.pk`;
+  const intro = trimText(
+    `Browse ${bikeLabel ? `${bikeLabel} used bikes` : 'used bikes'} for sale ${locationLabel} with updated prices, photos, model year details and seller information. Compare second hand motorcycle ads on ebike.pk before you contact the seller.`,
+    220
+  );
   const description = trimText(
-    `Find ${bikeLabel ? `${bikeLabel} used bikes` : 'used bikes'} for sale ${locationLabel} on ebike.pk. Browse URL-filtered motorcycle listings with prices, photos, model year, city and seller details.`,
+    `Find ${bikeLabel ? `${bikeLabel} used bikes` : 'used bikes'} for sale ${locationLabel} on ebike.pk. Compare prices, photos, model year, city and seller details for second hand motorcycles.`,
     170
   );
-  const keywords = [
+  const seoTags = uniqueSeoList([
+    heading,
+    bikeLabel ? `${bikeLabel} price ${city || 'Pakistan'}` : `used bike prices ${city || 'Pakistan'}`,
+    bikeLabel ? `${bikeLabel} ads ${city || 'Pakistan'}` : `used bike ads ${city || 'Pakistan'}`,
+    brand && modelYear && city ? `${brand} ${modelYear} bikes in ${city}` : '',
+    brand && city ? `${brand} bikes in ${city}` : '',
+    modelYear && city ? `${modelYear} model bikes in ${city}` : '',
+    city ? `second hand motorcycles in ${city}` : 'second hand motorcycles in Pakistan',
+  ]);
+  const keywords = uniqueSeoList([
     bikeLabel ? `${bikeLabel} used bikes` : 'used bikes in Pakistan',
     bikeLabel && city ? `${bikeLabel} bikes for sale in ${city}` : '',
     brand ? `${brand} used bikes` : '',
@@ -62,10 +79,14 @@ function getFilterSeo(params: Props['params']) {
     city ? `used bikes in ${city}` : '',
     brand && modelName ? `${brand} ${modelName} for sale` : '',
     brand && modelYear ? `${brand} ${modelYear} model used bike` : '',
+    brand && modelYear && city ? `${brand} ${modelYear} used bikes in ${city}` : '',
+    brand && city ? `${brand} second hand bikes ${city}` : '',
+    city ? `bike price in ${city}` : 'bike price in Pakistan',
+    city ? `used motorcycle ads ${city}` : 'used motorcycle ads Pakistan',
     'second hand bikes Pakistan',
     'motorcycles for sale Pakistan',
     'ebike.pk'
-  ].filter(Boolean) as string[];
+  ]);
 
   return {
     brand,
@@ -75,8 +96,10 @@ function getFilterSeo(params: Props['params']) {
     canonical,
     heading,
     title,
+    intro,
     description,
     keywords,
+    seoTags,
     locationLabel,
   };
 }
@@ -180,7 +203,9 @@ function buildFilterJsonLd(params: Props['params'], usedBikes: any) {
           seo.modelYear ? `${seo.modelYear} model bikes` : 'second hand motorcycles',
           seo.modelName ? `${seo.modelName} used bikes` : 'used motorcycle listings',
           seo.city ? `used bikes in ${seo.city}` : 'motorcycles for sale in Pakistan',
+          ...seo.seoTags,
         ],
+        keywords: seo.keywords.join(', '),
       },
       {
         '@type': 'BreadcrumbList',
@@ -245,6 +270,8 @@ export default async function BikesByFilter({ params }: Props) {
         _allUsedBike={allUsedBike}
         filterRequest={filterRequest}
         heading={stripHtml(seo.heading)}
+        seoIntro={stripHtml(seo.intro)}
+        seoTags={seo.seoTags}
       />
     </>
   );

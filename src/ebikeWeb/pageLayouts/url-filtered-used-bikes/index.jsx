@@ -62,6 +62,8 @@ export default function UrlFilteredUsedBikes({
   _allUsedBike,
   filterRequest,
   heading = 'Used Bikes',
+  seoIntro = '',
+  seoTags = [],
 }) {
   const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
   const [FavouriteData, setFavouriteData] = useState([]);
@@ -317,7 +319,17 @@ export default function UrlFilteredUsedBikes({
   return (
     <>
       <Box className={styles.main}>
-        {/* <h5 className={styles.heading1}>{heading}</h5> */}
+        <section className={styles.seo_header}>
+          <h1 className={styles.heading1}>{heading}</h1>
+          {seoIntro ? <p className={styles.seo_intro}>{seoIntro}</p> : null}
+          {seoTags?.length > 0 ? (
+            <ul className={styles.seo_tags} aria-label="Related bike searches">
+              {seoTags.slice(0, 7).map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
 
         {isLoading ? (
           <div className={styles.load_main}>
