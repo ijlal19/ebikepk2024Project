@@ -4,7 +4,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import styles from './index.module.scss';
 import Data from './Data';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { GetAllSetting } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 
 const OurVideos = ({ SetWidth, SetMaxWidth }: any) => {
@@ -12,14 +12,32 @@ const OurVideos = ({ SetWidth, SetMaxWidth }: any) => {
   const [isLoading, setIsloading] = useState<boolean>(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  useEffect(() => {
-    fetchBlogSetting();
+  const fetchLatestYoutubeVideos = useCallback(async () => {
+    try {
+      const response = await fetch('/api/youtube/latest-videos');
+      const res = await response.json();
+
+      if (res?.success && Array.isArray(res?.data) && res.data.length > 0) {
+        return res.data;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    return [];
   }, []);
 
-  const fetchBlogSetting = async () => {
+  const fetchBlogSetting = useCallback(async () => {
     setIsloading(true);
-    const res = await GetAllSetting();
+    const youtubeVideos = await fetchLatestYoutubeVideos();
 
+    if (youtubeVideos.length > 0) {
+      setSettingData(youtubeVideos);
+      setIsloading(false);
+      return;
+    }
+
+    const res = await GetAllSetting();
     if (res && res?.data) {
       const blogVideoSetting = res?.data?.find(
         (e: any) => e?.name === "blog_page_video"
@@ -38,7 +56,11 @@ const OurVideos = ({ SetWidth, SetMaxWidth }: any) => {
       setSettingData(Data);
       setIsloading(false);
     }
-  };
+  }, [fetchLatestYoutubeVideos]);
+
+  useEffect(() => {
+    fetchBlogSetting();
+  }, [fetchBlogSetting]);
 
   // ✅ fallback for first card (avoid undefined crash)
   const first = settingData?.[0] ?? Data?.[0];
@@ -302,5 +324,3 @@ export default OurVideos;
 // };
 
 // export default OurVideos;
-
-

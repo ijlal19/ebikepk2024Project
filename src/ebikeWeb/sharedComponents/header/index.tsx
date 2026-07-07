@@ -236,6 +236,15 @@ const Header = () => {
                     </Link>
                     <Divider />
 
+                    <Link href='/bike-videos' className={styles.anchor}>
+                        <ListItem sx={{ padding: 0 }} disablePadding>
+                            <ListItemButton onClick={() => goToRoute({ url: "/bike-videos" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
+                                <ListItemText primary='Bike Videos' sx={{ marginTop: "0px", marginBottom: "0px" }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+                    <Divider />
+
                     <MoreList props={Optionmore} />
                     <Divider />
 
