@@ -14,7 +14,7 @@ const OurVideos = ({ SetWidth, SetMaxWidth }: any) => {
 
   const fetchLatestYoutubeVideos = useCallback(async () => {
     try {
-      const response = await fetch('/api/youtube/latest-videos');
+      const response = await fetch('/api/youtube/latest-videos?limit=4');
       const res = await response.json();
 
       if (res?.success && Array.isArray(res?.data) && res.data.length > 0) {

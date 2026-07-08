@@ -97,7 +97,7 @@ const Bike_Videos = () => {
                 <div className={styles.header}>
                     <div>
                         <h1 className={styles.heading}>Bike Videos</h1>
-                        <p className={styles.subheading}>Latest motorcycle reviews, market updates, and e-bike videos from eBike.pk.</p>
+                        <p className={styles.subheading}>Latest motorcycle reviews, market updates, and e-bike videos from ebike.pk.</p>
                     </div>
                     <form className={styles.input_box} onSubmit={(event) => event.preventDefault()}>
                         <input

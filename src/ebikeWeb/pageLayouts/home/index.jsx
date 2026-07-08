@@ -25,6 +25,7 @@ import { List_Card, MotorCycle_News_Card } from '@/ebikeWeb/sharedComponents/New
 import Petrol_Price_Section from './petrol-price-section'
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 import CompareSection from './compareSection'
+import OurVideos from './ourVideos'
 
 
 function Index() {
@@ -86,6 +87,7 @@ function Index() {
     <GoGreen key="go-green" />,
     <BrandSection key="brand-section" />,
     <Explore key="explore" />,
+    <OurVideos key="bike-videos" />,
     <BlogSection key="blog-section" blogData={homeData.homeBlogs} />,
   ]
 

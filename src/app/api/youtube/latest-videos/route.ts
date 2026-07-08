@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const CHANNEL_ID = 'UCmudYXR1HtpZTIBFeDYn2fg';
+const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || 'UCmudYXR1HtpZTIBFeDYn2fg';
+const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 const FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
 const CHANNEL_VIDEOS_URL = 'https://www.youtube.com/@ebikepk/videos';
 
@@ -62,6 +63,54 @@ const getBestThumbnailUrl = async (videoId: string, fallbackUrl: string) => {
   }
 
   return fallbackUrl;
+};
+
+const fetchVideosFromYoutubeDataApi = async (limit: number): Promise<YoutubeVideo[]> => {
+  if (!YOUTUBE_API_KEY) {
+    return [];
+  }
+
+  const apiUrl = new URL('https://www.googleapis.com/youtube/v3/search');
+  apiUrl.searchParams.set('key', YOUTUBE_API_KEY);
+  apiUrl.searchParams.set('channelId', CHANNEL_ID);
+  apiUrl.searchParams.set('part', 'snippet');
+  apiUrl.searchParams.set('order', 'date');
+  apiUrl.searchParams.set('type', 'video');
+  apiUrl.searchParams.set('maxResults', String(limit));
+
+  const response = await fetch(apiUrl.toString(), {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    throw new Error(`YouTube Data API responded with ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  return (Array.isArray(data?.items) ? data.items : [])
+    .map((item: any) => {
+      const videoId = item?.id?.videoId || '';
+      const snippet = item?.snippet || {};
+      const thumbnails = snippet?.thumbnails || {};
+      const thumbnail =
+        thumbnails?.maxres?.url ||
+        thumbnails?.standard?.url ||
+        thumbnails?.high?.url ||
+        thumbnails?.medium?.url ||
+        thumbnails?.default?.url ||
+        `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+
+      return {
+        title: snippet?.title || '',
+        thumbnail_url: thumbnail,
+        video_url: `https://www.youtube.com/watch?v=${videoId}`,
+        videoId,
+        publishedAt: snippet?.publishedAt,
+      };
+    })
+    .filter((video: YoutubeVideo) => video.videoId && video.title)
+    .slice(0, limit);
 };
 
 const parseVideosFromFeed = (xml: string, limit: number): YoutubeVideo[] => {
@@ -130,6 +179,28 @@ export async function GET(request: NextRequest) {
   try {
     const limitParam = Number(request.nextUrl.searchParams.get('limit') || 4);
     const limit = Number.isFinite(limitParam) ? Math.min(Math.max(limitParam, 1), 24) : 4;
+    let dataApiVideos: YoutubeVideo[] = [];
+
+    try {
+      dataApiVideos = await fetchVideosFromYoutubeDataApi(limit);
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (dataApiVideos.length >= limit) {
+      const videos = await Promise.all(
+        dataApiVideos.map(async (video) => ({
+          ...video,
+          thumbnail_url: await getBestThumbnailUrl(video.videoId, video.thumbnail_url),
+        }))
+      );
+
+      return NextResponse.json({
+        success: true,
+        source: 'youtube-data-api',
+        data: videos,
+      });
+    }
 
     const response = await fetch(FEED_URL, {
       headers: {
@@ -163,7 +234,7 @@ export async function GET(request: NextRequest) {
     }
 
     const videos = await Promise.all(
-      mergeVideos(feedVideos, fallbackVideos, limit).map(async (video) => ({
+      mergeVideos(dataApiVideos, mergeVideos(feedVideos, fallbackVideos, limit), limit).map(async (video) => ({
         ...video,
         thumbnail_url: await getBestThumbnailUrl(video.videoId, video.thumbnail_url),
       }))
