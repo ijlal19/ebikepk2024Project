@@ -108,6 +108,7 @@ function buildStaticRoutes(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
     // { url: `${SITE_URL}/home`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/used-bikes`, lastModified: now, changeFrequency: "daily", priority: 0.95 },
+    { url: `${SITE_URL}/bikes/all/all/all`, lastModified: now, changeFrequency: "daily", priority: 0.95 },
     { url: `${SITE_URL}/used-bikes/sell-used-bike`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/new-bikes`, lastModified: now, changeFrequency: "daily", priority: 0.95 },
     { url: `${SITE_URL}/new-bike-price`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },

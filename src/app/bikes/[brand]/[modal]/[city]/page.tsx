@@ -46,11 +46,12 @@ function getFilterSeo(params: Props['params']) {
   const brand = formatFilterLabel(params.brand);
   const modal = formatFilterLabel(params.modal);
   const city = formatFilterLabel(params.city);
+  const cityLabel = city || 'Pakistan';
   const modelYear = modal && /^\d{4}$/.test(modal) ? modal : '';
   const modelName = modal && !modelYear ? modal : '';
   const canonical = `${SITE_URL}/bikes/${getBikeFilterSlug(params.brand)}/${getBikeFilterSlug(params.modal)}/${getBikeFilterSlug(params.city)}`;
   const bikeLabel = [brand, modelName || modelYear].filter(Boolean).join(' ');
-  const locationLabel = city ? `in ${city}` : 'in Pakistan';
+  const locationLabel = `in ${cityLabel}`;
   const heading = `${bikeLabel ? `${bikeLabel} Used Bikes` : 'Used Bikes'} for Sale ${locationLabel}`;
   const title = `${bikeLabel ? `${bikeLabel} Used Bikes` : 'Used Bikes'} for Sale ${locationLabel} | Prices & Ads | ebike.pk`;
   const intro = trimText(
