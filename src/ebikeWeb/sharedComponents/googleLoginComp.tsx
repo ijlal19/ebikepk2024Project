@@ -100,9 +100,8 @@ declare global {
 "use client";
 
 import { useEffect } from "react";
-import { userSignup } from "@/genericFunctions/geneFunc"
+import { CUSTOMER_AUTH_COOKIE_DAYS, userSignup } from "@/genericFunctions/geneFunc"
 const jsCookie = require('js-cookie');
-import { useRouter } from 'next/navigation'
 
 export default function GoogleSignIn(props:any) {
   useEffect(() => {
@@ -159,7 +158,7 @@ export default function GoogleSignIn(props:any) {
     console.log("Decoded token:", decodedToken);
 
     // Extract user info
-    const { name, email, picture, sub, jti } = decodedToken;
+    const { name, email, sub, jti } = decodedToken;
 
           // const profile = user.getBasicProfile();
           // const userId = profile.getId(); // User ID
@@ -172,7 +171,8 @@ export default function GoogleSignIn(props:any) {
           // console.log('User Email:', userEmail);
 
           let obj = {
-              social_uid: jti,
+              social_uid: sub || jti,
+              email: email || null,
               signupType: 'social',
               isVerified : true,
               userFullName: name
@@ -183,10 +183,11 @@ export default function GoogleSignIn(props:any) {
 
           if(res.token && res.user) {
             let userObj = JSON.stringify(res.user)
-            jsCookie.set('userInfo_e', userObj, {expires: 1})
-            jsCookie.set('accessToken_e', res.token , {expires: 1})
+            jsCookie.set('userInfo_e', userObj, {expires: CUSTOMER_AUTH_COOKIE_DAYS})
+            jsCookie.set('accessToken_e', res.token , {expires: CUSTOMER_AUTH_COOKIE_DAYS})
             props.showmodal()
             props.updateAfterLogin()
+            window.location.reload()
           }
 
     // You can send the token to your backend for verification

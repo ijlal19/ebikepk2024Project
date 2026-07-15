@@ -1,8 +1,8 @@
 "use client"
-import { Divider, IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, TextField, Typography } from '@mui/material'
-import { validateEmail, userLogin, resetPassword } from "@/genericFunctions/geneFunc";
-import { Close, Visibility, VisibilityOff } from '@mui/icons-material'
-import React, { useState, useEffect, useRef } from 'react';
+import { IconButton, InputAdornment, ListItem, ListItemButton, ListItemText, TextField, Typography } from '@mui/material'
+import { CUSTOMER_AUTH_COOKIE_DAYS, validateEmail, userLogin, resetPassword } from "@/genericFunctions/geneFunc";
+import { Close, EmailOutlined, Google, PhoneIphone, Visibility, VisibilityOff } from '@mui/icons-material'
+import React, { useState, useEffect } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import Button from '@mui/material/Button';
 import styles from './index.module.scss';
@@ -13,15 +13,11 @@ import Link from 'next/link';
 const jsCookie = require('js-cookie');
 import GoogleLoginButton from '../googleLoginComp';
 
-import {
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  ConfirmationResult,
-} from "firebase/auth";
-import { auth } from "@/lib/firebase";
+type LoginMode = 'email' | 'gmail' | 'phone';
 
 export default function LoginPopup({props,values}: any) {
   
+  const [loginMode, setLoginMode] = useState<LoginMode>('email');
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,13 +25,9 @@ export default function LoginPopup({props,values}: any) {
   const [isLoading, setIsLoading] = useState(false)
   const [phoneLoading, setPhoneLoading] = useState(false)
   const [isForgotPass, setIsForgotPass] = useState(false)
- 
-  const [phone, setPhone] = useState("+923001234567"); // E.164 format
+  const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState<"enter-phone" | "enter-otp" | "done">("enter-phone");
-  const confirmationRef = useRef<ConfirmationResult | null>(null);
-  const recaptchaRef = useRef<HTMLDivElement | null>(null);
-  const recaptchaVerifierRef = useRef<RecaptchaVerifier | null>(null);
+  const [step, setStep] = useState<"enter-phone" | "enter-otp">("enter-phone");
 
   useEffect(() => {
     if (!props?.openmodal) return;
@@ -45,135 +37,75 @@ export default function LoginPopup({props,values}: any) {
     setPassword('');
     setOtp('');
     setStep('enter-phone');
+    setLoginMode('email');
   }, [props?.openmodal]);
 
-  // ✅ Initialize Facebook SDK
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    (window as any).fbAsyncInit = function () {
-      (window as any).FB.init({
-        appId: '1044746900622305', // your App ID
-        cookie: true,
-        xfbml: true,
-        version: 'v19.0'
-      });
-      (window as any).FB.AppEvents.logPageView();
-    };
-
-    // load SDK
-    (function (d, s, id) {
-      let js: HTMLScriptElement;
-      const fjs = d.getElementsByTagName(s)[0] as HTMLScriptElement;
-      if (d.getElementById(id)) return;
-      js = d.createElement(s) as HTMLScriptElement;
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode?.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
-  }, []);
-
-  // ✅ Facebook Login Handler
-  const handleFacebookLogin = () => {
-    if (typeof window === "undefined") return;
-    const FB = (window as any).FB;
-
-    FB.login(
-      (response: any) => {
-        if (response.authResponse) {
-          // Get user data
-          FB.api('/me', { fields: 'name,email,picture' }, async (userInfo: any) => {
-            console.log('Facebook user info:', userInfo);
-
-            // example payload for backend login/signup
-            const obj = {
-              social_uid: userInfo.id,
-              email: userInfo.email,
-              userFullName: userInfo.name,
-              signupType: "facebook",
-              isVerified: true
-            };
-
-            // 🔽 Example backend call (adjust according to your API)
-            // const res = await userSignup(obj);
-            // if (res.token) {
-            //   jsCookie.set('userInfo_e', JSON.stringify(res.user), { expires: 7 });
-            //   jsCookie.set('accessToken_e', res.token, { expires: 7 });
-            //   props.showmodal('showloginpopup');
-            //   props.updateAfterLogin();
-            //   window.location.reload();
-            // }
-          });
-        } else {
-          alert('Facebook login failed or cancelled.');
-        }
-      },
-      { scope: 'public_profile,email' }
-    );
-  };
-
-  // recaptcha for phone verification
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (recaptchaVerifierRef.current) return; // already initialized
-
-    recaptchaVerifierRef.current = new RecaptchaVerifier(
-      auth,
-      recaptchaRef.current!,
-      {
-        size: "invisible",
-      }
-    );
-  }, []);
+  const saveCustomerSession = (res: any) => {
+    let userObj = JSON.stringify(res.user)
+    jsCookie.set('userInfo_e', userObj, {expires: CUSTOMER_AUTH_COOKIE_DAYS})
+    jsCookie.set('accessToken_e', res.accessToken, {expires: CUSTOMER_AUTH_COOKIE_DAYS})
+    props.showmodal('showloginpopup')
+    props.updateAfterLogin()
+    window.location.reload()
+  }
 
   const sendCodePhone = async () => {
+    const cleanPhone = phone.trim();
+    setError('')
+
+    if (!cleanPhone || cleanPhone.replace(/[^\d]/g, '').length < 10) {
+      setError('Please enter a valid phone number')
+      return
+    }
+
     try {
       setPhoneLoading(true)
-      if (!recaptchaVerifierRef.current) throw new Error("reCAPTCHA missing");
-      const confirmation = await signInWithPhoneNumber(
-        auth,
-        phone.trim(),
-        recaptchaVerifierRef.current
-      );
-      confirmationRef.current = confirmation;
-      setStep("enter-otp");
+      const res = await userLogin({
+        phoneNumber: cleanPhone,
+        signupType: 'phone-number'
+      });
+
+      if (res?.success && res?.otpSent !== false) {
+        setStep("enter-otp");
+      }
+      else {
+        setError(res?.info || res?.message || 'Failed to send OTP')
+      }
     } catch (err: any) {
-      alert(err?.message ?? "Failed to send code");
+      setError(err?.message ?? "Failed to send OTP");
     } finally {
      setPhoneLoading(false)
     }
   };
 
   const verifyCodePhone = async () => {
+    const cleanPhone = phone.trim();
+    const cleanOtp = otp.trim();
+    setError('')
+
+    if (!cleanOtp) {
+      setError('Please enter OTP')
+      return
+    }
+
     try {
       setPhoneLoading(true)
-      
-      if (!confirmationRef.current) throw new Error("No confirmation");
-      
-      const result = await confirmationRef.current.confirm(otp.trim());
-      console.log('result 111', result)
 
-      let obj = {
-        social_uid: "" ,
-        signupType: 'social',
-        isVerified : true,
-        userFullName: ""
+      const res = await userLogin({
+        phoneNumber: cleanPhone,
+        signupType: 'phone-number',
+        otp: cleanOtp
+      });
+
+      if(res?.success && res?.login) {
+        saveCustomerSession(res)
       }
-
-      // let res = await userSignup(obj)
-      // console.log('res 111', res)
-
-      // if(res.token && res.user) {
-      //   let userObj = JSON.stringify(res.user)
-      //   jsCookie.set('userInfo_e', userObj, {expires: 1})
-      //   jsCookie.set('accessToken_e', res.token , {expires: 1})
-      //   props.showmodal()
-      //   props.updateAfterLogin()
-      // }
-      setStep("done");
+      else {
+        setError(res?.info || res?.message || 'Invalid OTP')
+      }
     }
      catch (err: any) {
-      alert(err?.message ?? "Invalid code");
+      setError(err?.message ?? "Invalid OTP");
     } finally {
       setPhoneLoading(false)
     }
@@ -206,12 +138,7 @@ export default function LoginPopup({props,values}: any) {
     setIsLoading(false)
 
     if(res.success && res.login) {
-      let userObj = JSON.stringify(res.user)
-      jsCookie.set('userInfo_e', userObj, {expires: 7})
-      jsCookie.set('accessToken_e', res.accessToken, {expires: 7})
-      props.showmodal('showloginpopup')
-      props.updateAfterLogin()
-      window.location.reload()
+      saveCustomerSession(res)
     }
     else {
       setError(res.info)
@@ -286,14 +213,96 @@ export default function LoginPopup({props,values}: any) {
                 {isForgotPass ? "Forgot password" : "Sign in"}
               </Typography>
               <Typography id="ebike-login-description" className={styles.subtitle}>
-                {isForgotPass ? "We’ll email you a reset link." : "Welcome back. Please enter your details."}
+                {isForgotPass ? "We'll email you a reset link." : "Choose how you want to continue."}
               </Typography>
             </div>
 
             <div className={styles.content}>
               {!isForgotPass ? (
                 <>
-                  {jsCookie.get("phone_login") === "yes" ? (
+                  <div className={styles.modeSwitch} aria-label="Login options">
+                    {[
+                      { key: 'email', label: 'Email', icon: <EmailOutlined fontSize="small" /> },
+                      { key: 'gmail', label: 'Gmail', icon: <Google fontSize="small" /> },
+                      { key: 'phone', label: 'Phone', icon: <PhoneIphone fontSize="small" /> },
+                    ].map((item) => (
+                      <button
+                        key={item.key}
+                        type="button"
+                        className={`${styles.modeButton} ${loginMode === item.key ? styles.activeMode : ''}`}
+                        onClick={() => {
+                          setLoginMode(item.key as LoginMode);
+                          setError('');
+                        }}
+                      >
+                        {item.icon}
+                        <span>{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {loginMode === 'email' ? (
+                    <form className={styles.form} onSubmit={handleSubmit}>
+                      <TextField
+                        label="Email"
+                        size="small"
+                        fullWidth
+                        type="email"
+                        required
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={styles.field}
+                      />
+
+                      <TextField
+                        label="Password"
+                        size="small"
+                        fullWidth
+                        required
+                        type={showPassword ? "text" : "password"}
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={styles.field}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                onClick={handleClickShowPassword}
+                                edge="end"
+                                size="small"
+                              >
+                                {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+
+                      {error ? (
+                        <Typography className={styles.error} role="alert" aria-live="polite">
+                          {error}
+                        </Typography>
+                      ) : null}
+
+                      <Button disabled={isLoading} className={styles.primaryButton} fullWidth type="submit">
+                        {isLoading ? "Signing in..." : "Sign in"}
+                      </Button>
+                    </form>
+                  ) : null}
+
+                  {loginMode === 'gmail' ? (
+                    <div className={styles.googlePanel}>
+                      <GoogleLoginButton
+                        showmodal={() => props.showmodal('showloginpopup')}
+                        updateAfterLogin={() => props.updateAfterLogin()}
+                      />
+                    </div>
+                  ) : null}
+
+                  {loginMode === 'phone' ? (
                     <div className={styles.phoneBlock}>
                       {step === "enter-phone" ? (
                         <>
@@ -303,19 +312,25 @@ export default function LoginPopup({props,values}: any) {
                             fullWidth
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            placeholder="+923001234567"
+                            placeholder="03001234567"
+                            autoComplete="tel"
                             className={styles.field}
                           />
+                          {error ? (
+                            <Typography className={styles.error} role="alert" aria-live="polite">
+                              {error}
+                            </Typography>
+                          ) : null}
                           <Button
                             disabled={phoneLoading}
-                            className={styles.secondaryButton}
+                            className={styles.primaryButton}
                             fullWidth
                             onClick={sendCodePhone}
                           >
-                            {phoneLoading ? "Sending…" : "Send code"}
+                            {phoneLoading ? "Sending..." : "Send OTP"}
                           </Button>
                         </>
-                      ) : step === "enter-otp" ? (
+                      ) : (
                         <>
                           <TextField
                             label="OTP"
@@ -324,93 +339,40 @@ export default function LoginPopup({props,values}: any) {
                             value={otp}
                             onChange={(e) => setOtp(e.target.value)}
                             placeholder="123456"
+                            inputProps={{ inputMode: 'numeric' }}
                             className={styles.field}
                           />
+                          {error ? (
+                            <Typography className={styles.error} role="alert" aria-live="polite">
+                              {error}
+                            </Typography>
+                          ) : null}
                           <Button
                             disabled={phoneLoading}
-                            className={styles.secondaryButton}
+                            className={styles.primaryButton}
                             fullWidth
                             onClick={verifyCodePhone}
                           >
-                            {phoneLoading ? "Verifying…" : "Verify & login"}
+                            {phoneLoading ? "Verifying..." : "Verify & login"}
                           </Button>
                           <Button
                             className={styles.textButton}
                             fullWidth
-                            onClick={() => setStep("enter-phone")}
+                            onClick={() => {
+                              setStep("enter-phone");
+                              setOtp('');
+                              setError('');
+                            }}
                           >
                             Change number
                           </Button>
                         </>
-                      ) : (
-                        <Typography className={styles.success}>Phone verified. You can close this window.</Typography>
                       )}
-
-                      <Divider className={styles.divider}>
-                        <span className={styles.orText}>or</span>
-                      </Divider>
                     </div>
                   ) : null}
 
-                  <form className={styles.form} onSubmit={handleSubmit}>
-                    <TextField
-                      label="Email"
-                      size="small"
-                      fullWidth
-                      type="email"
-                      required
-                      autoComplete="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className={styles.field}
-                    />
-
-                    <TextField
-                      label="Password"
-                      size="small"
-                      fullWidth
-                      required
-                      type={showPassword ? "text" : "password"}
-                      autoComplete="current-password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className={styles.field}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label={showPassword ? "Hide password" : "Show password"}
-                              onClick={handleClickShowPassword}
-                              edge="end"
-                              size="small"
-                            >
-                              {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-
-                    {error ? (
-                      <Typography className={styles.error} role="alert" aria-live="polite">
-                        {error}
-                      </Typography>
-                    ) : null}
-
-                    <Button disabled={isLoading} className={styles.primaryButton} fullWidth type="submit">
-                      {isLoading ? "Signing in…" : "Sign in"}
-                    </Button>
-                  </form>
-
-                  <div className={styles.google_box}>
-                    <GoogleLoginButton
-                      showmodal={() => props.showmodal('showloginpopup')}
-                      updateAfterLogin={() => props.updateAfterLogin()}
-                    />
-                  </div>
-
                   <div className={styles.footer}>
-                    <Button onClick={() => setIsForgotPass(true)} className={styles.textButton}>
+                    <Button onClick={() => setIsForgotPass(true)} className={styles.textButton} disabled={loginMode !== 'email'}>
                       Forgot password?
                     </Button>
                     <Link href="/signup" onClick={handlesignup}>
@@ -441,7 +403,7 @@ export default function LoginPopup({props,values}: any) {
                   ) : null}
 
                   <Button disabled={isLoading} className={styles.primaryButton} fullWidth type="submit">
-                    {isLoading ? "Submitting…" : "Submit"}
+                    {isLoading ? "Submitting..." : "Submit"}
                   </Button>
 
                   <Button onClick={() => setIsForgotPass(false)} className={styles.textButton} fullWidth>
@@ -455,7 +417,6 @@ export default function LoginPopup({props,values}: any) {
       </Modal>
 
       <span onClick={()=>props.showmodal('showloginpopup')} id="general_login_btn" style={{ visibility:"hidden" }}> login </span>
-      <div id="recaptcha-container" ref={recaptchaRef} />
     </div>
   );
 }

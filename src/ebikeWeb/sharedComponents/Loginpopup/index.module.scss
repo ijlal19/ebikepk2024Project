@@ -117,6 +117,43 @@
   padding-top: 10px;
 }
 
+.modeSwitch{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px;
+  margin: 6px 0 12px 0;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  background: #f6f8f9;
+}
+
+.modeButton{
+  min-width: 0;
+  height: 42px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(0,0,0,0.68);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-family: 'LatoBold';
+  font-size: 12px;
+
+  svg{
+    font-size: 18px;
+  }
+}
+
+.activeMode{
+  background: #fff;
+  color: $primary_two;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+}
+
 .field{
   margin: 0 !important;
 }
@@ -174,7 +211,19 @@
 }
 
 .phoneBlock{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding-top: 4px;
+}
+
+.googlePanel{
+    text-align: center;
+    min-height: 76px;
+    padding: 12px 0 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .google_box{

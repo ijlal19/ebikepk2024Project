@@ -1,6 +1,8 @@
 const jsCookie = require('js-cookie');
 import Gconfig from 'globalconfig'
 
+const CUSTOMER_AUTH_COOKIE_DAYS = 30;
+
 function isLoginUser() {
   let obj = jsCookie.get('userInfo_e')
   if (obj) {
@@ -313,5 +315,6 @@ export {
   timeAgo,
   resetPassword,
   changePassword,
-  postSearchNew
+  postSearchNew,
+  CUSTOMER_AUTH_COOKIE_DAYS
 }
