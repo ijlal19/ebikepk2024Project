@@ -840,6 +840,33 @@
         min-width: 0;
     }
 
+    .faqList {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .faqRow {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
+        border: 1px solid #e2e8f3;
+        border-radius: 16px;
+        background: #fbfcff;
+    }
+
+    .removeFaqButton {
+        align-self: flex-end;
+        padding: 0.7rem 1rem;
+        border: 1px solid #f2c4c4;
+        border-radius: 12px;
+        background: #fff5f5;
+        color: #b42318;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
     .inlineGrid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));

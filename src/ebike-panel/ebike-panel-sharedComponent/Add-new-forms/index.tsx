@@ -12,6 +12,8 @@ import Loader from '../loader/loader';
 
 const jsCookie = require('js-cookie');
 
+const emptyFaq = { question: '', answer: '' };
+
 
 let BlogCategory = [
     {
@@ -109,7 +111,9 @@ const AddNewBikeForm = () => {
         tyreBack: '',
         tyreFront: '',
         videoUrl: '',
+        blogIds: '',
     });
+    const [faqs, setFaqs] = useState([{ ...emptyFaq }])
     const [AllBrandArr, setAllBrandArr] = useState<any>([])
 
     useEffect(() => {
@@ -131,6 +135,20 @@ const AddNewBikeForm = () => {
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setBikeData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleFaqChange = (index: number, field: 'question' | 'answer', value: string) => {
+        setFaqs(prev => prev.map((faq, faqIndex) => (
+            faqIndex === index ? { ...faq, [field]: value } : faq
+        )));
+    };
+
+    const addFaqRow = () => {
+        setFaqs(prev => [...prev, { ...emptyFaq }]);
+    };
+
+    const removeFaqRow = (index: number) => {
+        setFaqs(prev => prev.length > 1 ? prev.filter((_, faqIndex) => faqIndex !== index) : [{ ...emptyFaq }]);
     };
 
     const handleImageDelete = (index: number) => {
@@ -275,7 +293,8 @@ const AddNewBikeForm = () => {
             ...BikeData,
             brandId: selectedBrandId,
             images: imageArr,
-            uid: UserId || null
+            uid: UserId || null,
+            faqs: faqs.filter(faq => faq.question.trim() && faq.answer.trim())
         };
         console.log(finalBikeData)
         const res = await addNewBike(finalBikeData)
@@ -308,6 +327,9 @@ const AddNewBikeForm = () => {
 
                     <label htmlFor="bikeUrl" className={styles.label}>Unique URL</label>
                     <input id="bikeUrl" name="bikeUrl" value={BikeData.bikeUrl} onChange={handleInputChange} className={styles.input} />
+
+                    <label htmlFor="blogIds" className={styles.label}>Related Blog IDs</label>
+                    <input id="blogIds" name="blogIds" value={BikeData.blogIds} onChange={handleInputChange} className={styles.input} placeholder="12,45,88" />
 
                     <label htmlFor="description" className={styles.label}>Description</label>
                     <FloaraTextArea
@@ -389,6 +411,30 @@ const AddNewBikeForm = () => {
                     <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
                     <label htmlFor="others" className={styles.label}>Others</label>
                     <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
+
+                    <div className={styles.faqSection}>
+                        <div className={styles.faqHeader}>
+                            <label className={styles.label}>FAQs</label>
+                            <button type="button" className={styles.button_1} onClick={addFaqRow}>Add FAQ</button>
+                        </div>
+                        {faqs.map((faq, index) => (
+                            <div key={index} className={styles.faqRow}>
+                                <input
+                                    value={faq.question}
+                                    onChange={(e) => handleFaqChange(index, 'question', e.target.value)}
+                                    className={styles.input}
+                                    placeholder="Question"
+                                />
+                                <textarea
+                                    value={faq.answer}
+                                    onChange={(e) => handleFaqChange(index, 'answer', e.target.value)}
+                                    className={styles.textarea}
+                                    placeholder="Answer"
+                                />
+                                <button type="button" className={styles.removeFaqButton} onClick={() => removeFaqRow(index)}>Remove</button>
+                            </div>
+                        ))}
+                    </div>
 
                     <button type="submit" className={styles.button}>Add Bike</button>
                 </form> :

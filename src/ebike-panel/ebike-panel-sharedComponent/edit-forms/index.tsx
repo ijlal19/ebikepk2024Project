@@ -105,6 +105,8 @@ const electricBikeSpecFields = [
     { name: "newcompressionRatio", label: "Frame" },
 ];
 
+const emptyNewBikeFaq = { question: '', answer: '' };
+
 const DashboardFormHeader = ({
     eyebrow,
     title,
@@ -465,8 +467,10 @@ const EditNewBikeForm = () => {
         newtransmission: "",
         newtyreBack: "",
         newtyreFront: "",
-        newvideoUrl: ""
+        newvideoUrl: "",
+        newblogIds: ""
     })
+    const [faqs, setFaqs] = useState([{ ...emptyNewBikeFaq }])
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [AddcityId, setCityID] = useState('')
@@ -506,7 +510,7 @@ const EditNewBikeForm = () => {
         if (getData && getData[0].bike) {
             const bike = getData[0].bike;
             setCityID(bike.cityId)
-            const { uid, createdAt, images, newbike_comments, newbike_ratings, updatedAt, cityId, id, ...cleandData } = bike
+            const { uid, createdAt, images, newbike_comments, newbike_ratings, new_bike_faqs, updatedAt, cityId, id, ...cleandData } = bike
             const transformedData: any = {};
             Object.keys(cleandData).forEach((key) => {
                 transformedData["new" + key] = bike[key] || "";
@@ -517,6 +521,10 @@ const EditNewBikeForm = () => {
 
             setNewField(transformedData);
             setImageArr(bike?.images);
+            setFaqs(new_bike_faqs?.length > 0 ? new_bike_faqs.map((faq: any) => ({
+                question: faq.question || '',
+                answer: faq.answer || ''
+            })) : [{ ...emptyNewBikeFaq }]);
         }
 
         setIsLoading(false);
@@ -527,6 +535,20 @@ const EditNewBikeForm = () => {
             ...prev,
             [field]: value
         }));
+    };
+
+    const handleFaqChange = (index: number, field: 'question' | 'answer', value: string) => {
+        setFaqs(prev => prev.map((faq, faqIndex) => (
+            faqIndex === index ? { ...faq, [field]: value } : faq
+        )));
+    };
+
+    const addFaqRow = () => {
+        setFaqs(prev => [...prev, { ...emptyNewBikeFaq }]);
+    };
+
+    const removeFaqRow = (index: number) => {
+        setFaqs(prev => prev.length > 1 ? prev.filter((_, faqIndex) => faqIndex !== index) : [{ ...emptyNewBikeFaq }]);
     };
 
     const handleImageDelete = (index: number) => {
@@ -613,7 +635,9 @@ const EditNewBikeForm = () => {
             tyreBack: obj?.newtyreBack,
             tyreFront: obj?.newtyreFront,
             uid: UserId,
-            videoUrl: obj?.newvideoUrl
+            videoUrl: obj?.newvideoUrl,
+            blogIds: obj?.newblogIds,
+            faqs: faqs.filter(faq => faq.question.trim() && faq.answer.trim())
         }
 
         const res = await UpdateNewBikeById(slug1, finalData);
@@ -669,6 +693,10 @@ const EditNewBikeForm = () => {
                                         <input id="bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
                                     </DashboardField>
 
+                                    <DashboardField label="Related Blog IDs" htmlFor="blogIds">
+                                        <input id="blogIds" name="blogIds" value={NewField?.newblogIds || ""} onChange={(e) => handleChange('newblogIds', e.target.value)} className={styles.input} placeholder="12,45,88" />
+                                    </DashboardField>
+
                                     <DashboardField label="Description" htmlFor="newBikeDescription">
                                         <div className={styles.editorWrap}>
                                             <FloaraTextarea
@@ -715,6 +743,36 @@ const EditNewBikeForm = () => {
                                         <DashboardField label="Others" htmlFor="others">
                                             <textarea id="others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
                                         </DashboardField>
+                                    </div>
+                                </DashboardSection>
+
+                                <DashboardSection
+                                    title="FAQs"
+                                    hint="Add questions and answers that should appear on the bike detail page."
+                                >
+                                    <div className={styles.faqList}>
+                                        {faqs.map((faq, index) => (
+                                            <div key={index} className={styles.faqRow}>
+                                                <DashboardField label={`Question ${index + 1}`} htmlFor={`faq-question-${index}`}>
+                                                    <input
+                                                        id={`faq-question-${index}`}
+                                                        value={faq.question}
+                                                        onChange={(e) => handleFaqChange(index, 'question', e.target.value)}
+                                                        className={styles.input}
+                                                    />
+                                                </DashboardField>
+                                                <DashboardField label={`Answer ${index + 1}`} htmlFor={`faq-answer-${index}`}>
+                                                    <textarea
+                                                        id={`faq-answer-${index}`}
+                                                        value={faq.answer}
+                                                        onChange={(e) => handleFaqChange(index, 'answer', e.target.value)}
+                                                        className={styles.textarea}
+                                                    />
+                                                </DashboardField>
+                                                <button type="button" className={styles.removeFaqButton} onClick={() => removeFaqRow(index)}>Remove FAQ</button>
+                                            </div>
+                                        ))}
+                                        <button type="button" className={styles.ghostButton} onClick={addFaqRow}>Add FAQ</button>
                                     </div>
                                 </DashboardSection>
                             </div>
@@ -810,8 +868,10 @@ const EditElectricBikeForm = () => {
         newtransmission: "",
         newtyreBack: "",
         newtyreFront: "",
-        newvideoUrl: ""
+        newvideoUrl: "",
+        newblogIds: ""
     })
+    const [faqs, setFaqs] = useState([{ ...emptyNewBikeFaq }])
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [AddcityId, setCityID] = useState('')
@@ -846,7 +906,7 @@ const EditElectricBikeForm = () => {
         if (getData && getData[0].bike) {
             const bike = getData[0].bike;
             setCityID(bike.cityId)
-            const { uid, createdAt, images, newbike_comments, newbike_ratings, updatedAt, cityId, id, ...cleandData } = bike
+            const { uid, createdAt, images, newbike_comments, newbike_ratings, new_bike_faqs, updatedAt, cityId, id, ...cleandData } = bike
             const transformedData: any = {};
             Object.keys(cleandData).forEach((key) => {
                 transformedData["new" + key] = key === "price"
@@ -860,6 +920,10 @@ const EditElectricBikeForm = () => {
 
             setNewField(transformedData);
             setImageArr(bike?.images);
+            setFaqs(new_bike_faqs?.length > 0 ? new_bike_faqs.map((faq: any) => ({
+                question: faq.question || '',
+                answer: faq.answer || ''
+            })) : [{ ...emptyNewBikeFaq }]);
         }
 
         setIsLoading(false);
@@ -870,6 +934,20 @@ const EditElectricBikeForm = () => {
             ...prev,
             [field]: value
         }));
+    };
+
+    const handleFaqChange = (index: number, field: 'question' | 'answer', value: string) => {
+        setFaqs(prev => prev.map((faq, faqIndex) => (
+            faqIndex === index ? { ...faq, [field]: value } : faq
+        )));
+    };
+
+    const addFaqRow = () => {
+        setFaqs(prev => [...prev, { ...emptyNewBikeFaq }]);
+    };
+
+    const removeFaqRow = (index: number) => {
+        setFaqs(prev => prev.length > 1 ? prev.filter((_, faqIndex) => faqIndex !== index) : [{ ...emptyNewBikeFaq }]);
     };
 
     const handleImageDelete = (index: number) => {
@@ -956,7 +1034,9 @@ const EditElectricBikeForm = () => {
             tyreBack: obj?.newtyreBack,
             tyreFront: obj?.newtyreFront,
             uid: UserId,
-            videoUrl: obj?.newvideoUrl
+            videoUrl: obj?.newvideoUrl,
+            blogIds: obj?.newblogIds,
+            faqs: faqs.filter(faq => faq.question.trim() && faq.answer.trim())
         }
 
         console.log("data", obj, finalData);
@@ -1014,6 +1094,10 @@ const EditElectricBikeForm = () => {
                                         <input id="electric-bikeUrl" name="bikeUrl" value={NewField?.newbikeUrl} onChange={(e) => handleChange('newbikeUrl', e.target.value)} className={styles.input} />
                                     </DashboardField>
 
+                                    <DashboardField label="Related Blog IDs" htmlFor="electric-blogIds">
+                                        <input id="electric-blogIds" name="blogIds" value={NewField?.newblogIds || ""} onChange={(e) => handleChange('newblogIds', e.target.value)} className={styles.input} placeholder="12,45,88" />
+                                    </DashboardField>
+
                                     <DashboardField label="Description" htmlFor="electric-description">
                                         <div className={styles.editorWrap}>
                                             <FloaraTextarea
@@ -1060,6 +1144,36 @@ const EditElectricBikeForm = () => {
                                         <DashboardField label="Others" htmlFor="electric-others">
                                             <textarea id="electric-others" name="others" value={NewField?.newothers} onChange={(e) => handleChange('newothers', e.target.value)} className={styles.textarea} />
                                         </DashboardField>
+                                    </div>
+                                </DashboardSection>
+
+                                <DashboardSection
+                                    title="FAQs"
+                                    hint="Add questions and answers that should appear on the bike detail page."
+                                >
+                                    <div className={styles.faqList}>
+                                        {faqs.map((faq, index) => (
+                                            <div key={index} className={styles.faqRow}>
+                                                <DashboardField label={`Question ${index + 1}`} htmlFor={`electric-faq-question-${index}`}>
+                                                    <input
+                                                        id={`electric-faq-question-${index}`}
+                                                        value={faq.question}
+                                                        onChange={(e) => handleFaqChange(index, 'question', e.target.value)}
+                                                        className={styles.input}
+                                                    />
+                                                </DashboardField>
+                                                <DashboardField label={`Answer ${index + 1}`} htmlFor={`electric-faq-answer-${index}`}>
+                                                    <textarea
+                                                        id={`electric-faq-answer-${index}`}
+                                                        value={faq.answer}
+                                                        onChange={(e) => handleFaqChange(index, 'answer', e.target.value)}
+                                                        className={styles.textarea}
+                                                    />
+                                                </DashboardField>
+                                                <button type="button" className={styles.removeFaqButton} onClick={() => removeFaqRow(index)}>Remove FAQ</button>
+                                            </div>
+                                        ))}
+                                        <button type="button" className={styles.ghostButton} onClick={addFaqRow}>Add FAQ</button>
                                     </div>
                                 </DashboardSection>
                             </div>
