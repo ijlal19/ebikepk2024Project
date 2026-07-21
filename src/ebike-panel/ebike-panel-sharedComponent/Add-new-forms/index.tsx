@@ -14,7 +14,6 @@ const jsCookie = require('js-cookie');
 
 const emptyFaq = { question: '', answer: '' };
 
-
 let BlogCategory = [
     {
         id: 1,
@@ -86,6 +85,7 @@ const AddNewBikeForm = () => {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBrandId, setSelectedBrandId] = useState('');
     const [isLoading, setIsLoading] = useState(true)
+    const [youtubeUrlInput, setYoutubeUrlInput] = useState('');
     const [BikeData, setBikeData] = useState({
         bikeUrl: '',
         boreAndStroke: '',
@@ -111,6 +111,7 @@ const AddNewBikeForm = () => {
         tyreBack: '',
         tyreFront: '',
         videoUrl: '',
+        youtubeUrls: [] as string[],
         blogIds: '',
     });
     const [faqs, setFaqs] = useState([{ ...emptyFaq }])
@@ -135,6 +136,24 @@ const AddNewBikeForm = () => {
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setBikeData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleYoutubeUrlAdd = () => {
+        const url = youtubeUrlInput.trim();
+
+        if (!url) {
+            return;
+        }
+
+        setBikeData(prev => ({ ...prev, youtubeUrls: [...prev.youtubeUrls, url] }));
+        setYoutubeUrlInput('');
+    };
+
+    const handleYoutubeUrlDelete = (index: number) => {
+        setBikeData(prev => ({
+            ...prev,
+            youtubeUrls: prev.youtubeUrls.filter((_, urlIndex) => urlIndex !== index)
+        }));
     };
 
     const handleFaqChange = (index: number, field: 'question' | 'answer', value: string) => {
@@ -436,6 +455,22 @@ const AddNewBikeForm = () => {
                         ))}
                     </div>
 
+                    <div className={styles.youtubeUrlSection}>
+                        <label htmlFor="youtubeUrls" className={styles.label}>YouTube URLs</label>
+                        <div className={styles.youtubeUrlInputRow}>
+                            <input id="youtubeUrls" value={youtubeUrlInput} onChange={(e) => setYoutubeUrlInput(e.target.value)} className={styles.input_bike_url} placeholder="Paste YouTube URL" />
+                            <button type="button" onClick={handleYoutubeUrlAdd} className={styles.youtubeAddButton}>Add</button>
+                        </div>
+                        <div className={styles.youtubeUrlList}>
+                            {BikeData.youtubeUrls.map((url, index) => (
+                                <div key={`${url}-${index}`} className={styles.youtubeUrlItem}>
+                                    <span>{url}</span>
+                                    <button type="button" onClick={() => handleYoutubeUrlDelete(index)}>Delete</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <button type="submit" className={styles.button}>Add Bike</button>
                 </form> :
                 <div className={styles.loader_container}>
@@ -453,6 +488,7 @@ const AddNewElectricBikeForm = () => {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBrandId, setSelectedBrandId] = useState('');
     const [isLoading, setIsLoading] = useState(false)
+    const [youtubeUrlInput, setYoutubeUrlInput] = useState('');
     const [BikeData, setBikeData] = useState({
         bikeUrl: '',
         boreAndStroke: '',
@@ -478,6 +514,7 @@ const AddNewElectricBikeForm = () => {
         tyreBack: '',
         tyreFront: '',
         videoUrl: '',
+        youtubeUrls: [] as string[],
     });
     const [allBrands, setAllBrands] = useState<any>([])
 
@@ -499,6 +536,24 @@ const AddNewElectricBikeForm = () => {
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
         setBikeData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleYoutubeUrlAdd = () => {
+        const url = youtubeUrlInput.trim();
+
+        if (!url) {
+            return;
+        }
+
+        setBikeData(prev => ({ ...prev, youtubeUrls: [...prev.youtubeUrls, url] }));
+        setYoutubeUrlInput('');
+    };
+
+    const handleYoutubeUrlDelete = (index: number) => {
+        setBikeData(prev => ({
+            ...prev,
+            youtubeUrls: prev.youtubeUrls.filter((_, urlIndex) => urlIndex !== index)
+        }));
     };
 
     const handleImageDelete = (index: number) => {
@@ -659,7 +714,7 @@ const AddNewElectricBikeForm = () => {
             ...BikeData,
             brandId: selectedBrandId,
             images: imageArr,
-            uid: UserId || null
+            uid: UserId || null,
         };
         const res = await addNewBike(finalBikeData)
         if (res && res.success) {
@@ -772,6 +827,22 @@ const AddNewElectricBikeForm = () => {
                     <textarea id="focus_keyword" name="focus_keyword" value={BikeData.focus_keyword} onChange={handleInputChange} className={styles.textarea} />
                     <label htmlFor="others" className={styles.label}>Others</label>
                     <textarea id="others" name="others" value={BikeData.others} onChange={handleInputChange} className={styles.textarea} />
+
+                    <div className={styles.youtubeUrlSection}>
+                        <label htmlFor="electric-youtubeUrls" className={styles.label}>YouTube URLs</label>
+                        <div className={styles.youtubeUrlInputRow}>
+                            <input id="electric-youtubeUrls" value={youtubeUrlInput} onChange={(e) => setYoutubeUrlInput(e.target.value)} className={styles.input_bike_url} placeholder="Paste YouTube URL" />
+                            <button type="button" onClick={handleYoutubeUrlAdd} className={styles.youtubeAddButton}>Add</button>
+                        </div>
+                        <div className={styles.youtubeUrlList}>
+                            {BikeData.youtubeUrls.map((url, index) => (
+                                <div key={`${url}-${index}`} className={styles.youtubeUrlItem}>
+                                    <span>{url}</span>
+                                    <button type="button" onClick={() => handleYoutubeUrlDelete(index)}>Delete</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
                     <button type="submit" className={styles.button}>Add Bike</button>
                 </form> :

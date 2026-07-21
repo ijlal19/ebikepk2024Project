@@ -1888,3 +1888,80 @@
 // .fieldGroup {
 //     padding-right: 5% !important;
 // }
+
+.youtubeUrlBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.youtubeUrlInputRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.youtubeUrlInputRow .input {
+    flex: 1 1 auto;
+    width: auto !important;
+    max-width: none !important;
+}
+
+.youtubeAddButton {
+    flex: 0 0 auto;
+    min-height: 46px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 12px;
+    background: #1976d2;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.youtubeUrlList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.youtubeUrlItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid #d7e1f1;
+    border-radius: 12px;
+    background: #fbfcff;
+}
+
+.youtubeUrlItem span {
+    min-width: 0;
+    color: #26384f;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.youtubeUrlItem button {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    border: 1px solid #f2c4c4;
+    border-radius: 8px;
+    background: #fff5f5;
+    color: #b42318;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media (max-width: 520px) {
+    .youtubeUrlInputRow {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .youtubeAddButton {
+        width: 100%;
+    }
+}

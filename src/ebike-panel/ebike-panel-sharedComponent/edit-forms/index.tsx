@@ -107,6 +107,21 @@ const electricBikeSpecFields = [
 
 const emptyNewBikeFaq = { question: '', answer: '' };
 
+const normalizeYoutubeUrls = (value: string[] | string | null | undefined) => {
+    if (Array.isArray(value)) {
+        return value.filter(url => typeof url === 'string' && url.trim()).map(url => url.trim());
+    }
+
+    if (typeof value === 'string') {
+        return value
+            .split(/[\n,]+/)
+            .map(url => url.trim())
+            .filter(Boolean);
+    }
+
+    return [];
+};
+
 const DashboardFormHeader = ({
     eyebrow,
     title,
@@ -468,9 +483,11 @@ const EditNewBikeForm = () => {
         newtyreBack: "",
         newtyreFront: "",
         newvideoUrl: "",
+        newyoutubeUrls: [] as string[],
         newblogIds: ""
     })
     const [faqs, setFaqs] = useState([{ ...emptyNewBikeFaq }])
+    const [youtubeUrlInput, setYoutubeUrlInput] = useState('');
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [AddcityId, setCityID] = useState('')
@@ -513,7 +530,9 @@ const EditNewBikeForm = () => {
             const { uid, createdAt, images, newbike_comments, newbike_ratings, new_bike_faqs, updatedAt, cityId, id, ...cleandData } = bike
             const transformedData: any = {};
             Object.keys(cleandData).forEach((key) => {
-                transformedData["new" + key] = bike[key] || "";
+                transformedData["new" + key] = key === "youtubeUrls"
+                    ? normalizeYoutubeUrls(bike[key])
+                    : bike[key] || "";
             });
             transformedData.uid = bike.uid || "";
             console.log("data", transformedData)
@@ -534,6 +553,27 @@ const EditNewBikeForm = () => {
         setNewField((prev: any) => ({
             ...prev,
             [field]: value
+        }));
+    };
+
+    const handleYoutubeUrlAdd = () => {
+        const url = youtubeUrlInput.trim();
+
+        if (!url) {
+            return;
+        }
+
+        setNewField((prev: any) => ({
+            ...prev,
+            newyoutubeUrls: [...normalizeYoutubeUrls(prev.newyoutubeUrls), url]
+        }));
+        setYoutubeUrlInput('');
+    };
+
+    const handleYoutubeUrlDelete = (index: number) => {
+        setNewField((prev: any) => ({
+            ...prev,
+            newyoutubeUrls: normalizeYoutubeUrls(prev.newyoutubeUrls).filter((_, urlIndex) => urlIndex !== index)
         }));
     };
 
@@ -636,6 +676,7 @@ const EditNewBikeForm = () => {
             tyreFront: obj?.newtyreFront,
             uid: UserId,
             videoUrl: obj?.newvideoUrl,
+            youtubeUrls: normalizeYoutubeUrls(obj?.newyoutubeUrls),
             blogIds: obj?.newblogIds,
             faqs: faqs.filter(faq => faq.question.trim() && faq.answer.trim())
         }
@@ -775,6 +816,28 @@ const EditNewBikeForm = () => {
                                         <button type="button" className={styles.ghostButton} onClick={addFaqRow}>Add FAQ</button>
                                     </div>
                                 </DashboardSection>
+
+                                <DashboardSection
+                                    title="YouTube URLs"
+                                    hint="Add review or walkaround video links for this bike."
+                                >
+                                    <DashboardField label="YouTube URLs" htmlFor="youtubeUrls">
+                                        <div className={styles.youtubeUrlBox}>
+                                            <div className={styles.youtubeUrlInputRow}>
+                                                <input id="youtubeUrls" value={youtubeUrlInput} onChange={(e) => setYoutubeUrlInput(e.target.value)} className={styles.input} placeholder="Paste YouTube URL" />
+                                                <button type="button" onClick={handleYoutubeUrlAdd} className={styles.youtubeAddButton}>Add</button>
+                                            </div>
+                                            <div className={styles.youtubeUrlList}>
+                                                {normalizeYoutubeUrls(NewField.newyoutubeUrls).map((url, index) => (
+                                                    <div key={`${url}-${index}`} className={styles.youtubeUrlItem}>
+                                                        <span>{url}</span>
+                                                        <button type="button" onClick={() => handleYoutubeUrlDelete(index)}>Delete</button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </DashboardField>
+                                </DashboardSection>
                             </div>
 
                             <div className={styles.sideColumn}>
@@ -869,9 +932,11 @@ const EditElectricBikeForm = () => {
         newtyreBack: "",
         newtyreFront: "",
         newvideoUrl: "",
+        newyoutubeUrls: [] as string[],
         newblogIds: ""
     })
     const [faqs, setFaqs] = useState([{ ...emptyNewBikeFaq }])
+    const [youtubeUrlInput, setYoutubeUrlInput] = useState('');
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [AddcityId, setCityID] = useState('')
@@ -909,7 +974,9 @@ const EditElectricBikeForm = () => {
             const { uid, createdAt, images, newbike_comments, newbike_ratings, new_bike_faqs, updatedAt, cityId, id, ...cleandData } = bike
             const transformedData: any = {};
             Object.keys(cleandData).forEach((key) => {
-                transformedData["new" + key] = key === "price"
+                transformedData["new" + key] = key === "youtubeUrls"
+                    ? normalizeYoutubeUrls(bike[key])
+                    : key === "price"
                     ? bike[key] ?? 0
                     : bike[key] ?? "";
 
@@ -933,6 +1000,27 @@ const EditElectricBikeForm = () => {
         setNewField((prev: any) => ({
             ...prev,
             [field]: value
+        }));
+    };
+
+    const handleYoutubeUrlAdd = () => {
+        const url = youtubeUrlInput.trim();
+
+        if (!url) {
+            return;
+        }
+
+        setNewField((prev: any) => ({
+            ...prev,
+            newyoutubeUrls: [...normalizeYoutubeUrls(prev.newyoutubeUrls), url]
+        }));
+        setYoutubeUrlInput('');
+    };
+
+    const handleYoutubeUrlDelete = (index: number) => {
+        setNewField((prev: any) => ({
+            ...prev,
+            newyoutubeUrls: normalizeYoutubeUrls(prev.newyoutubeUrls).filter((_, urlIndex) => urlIndex !== index)
         }));
     };
 
@@ -1035,6 +1123,7 @@ const EditElectricBikeForm = () => {
             tyreFront: obj?.newtyreFront,
             uid: UserId,
             videoUrl: obj?.newvideoUrl,
+            youtubeUrls: normalizeYoutubeUrls(obj?.newyoutubeUrls),
             blogIds: obj?.newblogIds,
             faqs: faqs.filter(faq => faq.question.trim() && faq.answer.trim())
         }
@@ -1175,6 +1264,28 @@ const EditElectricBikeForm = () => {
                                         ))}
                                         <button type="button" className={styles.ghostButton} onClick={addFaqRow}>Add FAQ</button>
                                     </div>
+                                </DashboardSection>
+
+                                <DashboardSection
+                                    title="YouTube URLs"
+                                    hint="Add review or walkaround video links for this electric bike."
+                                >
+                                    <DashboardField label="YouTube URLs" htmlFor="electric-youtubeUrls">
+                                        <div className={styles.youtubeUrlBox}>
+                                            <div className={styles.youtubeUrlInputRow}>
+                                                <input id="electric-youtubeUrls" value={youtubeUrlInput} onChange={(e) => setYoutubeUrlInput(e.target.value)} className={styles.input} placeholder="Paste YouTube URL" />
+                                                <button type="button" onClick={handleYoutubeUrlAdd} className={styles.youtubeAddButton}>Add</button>
+                                            </div>
+                                            <div className={styles.youtubeUrlList}>
+                                                {normalizeYoutubeUrls(NewField.newyoutubeUrls).map((url, index) => (
+                                                    <div key={`${url}-${index}`} className={styles.youtubeUrlItem}>
+                                                        <span>{url}</span>
+                                                        <button type="button" onClick={() => handleYoutubeUrlDelete(index)}>Delete</button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </DashboardField>
                                 </DashboardSection>
                             </div>
 

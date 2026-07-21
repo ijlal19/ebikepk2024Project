@@ -65,6 +65,86 @@
     }
 }
 
+.youtubeUrlSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid #d7e1f1;
+    border-radius: 8px;
+    background: #fbfcff;
+}
+
+.youtubeUrlInputRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.youtubeUrlInputRow .input_bike_url {
+    margin-top: 0;
+}
+
+.youtubeAddButton {
+    min-height: 36px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    background: #1976d2;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.youtubeUrlList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.youtubeUrlItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid #d7e1f1;
+    border-radius: 6px;
+    background: #fff;
+}
+
+.youtubeUrlItem span {
+    min-width: 0;
+    color: #26384f;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.youtubeUrlItem button {
+    flex: 0 0 auto;
+    padding: 5px 8px;
+    border: 1px solid #f2c4c4;
+    border-radius: 4px;
+    background: #fff5f5;
+    color: #b42318;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+@media (max-width: 520px) {
+    .youtubeUrlInputRow {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .youtubeUrlInputRow .input_bike_url,
+    .youtubeAddButton {
+        width: 100%;
+    }
+}
+
 .label {
     font-weight: 500;
     font-size: 14px;

@@ -2,7 +2,7 @@
 import { WriteModal, MoreReviewModal } from '@/ebikeWeb/sharedComponents/Review-popup';
 import { Box, Button, Grid, Link, Typography, useMediaQuery } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { getdealerData, getnewBikeData, getnewBikedetailsData, getBikesBySpecificFilter, getMechanicByBrandId } from '@/ebikeWeb/functions/globalFuntions';
+import { getdealerData, getnewBikeData, getnewBikedetailsData, getBikesBySpecificFilter, getMechanicByBrandId, getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { cloudinaryLoader, priceWithCommas } from '@/genericFunctions/geneFunc';
@@ -46,6 +46,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   const [morePopup, setMorePopup] = useState(false);
   const [similarBrandUsedBike, setSimilarBrandUsedBike] = useState([]);
   const [similarCCUsedBike, setSimilarCCUsedBike] = useState([]);
+  const [relatedBlogs, setRelatedBlogs] = useState<any[]>([]);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null)
   const [allMechanicArr, setAllMechanicArr]: any = useState([]);
   const [isElectricBike, setIsElectricBike]: any = useState(false);
@@ -53,6 +54,13 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
   const params = useParams()
 
   const detailsId = params.slug3
+
+  const currentBike = AllnewBikeDetailsArr?.[0]?.bike;
+  const bikeFaqs = Array.isArray(currentBike?.new_bike_faqs) ? currentBike.new_bike_faqs : [];
+  const bikeYoutubeUrls = Array.isArray(currentBike?.youtubeUrls) ? currentBike.youtubeUrls.filter((url: any) => typeof url === 'string' && url.trim()) : [];
+  const bikeYoutubeEmbeds = bikeYoutubeUrls
+    .map((url: string) => ({ url, embedUrl: embebedYoutubeVideoId(url) }))
+    .filter((video: any) => video.embedUrl);
 
   useEffect(() => {
     fetchNewBikeInfo()
@@ -127,6 +135,7 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
       fetchSimilarBrandUsedBike(responsedetails[0]?.bike?.brandId)
       fetchSimilarBrandDealerInfo(responsedetails[0]?.bike?.brandId)
       fetchSimilarBrandMechanicInfo(responsedetails[0]?.bike?.brandId)
+      fetchRelatedBlogs(responsedetails[0]?.bike?.blogIds)
 
       // console.log('CCCCCC', CC)
       if (Number(CC) > 0) {
@@ -140,6 +149,52 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
       }, 1000);
     }
 
+  }
+
+  function getRelatedBlogIds(blogIds: any) {
+    if (!blogIds) {
+      return [];
+    }
+
+    if (Array.isArray(blogIds)) {
+      return blogIds.map((id: any) => Number(id)).filter((id: number) => Number.isInteger(id) && id > 0);
+    }
+
+    return blogIds
+      .toString()
+      .split(',')
+      .map((id: string) => Number(id.trim()))
+      .filter((id: number) => Number.isInteger(id) && id > 0);
+  }
+
+  function getBlogDetailUrl(blog: any) {
+    const title = blog?.blogUrl || blog?.blogTitle || '';
+    const lowerTitle = title.toString().toLowerCase().replaceAll(' ', '-').replace(/[^\w-]+/g, '');
+    const category = blog?.blog_category?.name?.toLowerCase() || 'news';
+
+    return `/blog/${category}/${lowerTitle}/${blog?.id}`;
+  }
+
+  function stripHtml(value: string) {
+    return value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+  }
+
+  async function fetchRelatedBlogs(blogIds: any) {
+    const ids = getRelatedBlogIds(blogIds);
+
+    if (ids.length === 0) {
+      setRelatedBlogs([]);
+      return;
+    }
+
+    const blogs = await getAllBlog();
+
+    if (!Array.isArray(blogs)) {
+      setRelatedBlogs([]);
+      return;
+    }
+
+    setRelatedBlogs(blogs.filter((blog: any) => ids.includes(Number(blog?.id))));
   }
 
   async function fetchSimilarBrandUsedBike(brandId: any) {
@@ -523,6 +578,68 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
                 slot="9214599249"
               />
             </div>
+
+            {(bikeFaqs.length > 0 || relatedBlogs.length > 0 || bikeYoutubeEmbeds.length > 0) ? (
+              <Box className={styles.extraContentSection}>
+                {bikeFaqs.length > 0 ? (
+                  <Box className={styles.extraCard}>
+                    <Typography className={styles.extraSectionTitle}>FAQs</Typography>
+                    <Box className={styles.faqCardList}>
+                      {bikeFaqs.map((faq: any, index: number) => (
+                        <Box key={faq?.id || index} className={styles.faqCard}>
+                          <Typography className={styles.faqQuestion}>{faq?.question}</Typography>
+                          <Typography className={styles.faqAnswer}>{faq?.answer}</Typography>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Box>
+                ) : null}
+
+                {relatedBlogs.length > 0 ? (
+                  <Box className={styles.extraCard}>
+                    <Typography className={styles.extraSectionTitle}>Related Blogs</Typography>
+                    <Box className={styles.relatedBlogGrid}>
+                      {relatedBlogs.map((blog: any) => {
+                        const blogExcerpt = stripHtml(blog?.blogtext || blog?.bloghtml || '');
+
+                        return (
+                          <Box key={blog?.id} className={styles.relatedBlogCard} onClick={() => router.push(getBlogDetailUrl(blog))}>
+                            {blog?.featuredImage ? (
+                              <img src={cloudinaryLoader(blog.featuredImage, 600, 'auto')} alt={blog?.blogTitle || 'Related blog'} className={styles.relatedBlogImage} />
+                            ) : null}
+                            <Box className={styles.relatedBlogBody}>
+                              <Typography className={styles.relatedBlogTitle}>{blog?.blogTitle}</Typography>
+                              <Typography className={styles.relatedBlogText}>
+                                {blogExcerpt.slice(0, 130)}
+                                {blogExcerpt.length > 130 ? '...' : ''}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        );
+                      })}
+                    </Box>
+                  </Box>
+                ) : null}
+
+                {bikeYoutubeEmbeds.length > 0 ? (
+                  <Box className={styles.extraCard}>
+                    <Typography className={styles.extraSectionTitle}>YouTube Videos</Typography>
+                    <Box className={styles.youtubeGrid}>
+                      {bikeYoutubeEmbeds.map((video: any, index: number) => (
+                        <Box key={`${video.url}-${index}`} className={styles.youtubeCard}>
+                          <iframe
+                            src={video.embedUrl}
+                            title={`YouTube video ${index + 1}`}
+                            className={styles.youtubeFrame}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          ></iframe>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Box>
+                ) : null}
+              </Box>
+            ) : null}
 
             <div className={styles.review_section_newbikes}>
               <ReviewSection orignal_review={AllnewBikeDetailsArr[0]?.bike?.newbike_comments?.length > 0 ? AllnewBikeDetailsArr[0]?.bike?.newbike_comments : []} />
