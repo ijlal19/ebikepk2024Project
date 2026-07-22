@@ -9,6 +9,8 @@ type Props = {
     params: { slug: string, id: string }
 }
 
+export const dynamic = "force-dynamic";
+
 function getDetailSeo(product: any, params: Props["params"]) {
     const add = product?.add;
     const city = getCityFromId(add?.cityId, CityArr);

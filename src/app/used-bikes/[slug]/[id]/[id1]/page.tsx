@@ -9,6 +9,8 @@ type Props = {
   params: { id: string, slug: string, id1:string }
 }
 
+export const dynamic = "force-dynamic";
+
 function getFilterSeo(params: Props["params"]) {
   const { id, slug, id1 } = params;
   const brand = getBrandFromId(id1, BrandArr);

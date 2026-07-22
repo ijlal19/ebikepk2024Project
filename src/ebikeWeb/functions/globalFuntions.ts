@@ -7,6 +7,7 @@ const jsCookie = require('js-cookie');
 function getAllbikesDetail(page: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-adds-with-offset/${page}/12`, {
         method: 'GET',
+        cache: 'no-store',
         // headers: { 'Authorization': 'Bearer eyJBdXRob3IiOiJGYXNoaW9uUGFzcyIsImFsZyI6IkhTMjU2In0.e30.oUQGjCS2S_jycg4PZnFK4uQ81DsNFX-N1m81Dfahi6o','X-Request-For':customer_ip, 'guid': request_guid }
     }).then(response => response.json()).then(data => {
         return data
@@ -86,6 +87,7 @@ function getNewBikeComparisonData(data: any) {
 function getFilteredAllbikesDetail(data: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-adds-by-filter`, {
         method: 'POST',
+        cache: 'no-store',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     }).then(response => response.json()).then(data => {
@@ -96,6 +98,7 @@ function getFilteredAllbikesDetail(data: any) {
 function getSinglebikesDetail(id: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-adds/${id}`, {
         method: 'GET',
+        cache: 'no-store',
         // headers: { 'Authorization': 'Bearer eyJBdXRob3IiOiJGYXNoaW9uUGFzcyIsImFsZyI6IkhTMjU2In0.e30.oUQGjCS2S_jycg4PZnFK4uQ81DsNFX-N1m81Dfahi6o','X-Request-For':customer_ip, 'guid': request_guid }
     }).then(response => response.json()).then(data => {
         return data
@@ -178,6 +181,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
     if (from == 'city') {
         return fetch(Gconfig.ebikeApi + `classified/get-adds-by-city-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
+            cache: 'no-store',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
             return data
@@ -186,6 +190,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
     else if (from == "cc") {
         return fetch(Gconfig.ebikeApi + `classified/get-adds-by-cc-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
+            cache: 'no-store',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
             return data
@@ -194,6 +199,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
     else if (from == "year") {
         return fetch(Gconfig.ebikeApi + `classified/get-adds-by-year-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
+            cache: 'no-store',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
             return data
@@ -202,6 +208,7 @@ function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
     else if (from == "brand") {
         return fetch(Gconfig.ebikeApi + `classified/get-adds-by-brand-offset/${id}/${getAdFrom}/12`, {
             method: 'GET',
+            cache: 'no-store',
             headers: { "Content-Type": "application/json" },
         }).then(response => response.json()).then(data => {
             return data
@@ -346,6 +353,7 @@ function getAllBlogComment() {
 function getAllFeaturedBike() {
     return fetch(Gconfig.ebikeApi + `classified/get-featured-ads`, {
         method: 'POST',
+        cache: 'no-store',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ "type": "CLASSIFIED_AD_FEATURED" })
     })
@@ -360,6 +368,7 @@ function getAllFeaturedBike() {
 function getMyAds(uid: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-user-adds/${uid}`, {
         method: 'GET',
+        cache: 'no-store',
         headers: { "Content-Type": "application/json" },
         // body: JSON.stringify({"type": "CLASSIFIED_AD_FEATURED"})
     })
@@ -403,6 +412,7 @@ function sendEmailLetter(data: any) {
 function getdatabycitybrand(brandId: any, cityId: any, limit: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-bike-data-by-city-brand/${brandId}/${cityId}/5/${limit}`, {
         method: 'GET',
+        cache: 'no-store',
         headers: { "Content-Type": "application/json" }
     }).then(response => response.json()).then(data => {
         return data
@@ -445,6 +455,7 @@ function getMechanicByBrandId(idArr: any) {
 function getCustomBikeAd(obj: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-custom-ads`, {
         method: 'POST',
+        cache: 'no-store',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(obj)
     }).then(response => response.json()).then(data => {
@@ -458,6 +469,7 @@ function getCustomBikeAd(obj: any) {
 function getFavouriteBikeById(Data: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-classified-by-id-with-random-favourite-adds`, {
         method: 'POST',
+        cache: 'no-store',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Data)
     }).then(response => response.json()).then(data => {

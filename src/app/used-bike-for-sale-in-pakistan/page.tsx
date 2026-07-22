@@ -1,34 +1,28 @@
-// 'use client'
 import * as React from 'react';
+import { Metadata } from 'next';
 import AllUsedBikeComp from "@/ebikeWeb/pageLayouts/all-used-bikes/index";
-import { Metadata } from 'next'
 import { getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { DEFAULT_SHARE_IMAGE, resolveClassifiedShareImage, SITE_URL, slugify } from '@/app/metadata-utils';
 
-const usedBikeTitle = "Used Bikes for Sale in Pakistan | ebike.pk";
-const usedBikeDescription = "Browse used bikes and motorcycles for sale in Pakistan. Compare Honda, Yamaha, Suzuki and other second hand bikes by price, city, model year and engine CC.";
-const usedBikeCanonical = `${SITE_URL}/used-bikes`;
+const usedBikeSaleTitle = "Used Bike for Sale in Pakistan | ebike.pk";
+const usedBikeSaleDescription = "Find used bike for sale in Pakistan on ebike.pk. Browse second hand motorcycles with prices, photos, city, model year, engine CC and seller details.";
+const usedBikeSaleCanonical = `${SITE_URL}/used-bike-for-sale-in-pakistan`;
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
- 
   return {
-    title: usedBikeTitle,
-    description: usedBikeDescription,
+    title: usedBikeSaleTitle,
+    description: usedBikeSaleDescription,
     keywords: [
-      "used bikes in Pakistan",
-      "used motorcycles for sale",
-      "second hand bikes Pakistan",
-      "Honda used bikes",
-      "Yamaha used bikes",
-      "Suzuki used bikes",
-      "used bikes Karachi",
-      "used bikes Lahore",
-      "buy used bike Pakistan"
+      "used bike for sale in Pakistan",
+      "used bikes for sale in Pakistan",
+      "second hand bike for sale Pakistan",
+      "buy used bike Pakistan",
+      "used motorcycle for sale Pakistan"
     ],
     alternates: {
-      canonical: usedBikeCanonical,
+      canonical: usedBikeSaleCanonical,
     },
     robots: {
       index: true,
@@ -43,16 +37,16 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     category: "automotive",
     openGraph: {
-      title: usedBikeTitle,
-      description: usedBikeDescription,
-      url: usedBikeCanonical,
+      title: usedBikeSaleTitle,
+      description: usedBikeSaleDescription,
+      url: usedBikeSaleCanonical,
       siteName: "ebike.pk",
       images: [
         {
           url: DEFAULT_SHARE_IMAGE,
           width: 512,
           height: 512,
-          alt: "Used bikes for sale in Pakistan"
+          alt: "Used bike for sale in Pakistan"
         }
       ],
       locale: "en_PK",
@@ -60,14 +54,14 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: usedBikeTitle,
-      description: usedBikeDescription,
+      title: usedBikeSaleTitle,
+      description: usedBikeSaleDescription,
       images: [DEFAULT_SHARE_IMAGE],
     }
-  }
+  };
 }
 
-function buildUsedBikeListJsonLd(usedBikes: any) {
+function buildUsedBikeSaleListJsonLd(usedBikes: any) {
   const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.slice(0, 12) : [];
 
   return {
@@ -75,23 +69,23 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
     "@graph": [
       {
         "@type": "CollectionPage",
-        "@id": `${usedBikeCanonical}#webpage`,
-        url: usedBikeCanonical,
-        name: usedBikeTitle,
-        description: usedBikeDescription,
+        "@id": `${usedBikeSaleCanonical}#webpage`,
+        url: usedBikeSaleCanonical,
+        name: usedBikeSaleTitle,
+        description: usedBikeSaleDescription,
         inLanguage: "en-PK",
         isPartOf: {
           "@id": `${SITE_URL}/#website`
         },
         about: [
-          "used bikes in Pakistan",
+          "used bike for sale in Pakistan",
           "second hand motorcycles",
           "motorcycle classifieds"
         ]
       },
       {
         "@type": "BreadcrumbList",
-        "@id": `${usedBikeCanonical}#breadcrumb`,
+        "@id": `${usedBikeSaleCanonical}#breadcrumb`,
         itemListElement: [
           {
             "@type": "ListItem",
@@ -102,15 +96,15 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Used Bikes",
-            item: usedBikeCanonical
+            name: "Used Bike for Sale in Pakistan",
+            item: usedBikeSaleCanonical
           }
         ]
       },
       {
         "@type": "ItemList",
-        "@id": `${usedBikeCanonical}#itemlist`,
-        name: "Latest used bikes for sale in Pakistan",
+        "@id": `${usedBikeSaleCanonical}#itemlist`,
+        name: "Latest used bike ads for sale in Pakistan",
         itemListOrder: "https://schema.org/ItemListOrderDescending",
         numberOfItems: bikes.length,
         itemListElement: bikes.map((bike: any, index: number) => {
@@ -136,36 +130,27 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
                 url: bikeUrl
               }
             }
-          }
+          };
         })
       }
     ]
   };
 }
 
-export default async function AllUsedBikes() {
-
-  let obj = {
-    adslimit: 12,
-  }
-  let allUsedBike = await getCustomBikeAd(obj);
-
-  let featureObject = {
-    isFeatured: true,
-    adslimit: 20
-  }
-  let allFeaturedBike = await getCustomBikeAd(featureObject);
+export default async function UsedBikeForSaleInPakistan() {
+  const allUsedBike = await getCustomBikeAd({ adslimit: 12 });
+  const allFeaturedBike = await getCustomBikeAd({ isFeatured: true, adslimit: 20 });
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildUsedBikeListJsonLd(allUsedBike)) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildUsedBikeSaleListJsonLd(allUsedBike)) }}
       />
       <AllUsedBikeComp
         _allFeaturedBike={allFeaturedBike}
         _allUsedBike={allUsedBike}
       />
     </>
-  )
+  );
 }

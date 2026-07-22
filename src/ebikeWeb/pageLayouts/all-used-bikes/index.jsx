@@ -69,17 +69,19 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
-    const [initialLoading, setInitialLoading] = useState(true);
+    const hasInitialUsedBikes = Array.isArray(_allUsedBike?.data) && _allUsedBike.data.length > 0;
+    const hasInitialFeaturedBikes = Array.isArray(_allFeaturedBike?.data) && _allFeaturedBike.data.length > 0;
+    const [initialLoading, setInitialLoading] = useState(!hasInitialUsedBikes);
     const [FavouriteData, setFavouriteData] = useState([]);
     const [SearchApply, setSearchApply] = useState(false);
-    const [featuredData, setFeaturedData] = useState([]);
+    const [featuredData, setFeaturedData] = useState(hasInitialFeaturedBikes ? _allFeaturedBike.data : []);
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
-    const [allBikesArr, setAllBikesArr] = useState([]);
+    const [allBikesArr, setAllBikesArr] = useState(hasInitialUsedBikes ? _allUsedBike.data : []);
     const [SearchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
+    const [totalPage, setTotalPage] = useState(_allUsedBike?.pages || null);
     const [priceTableData, setPriceTableData] = useState([]);
     const [priceTableBrandName, setPriceTableBrandName] = useState('');
     const is12InchScreen = useMediaQuery('(max-width:1200px)');
@@ -100,14 +102,16 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             setIsLogin("not_login")
         }
 
-        fetchFeaturedBike()
+        if (!hasInitialFeaturedBikes) {
+            fetchFeaturedBike()
+        }
         fetchRandomBikePriceTable()
 
         const pageNoRaw = localStorage.getItem('PageNo');
         if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
             const PageNo = Number(pageNoRaw);
             fetchBikeInfo(PageNo, true);
-        } else {
+        } else if (!hasInitialUsedBikes) {
             fetchBikeInfo(1, false);
         }
 
@@ -165,15 +169,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         }
 
 
-        // if(_allUsedBike && _pageNo == 1 && !fromPagination) {
-        //     res = _allUsedBike
-
-        // }
-        // else {
-        if (res == null || fromPagination) {
+        if (_allUsedBike && _pageNo == 1 && !fromPagination) {
+            res = _allUsedBike
+        }
+        else if (res == null || fromPagination) {
             res = await getCustomBikeAd(obj);
         }
-        // }
 
         setInitialLoading(false)
         localStorage.removeItem('PageNo')

@@ -14,6 +14,8 @@ type Props = {
   };
 };
 
+export const dynamic = 'force-dynamic';
+
 function getFilterRequest(params: Props['params']) {
   const filters = getBikeFilterIds(params);
   const modalSlug = getBikeFilterSlug(params.modal);
