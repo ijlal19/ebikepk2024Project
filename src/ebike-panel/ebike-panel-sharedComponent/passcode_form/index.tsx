@@ -13,7 +13,7 @@ const Passcode_form = ({props}:any) => {
         if(Passcode === ''){
             alert('Fill Passcode Field!')
         }
-       else  if (Passcode === 'Tarrar$$156chin@') {
+       else  if (Passcode === 'T343jUkhg@YU') {
             jsCookie.set('userData_ebike_panel', JSON.stringify(props), { expires: 1 });
             router.push('/ebike-panel/dashboard');
         } else {
