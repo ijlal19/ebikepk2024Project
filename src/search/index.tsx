@@ -14,7 +14,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './index.module.scss'
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 import { postSearch, postSearchNew } from '@/genericFunctions/geneFunc'
-import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
+import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
 
 /* ---------------------------------------------

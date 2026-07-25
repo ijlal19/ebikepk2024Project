@@ -1,5 +1,5 @@
 "use client"
-import { priceWithCommas, add3Dots, optimizeImage, isLoginUser, cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import { priceWithCommas, add3Dots, isLoginUser, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { getProduct, getShopCategory, PostAddCart } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import MainCatgeoryCard from '@/ebikeShop/ShopSharedComponent/MainCategoryCard';
 import { Box, Button, Grid, Link, Rating, Typography } from "@mui/material";

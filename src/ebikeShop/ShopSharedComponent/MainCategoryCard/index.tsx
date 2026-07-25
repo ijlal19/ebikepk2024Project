@@ -1,4 +1,4 @@
-import { add3Dots, cloudinaryLoader, optimizeImage } from '../../../genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader } from '../../../genericFunctions/geneFunc';
 import { Box, Link, Rating, useMediaQuery } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import styles from './index.module.scss';

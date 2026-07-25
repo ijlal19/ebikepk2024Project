@@ -1,5 +1,5 @@
 'use client'
-import { add3Dots, cloudinaryLoader, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
+import { add3Dots, cloudinaryLoader, isLoginUser, priceWithCommas } from "@/genericFunctions/geneFunc";
 import { Box, useMediaQuery, Button, Typography } from "@mui/material";
 import { getMyOrder } from "@/ebikeShop/Shopfunctions/globalFuntions";
 import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
@@ -110,7 +110,7 @@ export default My_Order
 // import styles from './index.module.scss';
 // import data from './data'
 // import { Box, useMediaQuery, Button } from "@mui/material";
-// import { add3Dots, isLoginUser, optimizeImage, priceWithCommas } from "@/genericFunctions/geneFunc";
+// import { add3Dots, isLoginUser, priceWithCommas } from "@/genericFunctions/geneFunc";
 // import { getMyOrder } from "@/ebikeShop/Shopfunctions/globalFuntions";
 // import Loader from "@/ebikeShop/ShopSharedComponent/loader/loader";
 

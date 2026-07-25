@@ -1,7 +1,7 @@
 'use client'
 import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandCompany, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMainForumCategory, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteThread, DeleteThreadComment, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getSessionData, GetAllMainForumCategory, GetAllSubForumCategory, GetAllThreads, GetAllThreadsComments, GetCompanyBrand, GetAllVideos, DeleteBikeVideo, AddNewVideo, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { AddForumMainCategory, AddForumThread, AddForumThreadComment, AddShopBrandPopup, BasicModal, EditForumMainCategory, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
-import { add3Dots, priceWithCommas, cloudinaryLoader, optimizeImage } from "@/genericFunctions/geneFunc";
+import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
 import { getMechanicTypeFilterOptions, getMechanicTypeLabel, matchesMechanicType } from "@/constants/mechanicType";
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader";

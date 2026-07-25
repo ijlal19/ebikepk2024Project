@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from '@mui/material';
-import { add3Dots, cloudinaryLoader, optimizeImage, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
 
 const NewCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')

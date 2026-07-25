@@ -1,6 +1,6 @@
 'use client'
 import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById, getnewBikeData } from "@/ebikeWeb/functions/globalFuntions";
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, optimizeImage, cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
