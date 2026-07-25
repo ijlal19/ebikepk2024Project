@@ -233,7 +233,7 @@ export default function SearchPage() {
                     // }
                   >
                     <Box className={styles.imgWrap}>
-                      <img src={bike.images?.[0]} alt={bike.title} />
+                      <img src={cloudinaryLoader(bike.images?.[0], 360, 'auto')} alt={bike.title} />
                       <span className={`${styles.tag} ${styles.tagUsed}`}>Used</span>
                     </Box>
 
@@ -279,7 +279,7 @@ export default function SearchPage() {
                 renderItem={(bike: any) => (
                   <Box key={bike.id} className={styles.card}>
                     <Box className={styles.imgWrap}>
-                      <img src={bike.images?.[0]} alt={bike.title} />
+                      <img src={cloudinaryLoader(bike.images?.[0], 360, 'auto')} alt={bike.title} />
                       <span className={`${styles.tag} ${styles.tagNew}`}>New</span>
                     </Box>
 
@@ -314,7 +314,7 @@ export default function SearchPage() {
                   <Box key={blog.id} className={styles.card}>
                     <Box className={styles.imgWrap}>
                       <img
-                        src={blog.featuredImage?.split('#$#')[0]?.trim()}
+                        src={cloudinaryLoader(blog.featuredImage?.split('#$#')[0]?.trim(), 360, 'auto')}
                         alt={blog.blogTitle}
                       />
                       <span className={`${styles.tag} ${styles.tagBlog}`}>Blog</span>

@@ -73,7 +73,7 @@ const Petrol_Price_Section = () => {
                     })
                 }
                 <div className={styles.powerd_div}>
-                    Powered By: <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png" alt="ebiek.pk" className={styles.image} />
+                    Powered By: <img src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_80,fl_strip_profile/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png" alt="ebiek.pk" className={styles.image} />
                 </div>
             </div>
         </div>

@@ -128,7 +128,7 @@ const TopCategories = () => {
 
             <div className={styles.add}>
                 <a href="https://www.youtube.com/@ebikepk" target='blank'>
-                    <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592568914/staticFiles/7_Ebikeshop_3rd_Banner_Approved_tw5f0h.jpg" alt="Add_Image" className={styles.add_image} />
+                    <img src="https://res.cloudinary.com/duiuzkifx/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_1000,fl_strip_profile/v1592568914/staticFiles/7_Ebikeshop_3rd_Banner_Approved_tw5f0h.jpg" alt="Add_Image" className={styles.add_image} />
                 </a>
             </div>
 
@@ -138,7 +138,6 @@ const TopCategories = () => {
 }
 
 export default TopCategories
-
 
 
 

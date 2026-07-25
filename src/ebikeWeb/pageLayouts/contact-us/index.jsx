@@ -26,7 +26,7 @@ const ContactUS = () => {
     <Box className={styles.contact_container}>
       <Box className={styles.contact_data}>
         <Typography className={styles.contact_logo}>
-          <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk"  className={styles.logo_Image}/>
+          <img src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk"  className={styles.logo_Image}/>
         </Typography>
         <Typography className={styles.contact_paragraph}>
         Dont Hesitate to Call Our ebike.pk Expert for Mototrcycle,Parts & Accessories related Queries & get an expert advice.

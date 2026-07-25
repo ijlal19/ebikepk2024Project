@@ -285,7 +285,7 @@ const Header = () => {
                     </Drawer>
 
                     <Box className={styles.logo}>
-                        <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} onClick={() => { router.push('/') }} />
+                        <img src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1727251053/Untitled-2_gsuasa.png" alt="ebike.pk" className={styles.logo_image} onClick={() => { router.push('/') }} />
                     </Box>
 
                 </Box>

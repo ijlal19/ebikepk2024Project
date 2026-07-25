@@ -377,7 +377,7 @@ const BlogDetails = () => {
 
               <Box className={styles.blog_add}>
                 <Link href='/blog'>
-                  <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
+                  <img src="https://res.cloudinary.com/duiuzkifx/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_360,fl_strip_profile/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg" alt="" className={styles.image} />
                 </Link>
               </Box>
 

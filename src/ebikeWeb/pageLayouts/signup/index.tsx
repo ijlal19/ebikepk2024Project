@@ -79,7 +79,7 @@ const Signup = () => {
                     <div className={styles.brand}>
                         <img
                             className={styles.logo}
-                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png"
+                            src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1727251053/Untitled-2_gsuasa.png"
                             alt="Ebike"
                         />
                         <Typography component="h1" className={styles.title}>

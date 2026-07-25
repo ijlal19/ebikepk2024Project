@@ -32,16 +32,15 @@ const MobileBanner = () => {
                     <p className={styles.p2} >  Sell your Bike at best price </p>
                     <p className={styles.p3} > <span onClick={()=>{goToRoute('/used-bikes/sell-used-bike') }} > sell your bike </span> </p>
                 </div>
-                <img className={styles.right_img} src="https://res.cloudinary.com/dzfd4phly/image/upload/v1757678416/WhatsApp_Image_2025-09-12_at_15.58.57_gabtpm.jpg" />
+                <img className={styles.right_img} src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_420,fl_strip_profile/v1757678416/WhatsApp_Image_2025-09-12_at_15.58.57_gabtpm.jpg" />
             </div>
 
              <div className={styles.mobile_baner}>
-                <img className={styles.baner_image} src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" />
+                <img className={styles.baner_image} src="https://res.cloudinary.com/dulfy2uxn/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_760,fl_strip_profile/v1608021415/Youtube%20Ad%20banners/ebike_banner_Black_1_syhm9t.jpg" />
              </div>
        </div>
     );
 };
 
 export default MobileBanner;
-
 

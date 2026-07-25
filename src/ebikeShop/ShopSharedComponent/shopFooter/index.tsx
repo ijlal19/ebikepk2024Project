@@ -43,7 +43,7 @@ const ShopFooter = () => {
                 <Grid item xs={isMobile ? 12 : 6} className={styles.footer_para_box}>
                     <Box className={styles.footer_logo}>
                         <img
-                            src="https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png"
+                            src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1727251053/Untitled-2_gsuasa.png"
                             alt=""
                             className={styles.logo}
                         />

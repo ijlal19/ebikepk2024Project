@@ -189,20 +189,20 @@ const AllUsedBike = () => {
                                 <Box className={styles.add_box}>
                                     <Link href="https://youtube.com/ebikepk" target="_blank" rel="noopener noreferrer">
                                         <img
-                                            src="https://res.cloudinary.com/dulfy2uxn/image/upload/v1608620216/Animated_Banner_Gif_3_txcj9p.gif"
+                                            src="https://res.cloudinary.com/dulfy2uxn/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_400,fl_strip_profile/v1608620216/Animated_Banner_Gif_3_txcj9p.gif"
                                             alt="eBike YouTube Banner"
                                             className={styles.add_image} />
                                     </Link>
                                     <Link href="/forum" rel="noopener noreferrer">
                                         <img
-                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg
+                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_400,fl_strip_profile/v1591968762/staticFiles/11_z0ruos.jpg
                                             "
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>
                                     <Link href="/blog" rel="noopener noreferrer">
                                         <img
-                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg                                            "
+                                            src="https://res.cloudinary.com/duiuzkifx/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_400,fl_strip_profile/v1591968762/staticFiles/Blog_Banner_bnv4lk.jpg                                            "
                                             alt="/forum"
                                             className={styles.add_image} />
                                     </Link>

@@ -9,7 +9,7 @@ import Modal from '@mui/material/Modal';
   return (
     <Modal open={props.isLoading}  className={styles.loader_main} >
       <Box className={styles.loader_inner}>
-        <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png " alt="ebike.pk" className={styles.logo_image} />
+        <img src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_120,fl_strip_profile/v1734597859/ebike_icon_design-16-Dec2024_ke1dfi.png" alt="ebike.pk" className={styles.logo_image} />
       </Box>
     </Modal>
   )

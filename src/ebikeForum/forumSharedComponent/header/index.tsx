@@ -53,13 +53,13 @@ const Header = () => {
 
     return (
         <Box className={styles.banner_box}>
-            <img src="https://res.cloudinary.com/dzfd4phly/image/upload/v1773120019/1.jpg_4_rgclgp.jpg" alt="ebike forum banner" className={styles.image} />
+            <img src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_1200,fl_strip_profile/v1773120019/1.jpg_4_rgclgp.jpg" alt="ebike forum banner" className={styles.image} />
             <Box className={styles.header_main}>
                 <Box className={styles.header_container}>
                     <Box className={styles.content_box}>
 
                         <Box className={styles.logo_box}>
-                            <img src="https://res.cloudinary.com/duiuzkifx/image/upload/v1592465223/staticFiles/logon_ayhmct.png " alt="" className={styles.logo_image} />
+                            <img src="https://res.cloudinary.com/duiuzkifx/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1592465223/staticFiles/logon_ayhmct.png" alt="" className={styles.logo_image} />
                         </Box>
                         <div className={styles.input_box}>
                             <input
