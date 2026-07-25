@@ -237,13 +237,13 @@ const BlogDetails = () => {
                   >
                     {DataBlog.featuredImage.split(' #$# ').map((imgUrl: string, idx: number) => (
                       <SwiperSlide key={idx}>
-                        <img src={cloudinaryLoader(imgUrl.trim(), 1000, 'auto')} alt={`blog-image-${idx}`} className={styles.image} />
+                        <img src={cloudinaryLoader(imgUrl.trim(), 900, 'auto')} alt={`blog-image-${idx}`} className={styles.image} />
                       </SwiperSlide>
                     ))}
                   </Swiper>
                 ) : (
                   <img
-                    src={cloudinaryLoader(DataBlog?.featuredImage?.split(' #$# ')[0]?.trim(), 1500, 'auto')}
+                    src={cloudinaryLoader(DataBlog?.featuredImage?.split(' #$# ')[0]?.trim(), 900, 'auto')}
                     alt="blog"
                     className={styles.image}
                   />

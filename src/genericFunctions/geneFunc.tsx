@@ -202,24 +202,64 @@ function GetFavouriteObject(userId: any, PageFrom: string, SelectedAds: any, adI
 
 }
 
-function cloudinaryLoader(src:any, width:any, quality:any) {
-    if (!src?.startsWith("http")) {
-      return src 
+function cloudinaryLoader(src: any, width: any, quality: any = "auto") {
+  if (!src?.startsWith("http")) {
+    return src
+  }
+
+  const uploadMarker = "/image/upload/";
+  const uploadIndex = src.indexOf(uploadMarker);
+  if (uploadIndex === -1 || !src.includes("res.cloudinary.com")) {
+    return src
+  }
+
+  const requestedWidth = Number(width);
+  const safeWidth = Number.isFinite(requestedWidth)
+    ? Math.min(Math.max(Math.round(requestedWidth), 40), 1600)
+    : 800;
+  const safeQuality = quality || "auto";
+  const baseUrl = src.slice(0, uploadIndex + uploadMarker.length);
+  const uploadPath = src.slice(uploadIndex + uploadMarker.length).trim();
+  const uploadParts = uploadPath.split("/");
+  const versionIndex = uploadParts.findIndex((part: string) => /^v\d+$/.test(part));
+  const assetPath = versionIndex > -1
+    ? uploadParts.slice(versionIndex).join("/")
+    : uploadParts.join("/");
+
+  return `${baseUrl}c_limit,dpr_auto,f_auto,q_${safeQuality},w_${safeWidth},fl_strip_profile/${assetPath}`;
+}
+
+function resizeImageForCloudinaryUpload(file: File, maxWidth = 1400, quality = 0.82): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      reject(new Error("Image file is required"));
+      return;
     }
 
-    // Extract the cloud name from the URL
-    const match = src.match(/res\.cloudinary\.com\/([^/]+)/);
-    const cloudName = match ? match[1] : null;
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("Unable to read image file"));
+    reader.onload = () => {
+      const imgElement = document.createElement("img");
+      imgElement.onerror = () => reject(new Error("Unable to load image file"));
+      imgElement.onload = () => {
+        const canvas = document.createElement("canvas");
+        const scaleSize = Math.min(maxWidth / imgElement.width, 1);
+        canvas.width = Math.round(imgElement.width * scaleSize);
+        canvas.height = Math.round(imgElement.height * scaleSize);
 
-    if (!cloudName) {
-      return src
-    }
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          reject(new Error("Unable to resize image file"));
+          return;
+        }
 
-    // Inject optimization params into the URL
-    return src.replace(
-      "/upload/",
-      `/upload/f_auto,q_${quality || "auto"},w_${width},fl_strip_profile/`
-    );
+        ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      imgElement.src = String(reader.result);
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 const BlogShuffle = (AllBlogs: any[]) => {
@@ -275,6 +315,7 @@ export {
   getFavouriteAds,
   GetFavouriteObject,
   cloudinaryLoader,
+  resizeImageForCloudinaryUpload,
   BlogShuffle,
   timeAgo,
   resetPassword,

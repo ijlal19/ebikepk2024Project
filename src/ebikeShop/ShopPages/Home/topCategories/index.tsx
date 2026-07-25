@@ -114,7 +114,7 @@ const TopCategories = () => {
                                 <Grid item xs={12} className={styles.grid}>
                                     <Box className={styles.grid_card}>
                                         <Link href={item?.url}>
-                                        <img src={cloudinaryLoader(item?.img_url , 900 , 'auto')} alt="" className={styles.image} />
+                                        <img src={cloudinaryLoader(item?.img_url , 500 , 'auto')} alt="" className={styles.image} />
                                         </Link>
                                     </Box>
                                 </Grid>
@@ -138,7 +138,6 @@ const TopCategories = () => {
 }
 
 export default TopCategories
-
 
 
 

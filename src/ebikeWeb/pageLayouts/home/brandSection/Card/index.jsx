@@ -15,7 +15,7 @@ const BrandCard = ({data}) => {
   return (
           <div className={styles.card_main} onClick={()=>goToBrand(data)} >
             <div className={styles.image_box}>
-            <img src={cloudinaryLoader(data.logoUrl , 1000 ,'auto')} alt={data.title} className={styles.card_image}/>
+            <img src={cloudinaryLoader(data.logoUrl , 220 ,'auto')} alt={data.title} className={styles.card_image}/>
             </div>
             <p className={styles.card_title}>{data.brandName}</p>
           </div>

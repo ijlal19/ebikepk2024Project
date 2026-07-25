@@ -263,16 +263,16 @@ const EditUsedBikeForm = () => {
             imgElement.onload = async (e: any) => {
 
                 const canvas = document.createElement("canvas");
-                const max_width = 600;
+                const max_width = 1400;
 
-                const scaleSize = max_width / e.target.width;
-                canvas.width = max_width;
-                canvas.height = e.target.height * scaleSize;
+                const scaleSize = Math.min(max_width / e.target.width, 1);
+                canvas.width = Math.round(e.target.width * scaleSize);
+                canvas.height = Math.round(e.target.height * scaleSize);
 
                 const ctx: any = canvas.getContext("2d")
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
-                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
                 let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
@@ -611,16 +611,16 @@ const EditNewBikeForm = () => {
             imgElement.onload = async (e: any) => {
 
                 const canvas = document.createElement("canvas");
-                const max_width = 600;
+                const max_width = 1400;
 
-                const scaleSize = max_width / e.target.width;
-                canvas.width = max_width;
-                canvas.height = e.target.height * scaleSize;
+                const scaleSize = Math.min(max_width / e.target.width, 1);
+                canvas.width = Math.round(e.target.width * scaleSize);
+                canvas.height = Math.round(e.target.height * scaleSize);
 
                 const ctx: any = canvas.getContext("2d")
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
-                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
                 let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
@@ -1058,16 +1058,16 @@ const EditElectricBikeForm = () => {
             imgElement.onload = async (e: any) => {
 
                 const canvas = document.createElement("canvas");
-                const max_width = 600;
+                const max_width = 1400;
 
-                const scaleSize = max_width / e.target.width;
-                canvas.width = max_width;
-                canvas.height = e.target.height * scaleSize;
+                const scaleSize = Math.min(max_width / e.target.width, 1);
+                canvas.width = Math.round(e.target.width * scaleSize);
+                canvas.height = Math.round(e.target.height * scaleSize);
 
                 const ctx: any = canvas.getContext("2d")
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
-                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
                 let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
@@ -1425,16 +1425,16 @@ const EditBlogForm = () => {
             imgElement.onload = async (e: any) => {
 
                 const canvas = document.createElement("canvas");
-                const max_width = 600;
+                const max_width = 1400;
 
-                const scaleSize = max_width / e.target.width;
-                canvas.width = max_width;
-                canvas.height = e.target.height * scaleSize;
+                const scaleSize = Math.min(max_width / e.target.width, 1);
+                canvas.width = Math.round(e.target.width * scaleSize);
+                canvas.height = Math.round(e.target.height * scaleSize);
 
                 const ctx: any = canvas.getContext("2d")
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
-                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
                 let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
@@ -2082,16 +2082,16 @@ const EditProductForm = () => {
             imgElement.onload = async (e: any) => {
 
                 const canvas = document.createElement("canvas");
-                const max_width = 600;
+                const max_width = 1400;
 
-                const scaleSize = max_width / e.target.width;
-                canvas.width = max_width;
-                canvas.height = e.target.height * scaleSize;
+                const scaleSize = Math.min(max_width / e.target.width, 1);
+                canvas.width = Math.round(e.target.width * scaleSize);
+                canvas.height = Math.round(e.target.height * scaleSize);
 
                 const ctx: any = canvas.getContext("2d")
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
-                const srcEncoded = ctx.canvas.toDataURL(e.target, "image/jpeg")
+                const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
                 let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
