@@ -5,6 +5,7 @@ import { filterVisibleBlogs } from "@/ebikeWeb/utils/blogVisibility";
 import { SITE_URL } from "./metadata-utils";
 
 export const revalidate = 3600;
+const USED_BIKE_SITEMAP_LIMIT = 500;
 
 type Brand = {
   id?: number | string;
@@ -37,6 +38,15 @@ type NewBike = {
   model?: {
     modelName?: string;
   };
+};
+
+type UsedBike = {
+  id?: number | string;
+  title?: string;
+  updatedAt?: string;
+  createdAt?: string;
+  isApproved?: boolean;
+  is_sold?: boolean;
 };
 
 type Blog = {
@@ -219,6 +229,25 @@ function buildNewBikeRoutes(bikes: NewBike[]): MetadataRoute.Sitemap {
   });
 }
 
+function buildUsedBikeRoutes(bikes: UsedBike[]): MetadataRoute.Sitemap {
+  return bikes.flatMap((bike) => {
+    const title = slugify(bike?.title);
+
+    if (!title || !bike?.id || bike?.isApproved === false || bike?.is_sold === true) {
+      return [];
+    }
+
+    return [
+      {
+        url: `${SITE_URL}/used-bikes/${title}/${bike.id}`,
+        lastModified: toLastModified(bike.updatedAt || bike.createdAt),
+        changeFrequency: "daily",
+        priority: 0.7
+      }
+    ];
+  });
+}
+
 function buildBlogRoutes(blogs: Blog[]): MetadataRoute.Sitemap {
   return blogs.flatMap((blog) => {
     if (!blog?.id || !blog?.blogTitle || !blog?.blog_category?.name) {
@@ -277,10 +306,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   try {
     const brands = (BrandArr as Brand[]).filter((brand) => brand?.brandName);
-    const [blogs, dealers, mechanics, newBikeGroups] = await Promise.all([
+    const [blogs, dealers, mechanics, usedBikes, newBikeGroups] = await Promise.all([
       fetchJson<Blog[]>("blog/get-all-blog"),
       fetchJson<Dealer[]>("dealers/get-dealer"),
       fetchJson<Mechanic[]>("mechanic/get-mechanic"),
+      fetchJson<UsedBike[]>(`classified/get-adds-with-offset/0/${USED_BIKE_SITEMAP_LIMIT}`),
       Promise.all(
         brands.map((brand) =>
           fetchJson<NewBike[]>("new-bikes/get-new-bikes-by-brand/", {
@@ -296,6 +326,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...brandRoutes,
       ...bikeFilterRoutes,
       ...buildNewBikeRoutes(newBikeGroups.flat()),
+      ...buildUsedBikeRoutes(Array.isArray(usedBikes) ? usedBikes : []),
       ...buildBlogRoutes(filterVisibleBlogs(Array.isArray(blogs) ? blogs : [])),
       ...buildDealerRoutes(Array.isArray(dealers) ? dealers : []),
       ...buildMechanicRoutes(Array.isArray(mechanics) ? mechanics : [])
