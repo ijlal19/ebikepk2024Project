@@ -6,8 +6,7 @@ import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
 import { cloudinaryLoader, isLoginUser } from "@/genericFunctions/geneFunc";
-import { numericOnly, publishAd } from "@/genericFunctions/geneFunc"
-import { uplaodImageFunc } from "@/ebikeWeb/functions/globalFuntions"
+import { numericOnly, publishAd, uplaodImageFunc } from "@/genericFunctions/geneFunc"
 import Loader from "@/ebikeWeb/sharedComponents/loader/loader"
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 const jsCookie = require('js-cookie');
@@ -287,7 +286,7 @@ const SellUsedBike = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 

@@ -229,6 +229,49 @@ function cloudinaryLoader(src: any, width: any, quality: any = "auto") {
   return `${baseUrl}c_limit,dpr_auto,f_auto,q_${safeQuality},w_${safeWidth},fl_strip_profile/${assetPath}`;
 }
 
+type CloudinaryUploadConfig = {
+  cloudName: string;
+  uploadPreset: string;
+}
+
+const usedBikeCloudinaryConfig: CloudinaryUploadConfig = {
+  // cloudName: 'km-plus',
+  cloudName: 'dulfy2uxn',
+  uploadPreset: 'bw6dfrc7',
+}
+
+const defaultCloudinaryConfig: CloudinaryUploadConfig = {
+  // cloudName: 'dzfd4phly',
+  cloudName: 'dulfy2uxn',
+  uploadPreset: 'bw6dfrc7',
+}
+
+function getCloudinaryUploadConfig(data: any) {
+  const isUsedBikeImage = data?.folder === 'used_bikes';
+  const config = isUsedBikeImage ? usedBikeCloudinaryConfig : defaultCloudinaryConfig;
+
+  if (!config.cloudName || !config.uploadPreset) {
+    throw new Error(`Missing Cloudinary config for ${isUsedBikeImage ? 'used bike' : 'default'} image upload`);
+  }
+
+  return config;
+}
+
+function uplaodImageFunc(data: any) {
+  const cloudinaryConfig = getCloudinaryUploadConfig(data);
+
+  return fetch(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ...data,
+      upload_preset: cloudinaryConfig.uploadPreset,
+    })
+  }).then(response => response.json()).then(data => {
+    return data
+  })
+}
+
 function resizeImageForCloudinaryUpload(file: File, maxWidth = 1400, quality = 0.82): Promise<string> {
   return new Promise((resolve, reject) => {
     if (!file) {
@@ -315,6 +358,7 @@ export {
   getFavouriteAds,
   GetFavouriteObject,
   cloudinaryLoader,
+  uplaodImageFunc,
   resizeImageForCloudinaryUpload,
   BlogShuffle,
   timeAgo,

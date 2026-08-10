@@ -14,16 +14,6 @@ function PostLogin(data: any) {
         })
 }
 
-function uplaodImageFunc(data: any) {
-    return fetch(`https://api.cloudinary.com/v1_1/dulfy2uxn/image/upload`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
-
 const checkAuthAndRedirect = (router: any, pathname: any) => {
     const userCookie = jsCookie.get("userData_ebike_panel");
 
@@ -1714,7 +1704,6 @@ function DeleteSetting(id: any) {
 
 export {
     PostLogin,
-    uplaodImageFunc,
     checkAuthAndRedirect,
     GetUserDetail,
 

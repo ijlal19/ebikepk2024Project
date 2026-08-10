@@ -167,15 +167,6 @@ function createdealer(data: any) {
         return data
     })
 }
-function uplaodImageFunc(data: any) {
-    return fetch(`https://api.cloudinary.com/v1_1/dulfy2uxn/image/upload`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-    }).then(response => response.json()).then(data => {
-        return data
-    })
-}
 function getBikesBySpecificFilter(from: any, id: any, getAdFrom: any) {
     // /get-adds-by-brand-offset
     if (from == 'city') {
@@ -590,7 +581,6 @@ export {
     getdealerData,
     getnewBikedetailsData,
     getNewBikeComparisonData,
-    uplaodImageFunc,
     getBikesBySpecificFilter,
     getAllBlog,
     getAllDealer,

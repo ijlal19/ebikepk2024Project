@@ -1,8 +1,8 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, uplaodImageFunc, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById, getSessionData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById, getSessionData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
-import { cloudinaryLoader, numericOnly } from '@/genericFunctions/geneFunc';
+import { cloudinaryLoader, numericOnly, uplaodImageFunc } from '@/genericFunctions/geneFunc';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import FloaraTextarea from '../floaraEditiorTextarea';
 import React, { useEffect, useState } from 'react';
@@ -25,6 +25,42 @@ let BlogCategory = [
     {
         id: 3,
         categoryName: "Safety"
+    },
+    {
+        id: 4,
+        categoryName: "Safety"
+    },
+    {
+        id: 5,
+        categoryName: "Pakistan Motorcycle News"
+    },
+    {
+        id: 6,
+        categoryName: "Electric Bike News"
+    },
+    {
+        id: 7,
+        categoryName: "EV Industry"
+    },
+    {
+        id: 8,
+        categoryName: "Motorcycle Launches"
+    },
+    {
+        id: 9,
+        categoryName: "Motorcycle Prices"
+    },
+    {
+        id: 10,
+        categoryName: "Auto Industry"
+    },
+    {
+        id: 11,
+        categoryName: "Government/Policy"
+    },
+    {
+        id: 12,
+        categoryName: "International Motorcycle News"
     },
 ]
 let PagePosition = [
@@ -273,7 +309,7 @@ const EditUsedBikeForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -621,7 +657,7 @@ const EditNewBikeForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -1068,7 +1104,7 @@ const EditElectricBikeForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -1435,7 +1471,7 @@ const EditBlogForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -2092,7 +2128,7 @@ const EditProductForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, upload_preset: 'bw6dfrc7', folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'used_bikes' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
