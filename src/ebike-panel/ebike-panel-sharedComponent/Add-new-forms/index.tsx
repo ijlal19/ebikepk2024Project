@@ -234,7 +234,7 @@ const AddNewBikeForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'other' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -621,7 +621,7 @@ const AddNewElectricBikeForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'other' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -953,7 +953,7 @@ const AddBlogForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'other' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -1297,7 +1297,7 @@ const AddProductForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'other' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
@@ -1764,7 +1764,7 @@ const AddCategoryForm = () => {
                 ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
                 const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, folder: 'used_bikes' }
+                let obj = { file: srcEncoded, folder: 'other' }
 
                 let imgRes: any = await uplaodImageFunc(obj)
 
