@@ -1492,10 +1492,10 @@ const EditBlogForm = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const invalidChars = /[\/,?#$!+]/;
-        if (invalidChars.test(Blog_Title)) {
-            alert("Please remove special characters.");
-            return;
-        }
+        // if (invalidChars.test(Blog_Title)) {
+        //     alert("Please remove special characters.");
+        //     return;
+        // }
         if (!Blog_Title || Blog_Title.length < 2) {
             alert("Please add a valid title (min 2 characters)");
             return;

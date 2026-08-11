@@ -235,15 +235,16 @@ type CloudinaryUploadConfig = {
 }
 
 const usedBikeCloudinaryConfig: CloudinaryUploadConfig = {
-  // cloudName: 'km-plus',
-  cloudName: 'dulfy2uxn',
-  uploadPreset: 'bw6dfrc7',
+  cloudName: 'km-plus',
+  uploadPreset: 'ml_default',
+
+  // cloudName: 'dulfy2uxn',
+  //  uploadPreset: 'bw6dfrc7',
 }
 
 const defaultCloudinaryConfig: CloudinaryUploadConfig = {
-  // cloudName: 'dzfd4phly',
-  cloudName: 'dulfy2uxn',
-  uploadPreset: 'bw6dfrc7',
+  cloudName: 'dzfd4phly',
+  uploadPreset: 'ml_default',
 }
 
 function getCloudinaryUploadConfig(data: any) {
