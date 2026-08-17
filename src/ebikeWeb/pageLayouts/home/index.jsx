@@ -27,10 +27,17 @@ import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
 import CompareSection from './compareSection'
 import OurVideos from './ourVideos'
 
+const defaultHomeData = {
+  homeFeaturedBike: featuredData,
+  homeTrendingBike: trendingData,
+  homeUsedBike: usedBikeData,
+  homeYoutubeVideos: youTubeData,
+  homeBlogs: blogData
+}
 
 function Index() {
 
-  const [homeData, setHomeData] = useState([])
+  const [homeData, setHomeData] = useState(defaultHomeData)
   const [isLoading, setIsLoading] = useState(true)
   
   useEffect(() => {
@@ -45,15 +52,7 @@ function Index() {
     fetch(gistUrl).then((res) => {
       setIsLoading(false)
       if (!res.ok) {
-        let obj = {
-          "homeFeaturedBike": featuredData,
-          "homeTrendingBike": trendingData,
-          "homeUsedBike": usedBikeData,
-          "homeYoutubeVideos": youTubeData,
-          "homeBlogs": blogData
-        }
-        setHomeData(obj)
-        return
+        return defaultHomeData
       };
     
       return res.json();
@@ -61,20 +60,13 @@ function Index() {
     .then((data) => {
       
         window.scrollTo(0, 0)
-        setHomeData(data)
+        setHomeData(data || defaultHomeData)
         setIsLoading(false)
         console.log('res qq', data)
       })
       .catch((err) => {
         setIsLoading(false)
-        let obj = {
-          "homeFeaturedBike": featuredData,
-          "homeTrendingBike": trendingData,
-          "homeUsedBike": usedBikeData,
-          "homeYoutubeVideos": youTubeData,
-          "homeBlogs": blogData
-        }
-        setHomeData(obj)
+        setHomeData(defaultHomeData)
       });
   }
 
