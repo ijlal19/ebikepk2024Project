@@ -1,5 +1,5 @@
 'use client';
-import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById, getSessionData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getnewBikedetailsData, getSingleblogDetail, UpdateBlogById, UpdateNewBikeById, getSinglebikesDetail, UpdateUsedBikeById, getPageById, UpdatePageById, getBrandFromId, UpdateBrandById, getbrandData, getShopMainCategory, GetProductCompany, getProduct, GetSubCategByMainCateg, UpdateProductDetailById, getSessionData, getAuthorById, UpdateAuthorById, getAllAuthors } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import { cloudinaryLoader, numericOnly, uplaodImageFunc } from '@/genericFunctions/geneFunc';
@@ -142,6 +142,32 @@ const electricBikeSpecFields = [
 ];
 
 const emptyNewBikeFaq = { question: '', answer: '' };
+
+const emptyAuthorData = {
+    name: '',
+    slug: '',
+    email: '',
+    phone: '',
+    designation: '',
+    company: '',
+    bio: '',
+    profileImage: '',
+    facebookUrl: '',
+    twitterUrl: '',
+    linkedinUrl: '',
+    instagramUrl: '',
+    websiteUrl: '',
+    metaTitle: '',
+    metaDescription: '',
+    isActive: true,
+};
+
+const slugifyAuthor = (value: string) => value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
 const normalizeYoutubeUrls = (value: string[] | string | null | undefined) => {
     if (Array.isArray(value)) {
@@ -1400,6 +1426,8 @@ const EditBlogForm = () => {
     const [Blog_Is_Hidden, setBlog_Is_Hidden] = useState(false);
     const [Blog_Meta_Title, setBlog_Meta_Title] = useState('');
     const [Author_Name, setAuthor_Name] = useState('');
+    const [Author_Id, setAuthor_Id] = useState('');
+    const [allAuthors, setAllAuthors] = useState<any[]>([]);
     const [BlogData, setBlogData] = useState<any>([]);
     const [Blog_Title, setBlog_Title] = useState('');
     const [CategoryId, setCategoryId] = useState('');
@@ -1414,7 +1442,15 @@ const EditBlogForm = () => {
 
     useEffect(() => {
         fetchBlogByID(slug1)
+        fetchAuthors()
     }, [])
+
+    const fetchAuthors = async () => {
+        const res = await getAllAuthors();
+        if (Array.isArray(res)) {
+            setAllAuthors(res);
+        }
+    };
 
     const fetchBlogByID = async (id: any) => {
         setIsLoading(true)
@@ -1423,6 +1459,7 @@ const EditBlogForm = () => {
             setCategoryId(res.blogCategoryId)
             setBlog_Title(res.blogTitle)
             setAuthor_Name(res.authorname)
+            setAuthor_Id(String(res.authorId || res.author_id || res.author?.id || ''))
             setBlog_Html(res.bloghtml)
             setBlog_Is_Hidden(Boolean(res.isHidden))
             setBlog_Meta_description(res.meta_description)
@@ -1489,6 +1526,10 @@ const EditBlogForm = () => {
         setCategoryId(e.target.value);
     };
 
+    const AuthorChange = (e: any) => {
+        setAuthor_Id(e.target.value);
+    };
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         const invalidChars = /[\/,?#$!+]/;
@@ -1525,6 +1566,7 @@ const EditBlogForm = () => {
         };
         const obj = {
             authorname: Author_Name,
+            authorId: Author_Id ? Number(Author_Id) : null,
             BlogCategoryId: Number(CategoryId),
             blogTitle: Blog_Title,
             blogUrl: finalBlogData?.blogUrl,
@@ -1585,6 +1627,20 @@ const EditBlogForm = () => {
                                 <div className={styles.fieldGroup}>
                                     <label htmlFor="authorname" className={styles.label}>Author Name</label>
                                     <input id="authorname" name="authorname" value={Author_Name} onChange={(e) => setAuthor_Name(e.target.value)} className={styles.input} />
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label htmlFor="authorId" className={styles.label}>Assign Author</label>
+                                    <div className={styles.drop_downBox}>
+                                        <select name="authorId" id="authorId" className={styles.selected} onChange={AuthorChange} value={Author_Id}>
+                                            <option value="">Select Author</option>
+                                            {allAuthors.map((author: any) => (
+                                                <option key={author?.id} value={author?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                                    {author?.name || author?.slug || `Author #${author?.id}`}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
 
                                 <div className={styles.fieldGroup}>
@@ -2448,6 +2504,151 @@ const EditProductForm = () => {
     );
 }
 
+const EditAuthorForm = () => {
+    const { slug1 } = useParams();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
+    const [authorData, setAuthorData] = useState<any>(emptyAuthorData);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (slug1) fetchAuthorById(slug1);
+    }, [slug1]);
+
+    const fetchAuthorById = async (id: any) => {
+        setIsLoading(true);
+        const res = await getAuthorById(id);
+        if (res && !res.message) {
+            setAuthorData({
+                ...emptyAuthorData,
+                ...res,
+                isActive: res.isActive !== false,
+            });
+        }
+        setIsLoading(false);
+    };
+
+    const handleInputChange = (e: any) => {
+        const { name, value, type, checked } = e.target;
+        setAuthorData((prev: any) => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value,
+        }));
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!authorData.name || authorData.name.trim().length < 2) {
+            alert("Please enter a valid author name");
+            return;
+        }
+
+        const payload = {
+            ...authorData,
+            name: authorData.name.trim(),
+            slug: authorData.slug ? slugifyAuthor(authorData.slug) : slugifyAuthor(authorData.name),
+        };
+
+        setIsLoading(true);
+        const res = await UpdateAuthorById(slug1, payload);
+        setIsLoading(false);
+
+        if (res?.success) {
+            alert("Author Updated Successfully");
+            router.push(`/ebike-panel/dashboard/author-list?page=${pageFromUrl}`);
+        } else {
+            alert(res?.error || 'Something is Wrong!');
+        }
+    };
+
+    const goBack = () => {
+        router.push(`/ebike-panel/dashboard/author-list?page=${pageFromUrl}`);
+    };
+
+    return (
+        <div className={`${styles.main_blog_box} ${styles.authorFormBox}`}>
+            {!isLoading ? (
+                <form onSubmit={handleSubmit} className={styles.main}>
+                    <div className={styles.formHeader}>
+                        <button type="button" className={styles.a} onClick={goBack} aria-label="Go back">
+                            <ArrowBackIosIcon className={styles.icon} />
+                        </button>
+                        <div className={styles.topText}>
+                            <p className={styles.eyebrow}>Content Manager</p>
+                            <p className={styles.heading}>Edit Author</p>
+                            <p className={styles.subheading}>Update author profile, contact, social, and SEO details.</p>
+                        </div>
+                    </div>
+
+                    <DashboardSection title="Basic Information" hint="Keep author identity consistent with blog bylines.">
+                        <DashboardField label="Name" htmlFor="name">
+                            <input id="name" name="name" value={authorData.name || ''} onChange={handleInputChange} className={styles.input} />
+                        </DashboardField>
+                        <DashboardField label="Slug" htmlFor="slug">
+                            <input id="slug" name="slug" value={authorData.slug || ''} onChange={handleInputChange} className={styles.input} />
+                        </DashboardField>
+                        <DashboardField label="Designation" htmlFor="designation">
+                            <input id="designation" name="designation" value={authorData.designation || ''} onChange={handleInputChange} className={styles.input} />
+                        </DashboardField>
+                        <DashboardField label="Company" htmlFor="company">
+                            <input id="company" name="company" value={authorData.company || ''} onChange={handleInputChange} className={styles.input} />
+                        </DashboardField>
+                    </DashboardSection>
+
+                    <DashboardSection title="Contact & Social" hint="Add public profile links used around blog content.">
+                        <div className={styles.all_inputs}>
+                            {[
+                                { name: 'email', label: 'Email' },
+                                { name: 'phone', label: 'Phone' },
+                                { name: 'profileImage', label: 'Profile Image URL' },
+                                { name: 'websiteUrl', label: 'Website URL' },
+                                { name: 'facebookUrl', label: 'Facebook URL' },
+                                { name: 'twitterUrl', label: 'Twitter URL' },
+                                { name: 'linkedinUrl', label: 'LinkedIn URL' },
+                                { name: 'instagramUrl', label: 'Instagram URL' },
+                            ].map(({ name, label }) => (
+                                <div key={name}>
+                                    <label htmlFor={name} className={styles.label}>{label}</label>
+                                    <input id={name} name={name} value={authorData[name] || ''} onChange={handleInputChange} className={styles.input_} />
+                                </div>
+                            ))}
+                        </div>
+                    </DashboardSection>
+
+                    <DashboardSection title="Profile Content" hint="Short author biography and metadata.">
+                        <DashboardField label="Bio" htmlFor="bio">
+                            <textarea id="bio" name="bio" value={authorData.bio || ''} onChange={handleInputChange} className={styles.textarea} />
+                        </DashboardField>
+                        <DashboardField label="Meta Title" htmlFor="metaTitle">
+                            <textarea id="metaTitle" name="metaTitle" value={authorData.metaTitle || ''} onChange={handleInputChange} className={styles.textarea} />
+                        </DashboardField>
+                        <DashboardField label="Meta Description" htmlFor="metaDescription">
+                            <textarea id="metaDescription" name="metaDescription" value={authorData.metaDescription || ''} onChange={handleInputChange} className={styles.textarea} />
+                        </DashboardField>
+                        <label htmlFor="isActive" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                            <input id="isActive" name="isActive" type="checkbox" checked={Boolean(authorData.isActive)} onChange={handleInputChange} />
+                            <span>Active author</span>
+                        </label>
+                    </DashboardSection>
+
+                    <div className={styles.actionRow}>
+                        <button type="button" className={styles.ghostButton} onClick={goBack}>Cancel</button>
+                        <button type="submit" className={styles.button}>Save Author</button>
+                    </div>
+                </form>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
 export {
     EditUsedBikeForm,
     EditNewBikeForm,
@@ -2455,5 +2656,6 @@ export {
     EditPageForm,
     EditBrandForm,
     EditElectricBikeForm,
-    EditProductForm
+    EditProductForm,
+    EditAuthorForm
 };

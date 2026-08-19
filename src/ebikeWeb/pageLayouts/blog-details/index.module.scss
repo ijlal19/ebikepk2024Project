@@ -87,6 +87,18 @@
                     font-size: 12px;
                     font-family: 'Lato';
 
+                    .authorLink {
+                        color: $primary_two;
+                        font-weight: 700;
+                        margin-right: 8px;
+                        text-decoration: none;
+                        cursor: pointer;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+
                     .view_count {
                         // display: inline-flex;
                         align-items: center;

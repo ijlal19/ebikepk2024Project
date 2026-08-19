@@ -136,6 +136,16 @@ function getSingleBlogData(id: any) {
         })
 }
 
+function getAuthorById(id: any) {
+    return fetch(Gconfig.ebikeApi + `author/get-author-by-id/${id}`)
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 function getAllBlog() {
     return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
         .then(response => response.json()).then(data => {
@@ -583,6 +593,7 @@ export {
     getNewBikeComparisonData,
     getBikesBySpecificFilter,
     getAllBlog,
+    getAuthorById,
     getAllDealer,
     getFeaturedDealer,
     getSingleDealerDetails,

@@ -37,6 +37,10 @@ const NavOptionArray = [
                 OptionName: "All Blog",
                 OptionRoute: "blog-list"
             },
+            {
+                OptionName: "Authors",
+                OptionRoute: "author-list"
+            },
         ]
     },
     {

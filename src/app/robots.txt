@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.ebike.pk/sitemap.xml
+Sitemap: https://www.ebike.pk/news-sitemap.xml

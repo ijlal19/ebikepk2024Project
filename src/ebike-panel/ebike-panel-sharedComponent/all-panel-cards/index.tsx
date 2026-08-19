@@ -1,5 +1,5 @@
 'use client'
-import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandCompany, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMainForumCategory, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteThread, DeleteThreadComment, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getSessionData, GetAllMainForumCategory, GetAllSubForumCategory, GetAllThreads, GetAllThreadsComments, GetCompanyBrand, GetAllVideos, DeleteBikeVideo, AddNewVideo, getbrandData } from "@/ebike-panel/ebike-panel-Function/globalfunction";
+import { addNewCity, ChangeApprove, ChangeDealerApprove, ChangeDealerFeatured, ChangeFeatured, ChangeMechanicApprove, ChangeMechanicFeatured, DeleteBlogById, DeleteBrandCompany, DeleteBrandbyId, DeleteCitybyId, DeleteDealerbyId, DeleteMainForumCategory, DeleteMechanicbyId, DeleteNewBikeById, DeletePagebyId, DeleteProductbyId, DeleteThread, DeleteThreadComment, DeleteUsedBikeById, getAllBlog, getAllDealer, getAllMechanics, getAllNewBike, getAllPages, getCityData, getCustomBikeAd, getShopCategory, getShopMainCategory, getSessionData, GetAllMainForumCategory, GetAllSubForumCategory, GetAllThreads, GetAllThreadsComments, GetCompanyBrand, GetAllVideos, DeleteBikeVideo, AddNewVideo, getbrandData, getAllAuthors } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 import { AddForumMainCategory, AddForumThread, AddForumThreadComment, AddShopBrandPopup, BasicModal, EditForumMainCategory, EditForumThread, EditForumThreadComment, EditVideo, ShopBrandPopup } from "./popup";
 import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { getBrandFromId, getCityFromId } from "@/ebikeWeb/functions/globalFuntions";
@@ -38,9 +38,9 @@ const getUsedBikeSlug = (value: any) => String(value || 'used-bike')
 /////////////////////////////////////////////////////// USED BIKE CARD
 const Used_bike_card: any = () => {
 
-    const [displayedBikes, setDisplayedBikes] = useState([]);
-    const [AllBikeForFilter, setAllBikeForFilter] = useState([]);
-    const [filteredBikes, setFilteredBikes] = useState([]);
+    const [displayedBikes, setDisplayedBikes] = useState<any[]>([]);
+    const [AllBikeForFilter, setAllBikeForFilter] = useState<any[]>([]);
+    const [filteredBikes, setFilteredBikes] = useState<any[]>([]);
     const [totalPage, setTotalPage] = useState<any>(null);
     const router = useRouter();
     const pathname = usePathname();
@@ -52,7 +52,7 @@ const Used_bike_card: any = () => {
     const [IsLoading, setIsLoading] = useState(false);
     const [actionLoading, setActionLoading] = useState<{ id: any; action: 'feature' | 'approve' } | null>(null);
     const [copiedAdId, setCopiedAdId] = useState<any>(null);
-    const [AllBikeArr, setAllBikeArr] = useState([]);
+    const [AllBikeArr, setAllBikeArr] = useState<any[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const itemsPerPage = 12;
 
@@ -1017,6 +1017,218 @@ const Blog_Card = () => {
         </div>
     )
 }
+
+const Author_Card = () => {
+    const [allAuthors, setAllAuthors] = useState<any[]>([]);
+    const [filteredAuthors, setFilteredAuthors] = useState<any[]>([]);
+    const [displayedAuthors, setDisplayedAuthors] = useState<any[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const pageFromUrl = Number(searchParams.get("page") || "1");
+    const initialPage = Number.isNaN(pageFromUrl) || pageFromUrl < 1 ? 1 : pageFromUrl;
+    const [currentPage, setCurrentPage] = useState(initialPage);
+    const [totalPage, setTotalPage] = useState<any>(null);
+    const itemsPerPage = 12;
+
+    useEffect(() => {
+        fetchAuthors();
+    }, []);
+
+    useEffect(() => {
+        const normalizedTerm = searchTerm.trim().toLowerCase();
+        const filtered = allAuthors.filter((author: any) => {
+            if (!normalizedTerm) return true;
+
+            const searchableValues = [
+                author?.id,
+                author?.name,
+                author?.slug,
+                author?.email,
+                author?.phone,
+                author?.designation,
+                author?.company,
+            ]
+                .filter(Boolean)
+                .map((value: any) => String(value).toLowerCase());
+
+            return searchableValues.some((value: string) => value.includes(normalizedTerm));
+        });
+        setFilteredAuthors(filtered);
+    }, [searchTerm, allAuthors]);
+
+    useEffect(() => {
+        setCurrentPage(initialPage);
+    }, [initialPage]);
+
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        setDisplayedAuthors(filteredAuthors.slice(startIndex, endIndex));
+        setTotalPage(Math.ceil(filteredAuthors.length / itemsPerPage));
+    }, [filteredAuthors, currentPage]);
+
+    const fetchAuthors = async () => {
+        setIsLoading(true);
+        try {
+            const res = await getAllAuthors();
+            if (Array.isArray(res)) {
+                setAllAuthors(res);
+                setFilteredAuthors(res);
+            } else {
+                setAllAuthors([]);
+                setFilteredAuthors([]);
+                setDisplayedAuthors([]);
+                setTotalPage(0);
+            }
+        } catch (error) {
+            console.error("Error fetching authors:", error);
+        }
+        setIsLoading(false);
+    };
+
+    const handlePaginationChange = (event: any, page: any) => {
+        setCurrentPage(page);
+        router.push(`${pathname}?page=${page}`, { scroll: false });
+        window.scrollTo(0, 0);
+    };
+
+    const handleSearch = (e: any) => {
+        setSearchTerm(e.target.value);
+        setCurrentPage(1);
+        router.push(`${pathname}?page=1`, { scroll: false });
+    };
+
+    return (
+        <div className={styles.main_blog}>
+            <New_header />
+            {!isLoading ? (
+                <div className={styles.big_container}>
+                    <div className={styles.page_header}>
+                        <div className={styles.blog_summary}>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Total Authors</span>
+                                <strong className={styles.summary_value}>{allAuthors?.length || 0}</strong>
+                            </div>
+                            <div className={styles.summary_card}>
+                                <span className={styles.summary_label}>Showing</span>
+                                <strong className={styles.summary_value}>{displayedAuthors?.length || 0}</strong>
+                            </div>
+                        </div>
+                        <form className={styles.input_box}>
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                placeholder="Search Author"
+                                className={styles.input}
+                            />
+                            <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
+                        </form>
+                        {filteredAuthors?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                        <button className={styles.add_new_btn}>
+                            <Link href={`/ebike-panel/dashboard/add-author?page=${currentPage}`} sx={{ color: "white", textDecoration: 'none' }}>
+                                Add Author
+                            </Link>
+                        </button>
+                    </div>
+
+                    <div className={styles.card_container}>
+                        {displayedAuthors?.length > 0 ? (
+                            <div className={styles.blog_table_section}>
+                                <div className={styles.blog_table_scroll}>
+                                    <table className={styles.blog_table}>
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Author</th>
+                                                <th>Contact</th>
+                                                <th>Profile</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {displayedAuthors.map((author: any, i: any) => (
+                                                <tr key={author?.id || i}>
+                                                    <td className={styles.id_cell}>#{author?.id || 'N/A'}</td>
+                                                    <td>
+                                                        <div className={styles.stack_cell}>
+                                                            <span className={styles.primary_text}>{author?.name || 'N/A'}</span>
+                                                            <span className={styles.secondary_text}>{author?.slug || 'No slug'}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className={styles.stack_cell}>
+                                                            <span className={styles.primary_text}>{author?.email || 'N/A'}</span>
+                                                            <span className={styles.secondary_text}>{author?.phone || 'No phone'}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className={styles.stack_cell}>
+                                                            <span className={styles.primary_text}>{author?.designation || 'N/A'}</span>
+                                                            <span className={styles.secondary_text}>{author?.company || 'No company'}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span className={styles.category_badge}>{author?.isActive === false ? 'Inactive' : 'Active'}</span>
+                                                    </td>
+                                                    <td>
+                                                        <div className={styles.table_actions}>
+                                                            <Link href={`/ebike-panel/dashboard/edit-author/${author?.id}?page=${currentPage}`} style={{ textDecoration: 'none', width: '100%' }}>
+                                                                <button className={`${styles.action_btn} ${styles.edit_btn}`}>
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className={styles.no_results}>
+                                <p>No authors found matching your search criteria.</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className={styles.pagination_btm}>
+                        {filteredAuthors?.length > 0 && (
+                            <div className={styles.used_bike_list_pagination}>
+                                <Pagination
+                                    count={totalPage}
+                                    onChange={handlePaginationChange}
+                                    page={currentPage}
+                                    size="medium"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ) : (
+                <div className={styles.load_main}>
+                    <div className={styles.load_div}>
+                        <Loader isLoading={isLoading} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
 
 /////////////////////////////////////////////////////// DEALERS CARD
 const Dealer_Card = () => {
@@ -3706,6 +3918,7 @@ export {
     Used_bike_card,
     New_bike_card,
     Blog_Card,
+    Author_Card,
     Dealer_Card,
     Mechanic_Card,
     AllPages_Card,

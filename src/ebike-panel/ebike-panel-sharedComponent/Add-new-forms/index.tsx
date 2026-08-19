@@ -1,5 +1,5 @@
 'use client';
-import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, getbrandData, addNewCategory, addNewSubCategory, UpdateCategImagesById, AddNewVideo } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { addNewBike, addNewBlog, addNewBrand, addNewPage, addNewProduct, GetProductCompany, getShopMainCategory, GetSubCategByMainCateg, getbrandData, addNewCategory, addNewSubCategory, UpdateCategImagesById, AddNewVideo, addNewAuthor, getAllAuthors } from '@/ebike-panel/ebike-panel-Function/globalfunction';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BrandArr } from '@/ebikeWeb/constants/globalData';
 import FloaraTextArea from '../floaraEditiorTextarea';
@@ -13,6 +13,32 @@ import Loader from '../loader/loader';
 const jsCookie = require('js-cookie');
 
 const emptyFaq = { question: '', answer: '' };
+
+const emptyAuthorData = {
+    name: '',
+    slug: '',
+    email: '',
+    phone: '',
+    designation: '',
+    company: '',
+    bio: '',
+    profileImage: '',
+    facebookUrl: '',
+    twitterUrl: '',
+    linkedinUrl: '',
+    instagramUrl: '',
+    websiteUrl: '',
+    metaTitle: '',
+    metaDescription: '',
+    isActive: true,
+};
+
+const slugifyAuthor = (value: string) => value
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
 let BlogCategory = [
     {
@@ -894,6 +920,8 @@ const AddBlogForm = () => {
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [selectedBlogId, setSelectedBlogId] = useState();
+    const [selectedAuthorId, setSelectedAuthorId] = useState('');
+    const [allAuthors, setAllAuthors] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [imageArr, setImageArr] = useState([])
     const [BlogData, setBlogData] = useState<any>({
@@ -911,6 +939,17 @@ const AddBlogForm = () => {
     let router = useRouter()
     const searchParams = useSearchParams();
     const pageFromUrl = searchParams.get("page") || "1";
+
+    useEffect(() => {
+        fetchAuthors();
+    }, []);
+
+    const fetchAuthors = async () => {
+        const res = await getAllAuthors();
+        if (Array.isArray(res)) {
+            setAllAuthors(res);
+        }
+    };
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -969,6 +1008,10 @@ const AddBlogForm = () => {
         setSelectedBlogId(e.target.value);
     };
 
+    const handleAuthorChange = (e: any) => {
+        setSelectedAuthorId(e.target.value);
+    };
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
@@ -1003,6 +1046,7 @@ const AddBlogForm = () => {
         const finalBikeData = {
             blogCategoryId: Number(selectedBlogId),
             ...BlogData,
+            authorId: selectedAuthorId ? Number(selectedAuthorId) : null,
             uid: UserId || null,
             featuredImage: imagesString
         }
@@ -1033,6 +1077,18 @@ const AddBlogForm = () => {
 
                 <label htmlFor="authorname" className={styles.label}>Author Name</label>
                 <input id="authorname" name="authorname" value={BlogData.authorname} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="authorId" className={styles.label}>Assign Author</label>
+                <div className={styles.drop_downBox}>
+                    <select name="authorId" id="authorId" className={styles.selected} onChange={handleAuthorChange} value={selectedAuthorId}>
+                        <option value="">Select Author</option>
+                        {allAuthors.map((author: any) => (
+                            <option key={author?.id} value={author?.id} className={styles.options} style={{ fontSize: '16px' }}>
+                                {author?.name || author?.slug || `Author #${author?.id}`}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 <label htmlFor="bloghtml" className={styles.label}>Description</label>
                 <FloaraTextArea
@@ -1093,6 +1149,118 @@ const AddBlogForm = () => {
         </div>
     );
 }
+
+///////////////////////////////////////////////////////// ADD NEW PAGE
+const AddAuthorForm = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pageFromUrl = searchParams.get("page") || "1";
+    const [authorData, setAuthorData] = useState<any>(emptyAuthorData);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleInputChange = (e: any) => {
+        const { name, value, type, checked } = e.target;
+        setAuthorData((prev: any) => {
+            const nextValue = type === 'checkbox' ? checked : value;
+            const next = { ...prev, [name]: nextValue };
+
+            if (name === 'name' && !prev.slug) {
+                next.slug = slugifyAuthor(value);
+            }
+
+            return next;
+        });
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+
+        if (!authorData.name || authorData.name.trim().length < 2) {
+            alert("Please enter a valid author name");
+            return;
+        }
+
+        const payload = {
+            ...authorData,
+            name: authorData.name.trim(),
+            slug: authorData.slug ? slugifyAuthor(authorData.slug) : slugifyAuthor(authorData.name),
+        };
+
+        setIsLoading(true);
+        const res = await addNewAuthor(payload);
+        setIsLoading(false);
+
+        if (res?.success) {
+            alert("Author Add Successfully");
+            router.push(`/ebike-panel/dashboard/author-list?page=${pageFromUrl}`);
+        } else {
+            alert(res?.error || 'Something went wrong!');
+        }
+    };
+
+    const goBack = () => {
+        router.push(`/ebike-panel/dashboard/author-list?page=${pageFromUrl}`);
+    };
+
+    return (
+        <div className={styles.main_box}>
+            {!isLoading ? (
+                <form onSubmit={handleSubmit} className={styles.main}>
+                    <div className={styles.formHeader}>
+                        <p className={styles.a} onClick={goBack}><ArrowBackIosIcon className={styles.icon} /></p>
+                        <p className={styles.heading}>Add Author</p>
+                    </div>
+
+                    <label htmlFor="name" className={styles.label}>Name</label>
+                    <input id="name" name="name" value={authorData.name} onChange={handleInputChange} className={styles.input} />
+
+                    <label htmlFor="slug" className={styles.label}>Slug</label>
+                    <input id="slug" name="slug" value={authorData.slug} onChange={handleInputChange} className={styles.input} />
+
+                    <div className={styles.all_inputs}>
+                        {[
+                            { name: 'email', label: 'Email' },
+                            { name: 'phone', label: 'Phone' },
+                            { name: 'designation', label: 'Designation' },
+                            { name: 'company', label: 'Company' },
+                            { name: 'profileImage', label: 'Profile Image URL' },
+                            { name: 'websiteUrl', label: 'Website URL' },
+                            { name: 'facebookUrl', label: 'Facebook URL' },
+                            { name: 'twitterUrl', label: 'Twitter URL' },
+                            { name: 'linkedinUrl', label: 'LinkedIn URL' },
+                            { name: 'instagramUrl', label: 'Instagram URL' },
+                        ].map(({ name, label }) => (
+                            <div key={name}>
+                                <label htmlFor={name} className={styles.label}>{label}</label>
+                                <input id={name} name={name} value={authorData[name]} onChange={handleInputChange} className={styles.input_} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <label htmlFor="bio" className={styles.label}>Bio</label>
+                    <textarea id="bio" name="bio" value={authorData.bio} onChange={handleInputChange} className={styles.textarea} />
+
+                    <label htmlFor="metaTitle" className={styles.label}>Meta Title</label>
+                    <textarea id="metaTitle" name="metaTitle" value={authorData.metaTitle} onChange={handleInputChange} className={styles.textarea} />
+
+                    <label htmlFor="metaDescription" className={styles.label}>Meta Description</label>
+                    <textarea id="metaDescription" name="metaDescription" value={authorData.metaDescription} onChange={handleInputChange} className={styles.textarea} />
+
+                    <label htmlFor="isActive" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                        <input id="isActive" name="isActive" type="checkbox" checked={Boolean(authorData.isActive)} onChange={handleInputChange} />
+                        <span>Active author</span>
+                    </label>
+
+                    <button type="submit" className={styles.button}>Add Author</button>
+                </form>
+            ) : (
+                <div className={styles.loader_container}>
+                    <Loader isLoading={isLoading} />
+                </div>
+            )}
+        </div>
+    );
+};
 
 ///////////////////////////////////////////////////////// ADD NEW PAGE
 const AddPageForm = () => {
@@ -2070,5 +2238,6 @@ export {
     AddProductForm,
     AddBrandForm,
     AddCategoryForm,
-    AddVideoForm
+    AddVideoForm,
+    AddAuthorForm
 };

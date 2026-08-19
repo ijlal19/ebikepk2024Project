@@ -357,6 +357,68 @@ function addNewBlog(data: any) {
         })
 }
 
+/////////////////////////////////////// AUTHOR FUNCTIONS //////////////////////////////////////////////////////
+function getAllAuthors() {
+    return fetch(Gconfig.ebikeApi + `author/get-all-authors`)
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function getAuthorById(id: any) {
+    return fetch(Gconfig.ebikeApi + `author/get-author-by-id/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function addNewAuthor(data: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `admin/author/add-author`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+}
+
+function UpdateAuthorById(id: any, payload: any) {
+    const userCookie = jsCookie.get("userData_ebike_panel");
+    const userData = JSON.parse(userCookie);
+    const token = userData?.accessToken;
+    return fetch(Gconfig.ebikeApi + `admin/author/edit-author/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": token
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
+
 /////////////////////////////////////// DEALERS FUNCTION ///////////////////////////////////////////////////////
 function getAllDealer() {
     return fetch(Gconfig.ebikeApi + `dealers/get-dealer`)
@@ -1725,6 +1787,10 @@ export {
     getSingleblogDetail,
     UpdateBlogById,
     addNewBlog,
+    getAllAuthors,
+    getAuthorById,
+    addNewAuthor,
+    UpdateAuthorById,
 
     getAllDealer,
     ChangeDealerApprove,

@@ -30,6 +30,13 @@ import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 const BLOG_VIEW_DEDUP_MS = 5000;
 const blogViewLastHitAt: Record<string, number> = {};
 
+const slugifyAuthor = (value: string) => value
+  .trim()
+  .toLowerCase()
+  .replace(/&/g, ' and ')
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '');
+
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
   const [allDealerArr, setAllDelaerArr] = useState([]);
@@ -215,6 +222,15 @@ const BlogDetails = () => {
     router.push(`/blog?tag=${encodeURIComponent(tag)}`);
   }
 
+  const assignedAuthor = DataBlog?.author;
+  const displayAuthorName = assignedAuthor?.name?.trim() || DataBlog?.authorname?.trim();
+  const authorHref = assignedAuthor?.id
+    ? `/author/${assignedAuthor.slug || slugifyAuthor(assignedAuthor.name || 'author')}/${assignedAuthor.id}`
+    : '';
+  const authorAvatar = assignedAuthor?.profileImage || (DataBlog?.featuredImage?.includes(" #$# ")
+    ? DataBlog.featuredImage.split(" #$# ")[0].trim()
+    : DataBlog?.featuredImage);
+
   return (
     <Box className={styles.blog_details_main}>
       {!isLoading ?
@@ -258,11 +274,18 @@ const BlogDetails = () => {
                 </Typography>
 
                 <Typography className={styles.profile_box}>
-                  <Avatar alt="Remy Sharp" sx={{ width: 26, height: 26, marginRight: 1 }} src={DataBlog?.featuredImage?.includes(" #$# ")
-                    ? DataBlog.featuredImage.split(" #$# ")[0].trim()
-                    : DataBlog?.featuredImage} />
+                  <Avatar alt={displayAuthorName || "Author"} sx={{ width: 26, height: 26, marginRight: 1 }} src={authorAvatar} />
                   <span>
-                    <span style={{ color: 'grey' }}>By</span> <span style={{ marginRight: 8 }}>{DataBlog.authorname}</span> <span style={{ color: 'grey', marginRight: 8 }}>- On</span> {DataBlog.createdAt.slice(0, 10)}
+                    <span style={{ color: 'grey' }}>By</span>{" "}
+                    {assignedAuthor?.id ? (
+                      <Link href={authorHref} className={styles.authorLink}>
+                        {displayAuthorName}
+                      </Link>
+                    ) : (
+                      <span style={{ marginRight: 8 }}>{displayAuthorName}</span>
+                    )}
+                    <span style={{ color: 'grey', marginRight: 8 }}>- On</span>
+                    <time dateTime={DataBlog.createdAt}>{DataBlog.createdAt.slice(0, 10)}</time>
                     <span className={styles.view_count}>
                       {/* <VisibilityOutlinedIcon sx={{ fontSize: '16px' }} /> */}
                       {DataBlog?.views_count || 0} views

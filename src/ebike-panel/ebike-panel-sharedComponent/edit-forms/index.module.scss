@@ -967,6 +967,64 @@
     }
 }
 
+.authorFormBox {
+    .fieldControl > .input,
+    .fieldControl > .textarea,
+    .fieldGroup .input,
+    .fieldGroup .textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .textarea {
+        min-width: 100% !important;
+    }
+
+    .all_inputs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        padding: 0 !important;
+        box-sizing: border-box;
+        min-width: 0;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+    }
+
+    .input_ {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 0.9rem 1rem !important;
+        border: 1px solid #d4dcea;
+        border-radius: 12px;
+        outline: none;
+        color: #1a2233;
+        background: #fbfcff;
+        box-sizing: border-box;
+        font-size: 0.96rem;
+        transition: all .25s ease;
+    }
+
+    .input_:focus {
+        box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+        border-color: #7fb0f1;
+        background: #fff;
+    }
+
+    @media (max-width:768px) {
+        .all_inputs {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
 //////////////////////////////////////EDIT PAGES
 .main_page_box {
     width: 100% !important;
