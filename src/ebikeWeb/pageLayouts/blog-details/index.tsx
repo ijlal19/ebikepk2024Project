@@ -11,6 +11,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { GiConsoleController } from 'react-icons/gi';
 import { Swiper, SwiperSlide } from "swiper/react";
 import ShareIcon from '@mui/icons-material/Share';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import "swiper/css/navigation";
@@ -36,6 +37,19 @@ const slugifyAuthor = (value: string) => value
   .replace(/&/g, ' and ')
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
+
+const formatBlogDate = (date?: string) => {
+  if (!date) return '';
+
+  const parsedDate = new Date(date);
+  if (Number.isNaN(parsedDate.getTime())) return '';
+
+  return parsedDate.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -227,9 +241,8 @@ const BlogDetails = () => {
   const authorHref = assignedAuthor?.id
     ? `/author/${assignedAuthor.slug || slugifyAuthor(assignedAuthor.name || 'author')}/${assignedAuthor.id}`
     : '';
-  const authorAvatar = assignedAuthor?.profileImage || (DataBlog?.featuredImage?.includes(" #$# ")
-    ? DataBlog.featuredImage.split(" #$# ")[0].trim()
-    : DataBlog?.featuredImage);
+  const createdDate = formatBlogDate(DataBlog?.createdAt);
+  const updatedDate = formatBlogDate(DataBlog?.updatedAt);
 
   return (
     <Box className={styles.blog_details_main}>
@@ -273,23 +286,33 @@ const BlogDetails = () => {
                   {DataBlog.blogTitle}
                 </Typography>
 
+                <Typography className={styles.date_meta_row}>
+                  {createdDate && (
+                    <span>
+                      <strong>Created:</strong> <time dateTime={DataBlog.createdAt}>{createdDate}</time>
+                    </span>
+                  )}
+                  {updatedDate && (
+                    <span>
+                      <strong>Last Updated:</strong> <time dateTime={DataBlog.updatedAt}>{updatedDate}</time>
+                    </span>
+                  )}
+                </Typography>
+
                 <Typography className={styles.profile_box}>
-                  <Avatar alt={displayAuthorName || "Author"} sx={{ width: 26, height: 26, marginRight: 1 }} src={authorAvatar} />
-                  <span>
-                    <span style={{ color: 'grey' }}>By</span>{" "}
+                  <AccountCircleOutlinedIcon className={styles.author_icon} />
+                  <span className={styles.author_text}>
+                    <span className={styles.by_label}>By</span>
                     {assignedAuthor?.id ? (
                       <Link href={authorHref} className={styles.authorLink}>
                         {displayAuthorName}
                       </Link>
                     ) : (
-                      <span style={{ marginRight: 8 }}>{displayAuthorName}</span>
+                      <span className={styles.author_name}>{displayAuthorName}</span>
                     )}
-                    <span style={{ color: 'grey', marginRight: 8 }}>- On</span>
-                    <time dateTime={DataBlog.createdAt}>{DataBlog.createdAt.slice(0, 10)}</time>
-                    <span className={styles.view_count}>
-                      {/* <VisibilityOutlinedIcon sx={{ fontSize: '16px' }} /> */}
-                      {DataBlog?.views_count || 0} views
-                    </span>
+                  </span>
+                  <span className={styles.view_count}>
+                    {DataBlog?.views_count || 0} views
                   </span>
                 </Typography>
 

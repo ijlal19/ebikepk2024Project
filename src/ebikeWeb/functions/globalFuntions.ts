@@ -146,6 +146,21 @@ function getAuthorById(id: any) {
         })
 }
 
+function getAuthorBlogs(author: any) {
+    return fetch(Gconfig.ebikeApi + `author/get-author-blogs/${author}`, {
+        method: 'GET',
+        cache: 'no-store',
+        headers: { "Content-Type": "application/json" },
+    })
+        .then(response => response.json()).then(data => {
+            return data
+        })
+        .catch((err) => {
+            console.log(err)
+            return []
+        })
+}
+
 function getAllBlog() {
     return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
         .then(response => response.json()).then(data => {
@@ -594,6 +609,7 @@ export {
     getBikesBySpecificFilter,
     getAllBlog,
     getAuthorById,
+    getAuthorBlogs,
     getAllDealer,
     getFeaturedDealer,
     getSingleDealerDetails,
