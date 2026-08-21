@@ -21,6 +21,7 @@ const SellUsedBike = () => {
     const [cc, setCc] = useState('');
     const [brand, setBrand] = useState('');
     const [title, setTitle] = useState('');
+    const [metaTitle, setMetaTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
@@ -127,6 +128,8 @@ const SellUsedBike = () => {
             setBrand(value);
         } else if (field === 'title') {
             setTitle(value);
+        } else if (field === 'metaTitle') {
+            setMetaTitle(value);
         } else if (field === 'description') {
             setDescription(value);
         } else if (field === 'price') {
@@ -209,6 +212,7 @@ const SellUsedBike = () => {
             "price": parseInt(price),
             "sellerName": sellerName,
             "title": title,
+            "meta_title": metaTitle,
             "uid": customer?.id,
             "yearId": modelYear,
             "images": imageArr,
@@ -238,6 +242,7 @@ const SellUsedBike = () => {
                     setCc("");
                     setBrand("");
                     setTitle("");
+                    setMetaTitle("");
                     setDescription("");
                     setPrice("");
                     setVideoUrl("");
@@ -312,6 +317,19 @@ const SellUsedBike = () => {
                         <input required type="text" id="title" className={styles.title_input} placeholder="Title"
                             onChange={(e) => handleChange('title', e.target.value)} />
                     </Typography>
+
+                    {adminToken && (
+                        <>
+                            <Typography>
+                                <label htmlFor="metaTitle" className={styles.title_label}>Meta Title</label>
+                            </Typography>
+
+                            <Typography className={styles.input_parent}>
+                                <input type="text" id="metaTitle" className={styles.title_input} placeholder="Honda CD 70 for Sale in Lahore - Best Price"
+                                    onChange={(e) => handleChange('metaTitle', e.target.value)} />
+                            </Typography>
+                        </>
+                    )}
 
                     <Typography>
                         <label htmlFor="desc" className={styles.description_label}>Description*</label>

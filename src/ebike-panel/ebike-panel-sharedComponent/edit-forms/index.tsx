@@ -249,6 +249,7 @@ const EditUsedBikeForm = () => {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [imageArr, setImageArr] = useState([])
     const [newtitle, setTitle] = useState('');
+    const [newMetaTitle, setMetaTitle] = useState('');
     const [newdescription, setDescription] = useState('');
     const [newprice, setPrice] = useState('');
     const [newvideoUrl, setVideoUrl] = useState('');
@@ -274,6 +275,7 @@ const EditUsedBikeForm = () => {
             const bike = getData?.add;
             console.log("data", bike)
             setTitle(bike.title)
+            setMetaTitle(bike.meta_title || '')
             setDescription(bike.description)
             setPrice(bike.price)
             setVideoUrl(bike.videoUrl)
@@ -292,6 +294,8 @@ const EditUsedBikeForm = () => {
     const handleChange = (field: any, value: any) => {
         if (field === 'title') {
             setTitle(value);
+        } else if (field === 'meta_title') {
+            setMetaTitle(value);
         } else if (field === 'description') {
             setDescription(value);
         } else if (field === 'price') {
@@ -392,6 +396,7 @@ const EditUsedBikeForm = () => {
         }
         const obj = {
             title: newtitle,
+            meta_title: newMetaTitle,
             description: newdescription,
             price: newprice,
             videoUrl: newvideoUrl,
@@ -436,6 +441,10 @@ const EditUsedBikeForm = () => {
                                 >
                                     <DashboardField label="Title" htmlFor="title">
                                         <input id="title" name="title" value={newtitle} onChange={(e) => handleChange('title', e.target.value)} className={styles.input} />
+                                    </DashboardField>
+
+                                    <DashboardField label="Meta Title" htmlFor="meta_title">
+                                        <input id="meta_title" name="meta_title" value={newMetaTitle} onChange={(e) => handleChange('meta_title', e.target.value)} className={styles.input} placeholder="Honda CD 70 for Sale in Lahore - Best Price" />
                                     </DashboardField>
 
                                     <DashboardField label="Description" htmlFor="description">

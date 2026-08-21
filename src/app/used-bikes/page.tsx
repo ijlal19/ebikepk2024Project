@@ -123,7 +123,7 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
             url: bikeUrl,
             item: {
               "@type": "Product",
-              name: bike?.title || "Used Bike",
+              name: bike?.meta_title || bike?.title || "Used Bike",
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
               category: "Used motorcycle",

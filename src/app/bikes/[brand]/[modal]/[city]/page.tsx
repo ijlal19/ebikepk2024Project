@@ -231,7 +231,7 @@ function buildFilterJsonLd(params: Props['params'], usedBikes: any) {
             url: bikeUrl,
             item: {
               '@type': 'Product',
-              name: bike?.title || seo.heading,
+              name: bike?.meta_title || bike?.title || seo.heading,
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
               category: 'Used motorcycle',

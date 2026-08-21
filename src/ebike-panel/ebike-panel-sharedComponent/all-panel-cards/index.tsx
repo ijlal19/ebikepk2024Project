@@ -79,6 +79,7 @@ const Used_bike_card: any = () => {
             const searchableValues = [
                 bike?.id,
                 bike?.title,
+                bike?.meta_title,
                 bike?.sellerName,
                 bike?.mobileNumber,
                 GetName("brand", bike?.brandId),
@@ -293,7 +294,7 @@ const Used_bike_card: any = () => {
 
     return (
         <div className={styles.main_used_bike}>
-            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search by Ad ID, title, seller or phone" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search by Ad ID, title, meta title, seller or phone" />
             {!IsLoading ? (
                 <div className={styles.big_container}>
                     <div className={styles.page_header}>
@@ -330,7 +331,7 @@ const Used_bike_card: any = () => {
                                 type="text"
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                placeholder='Search Ad with ID, title, seller or phone'
+                                placeholder='Search Ad with ID, title, meta title, seller or phone'
                                 className={styles.input} />
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
@@ -343,6 +344,7 @@ const Used_bike_card: any = () => {
                                         <tr>
                                             <th>ID</th>
                                             <th>Bike</th>
+                                            <th>Meta Title</th>
                                             <th>Seller</th>
                                             <th>Brand / City</th>
                                             <th>Price</th>
@@ -368,6 +370,7 @@ const Used_bike_card: any = () => {
                                                         </div>
                                                     </div>
                                                 </td>
+                                                <td className={styles.meta_title_cell}>{e?.meta_title ? add3Dots(e.meta_title, 70) : '-'}</td>
                                                 <td>
                                                     <div className={styles.seller_cell}>
                                                         <span className={styles.primary_text}>{e?.sellerName || 'N/A'}</span>
@@ -2350,7 +2353,7 @@ const AllBrands_Card = () => {
                             </thead>
                             <tbody className={styles.tbody}>
                                 {displayedAllBrands.map((e: any, i: any) => (
-                                    <tr className={styles.tr}>
+                                    <tr key={e?.id || i} className={styles.tr}>
                                         <td className={styles.td} >{e?.id}</td>
                                         <td className={styles.td} ><img src={cloudinaryLoader(e?.logoUrl, 400, 'auto')} alt="" className={styles.image} /></td>
                                         <td className={styles.td_name} >{e?.brandName || 'N/A'}</td>
