@@ -7,6 +7,25 @@ const currentYear = new Date().getFullYear();
 const homeTitle = `ebike.pk - Buy & Sell New, Used & Electric Bikes in Pakistan | Latest Bike Prices ${currentYear}`;
 const homeDescription = "Explore new bikes, used bike ads, electric bikes, bike prices, specifications, reviews, dealers, mechanics, and motorcycle news in Pakistan on ebike.pk.";
 const canonicalUrl = `${SITE_URL}/`;
+const homeDataUrl = "https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/72079447d17e9189938c831c0c1215457497766b/gistfile1.json";
+
+export const revalidate = 3600;
+
+async function getHomePageData() {
+  try {
+    const response = await fetch(homeDataUrl, {
+      next: { revalidate },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return response.json();
+  } catch {
+    return null;
+  }
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -70,7 +89,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function Home() {
+export default async function Home() {
+  const initialHomeData = await getHomePageData();
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -109,6 +129,28 @@ export default function Home() {
           "used bikes in Pakistan",
           "electric bikes in Pakistan"
         ]
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": `${canonicalUrl}#navigation`,
+        name: [
+          "Used Bikes",
+          "New Bikes",
+          "Electric Bikes",
+          "Bike Prices",
+          "Dealers",
+          "Mechanics",
+          "Motorcycle Blog"
+        ],
+        url: [
+          `${SITE_URL}/used-bikes`,
+          `${SITE_URL}/new-bikes`,
+          `${SITE_URL}/new-bikes?tab=2`,
+          `${SITE_URL}/new-bike-price`,
+          `${SITE_URL}/dealers`,
+          `${SITE_URL}/mechanics`,
+          `${SITE_URL}/blog`
+        ]
       }
     ]
   };
@@ -119,7 +161,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      <Index/>
+      <Index initialHomeData={initialHomeData} />
     </>
   );
 }

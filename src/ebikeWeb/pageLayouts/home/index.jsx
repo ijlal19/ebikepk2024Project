@@ -10,8 +10,6 @@ import MobileBanner from './mobileBanner/index'
 import BikeFilterBar from '@/ebikeWeb/sharedComponents/bikeFilterBar'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
-import { isLoginUser } from "@/genericFunctions/geneFunc";
-import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 
 // import blogData from './blogSection/Data'
 import { BlogData as blogData } from './blogSection/Data'
@@ -35,10 +33,9 @@ const defaultHomeData = {
   homeBlogs: blogData
 }
 
-function Index() {
+function Index({ initialHomeData = null }) {
 
-  const [homeData, setHomeData] = useState(defaultHomeData)
-  const [isLoading, setIsLoading] = useState(true)
+  const [homeData, setHomeData] = useState(initialHomeData || defaultHomeData)
   
   useEffect(() => {
     getHomeData()
@@ -48,11 +45,9 @@ function Index() {
 
     // const gistUrl = "https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/6c3f058f8f96c7da649a19757996501ba3a35401/gistfile1.json";
     const gistUrl =  "https://gist.githubusercontent.com/AbdulAhadHaroon/59c8b850de1090bcd563da31c9492426/raw/72079447d17e9189938c831c0c1215457497766b/gistfile1.json"
-    // setIsLoading(true)
     fetch(gistUrl).then((res) => {
-      setIsLoading(false)
       if (!res.ok) {
-        return defaultHomeData
+        return null
       };
     
       return res.json();
@@ -60,12 +55,11 @@ function Index() {
     .then((data) => {
       
         window.scrollTo(0, 0)
-        setHomeData(data || defaultHomeData)
-        setIsLoading(false)
-        console.log('res qq', data)
+        if (data) {
+          setHomeData(data)
+        }
       })
       .catch((err) => {
-        setIsLoading(false)
         setHomeData(defaultHomeData)
       });
   }
@@ -84,10 +78,6 @@ function Index() {
   ]
 
   return (
-    isLoading ?
-      <div className={styles.load_div}>
-        <Loader isLoading={isLoading} />
-      </div> :
       <>
         <BannerSection />
         <MobileBanner />
