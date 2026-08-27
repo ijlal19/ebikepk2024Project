@@ -236,6 +236,15 @@ const Header = () => {
                     </Link>
                     <Divider />
 
+                    <Link href='/blog/news' className={styles.anchor}>
+                        <ListItem sx={{ padding: 0 }} disablePadding>
+                            <ListItemButton onClick={() => goToRoute({ url: "/blog/news" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
+                                <ListItemText primary='News' sx={{ marginTop: "0px", marginBottom: "0px" }} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+                    <Divider />
+
                     <Link href='/bike-videos' className={styles.anchor}>
                         <ListItem sx={{ padding: 0 }} disablePadding>
                             <ListItemButton onClick={() => goToRoute({ url: "/bike-videos" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
