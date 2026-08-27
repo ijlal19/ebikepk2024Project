@@ -10,13 +10,16 @@ import { getMechanicTypeFilterOptions, matchesMechanicType } from '@/constants/m
 type DealerComp = {
   featuredDelaer: any;
   delaer: any;
+  seoHeading?: string;
+  seoIntro?: string;
+  seoTags?: string[];
 };
 
-const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
+const Dealer = ({ featuredDelaer, delaer, seoHeading, seoIntro, seoTags = [] }: DealerComp) => {
 
-  const [allDealers, setAllDealers] = useState([])
-  const [featuredDealers, setFeaturedDealers] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [allDealers, setAllDealers] = useState<any[]>(Array.isArray(delaer) ? delaer : [])
+  const [featuredDealers, setFeaturedDealers] = useState<any[]>(Array.isArray(featuredDelaer) ? featuredDelaer : [])
+  const [isLoading, setIsLoading] = useState(!(featuredDelaer?.length > 0 || delaer?.length > 0))
   const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all")
   const [selectedBrand, setSelectedBrand] = useState("all")
 
@@ -75,49 +78,53 @@ const Dealer = ({featuredDelaer, delaer}:DealerComp) => {
     })
   }
 
+  const hasInitialData = featuredDelaer?.length > 0 || delaer?.length > 0;
+
   useEffect(() => {
-    fetchInfo()
-  }, [])
-
-  async function fetchInfo() {
-
-    let res1:any = null
-    let res2:any = null
-
-    if(featuredDelaer?.length > 0) {
-      setFeaturedDealers(featuredDelaer)
+    if (hasInitialData) {
+      setIsLoading(false)
+      return
     }
-    else {
-      res1 = await getFeaturedDealer()
-      if(res1?.length > 0) {
+
+    async function fetchInfo() {
+      const res1: any = await getFeaturedDealer()
+      if (res1?.length > 0) {
         setFeaturedDealers(res1)
-      }
-      else {
+      } else {
         setFeaturedDealers([])
       }
-    }
-  
-    if(delaer?.length > 0) {
-      setAllDealers(delaer)
-    }
-    else {
-      res2 = await getAllDealer()
-      if(res2?.length > 0) {
+
+      const res2: any = await getAllDealer()
+      if (res2?.length > 0) {
         setAllDealers(res2)
-      }
-      else {
+      } else {
         setAllDealers([])
       }
+
+      setIsLoading(false)
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 1000);
     }
 
-    setIsLoading(false)
-    setTimeout(() => {
-         window.scrollTo(0, 0)
-       }, 1000);
-  }
+    fetchInfo()
+  }, [hasInitialData])
 
   return (
     <div className={styles.main_dealer}>
+      {seoHeading ? (
+        <section className={styles.seo_header}>
+          <h1 className={styles.seo_heading}>{seoHeading}</h1>
+          {seoIntro ? <p className={styles.seo_intro}>{seoIntro}</p> : null}
+          {seoTags.length > 0 ? (
+            <ul className={styles.seo_tags} aria-label="Related dealer searches">
+              {seoTags.slice(0, 7).map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      ) : null}
       {
         isLoading ?
          <>

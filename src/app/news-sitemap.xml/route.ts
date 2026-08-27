@@ -10,6 +10,8 @@ type Blog = {
   createdAt?: string;
   updatedAt?: string;
   isHidden?: boolean;
+  is_news?: boolean;
+  isNews?: boolean;
   blog_category?: {
     name?: string;
   };
@@ -49,10 +51,19 @@ function buildBlogUrl(blog: Blog) {
 }
 
 async function getRecentBlogs() {
-  const response = await fetch(`${Gconfig.ebikeApi}blog/get-all-blog`, {
+  let response = await fetch(`${Gconfig.ebikeApi}blog/get-all-blog`, {
+    method: 'POST',
     next: { revalidate },
     headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ is_news: true }),
   });
+
+  if (!response.ok) {
+    response = await fetch(`${Gconfig.ebikeApi}blog/get-all-blog`, {
+      next: { revalidate },
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 
   if (!response.ok) {
     return [];
@@ -62,7 +73,16 @@ async function getRecentBlogs() {
   const visibleBlogs = filterVisibleBlogs(Array.isArray(data) ? data : []);
 
   return visibleBlogs
-    .filter((blog: Blog) => blog?.id && blog?.blogTitle && isRecentNewsArticle(blog.createdAt))
+    .filter((blog: Blog) =>
+      blog?.id &&
+      blog?.blogTitle &&
+      isRecentNewsArticle(blog.createdAt) &&
+      (
+        blog?.is_news === true ||
+        blog?.isNews === true ||
+        blog?.blog_category?.name?.toLowerCase() === 'news'
+      )
+    )
     .sort((a: Blog, b: Blog) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
     .slice(0, 1000);
 }

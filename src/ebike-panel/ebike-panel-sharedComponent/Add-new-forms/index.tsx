@@ -932,6 +932,7 @@ const AddBlogForm = () => {
         blogtext: '',
         focus_keyword: '',
         isHidden: false,
+        is_news: false,
         meta_description: '',
         meta_title: '',
     });
@@ -959,6 +960,11 @@ const AddBlogForm = () => {
     const handleHiddenToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { checked } = e.target;
         setBlogData((prev: any) => ({ ...prev, isHidden: checked }));
+    };
+
+    const handleNewsToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { checked } = e.target;
+        setBlogData((prev: any) => ({ ...prev, is_news: checked }));
     };
 
     const handleImageDelete = (index: number) => {
@@ -1134,6 +1140,20 @@ const AddBlogForm = () => {
                             onChange={handleHiddenToggle}
                         />
                         <span>Hide this blog from website frontend</span>
+                    </label>
+                </div>
+
+                <div className={styles.fieldGroup}>
+                    <label className={styles.label} htmlFor="is_news">News Article</label>
+                    <label htmlFor="is_news" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                        <input
+                            id="is_news"
+                            name="is_news"
+                            type="checkbox"
+                            checked={Boolean(BlogData.is_news)}
+                            onChange={handleNewsToggle}
+                        />
+                        <span>Show this blog on the News page and Google News sitemap</span>
                     </label>
                 </div>
 

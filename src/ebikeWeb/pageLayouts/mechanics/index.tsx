@@ -10,58 +10,65 @@ import { getMechanicTypeFilterOptions, matchesMechanicType } from '@/constants/m
 type MechanicComp = {
   featuredMechanic: any;
   mechanic: any;
+  seoHeading?: string;
+  seoIntro?: string;
+  seoTags?: string[];
 };
 
-const Mechanic = ({ featuredMechanic, mechanic }: MechanicComp) => {
+const Mechanic = ({ featuredMechanic, mechanic, seoHeading, seoIntro, seoTags = [] }: MechanicComp) => {
 
-  const [allMechanics, setAllMechanics]: any = useState([])
-  const [featuredMechanics, setFeaturedMechanics]: any = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [allMechanics, setAllMechanics]: any = useState(Array.isArray(mechanic) ? mechanic : [])
+  const [featuredMechanics, setFeaturedMechanics]: any = useState(Array.isArray(featuredMechanic) ? featuredMechanic : [])
+  const [isLoading, setIsLoading] = useState(!(featuredMechanic?.length > 0 || mechanic?.length > 0))
   const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all")
 
+  const hasInitialData = featuredMechanic?.length > 0 || mechanic?.length > 0;
+
   useEffect(() => {
-    fetchInfo()
-  }, [])
-
-  async function fetchInfo() {
-
-    let res1: any = null
-    let res2: any = null
-
-    if (featuredMechanic?.length > 0) {
-      setFeaturedMechanics(featuredMechanic)
+    if (hasInitialData) {
+      setIsLoading(false)
+      return
     }
-    else {
-      res1 = await getFeaturedMechanics()
+
+    async function fetchInfo() {
+      const res1: any = await getFeaturedMechanics()
       if (res1?.length > 0) {
         setFeaturedMechanics(res1)
-      }
-      else {
+      } else {
         setFeaturedMechanics([])
       }
-    }
 
-    if (mechanic?.length > 0) {
-      setAllMechanics(mechanic)
-    }
-    else {
-      res2 = await getAllMechanics()
+      const res2: any = await getAllMechanics()
       if (res2?.length > 0) {
         setAllMechanics(res2)
-      }
-      else {
+      } else {
         setAllMechanics([])
       }
+
+      setIsLoading(false)
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 1000);
     }
 
-    setIsLoading(false)
-    setTimeout(() => {
-      window.scrollTo(0, 0)
-    }, 1000);
-  }
+    fetchInfo()
+  }, [hasInitialData])
 
   return (
     <div className={styles.main_dealer}>
+      {seoHeading ? (
+        <section className={styles.seo_header}>
+          <h1 className={styles.seo_heading}>{seoHeading}</h1>
+          {seoIntro ? <p className={styles.seo_intro}>{seoIntro}</p> : null}
+          {seoTags.length > 0 ? (
+            <ul className={styles.seo_tags} aria-label="Related mechanic searches">
+              {seoTags.slice(0, 7).map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      ) : null}
       {
         isLoading ?
           <>

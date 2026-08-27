@@ -26,21 +26,26 @@ import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 
-const Blog = () => {
-  const [filteredResults, setFilteredResults] = useState([]);
+type BlogProps = {
+  initialBlogs?: any[];
+  isNewsPage?: boolean;
+};
+
+const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
+  const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [isFilterApply, setisFilterApply] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const [BlogBikeCare, setBlogBikeCare] = useState([]);
+  const [BlogBikeCare, setBlogBikeCare] = useState<any[]>([]);
   const [SelectedTags, setSelectedTag] = useState('');
   const [IsLogin, setIsLogin] = useState('not_login');
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [BlogSafety, setBlogSafety] = useState([]);
-  const [BlogData, setBlogData] = useState([]);
-  const [BlogNews, setBlognews] = useState([]);
-  const [messages, setMessages] = useState<any>([]);
-  const [TipsandAdvice, setTipsandAdvide] = useState<any>([])
+  const [BlogSafety, setBlogSafety] = useState<any[]>([]);
+  const [BlogData, setBlogData] = useState<any[]>(initialBlogs);
+  const [BlogNews, setBlognews] = useState<any[]>([]);
+  const [messages, setMessages] = useState<any>(initialBlogs.slice(0, 7));
+  const [TipsandAdvice, setTipsandAdvide] = useState<any>(BlogShuffle(initialBlogs))
   const [OpinionsData, setOpinionsData] = useState<any>([])
   // const [AllViews, setAllView] = useState<any>([])
 
@@ -58,7 +63,12 @@ const Blog = () => {
       setIsLogin("not_login")
     }
 
-    getAllBlogList()
+    if (initialBlogs.length > 0) {
+      prepareBlogData(initialBlogs)
+      setisFilterApply(false)
+    } else {
+      getAllBlogList()
+    }
     setFade(true);
   }, [])
 
@@ -76,13 +86,9 @@ const Blog = () => {
     if (SelectedTags) {
       setSelectedTag('');
       setFilteredResults([]);
+      setisFilterApply(false);
     }
   }, [searchParams, BlogData]);
-
-  useEffect(() => {
-    setisFilterApply(true)
-  }, [filteredResults])
-
 
   useEffect(() => {
     if (messages.length === 0) return;
@@ -100,32 +106,33 @@ const Blog = () => {
 
   async function getAllBlogList() {
     setIsLoading(true)
-    let res = await getAllBlog()
+    let res = await getAllBlog(isNewsPage ? { is_news: true } : undefined)
     // let res1 = await getViewsByID(1)
     // if (res1 && res1?.success && res1?.data.length > 0) {
     //   setAllView(res1?.data)
     // }
-    setBlogData(res)
-    const resAdvice = BlogShuffle(res)
-    setTipsandAdvide(resAdvice);
-    const resOpinion = BlogShuffle(res)
-    setOpinionsData(resOpinion);
-    res?.map((e: any) => {
-      const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
-      const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
-      const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
-      setBlognews(newsBlogs)
-      setBlogSafety(safetyBlogs)
-      setBlogBikeCare(Bike_Care)
-    })
-    const top7Titles = res.slice(0, 7).map((e: any) => e);
-    setMessages(top7Titles);
-
+    prepareBlogData(res)
     setisFilterApply(false)
     setIsLoading(false)
     setTimeout(() => {
       window.scrollTo(0, 0)
     }, 1000);
+  }
+
+  function prepareBlogData(res: any[] = []) {
+    setBlogData(res)
+    const resAdvice = BlogShuffle(res)
+    setTipsandAdvide(resAdvice);
+    const resOpinion = BlogShuffle(res)
+    setOpinionsData(resOpinion);
+    const newsBlogs = res.filter((e: any) => e?.blog_category?.name === "News");
+    const safetyBlogs = res.filter((e: any) => e?.blog_category?.name === "Safety");
+    const Bike_Care = res.filter((e: any) => e?.blog_category?.name === "Bike Care");
+    setBlognews(newsBlogs)
+    setBlogSafety(safetyBlogs)
+    setBlogBikeCare(Bike_Care)
+    const top7Titles = res.slice(0, 7).map((e: any) => e);
+    setMessages(top7Titles);
   }
 
   const blogsPerPage = 10;
@@ -150,10 +157,19 @@ const Blog = () => {
 
   const handleSearch = (e: any) => {
     const value = e?.target?.value || '';
+    setCurrentPage(1);
+
+    if (!value.trim()) {
+      setFilteredResults([]);
+      setisFilterApply(false);
+      return;
+    }
+
     const results = BlogData.filter((item: any) =>
       item.blogTitle.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredResults(results);
+    setisFilterApply(true);
     setTimeout(() => {
       window.scrollTo({
         top: 0,
@@ -249,7 +265,7 @@ const Blog = () => {
           <Box className={styles.blog_main}>
             <Box className={styles.blog_header}>
               <Typography className={styles.blog_heading}>
-                <p className={styles.static}>Trending <NavigateNextIcon className={styles.icon} /> </p>
+                <p className={styles.static}>{isNewsPage ? 'Latest News' : 'Trending'} <NavigateNextIcon className={styles.icon} /> </p>
                 {messages.length > 0 && (
                   <h1 className={`${styles.text} ${fade ? styles.fadeIn : styles.fadeOut}`}>
                     <a href={getRoute(messages[index])} style={{ padding: '0px', margin: '0px', textDecoration: 'none', color: '#696969' }} >
@@ -265,7 +281,7 @@ const Blog = () => {
 
             </Box>
 
-            <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />
+            {!isNewsPage && <OurVideos SetMaxWidth='inblogs' SetWidth='inblogs' />}
 
             <hr />
 
@@ -274,7 +290,7 @@ const Blog = () => {
               <Grid item xs={isMobile ? 12 : 8.5} className={styles.card_grid_main}>
 
                 <Box className={styles.input_main_box}>
-                  <input type="text" placeholder='Search Blog Here...' onChange={(e) => handleSearch(e)} className={styles.input} />
+                  <input type="text" placeholder={isNewsPage ? 'Search News Here...' : 'Search Blog Here...'} onChange={(e) => handleSearch(e)} className={styles.input} />
                 </Box>
 
                 {
@@ -283,7 +299,7 @@ const Blog = () => {
 
 
 
-                      <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}> Bike News <span className={styles.underline}></span></Typography>
+                      <Typography className={styles.shortblogheading} sx={{ marginBottom: isMobile ? '10px' : '1px' }}> {isNewsPage ? 'Latest Motorcycle News' : 'Bike News'} <span className={styles.underline}></span></Typography>
 
                       {currentBlogs?.length > 0 && renderBlogCards(currentBlogs)}
                     </Grid> :
@@ -313,27 +329,33 @@ const Blog = () => {
                     />
                   </Box>
 
-                  <Side_brands />
+                  {!isNewsPage && (
+                    <>
+                      <Side_brands />
 
-                  <MechaniLeft />
+                      <MechaniLeft />
 
-                  <Featrued_Usedbike_left />
-                  <div className={styles.main_art}>
-                    <List_Card />
-                  </div>
+                      <Featrued_Usedbike_left />
+                      <div className={styles.main_art}>
+                        <List_Card />
+                      </div>
+                    </>
+                  )}
 
-                  <BlogSidebarSection
-                    selectedTag={SelectedTags}
-                    onTagClick={handleTag}
-                    onSellBikeClick={gotoSellBike}
-                  />
+                  {!isNewsPage && (
+                    <BlogSidebarSection
+                      selectedTag={SelectedTags}
+                      onTagClick={handleTag}
+                      onSellBikeClick={gotoSellBike}
+                    />
+                  )}
                 </Box>
               </Grid>
             </Grid>
 
-            <Blog_Category_Comp heading="More Blogs" data={TipsandAdvice} />
+            {!isNewsPage && <Blog_Category_Comp heading="More Blogs" data={TipsandAdvice} />}
 
-            <BrowseUsedBike />
+            {!isNewsPage && <BrowseUsedBike />}
           </Box >
           :
           <div className={styles.load_main}>

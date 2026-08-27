@@ -161,13 +161,57 @@ function getAuthorBlogs(author: any) {
         })
 }
 
-function getAllBlog() {
-    return fetch(Gconfig.ebikeApi + `blog/get-all-blog`)
-        .then(response => response.json()).then(data => {
+type GetAllBlogOptions = {
+    is_news?: boolean;
+    next?: NextFetchRequestConfig;
+};
+
+function filterNewsBlogs(data: any) {
+    const visibleBlogs = filterVisibleBlogs(data);
+
+    return visibleBlogs.filter((blog: any) =>
+        blog?.is_news === true ||
+        blog?.isNews === true ||
+        blog?.blog_category?.name?.toLowerCase() === "news"
+    );
+}
+
+function getAllBlog(options?: GetAllBlogOptions) {
+    const shouldFetchNews = options?.is_news === true;
+    const fetchOptions: RequestInit = {
+        ...(options?.next ? { next: options.next } : {}),
+    };
+    const endpoint = shouldFetchNews ? `blog/get-all-blog?is_news=true` : `blog/get-all-blog`;
+
+    return fetch(Gconfig.ebikeApi + endpoint, fetchOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch blogs: ${response.status}`)
+            }
+
+            return response.json()
+        }).then(data => {
+            if (shouldFetchNews) {
+                return filterNewsBlogs(data)
+            }
+
             return filterVisibleBlogs(data)
         })
         .catch((err) => {
+            if (shouldFetchNews) {
+                return fetch(Gconfig.ebikeApi + `blog/get-all-blog`, {
+                    ...(options?.next ? { next: options.next } : {}),
+                })
+                    .then(response => response.json())
+                    .then(data => filterNewsBlogs(data))
+                    .catch((fallbackErr) => {
+                        console.log(fallbackErr)
+                        return []
+                    })
+            }
+
             console.log(err)
+            return []
         })
 }
 

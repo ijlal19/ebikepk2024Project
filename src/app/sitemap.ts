@@ -124,6 +124,7 @@ function buildStaticRoutes(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/new-bikes`, lastModified: now, changeFrequency: "daily", priority: 0.95 },
     { url: `${SITE_URL}/new-bike-price`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "daily", priority: 0.85 },
+    { url: `${SITE_URL}/blog/news`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${SITE_URL}/bike-videos`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/dealers`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/mechanics`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },

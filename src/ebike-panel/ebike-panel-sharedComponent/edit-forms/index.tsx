@@ -184,6 +184,8 @@ const normalizeYoutubeUrls = (value: string[] | string | null | undefined) => {
     return [];
 };
 
+const toBooleanFlag = (value: any) => value === true || value === 'true' || value === 1 || value === '1';
+
 const DashboardFormHeader = ({
     eyebrow,
     title,
@@ -1433,6 +1435,7 @@ const EditBlogForm = () => {
     const [Blog_Featured_Image, setBlog_Featured_Image] = useState('');
     const [Blog_Focus_keyword, setBlog_Focus_keyword] = useState('');
     const [Blog_Is_Hidden, setBlog_Is_Hidden] = useState(false);
+    const [Blog_Is_News, setBlog_Is_News] = useState(false);
     const [Blog_Meta_Title, setBlog_Meta_Title] = useState('');
     const [Author_Name, setAuthor_Name] = useState('');
     const [Author_Id, setAuthor_Id] = useState('');
@@ -1471,6 +1474,7 @@ const EditBlogForm = () => {
             setAuthor_Id(String(res.authorId || res.author_id || res.author?.id || ''))
             setBlog_Html(res.bloghtml)
             setBlog_Is_Hidden(Boolean(res.isHidden))
+            setBlog_Is_News(toBooleanFlag(res.is_news))
             setBlog_Meta_description(res.meta_description)
             setBlog_Meta_Title(res.meta_title)
             setBlog_Focus_keyword(res.focus_keyword)
@@ -1584,6 +1588,7 @@ const EditBlogForm = () => {
             featuredImage: imageArr.join(' #$# '),
             focus_keyword: Blog_Focus_keyword,
             isHidden: Blog_Is_Hidden,
+            is_news: Blog_Is_News,
             meta_description: Blog_Meta_Description,
             meta_title: Blog_Meta_Title,
             uid: UserId
@@ -1676,6 +1681,20 @@ const EditBlogForm = () => {
                                             onChange={(e) => setBlog_Is_Hidden(e.target.checked)}
                                         />
                                         <span>Hide this blog from website frontend</span>
+                                    </label>
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label className={styles.label} htmlFor="editBlogNews">News Article</label>
+                                    <label htmlFor="editBlogNews" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+                                        <input
+                                            id="editBlogNews"
+                                            name="is_news"
+                                            type="checkbox"
+                                            checked={Blog_Is_News}
+                                            onChange={(e) => setBlog_Is_News(e.target.checked)}
+                                        />
+                                        <span>Show this blog on the News page and Google News sitemap</span>
                                     </label>
                                 </div>
                             </div>
