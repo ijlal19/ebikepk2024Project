@@ -4,10 +4,20 @@ import AllUsedBikeComp from "@/ebikeWeb/pageLayouts/all-used-bikes/index";
 import { Metadata } from 'next'
 import { getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
 import { DEFAULT_SHARE_IMAGE, resolveClassifiedShareImage, SITE_URL, slugify } from '@/app/metadata-utils';
+import SeoContentBlock from '@/app/components/SeoContentBlock';
 
 const usedBikeTitle = "Used Bikes for Sale in Pakistan | ebike.pk";
 const usedBikeDescription = "Browse used bikes and motorcycles for sale in Pakistan. Compare Honda, Yamaha, Suzuki and other second hand bikes by price, city, model year and engine CC.";
 const usedBikeCanonical = `${SITE_URL}/used-bikes`;
+const usedBikeSeoTags = [
+  "Used Bikes for Sale in Pakistan",
+  "used bike prices Pakistan",
+  "used bike ads Pakistan",
+  "second hand motorcycles in Pakistan",
+  "Honda used bikes Pakistan",
+  "Yamaha used bikes Pakistan",
+  "Suzuki used bikes Pakistan"
+];
 
 export const dynamic = "force-dynamic";
 
@@ -161,6 +171,12 @@ export default async function AllUsedBikes() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildUsedBikeListJsonLd(allUsedBike)) }}
+      />
+      <SeoContentBlock
+        title="Used Bikes for Sale in Pakistan"
+        description="Browse used bikes for sale in Pakistan with updated prices, photos, model year details and seller information. Compare second hand motorcycle ads on ebike.pk before you contact the seller."
+        tags={usedBikeSeoTags}
+        headingLevel="h1"
       />
       <AllUsedBikeComp
         _allFeaturedBike={allFeaturedBike}

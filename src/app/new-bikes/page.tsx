@@ -4,6 +4,7 @@ import BrandComp from "@/ebikeWeb/pageLayouts/bike-brands/index";
 import fallbackBrands from '@/ebikeWeb/pageLayouts/bike-brands/data';
 import Gconfig from 'globalconfig';
 import { DEFAULT_SHARE_IMAGE, SITE_URL, stripHtml } from '@/app/metadata-utils';
+import SeoContentBlock from '@/app/components/SeoContentBlock';
 
 export const revalidate = 3600;
 
@@ -15,8 +16,8 @@ type Brand = {
   id?: number;
   brandName?: string;
   description?: string;
-  meta_description?: string;
-  focus_keyword?: string;
+  meta_description?: string | null;
+  focus_keyword?: string | null;
   logoUrl?: string;
 };
 
@@ -99,6 +100,18 @@ function buildSeoContent(brands: Brand[], electricOnly = false) {
     pageLabel,
     categoryLabel,
     topBrands,
+    introTitle: electricOnly ? 'Electric Bikes in Pakistan' : 'New Bikes in Pakistan',
+    introDescription: electricOnly
+      ? `Explore electric bikes in Pakistan with latest e-bike brands, prices, specifications and model details. Compare ${filteredBrands.length} electric bike brands on ebike.pk before choosing your next ride.`
+      : `Browse new bikes in Pakistan with latest motorcycle brands, prices, specifications and model details. Compare Honda, Yamaha, Suzuki and other bike brands on ebike.pk before choosing your next ride.`,
+    introTags: [
+      electricOnly ? 'Electric Bikes in Pakistan' : 'New Bikes in Pakistan',
+      electricOnly ? 'electric bike prices Pakistan' : 'new bike prices Pakistan',
+      electricOnly ? 'latest e-bike models Pakistan' : 'latest motorcycle models Pakistan',
+      electricOnly ? 'electric bike brands Pakistan' : 'motorcycle brands Pakistan',
+      'bike specifications Pakistan',
+      ...topBrands.map((brand) => `${brand} bikes Pakistan`)
+    ],
   };
 }
 
@@ -224,12 +237,18 @@ export default async function NewBikeBrandPage(
   const resolvedSearchParams = searchParams instanceof Promise ? await searchParams : searchParams;
   const electricOnly = resolvedSearchParams?.tab === '2';
   const brands = await getBrands();
+  const seo = buildSeoContent(brands, electricOnly);
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildNewBikesJsonLd(brands, electricOnly)) }}
+      />
+      <SeoContentBlock
+        title={seo.introTitle}
+        description={seo.introDescription}
+        tags={seo.introTags}
       />
       <BrandComp initialBrands={brands} />
     </>

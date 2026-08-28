@@ -4,6 +4,7 @@ import AllNewBikeComp from "@/ebikeWeb/pageLayouts/all-new-bikes/index";
 import { getnewBikeData } from '@/ebikeWeb/functions/globalFuntions';
 import { DEFAULT_SHARE_IMAGE, SITE_URL, formatTitleText, stripHtml, toSecureUrl, trimText } from '@/app/metadata-utils';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import SeoContentBlock from '@/app/components/SeoContentBlock';
 
 export const revalidate = 3600;
 
@@ -69,6 +70,16 @@ function getBrandSeo(data: BrandBike[], slug: string) {
     keywords,
     modelCount: data.length,
     plainDescription,
+    introTitle: `${brandName} Bike Prices, Specs & Reviews`,
+    introDescription: `Compare ${brandName} new bikes in Pakistan with updated prices, specifications, features, photos and reviews. Explore latest ${brandName} motorcycle models on ebike.pk.`,
+    introTags: [
+      `${brandName} New Bikes in Pakistan`,
+      `${brandName} bike price in Pakistan`,
+      `${brandName} motorcycle models`,
+      `${brandName} bike specifications`,
+      `${brandName} reviews Pakistan`,
+      'latest bike prices Pakistan'
+    ],
   };
 }
 
@@ -207,12 +218,18 @@ function buildBrandJsonLd(data: BrandBike[], slug: string) {
 
 export default async function AllNewBikes({ params }: Props) {
   const data = await getBrandBikes(params.slug);
+  const seo = getBrandSeo(data, params.slug);
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBrandJsonLd(data, params.slug)) }}
+      />
+      <SeoContentBlock
+        title={seo.introTitle}
+        description={seo.introDescription}
+        tags={seo.introTags}
       />
       <AllNewBikeComp initialBrandData={data} />
     </>
