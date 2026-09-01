@@ -20,7 +20,12 @@ import ItemCard from '../../sharedComponents/itemCard'
 
 let SelectedADD = []
 
-const AllUsedBikeByFilter = () => {
+const AllUsedBikeByFilter = ({
+    _allUsedBike,
+    initialHeading = 'Used Bikes',
+    seoIntro = '',
+    seoTags = []
+} = {}) => {
 
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
@@ -34,16 +39,16 @@ const AllUsedBikeByFilter = () => {
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
     const [SearchValue, setSearchValue] = useState('');
-    const [allBikesArr, setAllBikesArr] = useState([]);
+    const [allBikesArr, setAllBikesArr] = useState(Array.isArray(_allUsedBike?.data) ? _allUsedBike.data : []);
     const [isLoading, setIsLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
     const [BrandArray, setBrandArray] = useState([]);
-    const [totalPage, setTotalPage] = useState(null);
+    const [totalPage, setTotalPage] = useState(_allUsedBike?.pages || null);
     const [getAdFrom, setGetAdFrom] = useState(-10);
     const [CityArray, setCityArray] = useState([]);
     const [YearsData, setYearsdata] = useState([]);
     const [CCsData, setCCsData] = useState([]);
-    const [heading, setHeading] = useState('');
+    const [heading, setHeading] = useState(initialHeading);
     const SelectedYearData = []
     const SelectedCCData = []
 
@@ -168,7 +173,7 @@ const AllUsedBikeByFilter = () => {
             fetchBikeInfo(page)
         }
         else {
-            fetchBikeInfo(1)
+            fetchBikeInfo(page)
         }
     }
 
@@ -187,7 +192,7 @@ const AllUsedBikeByFilter = () => {
             }
             let res = await getCustomBikeAd(Obj)
             if (res?.data?.length > 0) {
-                setCurrentPage(res?.currentPage)
+                setCurrentPage(res?.currentPage || _page || 1)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
                 setHeading('Used Bike For Year ' + params.id)
@@ -213,7 +218,7 @@ const AllUsedBikeByFilter = () => {
 
             if (res?.data?.length > 0) {
                 setHeading(capitalizeFirstWord(res?.data[0]?.bike_brand?.brandName)?.replaceAll('_', " ") + " Used Bike in " + capitalizeFirstWord(res?.data[0]?.city?.city_name))
-                setCurrentPage(res?.currentPage)
+                setCurrentPage(res?.currentPage || _page || 1)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
             }
@@ -238,7 +243,7 @@ const AllUsedBikeByFilter = () => {
 
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(res?.data[0]?.bike_brand?.brandName) + " in " + capitalizeFirstWord(res?.data[0]?.city?.city_name))
-                setCurrentPage(res?.currentPage)
+                setCurrentPage(res?.currentPage || _page || 1)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
             }
@@ -261,7 +266,7 @@ const AllUsedBikeByFilter = () => {
 
             if (res?.data?.length > 0) {
                 setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
-                setCurrentPage(res?.currentPage)
+                setCurrentPage(res?.currentPage || _page || 1)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
             }
@@ -284,7 +289,7 @@ const AllUsedBikeByFilter = () => {
 
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(params.id))
-                setCurrentPage(res?.currentPage)
+                setCurrentPage(res?.currentPage || _page || 1)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
             }
@@ -308,7 +313,7 @@ const AllUsedBikeByFilter = () => {
 
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(params.id) + "CC")
-                setCurrentPage(res?.currentPage)
+                setCurrentPage(res?.currentPage || _page || 1)
                 setAllBikesArr(res?.data)
                 setTotalPage(res?.pages)
             }
@@ -795,7 +800,17 @@ const AllUsedBikeByFilter = () => {
             }
 
             <Box className={styles.main}>
-                <h5 className={styles.heading1}>{heading}</h5>
+                <section className={styles.seo_header} aria-labelledby="filtered-used-bike-heading">
+                    <h1 id="filtered-used-bike-heading" className={styles.heading1}>{heading || initialHeading}</h1>
+                    {seoIntro ? <p className={styles.seo_intro}>{seoIntro}</p> : null}
+                    {seoTags?.length > 0 ? (
+                        <ul className={styles.seo_tags} aria-label="Related bike searches">
+                            {seoTags.slice(0, 7).map((tag) => (
+                                <li key={tag}>{tag}</li>
+                            ))}
+                        </ul>
+                    ) : null}
+                </section>
                 {
 
                         <>

@@ -98,7 +98,7 @@ const ShopFooter = () => {
 
                 <Grid item xs={isMobile ? 12 : 12} className={styles.copyright_box}>
                     <Typography className={styles.copyright}>
-                        Copyright © 2017 - 2024 ebikeshop.pk - All Rights Reserved.
+                        Copyright © 2017 - 2026 ebike.pk - All Rights Reserved.
                     </Typography>
                 </Grid>
 

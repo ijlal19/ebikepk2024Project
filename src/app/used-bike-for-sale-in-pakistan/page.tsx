@@ -7,6 +7,20 @@ import { DEFAULT_SHARE_IMAGE, resolveClassifiedShareImage, SITE_URL, slugify } f
 const usedBikeSaleTitle = "Used Bike for Sale in Pakistan | ebike.pk";
 const usedBikeSaleDescription = "Find used bike for sale in Pakistan on ebike.pk. Browse second hand motorcycles with prices, photos, city, model year, engine CC and seller details.";
 const usedBikeSaleCanonical = `${SITE_URL}/used-bike-for-sale-in-pakistan`;
+const usedBikeSaleFaqs = [
+  {
+    question: "Where can I find used bike for sale in Pakistan?",
+    answer: "You can find used bike ads on ebike.pk with price, city, model year, brand, engine CC, photos and seller contact details."
+  },
+  {
+    question: "What should I check before buying a second hand bike?",
+    answer: "Before buying a second hand bike, compare market price, inspect condition, check registration documents, verify engine and chassis details and meet the seller in a safe location."
+  },
+  {
+    question: "Can I post my bike ad on ebike.pk?",
+    answer: "Yes, you can post a used bike ad on ebike.pk with clear photos, correct price, condition details and contact information so interested buyers can reach you."
+  }
+];
 
 export const dynamic = "force-dynamic";
 
@@ -132,6 +146,18 @@ function buildUsedBikeSaleListJsonLd(usedBikes: any) {
             }
           };
         })
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${usedBikeSaleCanonical}#faq`,
+        mainEntity: usedBikeSaleFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer
+          }
+        }))
       }
     ]
   };

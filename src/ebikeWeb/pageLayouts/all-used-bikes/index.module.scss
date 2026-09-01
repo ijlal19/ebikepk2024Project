@@ -1054,6 +1054,85 @@
   }
 }
 
+.used_bike_seo_content {
+  width: calc(100% - 20px);
+  max-width: 1060px;
+  margin: 10px auto 34px;
+  padding: 26px 30px;
+  background: #fff;
+  border: 1px solid #dde6ef;
+  box-shadow: 0 1px 8px rgba(30, 50, 70, 0.06);
+  box-sizing: border-box;
+  color: #424242;
+
+  h2 {
+    margin: 0 0 16px;
+    color: #303030;
+    font-size: 28px;
+    line-height: 1.28;
+    font-weight: 700;
+  }
+
+  h3 {
+    margin: 24px 0 9px;
+    color: #164887;
+    font-size: 20px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.72;
+  }
+
+  .used_bike_seo_section {
+    margin-top: 0;
+  }
+
+  .used_bike_seo_links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .used_bike_seo_link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 7px 12px;
+    border: 1px solid #cdddf0;
+    background: #f7fbff;
+    color: #1976d2;
+    font-size: 14px;
+    line-height: 1.3;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+
+  @media (max-width:768px) {
+    width: calc(100% - 16px);
+    margin-bottom: 22px;
+    padding: 18px 15px;
+
+    h2 {
+      font-size: 22px;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin-top: 19px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.65;
+    }
+  }
+}
+
 .banner_1 {
   width: 100%;
   display: flex;

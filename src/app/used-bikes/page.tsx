@@ -18,6 +18,20 @@ const usedBikeSeoTags = [
   "Yamaha used bikes Pakistan",
   "Suzuki used bikes Pakistan"
 ];
+const usedBikeFaqs = [
+  {
+    question: "How can I find used bikes for sale in Pakistan on ebike.pk?",
+    answer: "You can browse used bike ads on ebike.pk and compare motorcycles by price, city, model year, brand, engine CC, photos and seller details."
+  },
+  {
+    question: "Which used bike brands are listed on ebike.pk?",
+    answer: "ebike.pk lists second hand motorcycles from popular brands including Honda, Yamaha, Suzuki, United, Road Prince, Super Power and other bike makers available in Pakistan."
+  },
+  {
+    question: "Can I sell my used bike on ebike.pk?",
+    answer: "Yes, sellers can post a used bike ad with photos, price, condition, registration details and contact information to reach buyers looking for motorcycles in Pakistan."
+  }
+];
 
 export const dynamic = "force-dynamic";
 
@@ -148,6 +162,18 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
             }
           }
         })
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${usedBikeCanonical}#faq`,
+        mainEntity: usedBikeFaqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer
+          }
+        }))
       }
     ]
   };

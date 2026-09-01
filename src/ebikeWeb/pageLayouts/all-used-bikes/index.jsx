@@ -65,6 +65,32 @@ const AdsArray = [
 let SelectedADD = []
 let GetScroll = 0
 
+const usedBikeSeoSections = [
+    {
+        heading: 'Why buy a used bike from ebike.pk?',
+        body: 'Buying a used bike in Pakistan is often the practical choice for daily travel, office commutes, student rides and delivery work. On ebike.pk, buyers can browse second hand motorcycles with price, city, model year, engine capacity, seller details and real ad information in one place.'
+    },
+    {
+        heading: 'Compare used bike prices before you call',
+        body: 'Used motorcycle prices change by brand, condition, registration city, mileage, model year and market demand. Our used bike listings help you compare Honda, Yamaha, Suzuki, United, Road Prince, Super Power and other popular bikes so you can shortlist the right option before contacting a seller.'
+    },
+    {
+        heading: 'Find used bikes in major cities of Pakistan',
+        body: 'Riders can search used bikes for sale in Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta and other cities. City based listings make it easier to inspect the bike, verify documents and negotiate with a nearby seller.'
+    },
+    {
+        heading: 'Sell your used bike online with confidence',
+        body: 'If you want to sell a motorcycle, ebike.pk helps you reach buyers who are already looking for used bikes in Pakistan. Add clear photos, correct price, bike condition, registration details and contact information to make your ad easier to trust and faster to discover.'
+    }
+]
+
+const usedBikeSeoLinks = [
+    { label: 'Post a used bike ad', href: '/used-bikes/sell-used-bike' },
+    { label: 'New bike prices', href: '/new-bike-price' },
+    { label: 'Bike dealers', href: '/dealers' },
+    { label: 'Bike blog', href: '/blog' }
+]
+
 export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
@@ -783,6 +809,25 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 </table>
                             </div>
                             : ""}
+                        <section className={styles.used_bike_seo_content} aria-labelledby="used-bike-seo-heading">
+                            <h2 id="used-bike-seo-heading">Used Bikes for Sale in Pakistan on ebike.pk</h2>
+                            <p>
+                                ebike.pk is built for motorcycle buyers and sellers in Pakistan who want a simple way to find used bikes, compare prices and check available options by city, brand, year and CC. Whether you are looking for a 70cc daily ride, a 100cc commuter, a 125cc motorcycle or a 150cc bike, this page helps you discover active used bike ads with useful details before you make a decision.
+                            </p>
+                            {usedBikeSeoSections.map((section) => (
+                                <div className={styles.used_bike_seo_section} key={section.heading}>
+                                    <h3>{section.heading}</h3>
+                                    <p>{section.body}</p>
+                                </div>
+                            ))}
+                            <div className={styles.used_bike_seo_links} aria-label="Useful used bike links">
+                                {usedBikeSeoLinks.map((link) => (
+                                    <Link href={link.href} key={link.href} className={styles.used_bike_seo_link}>
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </section>
                     </>
 
                     <div className={styles.load_main}>

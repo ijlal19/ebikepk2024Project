@@ -1,7 +1,7 @@
 'use client';
 import { BrandArr,CityArr } from '@/ebikeWeb/constants/globalData';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
-import { createdealer } from "@/ebikeWeb/functions/globalFuntions";
+import { createdealer, getbrandData } from "@/ebikeWeb/functions/globalFuntions";
 import { numericOnly } from "@/genericFunctions/geneFunc";
 import { TextareaAutosize, Typography } from '@mui/material';
 import {isLoginUser } from '@/genericFunctions/geneFunc';
@@ -11,6 +11,22 @@ import styles from './index.module.scss';
 import { getMechanicTypeFilterOptions } from '@/constants/mechanicType';
 
 const cityOptions = getSortedCityOptions(CityArr);
+
+function normalizeBrandOptions(data: any) {
+  if (Array.isArray(data)) {
+    return data;
+  }
+
+  if (Array.isArray(data?.data)) {
+    return data.data;
+  }
+
+  if (Array.isArray(data?.brands)) {
+    return data.brands;
+  }
+
+  return [];
+}
 
 const DealerRegistration = () => {
 
@@ -23,6 +39,7 @@ const DealerRegistration = () => {
   const [Address, setAddress] = useState('');
   const [mechanicType, setMechanicType] = useState('1');
   const [customer, setCustomer]  = useState<any>('not_login')
+  const [brandOptions, setBrandOptions] = useState<any[]>([]);
 
   useEffect(() => {
       let _isLoginUser = isLoginUser()
@@ -33,7 +50,15 @@ const DealerRegistration = () => {
           setCustomer("not_login")
           Router.push('/')
       }
+
+      fetchBrandOptions()
   },[])
+
+  async function fetchBrandOptions() {
+      const res = await getbrandData()
+      const apiBrands = normalizeBrandOptions(res)
+      setBrandOptions(apiBrands.length > 0 ? apiBrands : BrandArr)
+  }
 
   const handleChange = (field:any, value:any) => {
       if (field === 'city') {
@@ -183,10 +208,11 @@ const DealerRegistration = () => {
                         </Typography>
                         <Typography>
                             <select name="" id="brand" className={styles.section_main}
+                            value={brand}
                             onChange={(e) => handleChange('brand', e.target.value)}>
-                                <option value="" disabled selected hidden></option>
+                                <option value="" disabled hidden></option>
                                 {
-                                    BrandArr.map((e: any) => {
+                                    brandOptions.map((e: any) => {
                                         return (
                                             <option key={e.id} value={e.id} className={styles.drop_option}>{e.brandName}</option>
                                         )

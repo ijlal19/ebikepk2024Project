@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './index.module.scss'
 import { useRouter } from 'next/navigation';
 import { numericOnly } from "@/genericFunctions/geneFunc";
-import { createmechanic } from "@/ebikeWeb/functions/globalFuntions";
+import { createmechanic, getbrandData } from "@/ebikeWeb/functions/globalFuntions";
 import { BrandArr, CcArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import {isLoginUser} from "@/genericFunctions/geneFunc";
@@ -12,6 +12,21 @@ import { getMechanicTypeFilterOptions } from '@/constants/mechanicType';
 
 const cityOptions = getSortedCityOptions(CityArr);
 
+function normalizeBrandOptions(data: any) {
+  if (Array.isArray(data)) {
+    return data;
+  }
+
+  if (Array.isArray(data?.data)) {
+    return data.data;
+  }
+
+  if (Array.isArray(data?.brands)) {
+    return data.brands;
+  }
+
+  return [];
+}
 
 const MechanicRegistration = () => {
 
@@ -25,6 +40,7 @@ const MechanicRegistration = () => {
   const [mechanicType, setMechanicType] = useState('1');
   const [isAggreed, setIsAggreed] = useState(false)
   const [customer, setCustomer]  = useState<any>('not_login')
+  const [brandOptions, setBrandOptions] = useState<any[]>([]);
 
   useEffect(() => {
       let _isLoginUser = isLoginUser()
@@ -35,7 +51,15 @@ const MechanicRegistration = () => {
           setCustomer("not_login")
           Router.push('/')
       }
+
+      fetchBrandOptions()
   },[])
+
+  async function fetchBrandOptions() {
+      const res = await getbrandData()
+      const apiBrands = normalizeBrandOptions(res)
+      setBrandOptions(apiBrands.length > 0 ? apiBrands : BrandArr)
+  }
 
   const handleChange = (field:any, value:any) => {
       if (field === 'city') {
@@ -185,10 +209,11 @@ const MechanicRegistration = () => {
                         </Typography>
                         <Typography>
                             <select name="" id="brand" className={styles.section_main}
+                            value={brand}
                             onChange={(e) => handleChange('brand', e.target.value)}>
-                                <option value="" disabled selected hidden></option>
+                                <option value="" disabled hidden></option>
                                 {
-                                    BrandArr.map((e: any) => {
+                                    brandOptions.map((e: any) => {
                                         return (
                                             <option key={e.id} value={e.id} className={styles.drop_option}>{e.brandName}</option>
                                         )

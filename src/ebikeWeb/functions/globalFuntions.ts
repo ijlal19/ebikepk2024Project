@@ -166,14 +166,39 @@ type GetAllBlogOptions = {
     next?: NextFetchRequestConfig;
 };
 
-function filterNewsBlogs(data: any) {
-    const visibleBlogs = filterVisibleBlogs(data);
+function normalizeBlogResponse(data: any) {
+    if (Array.isArray(data)) {
+        return data;
+    }
 
-    return visibleBlogs.filter((blog: any) =>
-        blog?.is_news === true ||
-        blog?.isNews === true ||
+    if (Array.isArray(data?.data)) {
+        return data.data;
+    }
+
+    if (Array.isArray(data?.blogs)) {
+        return data.blogs;
+    }
+
+    return [];
+}
+
+function isNewsBlog(blog: any) {
+    const isNewsValue = blog?.is_news ?? blog?.isNews;
+    const normalizedNewsValue = String(isNewsValue).toLowerCase();
+
+    return (
+        isNewsValue === true ||
+        isNewsValue === 1 ||
+        normalizedNewsValue === "true" ||
+        normalizedNewsValue === "1" ||
         blog?.blog_category?.name?.toLowerCase() === "news"
     );
+}
+
+function filterNewsBlogs(data: any) {
+    const visibleBlogs = filterVisibleBlogs(normalizeBlogResponse(data));
+
+    return visibleBlogs.filter(isNewsBlog);
 }
 
 function getAllBlog(options?: GetAllBlogOptions) {
@@ -195,7 +220,7 @@ function getAllBlog(options?: GetAllBlogOptions) {
                 return filterNewsBlogs(data)
             }
 
-            return filterVisibleBlogs(data)
+            return filterVisibleBlogs(normalizeBlogResponse(data))
         })
         .catch((err) => {
             if (shouldFetchNews) {

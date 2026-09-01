@@ -224,6 +224,7 @@ function buildFilteredUsedBikeJsonLd(params: Props["params"], usedBikes: any) {
 }
 
 export default async function UsedBike({ params }: Props) {
+    const { heading, description, keywords } = getFilterSeo(params);
     const usedBikes = await getCustomBikeAd(getFilterRequest(params));
 
     return (  
@@ -232,7 +233,12 @@ export default async function UsedBike({ params }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFilteredUsedBikeJsonLd(params, usedBikes)) }}
         />
-        <AllUsedBikeFilter />
+        <AllUsedBikeFilter
+          _allUsedBike={usedBikes}
+          initialHeading={heading}
+          seoIntro={description}
+          seoTags={keywords}
+        />
       </>
     )
 }
