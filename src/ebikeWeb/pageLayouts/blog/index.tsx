@@ -29,9 +29,37 @@ import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 type BlogProps = {
   initialBlogs?: any[];
   isNewsPage?: boolean;
+  dynamicTags?: string[];
 };
 
-const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
+const buildDynamicSidebarTags = (blogs: any[] = [], limit = 18) => {
+  const tags: string[] = [];
+
+  const addTag = (value?: string | null) => {
+    const tag = (value || '').replace(/\s+/g, ' ').trim();
+    if (!tag || tags.some((item) => item.toLowerCase() === tag.toLowerCase())) return;
+    tags.push(tag);
+  };
+
+  blogs.forEach((blog: any) => addTag(blog?.blog_category?.name));
+  blogs.forEach((blog: any) => {
+    String(blog?.focus_keyword || '')
+      .split(',')
+      .forEach(addTag);
+  });
+
+  BLOG_TAGS.forEach(addTag);
+
+  return tags.slice(0, limit);
+};
+
+const normalizeQueryValue = (value?: string | null) => (value || '').replace(/_/g, ' ').trim();
+
+const normalizeCategoryLabel = (value?: string | null) => normalizeQueryValue(value)
+  .replace(/\s+Blogs$/i, '')
+  .trim();
+
+const Blog = ({ initialBlogs = [], isNewsPage = false, dynamicTags = [] }: BlogProps) => {
   const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [isFilterApply, setisFilterApply] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -75,8 +103,16 @@ const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
   useEffect(() => {
     if (BlogData.length === 0) return;
 
+    const categoryFromQuery = searchParams.get('category');
+    if (categoryFromQuery?.trim()) {
+      const normalizedCategory = normalizeCategoryLabel(categoryFromQuery);
+      setSelectedTag(normalizeQueryValue(categoryFromQuery));
+      handleCategoryFilter(normalizedCategory);
+      return;
+    }
+
     const tagFromQuery = searchParams.get('tag');
-    if (tagFromQuery && BLOG_TAGS.includes(tagFromQuery)) {
+    if (tagFromQuery?.trim()) {
       const normalizedTag = tagFromQuery.trim();
       setSelectedTag(normalizedTag);
       handleSearch({ target: { value: normalizedTag } });
@@ -165,9 +201,44 @@ const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
       return;
     }
 
+    const normalizedValue = value.toLowerCase();
+    const results = BlogData.filter((item: any) => {
+      const searchableValues = [
+        item?.blogTitle,
+        item?.focus_keyword,
+        item?.meta_description,
+        item?.blog_category?.name,
+      ]
+        .filter(Boolean)
+        .map((searchValue: any) => String(searchValue).toLowerCase());
+
+      return searchableValues.some((searchValue: string) => searchValue.includes(normalizedValue));
+    });
+    setFilteredResults(results);
+    setisFilterApply(true);
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }, 500);
+  };
+
+  const handleCategoryFilter = (category: string) => {
+    setCurrentPage(1);
+
+    if (!category.trim()) {
+      setFilteredResults([]);
+      setisFilterApply(false);
+      return;
+    }
+
+    const normalizedCategory = category.toLowerCase();
     const results = BlogData.filter((item: any) =>
-      item.blogTitle.toLowerCase().includes(value.toLowerCase())
+      String(item?.blog_category?.name || '').toLowerCase() === normalizedCategory
     );
+
     setFilteredResults(results);
     setisFilterApply(true);
     setTimeout(() => {
@@ -258,6 +329,10 @@ const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
     });
   }
 
+  const headerBlog = isFilterApply ? filteredResults[0] : messages[index % messages.length];
+  const headerLabel = isNewsPage ? 'Latest News' : SelectedTags || (isFilterApply ? 'Search Results' : 'Trending');
+  const sidebarTags = dynamicTags.length > 0 ? dynamicTags : buildDynamicSidebarTags(BlogData);
+
   return (
     <>
       {
@@ -265,11 +340,11 @@ const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
           <Box className={styles.blog_main}>
             <Box className={styles.blog_header}>
               <Typography className={styles.blog_heading}>
-                <p className={styles.static}>{isNewsPage ? 'Latest News' : 'Trending'} <NavigateNextIcon className={styles.icon} /> </p>
-                {messages.length > 0 && (
+                <p className={styles.static}>{headerLabel} <NavigateNextIcon className={styles.icon} /> </p>
+                {headerBlog && (
                   <h1 className={`${styles.text} ${fade ? styles.fadeIn : styles.fadeOut}`}>
-                    <a href={getRoute(messages[index])} style={{ padding: '0px', margin: '0px', textDecoration: 'none', color: '#696969' }} >
-                      {add3Dots(messages[index].blogTitle, isMobile ? 33 : 80)}
+                    <a href={getRoute(headerBlog)} style={{ padding: '0px', margin: '0px', textDecoration: 'none', color: '#696969' }} >
+                      {add3Dots(headerBlog.blogTitle, isMobile ? 33 : 80)}
                     </a>
                   </h1>
                 )}
@@ -345,6 +420,7 @@ const Blog = ({ initialBlogs = [], isNewsPage = false }: BlogProps) => {
                   {!isNewsPage && (
                     <BlogSidebarSection
                       selectedTag={SelectedTags}
+                      tags={sidebarTags}
                       onTagClick={handleTag}
                       onSellBikeClick={gotoSellBike}
                     />

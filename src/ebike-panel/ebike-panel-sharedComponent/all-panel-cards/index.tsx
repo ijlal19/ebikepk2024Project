@@ -294,7 +294,7 @@ const Used_bike_card: any = () => {
 
     return (
         <div className={styles.main_used_bike}>
-            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search by Ad ID, title, meta title, seller or phone" />
+            <New_header value={searchTerm} onChange={handleSearch} placeholder="Search by Ad ID, title, seller or phone" />
             {!IsLoading ? (
                 <div className={styles.big_container}>
                     <div className={styles.page_header}>
@@ -331,7 +331,7 @@ const Used_bike_card: any = () => {
                                 type="text"
                                 value={searchTerm}
                                 onChange={handleSearch}
-                                placeholder='Search Ad with ID, title, meta title, seller or phone'
+                                placeholder='Search Ad with ID, title, seller or phone'
                                 className={styles.input} />
                             <button className={styles.btn}><SearchIcon className={styles.icon} /></button>
                         </form>
@@ -344,7 +344,6 @@ const Used_bike_card: any = () => {
                                         <tr>
                                             <th>ID</th>
                                             <th>Bike</th>
-                                            <th>Meta Title</th>
                                             <th>Seller</th>
                                             <th>Brand / City</th>
                                             <th>Price</th>
@@ -370,7 +369,6 @@ const Used_bike_card: any = () => {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td className={styles.meta_title_cell}>{e?.meta_title ? add3Dots(e.meta_title, 70) : '-'}</td>
                                                 <td>
                                                     <div className={styles.seller_cell}>
                                                         <span className={styles.primary_text}>{e?.sellerName || 'N/A'}</span>

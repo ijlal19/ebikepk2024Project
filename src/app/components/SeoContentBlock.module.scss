@@ -45,6 +45,17 @@
   box-sizing: border-box;
 }
 
+a.tag {
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    border-color: #1976d2;
+    background: #eef6ff;
+    color: #1976d2;
+  }
+}
+
 @media (max-width: 768px) {
   .seoBlock {
     width: calc(100% - 16px);

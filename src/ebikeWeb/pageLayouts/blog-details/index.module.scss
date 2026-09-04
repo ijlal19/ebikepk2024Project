@@ -31,6 +31,52 @@
             width: 100%;
             padding: 0px 10px 20px 10px !important;
 
+            .breadcrumbs {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 4px;
+                margin: 0px 0px 12px;
+                color: #65758b;
+                font-family: 'Lato';
+                font-size: 14px;
+                line-height: 1.5;
+
+                .breadcrumbLink {
+                    color: $primary_two;
+                    text-decoration: none;
+                    font-family: 'LatoBold';
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                .breadcrumbIcon {
+                    color: #94a3b8;
+                    font-size: 18px;
+                    flex: 0 0 auto;
+                }
+
+                .breadcrumbCurrent {
+                    min-width: 0;
+                    max-width: 100%;
+                    color: #4b5563;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                @media (max-width:768px) {
+                    margin-bottom: 10px;
+                    font-size: 13px;
+
+                    .breadcrumbCurrent {
+                        white-space: normal;
+                    }
+                }
+            }
+
             .image_box {
                 width: 100%;
                 height: 418px;

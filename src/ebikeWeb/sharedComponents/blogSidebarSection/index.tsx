@@ -37,6 +37,7 @@ export const BLOG_TAGS = [
 
 type BlogSidebarSectionProps = {
   selectedTag?: string;
+  tags?: string[];
   onTagClick?: (tag: string) => void;
   onSellBikeClick?: () => void;
 };
@@ -46,10 +47,12 @@ const EBIKE_LOGO_URL = 'https://res.cloudinary.com/dzfd4phly/image/upload/v17272
 
 const BlogSidebarSection = ({
   selectedTag = '',
+  tags = BLOG_TAGS,
   onTagClick,
   onSellBikeClick,
 }: BlogSidebarSectionProps) => {
   const router = useRouter();
+  const displayTags = tags.length > 0 ? tags : BLOG_TAGS;
 
   const handleSellBike = () => {
     if (onSellBikeClick) {
@@ -102,7 +105,7 @@ const BlogSidebarSection = ({
         </Typography>
 
         <Box className={styles.tagsContent}>
-          {BLOG_TAGS.map((tag) => (
+          {displayTags.map((tag) => (
             <Button
               key={tag}
               className={selectedTag !== tag ? styles.tagsBtn : styles.tagsSelectBtn}

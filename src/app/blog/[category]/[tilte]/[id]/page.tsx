@@ -2,6 +2,7 @@ import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index'
 import { Metadata } from 'next'
 import { getSingleBlogData,  } from '@/ebikeWeb/functions/globalFuntions'
 import { DEFAULT_SHARE_IMAGE, resolveBlogShareImage, slugify, toSecureUrl, trimText, SITE_URL } from '@/app/metadata-utils';
+import { buildBlogBreadcrumbItems } from '../../../blog-utils';
 type Props = {
   params: { id: string }
 }
@@ -87,36 +88,45 @@ export default async function Blog({ params }: Props) {
   const authorUrl = buildAuthorUrl(blog?.author);
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': canonicalUrl,
-    },
-    headline: blog?.blogTitle,
-    description: trimText(blog?.meta_description || blog?.bloghtml || blog?.blogDescription, 170),
-    image: [toSecureUrl(ogImage)],
-    datePublished: blog?.createdAt,
-    dateModified: blog?.updatedAt || blog?.createdAt,
-    articleSection: blog?.blog_category?.name,
-    keywords: blog?.focus_keyword,
-    author: [
+    '@graph': [
       {
-        '@type': 'Person',
-        name: authorName,
-        ...(authorUrl ? { url: authorUrl } : {}),
-      }
-    ],
-    publisher: {
-      '@type': 'Organization',
-      name: 'ebike.pk',
-      url: SITE_URL,
-      logo: {
-        '@type': 'ImageObject',
-        url: toSecureUrl(DEFAULT_SHARE_IMAGE),
+        '@type': 'NewsArticle',
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl,
+        },
+        headline: blog?.blogTitle,
+        description: trimText(blog?.meta_description || blog?.bloghtml || blog?.blogDescription, 170),
+        image: [toSecureUrl(ogImage)],
+        datePublished: blog?.createdAt,
+        dateModified: blog?.updatedAt || blog?.createdAt,
+        articleSection: blog?.blog_category?.name,
+        keywords: blog?.focus_keyword,
+        author: [
+          {
+            '@type': 'Person',
+            name: authorName,
+            ...(authorUrl ? { url: authorUrl } : {}),
+          }
+        ],
+        publisher: {
+          '@type': 'Organization',
+          name: 'ebike.pk',
+          url: SITE_URL,
+          logo: {
+            '@type': 'ImageObject',
+            url: toSecureUrl(DEFAULT_SHARE_IMAGE),
+          },
+        },
+        isAccessibleForFree: true,
+        url: canonicalUrl,
       },
-    },
-    isAccessibleForFree: true,
-    url: canonicalUrl,
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonicalUrl}#breadcrumb`,
+        itemListElement: buildBlogBreadcrumbItems(blog),
+      },
+    ],
   };
 
   return (

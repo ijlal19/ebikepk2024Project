@@ -5,20 +5,13 @@ import { Suspense } from "react";
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import { DEFAULT_SHARE_IMAGE, resolveBlogShareImage, SITE_URL, slugify, toSecureUrl, trimText } from '@/app/metadata-utils';
 import SeoContentBlock from '@/app/components/SeoContentBlock';
+import { FALLBACK_BLOG_TAGS, buildBlogBreadcrumbItems, buildDynamicBlogTags } from './blog-utils';
 
 export const revalidate = 900;
 
 const blogTitle = 'Motorcycle News in Pakistan | Blogs & Articles | ebike.pk';
 const blogDescription = 'Read motorcycle blogs, bike reviews, maintenance guides, safety tips and latest bike news in Pakistan on ebike.pk.';
 const blogCanonical = `${SITE_URL}/blog`;
-const blogSeoTags = [
-  'Motorcycle News in Pakistan',
-  'bike blogs Pakistan',
-  'motorcycle reviews Pakistan',
-  'bike safety tips',
-  'bike maintenance guides',
-  'electric bike news Pakistan'
-];
 
 function buildBlogUrl(blogInfo: any) {
   return `${SITE_URL}/blog/${slugify(blogInfo?.blog_category?.name || 'blog')}/${slugify(blogInfo?.blogTitle)}/${blogInfo?.id}`;
@@ -57,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: blogTitle,
     description: blogDescription,
-    keywords: blogSeoTags,
+    keywords: FALLBACK_BLOG_TAGS,
     alternates: {
       canonical: blogCanonical,
     },
@@ -124,20 +117,7 @@ function buildBlogJsonLd(blogs: any[]) {
       {
         '@type': 'BreadcrumbList',
         '@id': `${blogCanonical}#breadcrumb`,
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: SITE_URL,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Blog',
-            item: blogCanonical,
-          },
-        ],
+        itemListElement: buildBlogBreadcrumbItems(),
       },
       {
         '@type': 'ItemList',
@@ -182,6 +162,7 @@ function buildBlogJsonLd(blogs: any[]) {
 export default async function Blog() {
   const blogs = await getAllBlog({ next: { revalidate } });
   const allBlogs = Array.isArray(blogs) ? blogs.map(sanitizeBlogForListing) : [];
+  const blogSeoTags = buildDynamicBlogTags(allBlogs);
 
   return (
     <>
@@ -193,6 +174,8 @@ export default async function Blog() {
         title="Motorcycle News, Blogs & Guides in Pakistan"
         description="Read motorcycle news, bike reviews, maintenance guides, safety tips and electric bike updates for Pakistan. Explore helpful ebike.pk articles before buying, selling or maintaining your bike."
         tags={blogSeoTags}
+        tagHrefPrefix="/blog?category="
+        formatTagHrefValue={(tag) => tag.replace(/\s+/g, "_")}
         headingLevel="h1"
       />
       <Suspense fallback={null}>

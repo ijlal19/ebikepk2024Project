@@ -4,6 +4,7 @@ import { Metadata } from 'next'
 import { Suspense } from "react";
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
 import { DEFAULT_SHARE_IMAGE, resolveBlogShareImage, SITE_URL, slugify, toSecureUrl, trimText } from '@/app/metadata-utils';
+import { FALLBACK_BLOG_TAGS, buildBlogBreadcrumbItems, buildDynamicBlogTags } from '../blog-utils';
 
 export const revalidate = 900;
 
@@ -48,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    keywords: 'motorcycle news Pakistan, bike news Pakistan, electric bike news, ebike.pk news',
+    keywords: FALLBACK_BLOG_TAGS,
     alternates: {
       canonical: canonicalUrl,
     },
@@ -91,6 +92,7 @@ export default async function NewsBlog() {
   const newsBlogs = await getAllBlog({ is_news: true, next: { revalidate } });
   const allNewsBlogs = Array.isArray(newsBlogs) ? newsBlogs.map(sanitizeBlogForListing) : [];
   const latestBlogs = allNewsBlogs.slice(0, 20);
+  const newsSeoTags = buildDynamicBlogTags(allNewsBlogs);
   const canonicalUrl = `${SITE_URL}/blog/news`;
   const jsonLd = [
     {
@@ -113,6 +115,11 @@ export default async function NewsBlog() {
           url: toSecureUrl(DEFAULT_SHARE_IMAGE),
         },
       },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: buildBlogBreadcrumbItems({ blog_category: { name: 'News' } }),
     },
     {
       '@context': 'https://schema.org',
@@ -157,7 +164,7 @@ export default async function NewsBlog() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
       <Suspense fallback={null}>
-        <BlogComp initialBlogs={allNewsBlogs} isNewsPage />
+        <BlogComp initialBlogs={allNewsBlogs} isNewsPage dynamicTags={newsSeoTags} />
       </Suspense>
     </>
   )

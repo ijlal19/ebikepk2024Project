@@ -26,7 +26,7 @@ import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bi
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
-import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
+import BlogSidebarSection, { BLOG_TAGS } from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 
 const BLOG_VIEW_DEDUP_MS = 5000;
 const blogViewLastHitAt: Record<string, number> = {};
@@ -37,6 +37,27 @@ const slugifyAuthor = (value: string) => value
   .replace(/&/g, ' and ')
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '');
+
+const buildDynamicSidebarTags = (blogs: any[] = [], limit = 18) => {
+  const tags: string[] = [];
+
+  const addTag = (value?: string | null) => {
+    const tag = (value || '').replace(/\s+/g, ' ').trim();
+    if (!tag || tags.some((item) => item.toLowerCase() === tag.toLowerCase())) return;
+    tags.push(tag);
+  };
+
+  blogs.forEach((blog: any) => addTag(blog?.blog_category?.name));
+  blogs.forEach((blog: any) => {
+    String(blog?.focus_keyword || '')
+      .split(',')
+      .forEach(addTag);
+  });
+
+  BLOG_TAGS.forEach(addTag);
+
+  return tags.slice(0, limit);
+};
 
 const formatBlogDate = (date?: string) => {
   if (!date) return '';
@@ -243,6 +264,9 @@ const BlogDetails = () => {
     : '';
   const createdDate = formatBlogDate(DataBlog?.createdAt);
   const updatedDate = formatBlogDate(DataBlog?.updatedAt);
+  const categoryName = DataBlog?.blog_category?.name?.trim();
+  const categoryHref = categoryName ? `/blog/${slugifyAuthor(categoryName)}` : '/blog';
+  const sidebarTags = buildDynamicSidebarTags([DataBlog, ...BlogData]);
 
   return (
     <Box className={styles.blog_details_main}>
@@ -250,6 +274,19 @@ const BlogDetails = () => {
         <> {DataBlog ?
           <Grid container className={styles.gird_box_main}>
             <Grid item xs={isMobile ? 12 : 8.5} className={styles.blog_details_card}>
+              <Box className={styles.breadcrumbs} aria-label="Breadcrumb">
+                <Link href="/" className={styles.breadcrumbLink}>Home</Link>
+                <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                <Link href="/blog" className={styles.breadcrumbLink}>Blog</Link>
+                {categoryName && (
+                  <>
+                    <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                    <Link href={categoryHref} className={styles.breadcrumbLink}>{categoryName}</Link>
+                  </>
+                )}
+                <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                <span className={styles.breadcrumbCurrent}>{DataBlog.blogTitle}</span>
+              </Box>
 
               {/* <Box className={styles.image_box}>
                 <img src={DataBlog.featuredImage} alt="" className={styles.image} />
@@ -432,6 +469,7 @@ const BlogDetails = () => {
               <Featrued_Usedbike_left />
 
               <BlogSidebarSection
+                tags={sidebarTags}
                 onSellBikeClick={gotoSellBike}
                 onTagClick={handleSidebarTagClick}
               />
