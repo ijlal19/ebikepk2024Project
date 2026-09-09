@@ -9,6 +9,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
+import { getVisibleBrands, isElectricBrand } from '@/ebikeWeb/utils/brandUtils';
 
 
 interface TabPanelProps {
@@ -31,16 +32,6 @@ function CustomTabPanel(props: TabPanelProps) {
       {value === index && <Box sx={{ p: 0 }}>{children}</Box>}
     </div>
   );
-}
-
-const hiddenBrandNames = new Set(['sport', 'china', 'sports', 'eagle']);
-
-function isHiddenBrand(brand: any) {
-  return hiddenBrandNames.has(brand?.brandName?.trim()?.toLowerCase());
-}
-
-function isElectricBrand(brand: any) {
-  return brand?.focus_keyword?.toLowerCase?.().includes('electric-bike');
 }
 
 function brandNameList(brands: any[]) {
@@ -80,7 +71,7 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
     setIsLoading(true)
     let res = await getbrandData()
     if (res && res.length > 0) {
-      setAllBrandArr(res)
+      setAllBrandArr(getVisibleBrands(res))
       setIsLoading(false)
     }
     else {
@@ -106,8 +97,9 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
     router.replace(nextUrl, { scroll: false });
   };
 
-  const motorcycleBrands = allBrandArr.filter((brand: any) => !isHiddenBrand(brand) && !isElectricBrand(brand));
-  const electricBrands = allBrandArr.filter((brand: any) => !isHiddenBrand(brand) && isElectricBrand(brand));
+  const visibleBrands = getVisibleBrands(allBrandArr);
+  const motorcycleBrands = visibleBrands.filter((brand: any) => !isElectricBrand(brand));
+  const electricBrands = visibleBrands.filter((brand: any) => isElectricBrand(brand));
   const activeBrands = value === 1 ? electricBrands : motorcycleBrands;
   const activeLabel = value === 1 ? 'Electric Bikes' : 'New Bikes';
   const activeCopy = value === 1

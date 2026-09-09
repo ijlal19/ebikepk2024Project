@@ -1,10 +1,10 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import BrandComp from "@/ebikeWeb/pageLayouts/bike-brands/index";
-import fallbackBrands from '@/ebikeWeb/pageLayouts/bike-brands/data';
 import Gconfig from 'globalconfig';
 import { DEFAULT_SHARE_IMAGE, SITE_URL, stripHtml } from '@/app/metadata-utils';
 import SeoContentBlock from '@/app/components/SeoContentBlock';
+import { getVisibleBrands, isElectricBrand } from '@/ebikeWeb/utils/brandUtils';
 
 export const revalidate = 3600;
 
@@ -21,25 +21,8 @@ type Brand = {
   logoUrl?: string;
 };
 
-const blockedBrands = new Set(['sport', 'sports', 'china', 'eagle']);
-
-function isElectricBrand(brand: Brand) {
-  return brand?.focus_keyword?.toLowerCase().includes('electric-bike') ?? false;
-}
-
-function isVisibleBrand(brand: Brand) {
-  const normalizedName = brand?.brandName?.trim().toLowerCase() ?? '';
-  return Boolean(normalizedName) && !blockedBrands.has(normalizedName);
-}
-
 function getFilteredBrands(brands: Brand[], electricOnly = false) {
-  return brands.filter((brand) => {
-    if (!isVisibleBrand(brand)) {
-      return false;
-    }
-
-    return electricOnly ? isElectricBrand(brand) : !isElectricBrand(brand);
-  });
+  return getVisibleBrands(brands).filter((brand) => electricOnly ? isElectricBrand(brand) : !isElectricBrand(brand));
 }
 
 async function getBrands(): Promise<Brand[]> {
@@ -53,10 +36,10 @@ async function getBrands(): Promise<Brand[]> {
     }
 
     const brands = await response.json();
-    return Array.isArray(brands) && brands.length > 0 ? brands : fallbackBrands;
+    return Array.isArray(brands) ? brands : [];
   } catch (error) {
     console.error('Failed to fetch new bike brands for SEO', error);
-    return fallbackBrands;
+    return [];
   }
 }
 

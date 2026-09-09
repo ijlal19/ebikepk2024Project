@@ -1,5 +1,7 @@
 import { BrandArr, CityArr } from '../../../../constants/globalData';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
+import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils';
 import { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 
@@ -9,6 +11,7 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
 
     const [brandFilter, setBrandFilter] = useState<any[]>([]);
     const [cityFilter, setCityFilter] = useState<any[]>([]);
+    const [brandOptions, setBrandOptions] = useState<any[]>([]);
 
     const parseFromLocalStorage = (key: string) => {
         try {
@@ -25,7 +28,14 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
         const selectedCity = parseFromLocalStorage("city_filter");
         setBrandFilter(selectedBrand);
         setCityFilter(selectedCity);
+        fetchBrandOptions();
     }, []);
+
+    const fetchBrandOptions = async () => {
+        const res = await getbrandData();
+        const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
+        setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)));
+    };
 
     const updateFilterValue = async (event: any, from: string, data: any) => {
         const id = data?.id;
@@ -68,7 +78,7 @@ export const DealerinPakFilter = ({ setFilterobject }: any) => {
             <div className={styles.by_brand}>
                 <p className={styles.filter_heading}>Search By Brand</p>
                 <div className={styles.city_options}>
-                    {BrandArr.map((data: any, i: any) => (
+                    {brandOptions.map((data: any, i: any) => (
                         <p className={styles.option_values} key={i}>
                             <input
                                 type="checkbox"

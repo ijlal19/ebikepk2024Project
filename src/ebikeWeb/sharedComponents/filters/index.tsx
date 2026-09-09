@@ -5,9 +5,10 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData'
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
+import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
-import { getCustomBikeAd, getFilteredAllbikesDetail } from "@/ebikeWeb/functions/globalFuntions"
+import { getCustomBikeAd, getFilteredAllbikesDetail, getbrandData } from "@/ebikeWeb/functions/globalFuntions"
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader'
 
 
@@ -25,6 +26,7 @@ function Filters(props: any , {updateData}:any) {
   const [modalOpenFor, setModalOpenFor] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isFilterChange, setIsFilterChange] = useState(false)
+  const [brandOptions, setBrandOptions]: any = useState([])
   // const [totalPage, setTotalPage] = useState(null)
   // const [currentPage, setCurrentPage] = useState(1)
 
@@ -32,6 +34,16 @@ function Filters(props: any , {updateData}:any) {
     showmodal: toggle,
     openmodal: openmodal,
     popupdata: popupData,
+  }
+
+  useEffect(() => {
+    fetchBrandOptions();
+  }, []);
+
+  async function fetchBrandOptions() {
+    const res = await getbrandData();
+    const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
+    setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)));
   }
 
   function toggle(from: any) {
@@ -43,7 +55,7 @@ function Filters(props: any , {updateData}:any) {
     }
     else if (from == 'brand') {
       setModalOpenFor(from)
-      setpopupData(BrandArr)
+      setpopupData(brandOptions)
       setOpenModal(true)
     }
     else if (from == 'close') {
@@ -260,7 +272,7 @@ function Filters(props: any , {updateData}:any) {
       </Box>
       <Box className={styles.brand_options}>
         {
-          BrandArr.slice(0, 5).map((data: any, i: any) => {
+          brandOptions.slice(0, 5).map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input

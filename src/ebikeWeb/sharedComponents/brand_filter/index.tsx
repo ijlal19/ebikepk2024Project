@@ -1,6 +1,7 @@
 'use client'
-import { getCustomBikeAd } from '@/ebikeWeb/functions/globalFuntions';
 import { BrandArr, CityArr } from '@/ebikeWeb/constants/globalData';
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
+import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
@@ -17,6 +18,7 @@ function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesAr
 
   const [modalOpenFor, setModalOpenFor] = useState('');
   const [popupData, setpopupData]: any = useState([]);
+  const [brandOptions, setBrandOptions]: any = useState([]);
   const [openmodal, setOpenModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,6 +26,18 @@ function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesAr
     showmodal: toggle,
     openmodal: openmodal,
     popupdata: popupData,
+  }
+
+  useEffect(() => {
+    fetchBrandOptions();
+  }, []);
+
+  async function fetchBrandOptions() {
+    setIsLoading(true);
+    const res = await getbrandData();
+    const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
+    setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)));
+    setIsLoading(false);
   }
 
   function clearFilters(from: any) {
@@ -36,7 +50,7 @@ function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesAr
   function toggle(from: any) {
     if (from == 'brand') {
       setModalOpenFor(from)
-      setpopupData(BrandArr)
+      setpopupData(brandOptions)
       setOpenModal(true)
     }
     else if (from == 'close') {
@@ -86,7 +100,7 @@ function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesAr
       </Box>
       <Box className={styles.brand_options}>
         {
-          BrandArr.slice(0, 5).map((data: any, i: any) => {
+          brandOptions.slice(0, 5).map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input

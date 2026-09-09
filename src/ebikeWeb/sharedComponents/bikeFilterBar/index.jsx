@@ -7,10 +7,12 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { MenuItem, Select, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
 import { ALL_FILTER_VALUE, getBikeFilterSlug, getBikeFilterUrl } from '@/ebikeWeb/utils/bikeFilterRoute';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
+import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils';
 import styles from './index.module.scss';
 
 function formatDropdownText(value = '') {
@@ -28,9 +30,9 @@ const BikeFilterBar = ({ initialBrand = ALL_FILTER_VALUE, initialModal = ALL_FIL
     const [selectedBrand, setSelectedBrand] = useState(getBikeFilterSlug(initialBrand));
     const [selectedModal, setSelectedModal] = useState(getBikeFilterSlug(initialModal));
     const [selectedCity, setSelectedCity] = useState(getBikeFilterSlug(initialCity));
+    const [brandOptions, setBrandOptions] = useState(sortBrandsByName(getVisibleBrands(BrandArr)));
 
     const yearOptions = [...YearArr].sort((a, b) => Number(b.year) - Number(a.year));
-    const brandOptions = [...BrandArr].sort((a, b) => a.brandName.localeCompare(b.brandName));
     const cityOptions = getSortedCityOptions(CityArr);
     const brandDropdownOptions = [
         { value: ALL_FILTER_VALUE, label: 'All Brands' },
@@ -63,6 +65,19 @@ const BikeFilterBar = ({ initialBrand = ALL_FILTER_VALUE, initialModal = ALL_FIL
             className: styles.selectMenuList,
         },
     };
+
+    useEffect(() => {
+        async function fetchBrandOptions() {
+            const res = await getbrandData();
+            const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
+
+            if (apiBrands.length > 0) {
+                setBrandOptions(apiBrands);
+            }
+        }
+
+        fetchBrandOptions();
+    }, []);
 
     const getSelectedLabel = (options, value) => {
         return options.find((option) => option.value === value)?.label || options[0]?.label || '';

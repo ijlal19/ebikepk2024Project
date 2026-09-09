@@ -1,4 +1,3 @@
-import data from '@/ebikeWeb/pageLayouts/bike-brands/data';
 import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
 import Gconfig from 'globalconfig'
 // import jsCookie from 'js-cookie'

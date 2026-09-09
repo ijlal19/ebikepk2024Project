@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import data from './data';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
-import { getbrandData } from '@/ebike-panel/ebike-panel-Function/globalfunction';
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
+import { getVisibleBrands } from '@/ebikeWeb/utils/brandUtils';
 import { Link } from '@mui/material';
 
 const Side_brands = () => {
@@ -25,16 +25,8 @@ const Side_brands = () => {
     const fetchBrandInfo = async () => {
         setIsLoading(true);
         let res = await getbrandData();
-        if (res && res.length > 0) {
-            const blockedBrands = ["hi_speed", "yamaha", "suzuki", "crown", "bmw", "honda"];
-            const filtered = res.filter((e: any) =>
-                blockedBrands.includes(e?.brandName?.trim()?.toLowerCase())
-            );
-            setAllBrandArr(filtered);
-            setIsLoading(false);
-        } else {
-            setAllBrandArr(data);
-        }
+        setAllBrandArr(Array.isArray(res) ? getVisibleBrands(res).slice(0, 6) : []);
+        setIsLoading(false);
         setTimeout(() => {
             window.scrollTo(0, 0);
         }, 1000);

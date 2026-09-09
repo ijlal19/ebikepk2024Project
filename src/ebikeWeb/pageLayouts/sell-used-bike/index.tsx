@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react"
 import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalData'
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions'
+import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils'
 import { useRouter } from 'next/navigation'
 import { TextareaAutosize, Typography } from "@mui/material"
 import { cloudinaryLoader, isLoginUser } from "@/genericFunctions/geneFunc";
@@ -33,10 +35,12 @@ const SellUsedBike = () => {
     const [imageArr, setImageArr] = useState([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [adminToken, setAdminToken] = useState(null);
+    const [brandOptions, setBrandOptions] = useState<any[]>([]);
 
     const router = useRouter()
 
     useEffect(() => {
+        fetchBrandOptions()
         let _isLoginUser = isLoginUser()
         if (_isLoginUser?.login) {
             setCustomer(_isLoginUser.info)
@@ -57,6 +61,12 @@ const SellUsedBike = () => {
             Router.push('/')
         }
     }, [])
+
+    const fetchBrandOptions = async () => {
+        const res = await getbrandData()
+        const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : []
+        setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)))
+    }
 
     function validateVideoUrl(url: string) {
         if (!url) {
@@ -425,7 +435,7 @@ const SellUsedBike = () => {
                                     onChange={(e) => handleChange('brand', e.target.value)}>
                                     <option value="" disabled selected hidden></option>
                                     {
-                                        BrandArr.map((e: any) => {
+                                        brandOptions.map((e: any) => {
                                             return (
                                                 <option key={e.id} value={e.id} className={styles.drop_option}>{e.brandName}</option>
                                             )

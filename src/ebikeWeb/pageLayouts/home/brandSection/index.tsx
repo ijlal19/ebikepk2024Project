@@ -1,13 +1,13 @@
 'use client'
 import styles from './index.module.scss'
 import { Box, Button, Container, Link, Typography } from '@mui/material';
-import Data from './Data';
 import * as React from 'react';
 import BrandCard from './Card/index'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useRouter } from 'next/navigation'
 import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
+import { getVisibleBrands } from '@/ebikeWeb/utils/brandUtils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,20 +52,8 @@ function BrandSection() {
   const fecthAllBRands = async () => {
     setIsLoading(true)
     let res = await getbrandData()
-    if (res && res.length > 0) {
-      const blockedBrands = ["china", "ghani", "aprilia", "ktm", "metro", "sport", "ravi", "derbi", "harley_davidson", "eagle"];
-      const filtered = res.filter(
-        (e: any) => !blockedBrands.includes(e?.brandName?.trim()?.toLowerCase())
-      );
-      setAllBrandArr(filtered);
-      setIsLoading(false);
-    }
-
-    else {
-      setIsLoading(false);
-      setAllBrandArr(Data)
-      // alert("Wait! Something went wrong while fetching the data. Please try again reload page.");
-    }
+    setAllBrandArr(Array.isArray(res) ? getVisibleBrands(res) : [])
+    setIsLoading(false);
   }
 
   return (
@@ -98,13 +86,7 @@ function BrandSection() {
                     )
                   }))
                   :
-                  (Data.slice(0, 12).map((e: any, i: any) => {
-                    return (
-                      <Link href={`/new-bikes/${e?.brandName}`} className={styles.brand_image_box} key={i}>
-                        <BrandCard key={i} data={e} />
-                      </Link>
-                    )
-                  }))
+                  null
               }
 
               <Button className={styles.viewallbikes_button} disableRipple><Link className={styles.anchor} href="/new-bikes">View More Brands</Link></Button>
