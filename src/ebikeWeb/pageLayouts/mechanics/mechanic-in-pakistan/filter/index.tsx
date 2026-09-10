@@ -1,7 +1,7 @@
 import { BrandArr, CityArr } from '../../../../constants/globalData';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
-import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils';
+import { getVisibleBrands, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils';
 import { useState, useEffect } from 'react';
 import styles from './index.module.scss'
 
@@ -33,8 +33,8 @@ export const MechanicinPakFilter = ({ setFilterobject }: any) => {
 
     const fetchBrandOptions = async () => {
         const res = await getbrandData();
-        const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
-        setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)));
+        const apiBrands = Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)) : [];
+        setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByPriority(getVisibleBrands(BrandArr)));
     };
 
     const updateFilterValue = async (event: any, from: any, data: any) => {

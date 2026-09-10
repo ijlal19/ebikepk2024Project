@@ -64,6 +64,63 @@ const AdsArray = [
 
 let SelectedADD = []
 let GetScroll = 0
+const qualityUsedBikeRequest = {
+    approved_only: true,
+    exclude_sold: true,
+    min_price: 1,
+    require_image: true,
+    sort_by: 'quality',
+    sort_order: 'desc'
+}
+
+function getBikePriceValue(bike) {
+    const price = Number(bike?.price);
+    return Number.isFinite(price) ? price : 0;
+}
+
+function hasBikeImage(bike) {
+    return Array.isArray(bike?.images) && bike.images.some(Boolean);
+}
+
+function getBikeQualityScore(bike) {
+    let score = 0;
+    const price = getBikePriceValue(bike);
+
+    if (bike?.isApproved !== false) score += 20;
+    if (!bike?.is_sold) score += 20;
+    if (price > 0) score += 30;
+    if (hasBikeImage(bike)) score += 15;
+    if (bike?.title && bike.title.length > 12) score += 8;
+    if (bike?.cityId || bike?.location) score += 4;
+    if (bike?.brandId) score += 3;
+
+    return score;
+}
+
+function sortUsedBikeAds(bikes) {
+    if (!Array.isArray(bikes)) return [];
+
+    return [...bikes].sort((a, b) => {
+        const scoreDiff = getBikeQualityScore(b) - getBikeQualityScore(a);
+        if (scoreDiff !== 0) return scoreDiff;
+        return (b?.id || 0) - (a?.id || 0);
+    });
+}
+
+function formatUsedBikePrice(price) {
+    const numericPrice = Number(price);
+    return Number.isFinite(numericPrice) && numericPrice > 0
+        ? `PKR ${priceWithCommas(numericPrice)}`
+        : 'Call for price';
+}
+
+function slugifyBikeTitle(title) {
+    return String(title || 'used-bike')
+        .toLowerCase()
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
 
 const usedBikeSeoSections = [
     {
@@ -91,7 +148,18 @@ const usedBikeSeoLinks = [
     { label: 'Bike blog', href: '/blog' }
 ]
 
-export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
+export default function AllUsedBike({
+    _allFeaturedBike,
+    _allUsedBike,
+    pageHeading = 'Find Used Bikes & Motorcycles in Pakistan',
+    pageSubheading = 'Used Honda, Suzuki, Yamaha & More',
+    seoHeading = 'Used Bikes for Sale in Pakistan on ebike.pk',
+    seoIntro = 'ebike.pk is built for motorcycle buyers and sellers in Pakistan who want a simple way to find used bikes, compare prices and check available options by city, brand, year and CC. Whether you are looking for a 70cc daily ride, a 100cc commuter, a 125cc motorcycle or a 150cc bike, this page helps you discover active used bike ads with useful details before you make a decision.',
+    seoSections = usedBikeSeoSections,
+    seoLinks = usedBikeSeoLinks,
+    hideSidebar = false,
+    hidePriceTable = false
+}) {
 
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
@@ -100,10 +168,10 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const [initialLoading, setInitialLoading] = useState(!hasInitialUsedBikes);
     const [FavouriteData, setFavouriteData] = useState([]);
     const [SearchApply, setSearchApply] = useState(false);
-    const [featuredData, setFeaturedData] = useState(hasInitialFeaturedBikes ? _allFeaturedBike.data : []);
+    const [featuredData, setFeaturedData] = useState(hasInitialFeaturedBikes ? sortUsedBikeAds(_allFeaturedBike.data) : []);
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
-    const [allBikesArr, setAllBikesArr] = useState(hasInitialUsedBikes ? _allUsedBike.data : []);
+    const [allBikesArr, setAllBikesArr] = useState(hasInitialUsedBikes ? sortUsedBikeAds(_allUsedBike.data) : []);
     const [SearchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
@@ -114,6 +182,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
     const isMobileView = useMediaQuery('(max-width:600px)');
     const is10Inch = useMediaQuery('(max-width:991px)');
     const is9Inch = useMediaQuery('(max-width:910px)');
+    const filterGridColumns = is9Inch ? 12 : is12InchScreen ? 2.1 : 2.3;
+    const cardGridColumns = is9Inch
+        ? 12
+        : is12InchScreen
+            ? 8.2
+            : 6.7;
+    const hasFeaturedData = featuredData?.length > 0;
 
     // const searchParams = useSearchParams();
 
@@ -191,7 +266,8 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         let obj = {
             adslimit: 12,
-            page: _pageNo
+            page: _pageNo,
+            ...qualityUsedBikeRequest
         }
 
 
@@ -206,7 +282,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         localStorage.removeItem('PageNo')
         if (res?.data?.length > 0) {
             setCurrentPage(res?.currentPage)
-            setAllBikesArr(res?.data)
+            setAllBikesArr(sortUsedBikeAds(res?.data))
             setTotalPage(res?.pages)
         }
         else {
@@ -229,12 +305,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
         let obj = {
             isFeatured: true,
-            adslimit: 20
+            adslimit: 20,
+            ...qualityUsedBikeRequest
         }
 
         let res = await getCustomBikeAd(obj);
         if (res && res?.data?.length > 0) {
-            setFeaturedData(res.data)
+            setFeaturedData(sortUsedBikeAds(res.data))
         }
         else {
             setFeaturedData([])
@@ -291,13 +368,15 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         const viewsCount = val?.views_count ?? 0
         const GetHref = () => {
             let title = val.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            let urlTitle = slugifyBikeTitle(title)
             return `/used-bikes/${urlTitle}/${val.id}`
         }
+        const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
+        const cardLabel = `${val?.title || 'Used bike for sale'}${cityName ? ` in ${cityName}` : ''}`;
 
 
         return (
-            <>
+            <React.Fragment key={val?.id || ind}>
                 {(ind + 1) % 4 == 0 ?
                     <div className={styles.banner_1}>
                         <AdSense
@@ -311,10 +390,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                         {/* <Link href={GetHref()} sx={{ textDecoration: 'none', display: isMobileView ? 'none' : 'flex', flexDirection: 'column' }} onClick={() => { goToDetailPage(val) }}> */}
 
                         <Grid container key={ind} className={styles.long_card} >
-                            <Grid item xs={is10Inch ? 12 : 3.5} className={styles.bike_image_box}>
+                            <Grid item xs={is10Inch ? 12 : 3} className={styles.bike_image_box}>
                                 <Box className={styles.long_card_img}
+                                    role="img"
+                                    aria-label={cardLabel}
+                                    title={cardLabel}
                                     sx={{
-                                        backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                        backgroundImage: `url(${imageUrl})`,
                                         backgroundSize: isMobileView ? '100% 100%' : 'cover',
                                         boxSizing: 'border-box',
                                         backgroundPosition: 'center',
@@ -339,7 +421,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 {/* {val.images && val.images.length > 0 ? <img src={val?.images[0]} alt="" /> : <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png" alt="" />} */}
                             </Grid>
 
-                            <Grid item xs={is10Inch ? 12 : 8} className={styles.card_info}>
+                            <Grid item xs={is10Inch ? 12 : 5.5} className={styles.card_info}>
 
                                 <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
 
@@ -357,12 +439,12 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                     </span>
                                 </Typography>
 
-                                <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
+                                <Typography className={styles.card_price_mobile}>{formatUsedBikePrice(val?.price)}</Typography>
 
                             </Grid>
 
-                            <Grid item className={styles.price_section_desktop}>
-                                <span> PKR {priceWithCommas(val?.price)}</span>
+                            <Grid item xs={is10Inch ? 12 : 3.5} className={styles.price_section_desktop}>
+                                <span>{formatUsedBikePrice(val?.price)}</span>
                                 {
                                     !isMobileView ?
                                         <Box className={styles.fav_box}>
@@ -394,7 +476,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                         />
                     </div>
                 }
-            </>
+            </React.Fragment>
 
         )
     }
@@ -408,14 +490,16 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
         const viewsCount = val?.views_count ?? 0
         const GetHref = () => {
             let title = val.title
-            let urlTitle = '' + title.toLowerCase().replaceAll(' ', '-')
+            let urlTitle = slugifyBikeTitle(title)
             return `/used-bikes/${urlTitle}/${val.id}`
         }
+        const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
+        const cardLabel = `${val?.title || 'Used bike for sale'}${cityName ? ` in ${cityName}` : ''}`;
 
         // console.log('val?.images?.[0]', val?.images?.[0], cloudinaryLoader(val?.images?.[0], 350, 350) )
 
         return (
-            <>
+            <React.Fragment key={val?.id || ind}>
                 {/* {!isMobileView ? */}
                 <Link href={GetHref()} key={ind} sx={{ textDecoration: 'none' }} className={styles.grid_card} onClick={() => { goToDetailPage(val) }}>
                     <Grid container >
@@ -423,8 +507,11 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                         <Grid item className={styles.grid_image_box}>
                             <Box
                                 className={styles.grid_image_upper}
+                                role="img"
+                                aria-label={cardLabel}
+                                title={cardLabel}
                                 sx={{
-                                    backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
+                                    backgroundImage: `url(${imageUrl})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     backgroundRepeat: 'no-repeat',
@@ -452,7 +539,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                             {/* <Typography className={styles.grid_card_location}> {val?.sellerName} </Typography> */}
 
-                            <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
+                            <Typography className={styles.grid_card_price}>{formatUsedBikePrice(val?.price)}</Typography>
 
                             <Typography className={styles.grid_bike_details}>
                                 {bikeYear ? <span>{bikeYear}</span> : null}
@@ -478,7 +565,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                     //         onBtnClick={() => { }}
                     //     />
                     // </div>} */}
-            </>
+            </React.Fragment>
         )
     }
 
@@ -494,12 +581,13 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
             const obj = {
                 search: query ? query : SearchValue,
                 page: _page,
-                adslimit: 12
+                adslimit: 12,
+                ...qualityUsedBikeRequest
             }
             const res = await getCustomBikeAd(obj)
 
             if (res && res?.data?.length > 0) {
-                setAllBikesArr(res?.data)
+                setAllBikesArr(sortUsedBikeAds(res?.data))
                 setCurrentPage(res.currentPage)
                 setTotalPage(res.pages)
 
@@ -540,42 +628,46 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                 <Box className={styles.main}>
                     <>
                         <Box className={styles.usedBike_headingBpx}>
-                            <Typography className={styles.headinh_sale}>Find Used Bikes & Motorcycles in Pakistan</Typography>
+                            <Typography className={styles.headinh_sale}>{pageHeading}</Typography>
                             {/* <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography> */}
-                            <Typography className={styles.path_text}> Used Honda, Suzuki, Yamaha & More </Typography>
+                            <Typography className={styles.path_text}> {pageSubheading} </Typography>
                         </Box>
 
                         <br className="d-none d-md-block" />
                         <br className="d-none d-md-block" />
 
                         {/* <UsedBikesSection from='featuredBike' featuredData={featuredData} /> */}
-                        <Typography className={styles.featuredHeading} >Featured Bikes</Typography>
-                        <div className={styles.featured_bike_swiper_main}>
-                            <Swiper
-                                modules={[Navigation]}
-                                navigation
-                                spaceBetween={0}
-                                loop={true}
-                                slidesPerView={3}        // default (desktop)
-                                slidesPerGroup={1}       // ek time me 1 slide move kare
-                                breakpoints={{
-                                    0: {
-                                        slidesPerView: 2,    // mobile (0px se upar)
-                                        slidesPerGroup: 1,
-                                    },
-                                    768: {
-                                        slidesPerView: 3,    // tablet/desktop (768px se upar)
-                                        slidesPerGroup: 1,
-                                    },
-                                }}
-                            >
-                                {featuredData?.map((item, i) => (
-                                    <SwiperSlide key={i}>
-                                        <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds} />
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
-                        </div>
+                        {hasFeaturedData ? (
+                            <>
+                                <Typography className={styles.featuredHeading} >Featured Bikes</Typography>
+                                <div className={styles.featured_bike_swiper_main}>
+                                    <Swiper
+                                        modules={[Navigation]}
+                                        navigation
+                                        spaceBetween={0}
+                                        loop={true}
+                                        slidesPerView={3}
+                                        slidesPerGroup={1}
+                                        breakpoints={{
+                                            0: {
+                                                slidesPerView: 2,
+                                                slidesPerGroup: 1,
+                                            },
+                                            768: {
+                                                slidesPerView: 3,
+                                                slidesPerGroup: 1,
+                                            },
+                                        }}
+                                    >
+                                        {featuredData.map((item, i) => (
+                                            <SwiperSlide key={i}>
+                                                <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds} />
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </div>
+                            </>
+                        ) : null}
                         {
                             AllFavouriteBike.length > 0 ?
                                 <Typography className={styles.featuredHeading} >Favourite Bikes</Typography> : ""
@@ -622,7 +714,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
 
                         <Grid container className={styles.grid_container}>
 
-                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 2.1 : 2.3} className={styles.filter_grid} >
+                            <Grid item xs={filterGridColumns} className={styles.filter_grid} >
                                 {
                                     is9Inch ?
                                         showfilter ?
@@ -650,7 +742,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 }
                             </Grid>
 
-                            <Grid item xs={is9Inch ? 12 : is12InchScreen ? 8.2 : 6.7} className={styles.cards_grid} >
+                            <Grid item xs={cardGridColumns} className={styles.cards_grid} >
 
                                 <Box className={styles.all_bike_main}>
                                     <div className={styles.main_box}>
@@ -665,8 +757,22 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                                 </div>
                                             </div>
                                             <div className={styles.swap_button_container}>
-                                                <span> <Apps className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
-                                                <span> <FormatListBulleted className={styles.swap_icon} onClick={() => setIsGridSelected(prev => !prev)} /> </span>
+                                                <button
+                                                    type="button"
+                                                    aria-label="Grid view"
+                                                    className={`${styles.view_toggle_btn} ${isGridSelected ? styles.view_toggle_btn_active : ''}`}
+                                                    onClick={() => setIsGridSelected(true)}
+                                                >
+                                                    <Apps className={styles.swap_icon} />
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    aria-label="List view"
+                                                    className={`${styles.view_toggle_btn} ${!isGridSelected ? styles.view_toggle_btn_active : ''}`}
+                                                    onClick={() => setIsGridSelected(false)}
+                                                >
+                                                    <FormatListBulleted className={styles.swap_icon} />
+                                                </button>
                                             </div>
                                             <div className={styles.search_box} style={{ display: isMobileView ? "flex" : "none" }}>
                                                 <div className={styles.search_box_inner}>
@@ -709,55 +815,59 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             </Grid>
 
                             <Grid item xs={is9Inch ? 12 : 3} className={styles.add_area}>
-                                <Box className={styles.add_box}>
-                                    <Box className={styles.sidebar_ads}>
-                                        <AdSense
-                                            client="ca-pub-5167970563180610"
-                                            slot="9214599249"
-                                            format={null}
-                                            responsive={false}
-                                            adStyle={{ display: "inline-block", width: "250px", height: "250px" }}
-                                        />
-                                    </Box>
-                                    {
-                                        AdsArray?.map((e, i) => {
-                                            return (
-                                                <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                {!hideSidebar ? (
+                                    <>
+                                    <Box className={styles.add_box}>
+                                        <Box className={styles.sidebar_ads}>
+                                            <AdSense
+                                                client="ca-pub-5167970563180610"
+                                                slot="9214599249"
+                                                format={null}
+                                                responsive={false}
+                                                adStyle={{ display: "inline-block", width: "250px", height: "250px" }}
+                                            />
+                                        </Box>
+                                        {
+                                            AdsArray?.map((e, i) => {
+                                                return (
+                                                    <Link href={e?.href} key={i} target={e?.target} rel="noopener noreferrer">
+                                                        <img
+                                                            src={cloudinaryLoader(e?.url, 400, 'auto')}
+                                                            alt={e?.alt}
+                                                            className={styles.add_image} />
+                                                    </Link>
+                                                )
+                                            })
+                                        }
+                                        <MechaniLeft />
+                                        <Side_brands />
+                                        {
+                                            !isGridSelected ?
+                                                <Link href='/forum' target="_blank" rel="noopener noreferrer" sx={{ marginBottom: 5 }}>
                                                     <img
-                                                        src={cloudinaryLoader(e?.url, 400, 'auto')}
-                                                        alt={e?.alt}
+                                                        src={cloudinaryLoader('https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg', 400, 'auto')}
+                                                        alt="/forum"
                                                         className={styles.add_image} />
                                                 </Link>
-                                            )
-                                        })
-                                    }
-                                    <MechaniLeft />
-                                    <Side_brands />
+
+                                                : ""
+                                        }
+                                    </Box>
+                                    {/* <Blog_left /> */}
+
                                     {
                                         !isGridSelected ?
-                                            <Link href='/forum' target="_blank" rel="noopener noreferrer" sx={{ marginBottom: 5 }}>
-                                                <img
-                                                    src={cloudinaryLoader('https://res.cloudinary.com/duiuzkifx/image/upload/v1591968762/staticFiles/11_z0ruos.jpg', 400, 'auto')}
-                                                    alt="/forum"
-                                                    className={styles.add_image} />
-                                            </Link>
-
+                                            <List_Card />
                                             : ""
                                     }
-                                </Box>
-                                {/* <Blog_left /> */}
-
-                                {
-                                    !isGridSelected ?
-                                        <List_Card />
-                                        : ""
-                                }
-                                <br />
-                                <br />
-                                {/* {
-                                    !isGridSelected ?
-                                        <DealerLeft /> : ""
-                                } */}
+                                    <br />
+                                    <br />
+                                    {/* {
+                                        !isGridSelected ?
+                                            <DealerLeft /> : ""
+                                    } */}
+                                    </>
+                                ) : null}
                             </Grid>
                         </Grid>
                         {allBikesArr?.length > 0 ?
@@ -775,7 +885,7 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                                 slot="9214599249"
                             />
                         </Box>
-                        {priceTableData?.length > 0 ?
+                        {!hidePriceTable && priceTableData?.length > 0 ?
                             <div className={styles.bike_price_main}>
                                 <div className={styles.heading_box}>
                                     <p className={styles.heading}>{priceTableBrandName} Bike Price in Pakistan 2025</p>
@@ -810,18 +920,16 @@ export default function AllUsedBike({ _allFeaturedBike, _allUsedBike }) {
                             </div>
                             : ""}
                         <section className={styles.used_bike_seo_content} aria-labelledby="used-bike-seo-heading">
-                            <h2 id="used-bike-seo-heading">Used Bikes for Sale in Pakistan on ebike.pk</h2>
-                            <p>
-                                ebike.pk is built for motorcycle buyers and sellers in Pakistan who want a simple way to find used bikes, compare prices and check available options by city, brand, year and CC. Whether you are looking for a 70cc daily ride, a 100cc commuter, a 125cc motorcycle or a 150cc bike, this page helps you discover active used bike ads with useful details before you make a decision.
-                            </p>
-                            {usedBikeSeoSections.map((section) => (
+                            <h2 id="used-bike-seo-heading">{seoHeading}</h2>
+                            <p>{seoIntro}</p>
+                            {seoSections.map((section) => (
                                 <div className={styles.used_bike_seo_section} key={section.heading}>
                                     <h3>{section.heading}</h3>
                                     <p>{section.body}</p>
                                 </div>
                             ))}
                             <div className={styles.used_bike_seo_links} aria-label="Useful used bike links">
-                                {usedBikeSeoLinks.map((link) => (
+                                {seoLinks.map((link) => (
                                     <Link href={link.href} key={link.href} className={styles.used_bike_seo_link}>
                                         {link.label}
                                     </Link>

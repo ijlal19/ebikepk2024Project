@@ -12,7 +12,7 @@ import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import BlogSidebarSection, { BLOG_TAGS } from '@/ebikeWeb/sharedComponents/blogSidebarSection';
+import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 import Autocomplete from '@mui/material/Autocomplete';
 import { GiConsoleController } from 'react-icons/gi';
 import TextField from '@mui/material/TextField';
@@ -42,13 +42,6 @@ const buildDynamicSidebarTags = (blogs: any[] = [], limit = 18) => {
   };
 
   blogs.forEach((blog: any) => addTag(blog?.blog_category?.name));
-  blogs.forEach((blog: any) => {
-    String(blog?.focus_keyword || '')
-      .split(',')
-      .forEach(addTag);
-  });
-
-  BLOG_TAGS.forEach(addTag);
 
   return tags.slice(0, limit);
 };
@@ -256,8 +249,8 @@ const Blog = ({ initialBlogs = [], isNewsPage = false, dynamicTags = [] }: BlogP
 
   const handleTag = async (e: any) => {
     setSelectedTag(e)
-    router.replace(`/blog?tag=${encodeURIComponent(e)}`)
-    handleSearch({ target: { value: e } })
+    router.replace(`/blog?category=${encodeURIComponent(e.replace(/\s+/g, '_'))}`)
+    handleCategoryFilter(e)
   }
 
   const blogCardMini = (e: any, i: any) => {

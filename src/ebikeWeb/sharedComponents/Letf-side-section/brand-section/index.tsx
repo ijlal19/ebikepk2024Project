@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
 import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
-import { getVisibleBrands } from '@/ebikeWeb/utils/brandUtils';
+import { getVisibleBrands, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils';
 import { Link } from '@mui/material';
 
 const Side_brands = () => {
@@ -25,7 +25,7 @@ const Side_brands = () => {
     const fetchBrandInfo = async () => {
         setIsLoading(true);
         let res = await getbrandData();
-        setAllBrandArr(Array.isArray(res) ? getVisibleBrands(res).slice(0, 6) : []);
+        setAllBrandArr(Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)).slice(0, 6) : []);
         setIsLoading(false);
         setTimeout(() => {
             window.scrollTo(0, 0);

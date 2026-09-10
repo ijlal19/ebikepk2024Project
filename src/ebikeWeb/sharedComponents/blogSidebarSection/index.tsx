@@ -6,39 +6,19 @@ import { Box, Button, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import styles from './index.module.scss';
 
-export const BLOG_TAGS = [
-  'Honda',
-  'Price',
-  'Bike',
-  'Tips',
-  'CC',
-  'Suzuki',
-  '125',
-  '2025',
-  'Petrol',
-  'New',
-  'Used',
-  'Riding',
-  'Fuel',
-  'KTM',
-  'Pakistan',
-  'Launch',
-  'Model',
-  'Yamaha',
-  'Review',
-  'Vehicle',
-  'Kawasaki',
-  'Motorcycle',
-  'Electric',
-  'Introduce',
-  'Scooter',
-  'BMW',
+export const BLOG_CATEGORIES = [
+  'News',
+  'Bike Care',
+  'Electric Bike News',
+  'Motorcycle Prices',
+  'Pakistan Motorcycle News',
+  'Safety',
 ];
 
 type BlogSidebarSectionProps = {
   selectedTag?: string;
   tags?: string[];
-  onTagClick?: (tag: string) => void;
+  onTagClick?: (category: string) => void;
   onSellBikeClick?: () => void;
 };
 
@@ -47,12 +27,12 @@ const EBIKE_LOGO_URL = 'https://res.cloudinary.com/dzfd4phly/image/upload/v17272
 
 const BlogSidebarSection = ({
   selectedTag = '',
-  tags = BLOG_TAGS,
+  tags = BLOG_CATEGORIES,
   onTagClick,
   onSellBikeClick,
 }: BlogSidebarSectionProps) => {
   const router = useRouter();
-  const displayTags = tags.length > 0 ? tags : BLOG_TAGS;
+  const displayTags = tags.length > 0 ? tags : BLOG_CATEGORIES;
 
   const handleSellBike = () => {
     if (onSellBikeClick) {
@@ -75,7 +55,7 @@ const BlogSidebarSection = ({
       return;
     }
 
-    router.push(`/blog?tag=${encodeURIComponent(tag)}`);
+    router.push(`/blog?category=${encodeURIComponent(tag.replace(/\s+/g, '_'))}`);
   };
 
   return (
@@ -101,7 +81,7 @@ const BlogSidebarSection = ({
 
       <Box className={styles.tagsMain}>
         <Typography className={styles.shortblogheading}>
-          Popular Tags <span className={styles.underline}></span>
+          Categories <span className={styles.underline}></span>
         </Typography>
 
         <Box className={styles.tagsContent}>

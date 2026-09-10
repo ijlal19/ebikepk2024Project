@@ -3,7 +3,7 @@
 .main {
   width: 100%;
   padding: 0px;
-  background: #f2f3f3;
+  background: #f5f7fa;
   min-height: 50vh;
   box-sizing: border-box;
   font-family: sans-serif;
@@ -291,19 +291,25 @@
   display: flex;
   flex-direction: row !important;
   justify-content: left;
+  max-width: 1420px;
+  margin: 0 auto;
+  padding: 0 24px 12px;
+  box-sizing: border-box;
+  column-gap: 0;
 
   .filter_grid {
     position: sticky;
     top: 0px;
-    padding: 0px !important;
+    padding: 0px 12px 0px 0px !important;
 
     @media (max-width:910px) {
       position: unset;
+      padding: 0px !important;
     }
   }
 
   .cards_grid {
-    padding: 15px 0px 0px 0px !important;
+    padding: 15px 8px 0px 8px !important;
     box-sizing: border-box;
 
     @media (max-width:768px) {
@@ -328,14 +334,14 @@
 
     .all_bike_main {
       display: flex;
-      padding: 0px 10px;
+      padding: 0px;
       box-sizing: border-box;
       width: 100% !important;
       margin: auto;
-      align-items: start;
+      align-items: flex-start;
 
       .main_box {
-        padding: 0px 10px !important;
+        padding: 0px !important;
         width: 100% !important;
         height: 100%;
         max-width: 100%;
@@ -346,18 +352,21 @@
         }
 
         .navigation {
-          max-width: 800px;
-          height: 30px;
+          width: 100%;
+          min-height: 56px;
           background: white;
-          border: 1px solid #e6e6e6;
-          padding: 10px;
+          border: 1px solid #e5eaf0;
+          border-radius: 8px;
+          padding: 8px 10px;
           margin: auto;
           position: relative;
           justify-content: space-between;
-          margin-bottom: 20px;
+          margin-bottom: 18px;
           display: flex;
           flex-wrap: nowrap;
           align-items: center;
+          box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+          box-sizing: border-box;
 
           @media (max-width:900px) {
             width: 95%;
@@ -370,21 +379,52 @@
           }
 
           .bike_text {
-            font-size: 16px;
+            font-size: 18px;
             float: left;
+            font-weight: 700;
+            color: #17212f;
+            white-space: nowrap;
           }
 
           .swap_button_container {
-            .swap_icon {
-              font-size: 20px;
+            display: flex;
+            align-items: center;
+            column-gap: 6px;
+
+            .view_toggle_btn {
+              width: 34px;
+              height: 34px;
+              border: 1px solid transparent;
+              border-radius: 7px;
+              background: transparent;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #111827;
               cursor: pointer;
+              transition: all 0.15s ease;
+
+              &:hover {
+                background: #f1f5f9;
+                border-color: #dbe4ee;
+              }
+            }
+
+            .view_toggle_btn_active {
+              color: #1976d2;
+              background: #edf6ff;
+              border-color: #cfe6ff;
+            }
+
+            .swap_icon {
+              font-size: 22px;
             }
           }
 
           .search_box {
             width: 100%;
             display: flex;
-            max-width: 300px;
+            max-width: 360px;
             justify-content: left;
 
             @media (max-width:600px) {
@@ -393,35 +433,39 @@
 
             .search_box_inner {
               width: 100%;
-              border: 1px solid #84818194;
+              border: 1px solid #cbd5e1;
               display: flex;
               justify-content: center;
-              border-radius: 5px;
+              border-radius: 8px;
+              overflow: hidden;
+              background: #fff;
 
               .search_input {
-                padding-left: 10px;
-                font-size: 14px;
+                padding: 0 12px;
+                font-size: 15px;
                 color: black;
                 border: none;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
                 outline: none;
                 width: 100%;
                 background: transparent;
+                min-height: 36px;
               }
 
               .search_btn {
-                border-top-right-radius: 10px;
                 border: none;
-                background: transparent;
-                color: rgb(0, 0, 0);
-                border-left: 1px solid rgba(128, 128, 128, 0.543);
-                padding: 4px 7px;
+                background: #fff;
+                color: #0f172a;
+                border-left: 1px solid #cbd5e1;
+                padding: 4px 11px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border-bottom-right-radius: 10px;
                 cursor: pointer;
+
+                &:hover {
+                  color: #1976d2;
+                  background: #f8fafc;
+                }
               }
             }
 
@@ -432,7 +476,7 @@
       .grid_bike_list {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        column-gap: 10px;
+        gap: 14px;
         // display: flex;
         // flex-wrap: wrap;
         // gap: 5px;
@@ -441,7 +485,7 @@
         @media (max-width:768px) {
           grid-template-columns: repeat(2, 1fr);
           // gap: 15px;
-          column-gap: 15px;
+          gap: 12px;
         }
 
         .grid_card {
@@ -449,9 +493,19 @@
           height: auto;
           padding: 0px !important;
           background: white;
-          border: 1px solid #e6e6e6;
-          margin: 10px 0px;
+          border: 1px solid #e7edf3;
+          border-radius: 8px;
+          margin: 0px;
           cursor: pointer;
+          overflow: hidden;
+          box-shadow: 0 8px 22px rgba(15, 23, 42, 0.07);
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+
+          &:hover {
+            border-color: #d5e6f7;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+            transform: translateY(-1px);
+          }
 
           @media (max-width:600px) {
             width: 100%;
@@ -520,8 +574,8 @@
             margin-top: 0px;
             margin-left: 0px;
             width: 100%;
-            padding-left: 10px;
-            padding-bottom: 10px;
+            padding: 10px 10px 12px;
+            box-sizing: border-box;
 
             .grid_icon_title {
               width: 100%;
@@ -533,8 +587,8 @@
                 font-weight: bold;
                 font-size: 14px;
                 width: 100%;
-                max-width: 150px;
-                padding: 5px 0px 4px 0px;
+                max-width: 100%;
+                padding: 0px 0px 6px 0px;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
@@ -560,11 +614,11 @@
             .grid_card_price {
               width: 100%;
               white-space: nowrap;
-              font-size: 13px;
-              font-weight: bolder;
+              font-size: 15px;
+              font-weight: 800;
               color: $primary_two;
-              margin-top: 10px;
-              margin-bottom: 10px;
+              margin-top: 9px;
+              margin-bottom: 7px;
             }
 
             .grid_bike_details {
@@ -616,21 +670,27 @@
         }
 
         .long_card {
-          box-shadow: 0px 0px 10px rgba(117, 117, 117, 0.395);
+          box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
           display: flex;
-          padding: 10px 0px !important;
-          margin: 0px 0px 20px;
-          border-radius: 10px;
+          padding: 10px !important;
+          margin: 0px 0px 18px;
+          border-radius: 8px;
           background: white;
-          border: 1px solid #e6e6e6;
-          height: 155px;
+          border: 1px solid #e7edf3;
+          min-height: 166px;
+          height: auto;
           align-items: center;
           flex-wrap: nowrap;
           cursor: pointer;
           flex-direction: row;
-          padding-left: 2px !important;
-          padding-right: 10px !important;
           box-sizing: border-box !important;
+          transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+
+          &:hover {
+            border-color: #d5e6f7;
+            box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+            transform: translateY(-1px);
+          }
 
           @media (max-width:600px) {
             height: auto !important;
@@ -640,15 +700,14 @@
             margin: 5px 8px !important;
             border: 1px solid #e4e4e4;
             background: rgb(249, 249, 249);
-            border-radius: 0;
+            border-radius: 8px;
             width: 44%;
             overflow: hidden;
           }
 
           .bike_image_box {
-            height: 150px;
-            width: 220px;
-            padding: 0px 10px;
+            height: 146px;
+            padding: 0px 12px 0px 0px;
             display: flex;
             box-sizing: border-box;
             justify-content: center;
@@ -666,6 +725,7 @@
               display: flex;
               justify-content: center;
               align-items: flex-end;
+              overflow: hidden;
             }
 
             .soldout {
@@ -696,8 +756,9 @@
 
           .card_info {
 
-            height: 148px;
-            padding: 20px 10px 10px 0px;
+            min-height: 146px;
+            height: auto;
+            padding: 24px 10px 10px 2px;
 
             @media (max-width:1050px) {
               padding-left: 10px;
@@ -719,8 +780,8 @@
 
 
             .card_title {
-              max-width: 250px;
-              font-size: 14px;
+              max-width: 100%;
+              font-size: 15px;
               padding: 0px;
               display: flex;
               align-items: center;
@@ -730,6 +791,7 @@
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
+              line-height: 1.35;
 
               @media (max-width:600px) {
                 font-size: 13px;
@@ -761,7 +823,7 @@
 
 
             .card_location {
-              padding: 7px 0px 0px;
+              padding: 10px 0px 0px;
               font-size: 13px;
               // border: 1px solid #000;
               // border: 1px solid #000;
@@ -775,7 +837,7 @@
             .bike_details {
               font-size: 13px;
               color: #434343;
-              padding: 5px 0px 0px;
+              padding: 8px 0px 0px;
               width: 100%;
 
               @media (max-width:500px) {
@@ -803,14 +865,14 @@
 
           .price_section_desktop {
             display: flex;
-            height: 148px;
+            min-height: 146px;
             box-sizing: border-box;
             justify-content: right !important;
             flex-direction: column;
-            align-items: center;
-            row-gap: 65px;
+            align-items: flex-end;
+            row-gap: 58px;
             white-space: nowrap;
-            padding: 20px 0px 0px 0px;
+            padding: 24px 4px 0px 0px;
 
             @media (max-width:600px) {
               display: none;
@@ -821,31 +883,35 @@
               width: 100%;
               text-align: right;
               box-sizing: border-box;
-              padding: 0px 10px 0px 0px !important;
-              font-size: 16px;
+              padding: 0px !important;
+              font-size: 17px;
+              font-weight: 700;
             }
 
             .fav_box {
               display: flex;
-              column-gap: 2px !important;
+              column-gap: 10px !important;
               flex-direction: row;
-              margin: 0px 10px 0px 5px !important;
+              margin: 0px !important;
               box-sizing: border-box;
+              align-items: center;
 
               .icon_box {
                 display: flex;
                 // padding: 5px 0px 5px 0px !important;
                 justify-content: center !important;
                 align-items: center !important;
-                width: 30px;
-                // background-color: red !important;
+                width: 38px;
                 border-radius: 50%;
-                height: 25px;
+                height: 38px;
                 overflow: hidden;
+                background: #f8fafc;
+                border: 1px solid #edf2f7;
+                box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
 
                 .icon {
                   // filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.635));
-                  font-size: 18px;
+                  font-size: 19px;
                 }
               }
 
@@ -854,13 +920,15 @@
                 justify-content: left;
                 align-items: center;
                 column-gap: 5px;
-                border-radius: 2px;
-                padding: 0px 5px !important;
+                border-radius: 6px;
+                padding: 0px 12px !important;
                 box-sizing: border-box;
-                border: 1px solid yellowgreen;
-                background-color: yellowgreen;
-                font-size: 11px;
+                border: 1px solid #8fd018;
+                background-color: #8fd018;
+                font-size: 12px;
+                font-weight: 700;
                 color: white;
+                min-height: 36px;
 
                 .icon {
                   font-size: 16px;

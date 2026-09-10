@@ -12,7 +12,7 @@ import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData';
 import { ALL_FILTER_VALUE, getBikeFilterSlug, getBikeFilterUrl } from '@/ebikeWeb/utils/bikeFilterRoute';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
-import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils';
+import { getVisibleBrands, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils';
 import styles from './index.module.scss';
 
 function formatDropdownText(value = '') {
@@ -30,7 +30,7 @@ const BikeFilterBar = ({ initialBrand = ALL_FILTER_VALUE, initialModal = ALL_FIL
     const [selectedBrand, setSelectedBrand] = useState(getBikeFilterSlug(initialBrand));
     const [selectedModal, setSelectedModal] = useState(getBikeFilterSlug(initialModal));
     const [selectedCity, setSelectedCity] = useState(getBikeFilterSlug(initialCity));
-    const [brandOptions, setBrandOptions] = useState(sortBrandsByName(getVisibleBrands(BrandArr)));
+    const [brandOptions, setBrandOptions] = useState(sortBrandsByPriority(getVisibleBrands(BrandArr)));
 
     const yearOptions = [...YearArr].sort((a, b) => Number(b.year) - Number(a.year));
     const cityOptions = getSortedCityOptions(CityArr);
@@ -69,7 +69,7 @@ const BikeFilterBar = ({ initialBrand = ALL_FILTER_VALUE, initialModal = ALL_FIL
     useEffect(() => {
         async function fetchBrandOptions() {
             const res = await getbrandData();
-            const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
+            const apiBrands = Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)) : [];
 
             if (apiBrands.length > 0) {
                 setBrandOptions(apiBrands);

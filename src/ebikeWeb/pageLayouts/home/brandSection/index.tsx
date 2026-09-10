@@ -7,7 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useRouter } from 'next/navigation'
 import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
-import { getVisibleBrands } from '@/ebikeWeb/utils/brandUtils';
+import { getVisibleBrands, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,7 +52,7 @@ function BrandSection() {
   const fecthAllBRands = async () => {
     setIsLoading(true)
     let res = await getbrandData()
-    setAllBrandArr(Array.isArray(res) ? getVisibleBrands(res) : [])
+    setAllBrandArr(Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)) : [])
     setIsLoading(false);
   }
 

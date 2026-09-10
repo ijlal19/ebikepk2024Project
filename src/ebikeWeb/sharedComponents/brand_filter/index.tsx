@@ -1,7 +1,7 @@
 'use client'
 import { BrandArr, CityArr } from '@/ebikeWeb/constants/globalData';
 import { getbrandData } from '@/ebikeWeb/functions/globalFuntions';
-import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils';
+import { getVisibleBrands, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils';
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import { useParams, useRouter } from 'next/navigation';
@@ -35,8 +35,8 @@ function BrandFilter({ setBrandArray, fetchBikeInfo, setTotalPage, setAllBikesAr
   async function fetchBrandOptions() {
     setIsLoading(true);
     const res = await getbrandData();
-    const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
-    setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)));
+    const apiBrands = Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)) : [];
+    setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByPriority(getVisibleBrands(BrandArr)));
     setIsLoading(false);
   }
 

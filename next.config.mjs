@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/used-bike-for-sale-in-pakistan',
+        destination: '/used-bikes',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

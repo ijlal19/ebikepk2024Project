@@ -9,7 +9,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
-import { getVisibleBrands, isElectricBrand } from '@/ebikeWeb/utils/brandUtils';
+import { getVisibleBrands, isElectricBrand, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils';
 
 
 interface TabPanelProps {
@@ -71,7 +71,7 @@ export default function NewBikeBrand({ initialBrands = [] }: { initialBrands?: a
     setIsLoading(true)
     let res = await getbrandData()
     if (res && res.length > 0) {
-      setAllBrandArr(getVisibleBrands(res))
+      setAllBrandArr(sortBrandsByPriority(getVisibleBrands(res)))
       setIsLoading(false)
     }
     else {

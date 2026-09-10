@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { BrandArr, CityArr, YearArr } from '@/ebikeWeb/constants/globalData'
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
-import { getVisibleBrands, sortBrandsByName } from '@/ebikeWeb/utils/brandUtils'
+import { getVisibleBrands, sortBrandsByPriority } from '@/ebikeWeb/utils/brandUtils'
 import FilterDropdown from './DropDown';
 import MoreOptionPopup from './Popup';
 import { getCustomBikeAd, getFilteredAllbikesDetail, getbrandData } from "@/ebikeWeb/functions/globalFuntions"
@@ -42,8 +42,8 @@ function Filters(props: any , {updateData}:any) {
 
   async function fetchBrandOptions() {
     const res = await getbrandData();
-    const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
-    setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByName(getVisibleBrands(BrandArr)));
+    const apiBrands = Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)) : [];
+    setBrandOptions(apiBrands.length > 0 ? apiBrands : sortBrandsByPriority(getVisibleBrands(BrandArr)));
   }
 
   function toggle(from: any) {
@@ -169,7 +169,13 @@ function Filters(props: any , {updateData}:any) {
         "cc": selectedCC,
         "page": _page,
         "adslimit": 12,
-        "search": props.SearchValue == "" ? '' : props.SearchValue
+        "search": props.SearchValue == "" ? '' : props.SearchValue,
+        "approved_only": true,
+        "exclude_sold": true,
+        "min_price": 1,
+        "require_image": true,
+        "sort_by": "quality",
+        "sort_order": "desc"
       }
 
       let res = await getCustomBikeAd(obj)

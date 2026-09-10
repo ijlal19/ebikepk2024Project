@@ -2,13 +2,17 @@
 
 .filter_box {
   height: fit-content;
-  box-shadow: 0px 0px 5px rgb(183, 181, 181);
-  max-width: 200px;
-  padding: 0px 0px 0px 0px !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  max-width: 210px;
+  width: 100%;
+  padding: 0px 0px 8px 0px !important;
   background: white;
   margin: auto;
   box-sizing: border-box;
-  margin-top: 20px;
+  margin-top: 15px;
+  border: 1px solid #e6edf4;
+  border-radius: 8px;
+  overflow: hidden;
 
 
   @media (max-width:768px) {
@@ -20,26 +24,33 @@
   }
 
   .heading_resultby {
-    // margin-top: 0px;
     width: 100%;
     background: $primary_two;
-    padding: 10px 0px !important;
+    padding: 13px 0px !important;
     color: rgb(255, 255, 255);
     text-align: center;
+
+    p {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0;
+      margin: 0;
+    }
   }
 
   .heading_city,
   .heading_brand,
   .heading_years {
-    border-top: 1px solid rgb(235, 231, 231);
-    width: 200px;
-    border-bottom: 1px solid rgb(235, 231, 231);
-    padding: 4px 0px !important;
+    border-top: 1px solid #eef2f6;
+    width: 100%;
+    border-bottom: 1px solid #eef2f6;
+    padding: 8px 0px !important;
     color: black;
     box-sizing: border-box;
+    background: #fbfcfe;
 
     @media (max-width:767px) {
-      width: 300px;
+      width: 100%;
       margin: auto;
       box-sizing: border-box;
     }
@@ -47,10 +58,12 @@
     .city_text,
     .brand_text,
     .years_text {
-      padding-left: 10px;
-      font-size: 13px;
-      font-weight:bolder;
+      padding-left: 14px;
+      font-size: 12px;
+      font-weight: 800;
       box-sizing: border-box;
+      color: #0f172a;
+      letter-spacing: 0;
     }
 
   }
@@ -58,26 +71,36 @@
   .city_options,
   .brand_options,
   .years_options {
-    width: 200px;
-    padding: 15px 0px 0px 0px !important;
+    width: 100%;
+    padding: 10px 0px 6px 0px !important;
     color: black;
     box-sizing: border-box;
-    margin-top: -5px;
+    margin-top: 0px;
     font-size: 12px;
 
     @media (max-width:767px) {
-      width: 300px;
+      width: 100%;
     }
 
     .option_values {
-      gap: 5px;
+      gap: 8px;
       width: 100%;
       box-sizing: border-box;
       display: flex;
       align-items: center;
       text-transform: capitalize;
-      padding: 2px 0px 2px 10px !important;
-      font-size: 12px;
+      padding: 5px 12px 5px 14px !important;
+      font-size: 13px;
+      color: #1f2937;
+      line-height: 1.25;
+
+      input {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: $primary_two;
+        cursor: pointer;
+      }
     }
 
     .option_values .MuiMenuItem-root {
@@ -91,42 +114,55 @@
 
     .seeMore {
       color: $primary_two;
-      padding: 5px 0px 5px 13px !important;
-      font-size: 12px;
+      padding: 7px 0px 6px 14px !important;
+      font-size: 13px;
+      font-weight: 700;
       cursor: pointer;
       margin: 2px 0px 4px 0px !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
 
 .clear_btn {
-  border-radius: 0px;
   height: auto;
-  background-color: $primary_one;
+  background-color: #eef7ff;
   display: block;
-  width: 120px;
-  font-size: 14px;
-  margin: 10px auto 10px auto;
-  color: white;
-  border: none;
+  width: calc(100% - 24px);
+  font-size: 12px;
+  font-weight: 700;
+  margin: 10px auto 8px auto;
+  color: $primary_two;
+  border: 1px solid #cfe6ff;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 6px;
   text-wrap: nowrap;
   padding: 7px 0px !important;
+
+  &:hover {
+    background-color: #e4f2ff;
+  }
 }
 
 .clear_btn_last {
-  border-radius: 0px;
   height: auto;
-  background-color: $primary_one;
+  background-color: #eef7ff;
   display: block;
-  width: 120px;
-  font-size: 14px;
+  width: calc(100% - 24px);
+  font-size: 12px;
+  font-weight: 700;
   margin: 10px auto 10px auto !important;
-  color: white;
-  border: none;
+  color: $primary_two;
+  border: 1px solid #cfe6ff;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 6px;
   text-wrap: nowrap;
   padding: 7px 0px !important;
+
+  &:hover {
+    background-color: #e4f2ff;
+  }
 }

@@ -87,6 +87,9 @@ export default function NewUsedBikesCard(props: any) {
 
     let bike = props.data
     const hasLocation = !!bike?.location
+    const bikePrice = Number(bike?.price)
+    const priceLabel = Number.isFinite(bikePrice) && bikePrice > 0 ? `PKR: ${priceWithCommas(bikePrice)}` : 'Call for price'
+    const imageAlt = `${bike?.title || 'Used bike for sale'}${bike?.location ? ` in ${bike.location}` : ''}`
 
     const AddFavourite = async (id: any) => {
         if (!IsLogin || IsLogin == "not_login") {
@@ -121,7 +124,7 @@ export default function NewUsedBikesCard(props: any) {
                             <div className={styles.card_img_wrapper}>
                                 <CardMedia
                                     component="img"
-                                    alt={bike.title}
+                                    alt={imageAlt}
                                     height="230"
                                     image={
                                         imgUrl
@@ -148,7 +151,7 @@ export default function NewUsedBikesCard(props: any) {
                             :
                             <CardMedia
                                 component="img"
-                                alt={bike.title}
+                                alt={imageAlt}
                                 height="230"
                                 image={imgUrl ? cloudinaryLoader(imgUrl , 400 , 'auto') : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'}
                                 className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height : ""}`}
@@ -162,11 +165,11 @@ export default function NewUsedBikesCard(props: any) {
                         {props.currentpage === 'featured_bike' ?
                             (isFeatureTagShow ?
                                 <Typography className={styles.card_price} sx={{ color: '#1976d2' }}>
-                                    PKR: {bike?.price ? priceWithCommas(bike?.price) : "0"}
+                                    {priceLabel}
                                 </Typography>
                                 : "")
                             : <Typography className={styles.card_price} sx={{ color: 'black' }}>
-                                PKR: {bike?.price ? priceWithCommas(bike?.price) : "0"}
+                                {priceLabel}
                             </Typography>}
 
                         {props.from == "usedBikeComp" ?

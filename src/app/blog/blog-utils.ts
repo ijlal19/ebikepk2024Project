@@ -9,6 +9,15 @@ const FALLBACK_BLOG_TAGS = [
   "electric bike news Pakistan",
 ];
 
+const FALLBACK_BLOG_CATEGORIES = [
+  "News",
+  "Bike Care",
+  "Electric Bike News",
+  "Motorcycle Prices",
+  "Pakistan Motorcycle News",
+  "Safety",
+];
+
 function normalizeTag(value?: string | null) {
   return (value || "")
     .replace(/\s+/g, " ")
@@ -32,10 +41,10 @@ function buildDynamicBlogTags(blogs: any[] = [], limit = 6) {
   const tags: string[] = [];
 
   blogs.forEach((blog) => {
-    addUniqueTag(tags, blog?.blog_category?.name ? `${blog.blog_category.name} Blogs` : "");
+    addUniqueTag(tags, blog?.blog_category?.name);
   });
 
-  FALLBACK_BLOG_TAGS.forEach((tag) => addUniqueTag(tags, tag));
+  FALLBACK_BLOG_CATEGORIES.forEach((tag) => addUniqueTag(tags, tag));
 
   return tags.slice(0, limit);
 }

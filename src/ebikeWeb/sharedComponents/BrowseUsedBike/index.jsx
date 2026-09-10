@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 import { Box, Grid, Link, useMediaQuery } from "@mui/material";
 import { BrandArr, CityArr } from "@/ebikeWeb/constants/globalData";
 import { getbrandData } from "@/ebikeWeb/functions/globalFuntions";
-import { getBrandSlug, getVisibleBrands, sortBrandsByName } from "@/ebikeWeb/utils/brandUtils";
+import { getBrandSlug, getVisibleBrands, sortBrandsByPriority } from "@/ebikeWeb/utils/brandUtils";
 
 const popularCityNames = ['karachi', 'islamabad', 'peshawar', 'lahore', 'faisalabad'];
 
@@ -26,12 +26,12 @@ function formatName(value = '') {
 const BrowseUsedBike = () => {
     const isMobile = useMediaQuery('(max-width:1120px)');
     const isMobile2 = useMediaQuery('(max-width:768px)');
-    const [brands, setBrands] = useState(sortBrandsByName(getVisibleBrands(BrandArr)).slice(0, 6));
+    const [brands, setBrands] = useState(sortBrandsByPriority(getVisibleBrands(BrandArr)).slice(0, 6));
 
     useEffect(() => {
         async function fetchBrands() {
             const res = await getbrandData();
-            const apiBrands = Array.isArray(res) ? sortBrandsByName(getVisibleBrands(res)) : [];
+            const apiBrands = Array.isArray(res) ? sortBrandsByPriority(getVisibleBrands(res)) : [];
 
             if (apiBrands.length > 0) {
                 setBrands(apiBrands.slice(0, 6));
