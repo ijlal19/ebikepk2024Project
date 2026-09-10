@@ -26,7 +26,7 @@ import Usedbike_left from '@/ebikeWeb/sharedComponents/Letf-side-section/used-bi
 import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left';
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
-import BlogSidebarSection, { BLOG_TAGS } from '@/ebikeWeb/sharedComponents/blogSidebarSection';
+import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
 
 const BLOG_VIEW_DEDUP_MS = 5000;
 const blogViewLastHitAt: Record<string, number> = {};
@@ -48,13 +48,6 @@ const buildDynamicSidebarTags = (blogs: any[] = [], limit = 18) => {
   };
 
   blogs.forEach((blog: any) => addTag(blog?.blog_category?.name));
-  blogs.forEach((blog: any) => {
-    String(blog?.focus_keyword || '')
-      .split(',')
-      .forEach(addTag);
-  });
-
-  BLOG_TAGS.forEach(addTag);
 
   return tags.slice(0, limit);
 };
@@ -254,7 +247,7 @@ const BlogDetails = () => {
   }
 
   const handleSidebarTagClick = (tag: string) => {
-    router.push(`/blog?tag=${encodeURIComponent(tag)}`);
+    router.push(`/blog?category=${encodeURIComponent(tag.replace(/\s+/g, '_'))}`);
   }
 
   const assignedAuthor = DataBlog?.author;
