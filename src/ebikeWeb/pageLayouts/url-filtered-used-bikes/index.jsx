@@ -58,6 +58,20 @@ function makePageRequest(filterRequest, page) {
   };
 }
 
+function hasQualityUsedBikeData(bike) {
+  const price = Number(bike?.price);
+  return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+}
+
+function normalizeUsedBikeAds(bikes) {
+  return Array.isArray(bikes) ? bikes.filter(hasQualityUsedBikeData) : [];
+}
+
+function formatUsedBikePrice(price) {
+  const numericPrice = Number(price);
+  return Number.isFinite(numericPrice) && numericPrice > 0 ? `PKR ${priceWithCommas(numericPrice)}` : 'Call for price';
+}
+
 export default function UrlFilteredUsedBikes({
   _allUsedBike,
   filterRequest,
@@ -69,7 +83,7 @@ export default function UrlFilteredUsedBikes({
   const [FavouriteData, setFavouriteData] = useState([]);
   const [isGridSelected, setIsGridSelected] = useState(false);
   const [IsLogin, setIsLogin] = useState('not_login');
-  const [allBikesArr, setAllBikesArr] = useState(Array.isArray(_allUsedBike?.data) ? _allUsedBike.data : []);
+  const [allBikesArr, setAllBikesArr] = useState(normalizeUsedBikeAds(_allUsedBike?.data));
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
   const [totalPage, setTotalPage] = useState(_allUsedBike?.pages || 0);
@@ -92,7 +106,7 @@ export default function UrlFilteredUsedBikes({
   }, []);
 
   useEffect(() => {
-    setAllBikesArr(Array.isArray(_allUsedBike?.data) ? _allUsedBike.data : []);
+    setAllBikesArr(normalizeUsedBikeAds(_allUsedBike?.data));
     setCurrentPage(_allUsedBike?.currentPage || 1);
     setTotalPage(_allUsedBike?.pages || 0);
   }, [_allUsedBike]);
@@ -124,7 +138,7 @@ export default function UrlFilteredUsedBikes({
 
     if (res?.data?.length > 0) {
       setCurrentPage(res?.currentPage);
-      setAllBikesArr(res?.data);
+      setAllBikesArr(normalizeUsedBikeAds(res?.data));
       setTotalPage(res?.pages);
     } else {
       setCurrentPage(1);
@@ -226,11 +240,11 @@ export default function UrlFilteredUsedBikes({
                     {viewsCount} <VisibilityOutlinedIcon sx={{ fontSize: '14px' }} />
                   </span>
                 </Typography>
-                <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
+                <Typography className={styles.card_price_mobile}>{formatUsedBikePrice(val?.price)}</Typography>
               </Grid>
 
               <Grid item className={styles.price_section_desktop}>
-                <span> PKR {priceWithCommas(val?.price)}</span>
+                <span>{formatUsedBikePrice(val?.price)}</span>
                 <Box className={styles.fav_box}>
                   <Box
                     className={styles.icon_box}
@@ -298,7 +312,7 @@ export default function UrlFilteredUsedBikes({
               <Typography className={styles.grid_card_title}>{val?.title}</Typography>
             </Box>
             <Typography className={styles.grid_card_location}>{val?.sellerName || val?.city?.city_name}</Typography>
-            <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
+            <Typography className={styles.grid_card_price}>{formatUsedBikePrice(val?.price)}</Typography>
             <Typography className={styles.grid_bike_details}>
               {bikeYear ? <span>{bikeYear}</span> : null}
               {bikeYear && brandName ? <span className={styles.grid_verticl_line}> | </span> : null}

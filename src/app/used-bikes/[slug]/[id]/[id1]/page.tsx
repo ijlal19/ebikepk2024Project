@@ -11,6 +11,27 @@ type Props = {
 
 export const dynamic = "force-dynamic";
 
+const usedBikeQualityRequest = {
+  approved_only: true,
+  exclude_sold: true,
+  min_price: 1,
+  require_image: true,
+  sort_by: "quality",
+  sort_order: "desc"
+};
+
+function hasQualityUsedBikeData(bike: any) {
+  const price = Number(bike?.price);
+  return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+}
+
+function normalizeUsedBikeResponse(response: any) {
+  return {
+    ...(response || {}),
+    data: Array.isArray(response?.data) ? response.data.filter(hasQualityUsedBikeData) : []
+  };
+}
+
 function getFilterSeo(params: Props["params"]) {
   const { id, slug, id1 } = params;
   const brand = getBrandFromId(id1, BrandArr);
@@ -72,6 +93,7 @@ function getFilterRequest(params: Props["params"]) {
   const baseRequest = {
     page: 1,
     adslimit: 12,
+    ...usedBikeQualityRequest,
   };
 
   if (slug?.indexOf("year") > -1) {
@@ -146,7 +168,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function buildFilteredUsedBikeJsonLd(params: Props["params"], usedBikes: any) {
   const { title, description, heading, canonical } = getFilterSeo(params);
-  const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.slice(0, 12) : [];
+  const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.filter(hasQualityUsedBikeData).slice(0, 12) : [];
 
   return {
     "@context": "https://schema.org",
@@ -202,19 +224,16 @@ function buildFilteredUsedBikeJsonLd(params: Props["params"], usedBikes: any) {
             position: index + 1,
             url: bikeUrl,
             item: {
-              "@type": "Product",
+              "@type": "WebPage",
+              "@id": `${bikeUrl}#webpage`,
               name: bike?.meta_title || bike?.title || "Used Bike",
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
-              category: "Used motorcycle",
-              offers: {
-                "@type": "Offer",
-                priceCurrency: "PKR",
-                ...(Number.isFinite(price) ? { price } : {}),
-                availability: bike?.is_sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
-                itemCondition: "https://schema.org/UsedCondition",
-                url: bikeUrl
-              }
+              description: [
+                bike?.title,
+                Number.isFinite(price) && price > 0 ? `Asking price PKR ${price}` : ""
+              ].filter(Boolean).join(". "),
+              about: "Used motorcycle classified ad"
             }
           }
         })
@@ -225,7 +244,7 @@ function buildFilteredUsedBikeJsonLd(params: Props["params"], usedBikes: any) {
 
 export default async function UsedBike({ params }: Props) {
     const { heading, description, keywords } = getFilterSeo(params);
-    const usedBikes = await getCustomBikeAd(getFilterRequest(params));
+    const usedBikes = normalizeUsedBikeResponse(await getCustomBikeAd(getFilterRequest(params)));
 
     return (  
       <>

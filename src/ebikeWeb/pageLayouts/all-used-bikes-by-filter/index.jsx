@@ -20,6 +20,20 @@ import ItemCard from '../../sharedComponents/itemCard'
 
 let SelectedADD = []
 
+function hasQualityUsedBikeData(bike) {
+    const price = Number(bike?.price);
+    return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+}
+
+function normalizeUsedBikeAds(bikes) {
+    return Array.isArray(bikes) ? bikes.filter(hasQualityUsedBikeData) : [];
+}
+
+function formatUsedBikePrice(price) {
+    const numericPrice = Number(price);
+    return Number.isFinite(numericPrice) && numericPrice > 0 ? `PKR ${priceWithCommas(numericPrice)}` : 'Call for price';
+}
+
 const AllUsedBikeByFilter = ({
     _allUsedBike,
     initialHeading = 'Used Bikes',
@@ -39,7 +53,7 @@ const AllUsedBikeByFilter = ({
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
     const [SearchValue, setSearchValue] = useState('');
-    const [allBikesArr, setAllBikesArr] = useState(Array.isArray(_allUsedBike?.data) ? _allUsedBike.data : []);
+    const [allBikesArr, setAllBikesArr] = useState(normalizeUsedBikeAds(_allUsedBike?.data));
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
     const [BrandArray, setBrandArray] = useState([]);
@@ -193,7 +207,7 @@ const AllUsedBikeByFilter = ({
             let res = await getCustomBikeAd(Obj)
             if (res?.data?.length > 0) {
                 setCurrentPage(res?.currentPage || _page || 1)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setTotalPage(res?.pages)
                 setHeading('Used Bike For Year ' + params.id)
             }
@@ -219,7 +233,7 @@ const AllUsedBikeByFilter = ({
             if (res?.data?.length > 0) {
                 setHeading(capitalizeFirstWord(res?.data[0]?.bike_brand?.brandName)?.replaceAll('_', " ") + " Used Bike in " + capitalizeFirstWord(res?.data[0]?.city?.city_name))
                 setCurrentPage(res?.currentPage || _page || 1)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setTotalPage(res?.pages)
             }
             else {
@@ -244,7 +258,7 @@ const AllUsedBikeByFilter = ({
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(res?.data[0]?.bike_brand?.brandName) + " in " + capitalizeFirstWord(res?.data[0]?.city?.city_name))
                 setCurrentPage(res?.currentPage || _page || 1)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setTotalPage(res?.pages)
             }
             else {
@@ -267,7 +281,7 @@ const AllUsedBikeByFilter = ({
             if (res?.data?.length > 0) {
                 setHeading('Used Bike For Sale in ' + capitalizeFirstWord(params.id))
                 setCurrentPage(res?.currentPage || _page || 1)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setTotalPage(res?.pages)
             }
             else {
@@ -290,7 +304,7 @@ const AllUsedBikeByFilter = ({
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(params.id))
                 setCurrentPage(res?.currentPage || _page || 1)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setTotalPage(res?.pages)
             }
             else {
@@ -314,7 +328,7 @@ const AllUsedBikeByFilter = ({
             if (res?.data?.length > 0) {
                 setHeading('Used Bike By ' + capitalizeFirstWord(params.id) + "CC")
                 setCurrentPage(res?.currentPage || _page || 1)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setTotalPage(res?.pages)
             }
             else {
@@ -409,12 +423,12 @@ const AllUsedBikeByFilter = ({
                                     </span>
                                 </Typography>
 
-                                <Typography className={styles.card_price_mobile}>PKR {priceWithCommas(val?.price)}</Typography>
+                                <Typography className={styles.card_price_mobile}>{formatUsedBikePrice(val?.price)}</Typography>
 
                             </Grid>
 
                             <Grid item className={styles.price_section_desktop}>
-                                <span> PKR {priceWithCommas(val?.price)}</span>
+                                <span> {formatUsedBikePrice(val?.price)}</span>
                                 {
                                     !isMobileView ?
                                         <Box className={styles.fav_box}>
@@ -492,7 +506,7 @@ const AllUsedBikeByFilter = ({
     
                                     <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>
     
-                                    <Typography className={styles.grid_card_price}>PKR {priceWithCommas(val?.price)}</Typography>
+                                    <Typography className={styles.grid_card_price}>{formatUsedBikePrice(val?.price)}</Typography>
     
                                     <Typography className={styles.grid_bike_details}>
                                         {bikeYear ? <span>{bikeYear}</span> : null}
@@ -551,7 +565,7 @@ const AllUsedBikeByFilter = ({
 
         const res = await getCustomBikeAd(obj)
         if (res && res?.data?.length > 0) {
-            setAllBikesArr(res?.data)
+            setAllBikesArr(normalizeUsedBikeAds(res?.data))
             setCurrentPage(res?.currentPage)
             setTotalPage(res?.pages)
         }
@@ -605,7 +619,7 @@ const AllUsedBikeByFilter = ({
 
         const res = await getCustomBikeAd(obj)
         if (res && res?.data?.length > 0) {
-            setAllBikesArr(res?.data)
+            setAllBikesArr(normalizeUsedBikeAds(res?.data))
             setCurrentPage(res?.currentPage)
             setTotalPage(res?.pages)
         }
@@ -637,7 +651,7 @@ const AllUsedBikeByFilter = ({
 
         const res = await getCustomBikeAd(obj)
         if (res && res?.data?.length > 0) {
-            setAllBikesArr(res?.data)
+            setAllBikesArr(normalizeUsedBikeAds(res?.data))
             setCurrentPage(res?.currentPage)
             setTotalPage(res?.pages)
         }
@@ -669,7 +683,7 @@ const AllUsedBikeByFilter = ({
         }
         const res = await getCustomBikeAd(obj)
         if (res && res?.data?.length > 0) {
-            setAllBikesArr(res?.data)
+            setAllBikesArr(normalizeUsedBikeAds(res?.data))
             setCurrentPage(res?.currentPage)
             setTotalPage(res?.pages)
         }
@@ -717,7 +731,7 @@ const AllUsedBikeByFilter = ({
 
             if (res && res?.data?.length > 0) {
                 setSearchApply(true)
-                setAllBikesArr(res?.data)
+                setAllBikesArr(normalizeUsedBikeAds(res?.data))
                 setCurrentPage(res.currentPage)
                 setTotalPage(res.pages)
             }

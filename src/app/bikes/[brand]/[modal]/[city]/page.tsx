@@ -16,6 +16,35 @@ type Props = {
 
 export const dynamic = 'force-dynamic';
 
+const usedBikeQualityRequest = {
+  approved_only: true,
+  exclude_sold: true,
+  min_price: 1,
+  require_image: true,
+  sort_by: 'quality',
+  sort_order: 'desc',
+};
+
+function isAllUsedBikeFilter(params: Props['params']) {
+  return (
+    getBikeFilterSlug(params.brand) === ALL_FILTER_VALUE &&
+    getBikeFilterSlug(params.modal) === ALL_FILTER_VALUE &&
+    getBikeFilterSlug(params.city) === ALL_FILTER_VALUE
+  );
+}
+
+function hasQualityUsedBikeData(bike: any) {
+  const price = Number(bike?.price);
+  return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+}
+
+function normalizeUsedBikeResponse(response: any) {
+  return {
+    ...(response || {}),
+    data: Array.isArray(response?.data) ? response.data.filter(hasQualityUsedBikeData) : []
+  };
+}
+
 function getFilterRequest(params: Props['params']) {
   const filters = getBikeFilterIds(params);
   const modalSlug = getBikeFilterSlug(params.modal);
@@ -26,6 +55,7 @@ function getFilterRequest(params: Props['params']) {
   return {
     page: 1,
     adslimit: 12,
+    ...usedBikeQualityRequest,
     brand_filter: filters.brand ? [filters.brand] : [],
     city_filter: filters.city ? [filters.city] : [],
     years_filter: filters.year ? [filters.year] : [],
@@ -51,7 +81,9 @@ function getFilterSeo(params: Props['params']) {
   const cityLabel = city || 'Pakistan';
   const modelYear = modal && /^\d{4}$/.test(modal) ? modal : '';
   const modelName = modal && !modelYear ? modal : '';
-  const canonical = `${SITE_URL}/bikes/${getBikeFilterSlug(params.brand)}/${getBikeFilterSlug(params.modal)}/${getBikeFilterSlug(params.city)}`;
+  const canonical = isAllUsedBikeFilter(params)
+    ? `${SITE_URL}/used-bikes`
+    : `${SITE_URL}/bikes/${getBikeFilterSlug(params.brand)}/${getBikeFilterSlug(params.modal)}/${getBikeFilterSlug(params.city)}`;
   const bikeLabel = [brand, modelName || modelYear].filter(Boolean).join(' ');
   const locationLabel = `in ${cityLabel}`;
   const heading = `${bikeLabel ? `${bikeLabel} Used Bikes` : 'Used Bikes'} for Sale ${locationLabel}`;
@@ -109,9 +141,10 @@ function getFilterSeo(params: Props['params']) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const seo = getFilterSeo(params);
-  const filteredBikes = await getCustomBikeAd(getFilterRequest(params));
+  const filteredBikes = normalizeUsedBikeResponse(await getCustomBikeAd(getFilterRequest(params)));
   const firstBike = Array.isArray(filteredBikes?.data) ? filteredBikes.data[0] : null;
   const shareImage = firstBike?.images ? resolveClassifiedShareImage(firstBike.images) : DEFAULT_SHARE_IMAGE;
+  const isDuplicateAllUsedBikesPage = isAllUsedBikeFilter(params);
 
   return {
     title: seo.title,
@@ -121,10 +154,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       canonical: seo.canonical,
     },
     robots: {
-      index: true,
+      index: !isDuplicateAllUsedBikesPage,
       follow: true,
       googleBot: {
-        index: true,
+        index: !isDuplicateAllUsedBikesPage,
         follow: true,
         'max-image-preview': 'large',
         'max-snippet': -1,
@@ -166,7 +199,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function buildFilterJsonLd(params: Props['params'], usedBikes: any) {
   const seo = getFilterSeo(params);
-  const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.slice(0, 12) : [];
+  const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.filter(hasQualityUsedBikeData).slice(0, 12) : [];
   const breadcrumbItems = [
     {
       '@type': 'ListItem',
@@ -230,20 +263,17 @@ function buildFilterJsonLd(params: Props['params'], usedBikes: any) {
             position: index + 1,
             url: bikeUrl,
             item: {
-              '@type': 'Product',
+              '@type': 'WebPage',
+              '@id': `${bikeUrl}#webpage`,
               name: bike?.meta_title || bike?.title || seo.heading,
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
-              category: 'Used motorcycle',
-              ...(seo.brand ? { brand: { '@type': 'Brand', name: seo.brand } } : {}),
-              offers: {
-                '@type': 'Offer',
-                priceCurrency: 'PKR',
-                ...(Number.isFinite(price) ? { price } : {}),
-                availability: bike?.is_sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
-                itemCondition: 'https://schema.org/UsedCondition',
-                url: bikeUrl,
-              },
+              description: [
+                bike?.title,
+                Number.isFinite(price) && price > 0 ? `Asking price PKR ${price}` : "",
+                seo.city ? `Location ${seo.city}` : ""
+              ].filter(Boolean).join(". "),
+              about: "Used motorcycle classified ad"
             },
           };
         }),
@@ -254,7 +284,7 @@ function buildFilterJsonLd(params: Props['params'], usedBikes: any) {
 
 export default async function BikesByFilter({ params }: Props) {
   const filterRequest = getFilterRequest(params);
-  const allUsedBike = await getCustomBikeAd(filterRequest);
+  const allUsedBike = normalizeUsedBikeResponse(await getCustomBikeAd(filterRequest));
   const seo = getFilterSeo(params);
 
   return (

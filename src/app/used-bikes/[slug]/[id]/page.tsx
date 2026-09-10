@@ -111,40 +111,39 @@ function buildUsedBikeDetailJsonLd(product: any, params: Props["params"]) {
         "@context": "https://schema.org",
         "@graph": [
             {
-                "@type": "Product",
-                "@id": `${url}#product`,
+                "@type": "WebPage",
+                "@id": `${url}#webpage`,
+                url,
                 name: add?.title || "Used Bike",
                 description: stripHtml(description),
-                image: [image],
-                url,
-                sku: add?.id ? String(add.id) : params.id,
-                category: "Used motorcycle",
-                ...(brandName ? { brand: { "@type": "Brand", name: brandName } } : {}),
-                offers: {
-                    "@type": "Offer",
-                    url,
-                    priceCurrency: "PKR",
-                    ...(Number.isFinite(price) ? { price } : {}),
-                    availability: add?.is_sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
-                    itemCondition: "https://schema.org/UsedCondition",
-                    seller: {
-                        "@type": "Person",
-                        name: add?.sellerName || "Private seller"
-                    },
-                    availableAtOrFrom: cityName ? {
-                        "@type": "Place",
-                        address: {
-                            "@type": "PostalAddress",
-                            addressLocality: cityName,
-                            addressCountry: "PK"
-                        }
-                    } : undefined
+                inLanguage: "en-PK",
+                isPartOf: {
+                    "@id": `${SITE_URL}/#website`
                 },
-                additionalProperty: [
-                    yearName ? { "@type": "PropertyValue", name: "Model year", value: String(yearName) } : null,
-                    add?.cc ? { "@type": "PropertyValue", name: "Engine capacity", value: `${add.cc}cc` } : null,
-                    cityName ? { "@type": "PropertyValue", name: "City", value: cityName } : null
-                ].filter(Boolean)
+                primaryImageOfPage: {
+                    "@type": "ImageObject",
+                    url: image
+                },
+                about: {
+                    "@type": "Thing",
+                    name: add?.title || "Used bike classified ad",
+                    description: [
+                        brandName ? `${brandName} used motorcycle` : "Used motorcycle",
+                        yearName ? `${yearName} model` : "",
+                        add?.cc ? `${add.cc}cc` : "",
+                        cityName ? `available in ${cityName}` : "available in Pakistan",
+                        Number.isFinite(price) && price > 0 ? `asking price PKR ${price}` : ""
+                    ].filter(Boolean).join(", "),
+                    image,
+                    additionalProperty: [
+                        add?.id ? { "@type": "PropertyValue", name: "Classified ad ID", value: String(add.id) } : null,
+                        yearName ? { "@type": "PropertyValue", name: "Model year", value: String(yearName) } : null,
+                        add?.cc ? { "@type": "PropertyValue", name: "Engine capacity", value: `${add.cc}cc` } : null,
+                        cityName ? { "@type": "PropertyValue", name: "City", value: cityName } : null,
+                        brandName ? { "@type": "PropertyValue", name: "Brand", value: brandName } : null,
+                        add?.sellerName ? { "@type": "PropertyValue", name: "Seller", value: add.sellerName } : null
+                    ].filter(Boolean)
+                }
             },
             {
                 "@type": "BreadcrumbList",
@@ -169,24 +168,6 @@ function buildUsedBikeDetailJsonLd(product: any, params: Props["params"]) {
                         item: url
                     }
                 ]
-            },
-            {
-                "@type": "WebPage",
-                "@id": `${url}#webpage`,
-                url,
-                name: title,
-                description,
-                inLanguage: "en-PK",
-                isPartOf: {
-                    "@id": `${SITE_URL}/#website`
-                },
-                primaryImageOfPage: {
-                    "@type": "ImageObject",
-                    url: image
-                },
-                mainEntity: {
-                    "@id": `${url}#product`
-                }
             }
         ]
     };

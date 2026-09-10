@@ -64,6 +64,18 @@ const usedBikeFaqs = [
 
 export const dynamic = "force-dynamic";
 
+function hasQualityUsedBikeData(bike: any) {
+  const price = Number(bike?.price);
+  return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+}
+
+function normalizeUsedBikeResponse(response: any) {
+  return {
+    ...(response || {}),
+    data: Array.isArray(response?.data) ? response.data.filter(hasQualityUsedBikeData) : []
+  };
+}
+
 export async function generateMetadata(): Promise<Metadata> {
  
   return {
@@ -123,7 +135,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 function buildUsedBikeListJsonLd(usedBikes: any) {
-  const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.slice(0, 12) : [];
+  const bikes = Array.isArray(usedBikes?.data) ? usedBikes.data.filter(hasQualityUsedBikeData).slice(0, 12) : [];
 
   return {
     "@context": "https://schema.org",
@@ -186,19 +198,17 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
             position: index + 1,
             url: bikeUrl,
             item: {
-              "@type": "Product",
+              "@type": "WebPage",
+              "@id": `${bikeUrl}#webpage`,
               name: bike?.meta_title || bike?.title || "Used Bike for Sale",
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
-              category: "Used motorcycle for sale",
-              offers: {
-                "@type": "Offer",
-                priceCurrency: "PKR",
-                ...(Number.isFinite(price) && price > 0 ? { price } : {}),
-                availability: bike?.is_sold ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
-                itemCondition: "https://schema.org/UsedCondition",
-                url: bikeUrl
-              }
+              description: [
+                bike?.title,
+                Number.isFinite(price) && price > 0 ? `Asking price PKR ${price}` : "",
+                bike?.location ? `Location ${bike.location}` : ""
+              ].filter(Boolean).join(". "),
+              about: "Used motorcycle classified ad"
             }
           }
         })
@@ -226,14 +236,14 @@ export default async function AllUsedBikes() {
     page: 1,
     ...usedBikeQualityRequest
   }
-  let allUsedBike = await getCustomBikeAd(obj);
+  let allUsedBike = normalizeUsedBikeResponse(await getCustomBikeAd(obj));
 
   let featureObject = {
     isFeatured: true,
     adslimit: 20,
     ...usedBikeQualityRequest
   }
-  let allFeaturedBike = await getCustomBikeAd(featureObject);
+  let allFeaturedBike = normalizeUsedBikeResponse(await getCustomBikeAd(featureObject));
 
   return (
     <UsedBikesPageContent

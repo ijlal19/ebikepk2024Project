@@ -100,7 +100,10 @@ function getBikeQualityScore(bike) {
 function sortUsedBikeAds(bikes) {
     if (!Array.isArray(bikes)) return [];
 
-    return [...bikes].sort((a, b) => {
+    return bikes.filter((bike) => {
+        const price = getBikePriceValue(bike);
+        return price > 0 && hasBikeImage(bike) && !bike?.is_sold;
+    }).sort((a, b) => {
         const scoreDiff = getBikeQualityScore(b) - getBikeQualityScore(a);
         if (scoreDiff !== 0) return scoreDiff;
         return (b?.id || 0) - (a?.id || 0);
