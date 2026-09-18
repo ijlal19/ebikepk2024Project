@@ -72,6 +72,20 @@ function slugify(value?: string | null) {
         .replace(/^-+|-+$/g, "");
 }
 
+function getBlogSlug(blogInfo?: any) {
+    return slugify(blogInfo?.slug || blogInfo?.blogTitle);
+}
+
+function buildBlogPath(blogInfo?: any) {
+    const blogSlug = getBlogSlug(blogInfo);
+
+    return blogSlug ? `/blog/${blogSlug}` : "/blog";
+}
+
+function buildBlogUrl(blogInfo?: any) {
+    return `${SITE_URL}${buildBlogPath(blogInfo)}`;
+}
+
 function resolveBlogShareImage(featuredImage?: string | null) {
     const rawImage = featuredImage?.split(" #$# ")[0]?.trim();
     if (!rawImage) {
@@ -98,6 +112,9 @@ export {
     trimText,
     formatTitleText,
     slugify,
+    getBlogSlug,
+    buildBlogPath,
+    buildBlogUrl,
     resolveBlogShareImage,
     resolveClassifiedShareImage
 };

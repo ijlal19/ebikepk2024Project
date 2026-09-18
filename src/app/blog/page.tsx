@@ -3,7 +3,7 @@ import BlogComp from "@/ebikeWeb/pageLayouts/blog/index"
 import { Metadata } from 'next'
 import { Suspense } from "react";
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
-import { DEFAULT_SHARE_IMAGE, resolveBlogShareImage, SITE_URL, slugify, toSecureUrl, trimText } from '@/app/metadata-utils';
+import { buildBlogUrl, DEFAULT_SHARE_IMAGE, resolveBlogShareImage, SITE_URL, toSecureUrl, trimText } from '@/app/metadata-utils';
 import SeoContentBlock from '@/app/components/SeoContentBlock';
 import { FALLBACK_BLOG_TAGS, buildBlogBreadcrumbItems, buildDynamicBlogTags } from './blog-utils';
 
@@ -13,14 +13,11 @@ const blogTitle = 'Motorcycle News in Pakistan | Blogs & Articles | ebike.pk';
 const blogDescription = 'Read motorcycle blogs, bike reviews, maintenance guides, safety tips and latest bike news in Pakistan on ebike.pk.';
 const blogCanonical = `${SITE_URL}/blog`;
 
-function buildBlogUrl(blogInfo: any) {
-  return `${SITE_URL}/blog/${slugify(blogInfo?.blog_category?.name || 'blog')}/${slugify(blogInfo?.blogTitle)}/${blogInfo?.id}`;
-}
-
 function sanitizeBlogForListing(blog: any) {
   return {
     id: blog?.id,
     blogTitle: blog?.blogTitle,
+    slug: blog?.slug,
     featuredImage: blog?.featuredImage,
     meta_description: blog?.meta_description,
     blogDescription: trimText(blog?.blogDescription, 220),

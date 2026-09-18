@@ -6,6 +6,7 @@ import { SITE_URL } from "./metadata-utils";
 
 export const revalidate = 3600;
 const USED_BIKE_SITEMAP_LIMIT = 500;
+const SITEMAP_GENERATED_AT = new Date();
 
 type Brand = {
   id?: number | string;
@@ -87,11 +88,28 @@ function slugify(value?: string | number | null) {
 
 function toLastModified(value?: string | null) {
   if (!value) {
-    return new Date();
+    return undefined;
   }
 
   const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+  if (Number.isNaN(parsed.getTime())) {
+    return undefined;
+  }
+
+  return parsed > SITEMAP_GENERATED_AT ? SITEMAP_GENERATED_AT : parsed;
+}
+
+function cleanSitemapRoutes(routes: MetadataRoute.Sitemap): MetadataRoute.Sitemap {
+  const seen = new Set<string>();
+
+  return routes.filter((route) => {
+    if (!route.url.startsWith(`${SITE_URL}/`) || seen.has(route.url)) {
+      return false;
+    }
+
+    seen.add(route.url);
+    return true;
+  });
 }
 
 async function fetchJson<T>(endpoint: string, init?: RequestInit): Promise<T> {
@@ -112,29 +130,27 @@ async function fetchJson<T>(endpoint: string, init?: RequestInit): Promise<T> {
 }
 
 function buildStaticRoutes(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   return [
-    { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
+    { url: `${SITE_URL}/`, changeFrequency: "daily", priority: 1 },
     // { url: `${SITE_URL}/home`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${SITE_URL}/used-bikes`, lastModified: now, changeFrequency: "daily", priority: 0.98 },
-    { url: `${SITE_URL}/used-bikes/sell-used-bike`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
-    { url: `${SITE_URL}/new-bikes`, lastModified: now, changeFrequency: "daily", priority: 0.95 },
-    { url: `${SITE_URL}/new-bike-price`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "daily", priority: 0.85 },
-    { url: `${SITE_URL}/blog/news`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
-    { url: `${SITE_URL}/bike-videos`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
-    { url: `${SITE_URL}/dealers`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${SITE_URL}/mechanics`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/used-bikes`, changeFrequency: "daily", priority: 0.98 },
+    { url: `${SITE_URL}/used-bikes/sell-used-bike`, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${SITE_URL}/new-bikes`, changeFrequency: "daily", priority: 0.95 },
+    { url: `${SITE_URL}/new-bike-price`, changeFrequency: "weekly", priority: 0.85 },
+    { url: `${SITE_URL}/blog`, changeFrequency: "daily", priority: 0.85 },
+    { url: `${SITE_URL}/blog/news`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${SITE_URL}/bike-videos`, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${SITE_URL}/dealers`, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${SITE_URL}/mechanics`, changeFrequency: "weekly", priority: 0.8 },
     // { url: `${SITE_URL}/forum`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     // { url: `${SITE_URL}/threads`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     // { url: `${SITE_URL}/certified-bikes`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
-    { url: `${SITE_URL}/contact-us`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
-    { url: `${SITE_URL}/mtmis-punjab`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/mtmis-sindh`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/mtmis-kpk`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/mtmis-islamabad`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${SITE_URL}/page/about-us/14`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${SITE_URL}/contact-us`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${SITE_URL}/mtmis-punjab`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/mtmis-sindh`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/mtmis-kpk`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/mtmis-islamabad`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/page/about-us/14`, changeFrequency: "monthly", priority: 0.4 },
     // { url: `${SITE_URL}/page/delete-my-data`, lastModified: now, changeFrequency: "yearly", priority: 0.2 }
   ];
 }
@@ -320,7 +336,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       )
     ]);
 
-    return [
+    return cleanSitemapRoutes([
       ...staticRoutes,
       ...brandRoutes,
       ...bikeFilterRoutes,
@@ -329,12 +345,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...buildBlogRoutes(filterVisibleBlogs(Array.isArray(blogs) ? blogs : [])),
       ...buildDealerRoutes(Array.isArray(dealers) ? dealers : []),
       ...buildMechanicRoutes(Array.isArray(mechanics) ? mechanics : [])
-    ];
+    ]);
   } catch {
-    return [
+    return cleanSitemapRoutes([
       ...staticRoutes,
       ...brandRoutes,
       ...bikeFilterRoutes
-    ];
+    ]);
   }
 }

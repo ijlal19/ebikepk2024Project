@@ -257,6 +257,7 @@ const EditUsedBikeForm = () => {
     const [newvideoUrl, setVideoUrl] = useState('');
     const [newsellerName, setSellerName] = useState('');
     const [mobile, setMobile] = useState('');
+    const [tag, setTag] = useState('');
     const [isLoading, setIsLoading] = useState(false)
     const [bikeData, setBikeData] = useState<any>();
 
@@ -283,6 +284,7 @@ const EditUsedBikeForm = () => {
             setVideoUrl(bike.videoUrl)
             setMobile(bike.mobileNumber)
             setSellerName(bike.sellerName)
+            setTag(bike.tag || '')
             setBikeData(bike);
             setImageArr(bike?.images || []);
             setIsLoading(false)
@@ -308,6 +310,8 @@ const EditUsedBikeForm = () => {
             setSellerName(value);
         } else if (field === 'mobile') {
             setMobile(value);
+        } else if (field === 'tag') {
+            setTag(value);
         }
     };
 
@@ -404,6 +408,7 @@ const EditUsedBikeForm = () => {
             videoUrl: newvideoUrl,
             sellerName: newsellerName,
             mobileNumber: mobile,
+            tag,
             images: imageArr,
             brandId: bikeData.brandId,
             cc: bikeData.cc,
@@ -451,6 +456,10 @@ const EditUsedBikeForm = () => {
 
                                     <DashboardField label="Description" htmlFor="description">
                                         <textarea id="description" name="description" value={newdescription} onChange={(e) => handleChange('description', e.target.value)} className={styles.textarea} />
+                                    </DashboardField>
+
+                                    <DashboardField label="Tags" htmlFor="tag">
+                                        <input id="tag" name="tag" value={tag} onChange={(e) => handleChange('tag', e.target.value)} className={styles.input} placeholder="electric,bike,karachi" />
                                     </DashboardField>
                                 </DashboardSection>
 
@@ -1439,6 +1448,7 @@ const EditBlogForm = () => {
     const [Blog_Meta_Title, setBlog_Meta_Title] = useState('');
     const [Author_Name, setAuthor_Name] = useState('');
     const [Author_Id, setAuthor_Id] = useState('');
+    const [Blog_Slug, setBlog_Slug] = useState('');
     const [allAuthors, setAllAuthors] = useState<any[]>([]);
     const [BlogData, setBlogData] = useState<any>([]);
     const [Blog_Title, setBlog_Title] = useState('');
@@ -1470,6 +1480,7 @@ const EditBlogForm = () => {
         if (res) {
             setCategoryId(res.blogCategoryId)
             setBlog_Title(res.blogTitle)
+            setBlog_Slug(res.slug || '')
             setAuthor_Name(res.authorname)
             setAuthor_Id(String(res.authorId || res.author_id || res.author?.id || ''))
             setBlog_Html(res.bloghtml)
@@ -1582,6 +1593,7 @@ const EditBlogForm = () => {
             authorId: Author_Id ? Number(Author_Id) : null,
             BlogCategoryId: Number(CategoryId),
             blogTitle: Blog_Title,
+            slug: Blog_Slug,
             blogUrl: finalBlogData?.blogUrl,
             bloghtml: Blog_Html,
             blogtext: finalBlogData?.blogtext,
@@ -1636,6 +1648,11 @@ const EditBlogForm = () => {
                                 <div className={styles.fieldGroup}>
                                     <label htmlFor="blogTitle" className={styles.label}>Title</label>
                                     <input id="blogTitle" name="blogTitle" value={Blog_Title} onChange={(e) => setBlog_Title(e.target.value)} className={styles.input} />
+                                </div>
+
+                                <div className={styles.fieldGroup}>
+                                    <label htmlFor="blogSlug" className={styles.label}>Slug</label>
+                                    <input id="blogSlug" name="slug" value={Blog_Slug} onChange={(e) => setBlog_Slug(e.target.value)} className={styles.input} placeholder="example-blog-url" />
                                 </div>
 
                                 <div className={styles.fieldGroup}>
