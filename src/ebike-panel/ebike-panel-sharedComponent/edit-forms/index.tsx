@@ -169,13 +169,6 @@ const slugifyAuthor = (value: string) => value
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
-const isValidBlogSlug = (value?: string | null) => {
-    const slug = String(value || '').trim();
-    return !slug || /^[A-Za-z0-9._~-]+$/.test(slug);
-};
-
-const blogSlugValidationMessage = 'Slug me space, comma, slash, ?, #, &, %, ya special URL characters allowed nahi hain. Sirf letters, numbers, hyphen (-), underscore (_), dot (.) aur tilde (~) use karein.';
-
 const normalizeYoutubeUrls = (value: string[] | string | null | undefined) => {
     if (Array.isArray(value)) {
         return value.filter(url => typeof url === 'string' && url.trim()).map(url => url.trim());
@@ -1561,20 +1554,10 @@ const EditBlogForm = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        const invalidChars = /[\/,?#$!+]/;
-        // if (invalidChars.test(Blog_Title)) {
-        //     alert("Please remove special characters.");
-        //     return;
-        // }
         if (!Blog_Title || Blog_Title.length < 2) {
             alert("Please add a valid title (min 2 characters)");
             return;
         }
-        else if (!isValidBlogSlug(Blog_Slug)) {
-            alert(blogSlugValidationMessage);
-            return;
-        }
-
         else if (!Author_Name && Author_Name.length < 2) {
             alert("Please enter a Author Name");
             return;

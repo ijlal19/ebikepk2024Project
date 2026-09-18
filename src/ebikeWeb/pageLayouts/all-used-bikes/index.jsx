@@ -1,14 +1,11 @@
 'use client'
 import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById, getnewBikeData } from "@/ebikeWeb/functions/globalFuntions";
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader, formatUsedBikeListTitle } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import UsedBikesSection from '@/ebikeWeb/pageLayouts/home/usedbikeSection/index';
-import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
 import BrowseUsedBike from '../../sharedComponents/BrowseUsedBike';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import { Apps, FormatListBulleted } from '@mui/icons-material';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -24,10 +21,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import "../../../app/globals.scss"
-import DealerLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/dealer-left";
 import MechaniLeft from "@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left";
-import Blog_left from "@/ebikeWeb/sharedComponents/Letf-side-section/blog-left";
-import { Featured_New_Card, FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
+import { FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
 import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
 import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
 import AdSense from "@/ebikeWeb/sharedComponents/googleAdsense/adsense";
@@ -152,7 +147,6 @@ const usedBikeSeoLinks = [
 ]
 
 export default function AllUsedBike({
-    _allFeaturedBike,
     _allUsedBike,
     pageHeading = 'Find Used Bikes & Motorcycles in Pakistan',
     pageSubheading = 'Used Honda, Suzuki, Yamaha & More',
@@ -167,11 +161,9 @@ export default function AllUsedBike({
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
     const hasInitialUsedBikes = Array.isArray(_allUsedBike?.data) && _allUsedBike.data.length > 0;
-    const hasInitialFeaturedBikes = Array.isArray(_allFeaturedBike?.data) && _allFeaturedBike.data.length > 0;
     const [initialLoading, setInitialLoading] = useState(!hasInitialUsedBikes);
     const [FavouriteData, setFavouriteData] = useState([]);
     const [SearchApply, setSearchApply] = useState(false);
-    const [featuredData, setFeaturedData] = useState(hasInitialFeaturedBikes ? sortUsedBikeAds(_allFeaturedBike.data) : []);
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
     const [allBikesArr, setAllBikesArr] = useState(hasInitialUsedBikes ? sortUsedBikeAds(_allUsedBike.data) : []);
@@ -191,7 +183,6 @@ export default function AllUsedBike({
         : is12InchScreen
             ? 8.2
             : 6.7;
-    const hasFeaturedData = featuredData?.length > 0;
 
     // const searchParams = useSearchParams();
 
@@ -206,9 +197,6 @@ export default function AllUsedBike({
             setIsLogin("not_login")
         }
 
-        if (!hasInitialFeaturedBikes) {
-            fetchFeaturedBike()
-        }
         fetchRandomBikePriceTable()
 
         const pageNoRaw = localStorage.getItem('PageNo');
@@ -304,23 +292,6 @@ export default function AllUsedBike({
         }, 500);
     }
 
-    async function fetchFeaturedBike() {
-
-        let obj = {
-            isFeatured: true,
-            adslimit: 20,
-            ...qualityUsedBikeRequest
-        }
-
-        let res = await getCustomBikeAd(obj);
-        if (res && res?.data?.length > 0) {
-            setFeaturedData(sortUsedBikeAds(res.data))
-        }
-        else {
-            setFeaturedData([])
-        }
-    }
-
     async function fetchRandomBikePriceTable() {
         const randomBrandIds = [1, 2, 3];
         const randomBrandId = randomBrandIds[Math.floor(Math.random() * randomBrandIds.length)];
@@ -376,6 +347,7 @@ export default function AllUsedBike({
         }
         const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
         const cardLabel = `${val?.title || 'Used bike for sale'}${cityName ? ` in ${cityName}` : ''}`;
+        const isFeaturedBike = val?.isFeatured || val?.is_featured;
 
 
         return (
@@ -409,6 +381,10 @@ export default function AllUsedBike({
                                         borderRadius: '5px'
                                     }}>
                                     {
+                                        isFeaturedBike ?
+                                            <div className={styles.featured_tag}>FEATURED</div> : ""
+                                    }
+                                    {
                                         val.is_sold ?
                                             <div className={styles.soldout}>Sold Out</div> : ""
                                     }
@@ -426,7 +402,7 @@ export default function AllUsedBike({
 
                             <Grid item xs={is10Inch ? 12 : 5.5} className={styles.card_info}>
 
-                                <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
+                                <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {formatUsedBikeListTitle(val?.title)} </Typography>
 
                                 <Typography className={styles.card_location}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />{val?.sellerName}</Typography>
 
@@ -498,6 +474,7 @@ export default function AllUsedBike({
         }
         const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
         const cardLabel = `${val?.title || 'Used bike for sale'}${cityName ? ` in ${cityName}` : ''}`;
+        const isFeaturedBike = val?.isFeatured || val?.is_featured;
 
         // console.log('val?.images?.[0]', val?.images?.[0], cloudinaryLoader(val?.images?.[0], 350, 350) )
 
@@ -526,6 +503,10 @@ export default function AllUsedBike({
                                     <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
                                 </Box>
                                 {
+                                    isFeaturedBike ?
+                                        <div className={styles.featured_tag}>FEATURED</div> : ""
+                                }
+                                {
                                     val.is_sold ?
                                         <div className={styles.soldout}>Sold Out</div> : ""
                                 }
@@ -536,7 +517,7 @@ export default function AllUsedBike({
                         <Grid item className={styles.grid_card_info}>
 
                             <Box className={styles.grid_icon_title}>
-                                <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
+                                <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {formatUsedBikeListTitle(val?.title)}  </Typography>
                             </Box>
                             <Typography className={styles.grid_card_location}><AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />{val?.sellerName}</Typography>
 
@@ -639,38 +620,6 @@ export default function AllUsedBike({
                         <br className="d-none d-md-block" />
                         <br className="d-none d-md-block" />
 
-                        {/* <UsedBikesSection from='featuredBike' featuredData={featuredData} /> */}
-                        {hasFeaturedData ? (
-                            <>
-                                <Typography className={styles.featuredHeading} >Featured Bikes</Typography>
-                                <div className={styles.featured_bike_swiper_main}>
-                                    <Swiper
-                                        modules={[Navigation]}
-                                        navigation
-                                        spaceBetween={0}
-                                        loop={true}
-                                        slidesPerView={3}
-                                        slidesPerGroup={1}
-                                        breakpoints={{
-                                            0: {
-                                                slidesPerView: 2,
-                                                slidesPerGroup: 1,
-                                            },
-                                            768: {
-                                                slidesPerView: 3,
-                                                slidesPerGroup: 1,
-                                            },
-                                        }}
-                                    >
-                                        {featuredData.map((item, i) => (
-                                            <SwiperSlide key={i}>
-                                                <Featured_New_Card props={item} fetchFavouriteAds={fetchFavouriteAds} />
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
-                                </div>
-                            </>
-                        ) : null}
                         {
                             AllFavouriteBike.length > 0 ?
                                 <Typography className={styles.featuredHeading} >Favourite Bikes</Typography> : ""

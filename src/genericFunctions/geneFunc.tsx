@@ -71,6 +71,11 @@ function formatUsedBikePrice(price: any) {
     : 'Call for price';
 }
 
+function formatUsedBikeListTitle(title: any) {
+  const cleanTitle = String(title || 'Used Bike').trim();
+  return /\bfor\s+sale\b/i.test(cleanTitle) ? cleanTitle : `${cleanTitle} for Sale`;
+}
+
 function userLogin(data: any) {
   return fetch(Gconfig.ebikeApi + `user/login`, {
     method: 'POST',
@@ -366,6 +371,7 @@ export {
   publishAd,
   priceWithCommas,
   formatUsedBikePrice,
+  formatUsedBikeListTitle,
   capitalizeFirstWord,
   postSearch,
   getFavouriteAds,

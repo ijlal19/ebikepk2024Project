@@ -1,6 +1,6 @@
 'use client'
 import { getBikesBySpecificFilter, getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
-import { cloudinaryLoader, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { cloudinaryLoader, formatUsedBikeListTitle, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Pagination, Typography, useMediaQuery } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Apps, FormatListBulleted, PagesRounded } from '@mui/icons-material';
@@ -407,7 +407,7 @@ const AllUsedBikeByFilter = ({
 
                             <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
 
-                                <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {val?.title} </Typography>
+                                <Typography className={styles.card_title} onClick={() => { goToDetailPage(val) }}> {formatUsedBikeListTitle(val?.title)} </Typography>
 
                                 <Typography className={styles.card_location}> {val?.city?.city_name} </Typography>
 
@@ -501,7 +501,7 @@ const AllUsedBikeByFilter = ({
                                 <Grid item className={styles.grid_card_info}>
     
                                     <Box className={styles.grid_icon_title}>
-                                        <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {val?.title}  </Typography>
+                                        <Typography className={styles.grid_card_title} onClick={() => { goToDetailPage(val) }}> {formatUsedBikeListTitle(val?.title)}  </Typography>
                                     </Box>
     
                                     <Typography className={styles.grid_card_location}> {val?.city?.city_name} </Typography>

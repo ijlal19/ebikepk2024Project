@@ -40,13 +40,6 @@ const slugifyAuthor = (value: string) => value
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
-const isValidBlogSlug = (value?: string | null) => {
-    const slug = String(value || '').trim();
-    return !slug || /^[A-Za-z0-9._~-]+$/.test(slug);
-};
-
-const blogSlugValidationMessage = 'Slug me space, comma, slash, ?, #, &, %, ya special URL characters allowed nahi hain. Sirf letters, numbers, hyphen (-), underscore (_), dot (.) aur tilde (~) use karein.';
-
 let BlogCategory = [
     {
         id: 1,
@@ -1031,10 +1024,6 @@ const AddBlogForm = () => {
 
         if (!BlogData.blogTitle || BlogData.blogTitle.length < 2) {
             alert("Please add a valid title (min 2 characters)");
-            return;
-        }
-        else if (!isValidBlogSlug(BlogData.slug)) {
-            alert(blogSlugValidationMessage);
             return;
         }
         else if (!BlogData.authorname || BlogData.authorname.length < 2) {

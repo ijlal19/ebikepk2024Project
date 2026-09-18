@@ -1,5 +1,5 @@
 'use client'
-import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader } from '@/genericFunctions/geneFunc';
+import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader, formatUsedBikeListTitle } from '@/genericFunctions/geneFunc';
 import { useParams, usePathname } from 'next/navigation';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -90,6 +90,7 @@ export default function NewUsedBikesCard(props: any) {
     const bikePrice = Number(bike?.price)
     const priceLabel = Number.isFinite(bikePrice) && bikePrice > 0 ? `PKR: ${priceWithCommas(bikePrice)}` : 'Call for price'
     const imageAlt = `${bike?.title || 'Used bike for sale'}${bike?.location ? ` in ${bike.location}` : ''}`
+    const isFeaturedBike = bike?.isFeatured || bike?.is_featured;
 
     const AddFavourite = async (id: any) => {
         if (!IsLogin || IsLogin == "not_login") {
@@ -115,7 +116,7 @@ export default function NewUsedBikesCard(props: any) {
     return (
         <>
                 <Card className={styles.itemCard}>
-                    {props.currentpage === 'featured_bike' ?
+                    {(props.currentpage === 'featured_bike' || (props.currentpage === 'used_bike' && isFeaturedBike)) ?
                         (isFeatureTagShow ?
                             <span className={styles.featured_tag}>FEATURED</span> : "")
                         : ""}
@@ -160,7 +161,7 @@ export default function NewUsedBikesCard(props: any) {
                     <CardContent className={styles.card_info}>
 
                         <Typography className={styles.card_title}>
-                            {bike.title}
+                            {props.currentpage === 'used_bike' || props.currentpage === 'featured_bike' ? formatUsedBikeListTitle(bike.title) : bike.title}
                         </Typography>
                         {props.currentpage === 'featured_bike' ?
                             (isFeatureTagShow ?

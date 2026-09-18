@@ -11,7 +11,7 @@ import { BrandArr, CityArr } from '@/ebikeWeb/constants/globalData';
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import ItemCard from '@/ebikeWeb/sharedComponents/itemCard';
-import { cloudinaryLoader, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { cloudinaryLoader, formatUsedBikeListTitle, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import styles from '../all-used-bikes-by-filter/index.module.scss';
 import '../../../app/globals.scss';
 
@@ -224,7 +224,7 @@ export default function UrlFilteredUsedBikes({
               </Grid>
 
               <Grid item xs={isMobile ? 12 : 8} className={styles.card_info}>
-                <Typography className={styles.card_title}>{val?.title}</Typography>
+                <Typography className={styles.card_title}>{formatUsedBikeListTitle(val?.title)}</Typography>
                 <Typography className={styles.card_location}>
                   <AccountCircleOutlinedIcon sx={{ fontSize: '15px', marginRight: '2px', boxSizing: 'border-box' }} />
                   {val?.sellerName || val?.city?.city_name}
@@ -309,7 +309,7 @@ export default function UrlFilteredUsedBikes({
 
           <Grid item className={styles.grid_card_info}>
             <Box className={styles.grid_icon_title}>
-              <Typography className={styles.grid_card_title}>{val?.title}</Typography>
+              <Typography className={styles.grid_card_title}>{formatUsedBikeListTitle(val?.title)}</Typography>
             </Box>
             <Typography className={styles.grid_card_location}>{val?.sellerName || val?.city?.city_name}</Typography>
             <Typography className={styles.grid_card_price}>{formatUsedBikePrice(val?.price)}</Typography>

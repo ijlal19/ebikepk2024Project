@@ -19,11 +19,9 @@ function getDetailSeo(product: any, params: Props["params"]) {
     const cityName = city && city?.length > 0 ? city[0].city_name : "";
     const brandName = brand && brand?.length > 0 ? brand[0].brandName?.replaceAll("_", " ") : "";
     const yearName = year && year?.length > 0 ? year[0].year : "";
-    const titleParts = [
-        add?.title || "Used Bike",
-        cityName ? `for Sale in ${cityName}` : "for Sale in Pakistan"
-    ];
-    const title = `${titleParts.join(" ")} | ebike.pk`;
+    const adTitle = add?.title || "Used Bike";
+    const adId = add?.id || params.id;
+    const title = `Used ${adTitle} Bike for sale in ${cityName || "Pakistan"} - ${adId} | ebike`;
     const fallbackDescription = [
         add?.title,
         brandName ? `${brandName} motorcycle` : "used motorcycle",

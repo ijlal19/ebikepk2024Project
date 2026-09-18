@@ -8,6 +8,7 @@ const usedBikeDescription = "Find a used bike for sale in Pakistan with prices, 
 const usedBikeCanonical = `${SITE_URL}/used-bikes`;
 const usedBikeSeoTags = [
   "used bike for sale in Pakistan",
+  "used motorcycle for sale in pakistan",
   "second hand bikes in Pakistan",
   "buy used bike in Pakistan",
   "used motorcycle for sale Pakistan",
@@ -84,6 +85,7 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: [
       "used bikes in Pakistan",
       "used bike for sale in Pakistan",
+      "used motorcycle for sale in pakistan",
       "used motorcycles for sale",
       "second hand bikes Pakistan",
       "second hand bikes in Pakistan",
@@ -155,6 +157,7 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
         },
         about: [
           "used bike for sale in Pakistan",
+          "used motorcycle for sale in pakistan",
           "used bikes in Pakistan",
           "second hand motorcycles",
           "motorcycle classifieds"
@@ -238,16 +241,8 @@ export default async function AllUsedBikes() {
   }
   let allUsedBike = normalizeUsedBikeResponse(await getCustomBikeAd(obj));
 
-  let featureObject = {
-    isFeatured: true,
-    adslimit: 20,
-    ...usedBikeQualityRequest
-  }
-  let allFeaturedBike = normalizeUsedBikeResponse(await getCustomBikeAd(featureObject));
-
   return (
     <UsedBikesPageContent
-      allFeaturedBike={allFeaturedBike}
       allUsedBike={allUsedBike}
       jsonLd={buildUsedBikeListJsonLd(allUsedBike)}
       seoTags={usedBikeSeoTags}
