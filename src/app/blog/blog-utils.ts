@@ -1,4 +1,4 @@
-import { SITE_URL, slugify } from "@/app/metadata-utils";
+import { buildBlogUrl, SITE_URL, slugify } from "@/app/metadata-utils";
 
 const FALLBACK_BLOG_TAGS = [
   "Motorcycle News in Pakistan",
@@ -81,7 +81,7 @@ function buildBlogBreadcrumbItems(blog?: any) {
       "@type": "ListItem",
       position: items.length + 1,
       name: blogTitle,
-      item: `${SITE_URL}/blog/${slugify(categoryName || "blog")}/${slugify(blogTitle)}/${blog?.id}`,
+      item: buildBlogUrl(blog),
     });
   }
 

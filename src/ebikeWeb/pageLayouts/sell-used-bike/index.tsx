@@ -26,6 +26,7 @@ const SellUsedBike = () => {
     const [metaTitle, setMetaTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [tag, setTag] = useState('');
     const [videoUrl, setVideoUrl] = useState('');
     const [sellerName, setSellerName] = useState('');
     const [mobile, setMobile] = useState('');
@@ -144,6 +145,8 @@ const SellUsedBike = () => {
             setDescription(value);
         } else if (field === 'price') {
             setPrice(value);
+        } else if (field === 'tag') {
+            setTag(value);
         } else if (field === 'videoUrl') {
             setVideoUrl(value);
         } else if (field === 'sellerName') {
@@ -223,6 +226,7 @@ const SellUsedBike = () => {
             "sellerName": sellerName,
             "title": title,
             "meta_title": metaTitle,
+            "tag": tag,
             "uid": customer?.id,
             "yearId": modelYear,
             "images": imageArr,
@@ -255,6 +259,7 @@ const SellUsedBike = () => {
                     setMetaTitle("");
                     setDescription("");
                     setPrice("");
+                    setTag("");
                     setVideoUrl("");
                     setSellerName("");
                     setMobile("");
@@ -337,6 +342,16 @@ const SellUsedBike = () => {
                             <Typography className={styles.input_parent}>
                                 <input type="text" id="metaTitle" className={styles.title_input} placeholder="Honda CD 70 for Sale in Lahore - Best Price"
                                     onChange={(e) => handleChange('metaTitle', e.target.value)} />
+                            </Typography>
+
+                            <Typography>
+                                <label htmlFor="tag" className={styles.title_label}>Tags</label>
+                            </Typography>
+
+                            <Typography className={styles.input_parent}>
+                                <input type="text" id="tag" className={styles.title_input} placeholder="electric,bike,karachi"
+                                    value={tag}
+                                    onChange={(e) => handleChange('tag', e.target.value)} />
                             </Typography>
                         </>
                     )}

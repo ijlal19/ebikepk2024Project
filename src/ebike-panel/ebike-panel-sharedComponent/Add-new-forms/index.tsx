@@ -928,6 +928,7 @@ const AddBlogForm = () => {
         authorname: '',
         blogTitle: '',
         blogUrl: '',
+        slug: '',
         bloghtml: '',
         blogtext: '',
         focus_keyword: '',
@@ -1080,6 +1081,9 @@ const AddBlogForm = () => {
 
                 <label htmlFor="blogTitle" className={styles.label}>Title</label>
                 <input id="blogTitle" name="blogTitle" value={BlogData.blogTitle} onChange={handleInputChange} className={styles.input} />
+
+                <label htmlFor="slug" className={styles.label}>Slug</label>
+                <input id="slug" name="slug" value={BlogData.slug} onChange={handleInputChange} className={styles.input} placeholder="example-blog-url" />
 
                 <label htmlFor="authorname" className={styles.label}>Author Name</label>
                 <input id="authorname" name="authorname" value={BlogData.authorname} onChange={handleInputChange} className={styles.input} />

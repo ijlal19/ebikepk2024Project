@@ -3,19 +3,16 @@ import BlogComp from "@/ebikeWeb/pageLayouts/blog/index"
 import { Metadata } from 'next'
 import { Suspense } from "react";
 import { getAllBlog } from '@/ebikeWeb/functions/globalFuntions';
-import { DEFAULT_SHARE_IMAGE, resolveBlogShareImage, SITE_URL, slugify, toSecureUrl, trimText } from '@/app/metadata-utils';
+import { buildBlogUrl, DEFAULT_SHARE_IMAGE, resolveBlogShareImage, SITE_URL, toSecureUrl, trimText } from '@/app/metadata-utils';
 import { FALLBACK_BLOG_TAGS, buildBlogBreadcrumbItems, buildDynamicBlogTags } from '../blog-utils';
 
 export const revalidate = 900;
-
-function buildBlogUrl(blogInfo: any) {
-  return `${SITE_URL}/blog/${slugify(blogInfo?.blog_category?.name || 'news')}/${slugify(blogInfo?.blogTitle)}/${blogInfo?.id}`;
-}
 
 function sanitizeBlogForListing(blog: any) {
   return {
     id: blog?.id,
     blogTitle: blog?.blogTitle,
+    slug: blog?.slug,
     featuredImage: blog?.featuredImage,
     meta_description: blog?.meta_description,
     blogDescription: trimText(blog?.blogDescription, 220),
