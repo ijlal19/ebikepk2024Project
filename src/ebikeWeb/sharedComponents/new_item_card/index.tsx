@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from '@mui/material';
-import { add3Dots, cloudinaryLoader, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, formatUsedBikePrice, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
 import { buildBlogPath } from '@/app/metadata-utils';
 
 const NewCard = ({ props }: any) => {
@@ -105,7 +105,7 @@ const UsedBikeCard = ({ props }: any) => {
                 </Link>
                 <div className={styles.content}>
                     <Link href={GetHref(props)} className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</Link>
-                    <p className={styles.price}><span className={styles.name}>PKR {priceWithCommas(props?.price)}</span></p>
+                    <p className={styles.price}><span className={styles.name}>{formatUsedBikePrice(props?.price)}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
                     <Link href='/used-bikes' className={styles.linkbtn}>
                         View All

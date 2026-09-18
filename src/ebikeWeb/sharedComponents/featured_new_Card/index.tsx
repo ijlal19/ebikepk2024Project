@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from "@mui/material";
-import { add3Dots, cloudinaryLoader, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from "@/genericFunctions/geneFunc";
+import { add3Dots, cloudinaryLoader, formatUsedBikePrice, getFavouriteAds, GetFavouriteObject, isLoginUser } from "@/genericFunctions/geneFunc";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import { getFavouriteBikeById } from "@/ebikeWeb/functions/globalFuntions";
@@ -123,7 +123,7 @@ const Featured_New_Card = ({ props , fetchFavouriteAds }: any) => {
 
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</p>
-                    <p className={styles.price}><span className={styles.name}>PKR {priceWithCommas(props?.price)}</span></p>
+                    <p className={styles.price}><span className={styles.name}>{formatUsedBikePrice(props?.price)}</span></p>
                     <Link href={GetHref(props)} className={styles.linkbtn}>
                         View Detail
                     </Link>
@@ -232,7 +232,7 @@ const FavouriteAds = ({ props }: any) => {
 
                 <div className={styles.content}>
                     <p className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</p>
-                    <p className={styles.price}><span className={styles.name}>PKR {priceWithCommas(props?.price)}</span></p>
+                    <p className={styles.price}><span className={styles.name}>{formatUsedBikePrice(props?.price)}</span></p>
                     <Link href={GetHref(props)} className={styles.linkbtn}>
                         View Detail
                     </Link>

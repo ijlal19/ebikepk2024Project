@@ -33,7 +33,7 @@ const SellUsedBike = () => {
     const [isAggreed, setIsAggreed] = useState(false)
     const [msg, setMsg] = useState('')
     const [customer, setCustomer] = useState<any>('not_login')
-    const [imageArr, setImageArr] = useState([])
+    const [imageArr, setImageArr] = useState<string[]>([])
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [adminToken, setAdminToken] = useState(null);
     const [brandOptions, setBrandOptions] = useState<any[]>([]);
@@ -283,39 +283,66 @@ const SellUsedBike = () => {
         setImageFiles(updatedFiles);
     };
 
-    function uploadImage(event: any) {
-        setIsLoading(true)
-        const reader = new FileReader()
-        reader.readAsDataURL(event.target.files[0])
+    const uploadSingleImage = (file: File) => {
+        return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
 
-        reader.onload = (event: any) => {
+            reader.onerror = reject
+            reader.onload = () => {
+                const imgElement: any = document.createElement("img");
+                imgElement.src = reader.result;
 
-            const imgElement: any = document.createElement("img");
-            imgElement.src = reader.result;
+                imgElement.onerror = reject
+                imgElement.onload = async (e: any) => {
+                    try {
+                        const canvas = document.createElement("canvas");
+                        const max_width = 1400;
 
-            imgElement.onload = async (e: any) => {
+                        const scaleSize = Math.min(max_width / e.target.width, 1);
+                        canvas.width = Math.round(e.target.width * scaleSize);
+                        canvas.height = Math.round(e.target.height * scaleSize);
 
-                const canvas = document.createElement("canvas");
-                const max_width = 1400;
+                        const ctx: any = canvas.getContext("2d")
+                        ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
 
-                const scaleSize = Math.min(max_width / e.target.width, 1);
-                canvas.width = Math.round(e.target.width * scaleSize);
-                canvas.height = Math.round(e.target.height * scaleSize);
+                        const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
+                        let obj = { file: srcEncoded, folder: 'used_bikes' }
 
-                const ctx: any = canvas.getContext("2d")
-                ctx.drawImage(e.target, 0, 0, canvas.width, canvas.height)
-
-                const srcEncoded = ctx.canvas.toDataURL("image/jpeg", 0.82)
-                let obj = { file: srcEncoded, folder: 'used_bikes' }
-
-                let imgRes: any = await uplaodImageFunc(obj)
-
-                let _imageArr: any = [...imageArr]
-                _imageArr.push(imgRes.secure_url)
-                setIsLoading(false)
-                setImageArr(_imageArr)
+                        let imgRes: any = await uplaodImageFunc(obj)
+                        resolve(imgRes.secure_url)
+                    } catch (error) {
+                        reject(error)
+                    }
+                }
             }
+        })
+    }
+
+    async function uploadImage(event: any) {
+        const selectedFiles = Array.from(event.target.files || []) as File[];
+        const availableSlots = 4 - imageArr.length;
+        const filesToUpload = selectedFiles.slice(0, availableSlots);
+
+        if (!filesToUpload.length) {
+            event.target.value = "";
+            return;
         }
+
+        if (selectedFiles.length > availableSlots) {
+            alert("You can upload maximum 4 images")
+        }
+
+        setIsLoading(true)
+        try {
+            const uploadedImages = await Promise.all(filesToUpload.map(uploadSingleImage))
+            setImageArr((prevImages) => [...prevImages, ...uploadedImages].slice(0, 4))
+            setImageFiles((prevFiles) => [...prevFiles, ...filesToUpload].slice(0, 4))
+        } catch (error) {
+            alert("Image upload failed")
+        }
+        setIsLoading(false)
+        event.target.value = "";
     }
 
     return (
@@ -367,7 +394,7 @@ const SellUsedBike = () => {
                         <label htmlFor="desc" className={styles.description_label}>Description*</label>
                     </Typography> */}
                     {imageArr.length < 4 ?
-                        <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput}/>
+                        <input type="file" accept="image/*" multiple onChange={(e) => uploadImage(e)} className={styles.fileInput} />
                         : ""}
 
                     <label className={styles.label}>Images (max 4)</label>

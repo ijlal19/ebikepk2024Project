@@ -9,7 +9,6 @@ export type BrandOption = {
 const hiddenBrandNames = new Set([
   'sport',
   'sports',
-  'china',
   'eagle',
 ]);
 

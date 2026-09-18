@@ -63,6 +63,14 @@ function priceWithCommas(x: any) {
   }
 }
 
+function formatUsedBikePrice(price: any) {
+  const numericPrice = Number(price);
+
+  return Number.isFinite(numericPrice) && numericPrice > 0
+    ? `PKR ${priceWithCommas(numericPrice)}`
+    : 'Call for price';
+}
+
 function userLogin(data: any) {
   return fetch(Gconfig.ebikeApi + `user/login`, {
     method: 'POST',
@@ -357,6 +365,7 @@ export {
   noSpecialCharactersExceptDotUderscore, userLogin, userSignup, verifyUserFromAuthenticationEmail,
   publishAd,
   priceWithCommas,
+  formatUsedBikePrice,
   capitalizeFirstWord,
   postSearch,
   getFavouriteAds,

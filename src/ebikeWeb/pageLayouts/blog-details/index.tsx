@@ -2,7 +2,7 @@
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, PinterestShareCount, TwitterIcon, TwitterShareButton } from 'next-share';
 import { getAllBlog, getAllFeaturedBike, getdealerData, getnewBikeData, getPostBlogcomment, getSingleBlogData, incrementBlogViews } from '@/ebikeWeb/functions/globalFuntions';
 import { Box, Grid, useMediaQuery, Typography, Avatar, Fab, Button, Link } from '@mui/material';
-import { add3Dots, cloudinaryLoader, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
+import { add3Dots, cloudinaryLoader, formatUsedBikePrice, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
@@ -214,7 +214,7 @@ const BlogDetails = () => {
         <Box className={styles.title_box}>
           <p className={styles.title}>{add3Dots(e?.title, 25)}
           </p>
-          <p className={styles.price}>PKR:{priceWithCommas(e?.price)}</p>
+          <p className={styles.price}>{formatUsedBikePrice(e?.price)}</p>
         </Box>
       </Box>
     )

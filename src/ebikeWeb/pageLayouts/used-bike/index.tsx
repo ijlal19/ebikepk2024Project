@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { getSinglebikesDetail, getBrandFromId, getCityFromId, getYearFromId, getCustomBikeAd, incrementClassifiedViews } from "@/ebikeWeb/functions/globalFuntions";
 import SwiperCarousels from '@/ebikeWeb/sharedComponents/swiperSlider/index';
 import { CityArr, BrandArr, YearArr } from "@/ebikeWeb/constants/globalData";
-import { numericOnly, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
+import { numericOnly, formatUsedBikePrice, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import BrowseUsedBike from '@/ebikeWeb/sharedComponents/BrowseUsedBike';
 import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
@@ -364,7 +364,7 @@ function embebedVideoUrl(videoURL: string) {
 
               <div>
                 <div className={styles.container_two}>
-                  <h2 className={styles.price_text} > PKR {priceWithCommas(bikeDetail.price)} </h2>
+                  <h2 className={styles.price_text} >{formatUsedBikePrice(bikeDetail.price)}</h2>
                   <hr />
                   <p className={styles.sellerName}> Seller Name: {bikeDetail.sellerName} </p>
                   <hr />
