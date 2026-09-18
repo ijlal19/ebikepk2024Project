@@ -23,8 +23,7 @@ function getDetailSeo(product: any, params: Props["params"]) {
         add?.title || "Used Bike",
         cityName ? `for Sale in ${cityName}` : "for Sale in Pakistan"
     ];
-    const metaTitle = add?.meta_title?.trim();
-    const title = metaTitle || `${titleParts.join(" ")} | ebike.pk`;
+    const title = `${titleParts.join(" ")} | ebike.pk`;
     const fallbackDescription = [
         add?.title,
         brandName ? `${brandName} motorcycle` : "used motorcycle",

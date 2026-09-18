@@ -5,13 +5,8 @@ import { add3Dots, cloudinaryLoader, timeAgo } from '@/genericFunctions/geneFunc
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { buildBlogPath } from '@/app/metadata-utils';
 import styles from './index.module.scss';
-
-const slugifyText = (value: any) => String(value || '')
-  .trim()
-  .replace(/\s+/g, '-')
-  .toLowerCase()
-  .replaceAll('?', '');
 
 const AuthorDetails = () => {
   const [author, setAuthor] = useState<any>(null);
@@ -51,10 +46,7 @@ const AuthorDetails = () => {
   };
 
   const getBlogRoute = (blogInfo: any) => {
-    const category = blogInfo?.blog_category?.name || blogInfo?.category || 'blog';
-    const title = blogInfo?.blogTitle || blogInfo?.title || 'blog';
-
-    return `/blog/${slugifyText(category)}/${slugifyText(title)}/${blogInfo?.id}`;
+    return buildBlogPath(blogInfo);
   };
 
   const getBlogImage = (blog: any) => {

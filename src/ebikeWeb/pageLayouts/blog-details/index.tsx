@@ -27,6 +27,7 @@ import DealerLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/dealer-lef
 import MechaniLeft from '@/ebikeWeb/sharedComponents/Letf-side-section/Mechanic-left';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
 import BlogSidebarSection from '@/ebikeWeb/sharedComponents/blogSidebarSection';
+import { buildBlogPath } from '@/app/metadata-utils';
 
 const BLOG_VIEW_DEDUP_MS = 5000;
 const blogViewLastHitAt: Record<string, number> = {};
@@ -74,7 +75,7 @@ const BlogDetails = () => {
   const [DataBlog, setDataBlog]: any = useState(null);
   const [CommentArr, setCommentArr]: any = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [BlogData, setBlogData] = useState([]);
+  const [BlogData, setBlogData] = useState<any[]>([]);
   const [Comment, setComment] = useState('');
   const [Href, setHref] = useState('');
 
@@ -199,11 +200,7 @@ const BlogDetails = () => {
   };
 
   const handleRoute = (blogInfo: any) => {
-    var title = blogInfo.blogTitle;
-    title = title.replace(/\s+/g, '-');
-    var lowerTitle = title.toLowerCase();
-    lowerTitle = '' + lowerTitle.replaceAll("?", "")
-    router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+    router.push(buildBlogPath(blogInfo));
   };
 
   const trendingCardMini = (e: any, i: any) => {

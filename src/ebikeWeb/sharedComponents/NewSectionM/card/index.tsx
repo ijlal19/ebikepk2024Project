@@ -4,6 +4,7 @@ import styles from './index.module.scss';
 import { Avatar, Link, useMediaQuery } from "@mui/material";
 import { add3Dots, BlogShuffle, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { getAllBlog } from "@/ebikeWeb/functions/globalFuntions";
+import { buildBlogPath } from "@/app/metadata-utils";
 
 let Data = [
     {
@@ -47,11 +48,7 @@ let Data = [
 const MotorCycle_News_Card = ({ props }: any) => {
     const isMoble = useMediaQuery('(max-width:768px)');
     const getRoute = (blogInfo: any) => {
-        var title = blogInfo?.blogTitle;
-        title = title?.replace(/\s+/g, '-');
-        var lowerTitle = title?.toLowerCase();
-        lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
+        return buildBlogPath(blogInfo)
     }
     return (
         <div className={styles.main}>
@@ -76,11 +73,7 @@ const List_Card = ({ props }: any) => {
     }
 
     const getRoute = (blogInfo: any) => {
-        var title = blogInfo?.blogTitle;
-        title = title?.replace(/\s+/g, '-');
-        var lowerTitle = title?.toLowerCase();
-        lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
+        return buildBlogPath(blogInfo)
     }
 
     return (

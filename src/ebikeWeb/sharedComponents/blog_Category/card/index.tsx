@@ -2,15 +2,12 @@ import React from "react";
 import styles from './index.module.scss';
 import { add3Dots, cloudinaryLoader } from "@/genericFunctions/geneFunc";
 import { Link, useMediaQuery } from "@mui/material";
+import { buildBlogPath } from "@/app/metadata-utils";
 
 const BlogCategoryCard = ({ props }: any) => {
     const IsMobile  = useMediaQuery('(max-width:768px)')
     const getRoute = (blogInfo: any) => {
-        var title = blogInfo.blogTitle;
-        title = title.replace(/\s+/g, '-');
-        var lowerTitle = title.toLowerCase();
-        lowerTitle = '' + lowerTitle.replaceAll("?", "")
-        return (`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+        return buildBlogPath(blogInfo);
     }
     return (
         <div className={styles.card_main}>

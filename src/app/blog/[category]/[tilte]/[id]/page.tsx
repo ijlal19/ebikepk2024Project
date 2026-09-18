@@ -1,7 +1,7 @@
 import BlogDetails from '@/ebikeWeb/pageLayouts/blog-details/index'
 import { Metadata } from 'next'
 import { getSingleBlogData,  } from '@/ebikeWeb/functions/globalFuntions'
-import { buildBlogUrl, DEFAULT_SHARE_IMAGE, resolveBlogShareImage, toSecureUrl, trimText, SITE_URL } from '@/app/metadata-utils';
+import { buildBlogUrl, DEFAULT_SHARE_IMAGE, resolveBlogShareImage, slugify, toSecureUrl, trimText, SITE_URL } from '@/app/metadata-utils';
 import { buildBlogBreadcrumbItems } from '../../../blog-utils';
 type Props = {
   params: { id: string }

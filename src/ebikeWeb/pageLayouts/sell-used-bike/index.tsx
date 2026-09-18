@@ -349,7 +349,7 @@ const SellUsedBike = () => {
                             </Typography>
 
                             <Typography className={styles.input_parent}>
-                                <input type="text" id="tag" className={styles.title_input} placeholder="electric,bike,karachi"
+                                <textarea id="tag" className={styles.description_area} placeholder="electric,bike,karachi"
                                     value={tag}
                                     onChange={(e) => handleChange('tag', e.target.value)} />
                             </Typography>

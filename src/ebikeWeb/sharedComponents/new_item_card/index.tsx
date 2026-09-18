@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './index.module.scss';
 import { Link, useMediaQuery } from '@mui/material';
 import { add3Dots, cloudinaryLoader, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
+import { buildBlogPath } from '@/app/metadata-utils';
 
 const NewCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
     const getBlogUrl = (blogInfo: any) => {
-        let title = blogInfo.blogTitle.replace(/\s+/g, '-').toLowerCase();
-        return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${title}/${blogInfo.id}`;
+        return buildBlogPath(blogInfo);
     };
     return (
         <div className={styles.main}>
@@ -32,8 +32,7 @@ const NewCard = ({ props }: any) => {
 const NewMoreBlogCard = ({ props }: any) => {
     const isMobile = useMediaQuery('(max-width:768px)')
     const getBlogUrl = (blogInfo: any) => {
-        let title = blogInfo.blogTitle.replace(/\s+/g, '-').toLowerCase();
-        return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${title}/${blogInfo.id}`;
+        return buildBlogPath(blogInfo);
     };
 
     return (

@@ -73,13 +73,17 @@ function slugify(value?: string | null) {
 }
 
 function getBlogSlug(blogInfo?: any) {
-    return slugify(blogInfo?.slug || blogInfo?.blogTitle);
+    const apiSlug = String(blogInfo?.slug || "").trim();
+
+    return apiSlug || slugify(blogInfo?.blogTitle);
 }
 
 function buildBlogPath(blogInfo?: any) {
     const blogSlug = getBlogSlug(blogInfo);
+    const categorySlug = slugify(blogInfo?.blog_category?.name || "blog");
+    const blogId = blogInfo?.id;
 
-    return blogSlug ? `/blog/${blogSlug}` : "/blog";
+    return blogSlug && blogId ? `/blog/${categorySlug}/${blogSlug}/${blogId}` : "/blog";
 }
 
 function buildBlogUrl(blogInfo?: any) {

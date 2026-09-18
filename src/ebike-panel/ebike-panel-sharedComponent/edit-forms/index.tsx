@@ -169,6 +169,13 @@ const slugifyAuthor = (value: string) => value
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
+const isValidBlogSlug = (value?: string | null) => {
+    const slug = String(value || '').trim();
+    return !slug || /^[A-Za-z0-9._~-]+$/.test(slug);
+};
+
+const blogSlugValidationMessage = 'Slug me space, comma, slash, ?, #, &, %, ya special URL characters allowed nahi hain. Sirf letters, numbers, hyphen (-), underscore (_), dot (.) aur tilde (~) use karein.';
+
 const normalizeYoutubeUrls = (value: string[] | string | null | undefined) => {
     if (Array.isArray(value)) {
         return value.filter(url => typeof url === 'string' && url.trim()).map(url => url.trim());
@@ -251,7 +258,6 @@ const EditUsedBikeForm = () => {
     const [imageFiles, setImageFiles] = useState<File[]>([]);
     const [imageArr, setImageArr] = useState([])
     const [newtitle, setTitle] = useState('');
-    const [newMetaTitle, setMetaTitle] = useState('');
     const [newdescription, setDescription] = useState('');
     const [newprice, setPrice] = useState('');
     const [newvideoUrl, setVideoUrl] = useState('');
@@ -278,7 +284,6 @@ const EditUsedBikeForm = () => {
             const bike = getData?.add;
             console.log("data", bike)
             setTitle(bike.title)
-            setMetaTitle(bike.meta_title || '')
             setDescription(bike.description)
             setPrice(bike.price)
             setVideoUrl(bike.videoUrl)
@@ -298,8 +303,6 @@ const EditUsedBikeForm = () => {
     const handleChange = (field: any, value: any) => {
         if (field === 'title') {
             setTitle(value);
-        } else if (field === 'meta_title') {
-            setMetaTitle(value);
         } else if (field === 'description') {
             setDescription(value);
         } else if (field === 'price') {
@@ -402,7 +405,6 @@ const EditUsedBikeForm = () => {
         }
         const obj = {
             title: newtitle,
-            meta_title: newMetaTitle,
             description: newdescription,
             price: newprice,
             videoUrl: newvideoUrl,
@@ -450,16 +452,19 @@ const EditUsedBikeForm = () => {
                                         <input id="title" name="title" value={newtitle} onChange={(e) => handleChange('title', e.target.value)} className={styles.input} />
                                     </DashboardField>
 
-                                    <DashboardField label="Meta Title" htmlFor="meta_title">
-                                        <input id="meta_title" name="meta_title" value={newMetaTitle} onChange={(e) => handleChange('meta_title', e.target.value)} className={styles.input} placeholder="Honda CD 70 for Sale in Lahore - Best Price" />
-                                    </DashboardField>
-
                                     <DashboardField label="Description" htmlFor="description">
                                         <textarea id="description" name="description" value={newdescription} onChange={(e) => handleChange('description', e.target.value)} className={styles.textarea} />
                                     </DashboardField>
 
                                     <DashboardField label="Tags" htmlFor="tag">
-                                        <input id="tag" name="tag" value={tag} onChange={(e) => handleChange('tag', e.target.value)} className={styles.input} placeholder="electric,bike,karachi" />
+                                        <textarea
+                                            id="tag"
+                                            name="tag"
+                                            value={tag}
+                                            onChange={(e) => handleChange('tag', e.target.value)}
+                                            className={styles.textarea}
+                                            placeholder="electric,bike,karachi"
+                                        />
                                     </DashboardField>
                                 </DashboardSection>
 
@@ -1565,6 +1570,10 @@ const EditBlogForm = () => {
             alert("Please add a valid title (min 2 characters)");
             return;
         }
+        else if (!isValidBlogSlug(Blog_Slug)) {
+            alert(blogSlugValidationMessage);
+            return;
+        }
 
         else if (!Author_Name && Author_Name.length < 2) {
             alert("Please enter a Author Name");
@@ -1593,7 +1602,7 @@ const EditBlogForm = () => {
             authorId: Author_Id ? Number(Author_Id) : null,
             BlogCategoryId: Number(CategoryId),
             blogTitle: Blog_Title,
-            slug: Blog_Slug,
+            slug: Blog_Slug.trim(),
             blogUrl: finalBlogData?.blogUrl,
             bloghtml: Blog_Html,
             blogtext: finalBlogData?.blogtext,

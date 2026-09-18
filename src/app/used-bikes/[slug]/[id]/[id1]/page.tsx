@@ -226,7 +226,7 @@ function buildFilteredUsedBikeJsonLd(params: Props["params"], usedBikes: any) {
             item: {
               "@type": "WebPage",
               "@id": `${bikeUrl}#webpage`,
-              name: bike?.meta_title || bike?.title || "Used Bike",
+              name: bike?.title || "Used Bike",
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
               description: [

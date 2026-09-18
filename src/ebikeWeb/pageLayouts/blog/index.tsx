@@ -23,6 +23,7 @@ import styles from './index.module.scss';
 import Stack from '@mui/material/Stack';
 import CATEGORYdATA from './Data';
 import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense';
+import { buildBlogPath } from '@/app/metadata-utils';
 
 import { List_Card } from '@/ebikeWeb/sharedComponents/NewSectionM/card';
 
@@ -177,11 +178,7 @@ const Blog = ({ initialBlogs = [], isNewsPage = false, dynamicTags = [] }: BlogP
   };
 
   const handleRoute = (blogInfo: any) => {
-    var title = blogInfo.blogTitle;
-    title = title.replace(/\s+/g, '-');
-    var lowerTitle = title.toLowerCase();
-    lowerTitle = '' + lowerTitle.replaceAll("?", "")
-    router.push(`/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`);
+    router.push(buildBlogPath(blogInfo));
   };
 
   const handleSearch = (e: any) => {
@@ -277,11 +274,7 @@ const Blog = ({ initialBlogs = [], isNewsPage = false, dynamicTags = [] }: BlogP
   }
 
   const getRoute = (blogInfo: any) => {
-    var title = blogInfo.blogTitle;
-    title = title.replace(/\s+/g, '-');
-    var lowerTitle = title.toLowerCase();
-    lowerTitle = '' + lowerTitle.replaceAll("?", "")
-    return `/blog/${blogInfo.blog_category.name.toLowerCase()}/${lowerTitle}/${blogInfo.id}`
+    return buildBlogPath(blogInfo)
   }
 
   const renderBlogCards = (blogs: any[]) => {

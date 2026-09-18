@@ -200,7 +200,7 @@ function buildUsedBikeListJsonLd(usedBikes: any) {
             item: {
               "@type": "WebPage",
               "@id": `${bikeUrl}#webpage`,
-              name: bike?.meta_title || bike?.title || "Used Bike for Sale",
+              name: bike?.title || "Used Bike for Sale",
               url: bikeUrl,
               image: resolveClassifiedShareImage(bike?.images),
               description: [

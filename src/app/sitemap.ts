@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import Gconfig from "globalconfig";
 import { BrandArr, CityArr, YearArr } from "@/ebikeWeb/constants/globalData";
 import { filterVisibleBlogs } from "@/ebikeWeb/utils/blogVisibility";
-import { SITE_URL } from "./metadata-utils";
+import { buildBlogUrl, SITE_URL } from "./metadata-utils";
 
 export const revalidate = 3600;
 const USED_BIKE_SITEMAP_LIMIT = 500;
@@ -53,6 +53,7 @@ type UsedBike = {
 type Blog = {
   id?: number | string;
   blogTitle?: string;
+  slug?: string;
   isHidden?: boolean;
   updatedAt?: string;
   createdAt?: string;
@@ -271,7 +272,7 @@ function buildBlogRoutes(blogs: Blog[]): MetadataRoute.Sitemap {
 
     return [
       {
-        url: `${SITE_URL}/blog/${slugify(blog.blog_category.name)}/${slugify(blog.blogTitle)}/${blog.id}`,
+        url: buildBlogUrl(blog),
         lastModified: toLastModified(blog.updatedAt || blog.createdAt),
         changeFrequency: "weekly",
         priority: 0.7
