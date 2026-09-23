@@ -62,7 +62,6 @@ let GetScroll = 0
 const qualityUsedBikeRequest = {
     approved_only: true,
     exclude_sold: true,
-    min_price: 1,
     require_image: true,
     sort_by: 'quality',
     sort_order: 'desc'
@@ -97,7 +96,7 @@ function sortUsedBikeAds(bikes) {
 
     return bikes.filter((bike) => {
         const price = getBikePriceValue(bike);
-        return price > 0 && hasBikeImage(bike) && !bike?.is_sold;
+        return bike?.price !== undefined && bike?.price !== null && price >= 0 && hasBikeImage(bike) && !bike?.is_sold;
     }).sort((a, b) => {
         const scoreDiff = getBikeQualityScore(b) - getBikeQualityScore(a);
         if (scoreDiff !== 0) return scoreDiff;

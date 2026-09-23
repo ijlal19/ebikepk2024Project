@@ -19,7 +19,6 @@ export const dynamic = 'force-dynamic';
 const usedBikeQualityRequest = {
   approved_only: true,
   exclude_sold: true,
-  min_price: 1,
   require_image: true,
   sort_by: 'quality',
   sort_order: 'desc',
@@ -35,7 +34,7 @@ function isAllUsedBikeFilter(params: Props['params']) {
 
 function hasQualityUsedBikeData(bike: any) {
   const price = Number(bike?.price);
-  return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+  return bike?.price !== undefined && bike?.price !== null && Number.isFinite(price) && price >= 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
 }
 
 function normalizeUsedBikeResponse(response: any) {

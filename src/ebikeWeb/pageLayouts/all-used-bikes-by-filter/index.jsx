@@ -22,7 +22,7 @@ let SelectedADD = []
 
 function hasQualityUsedBikeData(bike) {
     const price = Number(bike?.price);
-    return Number.isFinite(price) && price > 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
+    return bike?.price !== undefined && bike?.price !== null && Number.isFinite(price) && price >= 0 && Array.isArray(bike?.images) && bike.images.some(Boolean) && !bike?.is_sold;
 }
 
 function normalizeUsedBikeAds(bikes) {

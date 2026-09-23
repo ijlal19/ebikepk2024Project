@@ -66,6 +66,20 @@ const formatBlogDate = (date?: string) => {
   });
 };
 
+const getDisplayBlogDate = (createdAt?: string, updatedAt?: string) => {
+  const createdTime = createdAt ? new Date(createdAt).getTime() : NaN;
+  const updatedTime = updatedAt ? new Date(updatedAt).getTime() : NaN;
+  const showUpdated = Number.isFinite(updatedTime) && Number.isFinite(createdTime) && updatedTime > createdTime;
+  const dateTime = showUpdated ? updatedAt : createdAt;
+  const formattedDate = formatBlogDate(dateTime);
+
+  return {
+    label: showUpdated ? 'Last Updated:' : 'Created:',
+    dateTime,
+    formattedDate,
+  };
+};
+
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
   const [allDealerArr, setAllDelaerArr] = useState([]);
@@ -252,8 +266,7 @@ const BlogDetails = () => {
   const authorHref = assignedAuthor?.id
     ? `/author/${assignedAuthor.slug || slugifyAuthor(assignedAuthor.name || 'author')}/${assignedAuthor.id}`
     : '';
-  const createdDate = formatBlogDate(DataBlog?.createdAt);
-  const updatedDate = formatBlogDate(DataBlog?.updatedAt);
+  const displayDate = getDisplayBlogDate(DataBlog?.createdAt, DataBlog?.updatedAt);
   const categoryName = DataBlog?.blog_category?.name?.trim();
   const categoryHref = categoryName ? `/blog/${slugifyAuthor(categoryName)}` : '/blog';
   const sidebarTags = buildDynamicSidebarTags([DataBlog, ...BlogData]);
@@ -314,14 +327,9 @@ const BlogDetails = () => {
                 </Typography>
 
                 <Typography className={styles.date_meta_row}>
-                  {createdDate && (
+                  {displayDate.formattedDate && (
                     <span>
-                      <strong>Created:</strong> <time dateTime={DataBlog.createdAt}>{createdDate}</time>
-                    </span>
-                  )}
-                  {updatedDate && (
-                    <span>
-                      <strong>Last Updated:</strong> <time dateTime={DataBlog.updatedAt}>{updatedDate}</time>
+                      <strong>{displayDate.label}</strong> <time dateTime={displayDate.dateTime}>{displayDate.formattedDate}</time>
                     </span>
                   )}
                 </Typography>

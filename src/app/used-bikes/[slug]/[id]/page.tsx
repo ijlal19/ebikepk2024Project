@@ -3,7 +3,7 @@ import UsedBikeCompDetail from "@/ebikeWeb/pageLayouts/used-bike/index"
 import { Metadata } from 'next'
 import { getSinglebikesDetail, getCityFromId, getBrandFromId, getYearFromId } from "@/ebikeWeb/functions/globalFuntions"
 import { BrandArr, CityArr, YearArr } from "@/ebikeWeb/constants/globalData"
-import { resolveClassifiedShareImage, SITE_URL, stripHtml, trimText } from '@/app/metadata-utils';
+import { resolveClassifiedShareImage, SITE_URL, slugify, stripHtml, trimText } from '@/app/metadata-utils';
 
 type Props = {
     params: { slug: string, id: string }
@@ -44,6 +44,46 @@ function getDetailSeo(product: any, params: Props["params"]) {
         image,
         url,
     };
+}
+
+function buildUsedBikeDetailBreadcrumbItems(product: any, params: Props["params"]) {
+    const { add, cityName, brandName, url, title } = getDetailSeo(product, params);
+    const items = [
+        {
+            name: "Home",
+            item: SITE_URL
+        },
+        {
+            name: "Used Bikes",
+            item: `${SITE_URL}/used-bikes`
+        }
+    ];
+
+    if (cityName && add?.cityId) {
+        items.push({
+            name: `Bikes in ${cityName}`,
+            item: `${SITE_URL}/used-bikes/bike-by-city/${slugify(cityName)}/${add.cityId}`
+        });
+    }
+
+    if (brandName && cityName && add?.brandId && add?.cityId) {
+        items.push({
+            name: `${brandName} Bikes in ${cityName}`,
+            item: `${SITE_URL}/used-bikes/${slugify(brandName)}-used-bikes-in-${slugify(cityName)}-city/${add.brandId}/${add.cityId}`
+        });
+    }
+
+    items.push({
+        name: add?.title || title,
+        item: url
+    });
+
+    return items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        item: item.item
+    }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -145,26 +185,7 @@ function buildUsedBikeDetailJsonLd(product: any, params: Props["params"]) {
             {
                 "@type": "BreadcrumbList",
                 "@id": `${url}#breadcrumb`,
-                itemListElement: [
-                    {
-                        "@type": "ListItem",
-                        position: 1,
-                        name: "Home",
-                        item: SITE_URL
-                    },
-                    {
-                        "@type": "ListItem",
-                        position: 2,
-                        name: "Used Bikes",
-                        item: `${SITE_URL}/used-bikes`
-                    },
-                    {
-                        "@type": "ListItem",
-                        position: 3,
-                        name: add?.title || title,
-                        item: url
-                    }
-                ]
+                itemListElement: buildUsedBikeDetailBreadcrumbItems(product, params)
             }
         ]
     };

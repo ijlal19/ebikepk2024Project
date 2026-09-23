@@ -172,7 +172,6 @@ function Filters(props: any , {updateData}:any) {
         "search": props.SearchValue == "" ? '' : props.SearchValue,
         "approved_only": true,
         "exclude_sold": true,
-        "min_price": 1,
         "require_image": true,
         "sort_by": "quality",
         "sort_order": "desc"

@@ -12,6 +12,7 @@ import { Navigation, FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChatIcon from '@mui/icons-material/Chat';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -39,6 +40,14 @@ const getUpdatedViewsCount = (incrementResponse: any) => {
 
   const count = candidates.find((value) => value !== undefined && value !== null);
   return count !== undefined ? getNumericViewCount(count) : null;
+}
+
+function getUsedBikeSlug(value: any) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 export default function UsedBike({_bikeDetail}:any) {
@@ -224,6 +233,14 @@ function embebedVideoUrl(videoURL: string) {
   let bikeBrand = getBrandFromId(bikeDetail?.brandId, BrandArr)
   let bikeCity = getCityFromId(bikeDetail?.cityId, CityArr)
   let bikeYear = getYearFromId(bikeDetail?.yearId, YearArr)
+  const brandName = bikeBrand && bikeBrand?.length > 0 ? String(bikeBrand[0].brandName || '').replaceAll('_', ' ') : ''
+  const cityName = bikeCity && bikeCity?.length > 0 ? bikeCity[0].city_name : ''
+  const cityHref = cityName && bikeDetail?.cityId ? `/used-bikes/bike-by-city/${getUsedBikeSlug(cityName)}/${bikeDetail.cityId}` : ''
+  const brandCityHref = brandName && cityName && bikeDetail?.brandId && bikeDetail?.cityId
+    ? `/used-bikes/${getUsedBikeSlug(brandName)}-used-bikes-in-${getUsedBikeSlug(cityName)}-city/${bikeDetail.brandId}/${bikeDetail.cityId}`
+    : ''
+  const yearName = bikeYear && bikeYear?.length > 0 ? bikeYear[0].year : ''
+  const priceText = formatUsedBikePrice(bikeDetail?.price)
 
   return (
    !isLoading ? 
@@ -252,7 +269,25 @@ function embebedVideoUrl(videoURL: string) {
           <div className={styles.main_body}>
             <main className={`${styles.main_container} used_bike_detail_pg`}>
               <div className={styles.container_one}>
-
+                <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+                  <a href="/" className={styles.breadcrumbLink}>Home</a>
+                  <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                  <a href="/used-bikes" className={styles.breadcrumbLink}>Used Bikes</a>
+                  {cityHref ? (
+                    <>
+                      <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                      <a href={cityHref} className={styles.breadcrumbLink}>Bikes in {cityName}</a>
+                    </>
+                  ) : null}
+                  {brandCityHref ? (
+                    <>
+                      <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                      <a href={brandCityHref} className={styles.breadcrumbLink}>{brandName} Bikes in {cityName}</a>
+                    </>
+                  ) : null}
+                  <KeyboardArrowRightIcon className={styles.breadcrumbIcon} />
+                  <span className={styles.breadcrumbCurrent}>{bikeDetail?.title}</span>
+                </nav>
                 <h1 className={styles.title}> {bikeDetail?.title}  </h1>
                 <p className={styles.view_count}>
                   <VisibilityOutlinedIcon className={styles.view_icon} />
@@ -327,6 +362,16 @@ function embebedVideoUrl(videoURL: string) {
                 <div className={styles.seller_comments}>
                   <h6 className={styles.bike_dec_title} > Bike Description </h6>
                   <p className={styles.seller_comments_desc} dangerouslySetInnerHTML={{ __html: bikeDetail.description }} ></p>
+                </div>
+
+                <div className={styles.seo_text_box}>
+                  <p>
+                    {bikeDetail?.title || 'This used bike'} is listed for sale {cityName ? `in ${cityName}` : 'in Pakistan'}
+                    {brandName ? ` under the ${brandName} used bikes category` : ''}. Buyers can review the
+                    {yearName ? ` ${yearName} model year,` : ''}{bikeDetail?.cc ? ` ${bikeDetail.cc}cc engine details,` : ''}
+                    {priceText ? ` ${priceText} asking price,` : ''} photos, seller information and location before contacting the owner.
+                    Browse this second hand motorcycle ad on ebike.pk to compare similar used bikes and make a better buying decision.
+                  </p>
                 </div>
 
               { bikeDetail?.videoUrl ?
