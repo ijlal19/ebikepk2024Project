@@ -82,6 +82,31 @@
       width: 100%;
     }
 
+    .filter_search {
+      width: calc(100% - 24px);
+      height: 34px;
+      display: block;
+      box-sizing: border-box;
+      margin: 0px auto 6px auto;
+      border: 1px solid #d9e2ec;
+      border-radius: 6px;
+      outline: none;
+      background: #ffffff;
+      color: #0f172a;
+      font-size: 13px;
+      padding: 7px 9px !important;
+
+      &:focus {
+        border-color: $primary_two;
+        box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.12);
+      }
+    }
+
+    .filter_search::placeholder {
+      color: #7b8794;
+      font-size: 12px;
+    }
+
     .option_values {
       gap: 8px;
       width: 100%;
@@ -101,6 +126,13 @@
         accent-color: $primary_two;
         cursor: pointer;
       }
+    }
+
+    .no_results {
+      color: #64748b;
+      font-size: 12px;
+      padding: 5px 12px 5px 14px !important;
+      margin: 0px !important;
     }
 
     .option_values .MuiMenuItem-root {

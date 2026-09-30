@@ -1,12 +1,8 @@
 import AllUsedBikeComp from "@/ebikeWeb/pageLayouts/all-used-bikes/index";
-import SeoContentBlock from "@/app/components/SeoContentBlock";
 
 type UsedBikesPageContentProps = {
   allUsedBike: any;
   jsonLd: Record<string, any>;
-  seoTags: string[];
-  pageTitle: string;
-  pageDescription: string;
   listingHeading: string;
   listingSubheading: string;
   seoHeading: string;
@@ -20,9 +16,6 @@ type UsedBikesPageContentProps = {
 export default function UsedBikesPageContent({
   allUsedBike,
   jsonLd,
-  seoTags,
-  pageTitle,
-  pageDescription,
   listingHeading,
   listingSubheading,
   seoHeading,
@@ -37,12 +30,6 @@ export default function UsedBikesPageContent({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <SeoContentBlock
-        title={pageTitle}
-        description={pageDescription}
-        tags={seoTags}
-        headingLevel="h1"
       />
       <AllUsedBikeComp
         _allUsedBike={allUsedBike}

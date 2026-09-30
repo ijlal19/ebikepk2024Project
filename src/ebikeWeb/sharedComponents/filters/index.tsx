@@ -27,6 +27,8 @@ function Filters(props: any , {updateData}:any) {
   const [isLoading, setIsLoading] = useState(false)
   const [isFilterChange, setIsFilterChange] = useState(false)
   const [brandOptions, setBrandOptions]: any = useState([])
+  const [citySearch, setCitySearch] = useState('')
+  const [brandSearch, setBrandSearch] = useState('')
   // const [totalPage, setTotalPage] = useState(null)
   // const [currentPage, setCurrentPage] = useState(1)
 
@@ -35,6 +37,12 @@ function Filters(props: any , {updateData}:any) {
     openmodal: openmodal,
     popupdata: popupData,
   }
+  const filteredCityOptions = citySearch.trim()
+    ? cityOptions.filter((city: any) => city.city_name?.toLowerCase().includes(citySearch.trim().toLowerCase())).slice(0, 6)
+    : cityOptions.slice(0, 5)
+  const filteredBrandOptions = brandSearch.trim()
+    ? brandOptions.filter((brand: any) => brand.brandName?.toLowerCase().includes(brandSearch.trim().toLowerCase())).slice(0, 6)
+    : brandOptions.slice(0, 5)
 
   useEffect(() => {
     fetchBrandOptions();
@@ -245,8 +253,15 @@ function Filters(props: any , {updateData}:any) {
         <Typography className={styles.city_text}>CITY</Typography>
       </Box>
       <Box className={styles.city_options}>
+        <input
+          type="text"
+          className={styles.filter_search}
+          placeholder="Search city"
+          value={citySearch}
+          onChange={(event) => setCitySearch(event.target.value)}
+        />
         {
-          cityOptions.slice(0, 5).map((data: any, i: any) => {
+          filteredCityOptions.map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input
@@ -260,6 +275,7 @@ function Filters(props: any , {updateData}:any) {
             );
           })
         }
+        {filteredCityOptions.length === 0 ? <Typography className={styles.no_results}>No cities found</Typography> : ""}
 
         <p onClick={() => toggle('city')} className={styles.seeMore} > More Cities </p>
 
@@ -276,8 +292,15 @@ function Filters(props: any , {updateData}:any) {
         <Typography className={styles.brand_text}>BRAND</Typography>
       </Box>
       <Box className={styles.brand_options}>
+        <input
+          type="text"
+          className={styles.filter_search}
+          placeholder="Search brand"
+          value={brandSearch}
+          onChange={(event) => setBrandSearch(event.target.value)}
+        />
         {
-          brandOptions.slice(0, 5).map((data: any, i: any) => {
+          filteredBrandOptions.map((data: any, i: any) => {
             return (
               <Typography className={styles.option_values} key={i}>
                 <input
@@ -290,6 +313,7 @@ function Filters(props: any , {updateData}:any) {
               </Typography>)
           })
         }
+        {filteredBrandOptions.length === 0 ? <Typography className={styles.no_results}>No brands found</Typography> : ""}
 
         <p onClick={() => toggle('brand')} className={styles.seeMore} > More Brands </p>
 

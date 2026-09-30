@@ -169,6 +169,78 @@
                     font-size: 12px;
                     letter-spacing: 1px;
                 }
+
+                .searchable_dropdown {
+                    position: relative;
+                    width: 100%;
+                    margin: 3px 0px 10px 0px !important;
+                }
+
+                .searchable_input {
+                    width: 100%;
+                    box-sizing: border-box;
+                    border: 1px solid #d2d2d2;
+                    outline: none;
+                    padding: 10px 30px 8px 7px;
+                    height: 40px;
+                    background: #ffffff;
+                }
+
+                .searchable_input::placeholder {
+                    font-size: 12px;
+                    letter-spacing: 1px;
+                }
+
+                .searchable_toggle {
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    width: 32px;
+                    height: 40px;
+                    border: none;
+                    background: transparent;
+                    cursor: pointer;
+                    color: #111111;
+                    font-size: 16px;
+                    line-height: 1;
+                }
+
+                .searchable_menu {
+                    position: absolute;
+                    top: calc(100% - 1px);
+                    left: 0px;
+                    right: 0px;
+                    z-index: 20;
+                    max-height: 210px;
+                    overflow-y: auto;
+                    background: #ffffff;
+                    border: 1px solid #d2d2d2;
+                    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.12);
+                }
+
+                .searchable_option {
+                    width: 100%;
+                    display: block;
+                    border: none;
+                    background: #ffffff;
+                    color: #222222;
+                    cursor: pointer;
+                    font-size: 12px;
+                    line-height: 18px;
+                    padding: 8px 10px;
+                    text-align: left;
+                }
+
+                .searchable_option:hover,
+                .searchable_option_selected {
+                    background: #f2f2f2;
+                }
+
+                .searchable_empty {
+                    color: #777777;
+                    font-size: 12px;
+                    padding: 9px 10px;
+                }
             }
 
             .permission {

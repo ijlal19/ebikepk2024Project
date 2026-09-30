@@ -126,37 +126,19 @@
                     }
                 }
 
-                .date_meta_row {
-                    display: flex;
-                    align-items: flex-start;
-                    flex-direction: column;
-                    gap: 4px;
-                    margin: 0px 0px 9px;
-                    padding: 0px;
-                    color: #5f6f84;
-                    font-family: 'Lato';
-                    font-size: 15px;
-                    line-height: 1.4;
-
-                    strong {
-                        color: #2b3545;
-                        font-family: 'LatoBold';
-                    }
-                }
-
                 .profile_box {
                     display: flex;
                     padding: 2px 0px 8px 0px;
                     align-items: center;
                     flex-wrap: wrap;
-                    gap: 7px;
+                    gap: 8px;
                     font-size: 16px;
                     font-family: 'Lato';
-                    color: #2b3545;
+                    color: #4b4b4b;
 
                     .author_icon {
-                        color: $primary_two;
-                        font-size: 22px;
+                        color: #c8c8c8;
+                        font-size: 42px;
                         flex: 0 0 auto;
                     }
 
@@ -172,7 +154,7 @@
                     }
 
                     .authorLink {
-                        color: $primary_two;
+                        color: #454545;
                         font-weight: 700;
                         text-decoration: none;
                         cursor: pointer;
@@ -184,9 +166,26 @@
                     }
 
                     .author_name {
-                        color: $primary_two;
+                        color: #454545;
                         font-size: 17px;
                         font-weight: 700;
+                    }
+
+                    .meta_separator {
+                        color: #b7b7b7;
+                        font-size: 22px;
+                        margin: 0px 8px;
+                    }
+
+                    .date_text {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 5px;
+                        color: #4b4b4b;
+                    }
+
+                    .on_label {
+                        color: #777777;
                     }
 
                     .view_count {

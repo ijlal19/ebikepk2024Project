@@ -6,16 +6,6 @@ import UsedBikesPageContent from './UsedBikesPageContent';
 const usedBikeTitle = "Used Bike for Sale in Pakistan | Second Hand Bikes | ebike.pk";
 const usedBikeDescription = "Find a used bike for sale in Pakistan with prices, photos, city, model year, engine CC and seller contact information on ebike.pk.";
 const usedBikeCanonical = `${SITE_URL}/used-bikes`;
-const usedBikeSeoTags = [
-  "used bike for sale in Pakistan",
-  "used motorcycle for sale in pakistan",
-  "second hand bikes in Pakistan",
-  "buy used bike in Pakistan",
-  "used motorcycle for sale Pakistan",
-  "used Honda bike for sale",
-  "used Yamaha bike for sale",
-  "used Suzuki bike for sale"
-];
 const usedBikeSeoSections = [
   {
     heading: "Find the right used bike before you call",
@@ -244,9 +234,6 @@ export default async function AllUsedBikes() {
     <UsedBikesPageContent
       allUsedBike={allUsedBike}
       jsonLd={buildUsedBikeListJsonLd(allUsedBike)}
-      seoTags={usedBikeSeoTags}
-      pageTitle="Used Bike for Sale in Pakistan"
-      pageDescription="Browse active used bike ads in Pakistan with prices, photos, model year, city, engine CC and seller details. Compare second hand motorcycles from Honda, Yamaha, Suzuki and other brands before you contact the seller."
       listingHeading="Used Bike for Sale in Pakistan"
       listingSubheading="Second hand Honda, Yamaha, Suzuki & more"
       seoHeading="Used Bike for Sale in Pakistan on ebike.pk"

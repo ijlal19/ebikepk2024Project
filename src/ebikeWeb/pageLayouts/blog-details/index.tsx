@@ -66,19 +66,10 @@ const formatBlogDate = (date?: string) => {
   });
 };
 
-const getDisplayBlogDate = (createdAt?: string, updatedAt?: string) => {
-  const createdTime = createdAt ? new Date(createdAt).getTime() : NaN;
-  const updatedTime = updatedAt ? new Date(updatedAt).getTime() : NaN;
-  const showUpdated = Number.isFinite(updatedTime) && Number.isFinite(createdTime) && updatedTime > createdTime;
-  const dateTime = showUpdated ? updatedAt : createdAt;
-  const formattedDate = formatBlogDate(dateTime);
-
-  return {
-    label: showUpdated ? 'Last Updated:' : 'Created:',
-    dateTime,
-    formattedDate,
-  };
-};
+const getDisplayBlogDate = (createdAt?: string) => ({
+  dateTime: createdAt,
+  formattedDate: formatBlogDate(createdAt),
+});
 
 const BlogDetails = () => {
   const [IsLogin, setIsLogin] = useState<any>('not_login');
@@ -266,7 +257,7 @@ const BlogDetails = () => {
   const authorHref = assignedAuthor?.id
     ? `/author/${assignedAuthor.slug || slugifyAuthor(assignedAuthor.name || 'author')}/${assignedAuthor.id}`
     : '';
-  const displayDate = getDisplayBlogDate(DataBlog?.createdAt, DataBlog?.updatedAt);
+  const displayDate = getDisplayBlogDate(DataBlog?.createdAt);
   const categoryName = DataBlog?.blog_category?.name?.trim();
   const categoryHref = categoryName ? `/blog/${slugifyAuthor(categoryName)}` : '/blog';
   const sidebarTags = buildDynamicSidebarTags([DataBlog, ...BlogData]);
@@ -326,14 +317,6 @@ const BlogDetails = () => {
                   {DataBlog.blogTitle}
                 </Typography>
 
-                <Typography className={styles.date_meta_row}>
-                  {displayDate.formattedDate && (
-                    <span>
-                      <strong>{displayDate.label}</strong> <time dateTime={displayDate.dateTime}>{displayDate.formattedDate}</time>
-                    </span>
-                  )}
-                </Typography>
-
                 <Typography className={styles.profile_box}>
                   <AccountCircleOutlinedIcon className={styles.author_icon} />
                   <span className={styles.author_text}>
@@ -346,6 +329,15 @@ const BlogDetails = () => {
                       <span className={styles.author_name}>{displayAuthorName}</span>
                     )}
                   </span>
+                  {displayDate.formattedDate && (
+                    <>
+                      <span className={styles.meta_separator} aria-hidden="true">—</span>
+                      <span className={styles.date_text}>
+                        <span className={styles.on_label}>On</span>
+                        <time dateTime={displayDate.dateTime}>{displayDate.formattedDate}</time>
+                      </span>
+                    </>
+                  )}
                   <span className={styles.view_count}>
                     {DataBlog?.views_count || 0} views
                   </span>

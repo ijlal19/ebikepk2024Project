@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styles from './index.module.scss'
 import { BrandArr, CityArr, YearArr, CcArr } from '@/ebikeWeb/constants/globalData'
 import { getSortedCityOptions } from '@/ebikeWeb/utils/cityOptions'
@@ -13,6 +13,114 @@ import Loader from "@/ebikeWeb/sharedComponents/loader/loader"
 import { checkAuthAndRedirect } from "@/ebike-panel/ebike-panel-Function/globalfunction";
 const jsCookie = require('js-cookie');
 const cityOptions = getSortedCityOptions(CityArr);
+
+type SearchableOption = {
+    value: string;
+    label: string;
+};
+
+type SearchableDropdownProps = {
+    id: string;
+    value: string;
+    placeholder?: string;
+    options: SearchableOption[];
+    onChange: (value: string) => void;
+};
+
+const SearchableDropdown = ({ id, value, placeholder = "Search", options, onChange }: SearchableDropdownProps) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const selectedOption = options.find((option) => option.value === value);
+    const filteredOptions = options.filter((option) =>
+        option.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    useEffect(() => {
+        setSearchTerm(selectedOption?.label || "");
+    }, [selectedOption?.label]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!dropdownRef.current?.contains(event.target as Node)) {
+                setIsOpen(false);
+                setSearchTerm(selectedOption?.label || "");
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [selectedOption?.label]);
+
+    const selectOption = (option: SearchableOption) => {
+        onChange(option.value);
+        setSearchTerm(option.label);
+        setIsOpen(false);
+    };
+
+    return (
+        <div className={styles.searchable_dropdown} ref={dropdownRef}>
+            <input
+                id={id}
+                type="text"
+                autoComplete="off"
+                className={styles.searchable_input}
+                placeholder={placeholder}
+                value={isOpen ? searchTerm : selectedOption?.label || ""}
+                onFocus={() => {
+                    setIsOpen(true);
+                    setSearchTerm("");
+                }}
+                onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setIsOpen(true);
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" && filteredOptions[0]) {
+                        e.preventDefault();
+                        selectOption(filteredOptions[0]);
+                    }
+                    if (e.key === "Escape") {
+                        setIsOpen(false);
+                        setSearchTerm(selectedOption?.label || "");
+                    }
+                }}
+            />
+            <button
+                type="button"
+                className={styles.searchable_toggle}
+                aria-label="Open options"
+                aria-expanded={isOpen}
+                onClick={() => {
+                    setSearchTerm("");
+                    setIsOpen((prev) => !prev);
+                }}
+            >
+                v
+            </button>
+            {isOpen && (
+                <div className={styles.searchable_menu}>
+                    {filteredOptions.length > 0 ? (
+                        filteredOptions.map((option) => (
+                            <button
+                                type="button"
+                                key={option.value}
+                                className={`${styles.searchable_option} ${option.value === value ? styles.searchable_option_selected : ""}`}
+                                onMouseDown={(e) => e.preventDefault()}
+                                onClick={() => selectOption(option)}
+                            >
+                                {option.label}
+                            </button>
+                        ))
+                    ) : (
+                        <div className={styles.searchable_empty}>No results</div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
 
 const SellUsedBike = () => {
 
@@ -39,6 +147,18 @@ const SellUsedBike = () => {
     const [brandOptions, setBrandOptions] = useState<any[]>([]);
 
     const router = useRouter()
+    const cityDropdownOptions = cityOptions.map((e: any) => ({
+        value: String(e.id),
+        label: e.city_name,
+    }));
+    const ccDropdownOptions = CcArr.map((e: any) => ({
+        value: String(e),
+        label: String(e),
+    }));
+    const brandDropdownOptions = brandOptions.map((e: any) => ({
+        value: String(e.id),
+        label: e.brandName,
+    }));
 
     useEffect(() => {
         fetchBrandOptions()
@@ -414,16 +534,13 @@ const SellUsedBike = () => {
                                 <label htmlFor="city" className={styles.description_label}>City*</label>
                             </Typography>
                             <Typography>
-                                <select name="" id="city" className={styles.section_main} onChange={(e) => handleChange('city', e.target.value)}>
-                                    <option value="" disabled selected hidden></option>
-                                    {
-                                        cityOptions.map((e: any) => {
-                                            return (
-                                                <option key={e.city_name} value={e.id} className={styles.drop_option}>{e.city_name}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <SearchableDropdown
+                                    id="city"
+                                    value={city}
+                                    placeholder="Search city"
+                                    options={cityDropdownOptions}
+                                    onChange={(value) => handleChange('city', value)}
+                                />
                             </Typography>
                         </div>
 
@@ -451,17 +568,13 @@ const SellUsedBike = () => {
                                 <label htmlFor="cc" className={styles.description_label}>CC*</label>
                             </Typography>
                             <Typography>
-                                <select name="" id="cc" className={styles.section_main}
-                                    onChange={(e) => handleChange('cc', e.target.value)}>
-                                    <option value="" disabled selected hidden></option>
-                                    {
-                                        CcArr.map((e: any) => {
-                                            return (
-                                                <option key={e} value={e} className={styles.drop_option}>{e}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <SearchableDropdown
+                                    id="cc"
+                                    value={cc}
+                                    placeholder="Search CC"
+                                    options={ccDropdownOptions}
+                                    onChange={(value) => handleChange('cc', value)}
+                                />
                             </Typography>
                         </div>
                     </div>
@@ -473,17 +586,13 @@ const SellUsedBike = () => {
                                 <label htmlFor="brand" className={styles.description_label}>Brand*</label>
                             </Typography>
                             <Typography>
-                                <select name="" id="brand" className={styles.section_main}
-                                    onChange={(e) => handleChange('brand', e.target.value)}>
-                                    <option value="" disabled selected hidden></option>
-                                    {
-                                        brandOptions.map((e: any) => {
-                                            return (
-                                                <option key={e.id} value={e.id} className={styles.drop_option}>{e.brandName}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <SearchableDropdown
+                                    id="brand"
+                                    value={brand}
+                                    placeholder="Search brand"
+                                    options={brandDropdownOptions}
+                                    onChange={(value) => handleChange('brand', value)}
+                                />
                             </Typography>
                         </div>
 
