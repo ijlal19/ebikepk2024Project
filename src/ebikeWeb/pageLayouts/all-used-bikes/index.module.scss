@@ -521,6 +521,7 @@
               flex-direction: column;
               justify-content: space-between;
               align-items: center;
+              position: relative;
             }
 
             .soldout {
@@ -534,8 +535,12 @@
 
 
             img {
+              display: block;
+              position: absolute;
+              inset: 0;
               width: 100%;
               height: 140px;
+              object-fit: cover;
             }
 
 
@@ -692,6 +697,14 @@
             transform: translateY(-1px);
           }
 
+          @media (max-width:991px) {
+            flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+            min-width: 0;
+            overflow: hidden;
+          }
+
           @media (max-width:600px) {
             height: auto !important;
             padding: 0px !important;
@@ -707,6 +720,9 @@
 
           .bike_image_box {
             height: 146px;
+            flex: 0 0 25%;
+            max-width: 25%;
+            min-width: 0;
             padding: 0px 12px 0px 0px;
             display: flex;
             box-sizing: border-box;
@@ -714,21 +730,50 @@
             align-items: center;
             position: relative;
 
+            @media (max-width:991px) {
+              width: 100%;
+              flex: 0 0 auto;
+              max-width: 100%;
+              height: clamp(180px, 35vw, 260px);
+              padding: 0px;
+            }
+
             @media (max-width:600px) {
               height: 150px !important;
               width: 220px;
+              flex: 0 0 220px;
+              max-width: 220px;
               padding: 0px 0px;
               box-sizing: border-box;
             }
 
+            @media (min-width:601px) and (max-width:991px) {
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+
             .long_card_img {
-              display: flex;
-              justify-content: center;
-              align-items: flex-end;
+              display: block;
+              width: 100%;
+              height: 100% !important;
+              min-width: 0;
+              position: relative;
               overflow: hidden;
+
+              img {
+                display: block;
+                position: relative;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                min-width: 0;
+              }
             }
 
             .soldout {
+              position: absolute;
+              bottom: 0;
+              left: 0;
               color: white;
               width: 100%;
               padding: 1px 0px;
@@ -783,6 +828,14 @@
             min-height: 146px;
             height: auto;
             padding: 24px 10px 10px 2px;
+
+            @media (max-width:991px) {
+              width: 100%;
+              max-width: 100%;
+              flex: 0 0 auto;
+              min-width: 0;
+              box-sizing: border-box;
+            }
 
             @media (max-width:1050px) {
               padding-left: 10px;
@@ -897,6 +950,15 @@
             row-gap: 58px;
             white-space: nowrap;
             padding: 24px 4px 0px 0px;
+
+            @media (max-width:991px) {
+              width: 100%;
+              max-width: 100%;
+              min-height: auto;
+              padding: 0px 10px 12px;
+              align-items: flex-start;
+              row-gap: 12px;
+            }
 
             @media (max-width:600px) {
               display: none;
@@ -1188,6 +1250,25 @@
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 24px;
+  }
+
+  .used_bike_faq {
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #dde6ef;
+
+    h2 {
+      margin-bottom: 10px;
+    }
+  }
+
+  .used_bike_faq_item {
+    margin-top: 18px;
+
+    h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+    }
   }
 
   .used_bike_seo_link {

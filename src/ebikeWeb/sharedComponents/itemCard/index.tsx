@@ -12,6 +12,7 @@ import styles from './index.module.scss';
 import Card from '@mui/material/Card';
 
 let SelectedADD: any = []
+const usedBikePlaceholderImage = 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
 
 export default function NewUsedBikesCard(props: any) {
     const [isUsedBikePage, setIsUsedBikePage] = useState(false);
@@ -133,6 +134,10 @@ export default function NewUsedBikesCard(props: any) {
                                             : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'
                                     }
                                     className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height : ""}`}
+                                    onError={(event: any) => {
+                                        event.currentTarget.onerror = null;
+                                        event.currentTarget.src = usedBikePlaceholderImage;
+                                    }}
                                 />
                                 {
                                     isUsedBikePage ?
@@ -156,6 +161,10 @@ export default function NewUsedBikesCard(props: any) {
                                 height="230"
                                 image={imgUrl ? cloudinaryLoader(imgUrl , 400 , 'auto') : 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'}
                                 className={`${styles.card_img} ${props.from == "newBikeComp" ? styles.card_img_dynamic_height : ""}`}
+                                onError={(event: any) => {
+                                    event.currentTarget.onerror = null;
+                                    event.currentTarget.src = usedBikePlaceholderImage;
+                                }}
                             />
                     }
                     <CardContent className={styles.card_info}>

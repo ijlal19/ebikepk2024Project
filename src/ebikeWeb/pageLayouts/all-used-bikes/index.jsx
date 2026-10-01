@@ -1,7 +1,7 @@
 'use client'
 import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById, getnewBikeData } from "@/ebikeWeb/functions/globalFuntions";
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader, formatUsedBikeListTitle } from '@/genericFunctions/geneFunc';
-import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination } from '@mui/material';
+import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination, PaginationItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { CityArr, BrandArr } from "@/ebikeWeb/constants/globalData";
@@ -66,6 +66,7 @@ const qualityUsedBikeRequest = {
     sort_by: 'quality',
     sort_order: 'desc'
 }
+const usedBikePlaceholderImage = 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
 
 function getBikePriceValue(bike) {
     const price = Number(bike?.price);
@@ -153,14 +154,16 @@ export default function AllUsedBike({
     seoIntro = 'ebike.pk is built for motorcycle buyers and sellers in Pakistan who want a simple way to find used bikes, compare prices and check available options by city, brand, year and CC. Whether you are looking for a 70cc daily ride, a 100cc commuter, a 125cc motorcycle or a 150cc bike, this page helps you discover active used bike ads with useful details before you make a decision.',
     seoSections = usedBikeSeoSections,
     seoLinks = usedBikeSeoLinks,
+    faqs = [],
     hideSidebar = false,
     hidePriceTable = false
 }) {
 
     const [AllFavouriteBike, setAllFavouriteBike] = useState([]);
     const [isGridSelected, setIsGridSelected] = useState(false);
-    const hasInitialUsedBikes = Array.isArray(_allUsedBike?.data) && _allUsedBike.data.length > 0;
-    const [initialLoading, setInitialLoading] = useState(!hasInitialUsedBikes);
+    const hasInitialResponse = _allUsedBike && typeof _allUsedBike === 'object' && Array.isArray(_allUsedBike?.data);
+    const hasInitialUsedBikes = hasInitialResponse && _allUsedBike.data.length > 0;
+    const [initialLoading, setInitialLoading] = useState(!hasInitialResponse);
     const [FavouriteData, setFavouriteData] = useState([]);
     const [SearchApply, setSearchApply] = useState(false);
     const [showfilter, setshowfilter] = useState(false);
@@ -196,13 +199,11 @@ export default function AllUsedBike({
             setIsLogin("not_login")
         }
 
-        fetchRandomBikePriceTable()
+        if (!hidePriceTable) {
+            fetchRandomBikePriceTable()
+        }
 
-        const pageNoRaw = localStorage.getItem('PageNo');
-        if (pageNoRaw && !isNaN(Number(pageNoRaw))) {
-            const PageNo = Number(pageNoRaw);
-            fetchBikeInfo(PageNo, true);
-        } else if (!hasInitialUsedBikes) {
+        if (!hasInitialResponse) {
             fetchBikeInfo(1, false);
         }
 
@@ -241,7 +242,6 @@ export default function AllUsedBike({
     }
 
     const handlePaginationChange = async (event, page) => {
-        localStorage.setItem("PageNo", page);
         if (SearchApply) {
             handleSearch(page)
         }
@@ -269,7 +269,6 @@ export default function AllUsedBike({
         }
 
         setInitialLoading(false)
-        localStorage.removeItem('PageNo')
         if (res?.data?.length > 0) {
             setCurrentPage(res?.currentPage)
             setAllBikesArr(sortUsedBikeAds(res?.data))
@@ -308,8 +307,8 @@ export default function AllUsedBike({
         setPriceTableData(Array.isArray(res) ? res : []);
     }
 
-    function goToDetailPage(val) {
-        localStorage.setItem("PageNo", currentPage);
+    function goToDetailPage() {
+        // Detail navigation is provided by the surrounding crawlable link.
     }
 
     const AddFavourite = async (id) => {
@@ -344,7 +343,7 @@ export default function AllUsedBike({
             let urlTitle = slugifyBikeTitle(title)
             return `/used-bikes/${urlTitle}/${val.id}`
         }
-        const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
+        const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || usedBikePlaceholderImage;
         const cardLabel = `${val?.title || 'Used bike for sale'}${cityName ? ` in ${cityName}` : ''}`;
         const isFeaturedBike = val?.isFeatured || val?.is_featured;
 
@@ -370,15 +369,22 @@ export default function AllUsedBike({
                                     aria-label={cardLabel}
                                     title={cardLabel}
                                     sx={{
-                                        backgroundImage: `url(${imageUrl})`,
-                                        backgroundSize: isMobileView ? '100% 100%' : 'cover',
                                         boxSizing: 'border-box',
-                                        backgroundPosition: 'center',
-                                        backgroundRepeat: 'no-repeat',
                                         height: isMobileView ? '150px' : "95%",
                                         width: isMobileView ? '100%' : "100%",
                                         borderRadius: '5px'
                                     }}>
+                                    <img
+                                        src={imageUrl}
+                                        alt={cardLabel}
+                                        width="300"
+                                        height="150"
+                                        loading={ind < 4 ? 'eager' : 'lazy'}
+                                        onError={(event) => {
+                                            event.currentTarget.onerror = null;
+                                            event.currentTarget.src = usedBikePlaceholderImage;
+                                        }}
+                                    />
                                     {
                                         isFeaturedBike ?
                                             <div className={styles.featured_tag}>FEATURED</div> : ""
@@ -446,12 +452,14 @@ export default function AllUsedBike({
                     </Link >
                     :
                     <div className={styles.item_div}>
-                        <ItemCard
-                            data={val}
-                            from='usedBikeComp'
-                            currentpage='used_bike'
-                            onBtnClick={() => { }}
-                        />
+                        <Link href={GetHref()} sx={{ textDecoration: 'none' }} onClick={() => { goToDetailPage(val) }}>
+                            <ItemCard
+                                data={val}
+                                from='usedBikeComp'
+                                currentpage='used_bike'
+                                onBtnClick={() => { }}
+                            />
+                        </Link>
                     </div>
                 }
             </React.Fragment>
@@ -471,7 +479,7 @@ export default function AllUsedBike({
             let urlTitle = slugifyBikeTitle(title)
             return `/used-bikes/${urlTitle}/${val.id}`
         }
-        const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
+        const imageUrl = cloudinaryLoader(val?.images?.[0], 300, "auto") || usedBikePlaceholderImage;
         const cardLabel = `${val?.title || 'Used bike for sale'}${cityName ? ` in ${cityName}` : ''}`;
         const isFeaturedBike = val?.isFeatured || val?.is_featured;
 
@@ -490,13 +498,20 @@ export default function AllUsedBike({
                                 aria-label={cardLabel}
                                 title={cardLabel}
                                 sx={{
-                                    backgroundImage: `url(${imageUrl})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
                                     height: '100%',
                                     width: '100%',
                                 }}>
+                                <img
+                                    src={imageUrl}
+                                    alt={cardLabel}
+                                    width="300"
+                                    height="140"
+                                    loading={ind < 4 ? 'eager' : 'lazy'}
+                                    onError={(event) => {
+                                        event.currentTarget.onerror = null;
+                                        event.currentTarget.src = usedBikePlaceholderImage;
+                                    }}
+                                />
 
                                 <Box className={styles.icon_box} onClick={() => AddFavourite(val?.id)}>
                                     <FavoriteIcon className={styles.icon} sx={{ color: FavouriteData?.data?.favouriteArr?.usedBikeIds?.includes(val?.id) ? '#1976d2' : 'white' }} />
@@ -611,7 +626,7 @@ export default function AllUsedBike({
                 <Box className={styles.main}>
                     <>
                         <Box className={styles.usedBike_headingBpx}>
-                            <Typography className={styles.headinh_sale}>{pageHeading}</Typography>
+                            <Typography component="h1" className={styles.headinh_sale}>{pageHeading}</Typography>
                             {/* <Typography className={styles.path_text}> Home <span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Used<span style={{ paddingLeft: 5, paddingRight: 5 }}>/</span>Bike For Sale In Pakistan</Typography> */}
                             <Typography className={styles.path_text}> {pageSubheading} </Typography>
                         </Box>
@@ -825,8 +840,17 @@ export default function AllUsedBike({
                             <Box className={styles.used_bike_list_pagination}>
                                 <Pagination
                                     count={totalPage}
-                                    onChange={handlePaginationChange}
+                                    onChange={SearchApply ? handlePaginationChange : undefined}
                                     page={currentPage}
+                                    renderItem={(item) => item.page && !SearchApply ? (
+                                        <PaginationItem
+                                            {...item}
+                                            component="a"
+                                            href={item.page > 1 ? `/used-bikes?page=${item.page}` : '/used-bikes'}
+                                        />
+                                    ) : (
+                                        <PaginationItem {...item} />
+                                    )}
                                 />
                             </Box>
                             : ""}
@@ -886,6 +910,17 @@ export default function AllUsedBike({
                                     </Link>
                                 ))}
                             </div>
+                            {faqs.length > 0 && (
+                                <div className={styles.used_bike_faq} aria-labelledby="used-bike-faq-heading">
+                                    <h2 id="used-bike-faq-heading">Frequently Asked Questions</h2>
+                                    {faqs.map((faq) => (
+                                        <div className={styles.used_bike_faq_item} key={faq.question}>
+                                            <h3>{faq.question}</h3>
+                                            <p>{faq.answer}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </section>
                     </>
 

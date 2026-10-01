@@ -9,6 +9,7 @@ type UsedBikesPageContentProps = {
   seoIntro: string;
   seoSections: Array<{ heading: string; body: string }>;
   seoLinks: Array<{ label: string; href: string }>;
+  faqs: Array<{ question: string; answer: string }>;
   hideSidebar?: boolean;
   hidePriceTable?: boolean;
 };
@@ -22,6 +23,7 @@ export default function UsedBikesPageContent({
   seoIntro,
   seoSections,
   seoLinks,
+  faqs,
   hideSidebar = false,
   hidePriceTable = false,
 }: UsedBikesPageContentProps) {
@@ -39,6 +41,7 @@ export default function UsedBikesPageContent({
         seoIntro={seoIntro}
         seoSections={seoSections}
         seoLinks={seoLinks}
+        faqs={faqs}
         hideSidebar={hideSidebar}
         hidePriceTable={hidePriceTable}
       />

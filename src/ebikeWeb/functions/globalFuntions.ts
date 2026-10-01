@@ -3,6 +3,9 @@ import Gconfig from 'globalconfig'
 // import jsCookie from 'js-cookie'
 const jsCookie = require('js-cookie');
 
+let brandDataCache: any = null;
+let brandDataRequest: Promise<any> | null = null;
+
 function getAllbikesDetail(page: any) {
     return fetch(Gconfig.ebikeApi + `classified/get-adds-with-offset/${page}/12`, {
         method: 'GET',
@@ -13,13 +16,27 @@ function getAllbikesDetail(page: any) {
     })
 }
 function getbrandData() {
-    return fetch(Gconfig.ebikeApi + 'brand/get-brand')
-        .then(response => response.json()).then(data => {
-            return data
+    if (brandDataCache) {
+        return Promise.resolve(brandDataCache);
+    }
+
+    if (brandDataRequest) {
+        return brandDataRequest;
+    }
+
+    brandDataRequest = fetch(Gconfig.ebikeApi + 'brand/get-brand')
+        .then(response => response.json())
+        .then(data => {
+            brandDataCache = data;
+            return data;
         })
         .catch((err) => {
-            console.log(err)
-        })
+            brandDataRequest = null;
+            console.log(err);
+            return undefined;
+        });
+
+    return brandDataRequest;
 }
 
 function getnewBikeData(data: any) {
