@@ -2,6 +2,9 @@
   "name": "ebike-web-new",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
@@ -34,7 +37,7 @@
     "swiper": "^11.1.14"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
