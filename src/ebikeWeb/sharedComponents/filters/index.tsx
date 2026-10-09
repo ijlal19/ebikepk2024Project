@@ -186,8 +186,9 @@ function Filters(props: any , {updateData}:any) {
       }
 
       let res = await getCustomBikeAd(obj)
+      props.updateResponseState?.(res, _page)
 
-      if (res.data.length > 0) {
+      if (!props.updateResponseState && res?.data?.length > 0) {
         props.updateData(res.data)
         props.CurrentPage(res.currentPage)
         props.TotalPage(res.pages)

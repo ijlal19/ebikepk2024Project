@@ -67,6 +67,14 @@ function normalizeUsedBikeAds(bikes) {
   return Array.isArray(bikes) ? bikes.filter(hasQualityUsedBikeData) : [];
 }
 
+function splitFallbackAds(bikes) {
+  const ads = Array.isArray(bikes) ? bikes : [];
+  return {
+    modelYearOtherAds: ads.filter((ad) => ad?.isModelYearOtherAd),
+    usedBikeOtherAds: ads.filter((ad) => ad?.isUsedBikeOtherAd),
+  };
+}
+
 function formatUsedBikePrice(price) {
   const numericPrice = Number(price);
   return Number.isFinite(numericPrice) && numericPrice > 0 ? `PKR ${priceWithCommas(numericPrice)}` : 'Call for price';
@@ -84,6 +92,7 @@ export default function UrlFilteredUsedBikes({
   const [isGridSelected, setIsGridSelected] = useState(false);
   const [IsLogin, setIsLogin] = useState('not_login');
   const [allBikesArr, setAllBikesArr] = useState(normalizeUsedBikeAds(_allUsedBike?.data));
+  const [isFilterFailed, setIsFilterFailed] = useState(!!_allUsedBike?.isFilterFailed);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
   const [totalPage, setTotalPage] = useState(_allUsedBike?.pages || 0);
@@ -107,6 +116,7 @@ export default function UrlFilteredUsedBikes({
 
   useEffect(() => {
     setAllBikesArr(normalizeUsedBikeAds(_allUsedBike?.data));
+    setIsFilterFailed(!!_allUsedBike?.isFilterFailed);
     setCurrentPage(_allUsedBike?.currentPage || 1);
     setTotalPage(_allUsedBike?.pages || 0);
   }, [_allUsedBike]);
@@ -135,6 +145,7 @@ export default function UrlFilteredUsedBikes({
     setIsLoading(true);
 
     const res = await getCustomBikeAd(makePageRequest(stableFilterRequest, page));
+    setIsFilterFailed(!!res?.isFilterFailed);
 
     if (res?.data?.length > 0) {
       setCurrentPage(res?.currentPage);
@@ -330,6 +341,43 @@ export default function UrlFilteredUsedBikes({
     );
   }
 
+  const renderBikeCards = (bikes, indexOffset = 0) => {
+    return bikes.map((val, ind) => (isGridSelected ? GridCard(val, ind + indexOffset) : longCard(val, ind + indexOffset)));
+  };
+
+  const renderFallbackSections = () => {
+    const { modelYearOtherAds, usedBikeOtherAds } = splitFallbackAds(allBikesArr);
+
+    if (modelYearOtherAds.length === 0 && usedBikeOtherAds.length === 0) {
+      return <p className={styles.not_found}>No results found.</p>;
+    }
+
+    return (
+      <>
+        <div className={styles.fallback_notice}>
+          <h2>Sorry, we could not find exact results for your search.</h2>
+          <p>Showing more used bikes that may match what you are looking for.</p>
+        </div>
+        {modelYearOtherAds.length > 0 ? (
+          <section className={styles.fallback_section}>
+            <h2 className={styles.fallback_heading}>Similar model year ads</h2>
+            <div className={`${isGridSelected ? styles.grid_bike_list : ''} ${!isGridSelected ? styles.bike_ad_list : ''}`}>
+              {renderBikeCards(modelYearOtherAds)}
+            </div>
+          </section>
+        ) : null}
+        {usedBikeOtherAds.length > 0 ? (
+          <section className={styles.fallback_section}>
+            <h2 className={styles.fallback_heading}>Other used bikes</h2>
+            <div className={`${isGridSelected ? styles.grid_bike_list : ''} ${!isGridSelected ? styles.bike_ad_list : ''}`}>
+              {renderBikeCards(usedBikeOtherAds, modelYearOtherAds.length)}
+            </div>
+          </section>
+        ) : null}
+      </>
+    );
+  };
+
   return (
     <>
       <Box className={styles.main}>
@@ -357,13 +405,17 @@ export default function UrlFilteredUsedBikes({
           <Grid item xs={isTabView ? 12 : isMiniDesktopView ? 10 : 8} className={styles.cards_grid}>
             <Box className={styles.all_bike_main}>
               <div className={styles.main_box}>
-                <div className={`${isGridSelected ? styles.grid_bike_list : ''} ${!isGridSelected ? styles.bike_ad_list : ''}`}>
-                  {allBikesArr?.length == 0 ? (
-                    <p className={styles.not_found}>No results found.</p>
-                  ) : (
-                    allBikesArr.map((val, ind) => (isGridSelected ? GridCard(val, ind) : longCard(val, ind)))
-                  )}
-                </div>
+                {isFilterFailed ? (
+                  renderFallbackSections()
+                ) : (
+                  <div className={`${isGridSelected ? styles.grid_bike_list : ''} ${!isGridSelected ? styles.bike_ad_list : ''}`}>
+                    {allBikesArr?.length == 0 ? (
+                      <p className={styles.not_found}>No results found.</p>
+                    ) : (
+                      renderBikeCards(allBikesArr)
+                    )}
+                  </div>
+                )}
               </div>
             </Box>
           </Grid>

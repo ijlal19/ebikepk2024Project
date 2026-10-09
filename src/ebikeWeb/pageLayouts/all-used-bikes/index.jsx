@@ -105,6 +105,14 @@ function sortUsedBikeAds(bikes) {
     });
 }
 
+function splitFallbackAds(bikes) {
+    const ads = Array.isArray(bikes) ? bikes : [];
+    return {
+        modelYearOtherAds: ads.filter((ad) => ad?.isModelYearOtherAd),
+        usedBikeOtherAds: ads.filter((ad) => ad?.isUsedBikeOtherAd)
+    };
+}
+
 function formatUsedBikePrice(price) {
     const numericPrice = Number(price);
     return Number.isFinite(numericPrice) && numericPrice > 0
@@ -169,6 +177,7 @@ export default function AllUsedBike({
     const [showfilter, setshowfilter] = useState(false);
     const [IsLogin, setIsLogin] = useState('not_login');
     const [allBikesArr, setAllBikesArr] = useState(hasInitialUsedBikes ? sortUsedBikeAds(_allUsedBike.data) : []);
+    const [isFilterFailed, setIsFilterFailed] = useState(!!_allUsedBike?.isFilterFailed);
     const [SearchValue, setSearchValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
@@ -269,6 +278,7 @@ export default function AllUsedBike({
         }
 
         setInitialLoading(false)
+        setIsFilterFailed(!!res?.isFilterFailed)
         if (res?.data?.length > 0) {
             setCurrentPage(res?.currentPage)
             setAllBikesArr(sortUsedBikeAds(res?.data))
@@ -583,6 +593,7 @@ export default function AllUsedBike({
                 ...qualityUsedBikeRequest
             }
             const res = await getCustomBikeAd(obj)
+            setIsFilterFailed(!!res?.isFilterFailed)
 
             if (res && res?.data?.length > 0) {
                 setAllBikesArr(sortUsedBikeAds(res?.data))
@@ -615,6 +626,47 @@ export default function AllUsedBike({
         else {
             alert('Please Search Used Bike by (Brand , City , Years , CC)')
         }
+    }
+
+    const renderBikeCards = (bikes, indexOffset = 0) => {
+        return bikes.map((val, ind) => (
+            isGridSelected ?
+                GridCard(val, ind + indexOffset) :
+                longCard(val, ind + indexOffset)
+        ))
+    }
+
+    const renderFallbackSections = () => {
+        const { modelYearOtherAds, usedBikeOtherAds } = splitFallbackAds(allBikesArr);
+
+        if (modelYearOtherAds.length === 0 && usedBikeOtherAds.length === 0) {
+            return <p className={styles.not_found}>No results found.</p>
+        }
+
+        return (
+            <>
+                <div className={styles.fallback_notice}>
+                    <h2>Sorry, we could not find exact results for your search.</h2>
+                    <p>Showing more used bikes that may match what you are looking for.</p>
+                </div>
+                {modelYearOtherAds.length > 0 ? (
+                    <section className={styles.fallback_section}>
+                        <h2 className={styles.fallback_heading}>Similar model year ads</h2>
+                        <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                            {renderBikeCards(modelYearOtherAds)}
+                        </div>
+                    </section>
+                ) : null}
+                {usedBikeOtherAds.length > 0 ? (
+                    <section className={styles.fallback_section}>
+                        <h2 className={styles.fallback_heading}>Other used bikes</h2>
+                        <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                            {renderBikeCards(usedBikeOtherAds, modelYearOtherAds.length)}
+                        </div>
+                    </section>
+                ) : null}
+            </>
+        )
     }
 
     return (
@@ -692,6 +744,18 @@ export default function AllUsedBike({
                                                     CurrentPage={setCurrentPage}
                                                     TotalPage={setTotalPage}
                                                     SearchValue={SearchValue}
+                                                    updateResponseState={(res) => {
+                                                        setIsFilterFailed(!!res?.isFilterFailed)
+                                                        if (res?.data?.length > 0) {
+                                                            setAllBikesArr(sortUsedBikeAds(res?.data))
+                                                            setCurrentPage(res?.currentPage)
+                                                            setTotalPage(res?.pages)
+                                                        } else {
+                                                            setAllBikesArr([])
+                                                            setCurrentPage(1)
+                                                            setTotalPage(0)
+                                                        }
+                                                    }}
                                                 />
                                             </Box>
                                             : '' :
@@ -703,6 +767,18 @@ export default function AllUsedBike({
                                                 CurrentPage={setCurrentPage}
                                                 TotalPage={setTotalPage}
                                                 SearchValue={SearchValue}
+                                                updateResponseState={(res) => {
+                                                    setIsFilterFailed(!!res?.isFilterFailed)
+                                                    if (res?.data?.length > 0) {
+                                                        setAllBikesArr(sortUsedBikeAds(res?.data))
+                                                        setCurrentPage(res?.currentPage)
+                                                        setTotalPage(res?.pages)
+                                                    } else {
+                                                        setAllBikesArr([])
+                                                        setCurrentPage(1)
+                                                        setTotalPage(0)
+                                                    }
+                                                }}
                                             />
                                         </Box>
                                 }
@@ -747,35 +823,16 @@ export default function AllUsedBike({
                                                 </div>
                                             </div>
                                         </div>
-                                        {
-                                            !SearchApply ?
-                                                (
-                                                    <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                                                        {
-                                                            allBikesArr.map((val, ind) => {
-                                                                return (
-                                                                    isGridSelected ?
-                                                                        GridCard(val, ind)
-                                                                        :
-                                                                        longCard(val, ind)
-                                                                )
-                                                            })
-
-                                                        } </div>)
-                                                :
-                                                (<div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
-                                                    {allBikesArr?.length == 0 ?
-                                                        <p className={styles.not_found}>No results found.</p> :
-                                                        allBikesArr.map((val, ind) => {
-                                                            return (
-                                                                isGridSelected ? 
-                                                                GridCard(val, ind) : 
-                                                                longCard(val, ind) 
-                                                            )
-                                                        })
-                                                    }
-                                                </div>)
-                                        }
+                                        {isFilterFailed ? (
+                                            renderFallbackSections()
+                                        ) : (
+                                            <div className={`${isGridSelected ? styles.grid_bike_list : ""} ${!isGridSelected ? styles.bike_ad_list : ""} `}>
+                                                {SearchApply && allBikesArr?.length == 0 ?
+                                                    <p className={styles.not_found}>No results found.</p> :
+                                                    renderBikeCards(allBikesArr)
+                                                }
+                                            </div>
+                                        )}
                                     </div>
                                 </Box>
                             </Grid>

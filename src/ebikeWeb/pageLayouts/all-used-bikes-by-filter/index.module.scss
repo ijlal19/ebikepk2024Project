@@ -152,6 +152,57 @@
             padding: 0px 0px !important;
           }
 
+          .fallback_section {
+            margin-bottom: 22px;
+          }
+
+          .fallback_notice {
+            background: white;
+            border: 1px solid #e6e6e6;
+            padding: 34px 32px;
+            margin: 0px 0px 26px;
+            text-align: center;
+
+            h2 {
+              color: #1f2d4d;
+              font-size: 24px;
+              font-weight: 700;
+              margin: 0px 0px 12px;
+            }
+
+            p {
+              color: #3f3f3f;
+              font-size: 17px;
+              margin: 0px;
+            }
+
+            @media (max-width:600px) {
+              padding: 24px 16px;
+              margin-bottom: 20px;
+
+              h2 {
+                font-size: 18px;
+              }
+
+              p {
+                font-size: 14px;
+              }
+            }
+          }
+
+          .fallback_heading {
+            color: $black;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 10px 0px 14px;
+
+            @media (max-width:600px) {
+              font-size: 17px;
+              margin: 8px 0px 12px;
+              padding-left: 4px;
+            }
+          }
+
           .navigation {
             max-width: 800px;
             height: 30px;
