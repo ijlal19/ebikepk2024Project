@@ -44,9 +44,6 @@ function Filters({ props, mainCategoryData }: any) {
       setProductCompanyData(res);
       setCompanyData(res);
       setIsLoading(false);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 1000);
     }
   };
 

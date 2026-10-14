@@ -169,12 +169,17 @@ function Filters(props: any , {updateData}:any) {
 
   async function fetchedFilterData(_page: any) {
     setIsLoading(true)
+    const selectedFilters = {
+      "city_filter": selectedCity,
+      "brand_filter": selectedBrand,
+      "years_filter": selectedYear,
+      "cc": selectedCC
+    }
+    props.updateSelectedFilters?.(selectedFilters)
+
     if (selectedBrand.length > 0 || selectedCC.length > 0 || selectedCity.length > 0 || selectedYear.length > 0 || props.SearchValue !== "") {
       let obj = {
-        "city_filter": selectedCity,
-        "brand_filter": selectedBrand,
-        "years_filter": selectedYear,
-        "cc": selectedCC,
+        ...selectedFilters,
         "page": _page,
         "adslimit": 12,
         "search": props.SearchValue == "" ? '' : props.SearchValue,
@@ -194,13 +199,11 @@ function Filters(props: any , {updateData}:any) {
         props.TotalPage(res.pages)
       }
       setIsLoading(false)
-      window.scrollTo(0, 0)
     }
     else {
       props.fetchBikeInfo(1, true)
     }
     setIsLoading(false)
-    window.scrollTo(0, 0)
 
   }
 

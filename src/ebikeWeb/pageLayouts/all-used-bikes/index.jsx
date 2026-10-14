@@ -26,7 +26,7 @@ import { FavouriteAds } from "@/ebikeWeb/sharedComponents/featured_new_Card";
 import { Side_brands } from "@/ebikeWeb/sharedComponents/Letf-side-section/brand-section";
 import { List_Card } from "@/ebikeWeb/sharedComponents/NewSectionM/card";
 import AdSense from "@/ebikeWeb/sharedComponents/googleAdsense/adsense";
-// import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const AdsArray = [
     {
@@ -179,6 +179,12 @@ export default function AllUsedBike({
     const [allBikesArr, setAllBikesArr] = useState(hasInitialUsedBikes ? sortUsedBikeAds(_allUsedBike.data) : []);
     const [isFilterFailed, setIsFilterFailed] = useState(!!_allUsedBike?.isFilterFailed);
     const [SearchValue, setSearchValue] = useState('');
+    const [activeFilters, setActiveFilters] = useState({
+        city_filter: [],
+        brand_filter: [],
+        years_filter: [],
+        cc: []
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(_allUsedBike?.currentPage || 1);
     const [totalPage, setTotalPage] = useState(_allUsedBike?.pages || null);
@@ -195,7 +201,11 @@ export default function AllUsedBike({
             ? 8.2
             : 6.7;
 
-    // const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
+    const hasActiveFilters = activeFilters.city_filter.length > 0
+        || activeFilters.brand_filter.length > 0
+        || activeFilters.years_filter.length > 0
+        || activeFilters.cc.length > 0;
 
     useEffect(() => {
 
@@ -251,12 +261,62 @@ export default function AllUsedBike({
     }
 
     const handlePaginationChange = async (event, page) => {
-        if (SearchApply) {
+        if (hasActiveFilters) {
+            fetchFilteredBikeInfo(page)
+        }
+        else if (SearchApply) {
             handleSearch(page)
         }
         else {
             fetchBikeInfo(page, true)
         }
+    }
+
+    const getPaginationHref = (page) => {
+        const params = new URLSearchParams(searchParams?.toString() || '');
+
+        if (page > 1) {
+            params.set('page', page);
+        }
+        else {
+            params.delete('page');
+        }
+
+        const queryString = params.toString();
+        return queryString ? `/used-bikes?${queryString}` : '/used-bikes';
+    }
+
+    async function fetchFilteredBikeInfo(_pageNo) {
+        setIsLoading(true)
+        const obj = {
+            ...activeFilters,
+            page: _pageNo,
+            adslimit: 12,
+            search: SearchValue == "" ? '' : SearchValue,
+            ...qualityUsedBikeRequest
+        }
+
+        const res = await getCustomBikeAd(obj)
+        setIsFilterFailed(!!res?.isFilterFailed)
+
+        if (res?.data?.length > 0) {
+            setAllBikesArr(sortUsedBikeAds(res?.data))
+            setCurrentPage(res?.currentPage)
+            setTotalPage(res?.pages)
+        }
+        else {
+            setAllBikesArr([])
+            setCurrentPage(1)
+            setTotalPage(0)
+        }
+
+        setIsLoading(false)
+        setTimeout(() => {
+            window.scrollTo({
+                top: GetScroll || 0,
+                behavior: 'smooth'
+            });
+        }, 500);
     }
 
     async function fetchBikeInfo(_pageNo, fromPagination) {
@@ -579,7 +639,6 @@ export default function AllUsedBike({
 
     const filtershow = () => {
         setshowfilter(!showfilter);
-        window.scrollTo(0, 0);
     }
 
     const handleSearch = async (_page, query) => {
@@ -744,6 +803,7 @@ export default function AllUsedBike({
                                                     CurrentPage={setCurrentPage}
                                                     TotalPage={setTotalPage}
                                                     SearchValue={SearchValue}
+                                                    updateSelectedFilters={setActiveFilters}
                                                     updateResponseState={(res) => {
                                                         setIsFilterFailed(!!res?.isFilterFailed)
                                                         if (res?.data?.length > 0) {
@@ -767,6 +827,7 @@ export default function AllUsedBike({
                                                 CurrentPage={setCurrentPage}
                                                 TotalPage={setTotalPage}
                                                 SearchValue={SearchValue}
+                                                updateSelectedFilters={setActiveFilters}
                                                 updateResponseState={(res) => {
                                                     setIsFilterFailed(!!res?.isFilterFailed)
                                                     if (res?.data?.length > 0) {
@@ -897,13 +958,13 @@ export default function AllUsedBike({
                             <Box className={styles.used_bike_list_pagination}>
                                 <Pagination
                                     count={totalPage}
-                                    onChange={SearchApply ? handlePaginationChange : undefined}
+                                    onChange={SearchApply || hasActiveFilters ? handlePaginationChange : undefined}
                                     page={currentPage}
-                                    renderItem={(item) => item.page && !SearchApply ? (
+                                    renderItem={(item) => item.page && !SearchApply && !hasActiveFilters ? (
                                         <PaginationItem
                                             {...item}
                                             component="a"
-                                            href={item.page > 1 ? `/used-bikes?page=${item.page}` : '/used-bikes'}
+                                            href={getPaginationHref(item.page)}
                                         />
                                     ) : (
                                         <PaginationItem {...item} />

@@ -723,7 +723,6 @@ const AllUsedBikeByFilter = ({
 
     const filtershow = () => {
         setshowfilter(!showfilter);
-        window.scrollTo(0, 0);
     }
 
     const AddFavourite = async (id) => {

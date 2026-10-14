@@ -375,7 +375,6 @@ export default function AllCertifiedBikes() {
 
     const filtershow = () => {
         setshowfilter(!showfilter);
-        window.scrollTo(0, 0);
     }
 
     return (
