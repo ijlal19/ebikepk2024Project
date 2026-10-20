@@ -10,6 +10,7 @@ import { isLoginUser } from "@/genericFunctions/geneFunc";
 import { useParams, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import StarIcon from '@mui/icons-material/Star';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import styles from './index.module.scss';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -362,11 +363,17 @@ export default function NewBikeBrand({ _responsedetails }: NewBikeDetailsCompPro
 
                           {/* BIKE INFORMATION BOX */}
                           <Box className={styles.bike_information_grid1}>
+                            {e?.bike?.description && <section className={styles.overviewCard} aria-label="Bike overview">
+                              <div className={styles.overviewHeader}>
+                                <ArticleOutlinedIcon />
+                                <h2>Bike Overview</h2>
+                              </div>
                             <Typography
                               component="div"
                               className={styles.desc}
                               dangerouslySetInnerHTML={{ __html: e?.bike?.description }}
                             />
+                            </section>}
 
                             <Box className={styles.information_table}>
                               <Grid container>

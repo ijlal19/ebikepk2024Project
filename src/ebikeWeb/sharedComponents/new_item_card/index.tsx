@@ -20,8 +20,8 @@ const NewCard = ({ props }: any) => {
                     <Link href={getBlogUrl(props)} className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 25 : 60)}</Link>
                     <p className={styles.author}>By <span className={styles.name}>{props?.authorname}</span></p>
                     <p className={styles.description}>{add3Dots(props?.meta_description, isMobile ? 40 : 80)}</p>
-                    <Link href='/blog' className={styles.link}>
-                        View All
+                    <Link href={getBlogUrl(props)} className={styles.link}>
+                        Read more
                     </Link>
                 </div>
             </div>

@@ -42,62 +42,107 @@
                 }
             }
 
+            .overviewCard {
+                margin: 12px 0 24px;
+                overflow: hidden;
+                border: 1px solid #e3eaf2;
+                border-radius: 14px;
+                background: #fff;
+                box-shadow: 0 3px 14px rgba(28, 52, 84, .04);
+            }
+
+            .overviewHeader {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 16px 24px;
+                border-bottom: 1px solid #e3eaf2;
+                background: #f7faff;
+                color: #1976d2;
+
+                svg { font-size: 22px; }
+                h2 { margin: 0; color: #223b59; font-size: 16px; font-weight: 700; }
+            }
+
             .desc {
-                padding: 10px;
-                margin: 10px 0px;
-                color: #000;
-                font-size: 15px;
-                line-height: 1.7;
+                padding: 24px !important;
+                margin: 0;
+                color: #4b5c70;
+                font-size: 14px;
+                line-height: 1.85;
                 text-align: left;
                 overflow-wrap: anywhere;
-                word-break: break-word;
 
-                @media (max-width:768px) {
-                    padding: 8px 4px;
-                    margin: 8px 0px;
-                    font-size: 14px;
-                    line-height: 1.65;
-                }
-
-                p,
-                span,
-                li,
-                a {
-                    font-size: inherit !important;
+                // Keep editor formatting consistent with the detail page.
+                :global(*) {
+                    font-family: inherit !important;
                     line-height: inherit !important;
+                    max-width: 100%;
                 }
 
-                p,
-                ul,
-                ol,
-                h1,
-                h2,
-                h3,
-                h4,
-                h5,
-                h6 {
-                    margin-top: 0px;
-                    margin-bottom: 12px;
+                p, span, li, a, div, strong, b, em {
+                    font-size: inherit !important;
                 }
 
-                ul,
-                ol {
-                    padding-left: 20px;
+                p, ul, ol, blockquote {
+                    margin: 0 0 16px !important;
                 }
 
-                img,
-                iframe,
-                video {
+                h1, h2, h3, h4, h5, h6 {
+                    margin: 28px 0 12px !important;
+                    color: #223b59 !important;
+                    font-weight: 700;
+                    line-height: 1.45 !important;
+                    text-align: left !important;
+                }
+
+                h1, h2 { font-size: 20px !important; }
+                h3 { font-size: 18px !important; }
+                h4, h5, h6 { font-size: 16px !important; }
+                > :first-child { margin-top: 0 !important; }
+                > :last-child { margin-bottom: 0 !important; }
+                strong, b { color: #2d4058; font-weight: 700; }
+                ul, ol { padding-left: 22px !important; }
+                li { padding-left: 4px; margin-bottom: 8px; }
+                li::marker { color: #1976d2; }
+                li p { margin-bottom: 6px !important; }
+                a { color: #1976d2; text-underline-offset: 3px; }
+                blockquote {
+                    padding: 14px 18px;
+                    border-left: 3px solid #1976d2;
+                    border-radius: 0 8px 8px 0;
+                    background: #f5f9ff;
+                }
+                hr { border: 0; border-top: 1px solid #e3eaf2; margin: 24px 0; }
+
+                img, iframe, video {
                     max-width: 100% !important;
-                    height: auto !important;
                     display: block;
+                    border-radius: 8px;
+                    margin: 16px auto;
                 }
+                img, video { height: auto !important; }
+                iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
 
                 table {
                     width: 100% !important;
                     max-width: 100% !important;
                     display: block;
                     overflow-x: auto;
+                    border-collapse: collapse;
+                    margin: 16px 0;
+                    font-size: 13px;
+                }
+                th, td { padding: 10px 12px; border: 1px solid #e3eaf2; text-align: left; }
+                th { background: #f0f6fd; color: #223b59; }
+                tr:nth-child(even) { background: #f8fafc; }
+
+                @media (max-width:768px) {
+                    padding: 18px 16px !important;
+                    font-size: 13px;
+                    line-height: 1.8;
+                    h1, h2 { font-size: 18px !important; }
+                    h3 { font-size: 16px !important; }
                 }
             }
 

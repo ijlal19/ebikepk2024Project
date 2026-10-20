@@ -4,6 +4,34 @@
     background-color: whitesmoke;
 }
 
+.warning_container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 24px;
+}
+
+.old_ad_warning {
+    box-sizing: border-box;
+    // Match the combined visible width of the detail card and seller sidebar.
+    width: calc(45% + 350px);
+    max-width: calc(100% - 60px);
+    margin: 0 auto;
+    padding: 14px 16px;
+    border: 1px solid #ffe69c;
+    border-radius: 6px;
+    background-color: #fff3cd;
+    color: #664d03;
+    font-size: 14px;
+    line-height: 1.5;
+
+    @media (max-width: 767px) {
+        width: 95%;
+        max-width: none;
+        margin-bottom: 18px;
+    }
+}
+
 .main_container {
     min-height: 50vh;
     width: 100%;

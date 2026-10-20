@@ -1,419 +1,176 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Button, CircularProgress } from '@mui/material'
 import {
-  Box,
-  Typography,
-  Button,
-  Pagination,
-  CircularProgress,
-  useMediaQuery
-} from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search'
+  Search, ArrowForward, TwoWheelerOutlined, SellOutlined,
+  ArticleOutlined, StorefrontOutlined, BuildOutlined, SearchOff,
+  PhoneOutlined, ChevronRight, HomeOutlined, Refresh,
+} from '@mui/icons-material'
 import { useRouter, useSearchParams } from 'next/navigation'
 import styles from './index.module.scss'
-import AdSense from '@/ebikeWeb/sharedComponents/googleAdsense/adsense'
-import { postSearch, postSearchNew } from '@/genericFunctions/geneFunc'
-import { add3Dots, priceWithCommas, cloudinaryLoader } from "@/genericFunctions/geneFunc";
-import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
+import { postSearchNew, formatUsedBikePrice, cloudinaryLoader } from '@/genericFunctions/geneFunc'
+import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility'
+import { buildBlogPath } from '@/app/metadata-utils'
 
-/* ---------------------------------------------
-   Types (optional but recommended)
----------------------------------------------- */
-type SectionKey =
-  | 'used_bikes'
-  | 'new_bikes'
-  | 'blogs'
-  | 'dealers'
-  | 'mechanics'
-
+type SectionKey = 'used_bikes' | 'new_bikes' | 'blogs' | 'dealers' | 'mechanics'
+type Category = 'all' | SectionKey
 const PAGE_LIMIT = 10
+const EBikeLogo = 'https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,f_auto,q_auto,w_180/v1727251053/Untitled-2_gsuasa.png'
+const sections = [
+  { key: 'used_bikes', title: 'Used Bikes', description: 'Explore pre-owned bikes from sellers across Pakistan.', icon: SellOutlined, url: '/used-bikes' },
+  { key: 'new_bikes', title: 'New Bikes', description: 'Compare models, prices and specifications.', icon: TwoWheelerOutlined, url: '/new-bikes' },
+  { key: 'blogs', title: 'Articles & News', description: 'The latest stories, guides and updates for riders.', icon: ArticleOutlined, url: '/blog' },
+  { key: 'dealers', title: 'Dealers', description: 'Find a showroom for your next bike.', icon: StorefrontOutlined, url: '/dealers' },
+  { key: 'mechanics', title: 'Mechanics', description: 'Discover workshops and bike service providers.', icon: BuildOutlined, url: '/mechanics' },
+] as const
+
+const slugify = (value: string) => String(value || '').trim().toLowerCase().replace(/\s+/g, '-')
 
 export default function SearchPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-
-  const queryFromUrl = searchParams.get('query') || ''
-
+  const queryFromUrl = (searchParams.get('query') || '').trim()
   const [query, setQuery] = useState(queryFromUrl)
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(Boolean(queryFromUrl))
   const [results, setResults] = useState<any>(null)
+  const [category, setCategory] = useState<Category>('all')
+  const [error, setError] = useState(false)
+  const [retry, setRetry] = useState(0)
 
-  const [pages, setPages] = useState<Record<SectionKey, number>>({
-    used_bikes: 1,
-    new_bikes: 1,
-    blogs: 1,
-    dealers: 1,
-    mechanics: 1
-  })
-
-  const isMobile = useMediaQuery('(max-width:768px)');
-
-  /* ---------------------------------------------
-     Fetch Search Results
-  ---------------------------------------------- */
-  const fetchSearch = async () => {
-    if (!query.trim()) return
-
-    setLoading(true)
-
-    const payload = {
-      search: query,
-      page: 1,
-      limit: PAGE_LIMIT
+  useEffect(() => {
+    let cancelled = false
+    setQuery(queryFromUrl)
+    setCategory('all')
+    setResults(null)
+    setError(false)
+    if (!queryFromUrl) {
+      setLoading(false)
+      return
     }
-
-    const res = await postSearchNew(payload)
-    const nextResults = res?.results || null
-
-    if (nextResults?.blogs) {
-      const visibleBlogs = filterVisibleBlogs(nextResults.blogs.data)
-      nextResults.blogs = {
-        ...nextResults.blogs,
-        data: visibleBlogs,
-        total: visibleBlogs.length
+    setLoading(true)
+    const fetchResults = async () => {
+      try {
+        const response = await postSearchNew({ search: queryFromUrl, page: 1, limit: PAGE_LIMIT })
+        if (cancelled) return
+        if (!response?.results) throw new Error('Search unavailable')
+        const nextResults = { ...response.results }
+        if (nextResults.blogs) {
+          const visibleBlogs = filterVisibleBlogs(nextResults.blogs.data)
+          nextResults.blogs = { ...nextResults.blogs, data: visibleBlogs, total: visibleBlogs.length }
+        }
+        setResults(nextResults)
+      } catch {
+        if (!cancelled) setError(true)
+      } finally {
+        if (!cancelled) setLoading(false)
       }
     }
+    fetchResults()
+    return () => { cancelled = true }
+  }, [queryFromUrl, retry])
 
-    setResults(nextResults)
-    setLoading(false)
-
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  const handleSearch = (event: React.FormEvent) => {
+    event.preventDefault()
+    const term = query.trim()
+    if (!term) return
+    if (term === queryFromUrl) setRetry(value => value + 1)
+    else router.push(`/search?query=${encodeURIComponent(term)}`)
   }
 
-  /* ---------------------------------------------
-     On URL Query Change
-  ---------------------------------------------- */
-  useEffect(() => {
-    if (queryFromUrl) {
-      setQuery(queryFromUrl)
-      fetchSearch()
-    }
-  }, [queryFromUrl])
+  const getCount = (key: SectionKey) => Number(results?.[key]?.total) || 0
+  const total = sections.reduce((sum, section) => sum + getCount(section.key), 0)
+  const availableSections = sections.filter(section => getCount(section.key) > 0)
 
-  /* ---------------------------------------------
-     Submit Search
-  ---------------------------------------------- */
-  const handleSearch = () => {
-    if (!query.trim()) return
-
-    router.push(`/search?query=${encodeURIComponent(query)}`)
-  }
-
-  /* ---------------------------------------------
-     Helpers
-  ---------------------------------------------- */
-  const hasAnyResult =
-    results &&
-    Object.values(results).some((section: any) => section?.total > 0)
-
-  /* ---------------------------------------------
-     Renderers
-  ---------------------------------------------- */
-
-  const handleBlogRoute = (blogInfo: any) => {
-    var title = blogInfo.blogTitle;
-    title = title.replace(/\s+/g, '-');
-    var lowerTitle = title.toLowerCase();
-    lowerTitle = '' + lowerTitle.replaceAll("?", "")
-    router.push(`/blog/${'general'}/${lowerTitle}/${blogInfo.id}`);
-  };
-
-  function dealerDetailPage(bike: any) {
-    var shop_name = bike.shop_name;
-    shop_name = shop_name.replace(/\s+/g, '-');
-    var lowerTitle = shop_name.toLowerCase();
-    router.push(`/dealers/${lowerTitle}/${bike.id}`)
-  }
-
-  function mechanicToDetailPage(bike: any) {
-      var shop_name = bike.shop_name;
-      shop_name = shop_name.replace(/\s+/g, '-');
-      var lowerTitle = shop_name.toLowerCase();
-      router.push(`/mechanics/${lowerTitle}/${bike.id}`)
-      // return `/mechanics/${lowerTitle}/${bike.id}`
-  }
-
-
-  let ebike_logo = "https://res.cloudinary.com/dzfd4phly/image/upload/v1727251053/Untitled-2_gsuasa.png"
-
-  const Section = ({
-    title,
-    sectionKey,
-    renderItem,
-    viewAllUrl
-  }: {
-    title: string
-    sectionKey: SectionKey
-    renderItem: (item: any) => React.ReactNode
-    viewAllUrl: string
-  }) => {
-    const section = results?.[sectionKey]
-
-    if (!section || section.total === 0) return null
-
-    const totalPages = Math.ceil(section.total / PAGE_LIMIT)
+  const renderCard = (item: any, sectionKey: SectionKey) => {
+    const isBike = sectionKey === 'used_bikes' || sectionKey === 'new_bikes'
+    const isService = sectionKey === 'dealers' || sectionKey === 'mechanics'
+    const title = isBike ? item.title : isService ? item.shop_name : item.blogTitle
+    const url = sectionKey === 'used_bikes'
+      ? `/used-bikes/${slugify(item.title)}/${item.id}`
+      : sectionKey === 'new_bikes'
+        ? `/new-bikes/${item.bike_brand?.brandName}/${item.bikeUrl || slugify(item.title)}/${item.id}`
+        : sectionKey === 'blogs'
+          ? buildBlogPath(item)
+          : `/${sectionKey}/${slugify(item.shop_name)}/${item.id}`
+    const image = isBike ? item.images?.[0] || item.img_url
+      : isService ? item.bike_brand?.logoUrl
+        : item.featuredImage?.split('#$#')[0]?.trim()
+    const label = sectionKey === 'used_bikes' ? 'Used Bike' : sectionKey === 'new_bikes' ? 'New Bike'
+      : sectionKey === 'blogs' ? 'Article' : sectionKey === 'dealers' ? 'Dealer' : 'Mechanic'
 
     return (
-      <Box className={styles.section}>
-        <Box className={styles.sectionHeader}>
-          <Typography variant="h5">{title}</Typography>
-          <Button onClick={() => router.push(viewAllUrl)}>View All</Button>
-        </Box>
-
-        <Box className={styles.grid}>
-          {section.data.map((item: any) => renderItem(item))}
-        </Box>
-
-        {/* {totalPages > 1 && (
-          <Pagination
-            className={styles.pagination}
-            count={totalPages}
-            page={pages[sectionKey]}
-            onChange={(_, page) =>
-              setPages(prev => ({ ...prev, [sectionKey]: page }))
-            }
-          />
-        )} */}
-      </Box>
+      <Link href={url} key={item.id} className={styles.card}>
+        <div className={`${styles.imgWrap} ${sectionKey === 'new_bikes' || isService ? styles.containImage : ''}`}>
+          <img src={image ? cloudinaryLoader(image, 480, 'auto') : EBikeLogo} alt={title || label} loading="lazy" onError={event => { if (event.currentTarget.src !== EBikeLogo) event.currentTarget.src = EBikeLogo }} />
+          <span className={`${styles.tag} ${styles[sectionKey]}`}>{label}</span>
+        </div>
+        <div className={styles.cardBody}>
+          <h3 className={styles.cardTitle}>{title}</h3>
+          {isBike && <p className={styles.price}>{formatUsedBikePrice(item.price)}</p>}
+          {sectionKey === 'blogs' && item.authorname && <p className={styles.subText}>By {item.authorname}</p>}
+          {isService && item.phone && <p className={styles.subText}><PhoneOutlined />{item.phone}</p>}
+          <span className={styles.cardAction}>{sectionKey === 'blogs' ? 'Read more' : 'View details'}<ArrowForward /></span>
+        </div>
+      </Link>
     )
   }
 
-  /* ---------------------------------------------
-     JSX
-  ---------------------------------------------- */
   return (
-    <Box className={styles.main}>
-      {/* Search Bar */}
-      <Box className={styles.searchBar}>
-        <input
-          placeholder="Search bikes, blogs, dealers…"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && handleSearch()}
-        />
-        <Button onClick={handleSearch}>
-          <SearchIcon />
-        </Button>
-      </Box>
+    <div className={styles.page}>
+      <div className={styles.main}>
+        <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+          <Link href="/"><HomeOutlined />Home</Link><ChevronRight /><span aria-current="page">Search</span>
+        </nav>
 
-      <Box className={styles.contentWrap}>
-        <Box className={styles.resultsColumn}>
-          {/* Loader */}
-          {loading && (
-            <Box className={styles.loader}>
-              <CircularProgress />
-            </Box>
-          )}
+        <section className={styles.hero} aria-labelledby="search-title">
+          <div className={styles.heroHeading}>
+            <div><p className={styles.eyebrow}>EXPLORE EBIKE.PK</p><h1 id="search-title">Find your next ride & more</h1>
+              <p className={styles.heroIntro}>Search bikes, expert articles, dealers and mechanics in one place.</p></div>
+            <span className={styles.heroIcon} aria-hidden="true"><Search /></span>
+          </div>
+          <form className={styles.searchBar} onSubmit={handleSearch} role="search">
+            <Search className={styles.inputIcon} />
+            <input aria-label="Search bikes, articles, dealers and mechanics" placeholder="What are you looking for?" value={query} onChange={event => setQuery(event.target.value)} />
+            <Button type="submit" disabled={!query.trim()}><Search /><span>Search</span></Button>
+          </form>
+        </section>
 
-          {/* No Results */}
-          {!loading && query && !hasAnyResult && (
-            <Typography className={styles.noResult}>
-              No results found for “{query}”
-            </Typography>
-          )}
+        {!loading && !error && total > 0 && (
+          <>
+            <div className={styles.resultSummary} aria-live="polite"><h2>Results for <span>“{queryFromUrl}”</span></h2><p>{total.toLocaleString()} {total === 1 ? 'result' : 'results'} across {availableSections.length} {availableSections.length === 1 ? 'category' : 'categories'}</p></div>
+            <div className={styles.filters} aria-label="Filter search results">
+              <button aria-pressed={category === 'all'} className={category === 'all' ? styles.selected : ''} onClick={() => setCategory('all')}>All results<span>{total.toLocaleString()}</span></button>
+              {availableSections.map(section => {
+                const Icon = section.icon
+                return <button key={section.key} aria-pressed={category === section.key} className={category === section.key ? styles.selected : ''} onClick={() => setCategory(section.key)}><Icon />{section.title}<span>{getCount(section.key).toLocaleString()}</span></button>
+              })}
+            </div>
+          </>
+        )}
 
-          {/* Results */}
-          {!loading && results && (
-            <>
-              {/* Used Bikes */}
-              <Section
-                title="Used Bikes"
-                sectionKey="used_bikes"
-                viewAllUrl={`/used-bikes`}
-                renderItem={(bike: any) => (
-                  <Box
-                    key={bike.id}
-                    className={styles.card}
-                    // onClick={() =>
-                    //   router.push(
-                    //     `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
-                    //   )
-                    // }
-                  >
-                    <Box className={styles.imgWrap}>
-                      <img src={cloudinaryLoader(bike.images?.[0], 360, 'auto')} alt={bike.title} />
-                      <span className={`${styles.tag} ${styles.tagUsed}`}>Used</span>
-                    </Box>
+        <div className={styles.contentWrap}>
+          <div className={styles.resultsColumn} aria-busy={loading}>
+            {loading && <div className={styles.emptyState} role="status"><CircularProgress size={32} /><h2>Finding your matches</h2><p>Searching bikes, articles and local services…</p></div>}
+            {!loading && error && <div className={styles.emptyState} role="alert"><SearchOff /><h2>Search is unavailable</h2><p>We couldn’t load your results. Please try again.</p><Button onClick={() => setRetry(value => value + 1)} startIcon={<Refresh />}>Try again</Button></div>}
+            {!loading && !error && total === 0 && <div className={styles.emptyState}><SearchOff /><h2>{queryFromUrl ? `No matches for “${queryFromUrl}”` : 'Your next ride starts here'}</h2><p>{queryFromUrl ? 'Try a different spelling, a bike model or a broader search term.' : 'Enter a brand, model or keyword to explore ebike.pk.'}</p><div className={styles.suggestions}>{['Honda', 'Yamaha', 'Suzuki'].map(term => <Link key={term} href={`/search?query=${term}`}><Search />{term}</Link>)}</div></div>}
+            {!loading && !error && availableSections.filter(section => category === 'all' || category === section.key).map(section => {
+              const Icon = section.icon
+              return (
+                <section key={section.key} className={styles.section} aria-labelledby={`results-${section.key}`}>
+                  <div className={styles.sectionHeader}>
+                    <div className={styles.sectionHeading}><span className={styles.sectionIcon}><Icon /></span><div><h2 id={`results-${section.key}`}>{section.title}<span>{getCount(section.key).toLocaleString()}</span></h2><p>{section.description}</p></div></div>
+                    <Link href={section.url} className={styles.viewAll}>View all<ArrowForward /></Link>
+                  </div>
+                  <div className={styles.grid}>{(results?.[section.key]?.data || []).map((item: any) => renderCard(item, section.key))}</div>
+                </section>
+              )
+            })}
+          </div>
 
-                    <Box className={styles.cardBody}>
-                      <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
-
-                      <Box className={styles.metaRow}>
-                        <Typography className={styles.price}>
-                          PKR {priceWithCommas(bike.price)}
-                        </Typography>
-                      </Box>
-
-                      <Box className={styles.cardActions} onClick={(e) => e.stopPropagation()}>
-                        <Button
-                          className={styles.btnPrimary}
-                          onClick={() =>
-                            router.push(
-                              `/used-bikes/${bike.title.toLowerCase().replaceAll(' ', '-')}/${bike.id}`
-                            )
-                          }
-                        >
-                          View Details
-                        </Button>
-
-                        {/* <Button
-                          className={styles.btnGhost}
-                          onClick={() => router.push(`/used-bikes`)}
-                        >
-                          More Used
-                        </Button> */}
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-
-              />
-
-              {/* New Bikes */}
-              <Section
-                title="New Bikes"
-                sectionKey="new_bikes"
-                viewAllUrl={`/new-bikes`}
-                renderItem={(bike: any) => (
-                  <Box key={bike.id} className={styles.card}>
-                    <Box className={styles.imgWrap}>
-                      <img src={cloudinaryLoader(bike.images?.[0], 360, 'auto')} alt={bike.title} />
-                      <span className={`${styles.tag} ${styles.tagNew}`}>New</span>
-                    </Box>
-
-                    <Box className={styles.cardBody}>
-                      <Typography className={styles.cardTitle}>{add3Dots(bike.title, isMobile ? "15" : "25")}</Typography>
-
-                      <Box className={styles.metaRow}>
-                        <Typography className={styles.price}>
-                          PKR {priceWithCommas(bike.price)}
-                        </Typography>
-                      </Box>
-
-                      <Box className={styles.cardActions}>
-                        <Button className={styles.btnPrimary} onClick={() =>  router.push(`/new-bikes/${bike?.bike_brand?.brandName}/${bike?.bikeUrl}/${bike.id}`)}>
-                          View Details
-                        </Button>
-                        {/* <Button className={styles.btnGhost} onClick={() => router.push(`/new-bikes`)}>
-                          Compare
-                        </Button> */}
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-              />
-
-              {/* Blogs */}
-              <Section
-                title="Blogs"
-                sectionKey="blogs"
-                viewAllUrl={`/blog`}
-                renderItem={(blog: any) => (
-                  <Box key={blog.id} className={styles.card}>
-                    <Box className={styles.imgWrap}>
-                      <img
-                        src={cloudinaryLoader(blog.featuredImage?.split('#$#')[0]?.trim(), 360, 'auto')}
-                        alt={blog.blogTitle}
-                      />
-                      <span className={`${styles.tag} ${styles.tagBlog}`}>Blog</span>
-                    </Box>
-
-                    <Box className={styles.cardBody}>
-                      <Typography className={styles.cardTitle}>{add3Dots(blog.blogTitle, isMobile ? "20" : "25")}</Typography>
-                      <Typography className={`${styles.subText} mb-0 mt-0`} > Author : {blog.authorname} </Typography>
-                      <Box className={styles.cardActions}>
-                        <Button className={styles.btnPrimary} onClick={() => handleBlogRoute(blog)}>
-                          Read
-                        </Button>
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-
-              />
-
-              {/* Dealers */}
-              <Section
-                title="Dealers"
-                sectionKey="dealers"
-                viewAllUrl={`/dealers`}
-                renderItem={(d: any) => (
-                  <Box key={d.id} className={styles.card}>
-                    <Box className={styles.imgWrap}>
-                      <img src={ebike_logo} alt={d.shop_name} />
-                      <span className={`${styles.tag} ${styles.tagDealer}`}>Dealer</span>
-                    </Box>
-
-                    <Box className={styles.cardBody}>
-                      <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
-                      <Typography className={styles.subText}>{d.phone}</Typography>
-
-                      <Box className={styles.cardActions}>
-                        <Button
-                          className={styles.btnPrimary}
-                          onClick={() => dealerDetailPage(d) }
-                        >
-                          Details
-                        </Button>
-                      
-                      </Box>
-                    </Box>
-                  </Box>
-                )}
-
-              />
-
-              {/* Mechanics */}
-              <Section
-                title="Mechanics"
-                sectionKey="mechanics"
-                viewAllUrl={`/mechanics`}
-                renderItem={(d: any) => (
-                    <Box key={d.id} className={styles.card}>
-                      <Box className={styles.imgWrap}>
-                        <img src={ebike_logo} alt={d.shop_name} />
-                        <span className={`${styles.tag} ${styles.tagDealer}`}> mechanic </span>
-                      </Box>
-
-                      <Box className={styles.cardBody}>
-                        <Typography className={styles.cardTitle}>{add3Dots(d.shop_name, isMobile ? "15" : "25")}</Typography>
-                        <Typography className={styles.subText}>{d.phone}</Typography>
-
-                        <Box className={styles.cardActions}>
-                          <Button
-                            className={styles.btnPrimary}
-                            onClick={() => mechanicToDetailPage(d)}
-                          >
-                           Details
-                          </Button>
-                          {/* <Button className={styles.btnGhost} onClick={() => router.push(`/dealers`)}>
-                            View All
-                          </Button> */}
-                        </Box>
-                      </Box>
-                    </Box>
-                  )}
-
-              />
-            </>
-          )}
-        </Box>
-
-        <Box className={styles.sidebarColumn}>
-          <Box className={styles.sidebarInner}>
-            <AdSense
-              client="ca-pub-5167970563180610"
-              slot="9214599249"
-              format={null}
-              responsive={false}
-              style={{ margin: 0 }}
-              adStyle={{ display: 'inline-block', width: '300px', height: '600px' }}
-            />
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -1,23 +1,14 @@
 "use client"
-import { Box, Button, Link, List, Typography } from '@mui/material';
+import { Box, Button, Link } from '@mui/material';
 import { isLoginUser } from '../../../genericFunctions/geneFunc';
-import ListItemButton from '@mui/material/ListItemButton';
 import { usePathname, useRouter } from 'next/navigation';
-import ListItemText from '@mui/material/ListItemText';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useEffect, useState } from 'react';
-import LoginIcon from '@mui/icons-material/Login';
-import MechanicsList from './findMechanic/index';
 import MenuIcon from '@mui/icons-material/Menu';
-import ListItem from '@mui/material/ListItem';
-import DealerList from './findDealers/index';
 import LoginPopup from '../Loginpopup/login';
-import Divider from '@mui/material/Divider';
-import BuyandSell from './buyandsell/index';
-import { Label } from '@mui/icons-material';
-import MoreList from './moreOptions/index';
 import Drawer from '@mui/material/Drawer';
 import styles from './index.module.scss';
+import Sidebar from './Sidebar';
 import BottomBar from '@/ebikeWeb/sharedComponents/BottomBar/BottomBar'
 
 const jsCookie = require('js-cookie');
@@ -28,14 +19,10 @@ const Header = () => {
     const pathname = usePathname();
     const router = useRouter();
 
-    const [findMechanics, setFindMechanics] = useState(false);
-    const [buysellmenu, setBuySellmenu] = useState(false);
     const [customer, setCustomer] = useState('not_login');
     const [isUsedBike, setIsUserBike] = useState(false);
     const [IsEbikePanel, setIsEbikePanel] = useState(false);
-    const [findDealer, setFindDealer] = useState(false);
     const [openmodal, setOpenmodal] = useState(false);
-    const [options, setOptions] = useState(false);
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
 
@@ -96,32 +83,8 @@ const Header = () => {
         window.location.reload()
     }
 
-    function goToRoute(data: any) {
-        toggleDrawer(false)
-        setTimeout(() => {
-            router.push(data.url)
-        }, 500)
-    }
-
-    const toggle = (e: any) => {
-        if (e == 'buy&sell') {
-            setBuySellmenu(!buysellmenu);
-        }
-        else if (e == 'finddealer') {
-            setFindDealer(!findDealer);
-        }
-        else if (e == 'findmachenics') {
-            setFindMechanics(!findMechanics);
-        }
-        else if (e == 'moreoption') {
-            setOptions(!options);
-        }
-        else if (e == 'showloginpopup') {
-            setOpenmodal(!openmodal)
-        }
-        else {
-            setOpen(!open);
-        }
+    const toggle = (action: string) => {
+        if (action === 'showloginpopup') setOpenmodal(current => !current);
     };
 
     const toggleDrawer = (newOpen: boolean) => () => {
@@ -129,151 +92,11 @@ const Header = () => {
         setOpen(newOpen);
     };
 
-    const Optionmore = {
-        togglers: toggle,
-        toggleDrawers: toggleDrawer,
-        options: options,
-        customer: customer
-    }
-
-    const OptionBuySell = {
-        togglers: toggle,
-        open: open,
-        toggleDrawers: toggleDrawer,
-        options: buysellmenu,
-        title: 'Buy & Sell Bikes',
-        customer: customer
-    }
-
-    const OptionFindDealer = {
-        togglers: toggle,
-        open: open,
-        toggleDrawers: toggleDrawer,
-        options: findDealer,
-        title: 'Find Dealers',
-        customer: customer
-    }
-
-    const OptionFindMechanics = {
-        togglers: toggle,
-        open: open,
-        toggleDrawers: toggleDrawer,
-        options: findMechanics,
-        title: 'Find Mechanics',
-        customer: customer
-    }
     const ModalData = {
         showmodal: toggle,
         openmodal: openmodal,
         updateAfterLogin: authenticateUser
     }
-
-    const navlink = [
-        { label: 'New Bikes', url: '/new-bikes', isLoginReq: false },
-        { label: 'My Ads', url: '/my-ads', isLoginReq: false },
-        { label: 'Bikers Forum', url: '/forum', isLoginReq: false }
-    ]
-
-    const DrawerList = (
-        <>
-            <Box className={styles.drawer_main} sx={{width : 250}} role="presentation">
-                <Box className={styles.searc_drawer}>
-                <Box className={styles.search_box_inner}>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className={styles.search_input}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                    />
-                    <button className={styles.search_btn} onClick={handleSearch}>
-                        <SearchIcon />
-                    </button>
-                </Box>
-                </Box>
-                <List>
-                    <BuyandSell props={OptionBuySell} />
-                    <Divider />
-                    {
-                        navlink.map((e: any, i: any) => {
-
-                            if (e?.label == "My Adds" && customer == "not_login") return;
-
-                            return (
-                                !e.isLoginReq ?
-                                    <>
-                                        <Link className={styles.anchor} key={i} href={e.url}>
-                                            <ListItemButton sx={{ pl: 0, paddingTop: "0px", paddingBottom: "0px" }}>
-                                                <ListItemText style={{ marginLeft: "0px", marginTop: "0px", marginBottom: "0px" }} primary={e.label} />
-                                            </ListItemButton>
-                                        </Link>
-                                        <Divider />
-                                    </>
-                                    :
-                                    <>
-                                        <ListItemButton sx={{ pl: 0, paddingTop: "0px", paddingBottom: "0px" }} onClick={() => goToRoute(e)} key={i}>
-                                            <ListItemText style={{ marginLeft: "0px", marginTop: "0px", marginBottom: "0px" }} primary={e.label} />
-                                        </ListItemButton>
-                                        <Divider />
-                                    </>
-                            )
-                        })
-                    }
-
-                    <DealerList props={OptionFindDealer} />
-                    <Divider />
-
-                    <MechanicsList props={OptionFindMechanics} />
-                    <Divider />
-
-                    <Link href='/blog' className={styles.anchor}>
-                        <ListItem sx={{ padding: 0 }} disablePadding>
-                            <ListItemButton onClick={() => goToRoute({ url: "/blog" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
-                                <ListItemText primary='Blog' sx={{ marginTop: "0px", marginBottom: "0px" }} />
-                            </ListItemButton>
-                        </ListItem>
-                    </Link>
-                    <Divider />
-
-                    <Link href='/blog/news' className={styles.anchor}>
-                        <ListItem sx={{ padding: 0 }} disablePadding>
-                            <ListItemButton onClick={() => goToRoute({ url: "/blog/news" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
-                                <ListItemText primary='News' sx={{ marginTop: "0px", marginBottom: "0px" }} />
-                            </ListItemButton>
-                        </ListItem>
-                    </Link>
-                    <Divider />
-
-                    <Link href='/bike-videos' className={styles.anchor}>
-                        <ListItem sx={{ padding: 0 }} disablePadding>
-                            <ListItemButton onClick={() => goToRoute({ url: "/bike-videos" })} sx={{ paddingTop: "0px", paddingBottom: "0px" }} >
-                                <ListItemText primary='Bike Videos' sx={{ marginTop: "0px", marginBottom: "0px" }} />
-                            </ListItemButton>
-                        </ListItem>
-                    </Link>
-                    <Divider />
-
-                    <MoreList props={Optionmore} />
-                    <Divider />
-
-                    {customer == 'not_login' ?
-                        <LoginPopup
-                            props={ModalData}
-                            values={true}
-                        />
-                        : <></>}
-                </List>
-            </Box>
-
-            <Typography className={styles.downloadapp}>
-                Download Mobile App
-                <Box className={styles.download_image}>
-                    <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
-                </Box>
-            </Typography>
-        </>
-    );
 
     return (
         <>
@@ -285,11 +108,19 @@ const Header = () => {
                     </Button>
 
                     <Drawer
-                        className='header_drawer'
+                        PaperProps={{ sx: { borderRadius: '0 18px 18px 0' } }}
                         open={open}
                         onClose={toggleDrawer(false)}>
 
-                        {DrawerList}
+                        <Sidebar
+                            onClose={toggleDrawer(false)}
+                            onLogin={() => setOpenmodal(true)}
+                            onLogout={LogoutUser}
+                            loggedIn={customer !== 'not_login'}
+                            query={query}
+                            onQueryChange={setQuery}
+                            onSearch={handleSearch}
+                        />
 
                     </Drawer>
 

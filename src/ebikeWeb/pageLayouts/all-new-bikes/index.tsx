@@ -93,6 +93,9 @@ export default function AllNewBikes({ initialBrandData = [] }: { initialBrandDat
     ? `${brandname.charAt(0).toUpperCase()}${brandname.slice(1)}`
     : '';
   const plainDescription = stripHtml(desc);
+  const firstParagraph = desc.match(/<p\b[^>]*>[\s\S]*?<\/p>/gi)
+    ?.find(paragraph => stripHtml(paragraph).length > 0) || desc;
+  const hasMoreDescription = stripHtml(firstParagraph) !== plainDescription;
   const seoParagraph = visibleBrandName
     ? `${visibleBrandName} new bikes in Pakistan with latest prices, specifications, features, photos and reviews. Explore ${allnewBikeArr.length} ${visibleBrandName} motorcycle models and compare details on ebike.pk. ${plainDescription}`.trim()
     : '';
@@ -123,17 +126,15 @@ export default function AllNewBikes({ initialBrandData = [] }: { initialBrandDat
               </Box>
               {desc && desc.length > 0 && (
                 <>
-                  {/* <Typography className={styles.descriptionPara} >
-                    {Showmore ? desc.slice(0, 100) : desc}
-                  </Typography> */}
                   <Typography
+                    component="div"
                     className={styles.descriptionPara}
                     sx={{ textAlign: Showmore ? "center" : "left" }}
                     dangerouslySetInnerHTML={{
-                      __html: Showmore ? desc.slice(0, 100) : desc,
+                      __html: Showmore ? firstParagraph : desc,
                     }}
                   />
-                  <Box>
+                  {hasMoreDescription && <Box>
                     <Box className={styles.buttons_box}>
                       <Button
                         className={styles.show_more_button}
@@ -153,7 +154,7 @@ export default function AllNewBikes({ initialBrandData = [] }: { initialBrandDat
                         }
                       </Button>
                     </Box>
-                  </Box>
+                  </Box>}
                 </>
               )}
 

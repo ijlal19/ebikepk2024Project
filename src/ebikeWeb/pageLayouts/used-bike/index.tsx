@@ -50,6 +50,24 @@ function getUsedBikeSlug(value: any) {
     .replace(/^-+|-+$/g, '');
 }
 
+function isAdAtLeastSixMonthsOld(createdAt?: string, now = new Date()) {
+  if (!createdAt) return false;
+
+  const sixMonthsAfterCreation = new Date(createdAt);
+  if (Number.isNaN(sixMonthsAfterCreation.getTime())) return false;
+
+  const creationDay = sixMonthsAfterCreation.getUTCDate();
+  // Clamp to the last day when the target month is shorter.
+  sixMonthsAfterCreation.setUTCDate(1);
+  sixMonthsAfterCreation.setUTCMonth(sixMonthsAfterCreation.getUTCMonth() + 6);
+  const lastDay = new Date(Date.UTC(
+    sixMonthsAfterCreation.getUTCFullYear(), sixMonthsAfterCreation.getUTCMonth() + 1, 0
+  )).getUTCDate();
+  sixMonthsAfterCreation.setUTCDate(Math.min(creationDay, lastDay));
+
+  return sixMonthsAfterCreation.getTime() <= now.getTime();
+}
+
 export default function UsedBike({_bikeDetail}:any) {
 
   const [similarBikeArr, setSimilarBikeArr]: any = useState([]);
@@ -267,6 +285,13 @@ function embebedVideoUrl(videoURL: string) {
       {
         bikeDetail ?
           <div className={styles.main_body}>
+            {isAdAtLeastSixMonthsOld(bikeDetail?.createdAt) && (
+              <div className={styles.warning_container}>
+              <div className={styles.old_ad_warning} role="alert">
+                The ad you are viewing was posted 6 months ago or earlier.
+              </div>
+              </div>
+            )}
             <main className={`${styles.main_container} used_bike_detail_pg`}>
               <div className={styles.container_one}>
                 <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
