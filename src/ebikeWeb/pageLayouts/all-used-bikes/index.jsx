@@ -1,4 +1,5 @@
 'use client'
+import { sortUsedBikeAdsNewestFirst } from '@/ebikeWeb/utils/usedBikeSorting';
 import { getBrandFromId, getCityFromId, getCustomBikeAd, getFavouriteBikeById, getnewBikeData } from "@/ebikeWeb/functions/globalFuntions";
 import { getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas, cloudinaryLoader, formatUsedBikeListTitle } from '@/genericFunctions/geneFunc';
 import { Box, Button, Grid, Link, Typography, useMediaQuery, Pagination, PaginationItem } from '@mui/material';
@@ -16,6 +17,7 @@ import ItemCard from '../../sharedComponents/itemCard';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
+import watermarkStyles from '@/ebikeWeb/sharedComponents/used-bike-watermark.module.scss';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -63,7 +65,7 @@ const qualityUsedBikeRequest = {
     approved_only: true,
     exclude_sold: true,
     require_image: true,
-    sort_by: 'quality',
+    sort_by: 'createdAt',
     sort_order: 'desc'
 }
 const usedBikePlaceholderImage = 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png';
@@ -77,32 +79,13 @@ function hasBikeImage(bike) {
     return Array.isArray(bike?.images) && bike.images.some(Boolean);
 }
 
-function getBikeQualityScore(bike) {
-    let score = 0;
-    const price = getBikePriceValue(bike);
-
-    if (bike?.isApproved !== false) score += 20;
-    if (!bike?.is_sold) score += 20;
-    if (price > 0) score += 30;
-    if (hasBikeImage(bike)) score += 15;
-    if (bike?.title && bike.title.length > 12) score += 8;
-    if (bike?.cityId || bike?.location) score += 4;
-    if (bike?.brandId) score += 3;
-
-    return score;
-}
-
 function sortUsedBikeAds(bikes) {
     if (!Array.isArray(bikes)) return [];
 
-    return bikes.filter((bike) => {
+    return sortUsedBikeAdsNewestFirst(bikes.filter((bike) => {
         const price = getBikePriceValue(bike);
         return bike?.price !== undefined && bike?.price !== null && price >= 0 && hasBikeImage(bike) && !bike?.is_sold;
-    }).sort((a, b) => {
-        const scoreDiff = getBikeQualityScore(b) - getBikeQualityScore(a);
-        if (scoreDiff !== 0) return scoreDiff;
-        return (b?.id || 0) - (a?.id || 0);
-    });
+    }));
 }
 
 function splitFallbackAds(bikes) {
@@ -434,7 +417,7 @@ export default function AllUsedBike({
 
                         <Grid container key={ind} className={styles.long_card} >
                             <Grid item xs={is10Inch ? 12 : 3} className={styles.bike_image_box}>
-                                <Box className={styles.long_card_img}
+                                <Box className={`${styles.long_card_img} ${watermarkStyles.image}`}
                                     role="img"
                                     aria-label={cardLabel}
                                     title={cardLabel}
@@ -563,7 +546,7 @@ export default function AllUsedBike({
 
                         <Grid item className={styles.grid_image_box}>
                             <Box
-                                className={styles.grid_image_upper}
+                                className={`${styles.grid_image_upper} ${watermarkStyles.image}`}
                                 role="img"
                                 aria-label={cardLabel}
                                 title={cardLabel}

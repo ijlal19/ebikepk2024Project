@@ -17,6 +17,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import styles from "./index.module.scss";
+import watermarkStyles from '@/ebikeWeb/sharedComponents/used-bike-watermark.module.scss';
 import 'swiper/swiper-bundle.css';
 import Data from './data'
 
@@ -335,12 +336,16 @@ function embebedVideoUrl(videoURL: string) {
                       bikeDetail.images.map((imgUrl: any, ind: any) => {
                         return (
                           <SwiperSlide key={imgUrl}>
-                            <img src={cloudinaryLoader(imgUrl, 800, "auto")} alt={bikeDetail?.title} className={styles.slider_img} />
+                            <div className={`${watermarkStyles.image} ${watermarkStyles.gallery}`}>
+                              <img src={cloudinaryLoader(imgUrl, 800, "auto")} alt={bikeDetail?.title} className={styles.slider_img} />
+                            </div>
                           </SwiperSlide>
                         )
                       }) :
                       <SwiperSlide key=''>
-                        <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={bikeDetail?.title} className={styles.slider_img} />
+                        <div className={`${watermarkStyles.image} ${watermarkStyles.gallery}`}>
+                          <img src='https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png' alt={bikeDetail?.title} className={styles.slider_img} />
+                        </div>
                       </SwiperSlide>
                   }
                 </Swiper>

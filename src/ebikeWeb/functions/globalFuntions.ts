@@ -558,7 +558,7 @@ function getCustomBikeAd(obj: any) {
         method: 'POST',
         cache: 'no-store',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(obj)
+        body: JSON.stringify({ sort_by: 'createdAt', sort_order: 'desc', ...obj })
     }).then(response => response.json()).then(data => {
         return data
     })

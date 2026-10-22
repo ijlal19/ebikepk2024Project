@@ -1,16 +1,17 @@
 .sidebar {
-    width: 310px;
+    width: 260px;
     max-width: calc(100vw - 32px);
     min-height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background: #fff;
+    background: linear-gradient(135deg, #fff 0%, #f9fbfe 100%);
     color: #253449;
     font-family: 'Lato', Arial, sans-serif;
+    font-size: 12px;
 
     *, *::before, *::after { box-sizing: border-box; }
-    button, input { font: inherit; }
+    button, input { font-family: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     button { cursor: pointer; }
     a { text-decoration: none; color: inherit; }
@@ -21,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px 20px 20px;
+    padding: 10px 16px 8px;
 }
 
 .brand {
@@ -31,7 +32,7 @@
 
 .brandLogo {
     display: block;
-    width: 150px;
+    width: 128px;
     max-width: 100%;
     height: auto;
 }
@@ -39,46 +40,46 @@
 .close {
     display: grid;
     place-items: center;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border: 1px solid #e7edf3;
     border-radius: 50%;
     background: #fff;
     color: #7b8798;
-    svg { font-size: 18px; }
+    svg { font-size: 16px; }
     &:hover { background: #f1f5f9; color: #253449; }
 }
 
 .search {
     display: flex;
-    margin: 0 20px 20px;
+    margin: 0 14px 12px;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     background: #f7f9fc;
     overflow: hidden;
     &:focus-within { border-color: #1976d2; box-shadow: 0 0 0 3px #1976d215; }
-    input { width: 100%; min-width: 0; padding: 12px; font-size: 12px; border: 0; outline: 0; color: #253449; background: transparent; }
-    button { flex-shrink: 0; display: grid; place-items: center; width: 40px; border: 0; background: transparent; color: #1976d2; }
-    svg { font-size: 20px; }
+    input { width: 100%; min-width: 0; padding: 9px; font-size: 11px; border: 0; outline: 0; color: #253449; background: transparent; }
+    button { flex-shrink: 0; display: grid; place-items: center; width: 34px; border: 0; background: transparent; color: #1976d2; }
+    svg { font-size: 18px; }
 }
 
-.navigation { padding: 0 12px 12px; }
-.sectionLabel { margin: 0 12px 10px; color: #8a97a8; font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
-.menuGroup { margin-bottom: 3px; }
+.navigation { padding: 0 8px 8px; }
+.sectionLabel { margin: 0 10px 6px; color: #8a97a8; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; }
+.menuGroup { margin-bottom: 2px; }
 
 .menuItem {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     width: 100%;
-    min-height: 47px;
-    padding: 8px 12px;
+    min-height: 40px;
+    padding: 6px 10px;
     border: 0;
     border-radius: 10px;
     background: transparent;
     color: #35445a;
     text-align: left;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     transition: background .15s, color .15s;
     &:hover { background: #f3f7fc; color: #1976d2; }
@@ -88,50 +89,50 @@
 .icon {
     display: grid;
     place-items: center;
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     flex-shrink: 0;
     border-radius: 8px;
     background: #f3f6fa;
     color: #6c829d;
-    svg { font-size: 20px; }
+    svg { font-size: 17px; }
     .active & { background: #d9eaff; color: #1976d2; }
 }
 
-.chevron { margin-left: auto; font-size: 17px !important; color: #9aa9ba; transition: transform .2s !important; }
+.chevron { margin-left: auto; font-size: 15px !important; color: #9aa9ba; transition: transform .2s !important; }
 .expanded { transform: rotate(180deg); }
-.submenu { margin: 6px 0 8px 27px; padding-left: 14px; border-left: 1px solid #e2e8f0; }
+.submenu { margin: 3px 0 5px 23px; padding-left: 10px; border-left: 1px solid #e2e8f0; }
 .submenuItem {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 7px;
     width: 100%;
-    padding: 10px 8px;
+    padding: 7px 6px;
     border: 0;
     border-radius: 8px;
     text-align: left;
     background: transparent;
     color: #69798e;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.5;
-    svg { font-size: 17px; flex-shrink: 0; }
+    svg { font-size: 15px; flex-shrink: 0; }
     &:hover, &.active { background: #f0f6ff; color: #1976d2; }
 }
 
-.footer { margin-top: auto; padding: 16px 20px 20px; border-top: 1px solid #edf1f6; }
+.footer { margin-top: auto; padding: 12px 14px 14px; border-top: 1px solid #edf1f6; }
 .login {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     width: 100%;
-    min-height: 44px;
-    padding: 10px 14px;
+    min-height: 38px;
+    padding: 8px 12px;
     border: 0;
     border-radius: 10px;
     background: #1976d2;
     color: #fff;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     box-shadow: 0 4px 10px #1976d21a;
     svg { font-size: 18px; }
@@ -140,12 +141,12 @@
     &:hover { background: #1266b9; }
 }
 .appCard {
-    margin-top: 16px;
-    padding: 15px;
+    margin-top: 10px;
+    padding: 10px;
     border: 1px solid #e7edf5;
     border-radius: 12px;
     background: #f7f9fc;
-    img { display: block; margin-top: 12px; object-fit: contain; }
+    img { display: block; margin-top: 8px; object-fit: contain; }
 }
 .appHeading {
     display: flex;

@@ -186,7 +186,7 @@ function Filters(props: any , {updateData}:any) {
         "approved_only": true,
         "exclude_sold": true,
         "require_image": true,
-        "sort_by": "quality",
+        "sort_by": "createdAt",
         "sort_order": "desc"
       }
 

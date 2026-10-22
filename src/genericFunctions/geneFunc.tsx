@@ -247,14 +247,6 @@ type CloudinaryUploadConfig = {
   uploadPreset: string;
 }
 
-const usedBikeCloudinaryConfig: CloudinaryUploadConfig = {
-  cloudName: 'km-plus',
-  uploadPreset: 'ml_default',
-
-  // cloudName: 'dulfy2uxn',
-  // uploadPreset: 'bw6dfrc7',
-}
-
 const defaultCloudinaryConfig: CloudinaryUploadConfig = {
   cloudName: 'dzfd4phly',
   uploadPreset: 'ml_default',
@@ -263,19 +255,32 @@ const defaultCloudinaryConfig: CloudinaryUploadConfig = {
   // uploadPreset: 'bw6dfrc7',
 }
 
-function getCloudinaryUploadConfig(data: any) {
-  const isUsedBikeImage = data?.folder === 'used_bikes';
-  const config = isUsedBikeImage ? usedBikeCloudinaryConfig : defaultCloudinaryConfig;
+function getCloudinaryUploadConfig() {
+  const config = defaultCloudinaryConfig;
 
   if (!config.cloudName || !config.uploadPreset) {
-    throw new Error(`Missing Cloudinary config for ${isUsedBikeImage ? 'used bike' : 'default'} image upload`);
+    throw new Error('Missing Cloudinary config for default image upload');
   }
 
   return config;
 }
 
 function uplaodImageFunc(data: any) {
-  const cloudinaryConfig = getCloudinaryUploadConfig(data);
+  if (data?.folder === 'used_bikes') {
+    return fetch('/api/used-bikes/upload-image', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ file: data.file }),
+    }).then(async response => {
+      const result = await response.json();
+      if (!response.ok || !result.secure_url) {
+        throw new Error(result.error || 'Used bike image upload failed');
+      }
+      return result;
+    });
+  }
+
+  const cloudinaryConfig = getCloudinaryUploadConfig();
 
   return fetch(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`, {
     method: 'POST',

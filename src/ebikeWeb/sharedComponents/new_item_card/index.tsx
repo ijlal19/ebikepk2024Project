@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './index.module.scss';
+import watermarkStyles from '@/ebikeWeb/sharedComponents/used-bike-watermark.module.scss';
 import { Link, useMediaQuery } from '@mui/material';
 import { add3Dots, cloudinaryLoader, formatUsedBikePrice, priceWithCommas, timeAgo } from '@/genericFunctions/geneFunc';
 import { buildBlogPath } from '@/app/metadata-utils';
@@ -97,7 +98,7 @@ const UsedBikeCard = ({ props }: any) => {
     return (
         <div className={styles.main}>
             <div className={styles.container}>
-                <Link href={GetHref(props)} className={styles.image_boxusedbike}>
+                <Link href={GetHref(props)} className={`${styles.image_boxusedbike} ${watermarkStyles.image}`}>
                     <img src={cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')}
                         alt={props?.title || "default bike"}
                         className={styles.image}

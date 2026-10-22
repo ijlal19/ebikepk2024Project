@@ -1,5 +1,6 @@
 'use client'
 
+import { sortUsedBikeAdsNewestFirst } from '@/ebikeWeb/utils/usedBikeSorting';
 import React, { useEffect, useMemo, useState } from 'react';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -13,6 +14,7 @@ import Loader from '@/ebikeWeb/sharedComponents/loader/loader';
 import ItemCard from '@/ebikeWeb/sharedComponents/itemCard';
 import { cloudinaryLoader, formatUsedBikeListTitle, getFavouriteAds, GetFavouriteObject, isLoginUser, priceWithCommas } from '@/genericFunctions/geneFunc';
 import styles from '../all-used-bikes-by-filter/index.module.scss';
+import watermarkStyles from '@/ebikeWeb/sharedComponents/used-bike-watermark.module.scss';
 import '../../../app/globals.scss';
 
 let SelectedADD = [];
@@ -64,7 +66,7 @@ function hasQualityUsedBikeData(bike) {
 }
 
 function normalizeUsedBikeAds(bikes) {
-  return Array.isArray(bikes) ? bikes.filter(hasQualityUsedBikeData) : [];
+  return Array.isArray(bikes) ? sortUsedBikeAdsNewestFirst(bikes.filter(hasQualityUsedBikeData)) : [];
 }
 
 function splitFallbackAds(bikes) {
@@ -221,7 +223,7 @@ export default function UrlFilteredUsedBikes({
             <Grid container className={styles.long_card}>
               <Grid item xs={isMobile ? 12 : 3.5} className={styles.bike_image_box}>
                 <Box
-                  className={styles.long_card_img}
+                  className={`${styles.long_card_img} ${watermarkStyles.image}`}
                   sx={{
                     backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, 'auto') || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                     backgroundSize: isMobileView ? '100% 100%' : 'cover',
@@ -296,6 +298,7 @@ export default function UrlFilteredUsedBikes({
         <Grid container>
           <Grid item className={styles.grid_image_box}>
             <Box
+              className={watermarkStyles.image}
               sx={{
                 backgroundImage: `url(${cloudinaryLoader(val?.images?.[0], 300, 'auto') || 'https://res.cloudinary.com/dtroqldun/image/upload/c_scale,f_auto,h_200,q_auto,w_auto,dpr_auto/v1549082792/ebike-graphics/placeholders/used_bike_default_pic.png'})`,
                 backgroundSize: 'cover',

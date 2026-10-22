@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import { useEffect, useState } from 'react';
 import styles from './index.module.scss';
+import watermarkStyles from '@/ebikeWeb/sharedComponents/used-bike-watermark.module.scss';
 import Card from '@mui/material/Card';
 
 let SelectedADD: any = []
@@ -86,6 +87,8 @@ export default function NewUsedBikesCard(props: any) {
 
     }
 
+    const isUsedBikeImage = props.currentpage === 'used_bike' || props.currentpage === 'featured_bike' || props.from === 'usedBikeComp' || props.from === 'myAdsComp';
+
     let bike = props.data
     const hasLocation = !!bike?.location
     const bikePrice = Number(bike?.price)
@@ -123,7 +126,7 @@ export default function NewUsedBikesCard(props: any) {
                         : ""}
                     {
                         props.from == "usedBikeComp" ?
-                            <div className={styles.card_img_wrapper}>
+                            <div className={`${styles.card_img_wrapper} ${watermarkStyles.image}`}>
                                 <CardMedia
                                     component="img"
                                     alt={imageAlt}
@@ -155,6 +158,7 @@ export default function NewUsedBikesCard(props: any) {
 
                             </div>
                             :
+                            <div className={isUsedBikeImage ? watermarkStyles.image : undefined}>
                             <CardMedia
                                 component="img"
                                 alt={imageAlt}
@@ -166,6 +170,7 @@ export default function NewUsedBikesCard(props: any) {
                                     event.currentTarget.src = usedBikePlaceholderImage;
                                 }}
                             />
+                            </div>
                     }
                     <CardContent className={styles.card_info}>
 

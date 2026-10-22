@@ -64,7 +64,7 @@ export default function Sidebar({ onClose, onLogin, onLogout, loggedIn, query, o
                 <Link href="/" onClick={onClose} className={styles.brand}>
                     <img
                         className={styles.brandLogo}
-                        src="https://res.cloudinary.com/dzfd4phly/image/upload/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1727251053/Untitled-2_gsuasa.png"
+                        src="https://res.cloudinary.com/dzfd4phly/image/upload/e_trim/c_limit,dpr_auto,f_auto,q_auto,w_180,fl_strip_profile/v1727251053/Untitled-2_gsuasa.png"
                         alt="ebike.pk"
                     />
                 </Link>

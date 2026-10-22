@@ -1,3 +1,4 @@
+import { sortUsedBikeAdsNewestFirst } from '@/ebikeWeb/utils/usedBikeSorting';
 import * as React from 'react';
 import AllUsedBikeFilter from "@/ebikeWeb/pageLayouts/all-used-bikes-by-filter/index"
 import { Metadata } from 'next'
@@ -15,7 +16,7 @@ const usedBikeQualityRequest = {
   approved_only: true,
   exclude_sold: true,
   require_image: true,
-  sort_by: "quality",
+  sort_by: "createdAt",
   sort_order: "desc"
 };
 
@@ -27,7 +28,7 @@ function hasQualityUsedBikeData(bike: any) {
 function normalizeUsedBikeResponse(response: any) {
   return {
     ...(response || {}),
-    data: Array.isArray(response?.data) ? response.data.filter(hasQualityUsedBikeData) : []
+    data: Array.isArray(response?.data) ? sortUsedBikeAdsNewestFirst(response.data.filter(hasQualityUsedBikeData)) : []
   };
 }
 

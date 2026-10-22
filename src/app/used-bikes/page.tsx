@@ -1,3 +1,4 @@
+import { sortUsedBikeAdsNewestFirst } from '@/ebikeWeb/utils/usedBikeSorting';
 import { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 import { getCustomBikeAd } from "@/ebikeWeb/functions/globalFuntions";
@@ -48,7 +49,7 @@ const usedBikeQualityRequest = {
   approved_only: true,
   exclude_sold: true,
   require_image: true,
-  sort_by: "quality",
+  sort_by: "createdAt",
   sort_order: "desc"
 };
 const usedBikeFaqs = [
@@ -102,7 +103,7 @@ function hasQualityUsedBikeData(bike: any) {
 function normalizeUsedBikeResponse(response: any) {
   return {
     ...(response || {}),
-    data: Array.isArray(response?.data) ? response.data.filter(hasQualityUsedBikeData) : []
+    data: Array.isArray(response?.data) ? sortUsedBikeAdsNewestFirst(response.data.filter(hasQualityUsedBikeData)) : []
   };
 }
 

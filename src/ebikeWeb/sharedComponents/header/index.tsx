@@ -108,7 +108,11 @@ const Header = () => {
                     </Button>
 
                     <Drawer
-                        PaperProps={{ sx: { borderRadius: '0 18px 18px 0' } }}
+                        PaperProps={{ sx: {
+                            borderRadius: '0 16px 16px 0',
+                            borderRight: '1px solid #dce4ee',
+                            boxShadow: 'inset 1px 0 0 #fff, 6px 0 20px rgba(25, 45, 75, 0.2), 2px 0 5px rgba(25, 45, 75, 0.1)',
+                        } }}
                         open={open}
                         onClose={toggleDrawer(false)}>
 

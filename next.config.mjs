@@ -3,6 +3,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/shop/:path*',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/used-bike-for-sale-in-pakistan',
         destination: '/used-bikes',
         permanent: true,

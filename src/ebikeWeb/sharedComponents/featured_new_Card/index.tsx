@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import styles from './index.module.scss';
+import watermarkStyles from '@/ebikeWeb/sharedComponents/used-bike-watermark.module.scss';
 import { Link, useMediaQuery } from "@mui/material";
 import { add3Dots, cloudinaryLoader, formatUsedBikePrice, getFavouriteAds, GetFavouriteObject, isLoginUser } from "@/genericFunctions/geneFunc";
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
@@ -98,7 +99,7 @@ const Featured_New_Card = ({ props , fetchFavouriteAds }: any) => {
                     />
                 </div> */}
                 <div
-                    className={styles.image_boxusedbike}
+                    className={`${styles.image_boxusedbike} ${watermarkStyles.image}`}
                     style={{
                         backgroundImage: `url(${cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')})`,
                     }}>
@@ -210,7 +211,7 @@ const FavouriteAds = ({ props }: any) => {
                     />
                 </div> */}
                 <div
-                    className={styles.image_boxusedbike}
+                    className={`${styles.image_boxusedbike} ${watermarkStyles.image}`}
                     style={{
                         backgroundImage: `url(${cloudinaryLoader(GetImageSrc(props?.images), 400, 'auto')})`,
                     }}>
