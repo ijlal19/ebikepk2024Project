@@ -1,353 +1,54 @@
-@import '../../styles/variable';
-
-.top_add_area {
-    width: 100%;
-    background: #f2f3f3;
-    padding: 30px 0px 0px 0px;
-    display: flex;
-    justify-content: center;
-
-    .add_image {
-        width: 100%;
-        margin: 0px auto 0px auto;
-        background: #f2f3f3;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .image {         
-            width: 100%;
-            margin: 0px 5px !important;
-            height: 96px;
-            max-width: 970px;
-            background: #f2f3f3;
-        }
-    }
-}
-.path_box{
-    width: 100%;
-    background: #f2f3f3;
-    padding: 40px 0px;
-    box-sizing: border-box;
-    font-size: 14px;
-    color: #434343;
-    .path_text_box{
-        width: 100%;
-        max-width: 1000px;
-        box-sizing: border-box;
-        margin: auto;
-        padding: 0px 10px;
-        .path_text{
-            margin: 10px 0px;
-        }
-    }
-}
-
-.all_new_bike_main {
-    width: 100%;
-    max-width: 1000px;
-    box-sizing: border-box;
-    margin: 0px auto !important;
-    padding: 10px 5px 10px 5px !important;
-
-    .description_box {
-        width: 100%;
-        padding: 10px 0px;
-        font-size: 13px;
-        box-sizing: border-box;
-
-        .pageTitle {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 800;
-            color: #1d1d1d;
-            margin: 0 0 8px;
-
-            @media (max-width:768px) {
-                font-size: 22px;
-            }
-        }
-
-        .pageIntro {
-            text-align: center;
-            font-size: 14px;
-            color: #555;
-            max-width: 760px;
-            margin: 0 auto 10px;
-            padding: 0 10px;
-        }
-
-        .seoHiddenParagraph {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-        .card_main {
-            box-sizing: border-box;
-            width: 50px;
-            height: 50px;
-            margin: auto;
-            padding: 0px !important;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-
-            .card_image {
-                width: 70px !important;
-                // @media (max-width:768px) {
-                //     width:40px !important;
-                //     height: 40px !important;
-                //     border: 1px solid #000;
-                // }
-            }
-        }
-
-        .descriptionPara {
-            font-size: 14px;
-            letter-spacing: 1px;
-            width: 100%;
-            text-align: justify;
-            box-sizing: border-box;
-            margin: auto;
-            padding: 10px 10px !important;
-
-            @media (max-width:768px) {
-                text-align: justify;
-            }
-        }
-
-        .buttons_box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .show_more_button {
-                font-size: 10px;
-                border-radius: 0px;
-                background: white;
-                margin: auto !important;
-                padding: 0px !important;
-            }
-        }
-
-        .descriptionAdBox {
-            margin: 16px auto 0;
-            max-width: 970px;
-            width: 100%;
-            overflow: hidden;
-        }
-    }
-
-    .grid_sectiion_box {
-        display: flex;
-        justify-content: space-between;
-        padding: 5px;
-
-        @media (max-width:768px) {
-            padding: 0px !important;
-            justify-content: left;
-        }
-
-        .card_grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: left !important;
-            flex-direction: row;
-            padding: 0px 0px 0px 4px !important;
-            row-gap:20px;
-            @media (max-width:768px) {
-                justify-content: center !important;
-                column-gap: 10px;
-                row-gap: 10px !important;
-                flex-direction: row !important;
-                flex-wrap: wrap;
-            }
-
-            .heading {
-                width: 100%;
-                text-align: center;
-                font-size: 20px;
-                font-weight: bolder;
-                @media (max-width:768px) {
-                    font-size: 16px;
-                }
-            }
-        }
-    }
-
-    .Dealers_grid_box {
-        display: inline-block;
-        justify-content: center;
-
-        .sidebarAdBox {
-            width: 100%;
-            margin: 0 0 20px;
-            overflow: hidden;
-        }
-
-        .heading {
-            width: 100%;
-            text-align: center;
-            font-size: 16px;
-            font-weight: bolder;
-            padding: 5px 0px 10px 0px !important;
-            border-bottom: 1px solid #d7d2d2;
-        }
-
-        .Dealers_card {
-            margin: 10px 0px 30px 0px !important;
-            display: flex;
-            padding: 10px 10px 10px 10px !important;
-            flex-wrap: wrap;
-            justify-content: left;
-            column-gap: 10px;
-            box-shadow: 0px 0px 5px rgb(228, 225, 225);
-
-            .card_main {
-                width: 95%;
-                border: 1px solid #dfdada;
-                margin: 5px 0px 5px 0px;
-                height: 60px;
-                display: flex;
-                justify-content: left;
-                flex-direction: row;
-                text-align: left;
-                padding: 0px 10px 0px 10px !important;
-                align-items: center;
-
-                .card_image {
-                    width: 40px;
-                    height: auto;
-
-                    @media (max-width:768px) {
-                        padding: 10px 0px 10px 0px;
-                        width: 40px;
-                    }
-                }
-
-                .card_text {
-                    display: inline-block;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 0px !important;
-                    margin: 0px !important;
-                    width: 100%;
-
-                    .card_title {
-                        font-size: 12px;
-                        font-weight: bold;
-                        color: grey;
-                        padding: 0px 0px 0px 10px;
-
-                        @media (max-width:768px) {
-                            font-size: 11px;
-                        }
-                    }
-
-                    .card_location {
-                        font-size: 12px;
-                        font-weight: bolder;
-                        color: black;
-                        padding: 0px 0px 0px 10px;
-
-                        @media (max-width:768px) {
-                            font-size: 11px;
-                        }
-                    }
-                }
-
-                @media (max-width:768px) {
-                    width: 45%;
-                    height: 80px;
-                    padding: 10px 0px 10px 0px !important;
-                    flex-direction: column;
-                    text-align: center;
-                }
-            }
-        }
-
-        .view_detail_btn {
-            color: $primary_two;
-            margin-top: 10px;
-            border-radius: 1px;
-            padding: 0px 0px;
-            width: 100%;
-            font-size: 13px;
-            border: 1px solid $primary_two;
-            background-color: transparent;
-
-            .Link_tag{
-                padding: 3px 0px;
-                width: 100%;
-                text-decoration: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-        
-        @media (max-width:768px) {
-            margin-top: 40px;
-            justify-content: center !important; 
-            // flex-wrap: wrap;
-
-            .view_detail_btn {
-                padding: 2px 6px;
-                margin:5px auto 0px auto !important;
-                display: flex;
-                justify-content: center;
-                width: 80%;
-            }
-        }
-    }
-
-}
-
-.load_main{
-    width: 100%;
-    height: 70vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .load_div{
-        border: 1px solid #000;
-        height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-    }
-}
-@media (max-width:768px) {
-    .load_main{
-        width: 100%;
-        height: 50vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .load_div{
-            border: 1px solid #000;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-    
-        }
-    }
-}
-
-.no_data{
-    width: 100%;
-    padding: 30px 10px !important;
-    box-sizing: border-box;
-    text-align: center;
-}
+.page { font-family: Arial, Helvetica, sans-serif; background: #f6f8f7; color: #182c25; padding: 0 0 64px; }
+.container { max-width: 1200px; margin: auto; padding: 0 24px; }
+.page a { text-decoration: none; }
+.page a:focus-visible, .page button:focus-visible, .page select:focus-visible, .page input:focus-visible { outline: 3px solid #39b54a; outline-offset: 4px; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; padding: 24px 0; font-size: 12px; color: #64736c; a { color: inherit; } svg { width: 15px; height: 15px; } span { color: #213a2e; font-weight: 600; } }
+.hero { display: grid; grid-template-columns: 1fr 1fr; background: #102e22; border-radius: 20px; overflow: hidden; min-height: 370px; }
+.heroCopy { padding: 44px; color: white; h1 { font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -1.8px; line-height: 1.14; margin: 20px 0 16px; span { color: #a3dca8; } } p { max-width: 400px; font-size: 14px; line-height: 1.8; color: #cfdbd4; margin: 0 0 26px; } }
+.eyebrow { display: flex; align-items: center; gap: 9px; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; span { width: 7px; height: 7px; background: #8cdb72; border-radius: 50%; } }
+.primaryButton { display: inline-flex; align-items: center; gap: 24px; border-radius: 7px; padding: 13px 18px; background: #9de16e; color: #183a21; font-size: 13px; font-weight: 700; &:hover { background: #b3ec8c; } }
+.heroVisual { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(ellipse at center, #fff 20%, #e4ebe5 85%); margin: 18px; margin-left: 0; border-radius: 12px; padding: 68px 20px 36px; min-width: 0; }
+.brandLogo { position: absolute; top: 18px; left: 22px; img { display: block; max-width: 110px; max-height: 32px; object-fit: contain; } }
+.heroBike { width: 100%; height: 230px; object-fit: contain; mix-blend-mode: multiply; }
+.heroFallback { font-size: 150px !important; color: #729182; }
+.heroCaption { position: absolute; bottom: 15px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #50665a; font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); padding: 26px 10px; background: white; border: 1px solid #e3eae5; border-radius: 12px; margin-top: 18px; > div { padding: 0 28px; border-right: 1px solid #e3eae5; &:last-child { border: 0; } } span { display: block; font-size: 12px; color: #6e7b74; margin-bottom: 8px; } strong { font-size: 22px; font-weight: 750; letter-spacing: -.5px; } small { color: #718077; font-size: 12px; font-weight: 400; letter-spacing: 0; } }
+.sectionNav { display: flex; gap: 28px; align-items: center; border-bottom: 1px solid #dfe6e1; margin: 12px 0 32px; a { display: inline-flex; align-items: center; gap: 9px; padding: 20px 0 17px; color: #627269; font-size: 13px; white-space: nowrap; &:first-child { border-bottom: 2px solid #238b45; color: #23663b; font-weight: 700; } &:last-child { margin-left: auto; } &:hover { color: #238b45; } } span { background: #e5efe8; padding: 2px 7px; border-radius: 4px; font-size: 10px; } svg { width: 15px; } }
+.content { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 28px; align-items: start; }
+.mainColumn { min-width: 0; }
+.models, .panel { scroll-margin-top: 110px; }
+.sectionHeading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 22px; }
+.kicker { display: block; font-size: 9px; letter-spacing: 1.7px; color: #43835b; font-weight: 700; margin-bottom: 9px; }
+.sectionHeading h2, .panel h2 { font-size: 25px; font-weight: 750; letter-spacing: -.7px; margin: 0 0 8px; }
+.sectionHeading p, .panel > p { font-size: 12px; color: #748078; line-height: 1.6; margin: 0; }
+.count { border: 1px solid #dce6de; background: white; border-radius: 30px; padding: 7px 11px; white-space: nowrap; font-size: 11px; color: #5f7266; }
+.toolbar { display: flex; gap: 12px; padding: 12px; background: white; border: 1px solid #e1e8e3; border-radius: 10px; }
+.search { display: flex; align-items: center; flex: 1; gap: 8px; min-width: 0; background: #f6f8f7; border: 1px solid #e8ece9; border-radius: 6px; padding: 0 10px; svg { width: 19px; color: #819186; } input { min-width: 0; width: 100%; padding: 11px 0; background: transparent; border: 0; color: #243d2f; font: inherit; font-size: 12px; } }
+.sort { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #718078; select { max-width: 165px; background: white; border: 0; color: #2e4637; padding: 10px 4px; font: inherit; font-weight: 600; } }
+.resultCount { font-size: 11px; color: #7d8880; margin: 15px 0; }
+.cardGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.bikeCard { display: flex; flex-direction: column; background: white; border: 1px solid #e0e7e2; border-radius: 12px; overflow: hidden; color: #1b3124; transition: box-shadow .2s, border-color .2s; &:hover { border-color: #9dc4a7; box-shadow: 0 8px 24px #1836230d; .cardArrow { background: #237745; color: white; } } }
+.bikeImage { background: #fff; height: 200px; padding: 20px; display: flex; justify-content: center; align-items: center; img { width: 100%; height: 100%; object-fit: contain; } }
+.cardBody { padding: 18px; display: flex; flex-direction: column; flex: 1; border-top: 1px solid #f1f4f2; h3 { font-size: 17px; font-weight: 700; margin: 7px 0 12px; line-height: 1.4; } }
+.cardBrand { text-transform: uppercase; letter-spacing: 1.4px; font-size: 9px; color: #7d8e82; }
+.specs { display: flex; gap: 7px; flex-wrap: wrap; padding-bottom: 16px; span { font-size: 10px; color: #65766b; background: #f3f6f4; padding: 4px 7px; border-radius: 4px; } }
+.cardFooter { margin-top: auto; border-top: 1px solid #edf1ee; padding-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; div > span { display: block; color: #849087; font-size: 10px; margin-bottom: 5px; } strong { font-size: 17px; } }
+.cardArrow { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #dfe9e2; color: #3d7650; border-radius: 50%; flex-shrink: 0; }
+.sidebar { display: grid; gap: 20px; }
+.comparePanel { background: #eaf1e9; border: 1px solid #dbe7d9; border-radius: 12px; padding: 25px; .iconTile { display: grid; place-items: center; width: 44px; height: 44px; background: #dbe9d7; border-radius: 12px; color: #3a7145; margin-bottom: 26px; } h2 { font-size: 25px; font-weight: 750; line-height: 1.25; letter-spacing: -.6px; margin: 0 0 13px; } p { color: #687c6b; font-size: 12px; line-height: 1.8; margin: 0 0 24px; } a { display: flex; justify-content: space-between; gap: 12px; background: #fff; border: 1px solid #d6e0d3; color: #2b5b37; padding: 12px; border-radius: 6px; font-size: 12px; font-weight: 700; } }
+.dealerPanel { border: 1px solid #e0e7e2; background: white; padding: 24px; border-radius: 12px; .dealerIcon { color: #4c8b60; margin-bottom: 12px; } h2 { font-size: 17px; margin: 0 0 10px; } p { font-size: 12px; color: #78867c; line-height: 1.7; } > a { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #337c47; font-weight: 700; margin-top: 20px; } }
+.dealer { padding: 13px 0; border-bottom: 1px solid #edf1ee; strong { display: block; font-size: 12px; line-height: 1.5; } span { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #819087; margin-top: 4px; svg { width: 13px; height: 13px; } } }
+.ad { width: 100%; text-align: center; overflow: hidden; > span { display: block; color: #9ba59e; font-size: 8px; letter-spacing: 2px; margin-bottom: 12px; } }
+.panel { border: 1px solid #e0e7e2; background: white; padding: 26px; border-radius: 12px; margin-top: 28px; }
+.tableWrap { overflow-x: auto; margin-top: 22px; table { width: 100%; border-collapse: collapse; font-size: 12px; } th { color: #78877c; font-size: 10px; font-weight: 600; background: #f5f8f5; text-align: left; padding: 13px; } td { padding: 15px 13px; border-bottom: 1px solid #edf1ed; line-height: 1.5; } th:last-child, td:last-child { text-align: right; white-space: nowrap; } td:last-child { font-weight: 600; } a { color: #355f40; &:hover { text-decoration: underline; } } }
+.panel > .priceNote { font-size: 10px; margin-top: 16px; color: #8b948e; }
+.description { font-size: 13px; color: #687b6e; line-height: 1.9; overflow-wrap: anywhere; margin-top: 18px; img { max-width: 100%; height: auto; } a { color: #2e7e47; text-decoration: underline; } }
+.collapsed { max-height: 145px; overflow: hidden; mask-image: linear-gradient(to bottom, black 65%, transparent); }
+.readMore { display: inline-flex; align-items: center; gap: 5px; background: transparent; border: 0; color: #357849; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; padding: 14px 0 0; }
+.empty { text-align: center; padding: 50px 20px; background: white; border: 1px dashed #c9dacb; border-radius: 12px; h3 { font-size: 18px; } p { color: #78867a; font-size: 13px; } button, a { background: #e8f2e9; color: #2b6c40; border: 0; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; } > svg { font-size: 44px; color: #91b69a; } }
+.loading { display: grid; place-items: center; min-height: 60vh; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+@media (max-width: 1000px) { .content { grid-template-columns: minmax(0, 1fr) 250px; gap: 20px; } .heroCopy { padding: 32px; } .stats strong { font-size: 19px; } .cardFooter strong { font-size: 15px; } .bikeImage { height: 170px; } .comparePanel, .dealerPanel { padding: 20px; } }
+@media (max-width: 768px) { .container { padding: 0 16px; } .breadcrumb { padding: 18px 0; } .hero { grid-template-columns: 1fr; border-radius: 14px; } .heroCopy { padding: 30px 26px; h1 { font-size: 38px; } } .heroVisual { margin: 0 14px 14px; min-height: 230px; padding: 48px 16px 26px; } .heroBike { height: 200px; } .stats { padding: 18px 0; > div { padding: 0 14px; } span { font-size: 10px; line-height: 1.5; } strong { font-size: 15px; } small { display: block; margin-top: 4px; font-size: 10px; } } .sectionNav { overflow-x: auto; gap: 22px; margin-bottom: 24px; a { font-size: 12px; padding: 18px 0 14px; } } .content { grid-template-columns: 1fr; } .sidebar { grid-template-columns: 1fr 1fr; align-items: start; margin-top: 8px; } .ad { grid-column: 1 / -1; } .sectionHeading h2, .panel h2 { font-size: 22px; } .panel { padding: 20px; } .bikeImage { height: 190px; } }
+@media (max-width: 480px) { .heroCopy h1 { font-size: 34px; } .stats strong { font-size: 13px; } .stats > div { padding: 0 10px; } .toolbar { flex-direction: column; gap: 8px; } .sort { justify-content: space-between; padding: 0 4px; } .sort select { max-width: none; } .cardGrid { gap: 12px; } .bikeImage { height: 140px; padding: 10px; } .cardBody { padding: 12px; h3 { font-size: 14px; } } .cardFooter strong { font-size: 13px; } .cardArrow { width: 26px; height: 26px; svg { width: 15px; } } .specs { gap: 4px; span { font-size: 9px; } } .sidebar { grid-template-columns: 1fr; } .sectionHeading p { font-size: 11px; } .count { font-size: 10px; padding: 6px 8px; } .tableWrap td { padding: 13px 8px; font-size: 11px; } }
+@media (prefers-reduced-motion: reduce) { .bikeCard { transition: none; } }

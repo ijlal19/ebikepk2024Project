@@ -4,7 +4,6 @@ import AllNewBikeComp from "@/ebikeWeb/pageLayouts/all-new-bikes/index";
 import { getnewBikeData } from '@/ebikeWeb/functions/globalFuntions';
 import { DEFAULT_SHARE_IMAGE, SITE_URL, formatTitleText, stripHtml, toSecureUrl, trimText } from '@/app/metadata-utils';
 import { cloudinaryLoader } from '@/genericFunctions/geneFunc';
-import SeoContentBlock from '@/app/components/SeoContentBlock';
 
 export const revalidate = 3600;
 
@@ -218,18 +217,12 @@ function buildBrandJsonLd(data: BrandBike[], slug: string) {
 
 export default async function AllNewBikes({ params }: Props) {
   const data = await getBrandBikes(params.slug);
-  const seo = getBrandSeo(data, params.slug);
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBrandJsonLd(data, params.slug)) }}
-      />
-      <SeoContentBlock
-        title={seo.introTitle}
-        description={seo.introDescription}
-        tags={seo.introTags}
       />
       <AllNewBikeComp initialBrandData={data} />
     </>

@@ -174,9 +174,9 @@ return (
 
                 <Grid item xs={isMobile ? 12 : 4} className={styles.mail}>
 
-                    <Typography className={styles.subscribe_heading}>
+                    <Typography component="div" className={styles.subscribe_heading}>
                         Subscribe to our Newsletter
-                        <Typography className={styles.getUser_mail}>
+                        <Typography component="div" className={styles.getUser_mail}>
 
                             <form action="" className={styles.getUser_mail} onSubmit={SendMail}>
 
@@ -187,9 +187,9 @@ return (
                         </Typography>
                     </Typography>
 
-                    <Typography className={styles.follow_heading}>
+                    <Typography component="div" className={styles.follow_heading}>
                         Follow Us
-                        <Typography className={styles.Social_Links}>
+                        <Typography component="div" className={styles.Social_Links}>
 
                             <Link href='https://web.facebook.com/ebike.pk' target="blank" className={`${styles.Link} ${styles.facebook}`}>
                                 <FacebookIcon sx={{ margin: '0px', cursor: 'pointer', fontSize: '25px' }} />
@@ -218,7 +218,7 @@ return (
                         </Typography>
                     </Typography>
 
-                        <Typography className={styles.download_app}>
+                        <Typography component="div" className={styles.download_app}>
                             Download our mobile app
                             <Box className={styles.download_image}>
                                 <img src="https://res.cloudinary.com/dtroqldun/image/upload/c_fill,f_auto,q_auto,w_120,h_35/v1583472423/ebike-graphics/logos/google_logo_1.png" alt="App" />
