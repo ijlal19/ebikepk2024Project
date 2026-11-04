@@ -13,6 +13,7 @@ import styles from './index.module.scss'
 import { postSearchNew, formatUsedBikePrice, cloudinaryLoader } from '@/genericFunctions/geneFunc'
 import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility'
 import { buildBlogPath } from '@/app/metadata-utils'
+import { getbrandData } from '@/ebikeWeb/functions/globalFuntions'
 
 type SectionKey = 'used_bikes' | 'new_bikes' | 'blogs' | 'dealers' | 'mechanics'
 type Category = 'all' | SectionKey
@@ -52,10 +53,29 @@ export default function SearchPage() {
     setLoading(true)
     const fetchResults = async () => {
       try {
-        const response = await postSearchNew({ search: queryFromUrl, page: 1, limit: PAGE_LIMIT })
+        const [response, brands] = await Promise.all([
+          postSearchNew({ search: queryFromUrl, page: 1, limit: PAGE_LIMIT }),
+          getbrandData(),
+        ])
         if (cancelled) return
         if (!response?.results) throw new Error('Search unavailable')
         const nextResults = { ...response.results }
+        const brandsById = new Map<string, any>(
+          (Array.isArray(brands) ? brands : []).map((brand: any) => [String(brand.id), brand])
+        )
+        for (const key of ['dealers', 'mechanics'] as const) {
+          if (Array.isArray(nextResults[key]?.data)) {
+            nextResults[key] = {
+              ...nextResults[key],
+              data: nextResults[key].data.map((business: any) => ({
+                ...business,
+                bike_brand: business.bike_brand?.logoUrl
+                  ? business.bike_brand
+                  : brandsById.get(String(business.brand_id)) || business.bike_brand,
+              })),
+            }
+          }
+        }
         if (nextResults.blogs) {
           const visibleBlogs = filterVisibleBlogs(nextResults.blogs.data)
           nextResults.blogs = { ...nextResults.blogs, data: visibleBlogs, total: visibleBlogs.length }
@@ -103,7 +123,7 @@ export default function SearchPage() {
     return (
       <Link href={url} key={item.id} className={styles.card}>
         <div className={`${styles.imgWrap} ${sectionKey === 'new_bikes' || isService ? styles.containImage : ''}`}>
-          <img src={image ? cloudinaryLoader(image, 480, 'auto') : EBikeLogo} alt={title || label} loading="lazy" onError={event => { if (event.currentTarget.src !== EBikeLogo) event.currentTarget.src = EBikeLogo }} />
+          <img src={image ? cloudinaryLoader(image.replace(/^http:/, 'https:'), 480, 'auto') : EBikeLogo} alt={isService && item.bike_brand?.brandName ? `${item.bike_brand.brandName} logo` : title || label} loading="lazy" onError={event => { if (event.currentTarget.src !== EBikeLogo) event.currentTarget.src = EBikeLogo }} />
           <span className={`${styles.tag} ${styles[sectionKey]}`}>{label}</span>
         </div>
         <div className={styles.cardBody}>

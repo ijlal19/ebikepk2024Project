@@ -6,21 +6,20 @@ import { add3Dots, cloudinaryLoader, formatUsedBikePrice, priceWithCommas, timeA
 import { buildBlogPath } from '@/app/metadata-utils';
 
 const NewCard = ({ props }: any) => {
-    const isMobile = useMediaQuery('(max-width:768px)')
     const getBlogUrl = (blogInfo: any) => {
         return buildBlogPath(blogInfo);
     };
     return (
-        <div className={styles.main}>
+        <div className={`${styles.main} ${styles.blogCard}`}>
             <div className={styles.container}>
                 <Link href={getBlogUrl(props)} className={styles.image_box}
                 >
                     <img src={cloudinaryLoader(props?.featuredImage?.split(' #$# ')[0]?.trim(), 400, 'auto')} alt={props?.blogTitle} className={styles.image} />
                 </Link>
                 <div className={styles.content}>
-                    <Link href={getBlogUrl(props)} className={styles.title}>{add3Dots(props?.blogTitle, isMobile ? 25 : 60)}</Link>
+                    <Link href={getBlogUrl(props)} className={styles.title} title={props?.blogTitle}>{props?.blogTitle}</Link>
                     <p className={styles.author}>By <span className={styles.name}>{props?.authorname}</span></p>
-                    <p className={styles.description}>{add3Dots(props?.meta_description, isMobile ? 40 : 80)}</p>
+                    <p className={styles.description}>{props?.meta_description}</p>
                     <Link href={getBlogUrl(props)} className={styles.link}>
                         Read more
                     </Link>
@@ -53,7 +52,6 @@ const NewMoreBlogCard = ({ props }: any) => {
 }
 
 const NewBikeCard = ({ props }: any) => {
-    const isMobile = useMediaQuery('(max-width:768px)')
     const GetHref = (data: any) => {
         let GetId = data?.url?.split('/').pop() || data?.id
         let GetBrand = data?.url?.split('/')[2] || data?.bike_brand?.brandName
@@ -68,8 +66,8 @@ const NewBikeCard = ({ props }: any) => {
                     <Link href={GetHref(props)} className={styles.image}><img src={cloudinaryLoader(props?.img_url || props?.images[0], 400, 'auto')} alt={props?.title} className={styles.image} /></Link>
                 </div>
                 <div className={styles.content}>
-                    <Link href={GetHref(props)} className={styles.title}>{add3Dots(props?.title, isMobile ? 13 : 28)}</Link>
-                    <p className={styles.price}><span className={styles.name}>{props?.price}</span></p>
+                    <Link href={GetHref(props)} className={`${styles.title} ${styles.bikeTitle}`} title={props?.title}>{props?.title}</Link>
+                    <p className={styles.price}><span className={styles.name}>{priceWithCommas(props?.price)}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
                     <Link href='/new-bikes' className={styles.linkbtn}>
                         View All
@@ -81,7 +79,6 @@ const NewBikeCard = ({ props }: any) => {
 }
 
 const UsedBikeCard = ({ props }: any) => {
-    const isMobile = useMediaQuery('(max-width:768px)')
     const GetImageSrc = (image: any) => {
         if (image && image.length > 0) {
             return image[0]
@@ -105,7 +102,7 @@ const UsedBikeCard = ({ props }: any) => {
                     />
                 </Link>
                 <div className={styles.content}>
-                    <Link href={GetHref(props)} className={styles.title}>{add3Dots(props?.title, isMobile ? 12 : 30)}</Link>
+                    <Link href={GetHref(props)} className={`${styles.title} ${styles.bikeTitle}`} title={props?.title}>{props?.title}</Link>
                     <p className={styles.price}><span className={styles.name}>{formatUsedBikePrice(props?.price)}</span></p>
                     {/* <Link href={getBlogUrl(props)} className={styles.link}> */}
                     <Link href='/used-bikes' className={styles.linkbtn}>

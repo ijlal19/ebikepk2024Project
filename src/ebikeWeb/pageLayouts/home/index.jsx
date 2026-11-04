@@ -14,7 +14,6 @@ import styles from './index.module.scss'
 // import blogData from './blogSection/Data'
 import { BlogData as blogData } from './blogSection/Data'
 import youTubeData from './ourVideos/Data'
-import usedBikeData from './usedbikeSection/Data'
 import trendingData from './newbikesSection/TrendingData'
 import featuredData from './newbikesSection/Data'
 import GoGreen from './go-green'
@@ -28,7 +27,6 @@ import OurVideos from './ourVideos'
 const defaultHomeData = {
   homeFeaturedBike: featuredData,
   homeTrendingBike: trendingData,
-  homeUsedBike: usedBikeData,
   homeYoutubeVideos: youTubeData,
   homeBlogs: blogData
 }
@@ -69,7 +67,7 @@ function Index({ initialHomeData = null }) {
     <NewBikesSection key="new-bikes" featuredData={homeData.homeFeaturedBike} trendingData={homeData.homeTrendingBike} />,
     <CompareSection key="compare-section" />,
     <FeatureSection key="feature-section" />,
-    <UsedBikesSection key="used-bikes" usedBikeData={homeData.homeUsedBike} />,
+    <UsedBikesSection key="used-bikes" />,
     <GoGreen key="go-green" />,
     <BrandSection key="brand-section" />,
     <Explore key="explore" />,

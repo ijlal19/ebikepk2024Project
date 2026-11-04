@@ -31,13 +31,12 @@
    cursor: pointer;
    
    .heading {
-       padding: 0px !important;
+       padding: 16px 0px 0px !important;
        font-size: 20px;
        color: black;
        font-family: 'LatoBold';
        letter-spacing: 1px;
        margin: 0px 0px 0px !important;
-       padding: 10px 0px;
       //  margin-bottom: -18px;
    }
 
@@ -136,7 +135,7 @@
    display: grid;
    justify-content: space-between;
    padding: 15px 0px;
-   grid-template-columns: repeat(3 , 1fr);
+   grid-template-columns: repeat(4, minmax(0, 1fr));
    @media (max-width:768px) {
       grid-template-columns: repeat(2 , 1fr);
    }

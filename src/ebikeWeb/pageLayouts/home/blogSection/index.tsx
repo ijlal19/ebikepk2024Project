@@ -1,5 +1,5 @@
 'use client'
-import { Box, Container, useMediaQuery } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import { BlogData } from './Data'
@@ -9,7 +9,6 @@ import { filterVisibleBlogs } from '@/ebikeWeb/utils/blogVisibility';
 
 function BlogSection(props: any) {
   const [AllBlogs, setAllBlogs] = useState<any>([])
-  const isMobile = useMediaQuery('(max-width: 768px)')
   const [isLoading , setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -48,7 +47,7 @@ function BlogSection(props: any) {
                   !isLoading ? 
               <div  className={styles.panel1}>
                   {AllBlogs?.length > 0 &&
-                  (isMobile ? AllBlogs.slice(0, 2):AllBlogs.slice(0, 3)).map((e: any, i: any) => {
+                  AllBlogs.slice(0, 4).map((e: any, i: any) => {
                       return (
                         <NewCard props={e} key={i}/>
                       )

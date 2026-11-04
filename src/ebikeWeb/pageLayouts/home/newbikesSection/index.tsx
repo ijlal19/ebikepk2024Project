@@ -69,8 +69,8 @@ function NewBikesSection(props: any) {
                   modules={[Navigation]}
                   navigation
                   spaceBetween={0}
-                  loop={true}
-                  slidesPerView={3}        // default (desktop)
+                  watchOverflow
+                  slidesPerView={4}
                   slidesPerGroup={1}       // ek time me 1 slide move kare
                   breakpoints={{
                     0: {
@@ -78,12 +78,12 @@ function NewBikesSection(props: any) {
                       slidesPerGroup: 1,
                     },
                     768: {
-                      slidesPerView: 3,    // tablet/desktop (768px se upar)
+                      slidesPerView: 4,
                       slidesPerGroup: 1,
                     },
                   }}
                 >
-                  {props?.featuredData?.map((item: any, i: number) => (
+                  {props?.featuredData?.slice(0, 4).map((item: any, i: number) => (
                     <SwiperSlide key={i}>
                       <NewBikeCard props={item} />
                     </SwiperSlide>
@@ -99,8 +99,8 @@ function NewBikesSection(props: any) {
                   modules={[Navigation]}
                   navigation
                   spaceBetween={0}
-                  loop={true}
-                  slidesPerView={3}        // default (desktop)
+                  watchOverflow
+                  slidesPerView={4}
                   slidesPerGroup={1}       // ek time me 1 slide move kare
                   breakpoints={{
                     0: {
@@ -108,12 +108,12 @@ function NewBikesSection(props: any) {
                       slidesPerGroup: 1,
                     },
                     768: {
-                      slidesPerView: 3,    // tablet/desktop (768px se upar)
+                      slidesPerView: 4,
                       slidesPerGroup: 1,
                     },
                   }}
                 >
-                  {props?.trendingData?.map((item: any, i: number) => (
+                  {props?.trendingData?.slice(0, 4).map((item: any, i: number) => (
                     <SwiperSlide key={i}>
                       <NewBikeCard props={item} />
                     </SwiperSlide>

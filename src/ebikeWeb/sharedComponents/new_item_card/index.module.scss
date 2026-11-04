@@ -12,6 +12,59 @@
     font-style: normal;
 }
 
+.main.blogCard .container {
+    .image_box {
+        height: 150px;
+        flex-shrink: 0;
+
+        .image {
+            object-fit: cover;
+        }
+    }
+
+    .content {
+        .title,
+        .description {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .title {
+            height: 46px;
+            margin-top: 10px;
+        }
+
+        .description {
+            height: 40px;
+            margin-top: 8px;
+        }
+
+        .author {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 18px;
+            height: 18px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .image_box {
+            height: 110px;
+        }
+
+        .content {
+            .title,
+            .description {
+                height: 32px;
+            }
+        }
+    }
+}
+
 .main {
     width: 100%;
     max-width: 329px;
@@ -158,10 +211,24 @@
                 box-sizing: border-box;
                 font-family: 'LatoBold';
 
+                &.bikeTitle {
+                    display: block;
+                    min-width: 0;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    height: 23px;
+                    flex-shrink: 0;
+                }
+
                 @media (max-width:768px) {
                     font-size: 14px;
                     line-height: 16px;
                     margin: 5px 0px 0px;
+
+                    &.bikeTitle {
+                        height: 16px;
+                    }
                 }
             }
 
