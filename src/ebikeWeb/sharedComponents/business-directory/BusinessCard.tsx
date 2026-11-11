@@ -20,7 +20,7 @@ export function BusinessLogo({ business, kind }: { business: Business; kind: Bus
 
 export default function BusinessCard({ business, kind, featured = false }: { business: Business; kind: BusinessKind; featured?: boolean }) {
   const phone = phoneNumber(business.phone);
-  return <article className={`${styles.businessCard} ${featured ? styles.featuredCard : ''}`}>
+  return <article className={`${styles.businessCard} ${kind === 'dealer' ? styles.dealerCard : ''} ${featured ? styles.featuredCard : ''}`}>
     <div className={styles.cardTop}><BusinessLogo business={business} kind={kind} /><div className={styles.cardTags}>{featured && <span className={styles.featuredBadge}>Featured</span>}<span>{brandLabel(business.bike_brand?.brandName) || (kind === 'dealer' ? 'Bike showroom' : 'Bike workshop')}</span></div></div>
     <span className={styles.businessType}>{getMechanicTypeLabel(business.mechanic_type, kind)}</span>
     <h3><Link href={businessHref(business, kind)}>{business.shop_name || (kind === 'dealer' ? 'Bike dealer' : 'Bike mechanic')}</Link></h3>

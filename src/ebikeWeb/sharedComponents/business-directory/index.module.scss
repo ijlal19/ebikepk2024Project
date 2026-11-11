@@ -90,6 +90,7 @@ $border: #dfe7e1;
 .profileLink { color: #35774a; }
 .noPhone { color: #97a097; font-size: 10px; }
 .featuredCard { border-color: #dbe5ce; background: linear-gradient(160deg, #fff, #fbfcf8); padding: 16px; h3 { font-size: 14px; } .cardTop { margin-bottom: 15px; gap: 8px; } .logo { width: 46px; height: 46px; padding: 7px; border-radius: 9px; } .cardActions { gap: 5px; flex-wrap: wrap; } .callLink, .profileLink { font-size: 10px; } }
+.dealerCard .logo { width: 80px; height: 80px; padding: 6px; img { width: 100%; height: 100%; } }
 .sort select { background: white; color: #62786a; border: 1px solid $border; padding: 10px 8px; border-radius: 6px; font-size: 11px; max-width: 145px; }
 .resultsSection { scroll-margin-top: 90px; }
 .activeFilters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -2px 0 18px; > span { font-size: 10px; color: $muted; } button { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; background: #eaf2e9; color: #3d784b; border: 1px solid #d9e6d9; padding: 6px 8px; border-radius: 5px; svg { width: 12px; height: 12px; } &:last-child { border: 0; background: none; } } }
@@ -172,6 +173,7 @@ $border: #dfe7e1;
 @media (max-width: 540px) {
   .featuredGrid { grid-template-columns: 1fr; > :nth-child(3) { display: flex; } .businessCard { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; } .cardTop { grid-column: 1 / -1; margin-bottom: 14px; } .businessType, h3, .cardAddress, .cardActions { grid-column: 1 / -1; } .cardCity { grid-column: 1 / -1; } .logo { width: 48px; height: 48px; } .cardAddress { margin-bottom: 15px; } }
   .cardGrid, .relatedGrid { grid-template-columns: 1fr; gap: 14px; }
+  .dealerCard .logo, .featuredGrid .dealerCard .logo { width: 72px; height: 72px; }
   .businessCard h3 { font-size: 18px; }
   .featuredCard h3 { font-size: 17px; }
   .cardTop { margin-bottom: 16px; }
