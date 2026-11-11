@@ -17,6 +17,7 @@ import styles from './index.module.scss';
 import '../../../app/globals.scss';
 import 'swiper/css/navigation';
 import Data from "./data";
+import DirectoryEdit from './directory-edit';
 import 'swiper/css';
 
 let Usedbikewindowscroll: any;
@@ -1255,6 +1256,8 @@ const Dealer_Card = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all");
 
+    const [editingId, setEditingId] = useState<number | string | null>(null);
+
     const itemsPerPage = 10;
 
     useEffect(() => {
@@ -1318,11 +1321,6 @@ const Dealer_Card = () => {
         try {
             const res = await getAllDealer();
             if (res && res.length > 0) {
-                res?.map((e: any, i: any) => {
-                    if (e?.phone?.charAt(0) != '0') {
-                        e.phone = '0' + e.phone
-                    }
-                })
                 const approvedDealers = res.filter((e: any) => e?.is_approved === true);
                 const disapprovedDealers = res.filter((e: any) => e?.is_approved === false);
 
@@ -1392,12 +1390,12 @@ const Dealer_Card = () => {
         }
         console.log(obj)
         const res = await ChangeDealerApprove(id, obj)
-        if (res && res?.info && res?.info?.indexOf("Approve dealer is") > -1) {
+        if (res?.success === true || (res?.success !== false && res?.info?.indexOf("Approve dealer is") > -1)) {
             alert('Updated Successfully')
             fetchAllDealers(currentPage)
         }
         else {
-            alert('Something is Wrong!')
+            alert(res?.info || res?.message || 'Unable to update. Please try again.')
         }
     };
 
@@ -1410,12 +1408,12 @@ const Dealer_Card = () => {
         }
         console.log(obj)
         const res = await ChangeDealerFeatured(id, obj)
-        if (res && res?.info && res?.info?.indexOf("Feature Dealer is") > -1) {
+        if (res?.success === true || (res?.success !== false && res?.info?.indexOf("Feature Dealer is") > -1)) {
             alert('Updated Successfully')
             fetchAllDealers(currentPage)
         }
         else {
-            alert('Something is Wrong!')
+            alert(res?.info || res?.message || 'Unable to update. Please try again.')
         }
     };
 
@@ -1438,6 +1436,12 @@ const Dealer_Card = () => {
     return (
         <div className={styles.main_dealers}>
             <New_header value={searchTerm} onChange={handleSearch} placeholder="Search Dealers with Title" />
+            {editingId !== null && <DirectoryEdit kind="dealer" id={editingId}
+                onClose={() => setEditingId(null)}
+                onSaved={() => {
+                    setEditingId(null);
+                    fetchAllDealers(HandleOpenTabs ? currentpageapprove : currentPage);
+                }} />}
 
             {!IsLoading ? (
                 <div className={styles.main}>
@@ -1489,6 +1493,7 @@ const Dealer_Card = () => {
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
+                                                <th className={styles.th} >Edit</th>
                                                 <th className={styles.th} >Delete</th>
                                             </thead>
                                             <tbody className={styles.tbody}>
@@ -1519,6 +1524,9 @@ const Dealer_Card = () => {
                                                                     </button>
                                                                 </td>
                                                                 <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.feature_btn}`} onClick={() => setEditingId(e.id)}>Edit</button>
+                                                                </td>
+                                                                <td className={styles.td} >
                                                                     <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
                                                                         Delete
                                                                     </button>
@@ -1533,7 +1541,7 @@ const Dealer_Card = () => {
                                                         )
                                                     }) :
                                                         <tr className={styles.tr}>
-                                                            <td colSpan={7} className={styles.td}>User not found</td>
+                                                            <td colSpan={8} className={styles.td}>User not found</td>
                                                         </tr>
                                                 }
 
@@ -1549,6 +1557,7 @@ const Dealer_Card = () => {
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
+                                                <th className={styles.th} >Edit</th>
                                                 <th className={styles.th} >Delete</th>
                                             </thead>
                                             <tbody className={styles.tbody}>
@@ -1580,6 +1589,9 @@ const Dealer_Card = () => {
                                                                     </button>
                                                                 </td>
                                                                 <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.feature_btn}`} onClick={() => setEditingId(e.id)}>Edit</button>
+                                                                </td>
+                                                                <td className={styles.td} >
                                                                     <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
                                                                         Delete
                                                                     </button>
@@ -1594,7 +1606,7 @@ const Dealer_Card = () => {
                                                         )
                                                     }) :
                                                         <tr className={styles.tr}>
-                                                            <td colSpan={7} className={styles.td}>User not found</td>
+                                                            <td colSpan={8} className={styles.td}>User not found</td>
                                                         </tr>
                                                 }
 
@@ -1650,6 +1662,8 @@ const Mechanic_Card = () => {
     const [IsLoading, setIsLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedType, setSelectedType] = useState<"all" | 1 | 2>("all");
+
+    const [editingId, setEditingId] = useState<number | string | null>(null);
 
     const itemsPerPage = 10;
 
@@ -1714,11 +1728,6 @@ const Mechanic_Card = () => {
         try {
             const res = await getAllMechanics();
             if (res && res.length > 0) {
-                res?.map((e: any, i: any) => {
-                    if (e?.phone?.charAt(0) != '0') {
-                        e.phone = '0' + e.phone
-                    }
-                })
                 const approvedmechanics = res.filter((e: any) => e?.is_approved === true);
                 const disapprovedmechanics = res.filter((e: any) => e?.is_approved === false);
 
@@ -1788,12 +1797,12 @@ const Mechanic_Card = () => {
         }
         console.log(obj)
         const res = await ChangeMechanicApprove(id, obj)
-        if (res && res?.info && res?.info?.indexOf("Approve mechanic is ") > -1) {
+        if (res?.success === true || (res?.success !== false && res?.info?.indexOf("Approve mechanic is ") > -1)) {
             alert('Updated Successfully')
             fetchAllmechanics(currentPage)
         }
         else {
-            alert('Something is Wrong!')
+            alert(res?.info || res?.message || 'Unable to update. Please try again.')
         }
     };
 
@@ -1806,12 +1815,12 @@ const Mechanic_Card = () => {
         }
         console.log(obj)
         const res = await ChangeMechanicFeatured(id, obj)
-        if (res && res?.info && res?.info?.indexOf("Feature mechanic is ") > -1) {
+        if (res?.success === true || (res?.success !== false && res?.info?.indexOf("Feature mechanic is ") > -1)) {
             alert('Updated Successfully')
             fetchAllmechanics(currentPage)
         }
         else {
-            alert('Something is Wrong!')
+            alert(res?.info || res?.message || 'Unable to update. Please try again.')
         }
     };
 
@@ -1834,6 +1843,12 @@ const Mechanic_Card = () => {
     return (
         <div className={styles.main_mechanics}>
             <New_header />
+            {editingId !== null && <DirectoryEdit kind="mechanic" id={editingId}
+                onClose={() => setEditingId(null)}
+                onSaved={() => {
+                    setEditingId(null);
+                    fetchAllmechanics(HandleOpenTabs ? currentpageapprove : currentPage);
+                }} />}
 
             {!IsLoading ? (
                 <div className={styles.main}>
@@ -1886,6 +1901,7 @@ const Mechanic_Card = () => {
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
+                                                <th className={styles.th} >Edit</th>
                                                 <th className={styles.th} >Delete</th>
                                             </thead>
                                             <tbody className={styles.tbody}>
@@ -1916,6 +1932,9 @@ const Mechanic_Card = () => {
                                                                     </button>
                                                                 </td>
                                                                 <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.feature_btn}`} onClick={() => setEditingId(e.id)}>Edit</button>
+                                                                </td>
+                                                                <td className={styles.td} >
                                                                     <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
                                                                         Delete
                                                                     </button>
@@ -1930,7 +1949,7 @@ const Mechanic_Card = () => {
                                                         )
                                                     }) :
                                                         <tr className={styles.tr}>
-                                                            <td colSpan={7} className={styles.td}>User not found</td>
+                                                            <td colSpan={8} className={styles.td}>User not found</td>
                                                         </tr>
                                                 }
 
@@ -1946,6 +1965,7 @@ const Mechanic_Card = () => {
                                                 <th className={styles.th} >Address</th>
                                                 <th className={styles.th} >Approve</th>
                                                 <th className={styles.th} >Featured</th>
+                                                <th className={styles.th} >Edit</th>
                                                 <th className={styles.th} >Delete</th>
                                             </thead>
                                             <tbody className={styles.tbody}>
@@ -1977,6 +1997,9 @@ const Mechanic_Card = () => {
                                                                     </button>
                                                                 </td>
                                                                 <td className={styles.td} >
+                                                                    <button className={`${styles.action_btn} ${styles.feature_btn}`} onClick={() => setEditingId(e.id)}>Edit</button>
+                                                                </td>
+                                                                <td className={styles.td} >
                                                                     <button className={`${styles.action_btn} ${styles.delete_btn}`} onClick={() => handleDelete(e?.id)}>
                                                                         Delete
                                                                     </button>
@@ -1991,7 +2014,7 @@ const Mechanic_Card = () => {
                                                         )
                                                     }) :
                                                         <tr className={styles.tr}>
-                                                            <td colSpan={7} className={styles.td}>User not found</td>
+                                                            <td colSpan={8} className={styles.td}>User not found</td>
                                                         </tr>
                                                 }
 
